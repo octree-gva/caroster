@@ -103,7 +103,7 @@ Code Quality:
   stage: analyze
   image: ciricihq/gitlab-sonar-scanner
   rules:
-    - if: "$CI_PIPELINE_SOURCE =~ schedule"
+    - if: '$CI_PIPELINE_SOURCE =~ "schedule"'
   script:
     - >-
       sonar-scanner -Dsonar.host.url=$SONAR_URL 
