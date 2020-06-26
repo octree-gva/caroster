@@ -36,66 +36,63 @@ Build:
     - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA} $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
 
-# CI variables scopées:
-# - ENV_CONFIG: Fichier de configuration values.yaml (requis)
-Deploy to Test:
+.deploy:
   stage: deploy
   image: git.octree.ch:4567/o/infra/templates/ci/kubectl
+  variables:
+    HELM_EXPERIMENTAL_OCI: 1
+  script:
+    - helm registry login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - helm chart pull git.octree.ch:4567/o/charts/strapi:$STRAPI_CHART_VERSION
+    - helm chart export git.octree.ch:4567/o/charts/strapi:$STRAPI_CHART_VERSION -d charts
+    - >-
+      helm upgrade --install --create-namespace $CI_PROJECT_NAME charts/*
+      -n $ENV_NAMESPACE --cleanup-on-fail
+      --set strapi.image=$CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
+      --set strapi.host=$CI_ENVIRONMENT_URL
+      -f "$ENV_CONFIG"
+
+# CI variables:
+# - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
+# - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
+Deploy to Test:
+  extends: .deploy
   environment:
     name: test
     url: "https://$CI_PROJECT_NAME.dev.octr.ee"
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
-  script:
-    - >-
-      helm upgrade --install $CI_PROJECT_NAME k8s/*
-      -n $CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG --cleanup-on-fail
-      --set strapi.image=$CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
-      --set strapi.host=$CI_ENVIRONMENT_URL
-      -f "$ENV_CONFIG"
+  variables:
+    ENV_NAMESPACE: $CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG
 
-# CI variables scopées:
-# - ENV_URL: URL de l'environnement (requis)
-# - ENV_CONFIG: Fichier de configuration values.yaml (requis)
-# - ENV_NAMESPACE: Namespace Kubernetes (default: default)
+# CI variables:
+# - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
+# - ENV_URL [scopée]: URL de l'environnement (requis)
+# - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
+# - ENV_NAMESPACE [scopée]: Namespace Kubernetes (default: default)
 Deploy to Staging:
-  stage: deploy
-  image: git.octree.ch:4567/o/infra/templates/ci/kubectl
+  extends: .deploy
   environment:
     name: staging
     url: $ENV_URL
   rules:
     - if: "$CI_COMMIT_TAG =~ /v.*-rc$/"
-  script:
-    - >-
-      helm upgrade --install $CI_PROJECT_NAME k8s/*
-      -n $ENV_NAMESPACE--cleanup-on-fail
-      --set strapi.image=$CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
-      --set strapi.host=$CI_ENVIRONMENT_URL
-      -f "$ENV_CONFIG"
 
-# CI variables scopées:
-# - ENV_URL: URL de l'environnement (requis)
-# - ENV_CONFIG: Fichier de configuration values.yaml (requis)
-# - ENV_NAMESPACE: Namespace Kubernetes (default: default)
+# CI variables:
+# - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
+# - ENV_URL [scopée]: URL de l'environnement (requis)
+# - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
+# - ENV_NAMESPACE [scopée]: Namespace Kubernetes (default: default)
 Deploy to Production:
-  stage: deploy
-  image: git.octree.ch:4567/o/infra/templates/ci/kubectl
+  extends: .deploy
   environment:
     name: production
     url: $ENV_URL
   rules:
     - if: "$CI_COMMIT_TAG =~ /v.*[^r][^c]$/"
       when: manual
-  script:
-    - >-
-      helm upgrade --install $CI_PROJECT_NAME k8s/*
-      -n ${ENV_NAMESPACE:-default}--cleanup-on-fail
-      --set strapi.image=$CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
-      --set strapi.host=$CI_ENVIRONMENT_URL
-      -f "$ENV_CONFIG"
 
-# CI variables scopées:
+# CI variables:
 # - SONAR_URL: URL de SonarQube (requis)
 # - SONAR_LOGIN: Login pour SonarQube (requis)
 # - SONAR_SOURCE: Dossier à scanner (default: .)
