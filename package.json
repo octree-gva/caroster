@@ -15,6 +15,7 @@
     "strapi": "3.0.5",
     "strapi-admin": "3.0.5",
     "strapi-connector-mongoose": "3.0.5",
+    "strapi-middleware-reactapp": "^0.1.0",
     "strapi-plugin-content-manager": "3.0.5",
     "strapi-plugin-content-type-builder": "3.0.5",
     "strapi-plugin-documentation": "^3.0.5",
