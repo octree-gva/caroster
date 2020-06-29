@@ -1,0 +1,15 @@
+{
+  "event": {
+    "creation": {
+      "event_name": "Nom de l'événement",
+      "creator_email": "Votre e-mail",
+      "date": "Date de l'événement",
+      "address": "Adresse de l'événement",
+      "next": "Suivant",
+      "create": "Créer"
+    },
+    "errors": {
+      "cant_create": "Impossible de créer l'événement"
+    }
+  }
+}
