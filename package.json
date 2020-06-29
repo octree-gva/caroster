@@ -10,7 +10,10 @@
     "strapi": "strapi",
     "test": "echo 'DO TESTS!!!'"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.3.1"
+  },
   "dependencies": {
     "strapi": "3.0.5",
     "strapi-admin": "3.0.5",
