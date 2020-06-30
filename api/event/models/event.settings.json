@@ -26,6 +26,12 @@
     "cars": {
       "via": "event",
       "collection": "car"
+    },
+    "position": {
+      "type": "json"
+    },
+    "waiting_list": {
+      "type": "json"
     }
   }
 }

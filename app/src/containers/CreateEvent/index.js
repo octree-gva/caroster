@@ -32,6 +32,7 @@ const CreateEvent = (props) => {
       createEvent={createEvent}
       nextStep={() => setStep(step + 1)}
       previousStep={() => setStep(step - 1)}
+      id="NewEvent"
     />
   );
 };

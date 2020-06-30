@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../hooks/useDebounce";
+import Paper from "../../components/Paper";
 
 const isValidEmail = (email) =>
+  // eslint-disable-next-line
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
 
-const Step1 = ({ nextStep, event, addToEvent }) => {
+const Step1 = ({ nextStep, event, addToEvent, ...props }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -20,9 +21,10 @@ const Step1 = ({ nextStep, event, addToEvent }) => {
   const [email, setEmail] = useState(event.email ?? "");
   const [emailIsValid, setEmailIsValid] = useState(false);
 
+  const debouncedEmail = useDebounce(email, 400);
   useEffect(() => {
-    setEmailIsValid(isValidEmail(email));
-  }, [useDebounce(email, 400)]);
+    setEmailIsValid(isValidEmail(debouncedEmail));
+  }, [debouncedEmail]);
 
   const onNext = () => {
     addToEvent({ name, email });
@@ -30,7 +32,7 @@ const Step1 = ({ nextStep, event, addToEvent }) => {
   };
 
   return (
-    <Paper className={classes.container}>
+    <Paper {...props}>
       <TextField
         className={classes.textField}
         label={t("event.creation.event_name")}
@@ -39,6 +41,8 @@ const Step1 = ({ nextStep, event, addToEvent }) => {
         margin="dense"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        id="NewEventName"
+        name="name"
       />
       <TextField
         className={classes.textField}
@@ -47,6 +51,9 @@ const Step1 = ({ nextStep, event, addToEvent }) => {
         margin="dense"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        id="NewEventEmail"
+        name="email"
+        type="email"
       />
       <Button
         className={classes.button}
@@ -63,9 +70,6 @@ const Step1 = ({ nextStep, event, addToEvent }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(2),
-  },
   textField: {},
   button: {
     marginTop: theme.spacing(2),

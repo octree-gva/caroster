@@ -568,9 +568,18 @@
                 },
                 "event": {
                   "type": "string"
+                },
+                "passengers": {
+                  "type": "object"
                 }
               }
             }
+          },
+          "position": {
+            "type": "object"
+          },
+          "waiting_list": {
+            "type": "object"
           }
         }
       },
@@ -597,6 +606,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "position": {
+            "type": "object"
+          },
+          "waiting_list": {
+            "type": "object"
           }
         }
       }

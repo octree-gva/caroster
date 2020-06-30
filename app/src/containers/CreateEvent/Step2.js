@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -8,8 +7,9 @@ import { DatePicker } from "@material-ui/pickers";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { useToast } from "../../contexts/Toast";
+import Paper from "../../components/Paper";
 
-const Step2 = ({ event, addToEvent, createEvent }) => {
+const Step2 = ({ event, addToEvent, createEvent, ...props }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -28,7 +28,7 @@ const Step2 = ({ event, addToEvent, createEvent }) => {
   };
 
   return (
-    <Paper className={classes.container}>
+    <Paper {...props}>
       <DatePicker
         label={t("event.creation.date")}
         value={date}
@@ -37,6 +37,8 @@ const Step2 = ({ event, addToEvent, createEvent }) => {
         fullWidth
         format="DD.MM.YYYY"
         disablePast
+        id="NewEventDate"
+        name="date"
       />
       <TextField
         className={classes.textField}
@@ -47,6 +49,8 @@ const Step2 = ({ event, addToEvent, createEvent }) => {
         rows={4}
         value={address}
         onChange={(e) => setAddress(e.target.value)}
+        id="NewEventAddress"
+        name="address"
       />
       <Button
         className={classes.button}
@@ -54,6 +58,7 @@ const Step2 = ({ event, addToEvent, createEvent }) => {
         color="secondary"
         fullWidth
         onClick={onCreate}
+        id="NewEventSubmit"
       >
         {t("event.creation.create")}
       </Button>
@@ -62,9 +67,6 @@ const Step2 = ({ event, addToEvent, createEvent }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(2),
-  },
   textField: {},
   button: {
     marginTop: theme.spacing(2),

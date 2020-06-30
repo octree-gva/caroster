@@ -32,6 +32,9 @@
     "event": {
       "model": "event",
       "via": "cars"
+    },
+    "passengers": {
+      "type": "json"
     }
   }
 }

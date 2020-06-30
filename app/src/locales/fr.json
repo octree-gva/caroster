@@ -1,5 +1,10 @@
 {
+  "generic": { "loading": "Chargement..." },
   "event": {
+    "fields": {
+      "starts_on": "Commence le",
+      "address": "Adresse"
+    },
     "creation": {
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
@@ -8,8 +13,22 @@
       "next": "Suivant",
       "create": "Créer"
     },
+    "actions": {
+      "show_details": "Afficher les détails",
+      "hide_details": "Cacher les détails",
+      "add_car": "Ajouter une voiture",
+      "invite": "Inviter",
+      "find_car": "Trouver une voiture"
+    },
     "errors": {
-      "cant_create": "Impossible de créer l'événement"
+      "cant_create": "Impossible de créer l'événement",
+      "cant_update": "Impossible de modifier l'événement"
+    }
+  },
+  "car": {
+    "fields": {
+      "meeting_point": "Lieu de rencontre",
+      "details": "Notes"
     }
   }
 }

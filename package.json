@@ -15,6 +15,7 @@
     "eslint": "^7.3.1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "strapi": "3.0.5",
     "strapi-admin": "3.0.5",
     "strapi-connector-mongoose": "3.0.5",
