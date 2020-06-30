@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../layouts/Default";
 import EventMenu from "../containers/EventMenu";
 import EventDetails from "../containers/EventDetails";
+import EventFab from "../containers/EventFab";
 import { useEvent, EventProvider } from "../contexts/Event";
 import CarColumns from "../containers/CarColumns";
 import { useToast } from "../contexts/Toast";
@@ -103,6 +104,7 @@ const Event = () => {
         </Container>
       </AppBar>
       <CarColumns cars={event.cars} />
+      <EventFab />
     </Layout>
   );
 };
@@ -113,6 +115,8 @@ const useStyles = makeStyles((theme) => ({
     transition: "height 0.3s ease",
     overflow: "hidden",
     height: detailsOpen ? "100vh" : theme.mixins.toolbar.minHeight,
+    zIndex: theme.zIndex.appBar,
+    position: "relative",
   }),
   name: {
     flexGrow: 1,

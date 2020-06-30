@@ -19,7 +19,8 @@
       "hide_details": "Cacher les détails",
       "add_car": "Ajouter une voiture",
       "invite": "Inviter",
-      "find_car": "Trouver une voiture"
+      "find_car": "Trouver une voiture",
+      "copied": "Le lien a été copié dans votre presse-papier"
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",
