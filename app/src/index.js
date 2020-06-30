@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "fontsource-roboto";
+import "./i18n";
+import "moment/locale/fr-ch";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

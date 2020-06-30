@@ -1,10 +1,12 @@
 import React from "react";
+import Layout from "../layouts/Centered";
+import CreateEvent from "../containers/CreateEvent";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Caroster</h1>
-    </div>
+    <Layout>
+      <CreateEvent />
+    </Layout>
   );
 };
 
