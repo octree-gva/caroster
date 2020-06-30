@@ -1,5 +1,5 @@
 {
-  "generic": { "loading": "Chargement..." },
+  "generic": { "loading": "Chargement...", "close": "Fermer" },
   "event": {
     "fields": {
       "starts_on": "Commence le",
@@ -11,7 +11,8 @@
       "date": "Date de l'événement",
       "address": "Adresse de l'événement",
       "next": "Suivant",
-      "create": "Créer"
+      "create": "Créer",
+      "tos": "J'accepte les conditions générales d'utilisation"
     },
     "actions": {
       "show_details": "Afficher les détails",

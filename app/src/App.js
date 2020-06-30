@@ -8,7 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Router from "./Router";
 import theme from "./theme";
 
-const models = [{ name: "events" }, { name: "cars" }];
+const models = [{ name: "events" }, { name: "cars" }, { name: "pages" }];
 
 const App = () => {
   return (

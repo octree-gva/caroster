@@ -13,6 +13,7 @@
     "fontsource-roboto": "^2.1.4",
     "i18next": "^19.5.1",
     "leaflet": "^1.6.0",
+    "marked": "^1.1.0",
     "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
