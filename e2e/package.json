@@ -1,0 +1,69 @@
+{
+  "name": "@blueimp/wdio",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.10.3",
+    "@wdio/allure-reporter": "^6.1.22",
+    "@wdio/cli": "6",
+    "@wdio/mocha-framework": "6",
+    "allure-commandline": "^2.13.0",
+    "mailhog": "4",
+    "mocha": "^8.0.1",
+    "pug": "^3.0.0",
+    "uuid": "8",
+    "wdio-screen-commands": "5"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.10.3",
+    "@babel/register": "^7.10.3",
+    "@types/cucumber": "^6.0.1",
+    "@types/mocha": "7",
+    "@types/node": "14",
+    "@types/uuid": "7",
+    "@wdio/cucumber-framework": "^6.1.22",
+    "@wdio/local-runner": "^6.1.22",
+    "@wdio/spec-reporter": "^6.1.14",
+    "babel-eslint": "^10.1.0",
+    "cucumber": "^6.0.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.3.1",
+    "eslint-config-blueimp": "2",
+    "eslint-config-prettier": "6",
+    "eslint-plugin-jsdoc": "25",
+    "eslint-plugin-node": "11",
+    "eslint-plugin-prettier": "3",
+    "prettier": "2",
+    "typescript": "3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "blueimp",
+      "plugin:jsdoc/recommended",
+      "plugin:node/recommended",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "proseWrap": "always",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "scripts": {
+    "test": "rm -rf ./reports/screenshots/**/*.png && npm run test:chrome && npm run test:firefox && npm run test:mobile-safari && npm run test:safari",
+    "report": "npm run screenshot && ./bin/deploy",
+    "screenshot": "node reports/screenshots/index.js",
+    "report:allure": "npx allure",
+    "report:generate": "npm run report:allure generate -- --clean ./reports/allure/ -o ./reports/allure-report",
+    "test:chrome": "docker-compose  run -e NAV=chrome --rm wdio",
+    "test:edge": "docker-compose  run -e NAV=edge-legacy --rm wdio",
+    "test:edge-legacy": "docker-compose  run -e NAV=edge-legacy --rm wdio",
+    "test:firefox": "docker-compose  run -e NAV=firefox --rm wdio",
+    "test:internet-explorer": "docker-compose  run -e NAV=internet-explorer --rm wdio",
+    "test:mobile-chrome": "docker-compose  run -e NAV=mobile-chrome --rm wdio",
+    "test:mobile-safari": "docker-compose  run -e NAV=mobile-safari --rm wdio",
+    "test:safari": "docker-compose  run -e NAV=safari --rm wdio"
+  }
+}
