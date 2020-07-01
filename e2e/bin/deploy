@@ -4,6 +4,7 @@ POD=$(kubectl get pod  --namespace caroster-test -l group=e2e-caroster -o jsonpa
 echo caroster-test/$POD:/usr/share/nginx/html/
 
 kubectl cp ./reports/screenshots caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
+kubectl cp ./reports/videos caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
 kubectl cp ./reports/allure-report caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
 kubectl cp ./reports/index.html caroster-test/$POD:/usr/share/nginx/html/index.html --namespace caroster-test	
 

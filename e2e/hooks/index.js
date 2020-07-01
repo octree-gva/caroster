@@ -1,29 +1,59 @@
-'use strict'
+'use strict';
 
 /* global browser */
 
-const cmds = require('wdio-screen-commands')
+const cmds = require('wdio-screen-commands');
+const slugify = require('slugify');
 
+const {Scene} = require('../test/pages/utils/Scene');
 /* eslint-disable jsdoc/valid-types */
 /** @type WebdriverIO.HookFunctions */
 const config = {
   before: async () => {
-    global.uuidv4 = require('uuid').v4
-    browser.addCommand('saveScreenshotByName', cmds.saveScreenshotByName)
-    browser.addCommand('saveAndDiffScreenshot', cmds.saveAndDiffScreenshot)
+    global.uuidv4 = require('uuid').v4;
+    global.SCENE = Scene;
+    browser.addCommand('saveScreenshotByName', async screenshotName => {
+      console.log('New screen shots');
+      await cmds.saveScreenshotByName(screenshotName);
+      console.log('screenshot ', screenshotName);
+    });
     if (browser.config.appium)
-      await browser.updateSettings(browser.config.appium)
-    if (browser.config.maximizeWindow) await browser.maximizeWindow()
+      await browser.updateSettings(browser.config.appium);
+    if (browser.config.maximizeWindow) await browser.maximizeWindow();
+    console.log('Ready to spec');
   },
-  beforeTest: async test => {
-    await cmds.startScreenRecording(test)
+  beforeFeature: async function (uri, feature, scenarios) {
+    console.log({featureTags: feature.document.feature.tags});
+    const name = slugify(feature.document.feature.name);
+    const test = {
+      parent: 'Feat',
+      uid: name,
+      title: name,
+      state: 'passed',
+      type: 'test',
+    };
+    console.log('start recording');
+    await cmds.startScreenRecording(test);
   },
-  afterTest: async (test, context, result) => {
-    await Promise.all([
-      cmds.stopScreenRecording(test, result),
-      cmds.saveScreenshotByTest(test, result)
-    ])
-  }
-}
+  afterFeature: async function (uri, feature, scenarios) {
+    const name = slugify(feature.document.feature.name);
+    const test = {
+      parent: 'Feat',
+      uid: name,
+      title: name,
+      state: 'passed',
+      type: 'test',
+    };
+    console.log('stop recording');
 
-module.exports = config
+    await cmds.stopScreenRecording(test, {
+      error: undefined,
+      result: 0,
+      duration: undefined,
+      passed: scenarios.length,
+      retries: 0,
+    });
+  },
+};
+
+module.exports = config;

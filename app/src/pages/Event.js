@@ -51,7 +51,11 @@ const Event = () => {
 
   return (
     <Layout>
-      <AppBar position="sticky" className={classes.appbar}>
+      <AppBar
+        position="sticky"
+        className={classes.appbar}
+        id={isEditing ? "EditEvent" : detailsOpen ? "Details" : "Menu"}
+      >
         <Toolbar>
           {isEditing ? (
             <TextField
@@ -60,29 +64,38 @@ const Event = () => {
               onChange={(e) =>
                 setEditingEvent({ ...editingEvent, name: e.target.value })
               }
-              id="NewEventName"
+              id="EditEventName"
               name="name"
             />
           ) : (
-            <Typography variant="h6" className={classes.name}>
+            <Typography
+              variant="h6"
+              className={classes.name}
+              id="MenuHeaderTitle"
+            >
               {event.name}
             </Typography>
           )}
           {!detailsOpen && (
             <IconButton
               edge="end"
+              id="MenuMoreInfo"
               onClick={(e) => setAnchorEl(e.currentTarget)}
             >
               <Icon className={classes.barIcon}>more_vert</Icon>
             </IconButton>
           )}
           {detailsOpen && !isEditing && (
-            <IconButton edge="end" onClick={(e) => setIsEditing(true)}>
+            <IconButton
+              edge="end"
+              id="DetailsEditBtn"
+              onClick={(e) => setIsEditing(true)}
+            >
               <Icon className={classes.barIcon}>edit</Icon>
             </IconButton>
           )}
           {detailsOpen && isEditing && (
-            <IconButton edge="end" onClick={onEventSave}>
+            <IconButton edge="end" id="EditEventSubmit" onClick={onEventSave}>
               <Icon className={classes.barIcon}>done</Icon>
             </IconButton>
           )}
@@ -95,9 +108,18 @@ const Event = () => {
                   ? t("event.actions.hide_details")
                   : t("event.actions.show_details"),
                 onClick: toggleDetails,
+                id: "DetailsTab",
               },
-              { label: t("event.actions.add_car"), onClick: toggleNewCar },
-              { label: t("event.actions.invite"), onClick: () => {} },
+              {
+                label: t("event.actions.add_car"),
+                onClick: toggleNewCar,
+                id: "NewCarTab",
+              },
+              {
+                label: t("event.actions.invite"),
+                onClick: () => {},
+                id: "InviteTab",
+              },
             ]}
           />
         </Toolbar>

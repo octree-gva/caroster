@@ -15,7 +15,7 @@ const EventDetails = ({ toggleDetails }) => {
   const { event, isEditing, setEditingEvent, editingEvent } = useEvent();
 
   if (!event) return null;
-
+  const idPrefix = isEditing ? "EditEvent" : "Event";
   return (
     <div>
       <div className={classes.section}>
@@ -32,12 +32,14 @@ const EventDetails = ({ toggleDetails }) => {
             fullWidth
             format="DD.MM.YYYY"
             disablePast
-            id="UpdateEventDate"
+            id={`${idPrefix}Date`}
             name="date"
             TextFieldComponent={(p) => <TextField light {...p} />}
           />
         ) : (
-          <Typography variant="body1">{event.date}</Typography>
+          <Typography variant="body1" id={`${idPrefix}Date`}>
+            {event.date}
+          </Typography>
         )}
       </div>
       <div className={classes.section}>
@@ -51,20 +53,22 @@ const EventDetails = ({ toggleDetails }) => {
             onChange={(e) =>
               setEditingEvent({ ...editingEvent, address: e.target.value })
             }
-            id="UpdateEventAddress"
+            id={`${idPrefix}Address`}
             name="address"
           />
         ) : (
-          <Typography variant="body1">{event.address}</Typography>
+          <Typography variant="body1" id={`${idPrefix}Address`}>
+            {event.address}
+          </Typography>
         )}
       </div>
       <div className={classes.actions}>
-        <Button onClick={toggleDetails} variant="contained">
+        <Button onClick={toggleDetails} variant="contained" id={`CarFindBtn`}>
           {t("event.actions.find_car")}
         </Button>
       </div>
       {event.position && (
-        <div className={classes.map}>
+        <div className={classes.map} id={`${idPrefix}AddressMap`}>
           <Map position={event.position} />
         </div>
       )}
