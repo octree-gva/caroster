@@ -1,11 +1,12 @@
-import React, { useMemo } from "react";
-import Slider from "react-slick";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import Car from "./Car";
-import AddCar from "./AddCar";
-import { useEvent } from "../../contexts/Event";
-import { useStrapi } from "strapi-react-context";
+import React, {useMemo} from 'react';
+import Slider from 'react-slick';
+import Container from '@material-ui/core/Container';
+import {makeStyles} from '@material-ui/core/styles';
+import Car from './Car';
+import AddCar from './AddCar';
+import {useEvent} from '../../contexts/Event';
+import {useStrapi} from 'strapi-react-context';
+import WaitingList from './WaitingList';
 
 const settings = {
   dots: false,
@@ -40,24 +41,27 @@ const sortCars = (a, b) => {
   else return dateA - dateB;
 };
 
-const CarColumns = ({ ...props }) => {
+const CarColumns = ({...props}) => {
   const classes = useStyles();
   const strapi = useStrapi();
-  const { event } = useEvent();
+  const {event} = useEvent();
 
   const cars = useMemo(
     () =>
       strapi.stores.cars
-        ?.filter((car) => car?.event?.id === event?.id)
+        ?.filter(car => car?.event?.id === event?.id)
         .sort(sortCars),
     [strapi.stores.cars, event]
   );
 
   return (
-    <div className={classes.root}>
+    <div>
       <Slider {...settings}>
+        <Container maxWidth="sm" className={classes.slide}>
+          <WaitingList />
+        </Container>
         {cars &&
-          cars.map((car) => (
+          cars.map(car => (
             <Container key={car.id} maxWidth="sm" className={classes.slide}>
               <Car car={car} {...props} />
             </Container>
@@ -70,11 +74,10 @@ const CarColumns = ({ ...props }) => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
+const useStyles = makeStyles(theme => ({
   slide: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-    outline: "none",
+    outline: 'none',
     padding: theme.spacing(2),
     marginBottom: theme.spacing(4),
   },

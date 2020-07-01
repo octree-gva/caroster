@@ -55,5 +55,8 @@
       "cant_add_passenger": "Impossible d'ajouter un passager",
       "cant_remove_passenger": "Impossible de supprimer le passager"
     }
+  },
+  "passenger": {
+    "title": "Liste d'attente"
   }
 }
