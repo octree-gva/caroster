@@ -1,0 +1,23 @@
+{
+  "roles": {
+    "public": [
+      {
+        "type": "application",
+        "controllers": [
+          {
+            "name": "car",
+            "actions": ["create", "delete", "find", "findone", "update"]
+          },
+          {
+            "name": "event",
+            "actions": ["create", "findone", "update"]
+          },
+          {
+            "name": "page",
+            "actions": ["find", "findone"]
+          }
+        ]
+      }
+    ]
+  }
+}
