@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import Slider from 'react-slick';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
-import Car from './Car';
+import Car from '../Car';
 import AddCar from './AddCar';
 import {useEvent} from '../../contexts/Event';
 import {useStrapi} from 'strapi-react-context';
@@ -18,6 +18,7 @@ const settings = {
   lazyLoad: true,
   swipeToSlide: true,
   swipe: true,
+  adaptiveHeight: true,
   responsive: [
     {
       breakpoint: 600,
@@ -27,9 +28,21 @@ const settings = {
       },
     },
     {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
       breakpoint: 1200,
       settings: {
         slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 1400,
+      settings: {
+        slidesToShow: 4,
       },
     },
   ],
@@ -80,7 +93,6 @@ const useStyles = makeStyles(theme => ({
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     outline: 'none',
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(4),
   },
 }));
 

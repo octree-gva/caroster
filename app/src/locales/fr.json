@@ -3,7 +3,9 @@
     "loading": "Chargement...",
     "close": "Fermer",
     "create": "Créer",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "remove": "Supprimer",
+    "confirm": "Confirmer"
   },
   "event": {
     "fields": {
@@ -34,7 +36,8 @@
   "car": {
     "fields": {
       "meeting_point": "Lieu de rencontre",
-      "details": "Notes"
+      "details": "Notes",
+      "phone": "Contact"
     },
     "creation": {
       "title": "Ajouter une voiture",
@@ -45,6 +48,11 @@
       "notes": "Infos complémentaires",
       "created": "La voiture a été créée"
     },
+    "actions": {
+      "remove": "Supprimer la voiture",
+      "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
+      "removed": "La voiture a été supprimée"
+    },
     "passengers": {
       "empty": "Place disponible",
       "add": "Ajouter un passager"
@@ -52,6 +60,7 @@
     "errors": {
       "cant_create": "Impossible de créer la voiture",
       "cant_update": "Impossible de modifier la voiture",
+      "cant_remove": "Impossile de supprimer la voiture",
       "cant_add_passenger": "Impossible d'ajouter un passager",
       "cant_remove_passenger": "Impossible de supprimer le passager"
     }

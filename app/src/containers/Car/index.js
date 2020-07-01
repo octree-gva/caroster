@@ -1,19 +1,21 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, {useReducer} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
+
 import Paper from '@material-ui/core/Paper';
 import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
-import moment from 'moment';
 import PassengersList from '../PassengersList';
 import {useToast} from '../../contexts/Toast';
+import Header from './Header';
+import HeaderEditing from './HeaderEditing';
 
 const Car = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const {addToast} = useToast();
   const strapi = useStrapi();
+  const [isEditing, toggleEditing] = useReducer(i => !i, false);
 
   if (!car) return null;
 
@@ -42,31 +44,12 @@ const Car = ({car}) => {
   };
 
   return (
-    <Paper>
-      <div className={classes.header}>
-        {!!car.departure && (
-          <Typography variant="overline">
-            {moment(car.departure).format('LLLL')}
-          </Typography>
-        )}
-        <Typography variant="h5">{car.name}</Typography>
-        {!!car.meeting && (
-          <div className={classes.section}>
-            <Typography variant="subtitle2">
-              {t('car.fields.meeting_point')}
-            </Typography>
-            <Typography variant="body2">{car.meeting}</Typography>
-          </div>
-        )}
-        {!!car.details && (
-          <div className={classes.section}>
-            <Typography variant="subtitle2">
-              {t('car.fields.details')}
-            </Typography>
-            <Typography variant="body2">{car.details}</Typography>
-          </div>
-        )}
-      </div>
+    <Paper className={classes.root}>
+      {isEditing ? (
+        <HeaderEditing car={car} toggleEditing={toggleEditing} />
+      ) : (
+        <Header car={car} toggleEditing={toggleEditing} />
+      )}
       <Divider />
       <PassengersList
         passengers={car.passengers}
@@ -79,9 +62,8 @@ const Car = ({car}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  header: {padding: theme.spacing(2)},
-  section: {
-    marginTop: theme.spacing(2),
+  root: {
+    position: 'relative',
   },
 }));
 
