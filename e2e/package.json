@@ -45,7 +45,7 @@
     "test": "rm -rf ./reports/screenshots/**/*.png && rm -rf ./reports/videos/**/*.mp4 && npm run test:chrome && npm run test:firefox && npm run test:mobile-safari",
     "lint": "eslint .",
     "report": "npm run screenshot && ./bin/deploy",
-    "screenshot": "node reports/screenshots/index.js",
+    "screenshot": "node reports/screenshots.js",
     "report:allure": "npx allure",
     "report:generate": "npm run report:allure generate -- --clean ./reports/allure/ -o ./reports/allure-report",
     "test:chrome": "docker-compose  run -e NAV=chrome --rm wdio",
