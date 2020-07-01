@@ -1,3 +1,4 @@
+# Build stage
 FROM strapi/base:12-alpine
 
 ARG NPM_REGISTRY=https://npm-8ee.hidora.com/
@@ -5,8 +6,7 @@ ENV NODE_ENV production
 WORKDIR /srv/app
 
 RUN apk add --no-cache git
-RUN npm set registry $NPM_REGISTRY && \
-    npm install -g strapi@latest
+RUN npm set registry $NPM_REGISTRY
 
 ## Install dependencies
 COPY . /srv/app/
@@ -22,4 +22,12 @@ RUN rm -rf public && \
     mv build ../public && \
     cd .. && rm -rf app
 
-CMD ["strapi", "start"]
+# Prod stage
+FROM strapi/base:12-alpine
+
+ENV NODE_ENV production
+WORKDIR /srv/app
+
+COPY --from=0 /srv/app .
+
+CMD ["npm", "start"]
