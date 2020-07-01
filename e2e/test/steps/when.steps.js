@@ -23,3 +23,7 @@ When(/^I submit the form$/, {}, async () => {
 When(/^I write (.+) in (.+) field$/, {}, async (field, value) => {
   await global.SCENE.scene.type(field, value);
 });
+
+When(/^I go to the event detail page$/, {}, async (field, value) => {
+  await global.SCENE.scene.openTab('details');
+});
