@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
+const orientation = process.env.ORIENTATION || 'PORTRAIT'; // LANDSCAPE|PORTRAIT
 
 /* eslint-disable jsdoc/valid-types */
 /** @type WebdriverIO.Config */
@@ -18,23 +18,23 @@ const config = {
       platformName: 'iOS',
       platformVersion: process.env.PLATFORM_VERSION || '13.3',
       deviceName: process.env.IOS_DEVICE_NAME || 'iPhone 11',
-      orientation
-    }
+      orientation,
+    },
   ],
   appium: {
     mjpegServerFramerate: 15,
-    mjpegServerScreenshotQuality: 100
+    mjpegServerScreenshotQuality: 100,
   },
   videos: {
-    enabled: false,
+    enabled: true,
     inputFormat: 'mjpeg',
     rotate: orientation === 'LANDSCAPE' ? 90 : undefined,
     port: 9100,
     startDelay: 500,
-    stopDelay: 500
+    stopDelay: 500,
   },
   maximizeWindow: false,
-  assetsDir: null
-}
+  assetsDir: null,
+};
 
-exports.config = Object.assign({}, require('./chrome').config, config)
+exports.config = Object.assign({}, require('./chrome').config, config);

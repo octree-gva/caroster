@@ -1,7 +1,13 @@
-'use strict'
+'use strict';
 
 /* eslint-disable jsdoc/valid-types */
 const config = {
+  waitforTimeout: 6000,
+  connectionRetryTimeout: 90000,
+  connectionRetryCount: 3,
+  runner: 'local',
+  deprecationWarnings: true,
+  bail: 0,
   hostname: 'chromedriver',
   path: '/',
   capabilities: [
@@ -11,9 +17,9 @@ const config = {
       browserName: 'chrome',
       'goog:chromeOptions': {
         // Disable headless mode if screen recordings are enabled:
-        args: ['--headless', '--window-size=1440,900']
-      }
-    }
+        args: ['--headless', '--window-size=1440,900'],
+      },
+    },
   ],
   framework: 'cucumber',
   baseUrl: process.env.BASE_URL,
@@ -26,14 +32,13 @@ const config = {
         outputDir: '/opt/reports/allure/',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
-        useCucumberStepReporter: true
-      }
-    ]
+        useCucumberStepReporter: true,
+      },
+    ],
   ],
   cucumberOpts: {
     requireModule: ['@babel/register'],
-    require: ['./test/steps/**/*.steps.js'],
-    backtrace: false,
+    backtrace: true,
     compiler: [],
     dryRun: false,
     failFast: false,
@@ -42,24 +47,24 @@ const config = {
     snippets: true,
     source: true,
     profile: [],
-    strict: false,
+    strict: true,
     tags: [],
     timeout: 100000,
     ignoreUndefinedDefinitions: false,
-    tagExpression: 'not @skip'
+    tagExpression: '',
   },
   specs: ['test/features/**/*.feature'],
   maximizeWindow: true,
   screenshots: {
-    saveOnFail: true
+    saveOnFail: false,
   },
   videos: {
-    enabled: true,
+    enabled: false,
     resolution: '1440x900',
-    startDelay: 500,
-    stopDelay: 500
+    startDelay: 120,
+    stopDelay: 1500,
   },
-  assetsDir: '/home/webdriver/assets/'
-}
-
-exports.config = Object.assign({}, require('../hooks'), config)
+  assetsDir: '/home/webdriver/assets/',
+};
+config.cucumberOpts.require = ['./test/steps/**/*.steps.js'];
+exports.config = Object.assign({}, require('../hooks'), config);

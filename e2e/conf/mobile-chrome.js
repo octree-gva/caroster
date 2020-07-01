@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
+const orientation = process.env.ORIENTATION || 'PORTRAIT'; // LANDSCAPE|PORTRAIT
 
 /* eslint-disable jsdoc/valid-types */
 /** @type WebdriverIO.Config */
@@ -19,17 +19,17 @@ const config = {
       platformVersion: process.env.PLATFORM_VERSION,
       deviceName: process.env.DEVICE_NAME || 'Android Emulator',
       nativeWebScreenshot: true,
-      orientation
-    }
+      orientation,
+    },
   ],
   videos: {
     enabled: true,
     bitRate: 100000,
     startDelay: 500,
-    stopDelay: 500
+    stopDelay: 500,
   },
   maximizeWindow: false,
-  assetsDir: null
-}
+  assetsDir: null,
+};
 
-exports.config = Object.assign({}, require('./chrome').config, config)
+exports.config = Object.assign({}, require('./chrome').config, config);

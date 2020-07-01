@@ -1,25 +1,5 @@
 version: '3.7'
 services:
-  mailhog:
-    image: blueimp/mailhog
-    read_only: true
-    ports:
-      - 127.0.0.1:8025:8025
-
-  example:
-    build: ./src
-    read_only: true
-    tmpfs: /tmp
-    environment:
-      - SMTP_HOST=mailhog:1025
-    volumes:
-      - ./src/html:/srv/html:ro
-    ports:
-      - 127.0.0.1:8080:8080
-      - ${SERVER_HOST:-127.0.0.1}:${SERVER_PORT-}:8080
-    depends_on:
-      - mailhog
-
   chromedriver:
     image: blueimp/chromedriver
     init: true
@@ -58,7 +38,6 @@ services:
       - WAIT_FOR_HOSTS=
           chromedriver:4444
           geckodriver:4444
-          example:8080
       - WINDOWS_HOST
       - ANDROID_SERIAL
       - PLATFORM_VERSION
@@ -67,9 +46,7 @@ services:
       - MACOS_ASSETS_DIR=$PWD/assets/
       - WINDOWS_ASSETS_DIR
     volumes:
-      - .:/opt:ro
-      - ./reports:/opt/reports
+      - .:/opt
     depends_on:
       - chromedriver
       - geckodriver
-      - example

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /* eslint-disable jsdoc/valid-types */
 /** @type WebdriverIO.Config */
@@ -9,16 +9,16 @@ const config = {
     {
       // safaridriver supports no parallel sessions:
       maxInstances: 1,
-      browserName: 'safari'
-    }
+      browserName: 'safari',
+    },
   ],
   videos: {
     enabled: true,
     inputFormat: 'mjpeg',
     startDelay: 500,
-    stopDelay: 500
+    stopDelay: 500,
   },
-  assetsDir: process.env.MACOS_ASSETS_DIR
-}
+  assetsDir: process.env.MACOS_ASSETS_DIR,
+};
 
-exports.config = Object.assign({}, require('./chrome').config, config)
+exports.config = Object.assign({}, require('./chrome').config, config);

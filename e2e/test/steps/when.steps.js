@@ -1,10 +1,25 @@
-const { When } = require('cucumber')
-const Login = require('../pages/login')
+import {When} from 'cucumber';
+import {NewEvent} from '../pages/newEvent';
+import {EventPage} from '../pages/eventPage';
 
-When(/^I go to my dashboard$/, async () => {
-  await Login.open()
-  await browser.saveAndDiffScreenshot('Login')
-})
-When(/^I do login$/, async () => {
-  await Login.authenticate('user@example', 'password')
-})
+When(/^I am on the homepage$/, {}, async () => {
+  await NewEvent.open();
+  global.SCENE.scene = NewEvent;
+});
+
+When(/^I am on the event page$/, {}, async () => {
+  await EventPage.open();
+  global.SCENE.scene = EventPage;
+});
+
+When(/^I type (.+)$/, {}, async field => {
+  await global.SCENE.scene.type(field);
+});
+
+When(/^I submit the form$/, {}, async () => {
+  await global.SCENE.scene.submit();
+});
+
+When(/^I write (.+) in (.+) field$/, {}, async (field, value) => {
+  await global.SCENE.scene.type(field, value);
+});
