@@ -26,6 +26,7 @@ const EventMenu = ({ anchorEl, setAnchorEl, actions = [] }) => {
               setAnchorEl(null);
             }}
             key={idx}
+            id={action.id || `MenuItem${idx}`}
           >
             {action.label}
           </MenuItem>
