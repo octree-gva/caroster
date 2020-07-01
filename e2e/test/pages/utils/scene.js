@@ -16,9 +16,19 @@ function randomPhone() {
     max: 99,
   })}${faker.random.number({min: 10, max: 99})}`;
 }
+function randomFutureDate() {
+  const num = x => (x < 10 ? `0${x}` : `${x}`);
+  const date = faker.date.future();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return `${year}-${num(month)}-${num(day)}`;
+}
 
 class _Scene {
   constructor() {
+    this.feature = undefined;
+    this.screenShotCount = 0;
     this.scene = undefined;
     this.actor = this.randomActor();
     this.event = this.randomEvent();
@@ -34,13 +44,14 @@ class _Scene {
       phone: faker.random.arrayElement(['+41', '0']) + randomPhone(),
     };
   }
+
   /**
    * @return {Object}
    */
   randomEvent() {
     return {
       address: `${faker.address.streetAddress()}, ${faker.address.zipCode()} ${faker.address.city()}`,
-      date: faker.date.future(),
+      date: randomFutureDate(),
       name: `${faker.hacker.noun()} ${faker.hacker.verb()} ${faker.hacker.adjective()}`,
     };
   }
@@ -51,9 +62,9 @@ class _Scene {
   randomCar() {
     return {
       name: `${faker.hacker.verb()} ${faker.commerce.productName()}`,
-      seats: faker.random.number({min: 1, max: 8}),
+      seats: faker.random.number({min: 0, max: 7}),
       meeting: `${faker.address.streetAddress()}, ${faker.address.zipCode()} ${faker.address.city()}`,
-      meeting_date: faker.date.future(),
+      meeting_date: randomFutureDate(),
       details: faker.lorem.paragraph(),
     };
   }
@@ -63,16 +74,21 @@ class _Scene {
    * @return {string} the new event id
    */
   async createEvent() {
-    const {
-      data: {id},
-    } = await axios.post(`${process.env.BASE_URL}/events`, {
-      address: this.event.address,
-      date: this.event.date.toISOString(),
-      email: this.actor.email,
-      name: this.event.name,
-    });
-    this.event.id = id;
-    return id;
+    try {
+      const {
+        data: {id},
+      } = await axios.post(`${process.env.BASE_URL}/events`, {
+        address: this.event.address,
+        date: faker.date.future().toISOString(),
+        email: this.actor.email,
+        name: this.event.name,
+      });
+      this.event.id = id;
+      return id;
+    } catch (err) {
+      console.error('can not create event', {err});
+      throw err;
+    }
   }
 }
 exports.Scene = new _Scene();

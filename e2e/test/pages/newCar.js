@@ -14,7 +14,7 @@ class _NewCar extends Page {
         return '#NewCarName';
       case 'seats':
       case 'my car seats':
-        return '.MuiSlider-marked .MuiSlider-markLabel[aria-hidden=true]';
+        return '.MuiSlider-marked';
       case 'meeting':
       case 'my car meeting':
         return '#NewCarMeeting';
@@ -28,7 +28,7 @@ class _NewCar extends Page {
       case 'my car details':
         return '#NewCarDetails';
       case 'submit':
-        return 'button.MuiButton-root.MuiButton-contained';
+        return 'button.MuiButton-contained';
     }
     throw new Error('Unknown selector ' + selector);
   }
@@ -39,9 +39,11 @@ class _NewCar extends Page {
 
   async submit() {
     await new Promise(resolve => {
-      setTimeout(resolve, 1000);
+      setTimeout(resolve, 3000);
     });
-    await super.submit();
+    await browser.saveScreenshotByName(`${this.name}--filled`);
+
+    //    await super.submit();
   }
 }
 export const NewCar = new _NewCar('/');

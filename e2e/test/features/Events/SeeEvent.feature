@@ -1,5 +1,5 @@
-@GIT.5 and @skip
-Feature: Event Creation
+@GIT.5 
+Feature: Display Event 
     Background:
         Given I am vistor
         And I have created an event

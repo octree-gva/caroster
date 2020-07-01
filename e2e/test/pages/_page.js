@@ -57,6 +57,22 @@ export class Page {
     const element = await $(field);
     await element.addValue(cast(value));
   }
+  /**
+   *
+   * @param {string} selector
+   * @param {string} value
+   * @return {Promise<void>}
+   */
+  async pick(selector, value = undefined) {
+    const field = this.field(selector);
+    if (typeof value === 'undefined') value = selector;
+    const range = cast(value);
+    const container = await $(field);
+    const element = await container.$(
+      `.MuiSlider-markLabel[aria-hidden='true'][data-index='${range}']`
+    );
+    await element.click();
+  }
 
   /**
    *
@@ -69,9 +85,9 @@ export class Page {
     await element.click();
   }
 
-  async waitForDisplayed() {
+  async waitForDisplayed(timeout = 1200) {
     await new Promise(resolve => {
-      setTimeout(resolve, 1200);
+      setTimeout(resolve, timeout);
     });
     await browser.saveScreenshotByName(this.name);
   }

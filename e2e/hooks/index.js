@@ -14,6 +14,17 @@ const config = {
     global.SCENE = Scene;
     browser.addCommand('saveScreenshotByName', async screenshotName => {
       console.log('New screen shots');
+      if (Scene.feature) {
+        Scene.screenShotCount++;
+        screenshotName =
+          slugify(Scene.feature.document.feature.name) +
+          '_' +
+          (Scene.screenShotCount < 10
+            ? '0' + Scene.screenShotCount
+            : Scene.screenShotCount) +
+          ' ' +
+          screenshotName;
+      }
       await cmds.saveScreenshotByName(screenshotName);
       console.log('screenshot ', screenshotName);
     });
@@ -23,7 +34,8 @@ const config = {
     console.log('Ready to spec');
   },
   beforeFeature: async function (uri, feature, scenarios) {
-    console.log({featureTags: feature.document.feature.tags});
+    Scene.feature = feature;
+    Scene.screenShotCount = 0;
     const name = slugify(feature.document.feature.name);
     const test = {
       parent: 'Feat',
@@ -53,6 +65,7 @@ const config = {
       passed: scenarios.length,
       retries: 0,
     });
+    Scene.feature = undefined;
   },
 };
 

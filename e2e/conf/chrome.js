@@ -33,6 +33,9 @@ const config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
+        labels: {
+          feature: [/GIT.(\d*)/],
+        },
       },
     ],
   ],

@@ -19,6 +19,9 @@ class _NewEvent extends Page {
       case 'email':
       case 'my email':
         return '#NewEventEmail';
+      case 'on the Tos label':
+      case 'Tos label':
+        return '.MuiTypography-caption';
       case 'submit':
         return 'button.MuiButton-root';
     }

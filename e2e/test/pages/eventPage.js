@@ -24,7 +24,7 @@ class _EventPage extends Page {
   }
 
   get name() {
-    return 'EventDetail';
+    return 'EventPage';
   }
 
   async open() {
@@ -34,21 +34,25 @@ class _EventPage extends Page {
   async openMenu() {
     const menu = await $(this.field('menu'));
     await menu.click();
+    await new Promise(resolve => setTimeout(resolve, 500));
     await browser.saveScreenshotByName(`${this.name}--openMenu`);
   }
+
   async openTab(tab) {
+    let tabElement;
     await this.openMenu();
     switch (tab) {
       case 'details':
-        const tab = await $(this.field('detail tab'));
-        await tab.click();
+        tabElement = await $(this.field('detail tab'));
+        await tabElement.click();
         global.SCENE.scene = EventDetails;
         await EventDetails.waitForDisplayed();
         return;
       case 'new car':
-        const tab = await $(this.field('new car tab'));
-        await tab.click();
+        tabElement = await $(this.field('new car tab'));
+        await tabElement.click();
         global.SCENE.scene = NewCar;
+        await NewCar.waitForDisplayed(3000);
     }
   }
 
