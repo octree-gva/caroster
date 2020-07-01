@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useEvent } from "../../contexts/Event";
 import { useToast } from "../../contexts/Toast";
 
-const EventFab = () => {
+const EventFab = ({ toggleNewCar }) => {
   const { t } = useTranslation();
   const [open, toggleOpen] = useReducer((i) => !i, false);
   const classes = useStyles({ open });
@@ -54,6 +54,7 @@ const EventFab = () => {
           aria-label="add-car"
           variant="extended"
           className={classes.extendedFab}
+          onClick={toggleNewCar}
         >
           <Icon className={classes.extendedIcon}>directions_car</Icon>
           Ajouter

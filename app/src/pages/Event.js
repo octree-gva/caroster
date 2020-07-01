@@ -15,6 +15,7 @@ import EventFab from "../containers/EventFab";
 import { useEvent, EventProvider } from "../contexts/Event";
 import CarColumns from "../containers/CarColumns";
 import { useToast } from "../contexts/Toast";
+import NewCarDialog from "../containers/NewCarDialog";
 
 const Event = () => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const Event = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [detailsOpen, toggleDetails] = useReducer((i) => !i, false);
   const classes = useStyles({ detailsOpen });
+  const [openNewCar, toggleNewCar] = useReducer((i) => !i, false);
   const {
     event,
     isEditing,
@@ -33,7 +35,7 @@ const Event = () => {
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
-  }, [detailsOpen]);
+  }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onEventSave = async (e) => {
     try {
@@ -94,7 +96,7 @@ const Event = () => {
                   : t("event.actions.show_details"),
                 onClick: toggleDetails,
               },
-              { label: t("event.actions.add_car"), onClick: () => {} },
+              { label: t("event.actions.add_car"), onClick: toggleNewCar },
               { label: t("event.actions.invite"), onClick: () => {} },
             ]}
           />
@@ -103,8 +105,9 @@ const Event = () => {
           <EventDetails toggleDetails={toggleDetails} />
         </Container>
       </AppBar>
-      <CarColumns cars={event.cars} />
-      <EventFab />
+      <CarColumns toggleNewCar={toggleNewCar} />
+      <EventFab toggleNewCar={toggleNewCar} />
+      <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
     </Layout>
   );
 };

@@ -60,7 +60,7 @@ const Step2 = ({ event, addToEvent, createEvent, ...props }) => {
         onClick={onCreate}
         id="NewEventSubmit"
       >
-        {t("event.creation.create")}
+        {t("generic.create")}
       </Button>
     </Paper>
   );

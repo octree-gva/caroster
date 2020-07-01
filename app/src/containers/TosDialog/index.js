@@ -21,7 +21,7 @@ const TosDialog = ({ open, toggle }) => {
 
   useEffect(() => {
     strapi.services.pages.find({ type: "tos" });
-  }, []);
+  }, [strapi.services.pages]);
 
   return (
     <Dialog

@@ -1,5 +1,10 @@
 {
-  "generic": { "loading": "Chargement...", "close": "Fermer" },
+  "generic": {
+    "loading": "Chargement...",
+    "close": "Fermer",
+    "create": "Créer",
+    "cancel": "Annuler"
+  },
   "event": {
     "fields": {
       "starts_on": "Commence le",
@@ -11,7 +16,6 @@
       "date": "Date de l'événement",
       "address": "Adresse de l'événement",
       "next": "Suivant",
-      "create": "Créer",
       "tos": "J'accepte les conditions générales d'utilisation"
     },
     "actions": {
@@ -31,6 +35,19 @@
     "fields": {
       "meeting_point": "Lieu de rencontre",
       "details": "Notes"
+    },
+    "creation": {
+      "title": "Ajouter une voiture",
+      "name": "Nom de la voiture",
+      "seats": "Nombre de places",
+      "meeting": "Lieu de rencontre",
+      "phone": "Numéro de téléphone",
+      "notes": "Infos complémentaires",
+      "created": "La voiture a été créée"
+    },
+    "errors": {
+      "cant_create": "Impossible de créer la voiture",
+      "cant_update": "Impossible de modifier la voiture"
     }
   }
 }
