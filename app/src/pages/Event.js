@@ -51,7 +51,7 @@ const Event = () => {
 
   return (
     <Layout>
-      <AppBar position="static" className={classes.appbar}>
+      <AppBar position="sticky" className={classes.appbar}>
         <Toolbar>
           {isEditing ? (
             <TextField
@@ -119,7 +119,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     height: detailsOpen ? "100vh" : theme.mixins.toolbar.minHeight,
     zIndex: theme.zIndex.appBar,
-    position: "relative",
   }),
   name: {
     flexGrow: 1,

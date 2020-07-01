@@ -45,9 +45,15 @@
       "notes": "Infos complémentaires",
       "created": "La voiture a été créée"
     },
+    "passengers": {
+      "empty": "Place disponible",
+      "add": "Ajouter un passager"
+    },
     "errors": {
       "cant_create": "Impossible de créer la voiture",
-      "cant_update": "Impossible de modifier la voiture"
+      "cant_update": "Impossible de modifier la voiture",
+      "cant_add_passenger": "Impossible d'ajouter un passager",
+      "cant_remove_passenger": "Impossible de supprimer le passager"
     }
   }
 }

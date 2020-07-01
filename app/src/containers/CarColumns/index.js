@@ -24,7 +24,20 @@ const settings = {
         slidesToShow: 1,
       },
     },
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
   ],
+};
+
+const sortCars = (a, b) => {
+  const dateA = new Date(a.departure).getTime();
+  const dateB = new Date(b.departure).getTime();
+  if (dateA === dateB) return new Date(a.createdAt) - new Date(b.createdAt);
+  else return dateA - dateB;
 };
 
 const CarColumns = ({ ...props }) => {
@@ -33,12 +46,15 @@ const CarColumns = ({ ...props }) => {
   const { event } = useEvent();
 
   const cars = useMemo(
-    () => strapi.stores.cars?.filter((car) => car?.event?.id === event?.id),
+    () =>
+      strapi.stores.cars
+        ?.filter((car) => car?.event?.id === event?.id)
+        .sort(sortCars),
     [strapi.stores.cars, event]
   );
 
   return (
-    <div>
+    <div className={classes.root}>
       <Slider {...settings}>
         {cars &&
           cars.map((car) => (
@@ -55,10 +71,12 @@ const CarColumns = ({ ...props }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+  root: {},
   slide: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     outline: "none",
     padding: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 
