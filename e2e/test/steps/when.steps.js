@@ -16,6 +16,10 @@ When(/^I type (.+)$/, {}, async field => {
   await global.SCENE.scene.type(field);
 });
 
+When(/^I click (.+)$/, {}, async field => {
+  await global.SCENE.scene.click(field);
+});
+
 When(/^I submit the form$/, {}, async () => {
   await global.SCENE.scene.submit();
 });
@@ -24,6 +28,6 @@ When(/^I write (.+) in (.+) field$/, {}, async (field, value) => {
   await global.SCENE.scene.type(field, value);
 });
 
-When(/^I go to the event detail page$/, {}, async (field, value) => {
+When(/^I go to the event detail page$/, async () => {
   await global.SCENE.scene.openTab('details');
 });

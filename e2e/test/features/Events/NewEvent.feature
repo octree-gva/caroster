@@ -6,6 +6,7 @@ Feature: Event Creation
         When I am on the homepage
         And I type my event name
         And I type my email
+        And I click accept the Tos
         And I submit the form
         And I type my event date
         And I type my event address

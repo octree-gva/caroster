@@ -1,4 +1,4 @@
-@GIT.5
+@GIT.5 and @skip
 Feature: Event Creation
     Background:
         Given I am vistor

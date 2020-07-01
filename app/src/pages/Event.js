@@ -11,9 +11,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../layouts/Default";
 import EventMenu from "../containers/EventMenu";
 import EventDetails from "../containers/EventDetails";
+import EventFab from "../containers/EventFab";
 import { useEvent, EventProvider } from "../contexts/Event";
 import CarColumns from "../containers/CarColumns";
 import { useToast } from "../contexts/Toast";
+import NewCarDialog from "../containers/NewCarDialog";
 
 const Event = () => {
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ const Event = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [detailsOpen, toggleDetails] = useReducer((i) => !i, false);
   const classes = useStyles({ detailsOpen });
+  const [openNewCar, toggleNewCar] = useReducer((i) => !i, false);
   const {
     event,
     isEditing,
@@ -32,7 +35,7 @@ const Event = () => {
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
-  }, [detailsOpen]);
+  }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onEventSave = async (e) => {
     try {
@@ -51,7 +54,7 @@ const Event = () => {
       <AppBar
         position="static"
         className={classes.appbar}
-        id={isEditing ? "EditEvent" : detailsOpen ? "Details" : "Menu"}
+        id={(isEditing && "EditEvent") || (detailsOpen && "Details") || "Menu"}
       >
         <Toolbar>
           {isEditing ? (
@@ -109,7 +112,7 @@ const Event = () => {
               },
               {
                 label: t("event.actions.add_car"),
-                onClick: () => {},
+                onClick: toggleNewCar,
                 id: "NewCarTab",
               },
               {
@@ -124,7 +127,9 @@ const Event = () => {
           <EventDetails toggleDetails={toggleDetails} />
         </Container>
       </AppBar>
-      <CarColumns cars={event.cars} />
+      <CarColumns toggleNewCar={toggleNewCar} />
+      <EventFab toggleNewCar={toggleNewCar} />
+      <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
     </Layout>
   );
 };
@@ -135,6 +140,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "height 0.3s ease",
     overflow: "hidden",
     height: detailsOpen ? "100vh" : theme.mixins.toolbar.minHeight,
+    zIndex: theme.zIndex.appBar,
   }),
   name: {
     flexGrow: 1,

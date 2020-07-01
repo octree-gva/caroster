@@ -51,7 +51,7 @@ const config = {
     tags: [],
     timeout: 100000,
     ignoreUndefinedDefinitions: false,
-    tagExpression: '',
+    tagExpression: 'not @skip',
   },
   specs: ['test/features/**/*.feature'],
   maximizeWindow: true,

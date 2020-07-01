@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Slider from "react-slick";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Car from "./Car";
 import AddCar from "./AddCar";
+import { useEvent } from "../../contexts/Event";
+import { useStrapi } from "strapi-react-context";
 
 const settings = {
   dots: false,
@@ -22,21 +24,46 @@ const settings = {
         slidesToShow: 1,
       },
     },
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
   ],
 };
 
-const CarColumns = ({ cars = [] }) => {
+const sortCars = (a, b) => {
+  const dateA = new Date(a.departure).getTime();
+  const dateB = new Date(b.departure).getTime();
+  if (dateA === dateB) return new Date(a.createdAt) - new Date(b.createdAt);
+  else return dateA - dateB;
+};
+
+const CarColumns = ({ ...props }) => {
   const classes = useStyles();
+  const strapi = useStrapi();
+  const { event } = useEvent();
+
+  const cars = useMemo(
+    () =>
+      strapi.stores.cars
+        ?.filter((car) => car?.event?.id === event?.id)
+        .sort(sortCars),
+    [strapi.stores.cars, event]
+  );
+
   return (
-    <div>
+    <div className={classes.root}>
       <Slider {...settings}>
-        {cars.map((car) => (
-          <Container key={car.id} maxWidth="sm" className={classes.slide}>
-            <Car car={car} />
-          </Container>
-        ))}
+        {cars &&
+          cars.map((car) => (
+            <Container key={car.id} maxWidth="sm" className={classes.slide}>
+              <Car car={car} {...props} />
+            </Container>
+          ))}
         <Container maxWidth="sm" className={classes.slide}>
-          <AddCar />
+          <AddCar {...props} />
         </Container>
       </Slider>
     </div>
@@ -44,10 +71,12 @@ const CarColumns = ({ cars = [] }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+  root: {},
   slide: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     outline: "none",
     padding: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 

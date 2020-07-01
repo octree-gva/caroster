@@ -23,6 +23,11 @@ export const EventProvider = ({ match, children }) => {
       strapi.services.events.findOne(eventId);
   }, [eventId, strapi.stores.events, strapi.services.events]);
 
+  // Fetch event cars on load
+  useEffect(() => {
+    strapi.services.cars.find({ event: eventId });
+  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Retrieve event data
   const event = useMemo(
     () => strapi.stores.events?.find((e) => e.id === eventId),

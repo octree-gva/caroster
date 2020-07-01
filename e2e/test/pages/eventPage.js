@@ -1,5 +1,6 @@
 import {Page} from './_page';
 import {EventDetails} from './eventDetails';
+import {NewCar} from './newCar';
 class _EventPage extends Page {
   /**
    *
@@ -43,6 +44,11 @@ class _EventPage extends Page {
         await tab.click();
         global.SCENE.scene = EventDetails;
         await EventDetails.waitForDisplayed();
+        return;
+      case 'new car':
+        const tab = await $(this.field('new car tab'));
+        await tab.click();
+        global.SCENE.scene = NewCar;
     }
   }
 

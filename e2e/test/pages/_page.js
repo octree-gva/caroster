@@ -65,7 +65,6 @@ export class Page {
    */
   async click(selector) {
     const field = this.field(selector);
-    await $(field).waitForDisplayed();
     const element = await $(field);
     await element.click();
   }

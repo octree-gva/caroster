@@ -1,5 +1,10 @@
 {
-  "generic": { "loading": "Chargement..." },
+  "generic": {
+    "loading": "Chargement...",
+    "close": "Fermer",
+    "create": "Créer",
+    "cancel": "Annuler"
+  },
   "event": {
     "fields": {
       "starts_on": "Commence le",
@@ -11,14 +16,15 @@
       "date": "Date de l'événement",
       "address": "Adresse de l'événement",
       "next": "Suivant",
-      "create": "Créer"
+      "tos": "J'accepte les conditions générales d'utilisation"
     },
     "actions": {
       "show_details": "Afficher les détails",
       "hide_details": "Cacher les détails",
       "add_car": "Ajouter une voiture",
       "invite": "Inviter",
-      "find_car": "Trouver une voiture"
+      "find_car": "Trouver une voiture",
+      "copied": "Le lien a été copié dans votre presse-papier"
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",
@@ -29,6 +35,25 @@
     "fields": {
       "meeting_point": "Lieu de rencontre",
       "details": "Notes"
+    },
+    "creation": {
+      "title": "Ajouter une voiture",
+      "name": "Nom de la voiture",
+      "seats": "Nombre de places",
+      "meeting": "Lieu de rencontre",
+      "phone": "Numéro de téléphone",
+      "notes": "Infos complémentaires",
+      "created": "La voiture a été créée"
+    },
+    "passengers": {
+      "empty": "Place disponible",
+      "add": "Ajouter un passager"
+    },
+    "errors": {
+      "cant_create": "Impossible de créer la voiture",
+      "cant_update": "Impossible de modifier la voiture",
+      "cant_add_passenger": "Impossible d'ajouter un passager",
+      "cant_remove_passenger": "Impossible de supprimer le passager"
     }
   }
 }

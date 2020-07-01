@@ -13,6 +13,9 @@ class _NewEvent extends Page {
       case 'event name':
       case 'my event name':
         return '#NewEventName';
+      case 'tos':
+      case 'accept the Tos':
+        return '#NewEventTos';
       case 'email':
       case 'my email':
         return '#NewEventEmail';
