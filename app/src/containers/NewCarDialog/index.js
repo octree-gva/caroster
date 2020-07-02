@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import {DateTimePicker} from '@material-ui/pickers';
 import {useToast} from '../../contexts/Toast';
+import {useEvent} from '../../contexts/Event';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,6 +31,7 @@ const NewCarDialog = ({open, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const {addToast} = useToast();
+  const {event} = useEvent();
 
   // States
   const [name, setName] = useState('');
