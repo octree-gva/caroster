@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 // Pages
-import Home from "./pages/Home";
-import Event from "./pages/Event";
-import NotFound from "./pages/NotFound";
+import Home from './pages/Home';
+import Event from './pages/Event';
+import NotFound from './pages/NotFound';
 
 const Router = () => {
   return (

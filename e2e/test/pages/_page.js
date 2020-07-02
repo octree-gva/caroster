@@ -57,6 +57,7 @@ export class Page {
     const element = await $(field);
     await element.addValue(cast(value));
   }
+
   /**
    *
    * @param {string} selector
