@@ -51,58 +51,62 @@ const Step1 = ({
   return (
     <>
       <Paper {...props}>
-        <TextField
-          label={t('event.creation.event_name')}
-          fullWidth
-          autoFocus
-          margin="dense"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          id="NewEventName"
-          name="name"
-        />
-        <TextField
-          label={t('event.creation.creator_email')}
-          fullWidth
-          margin="dense"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          id="NewEventEmail"
-          name="email"
-          type="email"
-        />
-        <div className={classes.tos}>
-          <Checkbox
-            name="tos"
-            id="NewEventTos"
-            checked={tos}
-            onChange={e => setTos(e.target.checked)}
+        <form onSubmit={onNext}>
+          <TextField
+            className={classes.textField}
+            label={t('event.creation.event_name')}
+            fullWidth
+            autoFocus
+            margin="dense"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            id="NewEventName"
+            name="name"
           />
-          <Typography
-            component="a"
-            role="button"
-            variant="caption"
-            onClick={toggleTos}
-            tabIndex="0"
-            onKeyPress={({charCode}) => {
-              if (charCode && (charCode === 32 || charCode === 13)) toggleTos();
-            }}
+          <TextField
+            className={classes.textField}
+            label={t('event.creation.creator_email')}
+            fullWidth
+            margin="dense"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            id="NewEventEmail"
+            name="email"
+            type="email"
+          />
+          <div className={classes.tos}>
+            <Checkbox
+              name="tos"
+              id="NewEventTos"
+              checked={tos}
+              onChange={e => setTos(e.target.checked)}
+            />
+            <Typography
+              component="a"
+              role="button"
+              variant="caption"
+              onClick={toggleTos}
+              tabIndex="0"
+              onKeyPress={({charCode}) => {
+                if (charCode && (charCode === 32 || charCode === 13))
+                  toggleTos();
+              }}
+            >
+              {t('event.creation.tos')}
+            </Typography>
+          </div>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            disabled={!canSubmit}
+            aria-disabled={!canSubmit}
           >
-            {t('event.creation.tos')}
-          </Typography>
-        </div>
-        <Button
-          className={classes.button}
-          type="submit"
-          onClick={onNext}
-          variant="contained"
-          color="secondary"
-          fullWidth
-          disabled={!canSubmit}
-          aria-disabled={!canSubmit}
-        >
-          {t('event.creation.next')}
-        </Button>
+            {t('event.creation.next')}
+          </Button>
+        </form>
       </Paper>
       <TosDialog open={showTos} toggle={toggleTos} />
     </>
@@ -110,6 +114,7 @@ const Step1 = ({
 };
 
 const useStyles = makeStyles(theme => ({
+  textField: {},
   button: {
     marginTop: theme.spacing(2),
   },
