@@ -41,9 +41,11 @@ const Step1 = ({
     setEmailIsValid(isValidEmail(debouncedEmail));
   }, [debouncedEmail]);
 
-  const onNext = () => {
+  const onNext = event => {
+    if (event.preventDefault) event.preventDefault();
     addToEvent({name, email});
     nextStep();
+    return false;
   };
 
   return (
