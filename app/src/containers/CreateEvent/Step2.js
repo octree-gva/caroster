@@ -1,36 +1,36 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { useTranslation } from "react-i18next";
-import { DatePicker } from "@material-ui/pickers";
-import moment from "moment";
-import { useHistory } from "react-router-dom";
-import { useToast } from "../../contexts/Toast";
-import Paper from "../../components/Paper";
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import {useTranslation} from 'react-i18next';
+import {DatePicker} from '@material-ui/pickers';
+import moment from 'moment';
+import {useHistory} from 'react-router-dom';
+import {useToast} from '../../contexts/Toast';
+import Paper from '../../components/Paper';
 
-const Step2 = ({ event, addToEvent, createEvent, ...props }) => {
+const Step2 = ({event, addToEvent, createEvent, ...props}) => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const history = useHistory();
-  const { addToast } = useToast();
+  const {addToast} = useToast();
 
   // States
   const [date, setDate] = useState(!!event.date ? moment(event.date) : null);
-  const [address, setAddress] = useState(event.address ?? "");
+  const [address, setAddress] = useState(event.address ?? '');
 
   const onCreate = async () => {
-    const eventData = { date: date?.toISOString(), address };
+    const eventData = {date: date?.toISOString(), address};
     addToEvent(eventData);
     const result = await createEvent(eventData);
-    if (!result) addToast(t("event.errors.cant_create"));
+    if (!result) addToast(t('event.errors.cant_create'));
     else history.push(`/e/${result.id}`);
   };
 
   return (
     <Paper {...props}>
       <DatePicker
-        label={t("event.creation.date")}
+        label={t('event.creation.date')}
         value={date}
         onChange={setDate}
         className={classes.textField}
@@ -42,13 +42,13 @@ const Step2 = ({ event, addToEvent, createEvent, ...props }) => {
       />
       <TextField
         className={classes.textField}
-        label={t("event.creation.address")}
+        label={t('event.creation.address')}
         fullWidth
         margin="dense"
         multiline
         rows={4}
         value={address}
-        onChange={(e) => setAddress(e.target.value)}
+        onChange={e => setAddress(e.target.value)}
         id="NewEventAddress"
         name="address"
       />
@@ -60,13 +60,13 @@ const Step2 = ({ event, addToEvent, createEvent, ...props }) => {
         onClick={onCreate}
         id="NewEventSubmit"
       >
-        {t("generic.create")}
+        {t('generic.create')}
       </Button>
     </Paper>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   textField: {},
   button: {
     marginTop: theme.spacing(2),
