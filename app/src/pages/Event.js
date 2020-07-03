@@ -1,7 +1,6 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import AppBar from '@material-ui/core/AppBar';
-import TextField from '../components/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -25,14 +24,7 @@ const Event = () => {
   const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
   const classes = useStyles({detailsOpen});
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
-  const {
-    event,
-    isEditing,
-    setIsEditing,
-    editingEvent,
-    setEditingEvent,
-    updateEvent,
-  } = useEvent();
+  const {event, isEditing, setIsEditing, updateEvent} = useEvent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,25 +54,13 @@ const Event = () => {
         id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
       >
         <Toolbar>
-          {isEditing ? (
-            <TextField
-              light
-              value={editingEvent.name ?? event.name}
-              onChange={e =>
-                setEditingEvent({...editingEvent, name: e.target.value})
-              }
-              id="EditEventName"
-              name="name"
-            />
-          ) : (
-            <Typography
-              variant="h6"
-              className={classes.name}
-              id="MenuHeaderTitle"
-            >
-              {event.name}
-            </Typography>
-          )}
+          <Typography
+            variant="h6"
+            className={classes.name}
+            id="MenuHeaderTitle"
+          >
+            {event.name}
+          </Typography>
           {!detailsOpen && (
             <IconButton
               edge="end"

@@ -19,6 +19,20 @@ const EventDetails = ({toggleDetails}) => {
   return (
     <div>
       <div className={classes.section}>
+        {isEditing && (
+          <div className={classes.section}>
+            <Typography variant="h6">{t('event.fields.name')}</Typography>
+            <TextField
+              light
+              value={editingEvent.name ?? event.name}
+              onChange={e =>
+                setEditingEvent({...editingEvent, name: e.target.value})
+              }
+              id="EditEventName"
+              name="name"
+            />
+          </div>
+        )}
         <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
         {isEditing ? (
           <DatePicker
@@ -38,7 +52,7 @@ const EventDetails = ({toggleDetails}) => {
           />
         ) : (
           <Typography variant="body1" id={`${idPrefix}Date`}>
-            {event.date}
+            {event.date || t('event.fields.empty')}
           </Typography>
         )}
       </div>
@@ -58,7 +72,7 @@ const EventDetails = ({toggleDetails}) => {
           />
         ) : (
           <Typography variant="body1" id={`${idPrefix}Address`}>
-            {event.address}
+            {event.address || t('event.fields.empty')}
           </Typography>
         )}
       </div>

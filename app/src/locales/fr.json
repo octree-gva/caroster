@@ -10,7 +10,9 @@
   "event": {
     "fields": {
       "starts_on": "Commence le",
-      "address": "Adresse"
+      "address": "Adresse",
+      "name": "Nom de l'événement",
+      "empty": "Non précisé"
     },
     "creation": {
       "event_name": "Nom de l'événement",
