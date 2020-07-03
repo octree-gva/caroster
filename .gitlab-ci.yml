@@ -4,24 +4,27 @@ stages:
   - deploy
   - analyze
 
-# # CI variables scopées:
-# # - NPM_REGISTRY: URL du NPM registry à utiliser (default: https://npm-8ee.hidora.com/)
-# Test:
-#   stage: test
-#   coverage: /All\sfiles.*?\s+(\d+.\d+)/
-#   image: node:current-alpine3.12
-#   rules:
-#     - if: "$CI_PIPELINE_SOURCE =~ merge_request_event"
-#     - if: '$CI_COMMIT_REF_NAME == "master"'
-#   script:
-#     - npm set registry ${NPM_REGISTRY:-https://npm-8ee.hidora.com/}
-#     - npm ci
-#     - npm run test
-#   cache:
-#     key: "$CI_COMMIT_REF_SLUG"
-#     paths:
-#       - node_modules/
-#       - ~/.npm
+# CI variables scopées:
+# - NPM_REGISTRY: URL du NPM registry à utiliser (default: https://npm-8ee.hidora.com/)
+Test:
+  stage: test
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+  image: node:current-alpine3.12
+  only:
+    - merge_requests
+    - master
+  script:
+    - npm set registry ${NPM_REGISTRY:-https://npm-8ee.hidora.com/}
+    - apk add --no-cache python3
+    - cd app
+    - npm i
+    - npm run lint
+    # - npm run test
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
+      - ~/.npm
 
 Build:
   stage: build

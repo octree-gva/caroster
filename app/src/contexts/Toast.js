@@ -1,15 +1,15 @@
-import React, { createContext, useState, useContext } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
+import React, {createContext, useState, useContext} from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const ToastContext = createContext();
 export default ToastContext;
 
 export const useToast = () => useContext(ToastContext);
 
-export const ToastProvider = ({ children }) => {
+export const ToastProvider = ({children}) => {
   const [toasts, setToasts] = useState([]);
 
-  const addToast = (newToast) => setToasts([...toasts, newToast]);
+  const addToast = newToast => setToasts([...toasts, newToast]);
 
   const clearToasts = () => setToasts([]);
 
@@ -19,12 +19,12 @@ export const ToastProvider = ({ children }) => {
   };
 
   return (
-    <ToastContext.Provider value={{ toasts, addToast, clearToasts }}>
+    <ToastContext.Provider value={{toasts, addToast, clearToasts}}>
       {children}
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
         autoHideDuration={6000}
         open={toasts && toasts.length > 0}

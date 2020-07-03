@@ -29,7 +29,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
   const [date, setDate] = useState(
     car?.departure ? moment(car.departure) : moment()
   );
-  const [phone, setPhone] = useState(car?.phone_number ?? '');
+  const [phone, setPhone] = useState(car ? car['phone_number'] : '');
   const [details, setDetails] = useState(car?.details ?? '');
 
   // Click on ESQ should close the form

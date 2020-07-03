@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const DefaultLayout = ({ children }) => {
+const DefaultLayout = ({children}) => {
   return <div>{children}</div>;
 };
 

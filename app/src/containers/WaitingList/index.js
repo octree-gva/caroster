@@ -100,7 +100,7 @@ const WaitingList = ({car}) => {
         text={
           <Trans
             i18nKey="passenger.actions.remove_alert"
-            values={{name: passengers[removing]}}
+            values={{name: passengers ? passengers[removing] : null}}
             components={{italic: <i />, bold: <strong />}}
           />
         }

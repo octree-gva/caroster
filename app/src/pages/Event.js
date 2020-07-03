@@ -155,8 +155,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default props => (
+const EventWithContext = props => (
   <EventProvider {...props}>
     <Event {...props} />
   </EventProvider>
 );
+export default EventWithContext;

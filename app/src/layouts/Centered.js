@@ -1,18 +1,18 @@
-import React from "react";
-import Container from "@material-ui/core/Container";
-import DefaultLayout from "./Default";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import Container from '@material-ui/core/Container';
+import DefaultLayout from './Default';
+import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   layout: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: "100vh",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh',
   },
 }));
 
-const CenteredLayout = ({ children }) => {
+const CenteredLayout = ({children}) => {
   const classes = useStyles();
 
   return (

@@ -16,13 +16,11 @@ const EventFab = ({toggleNewCar}) => {
   const onShare = async () => {
     if (!event) return null;
     // If navigator as share capability
-    if (!!navigator.share) {
-      const shareData = {
+    if (!!navigator.share)
+      return await navigator.share({
         title: `Caroster ${event.name}`,
         url: `${window.location.href}`,
-      };
-      return await navigator.share(shareData);
-    }
+      });
     // Else copy URL in clipboard
     else if (!!navigator.clipboard) {
       await navigator.clipboard.writeText(window.location.href);
@@ -38,7 +36,11 @@ const EventFab = ({toggleNewCar}) => {
           <Icon>add</Icon>
         </Fab>
       </div>
-      <div className={classes.actionContainer} onClick={toggleOpen}>
+      <div
+        className={classes.actionContainer}
+        onClick={toggleOpen}
+        role="dialog"
+      >
         <Fab
           color="primary"
           aria-label="share"
