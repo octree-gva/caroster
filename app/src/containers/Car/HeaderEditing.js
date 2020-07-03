@@ -12,7 +12,7 @@ import Slider from '@material-ui/core/Slider';
 import {useStrapi} from 'strapi-react-context';
 import {useToast} from '../../contexts/Toast';
 import {useEvent} from '../../contexts/Event';
-import RemoveDialog from './RemoveDialog';
+import RemoveDialog from '../RemoveDialog';
 
 const HeaderEditing = ({car, toggleEditing}) => {
   const classes = useStyles();
@@ -184,8 +184,9 @@ const HeaderEditing = ({car, toggleEditing}) => {
         </Button>
       </div>
       <RemoveDialog
+        text={t('car.actions.remove_alert')}
         open={removing}
-        toggle={toggleRemoving}
+        onClose={toggleRemoving}
         onRemove={onRemove}
       />
     </div>

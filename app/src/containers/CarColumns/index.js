@@ -2,11 +2,11 @@ import React, {useMemo} from 'react';
 import Slider from 'react-slick';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
+import {useStrapi} from 'strapi-react-context';
+import {useEvent} from '../../contexts/Event';
+import WaitingList from '../WaitingList';
 import Car from '../Car';
 import AddCar from './AddCar';
-import {useEvent} from '../../contexts/Event';
-import {useStrapi} from 'strapi-react-context';
-import WaitingList from './WaitingList';
 
 const settings = {
   dots: false,
@@ -69,22 +69,20 @@ const CarColumns = ({...props}) => {
   );
 
   return (
-    <div>
-      <Slider {...settings}>
-        <Container maxWidth="sm" className={classes.slide}>
-          <WaitingList />
-        </Container>
-        {cars &&
-          cars.map(car => (
-            <Container key={car.id} maxWidth="sm" className={classes.slide}>
-              <Car car={car} {...props} />
-            </Container>
-          ))}
-        <Container maxWidth="sm" className={classes.slide}>
-          <AddCar {...props} />
-        </Container>
-      </Slider>
-    </div>
+    <Slider {...settings}>
+      <Container maxWidth="sm" className={classes.slide}>
+        <WaitingList />
+      </Container>
+      {cars &&
+        cars.map(car => (
+          <Container key={car.id} maxWidth="sm" className={classes.slide}>
+            <Car car={car} {...props} />
+          </Container>
+        ))}
+      <Container maxWidth="sm" className={classes.slide}>
+        <AddCar {...props} />
+      </Container>
+    </Slider>
   );
 };
 

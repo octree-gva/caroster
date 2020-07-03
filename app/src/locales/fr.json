@@ -60,12 +60,23 @@
     "errors": {
       "cant_create": "Impossible de créer la voiture",
       "cant_update": "Impossible de modifier la voiture",
-      "cant_remove": "Impossile de supprimer la voiture",
+      "cant_remove": "Impossible de supprimer la voiture",
       "cant_add_passenger": "Impossible d'ajouter un passager",
       "cant_remove_passenger": "Impossible de supprimer le passager"
     }
   },
   "passenger": {
-    "title": "Liste d'attente"
+    "title": "Liste d'attente",
+    "creation": {
+      "seats": "Nombre de passagers: {{seats}}"
+    },
+    "actions": {
+      "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?"
+    },
+    "errors": {
+      "cant_add_passenger": "Impossible d'ajouter un passager",
+      "cant_save_passengers": "Impossible de mettre à jour passagers",
+      "cant_select_car": "Impossible de sélectionner la voiture"
+    }
   }
 }

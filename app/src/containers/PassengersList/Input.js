@@ -1,45 +1,45 @@
-import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import { useTranslation } from "react-i18next";
-import { makeStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
+import React, {useState} from 'react';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import {useTranslation} from 'react-i18next';
 
-const Input = ({ addPassenger }) => {
-  const classes = useStyles();
-  const [name, setName] = useState("");
-  const { t } = useTranslation();
+const Input = ({addPassenger}) => {
+  const [name, setName] = useState('');
+  const {t} = useTranslation();
 
   const onSave = () => {
     if (!!name) {
       addPassenger(name);
-      setName("");
+      setName('');
     }
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown = e => {
     if (e.keyCode === 13) onSave();
   };
 
   return (
-    <>
-      <div className={classes.container}>
+    <Box pb={1}>
+      <Box display="flex" flexDirection="row" alignItems="center" px={2} pb={2}>
         <TextField
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={e => setName(e.target.value)}
           onKeyDown={onKeyDown}
           fullWidth
-          label={t("car.passengers.add")}
+          label={t('car.passengers.add')}
           id="NewPassenger"
           name="passenger"
         />
-      </div>
+        <IconButton edge="end" size="small" disabled={!name} onClick={onSave}>
+          <Icon>check</Icon>
+        </IconButton>
+      </Box>
       <Divider />
-    </>
+    </Box>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  container: { padding: theme.spacing(0, 2, 2) },
-}));
 
 export default Input;

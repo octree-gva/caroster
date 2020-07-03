@@ -1,18 +1,19 @@
 import React, {useReducer} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-
 import Paper from '@material-ui/core/Paper';
 import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
-import PassengersList from '../PassengersList';
+import {useEvent} from '../../contexts/Event';
 import {useToast} from '../../contexts/Toast';
-import Header from './Header';
+import PassengersList from '../PassengersList';
 import HeaderEditing from './HeaderEditing';
+import Header from './Header';
 
 const Car = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
+  const {event} = useEvent();
   const {addToast} = useToast();
   const strapi = useStrapi();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
@@ -33,6 +34,9 @@ const Car = ({car}) => {
   const removePassenger = async idx => {
     if (!car?.passengers) return false;
     try {
+      await strapi.services.events.update(event.id, {
+        waiting_list: [...(event.waiting_list || []), car.passengers[idx]],
+      });
       return await strapi.services.cars.update(car.id, {
         passengers: car.passengers.filter((_, i) => i !== idx),
       });
@@ -55,7 +59,8 @@ const Car = ({car}) => {
         passengers={car.passengers}
         places={car.seats}
         addPassenger={addPassenger}
-        removePassenger={removePassenger}
+        onClick={removePassenger}
+        icon="close"
       />
     </Paper>
   );

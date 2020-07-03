@@ -11,23 +11,23 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const RemoveDialog = ({open, toggle, onRemove}) => {
+const RemoveDialog = ({text, open, onClose, onRemove}) => {
   const {t} = useTranslation();
 
   return (
-    <Dialog open={open} TransitionComponent={Transition} onClose={toggle}>
+    <Dialog open={open} TransitionComponent={Transition} onClose={onClose}>
       <DialogContent>
-        <DialogContentText>{t('car.actions.remove_alert')}</DialogContentText>
+        <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={toggle} id="CarRemoveCancel">
+        <Button onClick={onClose} id="CarRemoveCancel">
           {t('generic.cancel')}
         </Button>
         <Button
           id="CarRemoveConfirm"
           onClick={() => {
             onRemove();
-            toggle();
+            onClose();
           }}
         >
           {t('generic.confirm')}

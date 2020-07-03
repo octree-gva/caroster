@@ -1,34 +1,34 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 
-const Passenger = ({passenger, removePassenger}) => {
+const Passenger = ({passenger, button}) => {
   const classes = useStyles();
   const {t} = useTranslation();
-  if (!!passenger)
-    return (
-      <div className={classes.item}>
-        <Typography variant="body2" className={classes.name}>
-          {passenger}
-        </Typography>
-        <IconButton edge="end" size="small" onClick={removePassenger}>
-          <Icon>close</Icon>
-        </IconButton>
-      </div>
-    );
-  else return <div className={classes.item}>{t('car.passengers.empty')}</div>;
+  return !!passenger ? (
+    <Box display="flex" flexDirection="row" alignItems="center" px={2} py={1}>
+      <Typography variant="body2" className={classes.name}>
+        {passenger}
+      </Typography>
+      {button}
+    </Box>
+  ) : (
+    <Box
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      px={2}
+      py={1}
+      minHeight={46}
+    >
+      <Typography variant="body2">{t('car.passengers.empty')}</Typography>
+    </Box>
+  );
 };
 
 const useStyles = makeStyles(theme => ({
-  item: {
-    padding: theme.spacing(1, 2),
-    display: 'flex',
-    alignItems: 'center',
-    height: '46px',
-  },
   name: {
     flexGrow: 1,
   },

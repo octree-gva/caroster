@@ -1,14 +1,17 @@
 import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
-import Passenger from './Passenger';
 import Input from './Input';
+import Passenger from './Passenger';
 
 const PassengersList = ({
   hideEmpty,
   passengers,
   places = 0,
   addPassenger,
-  removePassenger,
+  icon,
+  onClick,
 }) => {
   const classes = useStyles();
 
@@ -32,7 +35,15 @@ const PassengersList = ({
           <Passenger
             key={index}
             passenger={passenger}
-            removePassenger={() => removePassenger(index)}
+            button={
+              <IconButton
+                edge="end"
+                size="small"
+                onClick={() => onClick(index)}
+              >
+                <Icon>{icon}</Icon>
+              </IconButton>
+            }
           />
         ))}
     </div>
@@ -40,7 +51,9 @@ const PassengersList = ({
 };
 
 const useStyles = makeStyles(theme => ({
-  container: {padding: theme.spacing(1, 0)},
+  container: {
+    padding: theme.spacing(1, 0),
+  },
 }));
 
 export default PassengersList;

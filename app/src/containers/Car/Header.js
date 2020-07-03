@@ -2,8 +2,8 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import moment from 'moment';
 import {makeStyles} from '@material-ui/core/styles';
+import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 
 const Header = ({car, toggleEditing}) => {
@@ -57,7 +57,9 @@ const Header = ({car, toggleEditing}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  header: {padding: theme.spacing(2)},
+  header: {
+    padding: theme.spacing(2),
+  },
   editBtn: {
     position: 'absolute',
     top: 0,
