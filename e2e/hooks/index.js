@@ -46,6 +46,13 @@ const config = {
     };
     console.log('start recording');
     await cmds.startScreenRecording(test);
+
+    const oldBaseURL = browser.options.baseUrl;
+    browser.options.baseUrl = 'https://caroster-page.dev.octr.ee';
+    await browser.url(`/${feature.uri}.txt`);
+    console.log('browse ', browser.options.baseUrl, `/${feature.uri}`);
+    browser.options.baseUrl = oldBaseURL;
+    await new Promise(resolve => setTimeout(resolve, 5000));
   },
   afterFeature: async function (uri, feature, scenarios) {
     const name = slugify(feature.document.feature.name);

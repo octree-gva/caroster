@@ -1,4 +1,5 @@
 import {Page} from './_page';
+import {EventPage} from './eventPage';
 class _NewCar extends Page {
   /**
    *
@@ -28,7 +29,7 @@ class _NewCar extends Page {
       case 'my car details':
         return '#NewCarDetails';
       case 'submit':
-        return 'button.MuiButton-contained';
+        return '#NewCarSubmit';
     }
     throw new Error('Unknown selector ' + selector);
   }
@@ -41,9 +42,10 @@ class _NewCar extends Page {
     await new Promise(resolve => {
       setTimeout(resolve, 3000);
     });
-    await browser.saveScreenshotByName(`${this.name}--filled`);
-
-    //    await super.submit();
+    await super.submit();
+    global.SCENE.scene = EventPage;
+    await EventPage.waitForDisplayed(undefined, false);
+    await browser.saveScreenshotByName(`${EventPage.name}--carCreated`);
   }
 }
 export const NewCar = new _NewCar('/');

@@ -21,9 +21,9 @@ class _NewEvent extends Page {
         return '#NewEventEmail';
       case 'on the Tos label':
       case 'Tos label':
-        return '.MuiTypography-caption';
+        return 'a.MuiTypography-caption';
       case 'submit':
-        return 'button.MuiButton-root';
+        return 'button[type="submit"]';
     }
     throw new Error('Unknown selector ' + selector);
   }

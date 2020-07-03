@@ -20,8 +20,11 @@ const RemoveDialog = ({open, toggle, onRemove}) => {
         <DialogContentText>{t('car.actions.remove_alert')}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={toggle}>{t('generic.cancel')}</Button>
+        <Button onClick={toggle} id="CarRemoveCancel">
+          {t('generic.cancel')}
+        </Button>
         <Button
+          id="CarRemoveConfirm"
           onClick={() => {
             onRemove();
             toggle();

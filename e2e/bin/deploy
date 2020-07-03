@@ -7,5 +7,6 @@ kubectl cp ./reports/screenshots caroster-test/$POD:/usr/share/nginx/html/ --nam
 kubectl cp ./reports/videos caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
 kubectl cp ./reports/allure-report caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
 kubectl cp ./reports/index.html caroster-test/$POD:/usr/share/nginx/html/index.html --namespace caroster-test	
+kubectl cp ./reports/test caroster-test/$POD:/usr/share/nginx/html/ --namespace caroster-test	
 
 echo "done"

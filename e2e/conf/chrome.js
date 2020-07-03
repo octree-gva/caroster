@@ -50,7 +50,7 @@ const config = {
     snippets: true,
     source: true,
     profile: [],
-    strict: true,
+    strict: false,
     tags: [],
     timeout: 100000,
     ignoreUndefinedDefinitions: false,

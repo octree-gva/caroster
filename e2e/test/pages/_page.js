@@ -86,10 +86,10 @@ export class Page {
     await element.click();
   }
 
-  async waitForDisplayed(timeout = 1200) {
+  async waitForDisplayed(timeout = 1200, takeScreenshot = true) {
     await new Promise(resolve => {
       setTimeout(resolve, timeout);
     });
-    await browser.saveScreenshotByName(this.name);
+    if (takeScreenshot) await browser.saveScreenshotByName(this.name);
   }
 }
