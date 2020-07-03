@@ -35,6 +35,10 @@ const Event = () => {
   } = useEvent();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
   }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
