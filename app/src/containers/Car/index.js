@@ -55,13 +55,15 @@ const Car = ({car}) => {
         <Header car={car} toggleEditing={toggleEditing} />
       )}
       <Divider />
-      <PassengersList
-        passengers={car.passengers}
-        places={car.seats}
-        addPassenger={addPassenger}
-        onClick={removePassenger}
-        icon="close"
-      />
+      {!isEditing && (
+        <PassengersList
+          passengers={car.passengers}
+          places={car.seats}
+          addPassenger={addPassenger}
+          onClick={removePassenger}
+          icon="close"
+        />
+      )}
     </Paper>
   );
 };
