@@ -43,8 +43,8 @@ const NewCarDialog = ({open, toggle}) => {
 
   const canCreate = !!name && !!seats;
 
-  const onCreate = async event => {
-    if (event.preventDefault) event.preventDefault();
+  const onCreate = async e => {
+    if (e.preventDefault) e.preventDefault();
     try {
       await strapi.services.cars.create({
         name,
