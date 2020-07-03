@@ -57,6 +57,14 @@ const NewCarDialog = ({open, toggle}) => {
       });
       addToast(t('car.creation.created'));
       toggle();
+
+      // Clear states
+      setName('');
+      setSeats(4);
+      setMeeting('');
+      setDate(moment());
+      setPhone('');
+      setDetails('');
     } catch (error) {
       console.error(error);
       addToast(t('car.errors.cant_create'));
