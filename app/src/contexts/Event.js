@@ -20,7 +20,14 @@ export const EventProvider = ({match, children}) => {
   // Fetch event data if not already done
   useEffect(() => {
     if (!strapi.stores.events?.find(({id}) => eventId === id))
-      strapi.services.events.findOne(eventId);
+      (async () => {
+        const fetchedEvent = await strapi.services.events.findOne(eventId);
+        setEditingEvent({
+          name: fetchedEvent.name,
+          date: fetchedEvent.date,
+          address: fetchedEvent.address,
+        });
+      })();
   }, [eventId, strapi.stores.events, strapi.services.events]);
 
   // Fetch event cars on load

@@ -24,7 +24,7 @@ const EventDetails = ({toggleDetails}) => {
             <Typography variant="h6">{t('event.fields.name')}</Typography>
             <TextField
               light
-              value={editingEvent.name ?? event.name}
+              value={editingEvent.name}
               onChange={e =>
                 setEditingEvent({...editingEvent, name: e.target.value})
               }
@@ -36,11 +36,9 @@ const EventDetails = ({toggleDetails}) => {
         <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
         {isEditing ? (
           <DatePicker
-            value={
-              editingEvent.date ? moment(editingEvent.date) : moment(event.date)
-            }
+            value={editingEvent.date ? moment(editingEvent.date) : null}
             onChange={date =>
-              setEditingEvent({...editingEvent, date: date.toISOString()})
+              setEditingEvent({...editingEvent, date: date?.toISOString()})
             }
             className={classes.textField}
             fullWidth
@@ -49,6 +47,7 @@ const EventDetails = ({toggleDetails}) => {
             id={`${idPrefix}Date`}
             name="date"
             TextFieldComponent={p => <TextField light {...p} />}
+            cancelLabel={t('generic.cancel')}
           />
         ) : (
           <Typography variant="body1" id={`${idPrefix}Date`}>
@@ -63,7 +62,7 @@ const EventDetails = ({toggleDetails}) => {
             light
             multiline
             rows={4}
-            value={editingEvent.address ?? event.address}
+            value={editingEvent.address}
             onChange={e =>
               setEditingEvent({...editingEvent, address: e.target.value})
             }

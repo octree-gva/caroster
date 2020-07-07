@@ -109,6 +109,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           disablePast
           id="EditCarDateTime"
           name="date"
+          cancelLabel={t('generic.cancel')}
         />
         <TextField
           className={classes.textField}

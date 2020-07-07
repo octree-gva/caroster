@@ -89,6 +89,7 @@ const CarColumns = ({...props}) => {
 const useStyles = makeStyles(theme => ({
   slider: {
     padding: theme.spacing(1),
+    marginTop: theme.mixins.toolbar.minHeight,
   },
   slide: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - ${theme.spacing(

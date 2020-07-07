@@ -164,6 +164,8 @@ const useStyles = makeStyles(theme => ({
     height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
     transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
+    position: 'fixed',
+    top: 0,
   }),
   name: {
     flexGrow: 1,

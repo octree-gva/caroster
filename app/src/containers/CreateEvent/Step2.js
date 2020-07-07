@@ -42,6 +42,7 @@ const Step2 = ({event, addToEvent, createEvent, ...props}) => {
           disablePast
           id="NewEventDate"
           name="date"
+          cancelLabel={t('generic.cancel')}
         />
         <TextField
           className={classes.textField}
