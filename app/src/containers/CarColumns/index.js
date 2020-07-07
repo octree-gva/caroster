@@ -18,7 +18,6 @@ const settings = {
   lazyLoad: true,
   swipeToSlide: true,
   swipe: true,
-  adaptiveHeight: true,
   responsive: [
     {
       breakpoint: 600,
