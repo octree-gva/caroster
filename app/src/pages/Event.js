@@ -44,34 +44,65 @@ const Event = () => {
     }
   };
 
+  const onShare = async () => {
+    if (!event) return null;
+    // If navigator as share capability
+    if (!!navigator.share)
+      return await navigator.share({
+        title: `Caroster ${event.name}`,
+        url: `${window.location.href}`,
+      });
+    // Else copy URL in clipboard
+    else if (!!navigator.clipboard) {
+      await navigator.clipboard.writeText(window.location.href);
+      addToast(t('event.actions.copied'));
+      return true;
+    }
+  };
+
   if (!event) return <Loading />;
 
   return (
     <Layout>
       <AppBar
         position="static"
+        color="primary"
         className={classes.appbar}
         id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
       >
         <Toolbar>
           <Typography
             variant="h6"
+            noWrap
             className={classes.name}
             id="MenuHeaderTitle"
           >
             {event.name}
           </Typography>
           {!detailsOpen && (
-            <IconButton
-              edge="end"
-              id="MenuMoreInfo"
-              onClick={e => setAnchorEl(e.currentTarget)}
-            >
-              <Icon className={classes.barIcon}>more_vert</Icon>
-            </IconButton>
+            <>
+              <IconButton
+                color="inherit"
+                edge="end"
+                id="ShareBtn"
+                onClick={onShare}
+                className={classes.shareIcon}
+              >
+                <Icon>share</Icon>
+              </IconButton>
+              <IconButton
+                color="inherit"
+                edge="end"
+                id="MenuMoreInfo"
+                onClick={e => setAnchorEl(e.currentTarget)}
+              >
+                <Icon>more_vert</Icon>
+              </IconButton>
+            </>
           )}
           {detailsOpen && !isEditing && (
             <IconButton
+              color="inherit"
               edge="end"
               id="DetailsEditBtn"
               onClick={e => setIsEditing(true)}
@@ -80,7 +111,12 @@ const Event = () => {
             </IconButton>
           )}
           {detailsOpen && isEditing && (
-            <IconButton edge="end" id="EditEventSubmit" onClick={onEventSave}>
+            <IconButton
+              color="inherit"
+              edge="end"
+              id="EditEventSubmit"
+              onClick={onEventSave}
+            >
               <Icon className={classes.barIcon}>done</Icon>
             </IconButton>
           )}
@@ -113,25 +149,27 @@ const Event = () => {
         </Container>
       </AppBar>
       <CarColumns toggleNewCar={toggleNewCar} />
-      <EventFab toggleNewCar={toggleNewCar} />
+      <EventFab toggleNewCar={toggleNewCar} open={openNewCar} />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
     </Layout>
   );
 };
 
 const useStyles = makeStyles(theme => ({
-  container: {padding: theme.spacing(2)},
+  container: {
+    padding: theme.spacing(2),
+  },
   appbar: ({detailsOpen}) => ({
-    transition: 'height 0.3s ease',
     overflow: 'hidden',
     height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
+    transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
   }),
   name: {
     flexGrow: 1,
   },
-  barIcon: {
-    color: 'white',
+  shareIcon: {
+    marginRight: theme.spacing(2),
   },
 }));
 

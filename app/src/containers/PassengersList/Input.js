@@ -33,7 +33,13 @@ const Input = ({addPassenger}) => {
           id="NewPassenger"
           name="passenger"
         />
-        <IconButton edge="end" size="small" disabled={!name} onClick={onSave}>
+        <IconButton
+          color="primary"
+          edge="end"
+          size="small"
+          disabled={!name}
+          onClick={onSave}
+        >
           <Icon>check</Icon>
         </IconButton>
       </Box>

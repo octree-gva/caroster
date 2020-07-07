@@ -37,8 +37,9 @@ const PassengersList = ({
             passenger={passenger}
             button={
               <IconButton
-                edge="end"
                 size="small"
+                color="primary"
+                edge="end"
                 onClick={() => onClick(index)}
               >
                 <Icon>{icon}</Icon>

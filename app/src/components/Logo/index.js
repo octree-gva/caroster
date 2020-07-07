@@ -8,15 +8,28 @@ const LOGO_URL = 'https://caroster.io';
 const Logo = () => {
   const classes = useStyles();
   return (
-    <a href={LOGO_URL}>
-      <img src={LogoUrl} alt="Caroster" className={classes.logo} />
-    </a>
+    <div className={classes.layout}>
+      <a href={LOGO_URL} className={classes.link}>
+        <img src={LogoUrl} alt="Caroster" className={classes.logo} />
+      </a>
+    </div>
   );
 };
 
 const useStyles = makeStyles(theme => ({
+  layout: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
+  },
+  link: {
+    width: '75%',
+  },
   logo: {
+    display: 'block',
     width: '100%',
+    height: 'auto',
   },
 }));
 export default Logo;

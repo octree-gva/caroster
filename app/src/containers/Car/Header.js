@@ -12,6 +12,8 @@ const Header = ({car, toggleEditing}) => {
   return (
     <div className={classes.header}>
       <IconButton
+        size="small"
+        color="primary"
         className={classes.editBtn}
         onClick={toggleEditing}
         id="EditCarBtn"
@@ -64,6 +66,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0,
+    margin: theme.spacing(1),
     zIndex: theme.zIndex.speedDial,
   },
   section: {

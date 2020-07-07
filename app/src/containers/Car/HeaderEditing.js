@@ -175,8 +175,8 @@ const HeaderEditing = ({car, toggleEditing}) => {
       </form>
       <div className={classes.actions}>
         <Button
-          color="secondary"
           variant="outlined"
+          color="primary"
           onClick={toggleRemoving}
           id="CarRemove"
         >

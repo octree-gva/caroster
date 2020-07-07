@@ -17,7 +17,7 @@
     "creation": {
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
-      "date": "Date de l'événement",
+      "date": "Départ",
       "address": "Adresse de l'événement",
       "next": "Suivant",
       "tos": "J'accepte les conditions générales d'utilisation"

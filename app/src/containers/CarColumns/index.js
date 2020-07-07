@@ -69,7 +69,7 @@ const CarColumns = ({...props}) => {
   );
 
   return (
-    <Slider {...settings}>
+    <Slider className={classes.slider} {...settings}>
       <Container maxWidth="sm" className={classes.slide}>
         <WaitingList />
       </Container>
@@ -87,10 +87,16 @@ const CarColumns = ({...props}) => {
 };
 
 const useStyles = makeStyles(theme => ({
+  slider: {
+    padding: theme.spacing(1),
+  },
   slide: {
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - ${theme.spacing(
+      2
+    )})`,
     outline: 'none',
     padding: theme.spacing(2),
+    marginBottom: theme.spacing(10),
   },
 }));
 

@@ -9,7 +9,13 @@ const AddCar = ({toggleNewCar}) => {
   const {t} = useTranslation();
   return (
     <Container maxWidth="sm" className={classes.container}>
-      <Button variant="contained" onClick={toggleNewCar}>
+      <Button
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={toggleNewCar}
+        classes={{containedPrimary: classes.button}}
+      >
         {t('car.creation.title')}
       </Button>
     </Container>
@@ -20,6 +26,11 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    '&:hover': {color: theme.palette.primary.contrastText},
   },
 }));
 

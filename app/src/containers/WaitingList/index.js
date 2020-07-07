@@ -81,7 +81,12 @@ const WaitingList = ({car}) => {
     <>
       <Paper className={classes.root}>
         <div className={classes.header}>
-          <IconButton className={classes.editBtn} onClick={onEdit}>
+          <IconButton
+            size="small"
+            color="primary"
+            className={classes.editBtn}
+            onClick={onEdit}
+          >
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
           </IconButton>
           <Typography variant="h5">{t('passenger.title')}</Typography>
@@ -128,6 +133,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0,
+    margin: theme.spacing(1),
     zIndex: theme.zIndex.speedDial,
   },
 }));

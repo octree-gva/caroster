@@ -6,14 +6,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
-import moment from 'moment';
-import {useStrapi} from 'strapi-react-context';
-import {useTranslation} from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
 import {DateTimePicker} from '@material-ui/pickers';
+import {makeStyles} from '@material-ui/core/styles';
+import moment from 'moment';
+import {useTranslation} from 'react-i18next';
+import {useStrapi} from 'strapi-react-context';
 import {useToast} from '../../contexts/Toast';
 import {useEvent} from '../../contexts/Event';
 
@@ -95,14 +95,25 @@ const NewCarDialog = ({open, toggle}) => {
               id="NewCarName"
               name="name"
             />
+            <DateTimePicker
+              label={t('event.creation.date')}
+              value={date}
+              onChange={setDate}
+              className={classes.picker}
+              fullWidth
+              format="LLLL"
+              disablePast
+              id="NewCarDateTime"
+              name="date"
+            />
             <Typography variant="caption">{t('car.creation.seats')}</Typography>
             <Slider
               value={seats}
               onChange={(e, value) => setSeats(value)}
               step={1}
-              marks={marks}
               min={1}
               max={marks.length}
+              marks={marks}
               valueLabelDisplay="auto"
             />
             <TextField
@@ -110,23 +121,10 @@ const NewCarDialog = ({open, toggle}) => {
               label={t('car.creation.meeting')}
               fullWidth
               margin="dense"
-              multiline
-              rows={2}
               value={meeting}
               onChange={e => setMeeting(e.target.value)}
               id="NewCarMeeting"
               name="meeting"
-            />
-            <DateTimePicker
-              label={t('event.creation.date')}
-              value={date}
-              onChange={setDate}
-              className={classes.textField}
-              fullWidth
-              format="LLLL"
-              disablePast
-              id="NewCarDateTime"
-              name="date"
             />
             <TextField
               className={classes.textField}
@@ -144,7 +142,7 @@ const NewCarDialog = ({open, toggle}) => {
               fullWidth
               margin="dense"
               multiline
-              rows={2}
+              rows={4}
               value={details}
               onChange={e => setDetails(e.target.value)}
               id="NewCarDetails"
@@ -153,10 +151,16 @@ const NewCarDialog = ({open, toggle}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button id="NewCarCancel" onClick={toggle} tabIndex={-1}>
+          <Button
+            color="primary"
+            id="NewCarCancel"
+            onClick={toggle}
+            tabIndex={-1}
+          >
             {t('generic.cancel')}
           </Button>
           <Button
+            color="primary"
             variant="contained"
             type="submit"
             disabled={!canCreate}
@@ -172,7 +176,12 @@ const NewCarDialog = ({open, toggle}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  textField: {marginBottom: theme.spacing(2)},
+  textField: {
+    marginBottom: theme.spacing(2),
+  },
+  picker: {
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 export default NewCarDialog;
