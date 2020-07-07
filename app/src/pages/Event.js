@@ -104,10 +104,10 @@ const Event = () => {
             <IconButton
               color="inherit"
               edge="end"
-              id="DetailsEditBtn"
-              onClick={e => setIsEditing(true)}
+              id="CloseDetailsBtn"
+              onClick={toggleDetails}
             >
-              <Icon className={classes.barIcon}>edit</Icon>
+              <Icon className={classes.barIcon}>close</Icon>
             </IconButton>
           )}
           {detailsOpen && isEditing && (
