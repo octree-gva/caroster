@@ -178,10 +178,18 @@ const HeaderEditing = ({car, toggleEditing}) => {
         <Button
           variant="outlined"
           color="primary"
+          onClick={onSave}
+          id="CarSave"
+        >
+          {t('generic.save')}
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
           onClick={toggleRemoving}
           id="CarRemove"
         >
-          {t('car.actions.remove')}
+          {t('generic.remove')}
         </Button>
       </div>
       <RemoveDialog
@@ -210,8 +218,12 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     margin: theme.spacing(2, 0),
+    '& > *:first-child': {
+      marginBottom: theme.spacing(2),
+    },
   },
 }));
 

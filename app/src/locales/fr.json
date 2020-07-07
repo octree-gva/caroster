@@ -5,6 +5,7 @@
     "create": "Créer",
     "cancel": "Annuler",
     "remove": "Supprimer",
+    "save": "Enregistrer",
     "confirm": "Confirmer"
   },
   "event": {
@@ -51,7 +52,6 @@
       "created": "La voiture a été créée"
     },
     "actions": {
-      "remove": "Supprimer la voiture",
       "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
       "removed": "La voiture a été supprimée"
     },
