@@ -71,14 +71,33 @@ const Event = () => {
         id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            className={classes.name}
-            id="MenuHeaderTitle"
-          >
-            {event.name}
-          </Typography>
+          {
+            <div className={classes.name}>
+              <Typography variant="h6" noWrap id="MenuHeaderTitle">
+                {event.name}
+              </Typography>
+              {detailsOpen && !isEditing && (
+                <IconButton
+                  color="inherit"
+                  edge="end"
+                  id="CloseDetailsBtn"
+                  onClick={() => setIsEditing(true)}
+                >
+                  <Icon className={classes.barIcon}>edit</Icon>
+                </IconButton>
+              )}
+              {detailsOpen && isEditing && (
+                <IconButton
+                  color="inherit"
+                  edge="end"
+                  id="EditEventSubmit"
+                  onClick={onEventSave}
+                >
+                  <Icon className={classes.barIcon}>done</Icon>
+                </IconButton>
+              )}
+            </div>
+          }
           {!detailsOpen && (
             <>
               <IconButton
@@ -100,24 +119,17 @@ const Event = () => {
               </IconButton>
             </>
           )}
-          {detailsOpen && !isEditing && (
+          {detailsOpen && (
             <IconButton
               color="inherit"
               edge="end"
               id="CloseDetailsBtn"
-              onClick={toggleDetails}
+              onClick={() => {
+                setIsEditing(false);
+                toggleDetails();
+              }}
             >
               <Icon className={classes.barIcon}>close</Icon>
-            </IconButton>
-          )}
-          {detailsOpen && isEditing && (
-            <IconButton
-              color="inherit"
-              edge="end"
-              id="EditEventSubmit"
-              onClick={onEventSave}
-            >
-              <Icon className={classes.barIcon}>done</Icon>
             </IconButton>
           )}
           <EventMenu
@@ -169,6 +181,8 @@ const useStyles = makeStyles(theme => ({
   }),
   name: {
     flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
   },
   shareIcon: {
     marginRight: theme.spacing(2),
