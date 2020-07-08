@@ -141,6 +141,8 @@ const NewCarDialog = ({open, toggle}) => {
               label={t('car.creation.notes')}
               fullWidth
               margin="dense"
+              inputProps={{maxLength: 250}}
+              helperText={`${details.length}/250`}
               multiline
               rows={4}
               value={details}

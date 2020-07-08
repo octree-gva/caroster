@@ -96,7 +96,12 @@ const HeaderEditing = ({car, toggleEditing}) => {
   return (
     <div className={classes.header}>
       <form onSubmit={onSave}>
-        <IconButton type="submit" className={classes.editBtn}>
+        <IconButton
+          size="small"
+          color="primary"
+          type="submit"
+          className={classes.editBtn}
+        >
           <Icon>done</Icon>
         </IconButton>
         <DateTimePicker
@@ -150,6 +155,8 @@ const HeaderEditing = ({car, toggleEditing}) => {
           label={t('car.creation.notes')}
           fullWidth
           margin="dense"
+          inputProps={{maxLength: 250}}
+          helperText={`${details.length}/250`}
           multiline
           rows={2}
           value={details}
@@ -208,6 +215,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0,
+    margin: theme.spacing(1),
     zIndex: theme.zIndex.speedDial,
   },
   section: {
