@@ -1,5 +1,5 @@
-"use strict";
-const axios = require("axios");
+'use strict';
+const axios = require('axios');
 
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
@@ -9,10 +9,11 @@ const axios = require("axios");
 module.exports = {
   lifecycles: {
     async beforeCreate(event) {
-      if (!!event.address) {
+      // If user provides an address, get its lat/lng position using OSM API
+      if (event.address) {
         const query = encodeURI(event.address);
         try {
-          const { data } = await axios.get(
+          const {data} = await axios.get(
             ` https://nominatim.openstreetmap.org/search?format=json&q=${query}`
           );
           if (Array.isArray(data) && data.length > 0) {
@@ -26,12 +27,16 @@ module.exports = {
           strapi.log.error(error);
         }
       }
+
+      // If user accepts newsletters, subscribe it
+      if (event.newsletter)
+        strapi.plugins['sendgrid'].services.contacts.subscribe(event.email);
     },
     async beforeUpdate(params, event) {
-      if (!!event.address) {
+      if (event.address) {
         const query = encodeURI(event.address);
         try {
-          const { data } = await axios.get(
+          const {data} = await axios.get(
             ` https://nominatim.openstreetmap.org/search?format=json&q=${query}`
           );
           if (Array.isArray(data) && data.length > 0) {

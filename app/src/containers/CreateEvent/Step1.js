@@ -1,13 +1,12 @@
-import React, {useState, useEffect, useReducer, useMemo} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
 import Paper from '../../components/Paper';
-import TosDialog from '../TosDialog';
 
 const isValidEmail = email =>
   // eslint-disable-next-line
@@ -30,12 +29,11 @@ const Step1 = ({
   const [name, setName] = useState(event.name ?? '');
   const [email, setEmail] = useState(event.email ?? '');
   const [emailIsValid, setEmailIsValid] = useState(false);
-  const [tos, setTos] = useState(false);
-  const [showTos, toggleTos] = useReducer(i => !i, false);
+  const [newsletter, setNewsletter] = useState(false);
   const debouncedEmail = useDebounce(email, 400);
   const canSubmit = useMemo(
-    () => name.length > 0 && email.length > 0 && emailIsValid && tos,
-    [name, email, emailIsValid, tos]
+    () => name.length > 0 && email.length > 0 && emailIsValid,
+    [name, email, emailIsValid]
   );
   useEffect(() => {
     setEmailIsValid(isValidEmail(debouncedEmail));
@@ -43,73 +41,61 @@ const Step1 = ({
 
   const onNext = event => {
     if (event.preventDefault) event.preventDefault();
-    addToEvent({name, email});
+    addToEvent({name, email, newsletter});
     nextStep();
     return false;
   };
 
   return (
-    <>
-      <Paper {...props}>
-        <form onSubmit={onNext}>
-          <TextField
-            className={classes.textField}
-            label={t('event.creation.event_name')}
-            fullWidth
-            autoFocus
-            margin="dense"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            id="NewEventName"
-            name="name"
-          />
-          <TextField
-            className={classes.textField}
-            label={t('event.creation.creator_email')}
-            fullWidth
-            margin="dense"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            id="NewEventEmail"
-            name="email"
-            type="email"
-          />
-          <div className={classes.tos}>
+    <Paper {...props}>
+      <form onSubmit={onNext}>
+        <TextField
+          className={classes.textField}
+          label={t('event.creation.event_name')}
+          fullWidth
+          autoFocus
+          margin="dense"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          id="NewEventName"
+          name="name"
+        />
+        <TextField
+          className={classes.textField}
+          label={t('event.creation.creator_email')}
+          fullWidth
+          margin="dense"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          id="NewEventEmail"
+          name="email"
+          type="email"
+        />
+        <FormControlLabel
+          className={classes.newsletter}
+          label={t('event.creation.newsletter')}
+          control={
             <Checkbox
-              name="tos"
-              id="NewEventTos"
-              checked={tos}
-              onChange={e => setTos(e.target.checked)}
+              name="newsletter"
+              id="NewEventNewsletter"
+              checked={newsletter}
+              onChange={e => setNewsletter(e.target.checked)}
             />
-            <Typography
-              component="a"
-              role="button"
-              variant="caption"
-              onClick={toggleTos}
-              tabIndex="0"
-              onKeyPress={({charCode}) => {
-                if (charCode && (charCode === 32 || charCode === 13))
-                  toggleTos();
-              }}
-            >
-              {t('event.creation.tos')}
-            </Typography>
-          </div>
-          <Button
-            className={classes.button}
-            type="submit"
-            variant="contained"
-            color="secondary"
-            fullWidth
-            disabled={!canSubmit}
-            aria-disabled={!canSubmit}
-          >
-            {t('event.creation.next')}
-          </Button>
-        </form>
-      </Paper>
-      <TosDialog open={showTos} toggle={toggleTos} />
-    </>
+          }
+        />
+        <Button
+          className={classes.button}
+          type="submit"
+          variant="contained"
+          color="secondary"
+          fullWidth
+          disabled={!canSubmit}
+          aria-disabled={!canSubmit}
+        >
+          {t('event.creation.next')}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 
@@ -118,12 +104,8 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginTop: theme.spacing(2),
   },
-  tos: {
-    cursor: 'pointer',
+  newsletter: {
     marginTop: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-    marginLeft: '-11px',
   },
 }));
 
