@@ -1,4 +1,4 @@
-import React, {useReducer, useState, useEffect} from 'react';
+import React, {useReducer, useState, useEffect, useMemo} from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -13,6 +13,13 @@ import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import CarDialog from './CarDialog';
 
+const sortCars = (a, b) => {
+  const dateA = new Date(a.departure).getTime();
+  const dateB = new Date(b.departure).getTime();
+  if (dateA === dateB) return new Date(a.createdAt) - new Date(b.createdAt);
+  else return dateA - dateB;
+};
+
 const WaitingList = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -23,6 +30,25 @@ const WaitingList = ({car}) => {
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
   const [adding, setAdding] = useState(null);
+
+  const cars = useMemo(
+    () =>
+      strapi.stores.cars
+        ?.filter(car => car?.event?.id === event?.id)
+        .sort(sortCars),
+    [strapi.stores.cars, event]
+  );
+
+  const availability = useMemo(() => {
+    if (!cars) return;
+    let seats = 0;
+    let passengers = 0;
+    cars.forEach(car => {
+      seats += car.seats;
+      passengers += car.passengers ? car.passengers.length : 0;
+    });
+    return seats - passengers;
+  }, [cars]);
 
   useEffect(() => {
     setPassengers(event.waiting_list);
@@ -90,6 +116,9 @@ const WaitingList = ({car}) => {
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
           </IconButton>
           <Typography variant="h5">{t('passenger.title')}</Typography>
+          <Typography variant="overline">
+            {t('passenger.availability.seats', {count: availability})}
+          </Typography>
         </div>
         <Divider />
         <PassengersList
@@ -99,6 +128,7 @@ const WaitingList = ({car}) => {
           addPassenger={addPassenger}
           onClick={onClick}
           icon={isEditing ? 'close' : 'chevron_right'}
+          disabled={!availability}
         />
       </Paper>
       <RemoveDialog
@@ -114,6 +144,7 @@ const WaitingList = ({car}) => {
         onRemove={() => removePassenger(removing)}
       />
       <CarDialog
+        cars={cars}
         open={adding !== null}
         onClose={() => setAdding(null)}
         onSelect={selectCar}

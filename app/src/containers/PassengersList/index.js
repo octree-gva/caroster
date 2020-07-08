@@ -12,6 +12,7 @@ const PassengersList = ({
   addPassenger,
   icon,
   onClick,
+  disabled,
 }) => {
   const classes = useStyles();
 
@@ -41,6 +42,7 @@ const PassengersList = ({
                 color="primary"
                 edge="end"
                 onClick={() => onClick(index)}
+                disabled={disabled}
               >
                 <Icon>{icon}</Icon>
               </IconButton>

@@ -69,6 +69,10 @@
   },
   "passenger": {
     "title": "Liste d'attente",
+    "availability": {
+      "seats": "{{count}} place disponible",
+      "seats_plural": "{{count}} places disponibles"
+    },
     "creation": {
       "seats": "Nombre de passagers: {{seats}}"
     },
