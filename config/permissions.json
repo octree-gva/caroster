@@ -15,6 +15,10 @@
           {
             "name": "page",
             "actions": ["find", "findone"]
+          },
+          {
+            "name": "settings",
+            "actions": ["find"]
           }
         ]
       }
