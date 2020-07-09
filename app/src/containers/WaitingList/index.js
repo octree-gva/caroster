@@ -124,7 +124,7 @@ const WaitingList = ({car}) => {
           addPassenger={addPassenger}
           onClick={onClick}
           icon={isEditing ? 'close' : 'chevron_right'}
-          disabled={!availability}
+          disabled={availability <= 0}
         />
       </Paper>
       <RemoveDialog
