@@ -41,13 +41,9 @@ const WaitingList = ({car}) => {
 
   const availability = useMemo(() => {
     if (!cars) return;
-    let seats = 0;
-    let passengers = 0;
-    cars.forEach(car => {
-      seats += car.seats;
-      passengers += car.passengers ? car.passengers.length : 0;
-    });
-    return seats - passengers;
+    return cars.reduce((count, {seats, passengers = []}) => {
+      return count + seats - passengers.length;
+    }, 0);
   }, [cars]);
 
   useEffect(() => {
