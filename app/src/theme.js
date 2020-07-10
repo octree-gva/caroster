@@ -14,13 +14,13 @@ export default createMuiTheme({
   },
   mixins: {
     toolbar: {
-      minHeight: 64,
+      minHeight: 56,
     },
   },
   overrides: {
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: 'rgba(0,0,0,0.78)',
+        backgroundColor: '#242424',
         color: 'white',
       },
     },

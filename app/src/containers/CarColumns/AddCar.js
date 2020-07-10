@@ -12,9 +12,9 @@ const AddCar = ({toggleNewCar}) => {
       <Button
         fullWidth
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={toggleNewCar}
-        classes={{containedPrimary: classes.button}}
+        classes={{containedSecondary: classes.button}}
       >
         {t('car.creation.title')}
       </Button>
@@ -26,11 +26,12 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
+    padding: 0,
   },
   button: {
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
-    '&:hover': {color: theme.palette.primary.contrastText},
+    '&:hover': {color: theme.palette.secondary.contrastText},
   },
 }));
 

@@ -7,15 +7,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
+import {useEvent, EventProvider} from '../contexts/Event';
+import {useToast} from '../contexts/Toast';
 import Layout from '../layouts/Default';
+import Loading from '../pages/Loading';
 import EventMenu from '../containers/EventMenu';
 import EventDetails from '../containers/EventDetails';
 import EventFab from '../containers/EventFab';
-import {useEvent, EventProvider} from '../contexts/Event';
 import CarColumns from '../containers/CarColumns';
-import {useToast} from '../contexts/Toast';
 import NewCarDialog from '../containers/NewCarDialog';
-import Loading from '../pages/Loading';
 
 const Event = () => {
   const {t} = useTranslation();
@@ -71,33 +71,31 @@ const Event = () => {
         id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
       >
         <Toolbar>
-          {
-            <div className={classes.name}>
-              <Typography variant="h6" noWrap id="MenuHeaderTitle">
-                {event.name}
-              </Typography>
-              {detailsOpen && !isEditing && (
-                <IconButton
-                  color="inherit"
-                  edge="end"
-                  id="CloseDetailsBtn"
-                  onClick={() => setIsEditing(true)}
-                >
-                  <Icon className={classes.barIcon}>edit</Icon>
-                </IconButton>
-              )}
-              {detailsOpen && isEditing && (
-                <IconButton
-                  color="inherit"
-                  edge="end"
-                  id="EditEventSubmit"
-                  onClick={onEventSave}
-                >
-                  <Icon className={classes.barIcon}>done</Icon>
-                </IconButton>
-              )}
-            </div>
-          }
+          <div className={classes.name}>
+            <Typography variant="h6" noWrap id="MenuHeaderTitle">
+              {event.name}
+            </Typography>
+            {detailsOpen && !isEditing && (
+              <IconButton
+                color="inherit"
+                edge="end"
+                id="CloseDetailsBtn"
+                onClick={() => setIsEditing(true)}
+              >
+                <Icon>edit</Icon>
+              </IconButton>
+            )}
+            {detailsOpen && isEditing && (
+              <IconButton
+                color="inherit"
+                edge="end"
+                id="EditEventSubmit"
+                onClick={onEventSave}
+              >
+                <Icon>done</Icon>
+              </IconButton>
+            )}
+          </div>
           {!detailsOpen && (
             <>
               <IconButton
@@ -129,7 +127,7 @@ const Event = () => {
                 toggleDetails();
               }}
             >
-              <Icon className={classes.barIcon}>close</Icon>
+              <Icon>close</Icon>
             </IconButton>
           )}
           <EventMenu
@@ -185,7 +183,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   shareIcon: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
   },
 }));
 

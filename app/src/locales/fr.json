@@ -21,10 +21,10 @@
       "date": "Départ",
       "address": "Adresse de l'événement",
       "next": "Suivant",
-      "newsletter": "J'accepte d'être tenu informé de l'évolution du produit par e-mail"
+      "newsletter": "Me tenir informé des évolutions de Caroster par e-mail"
     },
     "actions": {
-      "show_details": "Afficher les détails",
+      "show_details": "Détails de l'événement",
       "hide_details": "Cacher les détails",
       "add_car": "Ajouter une voiture",
       "invite": "Inviter",
@@ -43,6 +43,8 @@
       "phone": "Contact"
     },
     "creation": {
+      "date": "Départ",
+      "date_min": "Sélectionnez une date à venir",
       "title": "Ajouter une voiture",
       "name": "Nom de la voiture",
       "seats": "Nombre de places",

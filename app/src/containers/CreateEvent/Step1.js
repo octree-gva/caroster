@@ -6,7 +6,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
-import Paper from '../../components/Paper';
 
 const isValidEmail = email =>
   // eslint-disable-next-line
@@ -14,14 +13,7 @@ const isValidEmail = email =>
     email
   );
 
-const Step1 = ({
-  nextStep,
-  previousStep,
-  createEvent,
-  event,
-  addToEvent,
-  ...props
-}) => {
+const Step1 = ({nextStep, previousStep, createEvent, event, addToEvent}) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -47,55 +39,54 @@ const Step1 = ({
   };
 
   return (
-    <Paper {...props}>
-      <form onSubmit={onNext}>
-        <TextField
-          className={classes.textField}
-          label={t('event.creation.event_name')}
-          fullWidth
-          autoFocus
-          margin="dense"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          id="NewEventName"
-          name="name"
-        />
-        <TextField
-          className={classes.textField}
-          label={t('event.creation.creator_email')}
-          fullWidth
-          margin="dense"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          id="NewEventEmail"
-          name="email"
-          type="email"
-        />
-        <FormControlLabel
-          className={classes.newsletter}
-          label={t('event.creation.newsletter')}
-          control={
-            <Checkbox
-              name="newsletter"
-              id="NewEventNewsletter"
-              checked={newsletter}
-              onChange={e => setNewsletter(e.target.checked)}
-            />
-          }
-        />
-        <Button
-          className={classes.button}
-          type="submit"
-          variant="contained"
-          color="secondary"
-          fullWidth
-          disabled={!canSubmit}
-          aria-disabled={!canSubmit}
-        >
-          {t('event.creation.next')}
-        </Button>
-      </form>
-    </Paper>
+    <form onSubmit={onNext}>
+      <TextField
+        className={classes.textField}
+        label={t('event.creation.event_name')}
+        fullWidth
+        autoFocus
+        margin="dense"
+        value={name}
+        onChange={e => setName(e.target.value)}
+        id="NewEventName"
+        name="name"
+      />
+      <TextField
+        className={classes.textField}
+        label={t('event.creation.creator_email')}
+        fullWidth
+        margin="dense"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        id="NewEventEmail"
+        name="email"
+        type="email"
+      />
+      <FormControlLabel
+        className={classes.newsletter}
+        label={t('event.creation.newsletter')}
+        control={
+          <Checkbox
+            name="newsletter"
+            color="primary"
+            id="NewEventNewsletter"
+            checked={newsletter}
+            onChange={e => setNewsletter(e.target.checked)}
+          />
+        }
+      />
+      <Button
+        className={classes.button}
+        type="submit"
+        variant="contained"
+        color="secondary"
+        fullWidth
+        disabled={!canSubmit}
+        aria-disabled={!canSubmit}
+      >
+        {t('event.creation.next')}
+      </Button>
+    </form>
   );
 };
 

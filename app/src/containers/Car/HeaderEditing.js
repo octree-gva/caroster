@@ -105,13 +105,14 @@ const HeaderEditing = ({car, toggleEditing}) => {
           <Icon>done</Icon>
         </IconButton>
         <DateTimePicker
-          label={t('event.creation.date')}
+          label={t('car.creation.date')}
           value={date}
           onChange={setDate}
           className={classes.textField}
           fullWidth
           format="LLLL"
           disablePast
+          minDateMessage={t('car.creation.date_min')}
           id="EditCarDateTime"
           name="date"
           cancelLabel={t('generic.cancel')}

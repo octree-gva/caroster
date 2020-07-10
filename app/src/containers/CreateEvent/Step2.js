@@ -7,9 +7,8 @@ import {DatePicker} from '@material-ui/pickers';
 import moment from 'moment';
 import {useHistory} from 'react-router-dom';
 import {useToast} from '../../contexts/Toast';
-import Paper from '../../components/Paper';
 
-const Step2 = ({event, addToEvent, createEvent, ...props}) => {
+const Step2 = ({event, addToEvent, createEvent}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const history = useHistory();
@@ -30,44 +29,42 @@ const Step2 = ({event, addToEvent, createEvent, ...props}) => {
   };
 
   return (
-    <Paper {...props}>
-      <form onSubmit={onCreate}>
-        <DatePicker
-          label={t('event.creation.date')}
-          value={date}
-          onChange={setDate}
-          className={classes.textField}
-          fullWidth
-          format="DD.MM.YYYY"
-          disablePast
-          id="NewEventDate"
-          name="date"
-          cancelLabel={t('generic.cancel')}
-        />
-        <TextField
-          className={classes.textField}
-          label={t('event.creation.address')}
-          fullWidth
-          margin="dense"
-          multiline
-          rows={4}
-          value={address}
-          onChange={e => setAddress(e.target.value)}
-          id="NewEventAddress"
-          name="address"
-        />
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="secondary"
-          fullWidth
-          type="submit"
-          id="NewEventSubmit"
-        >
-          {t('generic.create')}
-        </Button>
-      </form>
-    </Paper>
+    <form onSubmit={onCreate}>
+      <DatePicker
+        label={t('event.creation.date')}
+        value={date}
+        onChange={setDate}
+        className={classes.textField}
+        fullWidth
+        format="DD.MM.YYYY"
+        disablePast
+        id="NewEventDate"
+        name="date"
+        cancelLabel={t('generic.cancel')}
+      />
+      <TextField
+        className={classes.textField}
+        label={t('event.creation.address')}
+        fullWidth
+        margin="dense"
+        multiline
+        rows={4}
+        value={address}
+        onChange={e => setAddress(e.target.value)}
+        id="NewEventAddress"
+        name="address"
+      />
+      <Button
+        className={classes.button}
+        variant="contained"
+        color="secondary"
+        fullWidth
+        type="submit"
+        id="NewEventSubmit"
+      >
+        {t('generic.create')}
+      </Button>
+    </form>
   );
 };
 
