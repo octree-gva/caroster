@@ -1,6 +1,6 @@
 'use strict';
 const axios = require('axios');
-
+const moment = require('moment');
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
  * to customize this model
@@ -49,6 +49,39 @@ module.exports = {
         } catch (error) {
           strapi.log.error(error);
         }
+      }
+    },
+
+    async afterCreate(event) {
+      let eventTime = '';
+      if (event.date) {
+        eventTime =
+          ', ' +
+          moment(eventTime.date).locale('fr').format('dddd Do MMMM YYYY');
+      }
+      let eventAddress = '';
+      if (event.address) {
+        eventAddress = ', ' + event.address;
+      }
+      const {STRAPI_URL = ''} = process.env;
+
+      try {
+        await strapi.plugins['sendgrid'].services.email.send({
+          to: event.email,
+          from: 'caroster@octree.ch',
+          templateId: 'd-a1b5043fb186411ea4b57ea956625093',
+          dynamic_template_data: {
+            eventName: event.name,
+            eventTime,
+            eventAddress,
+            eventLink: `${STRAPI_URL}/e/${event.id}`,
+          },
+        });
+      } catch (error) {
+        strapi.log.error(
+          `Impossible to send email notification to ${event.email} for event#${event.id}:`,
+          error.message
+        );
       }
     },
   },
