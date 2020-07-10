@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "moment": "^2.27.0",
     "strapi": "3.0.5",
     "strapi-admin": "3.0.5",
     "strapi-connector-mongoose": "3.0.5",
