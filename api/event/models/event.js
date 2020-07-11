@@ -1,6 +1,7 @@
 'use strict';
 const axios = require('axios');
 const moment = require('moment');
+require('moment/locale/fr-ch');
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
  * to customize this model
@@ -55,9 +56,7 @@ module.exports = {
     async afterCreate(event) {
       let eventTime = '';
       if (event.date) {
-        eventTime =
-          ', ' +
-          moment(eventTime.date).locale('fr').format('dddd Do MMMM YYYY');
+        eventTime = ', ' + moment(eventTime.date).format('dddd Do MMMM YYYY');
       }
       let eventAddress = '';
       if (event.address) {
@@ -79,8 +78,9 @@ module.exports = {
         });
       } catch (error) {
         strapi.log.error(
-          `Impossible to send email notification to ${event.email} for event#${event.id}:`,
-          error.message
+          `Impossible to send email notification to ${event.email} for event#${
+            event.id
+          }. Error: ${JSON.stringify(error)}`
         );
       }
     },
