@@ -9,7 +9,7 @@ const steps = [Step1, Step2];
 
 const eventReducer = (state, item) => ({...state, ...item});
 
-const CreateEvent = props => {
+const CreateEvent = () => {
   const strapi = useStrapi();
   const [step, setStep] = useState(0);
   const [event, addToEvent] = useReducer(eventReducer, {});
@@ -26,7 +26,6 @@ const CreateEvent = props => {
 
   return (
     <Step
-      {...props}
       event={event}
       addToEvent={addToEvent}
       createEvent={createEvent}

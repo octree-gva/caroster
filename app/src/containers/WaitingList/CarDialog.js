@@ -34,7 +34,7 @@ const CarDialog = ({cars, open, onClose, onSelect}) => {
         </Toolbar>
       </AppBar>
       <div className={classes.offset}>
-        <List>
+        <List disablePadding>
           {cars?.map((car, i) => (
             <ListItem
               key={i}

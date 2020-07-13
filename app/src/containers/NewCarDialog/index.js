@@ -74,11 +74,11 @@ const NewCarDialog = ({open, toggle}) => {
 
   return (
     <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      onClose={toggle}
       fullWidth
       maxWidth="sm"
+      open={open}
+      onClose={toggle}
+      TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>
         <DialogTitle>{t('car.creation.title')}</DialogTitle>

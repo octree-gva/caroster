@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '1rem',
   },
   link: {
-    width: '75%',
+    width: '60%',
   },
   logo: {
     display: 'block',

@@ -1,5 +1,6 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import Input from './Input';
@@ -30,25 +31,21 @@ const PassengersList = ({
   return (
     <div className={classes.container}>
       {emptyPlaces > 0 && <Input addPassenger={addPassenger} />}
-      {!!places &&
-        !!list &&
-        list.map((passenger, index) => (
-          <Passenger
-            key={index}
-            passenger={passenger}
-            button={
-              <IconButton
-                size="small"
-                color="primary"
-                edge="end"
-                onClick={() => onClick(index)}
-                disabled={disabled}
-              >
-                <Icon>{icon}</Icon>
-              </IconButton>
-            }
-          />
-        ))}
+      <List disablePadding>
+        {!!places &&
+          !!list &&
+          list.map((passenger, index) => (
+            <ListItem key={index} onClick={() => !disabled && onClick(index)}>
+              <Passenger
+                key={index}
+                passenger={passenger}
+                button={
+                  <Icon color={disabled ? 'disabled' : 'primary'}>{icon}</Icon>
+                }
+              />
+            </ListItem>
+          ))}
+      </List>
     </div>
   );
 };
