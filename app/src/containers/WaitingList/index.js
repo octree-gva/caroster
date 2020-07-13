@@ -94,7 +94,7 @@ const WaitingList = ({car}) => {
     toggleEditing();
   };
 
-  const onClick = index => {
+  const onPress = index => {
     if (isEditing) setRemoving(index);
     else setAdding(index);
   };
@@ -122,7 +122,7 @@ const WaitingList = ({car}) => {
           places={50}
           passengers={passengers}
           addPassenger={addPassenger}
-          onClick={onClick}
+          onPress={onPress}
           icon={isEditing ? 'close' : 'chevron_right'}
           disabled={availability <= 0}
         />

@@ -1,7 +1,6 @@
 import React from 'react';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
@@ -11,7 +10,7 @@ const Passenger = ({passenger, button}) => {
   return !!passenger ? (
     <>
       <ListItemText primary={passenger} />
-      <ListItemSecondaryAction>{button}</ListItemSecondaryAction>
+      {button}
     </>
   ) : (
     <>
