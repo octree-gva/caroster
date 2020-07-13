@@ -21,7 +21,7 @@
     "creation": {
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
-      "date": "Départ",
+      "date": "Date de l'événement",
       "address": "Adresse de l'événement",
       "next": "Suivant",
       "newsletter": "Me tenir informé des évolutions de Caroster par e-mail"
