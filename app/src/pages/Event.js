@@ -1,4 +1,5 @@
 import React, {useState, useReducer, useEffect} from 'react';
+import {Helmet} from 'react-helmet';
 import {useTranslation} from 'react-i18next';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -64,6 +65,9 @@ const Event = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{t('meta.title', {title: event.name})}</title>
+      </Helmet>
       <AppBar
         position="static"
         color="primary"

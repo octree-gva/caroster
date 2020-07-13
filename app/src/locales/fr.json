@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "title": "Caroster - {{title}}"
+  },
   "generic": {
     "loading": "Chargement...",
     "close": "Fermer",
