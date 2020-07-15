@@ -87,6 +87,7 @@
     "errors": {
       "cant_add_passenger": "Impossible d'ajouter un passager",
       "cant_save_passengers": "Impossible de mettre à jour passagers",
+      "cant_remove_passenger": "Impossible de retirer le passager",
       "cant_select_car": "Impossible de sélectionner la voiture"
     }
   }
