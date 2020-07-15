@@ -89,5 +89,14 @@
       "cant_save_passengers": "Impossible de mettre à jour passagers",
       "cant_select_car": "Impossible de sélectionner la voiture"
     }
+  },
+  "signup":{
+    "email": "Email",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "password": "Mot de passe",
+    "submit": "Créer son compte",
+    "login": "Déjà un compte ? Se connecter"
+    
   }
 }

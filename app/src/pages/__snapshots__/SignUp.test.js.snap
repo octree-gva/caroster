@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp page match snapshot 1`] = `
+<div>
+  <div
+    className="makeStyles-layout-1"
+  >
+    <div
+      className="MuiContainer-root MuiContainer-maxWidthSm"
+    >
+      <div
+        className="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          className="makeStyles-layout-2"
+        >
+          <a
+            className="makeStyles-link-3"
+            href="https://caroster.io"
+          >
+            <img
+              alt="Caroster"
+              className="makeStyles-logo-4"
+              src="logo.png"
+            />
+          </a>
+        </div>
+        <span>
+          /containers/SignUp component
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
