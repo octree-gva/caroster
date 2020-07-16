@@ -6,6 +6,7 @@ import useGTM from './hooks/useGTM';
 import Home from './pages/Home';
 import Event from './pages/Event';
 import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard';
 import SignUp from './pages/SignUp';
 const Router = () => {
   useGTM();
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path="/e/:eventId" component={Event} />
         <Route path="/" exact component={Home} />
         <Route path="/register" exact component={SignUp} />
+        <Route path="/dashboard" exact component={Dashboard} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

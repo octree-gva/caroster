@@ -96,7 +96,10 @@
     "lastName": "Nom",
     "password": "Mot de passe",
     "submit": "Créer son compte",
-    "login": "Déjà un compte ? Se connecter"
+    "login": "Déjà un compte ? Se connecter",
+    "errors":{
+      "email_taken": "Email déjà pris"
+    }
     
   }
 }

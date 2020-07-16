@@ -12,7 +12,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "fontsource-roboto": "^2.1.4",
-    "i18next": "^19.5.1",
+    "i18next": "^19.6.1",
     "leaflet": "^1.6.0",
     "marked": "^1.1.0",
     "moment": "^2.27.0",
@@ -24,7 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.26.1",
-    "strapi-react-context": "^0.2.3"
+    "strapi-react-context": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,14 +3,16 @@ import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {Link} from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActions';
 import CardActions from '@material-ui/core/CardActions';
+import {useToast} from '../../contexts/Toast';
+import {Redirect} from 'react-router-dom';
+import {CircularProgress} from '@material-ui/core';
 
 export default () => {
   const {t} = useTranslation();
-  const {signUp} = useAuth();
+  const {signUp, token} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -23,16 +25,47 @@ export default () => {
         .length === 0,
     [firstName, lastName, email, password]
   );
+  const {addToast} = useToast();
 
-  const onSubmit = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await signUp(email, email, password, {firstName, lastName});
-    } catch (error) {
-      console.error(error);
-    }
-    setIsLoading(false);
-  }, [firstName, lastName, email, password]);
+  const onSubmit = useCallback(
+    async evt => {
+      if (evt.preventDefault) evt.preventDefault();
+      setIsLoading(true);
+      try {
+        const error = await signUp(email.replace(/\.@/, '_'), email, password, {
+          firstName,
+          lastName,
+        });
+        if (error) {
+          addToast(t('signup.errors.email_taken'));
+        }
+      } catch (error) {
+        console.log('ERROR', {error});
+        // if (error.statusCode && error.statusCode === 400) {
+        //   const [message] = error.message.messages;
+        //   console.log('add toast', message);
+        //   addToast(message.message);
+        // }
+      }
+      console.log('SIGN UP');
+
+      setIsLoading(false);
+      return false;
+    },
+    [firstName, lastName, email, password, addToast, signUp]
+  );
+  if (isLoading) {
+    return (
+      <CardContent>
+        <CircularProgress />
+      </CardContent>
+    );
+  }
+
+  if (token) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <form onSubmit={onSubmit}>
       <CardContent>
@@ -93,9 +126,9 @@ export default () => {
           >
             {t('signup.submit')}
           </Button>
-          <Link id="SignUpLogin" href="/login">
+          <Button id="SignUpLogin" href="/login">
             {t('signup.login')}
-          </Link>
+          </Button>
         </CardActions>
       </CardActionArea>
     </form>
