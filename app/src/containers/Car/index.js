@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import {useTranslation} from 'react-i18next';
-import {useStrapi} from 'strapi-react-context';
+import {useStrapi, useAuth} from 'strapi-react-context';
 import {useEvent} from '../../contexts/Event';
 import {useToast} from '../../contexts/Toast';
 import PassengersList from '../PassengersList';
@@ -16,6 +16,7 @@ const Car = ({car}) => {
   const {event} = useEvent();
   const {addToast} = useToast();
   const strapi = useStrapi();
+  const {token, authState} = useAuth();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
 
   if (!car) return null;
@@ -25,9 +26,16 @@ const Car = ({car}) => {
       await strapi.services.cars.update(car.id, {
         passengers: [...(car.passengers || []), passenger],
       });
+      if (!!token) {
+        const {user} = authState;
+        const {events = []} = user;
+        await strapi.services.users.update('me', {
+          ...user,
+          events: [...events.filter(e => e !== event.id), event.id],
+        });
+      }
     } catch (error) {
       console.error(error);
-      addToast(t('car.errors.cant_add_passenger'));
     }
   };
 
