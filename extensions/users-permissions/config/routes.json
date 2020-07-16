@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "method": "PUT",
+      "path": "/users/me",
+      "handler": "CarosterUser.update",
+      
+      "config": {
+        "policies": ["plugins::users-permissions.setme"],
+        "prefix": "",
+        "description": "Update an existing user",
+        "tag": {
+          "plugin": "users-permissions",
+          "name": "User",
+          "actionType": "update"
+        }
+      }
+    }
+  ]
+}
