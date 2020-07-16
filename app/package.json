@@ -23,7 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.26.1",
-    "strapi-react-context": "^0.2.6"
+    "strapi-react-context": "^0.2.7"
   },
   "scripts": {
     "start": "react-scripts start",
