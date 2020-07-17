@@ -23,9 +23,9 @@ const sortCars = (a, b) => {
 const WaitingList = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
+  const strapi = useStrapi();
   const {event} = useEvent();
   const {addToast} = useToast();
-  const strapi = useStrapi();
   const [passengers, setPassengers] = useState(event.waiting_list);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
