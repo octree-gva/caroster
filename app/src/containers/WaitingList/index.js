@@ -64,7 +64,7 @@ const WaitingList = ({car}) => {
     );
   };
 
-  const removePassenger = index => {
+  const removePassenger = async index => {
     return saveWaitingList(
       passengers.filter((_, i) => i !== index),
       'passenger.errors.cant_remove_passenger'
@@ -127,7 +127,7 @@ const WaitingList = ({car}) => {
         }
         open={removing !== null}
         onClose={() => setRemoving(null)}
-        onRemove={async () => removePassenger(removing)}
+        onRemove={() => removePassenger(removing)}
       />
       <CarDialog
         cars={cars}
