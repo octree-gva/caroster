@@ -14,6 +14,7 @@ export default () => {
       const {user} = authState;
       const {events} = user;
       updateProfile({
+        ...user,
         events: !!events
           ? [...events.filter(e => e !== event.id), event.id]
           : [event.id],
