@@ -9,9 +9,8 @@ import Input from './Input';
 import Passenger from './Passenger';
 
 const PassengersList = ({
-  hideEmpty,
   passengers,
-  places = 0,
+  places,
   addPassenger,
   icon,
   onClick,
@@ -22,14 +21,12 @@ const PassengersList = ({
 
   let list = passengers;
 
-  if (!hideEmpty) {
+  if (!!places) {
     const emptyList = [...Array(places)];
     list = Array.isArray(passengers)
       ? emptyList.map((u, index) => passengers[index])
       : emptyList;
   }
-
-  const emptyPlaces = !!passengers ? places - passengers.length : places;
 
   const button = index => {
     return !!onClick ? (
@@ -45,10 +42,13 @@ const PassengersList = ({
 
   return (
     <div className={classes.container}>
-      {emptyPlaces > 0 && <Input addPassenger={addPassenger} />}
+      {(!!places
+        ? !!passengers
+          ? places - passengers.length > 0
+          : places > 0
+        : true) && <Input addPassenger={addPassenger} />}
       <List disablePadding>
-        {!!places &&
-          !!list &&
+        {!!list &&
           list.map((passenger, index) => (
             <ListItem
               key={index}

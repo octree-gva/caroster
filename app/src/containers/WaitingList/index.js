@@ -86,6 +86,11 @@ const WaitingList = ({car}) => {
     setAdding(null);
   };
 
+  const onPress = index => {
+    if (isEditing) setRemoving(index);
+    else setAdding(index);
+  };
+
   return (
     <>
       <Paper className={classes.root}>
@@ -104,27 +109,13 @@ const WaitingList = ({car}) => {
           </Typography>
         </div>
         <Divider />
-        {isEditing ? (
-          <PassengersList
-            hideEmpty
-            places={Number.MAX_SAFE_INTEGER}
-            passengers={passengers}
-            addPassenger={addPassenger}
-            onPress={setRemoving}
-            icon={'close'}
-            disabled={false}
-          />
-        ) : (
-          <PassengersList
-            hideEmpty
-            places={Number.MAX_SAFE_INTEGER}
-            passengers={passengers}
-            addPassenger={addPassenger}
-            onPress={setAdding}
-            icon={'chevron_right'}
-            disabled={availability <= 0}
-          />
-        )}
+        <PassengersList
+          passengers={passengers}
+          addPassenger={addPassenger}
+          onPress={onPress}
+          icon={isEditing ? 'close' : 'chevron_right'}
+          disabled={!isEditing && availability <= 0}
+        />
       </Paper>
       <RemoveDialog
         text={
