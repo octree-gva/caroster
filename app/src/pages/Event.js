@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect, useCallback} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import {Helmet} from 'react-helmet';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
@@ -19,9 +19,11 @@ import EventFab from '../containers/EventFab';
 import CarColumns from '../containers/CarColumns';
 import NewCarDialog from '../containers/NewCarDialog';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
+import {useHistory} from 'react-router-dom';
 
 const Event = () => {
   const {t} = useTranslation();
+  const history = useHistory();
   const {addToast} = useToast();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
@@ -29,7 +31,7 @@ const Event = () => {
   const classes = useStyles({detailsOpen});
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
   const {event, isEditing, setIsEditing, updateEvent} = useEvent();
-  const {token, logout} = useAuth();
+  const {token} = useAuth();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -64,16 +66,20 @@ const Event = () => {
     }
   };
 
-  const addToMyEvents = useCallback(async () => {
+  const addToMyEvents = () => {
     if (!event) return;
     localStorage.setItem('addToMyEvents', event.id);
     setIsAddToMyEvent(true);
-  }, [event]);
+  };
+  const signUp = () => {
+    if (!event) return;
+    localStorage.setItem('addToMyEvents', event.id);
+    history.push('/register');
+  };
+  const signIn = history.push.bind(undefined, '/login');
+  const goToDashboard = history.push.bind(undefined, '/dashboard');
+  const goProfile = history.push.bind(undefined, '/profile');
 
-  const goToDashboard = useCallback(
-    () => (window.location.href = '/dashboard'),
-    []
-  );
   if (!event) return <Loading />;
 
   return (
@@ -168,20 +174,20 @@ const Event = () => {
                 onClick: goToDashboard,
                 id: 'GoToDashboardTab',
               },
-              {
-                label: t('event.actions.add_car'),
-                onClick: toggleNewCar,
-                id: 'NewCarTab',
+              !token && {
+                label: t('event.actions.signin'),
+                onClick: signIn,
+                id: 'SignInTab',
               },
-              {
-                label: t('event.actions.invite'),
-                onClick: () => {},
-                id: 'InviteTab',
+              !token && {
+                label: t('event.actions.signup'),
+                onClick: signUp,
+                id: 'SignUpTab',
               },
               !!token && {
-                label: t('event.actions.logout'),
-                onClick: logout,
-                id: 'LogoutTab',
+                label: t('event.actions.my_profile'),
+                onClick: goProfile,
+                id: 'ProfileTab',
               },
             ].filter(Boolean)}
           />

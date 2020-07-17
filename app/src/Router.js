@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Event from './pages/Event';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import SignUpSuccess from './pages/SignUpSuccess';
 import NotConfirmed from './pages/SignUpSuccess';
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/login" exact component={SignIn} />
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/confirm" exact component={NotConfirmed} />
+        <Route path="/profile" exact component={Profile} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

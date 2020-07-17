@@ -43,7 +43,9 @@
       "copied": "Le lien a été copié dans votre presse-papier",
       "add_to_my_events": "Ajouter à mes évènements",
       "my_events": "Mes évènements",
-      "logout": "Déconnecter"
+      "signin": "Se connecter",
+      "signup": "S'inscrire"
+
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",

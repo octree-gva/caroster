@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Layout from '../layouts/Centered';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
