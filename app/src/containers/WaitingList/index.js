@@ -1,10 +1,4 @@
-import React, {
-  useReducer,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, {useReducer, useState, useMemo} from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -32,10 +26,10 @@ const WaitingList = ({car}) => {
   const {event} = useEvent();
   const {addToast} = useToast();
   const strapi = useStrapi();
-  const [passengers, setPassengers] = useState(event.waiting_list);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
   const [adding, setAdding] = useState(null);
+  const passengers = event.waiting_list;
 
   const cars = useMemo(
     () =>
@@ -52,51 +46,30 @@ const WaitingList = ({car}) => {
     }, 0);
   }, [cars]);
 
-  useEffect(() => {
-    setPassengers(event.waiting_list);
-  }, [event.waiting_list]);
+  const saveWaitingList = async (waitingList, i18nError) => {
+    try {
+      await strapi.services.events.update(event.id, {
+        waiting_list: waitingList,
+      });
+    } catch (error) {
+      console.error(error);
+      addToast(t(i18nError));
+    }
+  };
 
-  const saveWaitingList = useCallback(
-    async (waitingList, i18nError) => {
-      try {
-        await strapi.services.events.update(event.id, {
-          waiting_list: waitingList,
-        });
-      } catch (error) {
-        console.error(error);
-        addToast(t(i18nError));
-      }
-    },
-    [event]
-  );
+  const addPassenger = async passenger => {
+    return saveWaitingList(
+      [...(event.waiting_list || []), passenger],
+      'passenger.errors.cant_add_passenger'
+    );
+  };
 
-  const addPassenger = useCallback(
-    async passenger => {
-      return saveWaitingList(
-        [...(event.waiting_list || []), passenger],
-        'passenger.errors.cant_add_passenger'
-      );
-    },
-    [saveWaitingList]
-  );
-
-  const removePassenger = useCallback(
-    index => {
-      const updatedPassagers = passengers.filter((_, i) => i !== index);
-      setPassengers(updatedPassagers);
-      return saveWaitingList(
-        updatedPassagers,
-        'passenger.errors.cant_remove_passenger'
-      );
-    },
-    [passengers, saveWaitingList]
-  );
-
-  const savePassengers = useCallback(
-    async () =>
-      saveWaitingList(passengers, 'passenger.errors.cant_save_passengers'),
-    [passengers, saveWaitingList]
-  );
+  const removePassenger = index => {
+    return saveWaitingList(
+      passengers.filter((_, i) => i !== index),
+      'passenger.errors.cant_remove_passenger'
+    );
+  };
 
   const selectCar = async car => {
     try {
@@ -113,11 +86,6 @@ const WaitingList = ({car}) => {
     setAdding(null);
   };
 
-  const onEdit = () => {
-    if (isEditing) savePassengers();
-    toggleEditing();
-  };
-
   return (
     <>
       <Paper className={classes.root}>
@@ -126,7 +94,7 @@ const WaitingList = ({car}) => {
             size="small"
             color="primary"
             className={classes.editBtn}
-            onClick={onEdit}
+            onClick={toggleEditing}
           >
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
           </IconButton>
@@ -168,10 +136,7 @@ const WaitingList = ({car}) => {
         }
         open={removing !== null}
         onClose={() => setRemoving(null)}
-        onRemove={async () => {
-          removePassenger(removing);
-          savePassengers();
-        }}
+        onRemove={async () => removePassenger(removing)}
       />
       <CarDialog
         cars={cars}
