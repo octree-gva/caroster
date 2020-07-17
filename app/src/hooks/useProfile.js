@@ -10,7 +10,7 @@ export default () => {
     if (connected) {
       const {user} = authState;
       const {events = []} = user;
-      //TODO: use authState.updateProfile
+      // TODO: use authState.updateProfile
       await strapi.services.users.update('me', {
         ...user,
         events: [...events.filter(e => e !== event.id), event.id],
