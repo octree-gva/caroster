@@ -68,6 +68,10 @@ const Event = () => {
 
   const addToMyEvents = () => {
     if (!event) return;
+<<<<<<< HEAD
+=======
+    window.localStorage.setItem('addToMyEvents', event.id);
+>>>>>>> fd8fb48736c1f2b5c5437607a5cd86f0b9523d93
     setIsAddToMyEvent(true);
   };
 
