@@ -12,7 +12,7 @@ import CardActionArea from '@material-ui/core/CardActions';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
-export default () => {
+const NotConfirmed = () => {
   const {t} = useTranslation();
   const {token} = useAuth();
   if (token) {
@@ -46,3 +46,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default NotConfirmed;

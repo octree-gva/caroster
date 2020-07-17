@@ -66,7 +66,7 @@ const Event = () => {
 
   const addToMyEvents = useCallback(async () => {
     if (!event) return;
-    localStorage.setItem('addToMyEvents', event.id);
+    window.localStorage.setItem('addToMyEvents', event.id);
     setIsAddToMyEvent(true);
   }, [event]);
 

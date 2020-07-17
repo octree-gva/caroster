@@ -9,7 +9,7 @@ import {useToast} from '../../contexts/Toast';
 import {Redirect} from 'react-router-dom';
 import {CircularProgress} from '@material-ui/core';
 
-export default () => {
+const SignUp = () => {
   const {t} = useTranslation();
   const {signUp, authState = {}} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -127,3 +127,5 @@ export default () => {
     </form>
   );
 };
+
+export default SignUp;

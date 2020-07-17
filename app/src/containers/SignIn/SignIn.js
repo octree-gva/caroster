@@ -9,7 +9,7 @@ import {CircularProgress} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import {useToast} from '../../contexts/Toast';
 
-export default () => {
+const SignIn = () => {
   const {t} = useTranslation();
   const {login, token, authState} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -97,3 +97,5 @@ export default () => {
     </form>
   );
 };
+
+export default SignIn;

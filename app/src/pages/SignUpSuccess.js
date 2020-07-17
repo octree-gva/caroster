@@ -11,7 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
-export default () => {
+const SignUpSuccess = () => {
   const {t} = useTranslation();
   const {token} = useAuth();
   if (token) {
@@ -43,3 +43,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default SignUpSuccess;
