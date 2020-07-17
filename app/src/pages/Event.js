@@ -1,6 +1,7 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, {useState, useReducer, useEffect, useCallback} from 'react';
 import {Helmet} from 'react-helmet';
 import {useTranslation} from 'react-i18next';
+import {useAuth} from 'strapi-react-context';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
@@ -17,16 +18,18 @@ import EventDetails from '../containers/EventDetails';
 import EventFab from '../containers/EventFab';
 import CarColumns from '../containers/CarColumns';
 import NewCarDialog from '../containers/NewCarDialog';
+import AddToMyEventDialog from '../containers/AddToMyEventDialog';
 
 const Event = () => {
   const {t} = useTranslation();
   const {addToast} = useToast();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
   const classes = useStyles({detailsOpen});
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
   const {event, isEditing, setIsEditing, updateEvent} = useEvent();
-
+  const {token, logout} = useAuth();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -61,6 +64,16 @@ const Event = () => {
     }
   };
 
+  const addToMyEvents = useCallback(async () => {
+    if (!event) return;
+    localStorage.setItem('addToMyEvents', event.id);
+    setIsAddToMyEvent(true);
+  }, [event]);
+
+  const goToDashboard = useCallback(
+    () => (window.location.href = '/dashboard'),
+    []
+  );
   if (!event) return <Loading />;
 
   return (
@@ -145,6 +158,16 @@ const Event = () => {
                 onClick: toggleDetails,
                 id: 'DetailsTab',
               },
+              !token && {
+                label: t('event.actions.add_to_my_events'),
+                onClick: addToMyEvents,
+                id: 'AddToMyEventsTab',
+              },
+              !!token && {
+                label: t('event.actions.my_events'),
+                onClick: goToDashboard,
+                id: 'GoToDashboardTab',
+              },
               {
                 label: t('event.actions.add_car'),
                 onClick: toggleNewCar,
@@ -155,7 +178,12 @@ const Event = () => {
                 onClick: () => {},
                 id: 'InviteTab',
               },
-            ]}
+              !!token && {
+                label: t('event.actions.logout'),
+                onClick: logout,
+                id: 'LogoutTab',
+              },
+            ].filter(Boolean)}
           />
         </Toolbar>
         <Container className={classes.container} maxWidth="sm">
@@ -165,6 +193,11 @@ const Event = () => {
       <CarColumns toggleNewCar={toggleNewCar} />
       <EventFab toggleNewCar={toggleNewCar} open={openNewCar} />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
+      <AddToMyEventDialog
+        open={isAddToMyEvent}
+        onClose={() => setIsAddToMyEvent(false)}
+        event={event}
+      />
     </Layout>
   );
 };

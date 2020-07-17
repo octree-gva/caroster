@@ -9,7 +9,17 @@
     "cancel": "Annuler",
     "remove": "Supprimer",
     "save": "Enregistrer",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "errors":{
+      "unknown": "Une erreur inconnue c'est produite",
+      "rejected": "Quelque chose c'est mal passé",
+      "bad_data": "Il manque quelque chose",
+      "unauthorized": "Problème d'authentification",
+      "forbidden": "Vous n'avez pas le droit de faire cette action",
+      "not_found": "Resource introuvable",
+      "server": "Problème sur nos serveurs",
+      "timeout": "Connexion instable, re-essayé plus tard"
+    }
   },
   "event": {
     "fields": {
@@ -32,11 +42,21 @@
       "add_car": "Ajouter une voiture",
       "invite": "Inviter",
       "find_car": "Trouver une voiture",
-      "copied": "Le lien a été copié dans votre presse-papier"
+      "copied": "Le lien a été copié dans votre presse-papier",
+      "add_to_my_events": "Ajouter à mes évènements",
+      "my_events": "Mes évènements",
+      "logout": "Déconnecter"
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",
       "cant_update": "Impossible de modifier l'événement"
+    },
+    "add_to_my_events": {
+      "cancel": "Annuler",
+      "login": "Se connecter",
+      "register" : "S'inscrire",
+      "title": "Ajouter {{eventName}} à sa liste d'évènement",
+      "text_html": "Pour ajouter <strong>{{eventName}}</strong>, il est nécessaire de se connecter ou de créer un compte."
     }
   },
   "car": {
@@ -90,5 +110,28 @@
       "cant_remove_passenger": "Impossible de retirer le passager",
       "cant_select_car": "Impossible de sélectionner la voiture"
     }
+  },
+  "signup":{
+    "email": "Email",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "password": "Mot de passe",
+    "submit": "Créer son compte",
+    "login": "Déjà un compte ? Se connecter",
+    "errors":{
+      "email_taken": "Email déjà pris"
+    },
+    "success": {
+      "title": "Bienvenue !",
+      "text": "Nous avons besoin de confirmer votre email avant de pouvoir vous connecter",
+      "login": "Se connecter"
+    }
+  },
+  "signin": {
+    "email": "Email",
+    "password": "Mot de passe",
+    "login": "Se connecter",
+    "register": "Pas encore de compte ? S'inscrire",
+    "errors": "Vérifier votre email et mot de passe"
   }
 }
