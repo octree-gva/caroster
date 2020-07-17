@@ -168,16 +168,6 @@ const Event = () => {
                 onClick: goToDashboard,
                 id: 'GoToDashboardTab',
               },
-              {
-                label: t('event.actions.add_car'),
-                onClick: toggleNewCar,
-                id: 'NewCarTab',
-              },
-              {
-                label: t('event.actions.invite'),
-                onClick: () => {},
-                id: 'InviteTab',
-              },
               !!token && {
                 label: t('event.actions.logout'),
                 onClick: logout,
