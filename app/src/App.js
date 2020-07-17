@@ -12,6 +12,7 @@ const models = [
   {name: 'events'},
   {name: 'cars'},
   {name: 'pages'},
+  {name: 'users'},
   {name: 'settings', singleType: true, init: true},
 ];
 

@@ -4,7 +4,6 @@ import {useAuth} from 'strapi-react-context';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActions';
 import CardActions from '@material-ui/core/CardActions';
 import {useToast} from '../../contexts/Toast';
 import {Redirect} from 'react-router-dom';
@@ -12,7 +11,7 @@ import {CircularProgress} from '@material-ui/core';
 
 export default () => {
   const {t} = useTranslation();
-  const {signUp, token} = useAuth();
+  const {signUp, authState = {}} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -30,40 +29,36 @@ export default () => {
   const onSubmit = useCallback(
     async evt => {
       if (evt.preventDefault) evt.preventDefault();
+      if (isLoading) return;
       setIsLoading(true);
       try {
-        const error = await signUp(email.replace(/\.@/, '_'), email, password, {
+        await signUp(email.replace(/\.@/, '_'), email, password, {
           firstName,
           lastName,
         });
-        if (error) {
-          addToast(t('signup.errors.email_taken'));
-        }
       } catch (error) {
-        console.log('ERROR', {error});
-        // if (error.statusCode && error.statusCode === 400) {
-        //   const [message] = error.message.messages;
-        //   console.log('add toast', message);
-        //   addToast(message.message);
-        // }
+        if (error.kind && error.kind === 'bad_data')
+          addToast(t('signup.errors.email_taken'));
+        else if (error.kind) {
+          addToast(t(`generic.errors.${error.kind}`));
+        } else {
+          addToast(t(`generic.errors.unknown`));
+        }
       }
       console.log('SIGN UP');
 
       setIsLoading(false);
       return false;
     },
-    [firstName, lastName, email, password, addToast, signUp]
+    [firstName, lastName, email, password, addToast, signUp, t, isLoading]
   );
-  if (isLoading) {
-    return (
-      <CardContent>
-        <CircularProgress />
-      </CardContent>
-    );
-  }
 
-  if (token) {
-    return <Redirect to="/dashboard" />;
+  if (authState.user) {
+    return authState.user.confirmed ? (
+      <Redirect to="/dashboard" />
+    ) : (
+      <Redirect to="/register/success" />
+    );
   }
 
   return (
@@ -113,24 +108,22 @@ export default () => {
           type="password"
         />
       </CardContent>
-      <CardActionArea>
-        <CardActions>
-          <Button
-            color="primary"
-            variant="contained"
-            type="submit"
-            disabled={!canSubmit}
-            aria-disabled={!canSubmit}
-            id="SignUpSubmit"
-            s
-          >
-            {t('signup.submit')}
-          </Button>
-          <Button id="SignUpLogin" href="/login">
-            {t('signup.login')}
-          </Button>
-        </CardActions>
-      </CardActionArea>
+      <CardActions>
+        <Button
+          color="primary"
+          variant="contained"
+          type="submit"
+          disabled={!canSubmit}
+          aria-disabled={!canSubmit}
+          id="SignUpSubmit"
+        >
+          {t('signup.submit')}
+          {isLoading && <CircularProgress />}
+        </Button>
+        <Button id="SignUpLogin" href="/login">
+          {t('signup.login')}
+        </Button>
+      </CardActions>
     </form>
   );
 };
