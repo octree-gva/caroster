@@ -39,8 +39,6 @@
     "actions": {
       "show_details": "Détails de l'événement",
       "hide_details": "Cacher les détails",
-      "add_car": "Ajouter une voiture",
-      "invite": "Inviter",
       "find_car": "Trouver une voiture",
       "copied": "Le lien a été copié dans votre presse-papier",
       "add_to_my_events": "Ajouter à mes évènements",
@@ -122,8 +120,9 @@
     },
     "success": {
       "title": "Bienvenue !",
-      "text": "Nous avons besoin de confirmer votre email avant de pouvoir vous connecter",
-      "login": "Se connecter"
+      "text_html": "Lorem Ipsum dolor sit amet, consectetur <strong>adipiscing elit</strong>",
+      "dashboard": "Aller sur son tableau de bord",
+      "create_event": "Créer un évènement"
     }
   },
   "signin": {

@@ -1,11 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Layout from '../layouts/Centered';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Logo from '../components/Logo';
-import {Redirect} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {useAuth} from 'strapi-react-context';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,10 +11,6 @@ import Typography from '@material-ui/core/Typography';
 
 export default () => {
   const {t} = useTranslation();
-  const {token} = useAuth();
-  if (token) {
-    return <Redirect to="/dashboard" />;
-  }
   return (
     <Layout>
       <Card>
@@ -25,18 +19,29 @@ export default () => {
           <Typography gutterBottom variant="h5" component="h2">
             {t('signup.success.title')}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {t('signup.success.text')}
-          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            dangerouslySetInnerHTML={{__html: t('signup.success.text_html')}}
+          />
         </CardContent>
         <CardActions>
           <Button
+            color="secondary"
+            variant="contained"
+            href={'/'}
+            id="SignUpSuccessCreateEvent"
+          >
+            {t('signup.success.create_event')}
+          </Button>
+          <Button
             color="primary"
             variant="contained"
-            href={'/login'}
-            id="SignUpSuccessLogin"
+            href={'/dashboard'}
+            id="SignUpSuccessDashboard"
           >
-            {t('signup.success.login')}
+            {t('signup.success.dashboard')}
           </Button>
         </CardActions>
       </Card>

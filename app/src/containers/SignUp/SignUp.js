@@ -8,10 +8,13 @@ import CardActions from '@material-ui/core/CardActions';
 import {useToast} from '../../contexts/Toast';
 import {Redirect} from 'react-router-dom';
 import {CircularProgress} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 
-export default () => {
+const SignUp = () => {
   const {t} = useTranslation();
-  const {signUp, authState = {}} = useAuth();
+  const classes = useStyles();
+
+  const {signUp, token} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -45,20 +48,14 @@ export default () => {
           addToast(t(`generic.errors.unknown`));
         }
       }
-      console.log('SIGN UP');
-
       setIsLoading(false);
       return false;
     },
     [firstName, lastName, email, password, addToast, signUp, t, isLoading]
   );
 
-  if (authState.user) {
-    return authState.user.confirmed ? (
-      <Redirect to="/dashboard" />
-    ) : (
-      <Redirect to="/register/success" />
-    );
+  if (!!token) {
+    return <Redirect to="/register/success" />;
   }
 
   return (
@@ -118,7 +115,9 @@ export default () => {
           id="SignUpSubmit"
         >
           {t('signup.submit')}
-          {isLoading && <CircularProgress />}
+          {isLoading && (
+            <CircularProgress class={classes.loader} size={20} color="white" />
+          )}
         </Button>
         <Button id="SignUpLogin" href="/login">
           {t('signup.login')}
@@ -127,3 +126,10 @@ export default () => {
     </form>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  loader: {
+    marginLeft: '14px',
+  },
+}));
+export default SignUp;
