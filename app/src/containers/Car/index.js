@@ -6,6 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
 import {useEvent} from '../../contexts/Event';
 import {useToast} from '../../contexts/Toast';
+import useProfile from '../../hooks/useProfile';
 import PassengersList from '../PassengersList';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
@@ -13,9 +14,10 @@ import Header from './Header';
 const Car = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {event} = useEvent();
-  const {addToast} = useToast();
   const strapi = useStrapi();
+  const {event} = useEvent();
+  const {addEvent} = useProfile();
+  const {addToast} = useToast();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
 
   if (!car) return null;
@@ -25,25 +27,25 @@ const Car = ({car}) => {
       await strapi.services.cars.update(car.id, {
         passengers: [...(car.passengers || []), passenger],
       });
+      addEvent(event);
     } catch (error) {
       console.error(error);
-      addToast(t('car.errors.cant_add_passenger'));
     }
   };
 
   const removePassenger = async idx => {
-    if (!car?.passengers) return false;
-    try {
-      await strapi.services.events.update(event.id, {
-        waiting_list: [...(event.waiting_list || []), car.passengers[idx]],
-      });
-      return await strapi.services.cars.update(car.id, {
-        passengers: car.passengers.filter((_, i) => i !== idx),
-      });
-    } catch (error) {
-      console.error(error);
-      addToast(t('car.errors.cant_remove_passenger'));
-      return false;
+    if (car?.passengers) {
+      try {
+        await strapi.services.events.update(event.id, {
+          waiting_list: [...(event.waiting_list || []), car.passengers[idx]],
+        });
+        await strapi.services.cars.update(car.id, {
+          passengers: car.passengers.filter((_, i) => i !== idx),
+        });
+      } catch (error) {
+        console.error(error);
+        addToast(t('car.errors.cant_remove_passenger'));
+      }
     }
   };
 

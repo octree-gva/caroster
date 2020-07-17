@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import React, {useState, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import TextField from '@material-ui/core/TextField';
@@ -9,11 +9,16 @@ import {useToast} from '../../contexts/Toast';
 import {Redirect} from 'react-router-dom';
 import {CircularProgress} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom';
 
 const SignUp = () => {
   const {t} = useTranslation();
   const classes = useStyles();
-
+  const history = useHistory();
+  const {
+    location: {state: historyState = {}},
+  } = history;
+  console.log({event: historyState.event});
   const {signUp, token} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -29,32 +34,30 @@ const SignUp = () => {
   );
   const {addToast} = useToast();
 
-  const onSubmit = useCallback(
-    async evt => {
-      if (evt.preventDefault) evt.preventDefault();
-      if (isLoading) return;
-      setIsLoading(true);
-      try {
-        await signUp(email.replace(/\.@/, '_'), email, password, {
-          firstName,
-          lastName,
-        });
-      } catch (error) {
-        if (error.kind && error.kind === 'bad_data')
-          addToast(t('signup.errors.email_taken'));
-        else if (error.kind) {
-          addToast(t(`generic.errors.${error.kind}`));
-        } else {
-          addToast(t(`generic.errors.unknown`));
-        }
+  const onSubmit = async evt => {
+    if (evt.preventDefault) evt.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      await signUp(email.replace(/\.@/, '_'), email, password, {
+        firstName,
+        lastName,
+        events: historyState.event ? [historyState.event] : [],
+      });
+    } catch (error) {
+      if (error.kind && error.kind === 'bad_data')
+        addToast(t('signup.errors.email_taken'));
+      else if (error.kind) {
+        addToast(t(`generic.errors.${error.kind}`));
+      } else {
+        addToast(t(`generic.errors.unknown`));
       }
-      setIsLoading(false);
-      return false;
-    },
-    [firstName, lastName, email, password, addToast, signUp, t, isLoading]
-  );
+    }
+    setIsLoading(false);
+    return false;
+  };
 
-  if (!!token) {
+  if (!!token && !isLoading) {
     return <Redirect to="/register/success" />;
   }
 
@@ -116,7 +119,11 @@ const SignUp = () => {
         >
           {t('signup.submit')}
           {isLoading && (
-            <CircularProgress class={classes.loader} size={20} color="white" />
+            <CircularProgress
+              class={classes.loader}
+              size={20}
+              color="secondary"
+            />
           )}
         </Button>
         <Button id="SignUpLogin" href="/login">

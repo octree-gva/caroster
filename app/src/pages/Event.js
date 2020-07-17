@@ -68,14 +68,17 @@ const Event = () => {
 
   const addToMyEvents = () => {
     if (!event) return;
-    localStorage.setItem('addToMyEvents', event.id);
     setIsAddToMyEvent(true);
   };
+
   const signUp = () => {
     if (!event) return;
-    localStorage.setItem('addToMyEvents', event.id);
-    history.push('/register');
+    history.push({
+      pathname: '/register',
+      state: {event: event.id},
+    });
   };
+
   const signIn = history.push.bind(undefined, '/login');
   const goToDashboard = history.push.bind(undefined, '/dashboard');
   const goProfile = history.push.bind(undefined, '/profile');

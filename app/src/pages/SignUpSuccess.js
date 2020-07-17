@@ -8,9 +8,14 @@ import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-
-export default () => {
+import {useAuth} from 'strapi-react-context';
+import {Redirect} from 'react-router-dom';
+const SignUpSuccess = () => {
   const {t} = useTranslation();
+  const {token} = useAuth();
+  if (!token) {
+    return <Redirect to="/" />;
+  }
   return (
     <Layout>
       <Card>
@@ -48,3 +53,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default SignUpSuccess;

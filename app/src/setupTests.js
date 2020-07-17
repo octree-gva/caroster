@@ -8,16 +8,11 @@ import './i18n';
 // FROM https://github.com/akiran/react-slick/blob/master/test-setup.js
 window.matchMedia =
   window.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addListener: function () {},
-      removeListener: function () {},
-    };
-  };
+  (() => ({
+    matches: false,
+    addListener: () => {},
+    removeListener: () => {},
+  }));
 
 window.requestAnimationFrame =
-  window.requestAnimationFrame ||
-  function (callback) {
-    setTimeout(callback, 0);
-  };
+  window.requestAnimationFrame || (callback => setTimeout(callback, 0));
