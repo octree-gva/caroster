@@ -30,15 +30,14 @@ export default () => {
       }
       setIsLoading(true);
       try {
-        const error = await login(email, password);
-        if (error) {
-          addToast(t('signin.errors'));
-        }
-
+        await login(email, password);
         // TODO add to my event if saved in local storage
         // TODO remove from local storage.
       } catch (error) {
         console.log('ERROR', {error});
+        if (error) {
+          addToast(t('signin.errors'));
+        }
       }
 
       setIsLoading(false);
