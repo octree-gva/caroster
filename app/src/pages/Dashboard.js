@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {useStrapi, useAuth} from 'strapi-react-context';
 import Layout from '../layouts/Centered';
 import Card from '@material-ui/core/Card';
@@ -9,12 +9,40 @@ import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
+import moment from 'moment';
 const Dashboard = () => {
   const classes = useStyles();
   const {t} = useTranslation();
   const [myEvents, setMyEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const strapi = useStrapi();
   const {authState, token} = useAuth();
+  const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+  const pastEvents = useMemo(
+    () =>
+      myEvents
+        .filter(({date}) => {
+          return date && moment(date).isBefore(moment());
+        })
+        .sort(sortDesc),
+    [myEvents]
+  );
+  const noDateEvents = useMemo(
+    () =>
+      myEvents.filter(({date}) => {
+        return !date;
+      }),
+    [myEvents]
+  );
+  const futureEvents = useMemo(
+    () =>
+      myEvents
+        .filter(({date}) => {
+          return date && moment(date).isAfter(moment());
+        })
+        .sort(sortDesc),
+    [myEvents]
+  );
   const fetchEvents = useCallback(
     async query => {
       const myEvents = await strapi.services.events.find(query);
@@ -24,6 +52,7 @@ const Dashboard = () => {
   );
   useEffect(() => {
     if (!token) return;
+    setIsLoading(true);
     const {
       user: {events = []},
     } = authState;
@@ -33,21 +62,43 @@ const Dashboard = () => {
           return acc + `id_in=${eventId}&`;
         }, '')
         .substring(-1)
-    );
+    ).then(() => setIsLoading(false));
   }, [authState, token, fetchEvents]);
 
   if (!token || !myEvents) return <div>Not connected</div>;
 
+  if (!isLoading && myEvents.length === 0) {
+    return (
+      <Layout>
+        <Card>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h1">
+              {t('dashboard.noEvent.title')}
+            </Typography>
+            <Typography
+              variant="body1"
+              dangerouslySetInnerHTML={{
+                __html: t('dashboard.noEvent.text_html'),
+              }}
+            />
+          </CardContent>
+          <CardActions>
+            <Button>{t('dashboard.actions.create_event')}</Button>
+          </CardActions>
+        </Card>
+      </Layout>
+    );
+  }
   return (
     <Layout>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={6}>
           <Grid container justify="center" spacing={4}>
-            {myEvents.map(event => (
+            {[...futureEvents, ...noDateEvents, ...pastEvents].map(event => (
               <Grid key={event.id} item>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h6" component="h3">
                       {event.name}
                     </Typography>
                     <Typography variant="body1">
@@ -66,7 +117,9 @@ const Dashboard = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button href={`/e/${event.id}`}>See event</Button>
+                    <Button href={`/e/${event.id}`}>
+                      {t('dashboard.actions.see_event')}
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>

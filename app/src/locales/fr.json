@@ -92,6 +92,16 @@
       "cant_remove_passenger": "Impossible de supprimer le passager"
     }
   },
+  "dashboard": {
+    "actions": {
+      "see_event": "Voir"
+    },
+    "noEvent": {
+      "title": "Tableau de bord Caroster",
+      "text_html": "Ceci est votre tableau de bord, vous y verrez <strong>les évènements auxquels vous participer</strong>",
+      "create_event": "Créer un évènement"
+    }
+  },
   "passenger": {
     "title": "Liste d'attente",
     "availability": {
