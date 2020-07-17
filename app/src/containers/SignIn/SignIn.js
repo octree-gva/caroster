@@ -8,9 +8,12 @@ import CardContent from '@material-ui/core/CardContent';
 import {CircularProgress} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import {useToast} from '../../contexts/Toast';
+import {makeStyles} from '@material-ui/core/styles';
 
-export default () => {
+const SignIn = () => {
   const {t} = useTranslation();
+  const classes = useStyles();
+
   const {login, token, authState} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
@@ -88,7 +91,9 @@ export default () => {
           id="SignInSubmit"
         >
           {t('signin.login')}
-          {isLoading && <CircularProgress size={20} />}
+          {isLoading && (
+            <CircularProgress className={classes.loader} size={20} />
+          )}
         </Button>
         <Button id="SignInRegister" href="/register">
           {t('signin.register')}
@@ -97,3 +102,10 @@ export default () => {
     </form>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  loader: {
+    marginLeft: '14px',
+  },
+}));
+export default SignIn;
