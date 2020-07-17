@@ -1,4 +1,4 @@
-import React, {useReducer, useState, useMemo} from 'react';
+import React, {useReducer, useState, useMemo, useCallback} from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -29,7 +29,6 @@ const WaitingList = ({car}) => {
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
   const [adding, setAdding] = useState(null);
-  const passengers = event.waiting_list;
 
   const cars = useMemo(
     () =>
@@ -46,50 +45,65 @@ const WaitingList = ({car}) => {
     }, 0);
   }, [cars]);
 
-  const saveWaitingList = async (waitingList, i18nError) => {
-    try {
-      await strapi.services.events.update(event.id, {
-        waiting_list: waitingList,
-      });
-    } catch (error) {
-      console.error(error);
-      addToast(t(i18nError));
-    }
-  };
+  const saveWaitingList = useCallback(
+    async (waitingList, i18nError) => {
+      try {
+        await strapi.services.events.update(event.id, {
+          waiting_list: waitingList,
+        });
+      } catch (error) {
+        console.error(error);
+        addToast(t(i18nError));
+      }
+    },
+    [event] // eslint-disable-line
+  );
 
-  const addPassenger = async passenger => {
-    return saveWaitingList(
-      [...(event.waiting_list || []), passenger],
-      'passenger.errors.cant_add_passenger'
-    );
-  };
+  const addPassenger = useCallback(
+    async passenger => {
+      return saveWaitingList(
+        [...(event.waiting_list || []), passenger],
+        'passenger.errors.cant_add_passenger'
+      );
+    },
+    [event] // eslint-disable-line
+  );
 
-  const removePassenger = async index => {
-    return saveWaitingList(
-      passengers.filter((_, i) => i !== index),
-      'passenger.errors.cant_remove_passenger'
-    );
-  };
+  const removePassenger = useCallback(
+    async index => {
+      return saveWaitingList(
+        event.waiting_list.filter((_, i) => i !== index),
+        'passenger.errors.cant_remove_passenger'
+      );
+    },
+    [event] // eslint-disable-line
+  );
 
-  const selectCar = async car => {
-    try {
-      await strapi.services.cars.update(car.id, {
-        passengers: [...(car.passengers || []), passengers[adding]],
-      });
-      await strapi.services.events.update(event.id, {
-        waiting_list: event.waiting_list.filter((_, i) => i !== adding),
-      });
-    } catch (error) {
-      console.error(error);
-      addToast(t('passenger.errors.cant_select_car'));
-    }
-    setAdding(null);
-  };
+  const selectCar = useCallback(
+    async car => {
+      try {
+        await strapi.services.cars.update(car.id, {
+          passengers: [...(car.passengers || []), event.waiting_list[adding]],
+        });
+        await strapi.services.events.update(event.id, {
+          waiting_list: event.waiting_list.filter((_, i) => i !== adding),
+        });
+      } catch (error) {
+        console.error(error);
+        addToast(t('passenger.errors.cant_select_car'));
+      }
+      setAdding(null);
+    },
+    [event, adding] // eslint-disable-line
+  );
 
-  const onPress = index => {
-    if (isEditing) setRemoving(index);
-    else setAdding(index);
-  };
+  const onPress = useCallback(
+    index => {
+      if (isEditing) setRemoving(index);
+      else setAdding(index);
+    },
+    [isEditing]
+  );
 
   return (
     <>
@@ -110,7 +124,7 @@ const WaitingList = ({car}) => {
         </div>
         <Divider />
         <PassengersList
-          passengers={passengers}
+          passengers={event.waiting_list}
           addPassenger={addPassenger}
           onPress={onPress}
           icon={isEditing ? 'close' : 'chevron_right'}
@@ -121,7 +135,9 @@ const WaitingList = ({car}) => {
         text={
           <Trans
             i18nKey="passenger.actions.remove_alert"
-            values={{name: passengers ? passengers[removing] : null}}
+            values={{
+              name: event.waiting_list ? event.waiting_list[removing] : null,
+            }}
             components={{italic: <i />, bold: <strong />}}
           />
         }
