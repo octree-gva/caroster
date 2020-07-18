@@ -5,9 +5,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
-
+import {useHistory} from 'react-router-dom';
 export const EmptyDashboard = () => {
   const {t} = useTranslation();
+  const history = useHistory();
+  const goNewEvent = history.push.bind(undefined, '/new');
   return (
     <Card>
       <CardContent>
@@ -16,13 +18,20 @@ export const EmptyDashboard = () => {
         </Typography>
         <Typography
           variant="body1"
+          gutterBottom
           dangerouslySetInnerHTML={{
             __html: t('dashboard.noEvent.text_html'),
           }}
         />
       </CardContent>
       <CardActions>
-        <Button>{t('dashboard.noEvent.create_event')}</Button>
+        <Button
+          onClick={() => goNewEvent()}
+          variant="contained"
+          color="primary"
+        >
+          {t('dashboard.noEvent.create_event')}
+        </Button>
       </CardActions>
     </Card>
   );
