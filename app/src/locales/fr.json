@@ -108,9 +108,9 @@
       "past_plural": "Évènements passés"
     } ,
     "noEvent": {
-      "title": "Tableau de bord Caroster",
-      "text_html": "Ceci est votre tableau de bord, vous y verrez <strong>les évènements auxquels vous participer</strong>",
-      "create_event": "Créer un évènement"
+      "title": "Bienvenue sur Caroster",
+      "text_html": "Ici, vous y verrez <strong>les évènements auxquels vous participer</strong>, pour commencer créer un évènement !",
+      "create_event": "Nouvel évènement"
     }
   },
   "passenger": {

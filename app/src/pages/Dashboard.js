@@ -12,14 +12,48 @@ import {useTranslation} from 'react-i18next';
 import GenericMenu from '../containers/GenericMenu';
 
 import {useHistory} from 'react-router-dom';
+
+const Menu = () => {
+  const history = useHistory();
+  const {t} = useTranslation();
+
+  const goProfile = history.push.bind(undefined, '/profile');
+  const goNewEvent = history.push.bind(undefined, '/new');
+  const goAbout = () => (window.location.href = t('meta.about_href'));
+
+  return (
+    <GenericMenu
+      title={t('dashboard.title')}
+      actions={[
+        {
+          label: t('dashboard.actions.add_event'),
+          onClick: goNewEvent,
+          id: 'AddEventTabs',
+        },
+        {
+          label: t('dashboard.actions.see_profile'),
+          onClick: goProfile,
+          id: 'ProfileTabs',
+        },
+        {
+          label: t('dashboard.actions.about'),
+          onClick: goAbout,
+          id: 'AboutTabs',
+        },
+      ]}
+    />
+  );
+};
 const Dashboard = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const {t} = useTranslation();
   const strapi = useStrapi();
   const {authState, token} = useAuth();
   const history = useHistory();
+
   const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+  const goNewEvent = history.push.bind(undefined, '/new');
+
   const pastEvents = useMemo(
     () =>
       myEvents
@@ -74,37 +108,19 @@ const Dashboard = () => {
 
   if (!isLoading && myEvents.length === 0) {
     return (
-      <LayoutCentered>
-        <EmptyDashboard />
-      </LayoutCentered>
+      <>
+        <Menu />
+        <LayoutCentered>
+          <EmptyDashboard />
+          <DashboardFab onClick={() => goNewEvent()} />
+        </LayoutCentered>
+      </>
     );
   }
-  const goProfile = history.push.bind(undefined, '/profile');
-  const goNewEvent = history.push.bind(undefined, '/new');
-  const goAbout = () => (window.location.href = t('meta.about_href'));
 
   return (
     <>
-      <GenericMenu
-        title={t('dashboard.title')}
-        actions={[
-          {
-            label: t('dashboard.actions.add_event'),
-            onClick: goNewEvent,
-            id: 'AddEventTabs',
-          },
-          {
-            label: t('dashboard.actions.see_profile'),
-            onClick: goProfile,
-            id: 'ProfileTabs',
-          },
-          {
-            label: t('dashboard.actions.about'),
-            onClick: goAbout,
-            id: 'AboutTabs',
-          },
-        ]}
-      />
+      <Menu />
       <LayoutDefault>
         <DashboardWithCard
           pastEvents={pastEvents}
