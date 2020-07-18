@@ -16,13 +16,13 @@ const Dashboard = ({futureEvents, noDateEvents, pastEvents}) => {
   const {t} = useTranslation();
   const cardsForEvents = events =>
     events.map(event => (
-      <Grid item xs={3} key={event.id}>
+      <Grid item xs={12} md={3} lg={4} key={event.id}>
         <EventCard event={event} />
       </Grid>
     ));
 
   return (
-    <Grid container className={classes.root} spacing={4}>
+    <Grid container className={classes.root} spacing={4} xs={'auto'}>
       {futureEvents.length + noDateEvents.length > 0 && (
         <>
           <DashboardSection>
@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     maxWidth: '90rem',
+    width: '100%',
     margin: '0 auto',
   },
 }));
