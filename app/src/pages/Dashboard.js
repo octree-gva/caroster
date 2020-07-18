@@ -98,7 +98,6 @@ const Dashboard = () => {
             onClick: goProfile,
             id: 'ProfileTabs',
           },
-
           {
             label: t('dashboard.actions.about'),
             onClick: goAbout,
