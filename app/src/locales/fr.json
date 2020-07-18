@@ -3,6 +3,15 @@
     "title": "Caroster - Covoiturage de groupe - {{title}}",
     "about_href": "https://caroster.io/about"
   },
+  "menu": {
+    "logout": "Se déconnecter",
+    "about": "À propos de Caroster",
+    "dashboard": "Mes évènements",
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "new_event": "Nouvel évènement",
+    "profile": "Profil"
+  },
   "generic": {
     "loading": "Chargement...",
     "close": "Fermer",
@@ -30,23 +39,25 @@
       "empty": "Non précisé"
     },
     "creation": {
+      "title": "Nouvel un évènement",
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
       "date": "Date de l'événement",
       "address": "Adresse de l'événement",
       "next": "Suivant",
-      "newsletter": "Me tenir informé des évolutions de Caroster par e-mail"
+      "newsletter": "Me tenir informé des évolutions de Caroster par e-mail",
+      "actions": {
+        "dashboard": "Mes évènements",
+        "see_profile": "Profil",
+        "about": "À propos de Caroster"
+      }
     },
     "actions": {
       "show_details": "Détails de l'événement",
       "hide_details": "Cacher les détails",
       "find_car": "Trouver une voiture",
       "copied": "Le lien a été copié dans votre presse-papier",
-      "add_to_my_events": "Ajouter à mes évènements",
-      "my_events": "Mes évènements",
-      "signin": "Se connecter",
-      "signup": "S'inscrire",
-      "my_profile": "Profil"
+      "add_to_my_events": "Ajouter à mes évènements"
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",
@@ -96,10 +107,7 @@
   "dashboard": {
     "title": "Évènements",
     "actions": {
-      "see_event": "Voir",
-      "see_profile": "Profil",
-      "add_event" : "Ajouter un évènement",
-      "about": "À propos de Caroster"
+      "see_event": "Voir"
     },
     "sections":{
       "future": "Évènement à venir",
@@ -113,6 +121,9 @@
       "create_event": "Nouvel évènement"
     }
   },
+  "profile":{
+    "title": "Mon profil"
+  } ,
   "passenger": {
     "title": "Liste d'attente",
     "availability": {

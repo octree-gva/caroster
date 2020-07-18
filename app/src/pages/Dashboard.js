@@ -26,17 +26,17 @@ const Menu = () => {
       title={t('dashboard.title')}
       actions={[
         {
-          label: t('dashboard.actions.add_event'),
+          label: t('menu.new_event'),
           onClick: goNewEvent,
           id: 'AddEventTabs',
         },
         {
-          label: t('dashboard.actions.see_profile'),
+          label: t('menu.profile'),
           onClick: goProfile,
           id: 'ProfileTabs',
         },
         {
-          label: t('dashboard.actions.about'),
+          label: t('menu.about'),
           onClick: goAbout,
           id: 'AboutTabs',
         },

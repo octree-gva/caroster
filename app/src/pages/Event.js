@@ -83,6 +83,7 @@ const Event = () => {
   const signIn = history.push.bind(undefined, '/login');
   const goToDashboard = history.push.bind(undefined, '/dashboard');
   const goProfile = history.push.bind(undefined, '/profile');
+  const goAbout = () => (window.location.href = t('meta.about_href'));
 
   if (!event) return <Loading />;
 
@@ -174,24 +175,29 @@ const Event = () => {
                 id: 'AddToMyEventsTab',
               },
               !!token && {
-                label: t('event.actions.my_events'),
+                label: t('menu.dashboard'),
                 onClick: goToDashboard,
                 id: 'GoToDashboardTab',
               },
               !token && {
-                label: t('event.actions.signin'),
+                label: t('menu.login'),
                 onClick: signIn,
                 id: 'SignInTab',
               },
               !token && {
-                label: t('event.actions.signup'),
+                label: t('menu.register'),
                 onClick: signUp,
                 id: 'SignUpTab',
               },
               !!token && {
-                label: t('event.actions.my_profile'),
+                label: t('menu.profile'),
                 onClick: goProfile,
                 id: 'ProfileTab',
+              },
+              {
+                label: t('menu.about'),
+                onClick: goAbout,
+                id: 'AboutTab',
               },
             ].filter(Boolean)}
           />
