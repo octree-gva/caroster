@@ -20,6 +20,7 @@ const Router = () => {
       <Switch>
         <Route path="/e/:eventId" component={Event} />
         <Route path="/" exact component={Home} />
+        <Route path="/new" exact component={Home} />
         <Route path="/register/success" exact component={SignUpSuccess} />
         <Route path="/register" exact component={SignUp} />
         <Route path="/login" exact component={SignIn} />

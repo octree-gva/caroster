@@ -12,7 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useEvent, EventProvider} from '../contexts/Event';
 import {useToast} from '../contexts/Toast';
 import Layout from '../layouts/Default';
-import Loading from '../pages/Loading';
+import Loading from './Loading';
 import EventMenu from '../containers/EventMenu';
 import EventDetails from '../containers/EventDetails';
 import EventFab from '../containers/EventFab';

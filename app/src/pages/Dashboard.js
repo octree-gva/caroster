@@ -1,22 +1,24 @@
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {useStrapi, useAuth} from 'strapi-react-context';
-import Layout from '../layouts/Centered';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import {makeStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import {useTranslation} from 'react-i18next';
+import LayoutCentered from '../layouts/Centered';
+import LayoutDefault from '../layouts/Default';
 import moment from 'moment';
+import Loading from './Loading';
+import DashboardWithCard, {
+  EmptyDashboard,
+  DashboardFab,
+} from '../containers/Dashboard';
+import {useTranslation} from 'react-i18next';
+import GenericMenu from '../containers/GenericMenu';
+
+import {useHistory} from 'react-router-dom';
 const Dashboard = () => {
-  const classes = useStyles();
-  const {t} = useTranslation();
   const [myEvents, setMyEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {t} = useTranslation();
   const strapi = useStrapi();
   const {authState, token} = useAuth();
+  const history = useHistory();
   const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
   const pastEvents = useMemo(
     () =>
@@ -50,6 +52,7 @@ const Dashboard = () => {
     },
     [strapi.services.events]
   );
+
   useEffect(() => {
     if (!token) return;
     setIsLoading(true);
@@ -65,78 +68,54 @@ const Dashboard = () => {
     ).then(() => setIsLoading(false));
   }, [authState, token, fetchEvents]);
 
+  if (isLoading) return <Loading />;
+
   if (!token || !myEvents) return <div>Not connected</div>;
 
   if (!isLoading && myEvents.length === 0) {
     return (
-      <Layout>
-        <Card>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h1">
-              {t('dashboard.noEvent.title')}
-            </Typography>
-            <Typography
-              variant="body1"
-              dangerouslySetInnerHTML={{
-                __html: t('dashboard.noEvent.text_html'),
-              }}
-            />
-          </CardContent>
-          <CardActions>
-            <Button>{t('dashboard.actions.create_event')}</Button>
-          </CardActions>
-        </Card>
-      </Layout>
+      <LayoutCentered>
+        <EmptyDashboard />
+      </LayoutCentered>
     );
   }
+  const goProfile = history.push.bind(undefined, '/profile');
+  const goNewEvent = history.push.bind(undefined, '/new');
+  const goAbout = () => (window.location.href = t('meta.about_href'));
+
   return (
-    <Layout>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={6}>
-          <Grid container justify="center" spacing={4}>
-            {[...futureEvents, ...noDateEvents, ...pastEvents].map(event => (
-              <Grid key={event.id} item>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="h3">
-                      {event.name}
-                    </Typography>
-                    <Typography variant="body1">
-                      {t('event.fields.starts_on')}
-                    </Typography>
+    <>
+      <GenericMenu
+        title={t('dashboard.title')}
+        actions={[
+          {
+            label: t('dashboard.actions.add_event'),
+            onClick: goNewEvent,
+            id: 'AddEventTabs',
+          },
+          {
+            label: t('dashboard.actions.see_profile'),
+            onClick: goProfile,
+            id: 'ProfileTabs',
+          },
 
-                    <Typography variant="body2" gutterBottom>
-                      {event.date || t('event.fields.empty')}
-                    </Typography>
-
-                    <Typography variant="body1">
-                      {t('event.fields.address')}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
-                      {event.address || t('event.fields.empty')}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button href={`/e/${event.id}`}>
-                      {t('dashboard.actions.see_event')}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Layout>
+          {
+            label: t('dashboard.actions.about'),
+            onClick: goAbout,
+            id: 'AboutTabs',
+          },
+        ]}
+      />
+      <LayoutDefault>
+        <DashboardWithCard
+          pastEvents={pastEvents}
+          futureEvents={futureEvents}
+          noDateEvents={noDateEvents}
+        />
+        <DashboardFab onClick={() => goNewEvent()} />
+      </LayoutDefault>
+    </>
   );
 };
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  card: {
-    minWidth: '300px',
-  },
-}));
 export default Dashboard;

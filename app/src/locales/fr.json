@@ -1,6 +1,7 @@
 {
   "meta": {
-    "title": "Caroster - Covoiturage de groupe - {{title}}"
+    "title": "Caroster - Covoiturage de groupe - {{title}}",
+    "about_href": "https://caroster.io/about"
   },
   "generic": {
     "loading": "Chargement...",
@@ -93,9 +94,19 @@
     }
   },
   "dashboard": {
+    "title": "Évènements",
     "actions": {
-      "see_event": "Voir"
+      "see_event": "Voir",
+      "see_profile": "Profil",
+      "add_event" : "Ajouter un évènement",
+      "about": "À propos de Caroster"
     },
+    "sections":{
+      "future": "Évènement à venir",
+      "future_plural": "Évènements à venir",
+      "past" : "Évènement passé",
+      "past_plural": "Évènements passés"
+    } ,
     "noEvent": {
       "title": "Tableau de bord Caroster",
       "text_html": "Ceci est votre tableau de bord, vous y verrez <strong>les évènements auxquels vous participer</strong>",
