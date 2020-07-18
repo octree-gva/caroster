@@ -16,6 +16,7 @@ import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
 import {useToast} from '../../contexts/Toast';
 import {useEvent} from '../../contexts/Event';
+import useProfile from '../../hooks/useProfile';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,6 +33,7 @@ const NewCarDialog = ({open, toggle}) => {
   const classes = useStyles();
   const {addToast} = useToast();
   const {event} = useEvent();
+  const {addEvent} = useProfile();
 
   // States
   const [name, setName] = useState('');
@@ -55,6 +57,7 @@ const NewCarDialog = ({open, toggle}) => {
         details,
         event: event.id,
       });
+      addEvent(event);
       addToast(t('car.creation.created'));
       toggle();
 

@@ -9,6 +9,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
 import {useEvent} from '../../contexts/Event';
 import {useToast} from '../../contexts/Toast';
+import useProfile from '../../hooks/useProfile';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import CarDialog from './CarDialog';
@@ -25,6 +26,7 @@ const WaitingList = ({car}) => {
   const {t} = useTranslation();
   const strapi = useStrapi();
   const {event} = useEvent();
+  const {addEvent} = useProfile();
   const {addToast} = useToast();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
@@ -51,6 +53,7 @@ const WaitingList = ({car}) => {
         await strapi.services.events.update(event.id, {
           waiting_list: waitingList,
         });
+        addEvent(event);
       } catch (error) {
         console.error(error);
         addToast(t(i18nError));

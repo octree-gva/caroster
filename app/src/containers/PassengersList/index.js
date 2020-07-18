@@ -46,7 +46,9 @@ const PassengersList = ({
         ? !!passengers
           ? places - passengers.length > 0
           : places > 0
-        : true) && <Input addPassenger={addPassenger} />}
+        : true) && (
+        <Input addPassenger={addPassenger} id={!!places ? 'Car' : 'Waiting'} />
+      )}
       <List disablePadding>
         {!!list &&
           list.map((passenger, index) => (

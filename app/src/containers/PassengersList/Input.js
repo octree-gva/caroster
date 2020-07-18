@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
 
-const Input = ({addPassenger}) => {
+const Input = ({addPassenger, id}) => {
   const [name, setName] = useState('');
   const {t} = useTranslation();
 
@@ -30,8 +30,8 @@ const Input = ({addPassenger}) => {
           onKeyDown={onKeyDown}
           fullWidth
           label={t('car.passengers.add')}
-          id="NewPassenger"
-          name="passenger"
+          id={`NewPassenger-${id}`}
+          name={`passenger-${id}`}
         />
         <IconButton
           color="primary"

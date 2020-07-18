@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
+import useProfile from '../../hooks/useProfile';
 
 const isValidEmail = email =>
   // eslint-disable-next-line
@@ -13,9 +14,10 @@ const isValidEmail = email =>
     email
   );
 
-const Step1 = ({nextStep, previousStep, createEvent, event, addToEvent}) => {
+const Step1 = ({nextStep, event, addToEvent}) => {
   const classes = useStyles();
   const {t} = useTranslation();
+  const {connected, user} = useProfile();
 
   // States
   const [name, setName] = useState(event.name ?? '');
@@ -23,17 +25,21 @@ const Step1 = ({nextStep, previousStep, createEvent, event, addToEvent}) => {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [newsletter, setNewsletter] = useState(false);
   const debouncedEmail = useDebounce(email, 400);
-  const canSubmit = useMemo(
-    () => name.length > 0 && email.length > 0 && emailIsValid,
-    [name, email, emailIsValid]
-  );
+
   useEffect(() => {
     setEmailIsValid(isValidEmail(debouncedEmail));
   }, [debouncedEmail]);
 
+  const canSubmit = useMemo(() => {
+    const n = name.length > 0;
+    const e = email.length > 0 && emailIsValid;
+    return connected ? n : n && e;
+  }, [name, email, emailIsValid, connected]);
+
   const onNext = event => {
     if (event.preventDefault) event.preventDefault();
-    addToEvent({name, email, newsletter});
+    const e = connected ? user.email : email;
+    addToEvent({name, email: e, newsletter});
     nextStep();
     return false;
   };
@@ -51,17 +57,19 @@ const Step1 = ({nextStep, previousStep, createEvent, event, addToEvent}) => {
         id="NewEventName"
         name="name"
       />
-      <TextField
-        className={classes.textField}
-        label={t('event.creation.creator_email')}
-        fullWidth
-        margin="dense"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        id="NewEventEmail"
-        name="email"
-        type="email"
-      />
+      {!connected && (
+        <TextField
+          className={classes.textField}
+          label={t('event.creation.creator_email')}
+          fullWidth
+          margin="dense"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          id="NewEventEmail"
+          name="email"
+          type="email"
+        />
+      )}
       <FormControlLabel
         className={classes.newsletter}
         label={t('event.creation.newsletter')}

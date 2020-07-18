@@ -1,26 +1,28 @@
-import {useEffect, useState} from 'react';
+import {useMemo, useCallback} from 'react';
 import {useAuth} from 'strapi-react-context';
 
 export default () => {
   const {token, authState, updateProfile} = useAuth();
-  const [connected, setConnected] = useState(false);
 
-  useEffect(() => {
-    setConnected(!!token);
-  }, [token]);
+  const connected = useMemo(() => !!token, [token]);
 
-  const addEvent = async event => {
-    if (connected) {
-      const {user} = authState;
-      const {events} = user;
-      updateProfile({
-        ...user,
-        events: !!events
-          ? [...events.filter(e => e !== event.id), event.id]
-          : [event.id],
-      });
-    }
-  };
+  const user = useMemo(() => authState?.user, [authState]);
 
-  return {connected, addEvent};
+  const addEvent = useCallback(
+    async event => {
+      if (!!token) {
+        const {user} = authState;
+        const {events} = user;
+        updateProfile({
+          ...user,
+          events: !!events
+            ? [...events.filter(e => e !== event.id), event.id]
+            : [event.id],
+        });
+      }
+    },
+    [token, authState] // eslint-disable-line
+  );
+
+  return {connected, user, addEvent};
 };
