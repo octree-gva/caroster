@@ -10,13 +10,12 @@ import DashboardWithCard, {
 } from '../containers/Dashboard';
 import {useTranslation} from 'react-i18next';
 import GenericMenu from '../containers/GenericMenu';
-
+import {makeStyles} from '@material-ui/core/styles';
 import {useHistory} from 'react-router-dom';
 
 const Menu = () => {
   const history = useHistory();
   const {t} = useTranslation();
-
   const goProfile = history.push.bind(undefined, '/profile');
   const goNewEvent = history.push.bind(undefined, '/new');
   const goAbout = () => (window.location.href = t('meta.about_href'));
@@ -44,21 +43,21 @@ const Menu = () => {
     />
   );
 };
+const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+
 const Dashboard = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const strapi = useStrapi();
   const {authState, token} = useAuth();
   const history = useHistory();
-
-  const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+  const classes = useStyles();
   const goNewEvent = history.push.bind(undefined, '/new');
-
   const pastEvents = useMemo(
     () =>
       myEvents
         .filter(({date}) => {
-          return date && moment(date).isBefore(moment());
+          return date && moment(date).isBefore(moment(), 'day');
         })
         .sort(sortDesc),
     [myEvents]
@@ -74,7 +73,7 @@ const Dashboard = () => {
     () =>
       myEvents
         .filter(({date}) => {
-          return date && moment(date).isAfter(moment());
+          return date && moment(date).isSameOrAfter(moment(), 'day');
         })
         .sort(sortDesc),
     [myEvents]
@@ -89,17 +88,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!token) return;
-    setIsLoading(true);
     const {
       user: {events = []},
     } = authState;
-    fetchEvents(
-      events
-        .reduce((acc, eventId) => {
-          return acc + `id_in=${eventId}&`;
-        }, '')
-        .substring(-1)
-    ).then(() => setIsLoading(false));
+    if (events.length > 0) {
+      setIsLoading(true);
+      fetchEvents(
+        events
+          .reduce((acc, eventId) => {
+            return acc + `id_in=${eventId}&`;
+          }, '')
+          .substring(-1)
+      ).then(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
   }, [authState, token, fetchEvents]);
 
   if (isLoading) return <Loading />;
@@ -121,7 +124,7 @@ const Dashboard = () => {
   return (
     <>
       <Menu />
-      <LayoutDefault>
+      <LayoutDefault className={classes.root}>
         <DashboardWithCard
           pastEvents={pastEvents}
           futureEvents={futureEvents}
@@ -132,5 +135,9 @@ const Dashboard = () => {
     </>
   );
 };
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: '50px',
+  },
+}));
 export default Dashboard;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DefaultLayout = ({children}) => {
-  return <div>{children}</div>;
+const DefaultLayout = ({children, className = undefined}) => {
+  return <div className={className}>{children}</div>;
 };
 
 export default DefaultLayout;
