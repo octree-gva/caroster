@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Caroster - Covoiturage de groupe - {{title}}",
-    "about_href": "https://caroster.io/about"
+    "about_href": "https://caroster.io"
   },
   "menu": {
     "logout": "Se déconnecter",
@@ -9,7 +9,7 @@
     "dashboard": "Mes évènements",
     "login": "Se connecter",
     "register": "S'inscrire",
-    "new_event": "Nouvel évènement",
+    "new_event": "Créer un évènement",
     "profile": "Profil"
   },
   "generic": {
@@ -39,7 +39,7 @@
       "empty": "Non précisé"
     },
     "creation": {
-      "title": "Nouvel un évènement",
+      "title": "Nouvel évènement",
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
       "date": "Date de l'événement",
@@ -119,7 +119,7 @@
     "noEvent": {
       "title": "Bienvenue sur Caroster",
       "text_html": "Ici, vous y verrez <strong>les évènements auxquels vous participer</strong>, pour commencer créer un évènement !",
-      "create_event": "Nouvel évènement"
+      "create_event": "Créer un évènement"
     }
   },
   "profile":{
