@@ -1,6 +1,14 @@
 {
   "meta": {
-    "title": "Caroster - Covoiturage de groupe - {{title}}",
+    "default_title": "Caroster - Covoiturage de groupe",
+    "dashboard_title": "$t(meta.default_title)",
+    "profile_title": "$t(meta.default_title)",
+    "register_title": "$t(meta.default_title)",
+    "register_success_title": "$t(meta.default_title)",
+    "login_title": "$t(meta.default_title)",
+    "new_event_title": "$t(meta.default_title)",
+    "event_title": "$t(meta.default_title) - {{event.name}}",
+    "description": "Organisez votre covoiturage en groupe privé. Créez votre application de covoiturage pour vous et vos amis. Caroster est le doodle du covoiturage, mais libre.",
     "about_href": "https://caroster.io/about"
   },
   "menu": {
@@ -57,8 +65,7 @@
       "hide_details": "Cacher les détails",
       "find_car": "Trouver une voiture",
       "copied": "Le lien a été copié dans votre presse-papier",
-      "add_to_my_events": "Ajouter à mes évènements",
-      "see_on_gmap": "Voir sur une carte"
+      "add_to_my_events": "Ajouter à mes évènements"
     },
     "errors": {
       "cant_create": "Impossible de créer l'événement",
