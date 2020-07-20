@@ -13,11 +13,11 @@ const LayoutHelmet = ({title}) => {
       <meta property="og:image" content="/Caroster_Octree_Social.jpg" />
       <meta property="og:image:width" content="1500" />
       <meta property="og:image:height" content="843" />
-      <meta itemprop="name" content={title} />
-      <meta itemprop="url" content="https://app.caroster.io" />
-      <meta itemprop="thumbnailUrl" content="/Caroster_Octree_Social.jpg" />
+      <meta itemProp="name" content={title} />
+      <meta itemProp="url" content="https://app.caroster.io" />
+      <meta itemProp="thumbnailUrl" content="/Caroster_Octree_Social.jpg" />
       <link rel="image_src" href="/Caroster_Octree_Social.jpg" />
-      <meta itemprop="image" content="/Caroster_Octree_Social.jpg" />
+      <meta itemProp="image" content="/Caroster_Octree_Social.jpg" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:image" content="/Caroster_Octree_Social.jpg" />
       <meta name="twitter:url" content="https://app.caroster.io" />
