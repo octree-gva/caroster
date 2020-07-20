@@ -44,10 +44,11 @@ const Menu = () => {
 };
 
 const Profile = () => {
+  const {t} = useTranslation();
   return (
     <>
       <Menu />
-      <Layout>Profile – NOT IMPLEMENTED</Layout>
+      <Layout title={t('meta.profile_title')}>Profile – NOT IMPLEMENTED</Layout>
     </>
   );
 };

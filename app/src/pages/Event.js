@@ -1,5 +1,4 @@
 import React, {useState, useReducer, useEffect} from 'react';
-import {Helmet} from 'react-helmet';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import AppBar from '@material-ui/core/AppBar';
@@ -88,10 +87,7 @@ const Event = () => {
   if (!event) return <Loading />;
 
   return (
-    <Layout>
-      <Helmet>
-        <title>{t('meta.title', {title: event.name})}</title>
-      </Helmet>
+    <Layout title={t('meta.event_title', {event})}>
       <AppBar
         position="static"
         color="primary"
