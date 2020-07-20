@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const permissions = require("../permissions.json");
+const permissions = require('../permissions.json');
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -20,9 +20,9 @@ module.exports = async () => {
   // For each role, set permissions
   const roles = Object.keys(permissions.roles);
   await Promise.all(
-    roles.map(async (roleType) => {
+    roles.map(async roleType => {
       // Get role entity in Strapi db
-      const role = await strapi.query("role", "users-permissions").findOne({
+      const role = await strapi.query('role', 'users-permissions').findOne({
         type: roleType,
       });
       // If role doesn't exist, skip
@@ -30,33 +30,33 @@ module.exports = async () => {
 
       // Enable or create permissions for each roles, controllers and actions
       const perms = permissions.roles[roleType];
-      return perms.map(({ type, controllers }) =>
-        controllers.map(({ name: controller, actions }) =>
-          actions.map(async (action) => {
+      return perms.map(({type, controllers}) =>
+        controllers.map(({name: controller, actions}) =>
+          actions.map(async action => {
             const existingPerm = await strapi
-              .query("permission", "users-permissions")
+              .query('permission', 'users-permissions')
               .findOne({
                 role: role.id,
                 type,
                 controller,
                 action,
               });
-            if (!!existingPerm) {
+            if (existingPerm) {
               if (existingPerm.enabled) return false; // If permission already enabled, skip
               strapi.log.info(
                 `Enable permission ${type}.${controller}.${action} for role ${roleType}.`
               );
               return strapi
-                .query("permission", "users-permissions")
+                .query('permission', 'users-permissions')
                 .update(
-                  { role: role.id, type, controller, action },
-                  { enabled: true }
+                  {role: role.id, type, controller, action},
+                  {enabled: true}
                 );
             } else {
               strapi.log.info(
                 `Create permission ${type}.${controller}.${action} for role ${roleType}.`
               );
-              return strapi.query("permission", "users-permissions").create({
+              return strapi.query('permission', 'users-permissions').create({
                 role: role.id,
                 type,
                 controller,

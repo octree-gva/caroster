@@ -2,6 +2,9 @@
 const axios = require('axios');
 const moment = require('moment');
 require('moment/locale/fr-ch');
+
+const {STRAPI_URL = '', CAROSTER_TEMPLATEID_EVENTCREATION} = process.env;
+
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
  * to customize this model
@@ -31,7 +34,20 @@ module.exports = {
 
       // If user accepts newsletters, subscribe it
       if (event.newsletter)
-        strapi.plugins['sendgrid'].services.contacts.subscribe(event.email);
+        try {
+          strapi.plugins['email'].services.contact.subscribe({
+            email: event.email,
+          });
+        } catch (error) {
+          console.error(error);
+          strapi.log.error(
+            `Impossible to save email ${
+              event.email
+            } in contact list for event#${event.id}. Error: ${JSON.stringify(
+              error
+            )}`
+          );
+        }
     },
     async beforeUpdate(params, event) {
       if (event.address) {
@@ -54,29 +70,21 @@ module.exports = {
     },
 
     async afterCreate(event) {
-      let eventTime = '';
-      if (event.date) {
-        eventTime = ', ' + moment(eventTime.date).format('dddd Do MMMM YYYY');
-      }
-      let eventAddress = '';
-      if (event.address) {
-        eventAddress = ', ' + event.address;
-      }
-      const {STRAPI_URL = ''} = process.env;
-
       try {
-        await strapi.plugins['sendgrid'].services.email.send({
+        await strapi.plugins['email'].services.email.send({
           to: event.email,
-          from: 'caroster@octree.ch',
-          templateId: 'd-a1b5043fb186411ea4b57ea956625093',
-          dynamic_template_data: {
+          templateId: CAROSTER_TEMPLATEID_EVENTCREATION,
+          templateData: {
             eventName: event.name,
-            eventTime,
-            eventAddress,
+            eventTime: event.date
+              ? moment(event.date).format('dddd Do MMMM YYYY')
+              : null,
+            eventAddress: event.address,
             eventLink: `${STRAPI_URL}/e/${event.id}`,
           },
         });
       } catch (error) {
+        console.error(error);
         strapi.log.error(
           `Impossible to send email notification to ${event.email} for event#${
             event.id
