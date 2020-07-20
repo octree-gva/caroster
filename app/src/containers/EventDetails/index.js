@@ -56,7 +56,22 @@ const EventDetails = ({toggleDetails}) => {
         )}
       </div>
       <div className={classes.section}>
-        <Typography variant="h6">{t('event.fields.address')}</Typography>
+        <Typography variant="h6">
+          {t('event.fields.address')}
+          {!isEditing && event.address && (
+            <Button
+              href={`https://www.google.ch/maps/place/${encodeURI(
+                'event.address'
+              )}`}
+              size="small"
+              color="primary"
+              className={classes.seeOnGMapButton}
+              id="SeeOnGoogleMap"
+            >
+              {t('event.actions.see_on_gmap')}
+            </Button>
+          )}
+        </Typography>
         {isEditing ? (
           <TextField
             light
@@ -100,6 +115,9 @@ const useStyles = makeStyles(theme => ({
   },
   map: {
     marginTop: theme.spacing(4),
+  },
+  seeOnGMapButton: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
