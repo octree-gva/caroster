@@ -34,7 +34,7 @@
   },
   "rules": {
     "prefer-const": "error",
-    "complexity": ["warn", 16],
+    "complexity": ["warn", 20],
     "max-len": ["warn", 110],
     "arrow-parens": "off",
     "prefer-destructuring": "error",
