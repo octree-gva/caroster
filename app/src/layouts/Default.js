@@ -1,7 +1,13 @@
 import React from 'react';
+import Helmet from './Helmet';
 
-const DefaultLayout = ({children, className = undefined}) => {
-  return <div className={className}>{children}</div>;
+const DefaultLayout = ({children, title, className = undefined}) => {
+  return (
+    <>
+      <Helmet title={title} />
+      <div className={className}>{children}</div>
+    </>
+  );
 };
 
 export default DefaultLayout;
