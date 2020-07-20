@@ -95,12 +95,12 @@ const useStyles = makeStyles(theme => ({
     },
   },
   slide: {
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - ${theme.spacing(
-      2
-    )})`,
+    minHeight: `calc(100vh - ${
+      theme.mixins.toolbar.minHeight + theme.spacing(14)
+    }px)`,
     outline: 'none',
     padding: theme.spacing(1),
-    marginBottom: theme.spacing(10),
+    marginBottom: theme.spacing(12),
   },
 }));
 

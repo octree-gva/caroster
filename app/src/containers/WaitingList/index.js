@@ -116,6 +116,7 @@ const WaitingList = ({car}) => {
             size="small"
             color="primary"
             className={classes.editBtn}
+            disabled={!event.waiting_list || !event.waiting_list.length}
             onClick={toggleEditing}
           >
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}

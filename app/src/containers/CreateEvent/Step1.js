@@ -47,7 +47,6 @@ const Step1 = ({nextStep, event, addToEvent}) => {
   return (
     <form onSubmit={onNext}>
       <TextField
-        className={classes.textField}
         label={t('event.creation.event_name')}
         fullWidth
         autoFocus
@@ -59,7 +58,6 @@ const Step1 = ({nextStep, event, addToEvent}) => {
       />
       {!connected && (
         <TextField
-          className={classes.textField}
           label={t('event.creation.creator_email')}
           fullWidth
           margin="dense"
@@ -99,7 +97,6 @@ const Step1 = ({nextStep, event, addToEvent}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  textField: {},
   button: {
     marginTop: theme.spacing(2),
   },

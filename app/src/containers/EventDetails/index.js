@@ -1,13 +1,23 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import TextField from '../../components/TextField';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import {DatePicker} from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
+import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import {useEvent} from '../../contexts/Event';
-import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import {DatePicker} from '@material-ui/pickers';
 import Map from '../../components/Map';
+import {caroster} from '../../theme';
+
+const theme = createMuiTheme({
+  ...caroster,
+  palette: {
+    ...caroster.palette,
+    type: 'dark',
+  },
+});
 
 const EventDetails = ({toggleDetails}) => {
   const {t} = useTranslation();
@@ -16,95 +26,103 @@ const EventDetails = ({toggleDetails}) => {
 
   if (!event) return null;
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
+
   return (
-    <div>
-      <div className={classes.section}>
-        {isEditing && (
-          <div className={classes.section}>
-            <Typography variant="h6">{t('event.fields.name')}</Typography>
-            <TextField
-              light
-              value={editingEvent.name}
-              onChange={e =>
-                setEditingEvent({...editingEvent, name: e.target.value})
+    <ThemeProvider theme={theme}>
+      <div className={classes.container}>
+        <div className={classes.section}>
+          {isEditing && (
+            <div className={classes.section}>
+              <Typography variant="h6">{t('event.fields.name')}</Typography>
+              <TextField
+                defaultValue={event.name}
+                value={editingEvent.name}
+                onChange={e =>
+                  setEditingEvent({...editingEvent, name: e.target.value})
+                }
+                fullWidth
+                id="EditEventName"
+                name="name"
+              />
+            </div>
+          )}
+          <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
+          {isEditing ? (
+            <DatePicker
+              value={
+                editingEvent.date
+                  ? moment(editingEvent.date)
+                  : event.date
+                  ? moment(event.date)
+                  : null
               }
-              id="EditEventName"
-              name="name"
+              onChange={date =>
+                setEditingEvent({...editingEvent, date: date?.toISOString()})
+              }
+              fullWidth
+              format="DD.MM.YYYY"
+              disablePast
+              id={`${idPrefix}Date`}
+              name="date"
+              TextFieldComponent={p => <TextField {...p} />}
+              cancelLabel={t('generic.cancel')}
             />
+          ) : (
+            <Typography variant="body1" id={`${idPrefix}Date`}>
+              {moment(event.date).format('DD.MM.YYYY') ||
+                t('event.fields.empty')}
+            </Typography>
+          )}
+        </div>
+        <div className={classes.section}>
+          <Typography variant="h6">{t('event.fields.address')}</Typography>
+          {isEditing ? (
+            <TextField
+              defaultValue={event.address}
+              value={editingEvent.address}
+              onChange={e =>
+                setEditingEvent({...editingEvent, address: e.target.value})
+              }
+              fullWidth
+              multiline
+              rows={4}
+              id={`${idPrefix}Address`}
+              name="address"
+            />
+          ) : (
+            <Typography variant="body1" id={`${idPrefix}Address`}>
+              {event.address ? (
+                <Link
+                  href={`https://maps.google.com/?q=${event.address}`}
+                  onClick={e => e.preventDefault}
+                >
+                  {event.address}
+                </Link>
+              ) : (
+                t('event.fields.empty')
+              )}
+            </Typography>
+          )}
+        </div>
+        <div className={classes.actions}>
+          <Button onClick={toggleDetails} variant="contained" id={`CarFindBtn`}>
+            {t('event.actions.find_car')}
+          </Button>
+        </div>
+        {event.position && (
+          <div className={classes.map} id={`${idPrefix}AddressMap`}>
+            <Map position={event.position} />
           </div>
         )}
-        <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
-        {isEditing ? (
-          <DatePicker
-            value={editingEvent.date ? moment(editingEvent.date) : null}
-            onChange={date =>
-              setEditingEvent({...editingEvent, date: date?.toISOString()})
-            }
-            className={classes.textField}
-            fullWidth
-            format="DD.MM.YYYY"
-            disablePast
-            id={`${idPrefix}Date`}
-            name="date"
-            TextFieldComponent={p => <TextField light {...p} />}
-            cancelLabel={t('generic.cancel')}
-          />
-        ) : (
-          <Typography variant="body1" id={`${idPrefix}Date`}>
-            {event.date || t('event.fields.empty')}
-          </Typography>
-        )}
       </div>
-      <div className={classes.section}>
-        <Typography variant="h6">
-          {t('event.fields.address')}
-          {!isEditing && event.address && (
-            <Button
-              href={`https://www.google.ch/maps/place/${encodeURI(
-                'event.address'
-              )}`}
-              size="small"
-              color="primary"
-              className={classes.seeOnGMapButton}
-              id="SeeOnGoogleMap"
-            >
-              {t('event.actions.see_on_gmap')}
-            </Button>
-          )}
-        </Typography>
-        {isEditing ? (
-          <TextField
-            light
-            multiline
-            rows={4}
-            value={editingEvent.address}
-            onChange={e =>
-              setEditingEvent({...editingEvent, address: e.target.value})
-            }
-            id={`${idPrefix}Address`}
-            name="address"
-          />
-        ) : (
-          <Typography variant="body1" id={`${idPrefix}Address`}>
-            {event.address || t('event.fields.empty')}
-          </Typography>
-        )}
-      </div>
-      <div className={classes.actions}>
-        <Button onClick={toggleDetails} variant="contained" id={`CarFindBtn`}>
-          {t('event.actions.find_car')}
-        </Button>
-      </div>
-      {event.position && (
-        <div className={classes.map} id={`${idPrefix}AddressMap`}>
-          <Map position={event.position} />
-        </div>
-      )}
-    </div>
+    </ThemeProvider>
   );
 };
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: theme.spacing(12),
+  },
   section: {
     marginBottom: theme.spacing(2),
   },

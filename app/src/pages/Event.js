@@ -202,9 +202,11 @@ const Event = () => {
             ].filter(Boolean)}
           />
         </Toolbar>
-        <Container className={classes.container} maxWidth="sm">
-          <EventDetails toggleDetails={toggleDetails} />
-        </Container>
+        {detailsOpen && (
+          <Container className={classes.container} maxWidth="sm">
+            <EventDetails toggleDetails={toggleDetails} />
+          </Container>
+        )}
       </AppBar>
       <CarColumns toggleNewCar={toggleNewCar} />
       <EventFab toggleNewCar={toggleNewCar} open={openNewCar} />
@@ -225,6 +227,7 @@ const useStyles = makeStyles(theme => ({
   appbar: ({detailsOpen}) => ({
     overflow: 'hidden',
     height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
+    overflowY: detailsOpen ? 'scroll' : 'hidden',
     transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
     position: 'fixed',

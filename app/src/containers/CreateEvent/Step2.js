@@ -34,7 +34,6 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         label={t('event.creation.date')}
         value={date}
         onChange={setDate}
-        className={classes.textField}
         fullWidth
         format="DD.MM.YYYY"
         disablePast
@@ -43,7 +42,6 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         cancelLabel={t('generic.cancel')}
       />
       <TextField
-        className={classes.textField}
         label={t('event.creation.address')}
         fullWidth
         margin="dense"
@@ -69,7 +67,6 @@ const Step2 = ({event, addToEvent, createEvent}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  textField: {},
   button: {
     marginTop: theme.spacing(2),
   },

@@ -88,13 +88,11 @@ const NewCarDialog = ({open, toggle}) => {
         <DialogContent>
           <DialogContentText>
             <TextField
-              className={classes.textField}
               label={t('car.creation.name')}
-              fullWidth
-              autoFocus
-              margin="dense"
               value={name}
               onChange={e => setName(e.target.value)}
+              fullWidth
+              autoFocus
               id="NewCarName"
               name="name"
             />
@@ -104,8 +102,8 @@ const NewCarDialog = ({open, toggle}) => {
               onChange={setDate}
               className={classes.picker}
               fullWidth
-              format="LLLL"
               disablePast
+              format="LLLL"
               id="NewCarDateTime"
               name="date"
             />
@@ -120,36 +118,33 @@ const NewCarDialog = ({open, toggle}) => {
               valueLabelDisplay="auto"
             />
             <TextField
-              className={classes.textField}
               label={t('car.creation.meeting')}
-              fullWidth
-              margin="dense"
               value={meeting}
               onChange={e => setMeeting(e.target.value)}
+              fullWidth
+              margin="dense"
               id="NewCarMeeting"
               name="meeting"
             />
             <TextField
-              className={classes.textField}
               label={t('car.creation.phone')}
-              fullWidth
-              margin="dense"
               value={phone}
               onChange={e => setPhone(e.target.value)}
+              fullWidth
+              margin="dense"
               id="NewCarPhone"
               name="phone"
             />
             <TextField
-              className={classes.textField}
               label={t('car.creation.notes')}
+              value={details}
+              onChange={e => setDetails(e.target.value)}
               fullWidth
               margin="dense"
               inputProps={{maxLength: 250}}
               helperText={`${details.length}/250`}
               multiline
               rows={4}
-              value={details}
-              onChange={e => setDetails(e.target.value)}
               id="NewCarDetails"
               name="details"
             />
@@ -181,10 +176,8 @@ const NewCarDialog = ({open, toggle}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  textField: {
-    marginBottom: theme.spacing(2),
-  },
   picker: {
+    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
 }));

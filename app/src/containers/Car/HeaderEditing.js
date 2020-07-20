@@ -100,7 +100,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           size="small"
           color="primary"
           type="submit"
-          className={classes.editBtn}
+          className={classes.edit}
         >
           <Icon>done</Icon>
         </IconButton>
@@ -108,7 +108,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           label={t('car.creation.date')}
           value={date}
           onChange={setDate}
-          className={classes.textField}
+          className={classes.picker}
           fullWidth
           format="LLLL"
           disablePast
@@ -118,7 +118,6 @@ const HeaderEditing = ({car, toggleEditing}) => {
           cancelLabel={t('generic.cancel')}
         />
         <TextField
-          className={classes.textField}
           label={t('car.creation.name')}
           fullWidth
           autoFocus
@@ -129,7 +128,6 @@ const HeaderEditing = ({car, toggleEditing}) => {
           name="name"
         />
         <TextField
-          className={classes.textField}
           label={t('car.creation.phone')}
           fullWidth
           autoFocus
@@ -140,7 +138,6 @@ const HeaderEditing = ({car, toggleEditing}) => {
           name="phone"
         />
         <TextField
-          className={classes.textField}
           label={t('car.creation.meeting')}
           fullWidth
           margin="dense"
@@ -152,7 +149,6 @@ const HeaderEditing = ({car, toggleEditing}) => {
           name="meeting"
         />
         <TextField
-          className={classes.textField}
           label={t('car.creation.notes')}
           fullWidth
           margin="dense"
@@ -211,8 +207,10 @@ const HeaderEditing = ({car, toggleEditing}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  header: {padding: theme.spacing(2)},
-  editBtn: {
+  header: {
+    padding: theme.spacing(2),
+  },
+  edit: {
     position: 'absolute',
     top: 0,
     right: 0,
@@ -233,6 +231,9 @@ const useStyles = makeStyles(theme => ({
     '& > *:first-child': {
       marginBottom: theme.spacing(2),
     },
+  },
+  picker: {
+    marginBottom: theme.spacing(2),
   },
 }));
 

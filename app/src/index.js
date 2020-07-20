@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import 'fontsource-roboto';
 import './i18n';
 import 'moment/locale/fr-ch';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
