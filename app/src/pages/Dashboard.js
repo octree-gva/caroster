@@ -50,6 +50,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const strapi = useStrapi();
   const {authState, token} = useAuth();
+  const {t} = useTranslation();
   const history = useHistory();
   const classes = useStyles();
   const goNewEvent = history.push.bind(undefined, '/new');
@@ -113,7 +114,7 @@ const Dashboard = () => {
     return (
       <>
         <Menu />
-        <LayoutCentered>
+        <LayoutCentered title={t('meta.dashboard_title')}>
           <EmptyDashboard />
           <DashboardFab onClick={() => goNewEvent()} />
         </LayoutCentered>
@@ -124,7 +125,7 @@ const Dashboard = () => {
   return (
     <>
       <Menu />
-      <LayoutDefault className={classes.root}>
+      <LayoutDefault className={classes.root} title={t('meta.dashboard_title')}>
         <DashboardWithCard
           pastEvents={pastEvents}
           futureEvents={futureEvents}

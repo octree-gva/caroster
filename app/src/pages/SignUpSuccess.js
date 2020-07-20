@@ -17,7 +17,7 @@ const SignUpSuccess = () => {
     return <Redirect to="/" />;
   }
   return (
-    <Layout>
+    <Layout title={t('meta.register_success_title')}>
       <Card>
         <CardMedia component={Logo} />
         <CardContent>

@@ -52,10 +52,11 @@ const Menu = () => {
 };
 
 const Home = () => {
+  const {t} = useTranslation();
   return (
     <>
       <Menu />
-      <Layout>
+      <Layout title={t('meta.new_event_title')}>
         <Paper>
           <Logo />
           <CreateEvent />

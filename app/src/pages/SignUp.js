@@ -4,10 +4,11 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Logo from '../components/Logo';
 import Su from '../containers/SignUp';
-
+import {useTranslation} from 'react-i18next';
 const SignUp = () => {
+  const {t} = useTranslation();
   return (
-    <Layout>
+    <Layout title={t('meta.register_title')}>
       <Card>
         <CardMedia component={Logo} />
         <Su />
