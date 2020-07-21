@@ -39,7 +39,8 @@ const Step1 = ({nextStep, event, addToEvent}) => {
   const onNext = event => {
     if (event.preventDefault) event.preventDefault();
     const e = connected ? user.email : email;
-    addToEvent({name, email: e, newsletter});
+    const n = connected ? true : newsletter;
+    addToEvent({name, email: e, newsletter: n});
     nextStep();
     return false;
   };
@@ -68,19 +69,21 @@ const Step1 = ({nextStep, event, addToEvent}) => {
           type="email"
         />
       )}
-      <FormControlLabel
-        className={classes.newsletter}
-        label={t('event.creation.newsletter')}
-        control={
-          <Checkbox
-            name="newsletter"
-            color="primary"
-            id="NewEventNewsletter"
-            checked={newsletter}
-            onChange={e => setNewsletter(e.target.checked)}
-          />
-        }
-      />
+      {!connected && (
+        <FormControlLabel
+          className={classes.newsletter}
+          label={t('event.creation.newsletter')}
+          control={
+            <Checkbox
+              name="newsletter"
+              color="primary"
+              id="NewEventNewsletter"
+              checked={newsletter}
+              onChange={e => setNewsletter(e.target.checked)}
+            />
+          }
+        />
+      )}
       <Button
         className={classes.button}
         type="submit"
