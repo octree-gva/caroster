@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SignUp from './SignUp';
+import SignUp from '.';
 
 describe('SignUp', () => {
   const signUpNode = renderer.create(<SignUp />);

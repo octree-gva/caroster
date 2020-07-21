@@ -93,8 +93,12 @@ const EventDetails = ({toggleDetails}) => {
             <Typography variant="body1" id={`${idPrefix}Address`}>
               {event.address ? (
                 <Link
-                  href={`https://maps.google.com/?q=${event.address}`}
-                  onClick={e => e.preventDefault}
+                  href={`https://maps.google.com/?q=${encodeURI(
+                    event.address
+                  )}`}
+                  rel="noopener noreferrer"
+                  component="a"
+                  target="_blank"
                 >
                   {event.address}
                 </Link>

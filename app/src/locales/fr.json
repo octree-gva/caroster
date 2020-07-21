@@ -1,15 +1,7 @@
 {
   "meta": {
-    "default_title": "Caroster - Covoiturage de groupe",
-    "dashboard_title": "$t(meta.default_title)",
-    "profile_title": "$t(meta.default_title)",
-    "register_title": "$t(meta.default_title)",
-    "register_success_title": "$t(meta.default_title)",
-    "login_title": "$t(meta.default_title)",
-    "new_event_title": "$t(meta.default_title)",
-    "event_title": "$t(meta.default_title) - {{event.name}}",
-    "description": "Organisez votre covoiturage en groupe privé. Créez votre application de covoiturage pour vous et vos amis. Caroster est le doodle du covoiturage, mais libre.",
-    "about_href": "https://caroster.io/about"
+    "title": "Caroster - Covoiturage de groupe - {{title}}",
+    "about_href": "https://caroster.io"
   },
   "menu": {
     "logout": "Se déconnecter",
@@ -17,7 +9,7 @@
     "dashboard": "Mes évènements",
     "login": "Se connecter",
     "register": "S'inscrire",
-    "new_event": "Nouvel évènement",
+    "new_event": "Créer un évènement",
     "profile": "Profil"
   },
   "generic": {
@@ -28,7 +20,7 @@
     "remove": "Supprimer",
     "save": "Enregistrer",
     "confirm": "Confirmer",
-    "errors":{
+    "errors": {
       "unknown": "Une erreur inconnue c'est produite",
       "rejected": "Quelque chose c'est mal passé",
       "bad_data": "Il manque quelque chose",
@@ -47,7 +39,7 @@
       "empty": "Non précisé"
     },
     "creation": {
-      "title": "Nouvel un évènement",
+      "title": "Nouvel évènement",
       "event_name": "Nom de l'événement",
       "creator_email": "Votre e-mail",
       "date": "Date de l'événement",
@@ -75,7 +67,7 @@
     "add_to_my_events": {
       "cancel": "Annuler",
       "login": "Se connecter",
-      "register" : "S'inscrire",
+      "register": "S'inscrire",
       "title": "Ajouter {{eventName}} à sa liste d'évènement",
       "text_html": "Pour ajouter <strong>{{eventName}}</strong>, il est nécessaire de se connecter ou de créer un compte."
     }
@@ -118,21 +110,41 @@
     "actions": {
       "see_event": "Voir"
     },
-    "sections":{
+    "sections": {
       "future": "Évènement à venir",
       "future_plural": "Évènements à venir",
-      "past" : "Évènement passé",
-      "past_plural": "Évènements passés"
-    } ,
+      "past": "Évènement passé",
+      "past_plural": "Évènements passés",
+      "noDate": "Évènement sans date",
+      "noDate_plural": "Évènements sans date"
+    },
     "noEvent": {
       "title": "Bienvenue sur Caroster",
       "text_html": "Ici, vous y verrez <strong>les évènements auxquels vous participer</strong>, pour commencer créer un évènement !",
-      "create_event": "Nouvel évènement"
+      "create_event": "Créer un évènement"
     }
   },
-  "profile":{
-    "title": "Mon profil"
-  } ,
+  "profile": {
+    "title": "Mon profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "current_password": "Mot de passe actuel",
+    "new_password": "Nouveau mot de passe",
+    "password_changed": "Mot de passe mis à jour",
+    "updated": "Profil mis à jour",
+    "actions": {
+      "save": "Enregistrer",
+      "edit": "Editer",
+      "change_password": "Changer son mot de passe",
+      "logout": "Se déconnecter",
+      "cancel": "Annuler",
+      "save_new_password": "Mettre à jour"
+    },
+    "errors": {
+      "password_nomatch": "Mot de passe erroné"
+    }
+  },
   "passenger": {
     "title": "Liste d'attente",
     "availability": {
@@ -152,14 +164,15 @@
       "cant_select_car": "Impossible de sélectionner la voiture"
     }
   },
-  "signup":{
+  "signup": {
+    "title": "Inscription",
     "email": "Email",
     "firstName": "Prénom",
     "lastName": "Nom",
     "password": "Mot de passe",
     "submit": "Créer son compte",
     "login": "Déjà un compte ? Se connecter",
-    "errors":{
+    "errors": {
       "email_taken": "Email déjà pris"
     },
     "success": {
@@ -170,6 +183,7 @@
     }
   },
   "signin": {
+    "title": "Se connecter",
     "email": "Email",
     "password": "Mot de passe",
     "login": "Se connecter",

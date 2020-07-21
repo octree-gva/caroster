@@ -113,9 +113,10 @@ Code Quality:
   stage: analyze
   image: ciricihq/gitlab-sonar-scanner
   rules:
-    - if: '$CI_PIPELINE_SOURCE =~ "schedule"'
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: manual
   script:
     - >-
       sonar-scanner -Dsonar.host.url=$SONAR_URL 
-      -Dsonar.projectKey=$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG 
+      -Dsonar.projectKey=$CI_PROJECT_NAME
       -Dsonar.login=$SONAR_LOGIN -Dsonar.sources=${SONAR_SOURCE:-.}

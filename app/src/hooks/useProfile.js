@@ -1,28 +1,43 @@
-import {useMemo, useCallback} from 'react';
-import {useAuth} from 'strapi-react-context';
+import {useState, useEffect} from 'react';
+import {useStrapi, useAuth} from 'strapi-react-context';
 
 export default () => {
-  const {token, authState, updateProfile} = useAuth();
+  const strapi = useStrapi();
+  const {token, authState} = useAuth();
+  const [profile, setProfile] = useState();
 
-  const connected = useMemo(() => !!token, [token]);
-
-  const user = useMemo(() => authState?.user, [authState]);
-
-  const addEvent = useCallback(
-    async event => {
-      if (!!token) {
-        const {user} = authState;
-        const {events} = user;
-        updateProfile({
-          ...user,
-          events: !!events
-            ? [...events.filter(e => e !== event.id), event.id]
-            : [event.id],
-        });
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const fetchedProfile = await strapi.services.users.findOne('me');
+        setProfile(fetchedProfile);
+      } catch (error) {
+        console.error(error);
+        setProfile(null);
       }
-    },
-    [token, authState] // eslint-disable-line
-  );
+    };
+    if (authState) getProfile();
+    else setProfile(null);
+  }, [authState, strapi.services.users]);
 
-  return {connected, user, addEvent};
+  const addEvent = async event => {
+    try {
+      if (!profile)
+        throw new Error(`Can't add event to logged user: profile empty`);
+      if (!profile?.events?.some(({id}) => id === event.id))
+        await strapi.services.users.update('me', {
+          events: [...profile.events, event.id],
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return {
+    profile,
+    addEvent,
+    connected: !!token,
+    user: authState?.user,
+    isReady: typeof profile !== 'undefined',
+  };
 };

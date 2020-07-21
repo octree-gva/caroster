@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SignIn from './SignIn';
+import SignIn from '.';
 
 describe('SignIn', () => {
   const signIn = renderer.create(<SignIn />);

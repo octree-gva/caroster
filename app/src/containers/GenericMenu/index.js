@@ -6,10 +6,23 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import GenericToolbar from './Toolbar';
+import {useTranslation} from 'react-i18next';
+import {useStrapi} from 'strapi-react-context';
+
 const GenericMenu = ({title, actions = []}) => {
+  const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
+  const strapi = useStrapi();
+  const [settings] = strapi.stores?.settings || [{}];
   const validActions = useMemo(() => actions.filter(Boolean), [actions]);
+
+  const aboutMenuItem = {
+    label: t('menu.about'),
+    onClick: () => (window.location.href = settings['about_link']),
+    id: 'AboutTabs',
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -41,7 +54,7 @@ const GenericMenu = ({title, actions = []}) => {
             <GenericToolbar
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={validActions}
+              actions={[...validActions, aboutMenuItem]}
             />
           </>
         )}

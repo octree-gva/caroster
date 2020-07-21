@@ -32,6 +32,11 @@
     },
     "waiting_list": {
       "type": "json"
+    },
+    "users": {
+      "via": "events",
+      "plugin": "users-permissions",
+      "collection": "user"
     }
   }
 }

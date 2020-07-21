@@ -1,6 +1,5 @@
 import React, {useState, useReducer} from 'react';
-import {useStrapi} from 'strapi-react-context';
-import useProfile from '../../hooks/useProfile';
+import {useStrapi, useAuth} from 'strapi-react-context';
 
 // Steps
 import Step1 from './Step1';
@@ -12,18 +11,18 @@ const eventReducer = (state, item) => ({...state, ...item});
 
 const CreateEvent = () => {
   const strapi = useStrapi();
+  const {authState} = useAuth();
   const [step, setStep] = useState(0);
   const [event, addToEvent] = useReducer(eventReducer, {});
   const Step = steps[step];
-  const {connected, addEvent} = useProfile();
 
   const createEvent = async eventData => {
     try {
       const result = await strapi.services.events.create({
         ...event,
         ...eventData,
+        users: authState ? [authState.user?.id] : null,
       });
-      if (connected) addEvent(result);
       return result;
     } catch (err) {
       console.error(err);

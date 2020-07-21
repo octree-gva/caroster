@@ -5,7 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
-export const EventCard = ({event}) => {
+import {Link} from 'react-router-dom';
+
+const EventCard = ({event}) => {
   const {t} = useTranslation();
   return (
     <Card>
@@ -23,10 +25,12 @@ export const EventCard = ({event}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`/e/${event.id}`}>
-          {t('dashboard.actions.see_event')}
-        </Button>
+        <Link to={`/e/${event.id}`}>
+          <Button>{t('dashboard.actions.see_event')}</Button>
+        </Link>
       </CardActions>
     </Card>
   );
 };
+
+export default EventCard;

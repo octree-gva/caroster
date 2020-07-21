@@ -67,7 +67,9 @@
       "configurable": false
     },
     "events": {
-      "type": "json"
+      "collection": "event",
+      "via": "users",
+      "dominant": true
     }
   }
 }

@@ -3,16 +3,15 @@
     {
       "method": "PUT",
       "path": "/users/me",
-      "handler": "CarosterUser.update",
-      
+      "handler": "User.updateMe",
       "config": {
-        "policies": ["plugins::users-permissions.setme"],
+        "policies": [],
         "prefix": "",
-        "description": "Update an existing user",
+        "description": "Update authenticated user",
         "tag": {
           "plugin": "users-permissions",
           "name": "User",
-          "actionType": "update"
+          "actionType": "updateMe"
         }
       }
     }

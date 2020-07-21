@@ -10,12 +10,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import {useAuth} from 'strapi-react-context';
 import {Redirect} from 'react-router-dom';
+
 const SignUpSuccess = () => {
   const {t} = useTranslation();
   const {token} = useAuth();
-  if (!token) {
-    return <Redirect to="/" />;
-  }
+
+  if (!token) return <Redirect to="/" />;
+
   return (
     <Layout title={t('meta.register_success_title')}>
       <Card>

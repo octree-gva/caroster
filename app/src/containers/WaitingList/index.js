@@ -59,17 +59,16 @@ const WaitingList = ({car}) => {
         addToast(t(i18nError));
       }
     },
-    [event] // eslint-disable-line
+    [event, addEvent] // eslint-disable-line
   );
 
   const addPassenger = useCallback(
-    async passenger => {
-      return saveWaitingList(
+    async passenger =>
+      saveWaitingList(
         [...(event.waiting_list || []), passenger],
         'passenger.errors.cant_add_passenger'
-      );
-    },
-    [event] // eslint-disable-line
+      ),
+    [event, saveWaitingList] // eslint-disable-line
   );
 
   const removePassenger = useCallback(
@@ -79,7 +78,7 @@ const WaitingList = ({car}) => {
         'passenger.errors.cant_remove_passenger'
       );
     },
-    [event] // eslint-disable-line
+    [event, saveWaitingList] // eslint-disable-line
   );
 
   const selectCar = useCallback(

@@ -320,12 +320,18 @@
           },
           "gtm_id": {
             "type": "string"
+          },
+          "about_link": {
+            "type": "string"
           }
         }
       },
       "NewSettings": {
         "properties": {
           "gtm_id": {
+            "type": "string"
+          },
+          "about_link": {
             "type": "string"
           }
         }

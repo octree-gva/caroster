@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/08/2020 12:13:00 PM"
+    "x-generation-date": "21.07.2020 11:35:03"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1950,6 +1950,12 @@
               },
               "waiting_list": {
                 "type": "object"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -2056,6 +2062,59 @@
           },
           "waiting_list": {
             "type": "object"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "username",
+                "firstName",
+                "lastName",
+                "email"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "resetPasswordToken": {
+                  "type": "string"
+                },
+                "confirmed": {
+                  "type": "boolean"
+                },
+                "blocked": {
+                  "type": "boolean"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2088,6 +2147,12 @@
           },
           "waiting_list": {
             "type": "object"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -2143,12 +2208,18 @@
           },
           "gtm_id": {
             "type": "string"
+          },
+          "about_link": {
+            "type": "string"
           }
         }
       },
       "NewSettings": {
         "properties": {
           "gtm_id": {
+            "type": "string"
+          },
+          "about_link": {
             "type": "string"
           }
         }

@@ -5,7 +5,7 @@ import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-
+import Link from '@material-ui/core/Link';
 const Header = ({car, toggleEditing}) => {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -42,7 +42,15 @@ const Header = ({car, toggleEditing}) => {
             {t('car.fields.meeting_point')}
           </Typography>
           <Typography variant="body2" id="CarMeeting">
-            {car.meeting}
+            <Link
+              component="a"
+              size="small"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://maps.google.com/?q=${encodeURI(car.meeting)}`}
+            >
+              {car.meeting}
+            </Link>
           </Typography>
         </div>
       )}
