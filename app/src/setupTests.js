@@ -1,3 +1,4 @@
+/* eslint-disable */
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
@@ -5,6 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import './i18n';
 
+window.scrollTo = jest.fn();
 // FROM https://github.com/akiran/react-slick/blob/master/test-setup.js
 window.matchMedia =
   window.matchMedia ||
@@ -16,3 +18,9 @@ window.matchMedia =
 
 window.requestAnimationFrame =
   window.requestAnimationFrame || (callback => setTimeout(callback, 0));
+
+global.createNodeMock = () => {
+  return {
+    focus: jest.fn(),
+  };
+};

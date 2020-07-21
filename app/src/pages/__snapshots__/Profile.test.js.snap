@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile page match snapshot 1`] = `
+<div>
+  <div
+    className="makeStyles-layout-1"
+  >
+    <div
+      className="MuiContainer-root MuiContainer-maxWidthSm"
+    >
+      <div>
+        Mon ami
+      </div>
+    </div>
+  </div>
+</div>
+`;

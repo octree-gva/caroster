@@ -123,7 +123,25 @@
     }
   },
   "profile": {
-    "title": "Mon profil"
+    "title": "Mon profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "current_password": "Mot de passe actuel",
+    "new_password": "Nouveau mot de passe",
+    "password_changed": "Mot de passe mis à jour",
+    "updated": "Profil mis à jour",
+    "actions": {
+      "save": "Enregistrer",
+      "edit": "Editer",
+      "change_password": "Changer son mot de passe",
+      "logout": "Se déconnecter",
+      "cancel": "Annuler",
+      "save_new_password": "Mettre à jour"
+    },
+    "errors": {
+      "password_nomatch": "Mot de passe erroné"
+    }
   },
   "passenger": {
     "title": "Liste d'attente",

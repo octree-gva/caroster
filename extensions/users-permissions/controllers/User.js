@@ -1,5 +1,9 @@
 const {removeUndefined, sanitizeEntity} = require('strapi-utils');
 
+const formatError = error => [
+  {messages: [{id: error.id, message: error.message, field: error.field}]},
+];
+
 module.exports = {
   /**
    * Update authenticated user.
@@ -19,10 +23,27 @@ module.exports = {
       username,
       email,
       password,
-      firstname,
-      lastname,
+      old_password,
+      firstName,
+      lastName,
       events,
     } = ctx.request.body;
+
+    if (password) {
+      const validPassword = strapi.plugins[
+        'users-permissions'
+      ].services.user.validatePassword(old_password, user.password);
+      if (!validPassword)
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'Auth.form.error.password.matching',
+            message: 'Passwords do not match.',
+          })
+        );
+
+      delete ctx.request.body.old_password;
+    }
 
     const data = await strapi.plugins['users-permissions'].services.user.edit(
       {id: user.id},
@@ -30,8 +51,8 @@ module.exports = {
         username,
         email,
         password,
-        firstname,
-        lastname,
+        firstName,
+        lastName,
         events,
       })
     );

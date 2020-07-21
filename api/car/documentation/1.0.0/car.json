@@ -50,9 +50,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "parameters": [
           {
             "name": "_limit",
@@ -238,9 +236,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -305,9 +301,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "parameters": []
       }
     },
@@ -358,9 +352,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "parameters": [
           {
             "name": "id",
@@ -420,9 +412,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -494,9 +484,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Car"
-        ],
+        "tags": ["Car"],
         "parameters": [
           {
             "name": "id",
@@ -515,11 +503,7 @@
   "components": {
     "schemas": {
       "Car": {
-        "required": [
-          "id",
-          "name",
-          "seats"
-        ],
+        "required": ["id", "name", "seats"],
         "properties": {
           "id": {
             "type": "string"
@@ -543,11 +527,7 @@
             "type": "string"
           },
           "event": {
-            "required": [
-              "id",
-              "name",
-              "email"
-            ],
+            "required": ["id", "name", "email"],
             "properties": {
               "id": {
                 "type": "string"
@@ -590,10 +570,7 @@
         }
       },
       "NewCar": {
-        "required": [
-          "name",
-          "seats"
-        ],
+        "required": ["name", "seats"],
         "properties": {
           "name": {
             "type": "string"
