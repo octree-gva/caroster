@@ -1,5 +1,4 @@
 import React, {useState, useReducer, useEffect} from 'react';
-import {Helmet} from 'react-helmet';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import AppBar from '@material-ui/core/AppBar';
@@ -32,9 +31,6 @@ const Event = () => {
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
   const {event, isEditing, setIsEditing, updateEvent} = useEvent();
   const {token} = useAuth();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
@@ -67,31 +63,26 @@ const Event = () => {
   };
 
   const addToMyEvents = () => {
-    if (!event) return;
-    window.localStorage.setItem('addToMyEvents', event.id);
     setIsAddToMyEvent(true);
   };
 
-  const signUp = () => {
-    if (!event) return;
+  const signUp = () =>
     history.push({
       pathname: '/register',
-      state: {event: event.id},
+      state: {event: event?.id},
     });
-  };
 
   const signIn = history.push.bind(undefined, '/login');
   const goToDashboard = history.push.bind(undefined, '/dashboard');
   const goProfile = history.push.bind(undefined, '/profile');
-  const goAbout = () => (window.location.href = t('meta.about_href'));
 
   if (!event) return <Loading />;
 
   return (
-    <Layout>
-      <Helmet>
-        <title>{t('meta.title', {title: event.name})}</title>
-      </Helmet>
+    <Layout
+      pageTitle={t('event.title')}
+      menuTitle={t('meta.title', {title: event.name})}
+    >
       <AppBar
         position="static"
         color="primary"
@@ -103,28 +94,30 @@ const Event = () => {
             <Typography variant="h6" noWrap id="MenuHeaderTitle">
               {event.name}
             </Typography>
-            {detailsOpen && !isEditing && (
+            {detailsOpen && (
               <IconButton
                 color="inherit"
                 edge="end"
-                id="CloseDetailsBtn"
-                onClick={() => setIsEditing(true)}
+                id="HeaderAction"
+                onClick={isEditing ? onEventSave : () => setIsEditing(true)}
               >
-                <Icon>edit</Icon>
-              </IconButton>
-            )}
-            {detailsOpen && isEditing && (
-              <IconButton
-                color="inherit"
-                edge="end"
-                id="EditEventSubmit"
-                onClick={onEventSave}
-              >
-                <Icon>done</Icon>
+                <Icon>{isEditing ? 'edit' : 'done'}</Icon>
               </IconButton>
             )}
           </div>
-          {!detailsOpen && (
+          {detailsOpen ? (
+            <IconButton
+              color="inherit"
+              edge="end"
+              id="CloseDetailsBtn"
+              onClick={() => {
+                setIsEditing(false);
+                toggleDetails();
+              }}
+            >
+              <Icon>close</Icon>
+            </IconButton>
+          ) : (
             <>
               <IconButton
                 color="inherit"
@@ -144,19 +137,6 @@ const Event = () => {
                 <Icon>more_vert</Icon>
               </IconButton>
             </>
-          )}
-          {detailsOpen && (
-            <IconButton
-              color="inherit"
-              edge="end"
-              id="CloseDetailsBtn"
-              onClick={() => {
-                setIsEditing(false);
-                toggleDetails();
-              }}
-            >
-              <Icon>close</Icon>
-            </IconButton>
           )}
           <EventMenu
             anchorEl={anchorEl}
@@ -194,12 +174,7 @@ const Event = () => {
                 onClick: goProfile,
                 id: 'ProfileTab',
               },
-              {
-                label: t('menu.about'),
-                onClick: goAbout,
-                id: 'AboutTab',
-              },
-            ].filter(Boolean)}
+            ]}
           />
         </Toolbar>
         {detailsOpen && (

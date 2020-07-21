@@ -6,10 +6,11 @@ const DefaultLayout = ({
   className,
   menuTitle = 'Caroster',
   menuActions,
+  pageTitle = undefined,
 }) => {
   return (
     <>
-      <Helmet title={menuTitle} />
+      <Helmet title={pageTitle || menuTitle} />
       {(menuTitle || menuActions) && (
         <GenericMenu title={menuTitle} actions={menuActions} />
       )}
