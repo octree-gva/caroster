@@ -8,7 +8,6 @@ import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import {useEvent} from '../../contexts/Event';
-import Map from '../../components/Map';
 import {caroster} from '../../theme';
 
 const theme = createMuiTheme({
@@ -93,12 +92,12 @@ const EventDetails = ({toggleDetails}) => {
             <Typography variant="body1" id={`${idPrefix}Address`}>
               {event.address ? (
                 <Link
-                  href={`https://maps.google.com/?q=${encodeURI(
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                     event.address
                   )}`}
-                  rel="noopener noreferrer"
-                  component="a"
-                  target="_blank"
+                  onClick={e => e.preventDefault}
                 >
                   {event.address}
                 </Link>
@@ -113,11 +112,6 @@ const EventDetails = ({toggleDetails}) => {
             {t('event.actions.find_car')}
           </Button>
         </div>
-        {event.position && (
-          <div className={classes.map} id={`${idPrefix}AddressMap`}>
-            <Map position={event.position} />
-          </div>
-        )}
       </div>
     </ThemeProvider>
   );
