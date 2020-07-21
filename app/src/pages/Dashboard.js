@@ -1,143 +1,88 @@
-import React, {useEffect, useState, useCallback, useMemo} from 'react';
-import {useStrapi, useAuth} from 'strapi-react-context';
-import LayoutCentered from '../layouts/Centered';
+import React, {useMemo} from 'react';
+import {useAuth} from 'strapi-react-context';
 import LayoutDefault from '../layouts/Default';
 import moment from 'moment';
 import Loading from './Loading';
-import DashboardWithCard, {
-  EmptyDashboard,
-  DashboardFab,
-} from '../containers/Dashboard';
+import DashboardEvents from '../containers/DashboardEvents';
+import DashboardEmpty from '../containers/DashboardEmpty';
+import Fab from '../containers/Fab';
 import {useTranslation} from 'react-i18next';
-import GenericMenu from '../containers/GenericMenu';
 import {makeStyles} from '@material-ui/core/styles';
 import {useHistory} from 'react-router-dom';
+import useProfile from '../hooks/useProfile';
 
-const Menu = () => {
-  const history = useHistory();
-  const {t} = useTranslation();
-  const goProfile = history.push.bind(undefined, '/profile');
-  const goNewEvent = history.push.bind(undefined, '/new');
-  const goAbout = () => (window.location.href = t('meta.about_href'));
-
-  return (
-    <GenericMenu
-      title={t('dashboard.title')}
-      actions={[
-        {
-          label: t('menu.new_event'),
-          onClick: goNewEvent,
-          id: 'AddEventTabs',
-        },
-        {
-          label: t('menu.profile'),
-          onClick: goProfile,
-          id: 'ProfileTabs',
-        },
-        {
-          label: t('menu.about'),
-          onClick: goAbout,
-          id: 'AboutTabs',
-        },
-      ]}
-    />
-  );
-};
 const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
 
 const Dashboard = () => {
-  const [myEvents, setMyEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const strapi = useStrapi();
-  const {authState, token} = useAuth();
+  const {authState} = useAuth();
+  const {profile, isReady} = useProfile();
   const history = useHistory();
+  const {t} = useTranslation();
   const classes = useStyles();
-  const goNewEvent = history.push.bind(undefined, '/new');
+  const {events = []} = profile || {};
+
   const pastEvents = useMemo(
     () =>
-      myEvents
-        .filter(({date}) => {
-          return date && moment(date).isBefore(moment(), 'day');
-        })
+      events
+        .filter(({date}) => date && moment(date).isBefore(moment(), 'day'))
         .sort(sortDesc),
-    [myEvents]
+    [events]
   );
-  const noDateEvents = useMemo(
-    () =>
-      myEvents.filter(({date}) => {
-        return !date;
-      }),
-    [myEvents]
-  );
+
   const futureEvents = useMemo(
     () =>
-      myEvents
-        .filter(({date}) => {
-          return date && moment(date).isSameOrAfter(moment(), 'day');
-        })
+      events
+        .filter(({date}) => date && moment(date).isSameOrAfter(moment(), 'day'))
         .sort(sortDesc),
-    [myEvents]
-  );
-  const fetchEvents = useCallback(
-    async query => {
-      const myEvents = await strapi.services.events.find(query);
-      setMyEvents(myEvents);
-    },
-    [strapi.services.events]
+    [events]
   );
 
-  useEffect(() => {
-    if (!token) return;
-    const {
-      user: {events = []},
-    } = authState;
-    if (events.length > 0) {
-      setIsLoading(true);
-      fetchEvents(
-        events
-          .reduce((acc, eventId) => {
-            return acc + `id_in=${eventId}&`;
-          }, '')
-          .substring(-1)
-      ).then(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
-  }, [authState, token, fetchEvents]);
+  const noDateEvents = useMemo(() => events.filter(({date}) => !date), [
+    events,
+  ]);
 
-  if (isLoading) return <Loading />;
-
-  if (!token || !myEvents) return <div>Not connected</div>;
-
-  if (!isLoading && myEvents.length === 0) {
+  if (!authState || !isReady)
     return (
-      <>
-        <Menu />
-        <LayoutCentered>
-          <EmptyDashboard />
-          <DashboardFab onClick={() => goNewEvent()} />
-        </LayoutCentered>
-      </>
+      <LayoutDefault menuTitle={t('dashboard.title')}>
+        <Loading />
+      </LayoutDefault>
     );
-  }
+
+  const menuActions = [
+    {
+      label: t('menu.new_event'),
+      onClick: () => history.push('/new'),
+      id: 'AddEventTabs',
+    },
+    {
+      label: t('menu.profile'),
+      onClick: () => history.push('/profile'),
+      id: 'ProfileTabs',
+    },
+  ];
 
   return (
-    <>
-      <Menu />
-      <LayoutDefault className={classes.root}>
-        <DashboardWithCard
+    <LayoutDefault
+      className={classes.root}
+      menuActions={menuActions}
+      menuTitle={t('dashboard.title')}
+    >
+      {!events || events.length === 0 ? (
+        <DashboardEmpty />
+      ) : (
+        <DashboardEvents
           pastEvents={pastEvents}
           futureEvents={futureEvents}
           noDateEvents={noDateEvents}
         />
-        <DashboardFab onClick={() => goNewEvent()} />
-      </LayoutDefault>
-    </>
+      )}
+      <Fab onClick={() => history.push('/new')} aria-label="add-event" />
+    </LayoutDefault>
   );
 };
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: '50px',
+    marginTop: theme.mixins.toolbar.minHeight,
   },
 }));
 export default Dashboard;

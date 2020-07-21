@@ -1,16 +1,16 @@
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
-import Fab from '@material-ui/core/Fab';
+import FabMui from '@material-ui/core/Fab';
 import {makeStyles} from '@material-ui/core/styles';
 
-export const DashboardFab = ({onClick, open}) => {
+const Fab = ({open, ...props}) => {
   const classes = useStyles({open});
 
   return (
     <div className={classes.container}>
-      <Fab color="secondary" aria-label="dashboard-add" onClick={onClick}>
+      <FabMui color="secondary" {...props}>
         <Icon>add</Icon>
-      </Fab>
+      </FabMui>
     </div>
   );
 };
@@ -25,3 +25,5 @@ const useStyles = makeStyles(theme => ({
     zIndex: theme.zIndex.speedDial,
   }),
 }));
+
+export default Fab;

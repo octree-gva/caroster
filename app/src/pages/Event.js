@@ -15,7 +15,7 @@ import Layout from '../layouts/Default';
 import Loading from './Loading';
 import EventMenu from '../containers/EventMenu';
 import EventDetails from '../containers/EventDetails';
-import EventFab from '../containers/EventFab';
+import Fab from '../containers/Fab';
 import CarColumns from '../containers/CarColumns';
 import NewCarDialog from '../containers/NewCarDialog';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
@@ -209,7 +209,7 @@ const Event = () => {
         )}
       </AppBar>
       <CarColumns toggleNewCar={toggleNewCar} />
-      <EventFab toggleNewCar={toggleNewCar} open={openNewCar} />
+      <Fab onClick={toggleNewCar} open={openNewCar} aria-label="add-car" />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
       <AddToMyEventDialog
         open={isAddToMyEvent}

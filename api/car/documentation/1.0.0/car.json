@@ -575,6 +575,12 @@
               },
               "waiting_list": {
                 "type": "object"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           },

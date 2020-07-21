@@ -18,7 +18,7 @@ const SignUp = () => {
   const {
     location: {state: historyState = {}},
   } = history;
-  console.log({event: historyState.event});
+
   const {signUp, token} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');

@@ -12,6 +12,9 @@
     "gtm_id": {
       "type": "string",
       "regex": "GTM-.*"
+    },
+    "about_link": {
+      "type": "string"
     }
   }
 }

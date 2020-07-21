@@ -20,7 +20,7 @@
     "remove": "Supprimer",
     "save": "Enregistrer",
     "confirm": "Confirmer",
-    "errors":{
+    "errors": {
       "unknown": "Une erreur inconnue c'est produite",
       "rejected": "Quelque chose c'est mal passé",
       "bad_data": "Il manque quelque chose",
@@ -67,7 +67,7 @@
     "add_to_my_events": {
       "cancel": "Annuler",
       "login": "Se connecter",
-      "register" : "S'inscrire",
+      "register": "S'inscrire",
       "title": "Ajouter {{eventName}} à sa liste d'évènement",
       "text_html": "Pour ajouter <strong>{{eventName}}</strong>, il est nécessaire de se connecter ou de créer un compte."
     }
@@ -110,21 +110,21 @@
     "actions": {
       "see_event": "Voir"
     },
-    "sections":{
+    "sections": {
       "future": "Évènement à venir",
       "future_plural": "Évènements à venir",
-      "past" : "Évènement passé",
+      "past": "Évènement passé",
       "past_plural": "Évènements passés"
-    } ,
+    },
     "noEvent": {
       "title": "Bienvenue sur Caroster",
       "text_html": "Ici, vous y verrez <strong>les évènements auxquels vous participer</strong>, pour commencer créer un évènement !",
       "create_event": "Créer un évènement"
     }
   },
-  "profile":{
+  "profile": {
     "title": "Mon profil"
-  } ,
+  },
   "passenger": {
     "title": "Liste d'attente",
     "availability": {
@@ -144,14 +144,14 @@
       "cant_select_car": "Impossible de sélectionner la voiture"
     }
   },
-  "signup":{
+  "signup": {
     "email": "Email",
     "firstName": "Prénom",
     "lastName": "Nom",
     "password": "Mot de passe",
     "submit": "Créer son compte",
     "login": "Déjà un compte ? Se connecter",
-    "errors":{
+    "errors": {
       "email_taken": "Email déjà pris"
     },
     "success": {
