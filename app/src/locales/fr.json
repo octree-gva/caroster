@@ -114,7 +114,9 @@
       "future": "Évènement à venir",
       "future_plural": "Évènements à venir",
       "past": "Évènement passé",
-      "past_plural": "Évènements passés"
+      "past_plural": "Évènements passés",
+      "noDate": "Évènement sans date",
+      "noDate_plural": "Évènements sans date"
     },
     "noEvent": {
       "title": "Bienvenue sur Caroster",

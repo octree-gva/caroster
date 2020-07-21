@@ -18,14 +18,23 @@ const DashboardEvents = ({futureEvents, noDateEvents, pastEvents}) => {
 
   return (
     <Grid container className={classes.root} spacing={4} xs={'auto'}>
-      {futureEvents.length + noDateEvents.length > 0 && (
+      {futureEvents.length > 0 && (
         <>
           <Section>
             {t('dashboard.sections.future', {
-              count: futureEvents.length + noDateEvents.length,
+              count: futureEvents.length,
             })}
           </Section>
           {cardsForEvents(futureEvents)}
+        </>
+      )}
+      {noDateEvents.length > 0 && (
+        <>
+          <Section>
+            {t('dashboard.sections.noDate', {
+              count: noDateEvents.length,
+            })}
+          </Section>
           {cardsForEvents(noDateEvents)}
         </>
       )}
