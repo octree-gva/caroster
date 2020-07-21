@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {useTranslation} from 'react-i18next';
+import {CircularProgress} from '@material-ui/core';
 import {DatePicker} from '@material-ui/pickers';
+import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import {useHistory} from 'react-router-dom';
 import {useToast} from '../../contexts/Toast';
@@ -17,14 +18,18 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   // States
   const [date, setDate] = useState(!!event.date ? moment(event.date) : null);
   const [address, setAddress] = useState(event.address ?? '');
+  const [loading, setLoading] = useState(false);
 
   const onCreate = async evt => {
     if (evt.preventDefault) evt.preventDefault();
+    if (loading) return false;
+    setLoading(true);
     const eventData = {date: date?.toISOString(), address};
     addToEvent(eventData);
     const result = await createEvent(eventData);
     if (!result) addToast(t('event.errors.cant_create'));
     else history.push(`/e/${result.id}`);
+    setLoading(false);
     return false;
   };
 
@@ -53,6 +58,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         name="address"
       />
       <Button
+        disabled={loading}
         className={classes.button}
         variant="contained"
         color="secondary"
@@ -60,7 +66,11 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         type="submit"
         id="NewEventSubmit"
       >
-        {t('generic.create')}
+        {loading ? (
+          <CircularProgress className={classes.loader} size={20} />
+        ) : (
+          t('generic.create')
+        )}
       </Button>
     </form>
   );
