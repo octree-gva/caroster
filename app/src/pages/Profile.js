@@ -5,11 +5,13 @@ import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
 import Loading from './Loading';
 import Profile from '../containers/Profile';
+import useProfile from '../hooks/useProfile';
 
 const ProfilePage = () => {
   const history = useHistory();
   const {t} = useTranslation();
-  const {authState, logout, updateProfile} = useAuth();
+  const {logout, updateProfile} = useAuth();
+  const {profile} = useProfile();
 
   const menuActions = [
     {
@@ -29,12 +31,12 @@ const ProfilePage = () => {
     },
   ];
 
-  if (!authState) return <Loading />;
+  if (!profile) return <Loading />;
 
   return (
     <Layout menuTitle={t('profile.title')} menuActions={menuActions}>
       <Profile
-        profile={authState.user}
+        profile={profile}
         updateProfile={updateProfile}
         logout={logout}
       />
