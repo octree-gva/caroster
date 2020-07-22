@@ -24,6 +24,7 @@ const EventDetails = ({toggleDetails}) => {
   const {event, isEditing, setEditingEvent, editingEvent} = useEvent();
 
   if (!event) return null;
+
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
 
   return (
@@ -58,18 +59,20 @@ const EventDetails = ({toggleDetails}) => {
               onChange={date =>
                 setEditingEvent({...editingEvent, date: date?.toISOString()})
               }
-              fullWidth
               format="DD.MM.YYYY"
-              disablePast
-              id={`${idPrefix}Date`}
-              name="date"
               TextFieldComponent={p => <TextField {...p} />}
+              minDateMessage={t('generic.errors.date_min')}
               cancelLabel={t('generic.cancel')}
+              name="date"
+              disablePast
+              fullWidth
+              id={`${idPrefix}Date`}
             />
           ) : (
             <Typography variant="body1" id={`${idPrefix}Date`}>
-              {moment(event.date).format('DD.MM.YYYY') ||
-                t('event.fields.empty')}
+              {event.date
+                ? moment(event.date).format('DD.MM.YYYY')
+                : t('event.fields.empty')}
             </Typography>
           )}
         </div>
@@ -108,7 +111,7 @@ const EventDetails = ({toggleDetails}) => {
           )}
         </div>
         <div className={classes.actions}>
-          <Button onClick={toggleDetails} variant="contained" id={`CarFindBtn`}>
+          <Button onClick={toggleDetails} variant="outlined" id={`CarFindBtn`}>
             {t('event.actions.find_car')}
           </Button>
         </div>

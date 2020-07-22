@@ -112,7 +112,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           fullWidth
           format="LLLL"
           disablePast
-          minDateMessage={t('car.creation.date_min')}
+          minDateMessage={t('generic.errors.date_min')}
           id="EditCarDateTime"
           name="date"
           cancelLabel={t('generic.cancel')}

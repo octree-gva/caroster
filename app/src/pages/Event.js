@@ -1,42 +1,23 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, {useState, useReducer} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useAuth} from 'strapi-react-context';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
 import {useEvent, EventProvider} from '../contexts/Event';
 import {useToast} from '../contexts/Toast';
 import Layout from '../layouts/Default';
-import Loading from './Loading';
-import EventMenu from '../containers/EventMenu';
-import EventDetails from '../containers/EventDetails';
 import Fab from '../containers/Fab';
 import CarColumns from '../containers/CarColumns';
 import NewCarDialog from '../containers/NewCarDialog';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
-import {useHistory} from 'react-router-dom';
+import Loading from './Loading';
+import EventBar from '../containers/EventBar';
 
 const Event = () => {
   const {t} = useTranslation();
-  const history = useHistory();
   const {addToast} = useToast();
-  const [anchorEl, setAnchorEl] = useState(null);
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
-  const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
-  const classes = useStyles({detailsOpen});
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
   const {event, isEditing, setIsEditing, updateEvent} = useEvent();
-  const {token} = useAuth();
 
-  useEffect(() => {
-    if (!detailsOpen) setIsEditing(false);
-  }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onEventSave = async e => {
+  const onSave = async e => {
     try {
       await updateEvent();
       setIsEditing(false);
@@ -62,20 +43,6 @@ const Event = () => {
     }
   };
 
-  const addToMyEvents = () => {
-    setIsAddToMyEvent(true);
-  };
-
-  const signUp = () =>
-    history.push({
-      pathname: '/register',
-      state: {event: event?.id},
-    });
-
-  const signIn = history.push.bind(undefined, '/login');
-  const goToDashboard = history.push.bind(undefined, '/dashboard');
-  const goProfile = history.push.bind(undefined, '/profile');
-
   if (!event) return <Loading />;
 
   return (
@@ -83,140 +50,25 @@ const Event = () => {
       pageTitle={t('event.title')}
       menuTitle={t('meta.title', {title: event.name})}
     >
-      <AppBar
-        position="static"
-        color="primary"
-        className={classes.appbar}
-        id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
-      >
-        <Toolbar>
-          <div className={classes.name}>
-            <Typography variant="h6" noWrap id="MenuHeaderTitle">
-              {event.name}
-            </Typography>
-            {detailsOpen && (
-              <IconButton
-                color="inherit"
-                edge="end"
-                id="HeaderAction"
-                onClick={isEditing ? onEventSave : () => setIsEditing(true)}
-              >
-                <Icon>{isEditing ? 'edit' : 'done'}</Icon>
-              </IconButton>
-            )}
-          </div>
-          {detailsOpen ? (
-            <IconButton
-              color="inherit"
-              edge="end"
-              id="CloseDetailsBtn"
-              onClick={() => {
-                setIsEditing(false);
-                toggleDetails();
-              }}
-            >
-              <Icon>close</Icon>
-            </IconButton>
-          ) : (
-            <>
-              <IconButton
-                color="inherit"
-                edge="end"
-                id="ShareBtn"
-                onClick={onShare}
-                className={classes.shareIcon}
-              >
-                <Icon>share</Icon>
-              </IconButton>
-              <IconButton
-                color="inherit"
-                edge="end"
-                id="MenuMoreInfo"
-                onClick={e => setAnchorEl(e.currentTarget)}
-              >
-                <Icon>more_vert</Icon>
-              </IconButton>
-            </>
-          )}
-          <EventMenu
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            actions={[
-              {
-                label: detailsOpen
-                  ? t('event.actions.hide_details')
-                  : t('event.actions.show_details'),
-                onClick: toggleDetails,
-                id: 'DetailsTab',
-              },
-              !token && {
-                label: t('event.actions.add_to_my_events'),
-                onClick: addToMyEvents,
-                id: 'AddToMyEventsTab',
-              },
-              !!token && {
-                label: t('menu.dashboard'),
-                onClick: goToDashboard,
-                id: 'GoToDashboardTab',
-              },
-              !token && {
-                label: t('menu.login'),
-                onClick: signIn,
-                id: 'SignInTab',
-              },
-              !token && {
-                label: t('menu.register'),
-                onClick: signUp,
-                id: 'SignUpTab',
-              },
-              !!token && {
-                label: t('menu.profile'),
-                onClick: goProfile,
-                id: 'ProfileTab',
-              },
-            ]}
-          />
-        </Toolbar>
-        {detailsOpen && (
-          <Container className={classes.container} maxWidth="sm">
-            <EventDetails toggleDetails={toggleDetails} />
-          </Container>
-        )}
-      </AppBar>
+      <EventBar
+        event={event}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        onAdd={setIsAddToMyEvent}
+        onSave={onSave}
+        onShare={onShare}
+      />
       <CarColumns toggleNewCar={toggleNewCar} />
       <Fab onClick={toggleNewCar} open={openNewCar} aria-label="add-car" />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
       <AddToMyEventDialog
+        event={event}
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
-        event={event}
       />
     </Layout>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    padding: theme.spacing(2),
-  },
-  appbar: ({detailsOpen}) => ({
-    overflow: 'hidden',
-    height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
-    overflowY: detailsOpen ? 'scroll' : 'hidden',
-    transition: 'height 0.3s ease',
-    zIndex: theme.zIndex.appBar,
-    position: 'fixed',
-    top: 0,
-  }),
-  name: {
-    flexGrow: 1,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  shareIcon: {
-    marginRight: theme.spacing(0),
-  },
-}));
 
 const EventWithContext = props => (
   <EventProvider {...props}>

@@ -3,6 +3,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
+
 const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
   const {t} = useTranslation();
   const strapi = useStrapi();

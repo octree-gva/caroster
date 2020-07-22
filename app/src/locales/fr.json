@@ -21,6 +21,7 @@
     "save": "Enregistrer",
     "confirm": "Confirmer",
     "errors": {
+      "date_min": "Sélectionnez une date à venir",
       "unknown": "Une erreur inconnue c'est produite",
       "rejected": "Quelque chose c'est mal passé",
       "bad_data": "Il manque quelque chose",
@@ -80,7 +81,6 @@
     },
     "creation": {
       "date": "Départ",
-      "date_min": "Sélectionnez une date à venir",
       "title": "Ajouter une voiture",
       "name": "Nom de la voiture",
       "seats": "Nombre de places",
