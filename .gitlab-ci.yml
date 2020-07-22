@@ -29,6 +29,8 @@ Test:
 Build:
   stage: build
   image: docker:stable-git
+  environment:
+    REACT_APP_URL: $ENV_URL
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
   script:
