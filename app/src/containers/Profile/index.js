@@ -25,6 +25,13 @@ const Profile = ({profile, updateProfile, logout}) => {
   const [newPassword, setNewPassword] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
 
+  const resetPassword = () => {
+    setIsEditingPassword(false);
+    setNewPassword('');
+    setOldPassword('');
+    setErrorPassword('');
+  };
+
   const savePassword = async () => {
     try {
       await updateProfile({
@@ -32,13 +39,13 @@ const Profile = ({profile, updateProfile, logout}) => {
         password: newPassword,
       });
       addToast(t('profile.password_changed'));
+      resetPassword();
     } catch (err) {
       if (err.kind === 'bad_data') {
         setErrorPassword(t('profile.errors.password_nomatch'));
         return;
       }
     }
-    setIsEditingPassword(false);
   };
 
   if (isEditingPassword)
@@ -50,11 +57,7 @@ const Profile = ({profile, updateProfile, logout}) => {
         setNewPassword={setNewPassword}
         error={errorPassword}
         save={savePassword}
-        cancel={() => {
-          setIsEditingPassword(false);
-          setNewPassword('');
-          setOldPassword('');
-        }}
+        cancel={resetPassword}
       />
     );
 
@@ -79,7 +82,6 @@ const Profile = ({profile, updateProfile, logout}) => {
           action={
             <IconButton
               color="inherit"
-              edge="end"
               id="EditProfileAction"
               type="submit"
               title={
@@ -130,7 +132,6 @@ const Profile = ({profile, updateProfile, logout}) => {
             <Button
               type="button"
               color="primary"
-              size="small"
               onClick={evt => {
                 if (evt.preventDefault) evt.preventDefault();
                 setIsEditingPassword(true);
@@ -140,12 +141,7 @@ const Profile = ({profile, updateProfile, logout}) => {
             </Button>
           )}
           {!isEditing && (
-            <Button
-              type="button"
-              color="secondary"
-              size="small"
-              onClick={() => logout()}
-            >
+            <Button type="button" color="default" onClick={() => logout()}>
               {t('profile.actions.logout')}
             </Button>
           )}

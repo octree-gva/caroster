@@ -6,10 +6,10 @@ export const caroster = {
       main: '#009688',
     },
     secondary: {
-      main: '#ffde03',
+      main: '#FFEB3B',
     },
     background: {
-      default: '#f4f4ff',
+      default: '#F4F4FF',
     },
   },
   mixins: {

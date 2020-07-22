@@ -34,10 +34,10 @@ const EditPassword = ({
           action={
             <IconButton
               color="inherit"
-              edge="end"
               id="ChangePasswordAction"
               type="submit"
               title={t('profile.actions.save')}
+              disabled={oldPassword.length < 4 || newPassword.length < 4}
             >
               <Icon>done</Icon>
             </IconButton>
@@ -69,19 +69,12 @@ const EditPassword = ({
           />
         </CardContent>
         <CardActions>
-          <Button
-            type="button"
-            color="secondary"
-            size="small"
-            variant="contained"
-            onClick={cancel}
-          >
+          <Button type="button" onClick={cancel}>
             {t('profile.actions.cancel')}
           </Button>
           <Button
             type="submit"
             color="primary"
-            size="small"
             variant="contained"
             disabled={oldPassword.length < 4 || newPassword.length < 4}
           >
