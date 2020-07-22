@@ -1,9 +1,11 @@
 import React, {useCallback, useState, useMemo} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link as RouterLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+
 import CardContent from '@material-ui/core/CardContent';
 import {CircularProgress} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,6 +18,7 @@ const SignIn = () => {
 
   const {login, token, authState} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {addToast} = useToast();
@@ -38,7 +41,8 @@ const SignIn = () => {
         // TODO remove from local storage.
       } catch (error) {
         console.log('ERROR', {error});
-        if (error) {
+        if (error.kind === 'bad_data') {
+          setError(t('signin.errors'));
           addToast(t('signin.errors'));
         }
       }
@@ -68,6 +72,8 @@ const SignIn = () => {
           id="SignInEmail"
           name="email"
           type="email"
+          error={!!error}
+          helperText={error}
         />
         <TextField
           label={t('signin.password')}
@@ -79,6 +85,14 @@ const SignIn = () => {
           id="SignInEmail"
           name="password"
           type="password"
+          error={!!error}
+          helperText={
+            error && (
+              <RouterLink to="/lost-password" component={Link}>
+                {t('lost_password.message')}
+              </RouterLink>
+            )
+          }
         />
       </CardContent>
       <CardActions>

@@ -21,6 +21,15 @@
             "actions": ["find"]
           }
         ]
+      },
+      {
+        "type": "users-permissions",
+        "controllers": [
+          {
+            "name": "user",
+            "actions": ["resetpassword"]
+          }
+        ]
       }
     ],
     "authenticated": [

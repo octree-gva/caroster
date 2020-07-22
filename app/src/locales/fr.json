@@ -189,5 +189,24 @@
     "login": "Se connecter",
     "register": "Pas encore de compte ? S'inscrire",
     "errors": "Vérifier votre email et mot de passe"
+  },
+  "lost_password": {
+    "title": "Récupération de mot de passe",
+    "reset_title": "Définition d'un nouveau mot de passe",
+    "message": "Perdu son mot de passe ?",
+    "email": "Votre email",
+    "password": "Nouveau mot de passe",
+    "password_confirmation": "Confirmation du nouveau mot de passe",
+    "sent": "Un email a été envoyé à {{email}}, avec un lien pour récupérer votre mot de passe",
+    "error": "Cet email n'existe pas",
+    "change_success": "Votre mot de passe a été modifié",
+    "actions": {
+      "send": "Envoyer un email de récupération",
+      "cancel": "Annuler",
+      "login": "Retour à l'écran de connexion",
+      "resend": "Envoyer à nouveau",
+      "register": "Créer un compte ?",
+      "save_new_password": "Mettre à jour"
+    }
   }
 }
