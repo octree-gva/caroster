@@ -26,7 +26,7 @@ const ResetPassword = () => {
     try {
       await resetPassword(code, password, passwordConfirmation);
       setPasswordError('');
-      addToast(t('forgot_password.change_success'));
+      addToast(t('lost_password.change_success'));
       history.push('/login');
     } catch (err) {
       if (err.kind === 'bad_data') {
