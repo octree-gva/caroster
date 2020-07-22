@@ -1,22 +1,23 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import React, {useCallback, useState, useMemo, useEffect} from 'react';
 import {Redirect, Link as RouterLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from 'strapi-react-context';
 import TextField from '@material-ui/core/TextField';
+import {useLocation} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 
 import CardContent from '@material-ui/core/CardContent';
 import {CircularProgress} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
-import {useToast} from '../../contexts/Toast';
 import {makeStyles} from '@material-ui/core/styles';
+import {useToast} from '../../contexts/Toast';
 
 const SignIn = () => {
   const {t} = useTranslation();
   const classes = useStyles();
-
-  const {login, token, authState} = useAuth();
+  const location = useLocation();
+  const {login, token, authState, loginWithProvider} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -53,12 +54,24 @@ const SignIn = () => {
     [email, password, login, isLoading, addToast, t]
   );
 
-  if (token) {
-    return <Redirect to="/dashboard" />;
-  }
-  if (authState && authState.user && !authState.user.confirmed) {
+  // If an access token is given in URL params, login with auth provider
+  useEffect(() => {
+    const authWithGoogle = async search => {
+      try {
+        await loginWithProvider('google', search);
+      } catch (error) {
+        console.log('ERROR', {error});
+        addToast(t('signin.errors'));
+      }
+    };
+
+    if (location.search) authWithGoogle(location.search);
+  }, [location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (token) return <Redirect to="/dashboard" />;
+  if (authState?.user && !authState.user.confirmed)
     return <Redirect to="/confirm" />;
-  }
+
   return (
     <form onSubmit={onSubmit}>
       <CardContent>
@@ -108,6 +121,9 @@ const SignIn = () => {
           {isLoading && (
             <CircularProgress className={classes.loader} size={20} />
           )}
+        </Button>
+        <Button color="primary" variant="contained" href="/connect/google">
+          {t('signin.withGoogle')}
         </Button>
         <Button id="SignInRegister" href="/register">
           {t('signin.register')}

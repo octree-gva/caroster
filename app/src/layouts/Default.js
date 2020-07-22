@@ -1,6 +1,7 @@
 import React from 'react';
 import GenericMenu from '../containers/GenericMenu';
 import Helmet from './Helmet';
+
 const DefaultLayout = ({
   children,
   className,

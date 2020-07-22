@@ -21,13 +21,13 @@
       "type": "string",
       "minLength": 3,
       "configurable": false,
-      "required": true
+      "required": false
     },
     "lastName": {
       "type": "string",
       "minLength": 3,
       "configurable": false,
-      "required": true
+      "required": false
     },
     "email": {
       "type": "email",

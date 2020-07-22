@@ -5,6 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Logo from '../components/Logo';
 import SignUpForm from '../containers/SignUpForm';
 import {useTranslation} from 'react-i18next';
+
 const SignUp = () => {
   const {t} = useTranslation();
   return (

@@ -126,6 +126,9 @@ const SignUp = () => {
             />
           )}
         </Button>
+        <Button color="primary" variant="contained" href="/connect/google">
+          {t('signin.withGoogle')}
+        </Button>
         <Button id="SignUpLogin" href="/login">
           {t('signup.login')}
         </Button>
