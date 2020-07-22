@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
 import {useToast} from '../../contexts/Toast';
 import {Redirect} from 'react-router-dom';
 import {CircularProgress} from '@material-ui/core';
@@ -63,7 +64,8 @@ const SignUp = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <CardContent>
+      <CardContent className={classes.content}>
+        <Typography variant="h6">{t('signup.title')}</Typography>
         <TextField
           label={t('signup.firstName')}
           fullWidth
@@ -108,12 +110,14 @@ const SignUp = () => {
           type="password"
         />
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Button
           color="primary"
           variant="contained"
           type="submit"
           disabled={!canSubmit}
+          className={classes.button}
+          fullWidth
           aria-disabled={!canSubmit}
           id="SignUpSubmit"
         >
@@ -126,10 +130,7 @@ const SignUp = () => {
             />
           )}
         </Button>
-        <Button color="primary" variant="contained" href="/connect/google">
-          {t('signin.withGoogle')}
-        </Button>
-        <Button id="SignUpLogin" href="/login">
+        <Button id="SignUpLogin" href="/login" fullWidth>
           {t('signup.login')}
         </Button>
       </CardActions>
@@ -138,8 +139,21 @@ const SignUp = () => {
 };
 
 const useStyles = makeStyles(theme => ({
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   loader: {
     marginLeft: '14px',
+  },
+  actions: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  button: {
+    margin: theme.spacing(1),
   },
 }));
 export default SignUp;

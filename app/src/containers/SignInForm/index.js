@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import {useLocation} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-
+import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import {CircularProgress} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
@@ -74,7 +74,8 @@ const SignIn = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <CardContent>
+      <CardContent className={classes.content}>
+        <Typography variant="h6">{t('signin.title')}</Typography>
         <TextField
           label={t('signin.email')}
           fullWidth
@@ -108,7 +109,7 @@ const SignIn = () => {
           }
         />
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Button
           color="primary"
           variant="contained"
@@ -116,16 +117,15 @@ const SignIn = () => {
           disabled={!canSubmit}
           aria-disabled={!canSubmit}
           id="SignInSubmit"
+          fullWidth
         >
-          {t('signin.login')}
-          {isLoading && (
+          {isLoading ? (
             <CircularProgress className={classes.loader} size={20} />
+          ) : (
+            t('signin.login')
           )}
         </Button>
-        <Button color="primary" variant="contained" href="/connect/google">
-          {t('signin.withGoogle')}
-        </Button>
-        <Button id="SignInRegister" href="/register">
+        <Button id="SignInRegister" href="/register" fullWidth size="small">
           {t('signin.register')}
         </Button>
       </CardActions>
@@ -134,8 +134,18 @@ const SignIn = () => {
 };
 
 const useStyles = makeStyles(theme => ({
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   loader: {
     marginLeft: '14px',
+  },
+  actions: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 }));
 export default SignIn;

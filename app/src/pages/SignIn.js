@@ -1,10 +1,12 @@
 import React from 'react';
-import Layout from '../layouts/Centered';
 import Card from '@material-ui/core/Card';
+import {useTranslation} from 'react-i18next';
 import CardMedia from '@material-ui/core/CardMedia';
+import Divider from '@material-ui/core/Divider';
+import Layout from '../layouts/Centered';
 import Logo from '../components/Logo';
 import SignInForm from '../containers/SignInForm';
-import {useTranslation} from 'react-i18next';
+import LoginGoogle from '../containers/LoginGoogle';
 
 const SignIn = () => {
   const {t} = useTranslation();
@@ -12,6 +14,9 @@ const SignIn = () => {
     <Layout menuTitle={t('signin.title')}>
       <Card>
         <CardMedia component={Logo} />
+        <Divider />
+        <LoginGoogle />
+        <Divider />
         <SignInForm />
       </Card>
     </Layout>

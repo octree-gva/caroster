@@ -183,13 +183,13 @@
     }
   },
   "signin": {
-    "title": "Se connecter",
+    "title": "Connexion",
     "email": "Email",
     "password": "Mot de passe",
     "login": "Se connecter",
-    "register": "Pas encore de compte ? S'inscrire",
+    "register": "S'inscrire",
     "errors": "Vérifier votre email et mot de passe",
-    "withGoogle": "Login avec Google"
+    "withGoogle": "Se connecter avec Google"
   },
   "lost_password": {
     "title": "Récupération de mot de passe",
