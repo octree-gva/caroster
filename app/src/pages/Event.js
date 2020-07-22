@@ -46,10 +46,7 @@ const Event = () => {
   if (!event) return <Loading />;
 
   return (
-    <Layout
-      pageTitle={t('event.title')}
-      menuTitle={t('meta.title', {title: event.name})}
-    >
+    <Layout menuTitle={t('meta.title', {title: event.name})}>
       <EventBar
         event={event}
         isEditing={isEditing}
