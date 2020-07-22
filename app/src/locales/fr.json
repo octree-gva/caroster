@@ -1,8 +1,4 @@
 {
-  "meta": {
-    "title": "Caroster - Covoiturage de groupe - {{title}}",
-    "about_href": "https://caroster.io"
-  },
   "menu": {
     "logout": "Se déconnecter",
     "about": "À propos de Caroster",
