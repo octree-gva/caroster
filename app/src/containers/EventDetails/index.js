@@ -49,6 +49,7 @@ const EventDetails = ({toggleDetails}) => {
           <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
           {isEditing ? (
             <DatePicker
+              format="DD.MM.YYYY"
               value={
                 editingEvent.date
                   ? moment(editingEvent.date)
@@ -57,9 +58,11 @@ const EventDetails = ({toggleDetails}) => {
                   : null
               }
               onChange={date =>
-                setEditingEvent({...editingEvent, date: date?.toISOString()})
+                setEditingEvent({
+                  ...editingEvent,
+                  date: moment(date).format('YYYY-MM-DD'),
+                })
               }
-              format="DD.MM.YYYY"
               TextFieldComponent={p => <TextField {...p} />}
               minDateMessage={t('generic.errors.date_min')}
               cancelLabel={t('generic.cancel')}
