@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.2.0",
   "private": true,
-  "proxy": "http://localhost:1337",
+  "proxy": "https://caroster.dev.octr.ee",
   "dependencies": {
     "@date-io/moment": "^1.3.13",
     "@material-ui/core": "^4.10.2",
