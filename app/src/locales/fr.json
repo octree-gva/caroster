@@ -121,7 +121,7 @@
     }
   },
   "profile": {
-    "title": "Mon profil",
+    "title": "Profil",
     "firstName": "Prénom",
     "lastName": "Nom",
     "email": "Email",
