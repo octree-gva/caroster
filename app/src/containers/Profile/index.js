@@ -78,22 +78,6 @@ const Profile = ({profile, updateProfile, logout}) => {
       }}
     >
       <Card>
-        <CardHeader
-          action={
-            <IconButton
-              color="inherit"
-              id="EditProfileAction"
-              type="submit"
-              title={
-                isEditing
-                  ? t('profile.actions.save')
-                  : t('profile.actions.edit')
-              }
-            >
-              <Icon>{isEditing ? 'done' : 'edit'}</Icon>
-            </IconButton>
-          }
-        />
         <CardContent>
           <ProfileField
             name="firstName"
@@ -125,12 +109,10 @@ const Profile = ({profile, updateProfile, logout}) => {
             onChange={setEmail}
             isEditing={isEditing}
           />
-        </CardContent>
-        <CardActions className={classes.actions}>
           {isEditing && (
             <Button
               type="button"
-              color="primary"
+              className={classes.changePassword}
               onClick={evt => {
                 if (evt.preventDefault) evt.preventDefault();
                 setIsEditingPassword(true);
@@ -139,9 +121,26 @@ const Profile = ({profile, updateProfile, logout}) => {
               {t('profile.actions.change_password')}
             </Button>
           )}
+        </CardContent>
+        <CardActions className={classes.actions}>
           {!isEditing && (
-            <Button type="button" color="default" onClick={() => logout()}>
-              {t('profile.actions.logout')}
+            <Button
+              type="button"
+              color="primary"
+              onClick={() => setIsEditing(true)}
+              variant="contained"
+            >
+              {t('profile.actions.edit')}
+            </Button>
+          )}
+          {isEditing && (
+            <Button
+              type="submit"
+              color="primary"
+              onClick={() => setIsEditing(false)}
+              variant="contained"
+            >
+              {t('profile.actions.save')}
             </Button>
           )}
         </CardActions>
@@ -152,6 +151,9 @@ const Profile = ({profile, updateProfile, logout}) => {
 
 const useStyles = makeStyles(theme => ({
   actions: {
+    marginTop: theme.spacing(2),
+  },
+  changePassword: {
     marginTop: theme.spacing(2),
   },
 }));

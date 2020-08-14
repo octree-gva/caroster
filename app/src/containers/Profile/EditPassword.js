@@ -29,20 +29,6 @@ const EditPassword = ({
       }}
     >
       <Card>
-        <CardHeader
-          title={t('profile.actions.change_password')}
-          action={
-            <IconButton
-              color="inherit"
-              id="ChangePasswordAction"
-              type="submit"
-              title={t('profile.actions.save')}
-              disabled={oldPassword.length < 4 || newPassword.length < 4}
-            >
-              <Icon>done</Icon>
-            </IconButton>
-          }
-        />
         <CardContent>
           <TextField
             label={t('profile.current_password')}
