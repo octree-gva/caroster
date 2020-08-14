@@ -93,7 +93,6 @@ const Profile = ({profile, updateProfile, logout}) => {
               <Icon>{isEditing ? 'done' : 'edit'}</Icon>
             </IconButton>
           }
-          title={t('profile.title')}
         />
         <CardContent>
           <ProfileField
