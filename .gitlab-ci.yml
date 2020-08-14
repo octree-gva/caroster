@@ -14,6 +14,7 @@ Test:
     - merge_requests
     - master
   script:
+    - echo "45.66.221.1 npm-8ee.hidora.com" >> /etc/hosts
     - npm set registry ${NPM_REGISTRY:-https://npm-8ee.hidora.com/}
     - apk add --no-cache python3
     - cd app
