@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,9 +8,10 @@ import {makeStyles} from '@material-ui/core/styles';
 import GenericToolbar from './Toolbar';
 import {useTranslation} from 'react-i18next';
 import {useStrapi} from 'strapi-react-context';
-
+import {useHistory} from 'react-router-dom';
 const GenericMenu = ({title, actions = []}) => {
   const {t} = useTranslation();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
   const strapi = useStrapi();
@@ -22,7 +23,6 @@ const GenericMenu = ({title, actions = []}) => {
     onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
   };
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -35,6 +35,15 @@ const GenericMenu = ({title, actions = []}) => {
       id="Menu"
     >
       <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.goBack}
+          onClick={() =>
+            history.length > 2 ? history.goBack() : history.push('/dashboard')
+          }
+        >
+          <Icon>arrow_back</Icon>
+        </IconButton>
         <div className={classes.name}>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {title}
@@ -82,6 +91,9 @@ const useStyles = makeStyles(theme => ({
   },
   shareIcon: {
     marginRight: theme.spacing(0),
+  },
+  goBack: {
+    color: theme.palette.background.paper,
   },
 }));
 
