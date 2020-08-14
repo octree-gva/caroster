@@ -132,7 +132,7 @@
     "actions": {
       "save": "Enregistrer",
       "edit": "Editer",
-      "change_password": "Mot de passe oublié ?",
+      "change_password": "Changer son mot de passe",
       "logout": "Se déconnecter",
       "cancel": "Annuler",
       "save_new_password": "Mettre à jour"
