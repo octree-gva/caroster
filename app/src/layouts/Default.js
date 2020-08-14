@@ -6,11 +6,12 @@ const DefaultLayout = ({
   className,
   menuTitle = 'Caroster',
   menuActions,
+  goBack = false,
 }) => {
   return (
     <>
       {(menuTitle || menuActions) && (
-        <GenericMenu title={menuTitle} actions={menuActions} />
+        <GenericMenu title={menuTitle} actions={menuActions} goBack={goBack} />
       )}
       <div className={className}>{children}</div>
     </>

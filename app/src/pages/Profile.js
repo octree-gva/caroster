@@ -34,7 +34,7 @@ const ProfilePage = () => {
   if (!profile) return <Loading />;
 
   return (
-    <Layout menuTitle={t('profile.title')} menuActions={menuActions}>
+    <Layout menuTitle={t('profile.title')} menuActions={menuActions} goBack>
       <Profile
         profile={profile}
         updateProfile={updateProfile}
