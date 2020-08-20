@@ -1,8 +1,7 @@
-stages:
-  - test
-  - build
-  - deploy
-  - analyze
+# Import des templates de jobs pré-configurés
+include:
+  - project: o/infra/templates
+    file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
 
 # CI variables scopées:
 # - NPM_REGISTRY: URL du NPM registry à utiliser (default: https://npm-8ee.hidora.com/)
@@ -22,65 +21,22 @@ Test:
     - npm run lint
     # - npm run test
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: '$CI_COMMIT_REF_SLUG'
     paths:
       - node_modules/
       - ~/.npm
 
-Build:
-  stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
-    - if: "$CI_COMMIT_TAG =~ /v.*$/"
-  script:
-    - echo "45.66.221.1 npm-8ee.hidora.com" >> /etc/hosts
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
-
-.deploy:
-  stage: deploy
-  image: git.octree.ch:4567/o/infra/templates/ci/kubectl
-  variables:
-    HELM_EXPERIMENTAL_OCI: 1
-  script:
-    - helm registry login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - helm chart pull git.octree.ch:4567/o/charts/strapi:$STRAPI_CHART_VERSION
-    - helm chart export git.octree.ch:4567/o/charts/strapi:$STRAPI_CHART_VERSION -d charts
-    - >-
-      helm upgrade --install --create-namespace $CI_PROJECT_NAME charts/*
-      -n $ENV_NAMESPACE --cleanup-on-fail
-      --set strapi.image=$CI_REGISTRY_IMAGE:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
-      --set strapi.host=$CI_ENVIRONMENT_URL
-      -f "$ENV_CONFIG"
-
 # CI variables:
 # - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
 # - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
+# - ENV_NAMESPACE [scopée]: Namespace Kubernetes (default: KUBE_NAMESPACE)
 Deploy to Test:
-  extends: .deploy
+  extends: .deployStrapi
   environment:
     name: test
-    url: "https://$CI_PROJECT_NAME.dev.octr.ee"
+    url: 'https://$CI_PROJECT_NAME.dev.octr.ee'
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
-  variables:
-    ENV_NAMESPACE: $CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG
-
-# CI variables:
-# - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
-# - ENV_URL [scopée]: URL de l'environnement (requis)
-# - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
-# - ENV_NAMESPACE [scopée]: Namespace Kubernetes (default: default)
-Deploy to Staging:
-  extends: .deploy
-  environment:
-    name: staging
-    url: $ENV_URL
-  rules:
-    - if: "$CI_COMMIT_TAG =~ /v.*-rc$/"
 
 # CI variables:
 # - ENV_URL [scopée]: URL de l'environnement (requis)
@@ -96,24 +52,8 @@ Deploy to Production:
     name: production
     url: $ENV_URL
   rules:
-    - if: "$CI_COMMIT_TAG =~ /v.*[^r][^c]$/"
+    - if: '$CI_COMMIT_TAG =~ /v.*[^r][^c]$/'
   image: mwienk/jelastic-cli
   script:
     - /root/jelastic/users/authentication/signin --login $JELASTIC_LOGIN --password $JELASTIC_PASSWORD --platformUrl ${JELASTIC_HOSTER:-app.hidora.com}
     - /root/jelastic/environment/control/redeploycontainerbyid --envName $JELASTIC_ENVNAME --nodeId $JELASTIC_NODEID --tag ${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA} --useExistingVolumes ${USE_EXISTING_VOLUME:-true}
-
-# CI variables:
-# - SONAR_URL: URL de SonarQube (requis)
-# - SONAR_LOGIN: Login pour SonarQube (requis)
-# - SONAR_SOURCE: Dossier à scanner (default: .)
-Code Quality:
-  stage: analyze
-  image: ciricihq/gitlab-sonar-scanner
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
-      when: manual
-  script:
-    - >-
-      sonar-scanner -Dsonar.host.url=$SONAR_URL 
-      -Dsonar.projectKey=$CI_PROJECT_NAME
-      -Dsonar.login=$SONAR_LOGIN -Dsonar.sources=${SONAR_SOURCE:-.}
