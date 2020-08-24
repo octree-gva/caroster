@@ -59,7 +59,7 @@ const SignUp = () => {
   };
 
   if (!!token && !isLoading) {
-    return <Redirect to="/register/success" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
