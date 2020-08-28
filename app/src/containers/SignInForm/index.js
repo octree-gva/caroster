@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import {CircularProgress} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActions from '@material-ui/core/CardActions';
 import {makeStyles} from '@material-ui/core/styles';
 import {useToast} from '../../contexts/Toast';
@@ -76,6 +77,7 @@ const SignIn = () => {
     <form onSubmit={onSubmit}>
       <CardContent className={classes.content}>
         <Typography variant="h6">{t('signin.title')}</Typography>
+        {error && <FormHelperText error={true}>{error}</FormHelperText>}
         <TextField
           label={t('signin.email')}
           fullWidth
@@ -87,7 +89,6 @@ const SignIn = () => {
           name="email"
           type="email"
           error={!!error}
-          helperText={error}
         />
         <TextField
           label={t('signin.password')}
@@ -100,16 +101,18 @@ const SignIn = () => {
           name="password"
           type="password"
           error={!!error}
-          helperText={
-            error && (
-              <RouterLink to="/lost-password" component={Link}>
-                {t('lost_password.message')}
-              </RouterLink>
-            )
-          }
+          gutterBottom
         />
+        <RouterLink to="/reset-password" component={Link}>
+          <Typography align="center" variant="body2">
+            {t('lost_password.message')}
+          </Typography>
+        </RouterLink>
       </CardContent>
-      <CardActions className={classes.actions}>
+      <CardActions className={classes.actions} align="center">
+        <Button id="SignInRegister" href="/register" size="small">
+          {t('signin.register')}
+        </Button>
         <Button
           color="primary"
           variant="contained"
@@ -117,16 +120,13 @@ const SignIn = () => {
           disabled={!canSubmit}
           aria-disabled={!canSubmit}
           id="SignInSubmit"
-          fullWidth
+          endIcon={
+            isLoading && (
+              <CircularProgress className={classes.loader} size={20} />
+            )
+          }
         >
-          {isLoading ? (
-            <CircularProgress className={classes.loader} size={20} />
-          ) : (
-            t('signin.login')
-          )}
-        </Button>
-        <Button id="SignInRegister" href="/register" fullWidth size="small">
-          {t('signin.register')}
+          {t('signin.login')}
         </Button>
       </CardActions>
     </form>
@@ -141,11 +141,11 @@ const useStyles = makeStyles(theme => ({
   },
   loader: {
     marginLeft: '14px',
+    color: theme.palette.background.paper,
   },
   actions: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: theme.spacing(2),
   },
 }));
 export default SignIn;

@@ -14,10 +14,9 @@ const SignUp = () => {
     <Layout menuTitle={t('signup.title')}>
       <Card>
         <CardMedia component={Logo} />
+        <SignUpForm />
         <Divider />
         <LoginGoogle />
-        <Divider />
-        <SignUpForm />
       </Card>
     </Layout>
   );
