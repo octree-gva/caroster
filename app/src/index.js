@@ -6,6 +6,15 @@ import 'moment/locale/fr-ch';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 
+if (process.env.NODE_ENV !== 'production') {
+  // Require to not be embed in production builds
+  const axe = require('react-axe');
+  const {config} = require('./setupA11y');
+  // Throws some accessibility warning on rendered DOM.
+  // @see https://github.com/dequelabs/react-axe
+  axe(React, ReactDOM, 1000, config);
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
