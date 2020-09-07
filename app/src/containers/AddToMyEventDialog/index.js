@@ -40,9 +40,6 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} id="AddToMyEventCancel">
-          {t('event.add_to_my_events.cancel')}
-        </Button>
         <Button id="AddToMyEventLogin" onClick={() => setRedirectTo('/login')}>
           {t('event.add_to_my_events.login')}
         </Button>
