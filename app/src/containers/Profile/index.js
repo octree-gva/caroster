@@ -106,18 +106,6 @@ const Profile = ({profile, updateProfile, logout}) => {
             onChange={setEmail}
             isEditing={isEditing}
           />
-          {isEditing && (
-            <Button
-              type="button"
-              className={classes.changePassword}
-              onClick={evt => {
-                if (evt.preventDefault) evt.preventDefault();
-                setIsEditingPassword(true);
-              }}
-            >
-              {t('profile.actions.change_password')}
-            </Button>
-          )}
         </CardContent>
         <CardActions className={classes.actions}>
           {!isEditing && (
@@ -136,14 +124,25 @@ const Profile = ({profile, updateProfile, logout}) => {
             </>
           )}
           {isEditing && (
-            <Button
-              type="submit"
-              color="primary"
-              onClick={() => setIsEditing(false)}
-              variant="contained"
-            >
-              {t('profile.actions.save')}
-            </Button>
+            <>
+              <Button
+                type="button"
+                onClick={evt => {
+                  if (evt.preventDefault) evt.preventDefault();
+                  setIsEditingPassword(true);
+                }}
+              >
+                {t('profile.actions.change_password')}
+              </Button>
+              <Button
+                type="submit"
+                color="primary"
+                onClick={() => setIsEditing(false)}
+                variant="contained"
+              >
+                {t('profile.actions.save')}
+              </Button>
+            </>
           )}
         </CardActions>
       </Card>
@@ -154,9 +153,7 @@ const Profile = ({profile, updateProfile, logout}) => {
 const useStyles = makeStyles(theme => ({
   actions: {
     marginTop: theme.spacing(2),
-  },
-  changePassword: {
-    marginTop: theme.spacing(2),
+    justifyContent: 'flex-end',
   },
 }));
 export default Profile;
