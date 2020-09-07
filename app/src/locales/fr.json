@@ -47,6 +47,14 @@
         "dashboard": "Mes évènements",
         "see_profile": "Profil",
         "about": "À propos de Caroster"
+      },
+      "addFromAccount": {
+        "title": "Voulez-vous ajouter ce caroster à vos évènements ?",
+        "subtitle": "Créez-le depuis votre compte",
+        "actions": {
+          "register": "$t(menu.register)",
+          "login": "$t(menu.login)"
+        }
       }
     },
     "actions": {
