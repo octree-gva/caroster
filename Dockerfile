@@ -1,7 +1,9 @@
 # Build stage
 FROM strapi/base:12-alpine
 
-ARG NPM_REGISTRY=https://npm-8ee.hidora.com/
+ARG VERSION
+ENV VERSION ${VERSION:-dev}
+ENV NPM_REGISTRY https://npm-8ee.hidora.com/
 ENV NODE_ENV production
 WORKDIR /srv/app
 
