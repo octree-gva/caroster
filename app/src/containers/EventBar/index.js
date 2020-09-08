@@ -7,10 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
-import {useAuth} from 'strapi-react-context';
+import {useHistory, Link} from 'react-router-dom';
+import {useStrapi, useAuth} from 'strapi-react-context';
 import EventMenu from '../EventMenu';
 import EventDetails from '../EventDetails';
+import {ReactComponent as CarosterLogo} from './logo.svg';
 
 const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
   const {t} = useTranslation();
@@ -19,7 +20,8 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({detailsOpen});
   const {token} = useAuth();
-
+  const strapi = useStrapi();
+  const [settings] = strapi.stores?.settings || [{}];
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
   }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -79,6 +81,13 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
     >
       <Toolbar>
         <div className={classes.name}>
+          <Link
+            onClick={() => {
+              window.location.href = settings['about_link'];
+            }}
+          >
+            <CarosterLogo className={classes.logo} title="" />
+          </Link>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {event.name}
           </Typography>
@@ -163,6 +172,11 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     top: 0,
   }),
+  logo: {
+    marginRight: theme.spacing(2),
+    width: 32,
+    height: 32,
+  },
   name: {
     flexGrow: 1,
     display: 'flex',
