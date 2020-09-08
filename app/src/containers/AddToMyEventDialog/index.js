@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import {makeStyles} from '@material-ui/core/styles';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Icon from '@material-ui/core/Icon';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import {useTranslation} from 'react-i18next';
 import {Redirect} from 'react-router-dom';
 
@@ -16,7 +19,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddToMyEventDialog = ({event, open, onClose}) => {
   const {t} = useTranslation();
   const [redirectTo, setRedirectTo] = useState(null);
-
+  const classes = useStyles();
   if (!event) return null;
 
   if (redirectTo) {
@@ -27,10 +30,13 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
 
   return (
     <Dialog open={open} TransitionComponent={Transition} onClose={onClose}>
+      <IconButton onClick={onClose} className={classes.close}>
+        <Icon>close</Icon>
+      </IconButton>
+      <DialogTitle>
+        {t('event.add_to_my_events.title', {eventName: event.name})}
+      </DialogTitle>
       <DialogContent>
-        <DialogTitle>
-          {t('event.add_to_my_events.title', {eventName: event.name})}
-        </DialogTitle>
         <DialogContentText
           dangerouslySetInnerHTML={{
             __html: t('event.add_to_my_events.text_html', {
@@ -40,9 +46,6 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} id="AddToMyEventCancel">
-          {t('event.add_to_my_events.cancel')}
-        </Button>
         <Button id="AddToMyEventLogin" onClick={() => setRedirectTo('/login')}>
           {t('event.add_to_my_events.login')}
         </Button>
@@ -58,4 +61,11 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
   );
 };
 
+const useStyles = makeStyles(theme => ({
+  close: {
+    position: 'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(0.5),
+  },
+}));
 export default AddToMyEventDialog;
