@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 const Home = () => {
   const history = useHistory();
   const {t} = useTranslation();
-  const {token} = useAuth();
+  const {token, authState} = useAuth();
 
   const noUserMenuActions = [
     {
@@ -41,7 +41,11 @@ const Home = () => {
   const menuActions = token ? loggedMenuActions : noUserMenuActions;
 
   return (
-    <Layout menuTitle={t('event.creation.title')} menuActions={menuActions}>
+    <Layout
+      menuTitle={t('event.creation.title')}
+      menuActions={menuActions}
+      displayMenu={!!authState && !!authState.user}
+    >
       <Paper>
         <Logo />
         <CreateEvent />

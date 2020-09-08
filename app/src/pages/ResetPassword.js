@@ -45,7 +45,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <Layout menuTitle={t('lost_password.reset_title')}>
+    <Layout menuTitle={t('lost_password.reset_title')} displayMenu={false}>
       <form onSubmit={onReset}>
         <ResetPasswordContainer
           isLoading={isLoading}

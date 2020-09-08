@@ -3,6 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
@@ -12,13 +13,22 @@ import {useAuth} from 'strapi-react-context';
 import EventMenu from '../EventMenu';
 import EventDetails from '../EventDetails';
 
+const initials = email => {
+  const beforeAt = email.substr(0, email.indexOf('@'));
+  const matches = beforeAt.split('.');
+  if (matches.length > 1) {
+    return `${matches[0][0]}${matches[1][0]}`.toUpperCase();
+  }
+  return matches[0].substr(0, 2).toUpperCase();
+};
+
 const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
   const {t} = useTranslation();
   const history = useHistory();
   const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({detailsOpen});
-  const {token} = useAuth();
+  const {token, authState} = useAuth();
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
@@ -67,6 +77,9 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
   ];
 
   const menuActions = token ? loggedMenuActions : noUserMenuActions;
+  const userInfos = authState?.user
+    ? [{label: authState.user.username, id: 'Email'}, {divider: true}]
+    : [];
 
   return (
     <AppBar
@@ -110,9 +123,18 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
               edge="end"
               id="ShareBtn"
               onClick={onShare}
-              className={classes.shareIcon}
+              className={classes.iconButtons}
             >
               <Icon>share</Icon>
+            </IconButton>
+            <IconButton
+              color="inherit"
+              edge="end"
+              id="ShareBtn"
+              onClick={toggleDetails}
+              className={classes.iconButtons}
+            >
+              <Icon>information_outline</Icon>
             </IconButton>
             <IconButton
               color="inherit"
@@ -120,7 +142,13 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
               id="MenuMoreInfo"
               onClick={e => setAnchorEl(e.currentTarget)}
             >
-              <Icon>more_vert</Icon>
+              {authState?.user ? (
+                <Avatar className={classes.avatar}>
+                  {initials(authState.user.username)}
+                </Avatar>
+              ) : (
+                <Icon>more_vert</Icon>
+              )}
             </IconButton>
           </>
         )}
@@ -128,6 +156,7 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
           anchorEl={anchorEl}
           setAnchorEl={setAnchorEl}
           actions={[
+            ...userInfos,
             ...[
               {
                 label: detailsOpen
@@ -168,8 +197,15 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-  shareIcon: {
+  iconButtons: {
     marginRight: theme.spacing(0),
+    marginLeft: theme.spacing(1),
+  },
+  avatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: 12,
+    fontWeight: 900,
   },
 }));
 

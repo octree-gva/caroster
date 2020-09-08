@@ -13,7 +13,7 @@ const LostPassword = () => {
   }
 
   return (
-    <Layout menuTitle={t('lost_password.title')}>
+    <Layout menuTitle={t('lost_password.title')} displayMenu={false}>
       <LostPasswordContainer />
     </Layout>
   );

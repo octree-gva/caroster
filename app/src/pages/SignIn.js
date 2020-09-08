@@ -11,7 +11,7 @@ import LoginGoogle from '../containers/LoginGoogle';
 const SignIn = () => {
   const {t} = useTranslation();
   return (
-    <Layout menuTitle={t('signin.title')}>
+    <Layout menuTitle={t('signin.title')} displayMenu={false}>
       <Card>
         <CardMedia component={Logo} />
         <SignInForm />
