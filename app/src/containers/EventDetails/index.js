@@ -113,11 +113,6 @@ const EventDetails = ({toggleDetails}) => {
             </Typography>
           )}
         </div>
-        <div className={classes.actions}>
-          <Button onClick={toggleDetails} variant="outlined" id={`CarFindBtn`}>
-            {t('event.actions.find_car')}
-          </Button>
-        </div>
       </div>
     </ThemeProvider>
   );
@@ -129,11 +124,6 @@ const useStyles = makeStyles(theme => ({
   },
   section: {
     marginBottom: theme.spacing(2),
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: theme.spacing(4),
   },
   map: {
     marginTop: theme.spacing(4),
