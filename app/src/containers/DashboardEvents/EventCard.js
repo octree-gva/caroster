@@ -15,11 +15,13 @@ const EventCard = ({event}) => {
         <Typography gutterBottom variant="h6" component="h3">
           {event.name}
         </Typography>
-        <Typography variant="body1">{t('event.fields.starts_on')}</Typography>
+        <Typography variant="outlined">
+          {t('event.fields.starts_on')}
+        </Typography>
         <Typography variant="body2" gutterBottom>
           {event.date || t('event.fields.empty')}
         </Typography>
-        <Typography variant="body1">{t('event.fields.address')}</Typography>
+        <Typography variant="outlined">{t('event.fields.address')}</Typography>
         <Typography variant="body2" gutterBottom>
           {event.address || t('event.fields.empty')}
         </Typography>
