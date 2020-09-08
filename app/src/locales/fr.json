@@ -62,7 +62,6 @@
       "cant_update": "Impossible de modifier l'événement"
     },
     "add_to_my_events": {
-      "cancel": "Annuler",
       "login": "Se connecter",
       "register": "S'inscrire",
       "title": "Ajouter {{eventName}} à sa liste d'évènement",
@@ -104,7 +103,8 @@
   "dashboard": {
     "title": "Évènements",
     "actions": {
-      "see_event": "Voir"
+      "see_event": "Voir plus",
+      "add_event": "Créer un caroster"
     },
     "sections": {
       "future": "Évènement à venir",

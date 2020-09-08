@@ -3,26 +3,33 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import GenericToolbar from './Toolbar';
 import {useTranslation} from 'react-i18next';
-import {useStrapi} from 'strapi-react-context';
+import {useStrapi, useAuth} from 'strapi-react-context';
 
 const GenericMenu = ({title, actions = []}) => {
   const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
   const strapi = useStrapi();
+  const {logout, authState} = useAuth();
   const [settings] = strapi.stores?.settings || [{}];
   const validActions = useMemo(() => actions.filter(Boolean), [actions]);
 
+  const logoutMenuItem = authState?.user
+    ? {label: t('menu.logout'), onClick: logout, id: 'LogoutTabs'}
+    : null;
   const aboutMenuItem = {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
   };
-
+  const userInfos = authState?.user
+    ? [{label: authState.user.username, id: 'Email'}, {divider: true}]
+    : [];
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -48,13 +55,25 @@ const GenericMenu = ({title, actions = []}) => {
               id="MenuMoreInfo"
               onClick={e => setAnchorEl(e.currentTarget)}
             >
-              <Icon>more_vert</Icon>
+              {authState?.user ? (
+                <Avatar className={classes.avatar}>
+                  {`${authState.user.username[0]}`.toUpperCase()}
+                </Avatar>
+              ) : (
+                <Icon>more_vert</Icon>
+              )}
             </IconButton>
 
             <GenericToolbar
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[...validActions, aboutMenuItem]}
+              actions={[
+                ...userInfos,
+                ...validActions,
+                {divider: true},
+                aboutMenuItem,
+                logoutMenuItem,
+              ].filter(Boolean)}
             />
           </>
         )}
@@ -82,6 +101,11 @@ const useStyles = makeStyles(theme => ({
   },
   shareIcon: {
     marginRight: theme.spacing(0),
+  },
+  avatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: 16,
   },
 }));
 
