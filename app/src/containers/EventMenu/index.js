@@ -3,13 +3,18 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {useStrapi} from 'strapi-react-context';
+import {useStrapi, useAuth} from 'strapi-react-context';
 
 const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
   const {t} = useTranslation();
   const strapi = useStrapi();
   const classes = useStyles();
+  const {logout, authState} = useAuth();
+
   const [settings] = strapi.stores?.settings || [{}];
+  const logoutMenuItem = authState?.user
+    ? {label: t('menu.logout'), onClick: logout, id: 'LogoutTabs'}
+    : null;
   const aboutMenuItem = {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),
@@ -33,7 +38,7 @@ const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
       onClose={() => setAnchorEl(null)}
     >
       {actions &&
-        [...actions, aboutMenuItem]
+        [...actions, aboutMenuItem, logoutMenuItem]
           .filter(Boolean)
           .map(({label, id, onClick, ...attributes}, idx) => (
             <MenuItem

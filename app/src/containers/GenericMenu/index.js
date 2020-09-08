@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,23 +7,26 @@ import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import GenericToolbar from './Toolbar';
 import {useTranslation} from 'react-i18next';
-import {useStrapi} from 'strapi-react-context';
+import {useStrapi, useAuth} from 'strapi-react-context';
 
 const GenericMenu = ({title, actions = []}) => {
   const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
   const strapi = useStrapi();
+  const {logout, authState} = useAuth();
   const [settings] = strapi.stores?.settings || [{}];
   const validActions = useMemo(() => actions.filter(Boolean), [actions]);
 
+  const logoutMenuItem = authState?.user
+    ? {label: t('menu.logout'), onClick: logout, id: 'LogoutTabs'}
+    : null;
   const aboutMenuItem = {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
     className: classes.withDivider,
   };
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -56,7 +58,9 @@ const GenericMenu = ({title, actions = []}) => {
             <GenericToolbar
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[...validActions, aboutMenuItem]}
+              actions={[...validActions, aboutMenuItem, logoutMenuItem].filter(
+                Boolean
+              )}
             />
           </>
         )}
