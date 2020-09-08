@@ -104,7 +104,8 @@
   "dashboard": {
     "title": "Évènements",
     "actions": {
-      "see_event": "Voir"
+      "see_event": "Voir",
+      "add_event": "Créer un caroster"
     },
     "sections": {
       "future": "Évènement à venir",

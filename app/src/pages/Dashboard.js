@@ -76,7 +76,9 @@ const Dashboard = () => {
           noDateEvents={noDateEvents}
         />
       )}
-      <Fab onClick={() => history.push('/new')} aria-label="add-event" />
+      <Fab onClick={() => history.push('/new')} aria-label="add-event">
+        {t('dashboard.actions.add_event')}
+      </Fab>
     </LayoutDefault>
   );
 };
