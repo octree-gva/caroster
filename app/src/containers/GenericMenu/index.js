@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Divider from '@material-ui/core/Divider';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,6 +22,7 @@ const GenericMenu = ({title, actions = []}) => {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
+    className: classes.withDivider,
   };
 
   useEffect(() => {
@@ -82,6 +84,9 @@ const useStyles = makeStyles(theme => ({
   },
   shareIcon: {
     marginRight: theme.spacing(0),
+  },
+  withDivider: {
+    borderTop: `1px solid ${theme.palette.divider}`,
   },
 }));
 
