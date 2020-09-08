@@ -1,8 +1,11 @@
 import React from 'react';
+import Divider from '@material-ui/core/Divider';
+import {makeStyles} from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const Toolbar = ({anchorEl, setAnchorEl, actions = []}) => {
+  const classes = useStyles();
   if (actions.length === 0) return null;
   return (
     <Menu
@@ -20,21 +23,31 @@ const Toolbar = ({anchorEl, setAnchorEl, actions = []}) => {
       onClose={() => setAnchorEl(null)}
     >
       {actions &&
-        actions.map(({onClick, id, label, ...menuItemProps}, idx) => (
-          <MenuItem
-            onClick={() => {
-              if (!onClick) return;
-              onClick();
-              setAnchorEl(null);
-            }}
-            key={idx}
-            id={id || `MenuItem${idx}`}
-            {...menuItemProps}
-          >
-            {label}
-          </MenuItem>
-        ))}
+        actions.map(
+          ({onClick, id, label, divider = false, ...menuItemProps}, idx) =>
+            divider ? (
+              <Divider variant="fullWidth" className={classes.divider} />
+            ) : (
+              <MenuItem
+                onClick={() => {
+                  if (!!onClick) onClick();
+                  setAnchorEl(null);
+                }}
+                key={idx}
+                id={id || `MenuItem${idx}`}
+                {...menuItemProps}
+              >
+                {label}
+              </MenuItem>
+            )
+        )}
     </Menu>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  divider: {
+    margin: theme.spacing(1, 0),
+  },
+}));
 export default Toolbar;

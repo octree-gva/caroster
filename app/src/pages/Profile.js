@@ -24,11 +24,6 @@ const ProfilePage = () => {
       onClick: () => history.push('/dashboard'),
       id: 'DashboardTabs',
     },
-    {
-      label: t('menu.logout'),
-      onClick: logout,
-      id: 'LogoutTabs',
-    },
   ];
 
   if (!profile) return <Loading />;

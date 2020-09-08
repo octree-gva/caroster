@@ -25,7 +25,6 @@ const GenericMenu = ({title, actions = []}) => {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
-    className: classes.withDivider,
   };
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,9 +57,12 @@ const GenericMenu = ({title, actions = []}) => {
             <GenericToolbar
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[...validActions, aboutMenuItem, logoutMenuItem].filter(
-                Boolean
-              )}
+              actions={[
+                ...validActions,
+                {divider: true},
+                aboutMenuItem,
+                logoutMenuItem,
+              ].filter(Boolean)}
             />
           </>
         )}
@@ -88,9 +90,6 @@ const useStyles = makeStyles(theme => ({
   },
   shareIcon: {
     marginRight: theme.spacing(0),
-  },
-  withDivider: {
-    borderTop: `1px solid ${theme.palette.divider}`,
   },
 }));
 

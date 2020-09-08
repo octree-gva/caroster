@@ -41,6 +41,7 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
       },
       id: 'AddToMyEventsTab',
     },
+    {divider: true},
     {
       label: t('menu.login'),
       onClick: signIn,
@@ -64,6 +65,7 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
       onClick: goProfile,
       id: 'ProfileTab',
     },
+    {divider: true},
   ];
 
   const menuActions = token ? loggedMenuActions : noUserMenuActions;
@@ -128,15 +130,13 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
           anchorEl={anchorEl}
           setAnchorEl={setAnchorEl}
           actions={[
-            ...[
-              {
-                label: detailsOpen
-                  ? t('event.actions.hide_details')
-                  : t('event.actions.show_details'),
-                onClick: toggleDetails,
-                id: 'DetailsTab',
-              },
-            ],
+            {
+              label: detailsOpen
+                ? t('event.actions.hide_details')
+                : t('event.actions.show_details'),
+              onClick: toggleDetails,
+              id: 'DetailsTab',
+            },
             ...menuActions,
           ]}
         />
@@ -170,6 +170,9 @@ const useStyles = makeStyles(theme => ({
   },
   shareIcon: {
     marginRight: theme.spacing(0),
+  },
+  withDivider: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 }));
 
