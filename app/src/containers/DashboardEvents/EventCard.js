@@ -27,9 +27,9 @@ const EventCard = ({event}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/e/${event.id}`}>
-          <Button>{t('dashboard.actions.see_event')}</Button>
-        </Link>
+        <Button component={Link} to={`/e/${event.id}`} color="primary">
+          {t('dashboard.actions.see_event')}
+        </Button>
       </CardActions>
     </Card>
   );
