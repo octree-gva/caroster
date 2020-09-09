@@ -89,13 +89,8 @@ const LostPassword = () => {
             }
           />
         </CardContent>
-        <CardActions>
-          <Button
-            id="LostPasswordRegister"
-            href="/login"
-            color="secondary"
-            variant="contained"
-          >
+        <CardActions className={classes.actions}>
+          <Button id="LostPasswordRegister" href="/login">
             {t('lost_password.actions.cancel')}
           </Button>
 
@@ -109,7 +104,11 @@ const LostPassword = () => {
           >
             {t('lost_password.actions.send')}
             {isLoading && (
-              <CircularProgress className={classes.loader} size={20} />
+              <CircularProgress
+                className={classes.loader}
+                color="primary"
+                size={20}
+              />
             )}
           </Button>
         </CardActions>
@@ -121,6 +120,10 @@ const LostPassword = () => {
 const useStyles = makeStyles(theme => ({
   loader: {
     marginLeft: theme.spacing(4),
+  },
+  actions: {
+    marginTop: theme.spacing(2),
+    justifyContent: 'flex-end',
   },
 }));
 export default LostPassword;

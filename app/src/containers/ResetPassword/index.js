@@ -6,9 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-
+import {makeStyles} from '@material-ui/core/styles';
 const ResetPassword = ({
   password,
   setPassword,
@@ -18,22 +16,10 @@ const ResetPassword = ({
   isLoading,
 }) => {
   const {t} = useTranslation();
+  const classes = useStyles();
   return (
     <Card>
-      <CardHeader
-        title={t('profile.actions.change_password')}
-        action={
-          <IconButton
-            color="inherit"
-            edge="end"
-            id="ChangePasswordAction"
-            type="submit"
-            title={t('profile.actions.save')}
-          >
-            <Icon>done</Icon>
-          </IconButton>
-        }
-      />
+      <CardHeader title={t('profile.actions.change_password')} />
       <CardContent>
         <TextField
           label={t('lost_password.password')}
@@ -59,11 +45,10 @@ const ResetPassword = ({
           name="new_password_confirmation"
         />
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Button
           type="submit"
           color="primary"
-          size="small"
           variant="contained"
           disabled={
             isLoading ||
@@ -77,5 +62,10 @@ const ResetPassword = ({
     </Card>
   );
 };
-
+const useStyles = makeStyles(theme => ({
+  actions: {
+    justifyContent: 'flex-end',
+    marginTop: theme.spacing(2),
+  },
+}));
 export default ResetPassword;

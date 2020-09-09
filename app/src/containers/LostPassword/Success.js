@@ -25,11 +25,11 @@ const Success = ({email}) => {
           {t('lost_password.sent', {email})}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Button
           id="LostPasswordRegister"
           href="/login"
-          color="secondary"
+          color="primary"
           variant="contained"
         >
           {t('lost_password.actions.login')}
@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
   },
   successIcon: {
     fontSize: theme.spacing(14),
+  },
+  actions: {
+    justifyContent: 'center',
   },
 }));
 export default Success;
