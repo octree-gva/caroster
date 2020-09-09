@@ -103,7 +103,7 @@ const SignIn = () => {
           error={!!error}
           gutterBottom
         />
-        <RouterLink to="/reset-password" component={Link}>
+        <RouterLink to="/lost-password" component={Link}>
           <Typography align="center" variant="body2">
             {t('lost_password.message')}
           </Typography>
