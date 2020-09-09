@@ -10,12 +10,14 @@ import {Typography} from '@material-ui/core';
 const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
   const {t} = useTranslation();
   const strapi = useStrapi();
+  const [settings] = strapi.stores?.settings || [{}];
   const {logout, authState} = useAuth();
   const classes = useStyles();
-  const [settings] = strapi.stores?.settings || [{}];
-  const logoutMenuItem = authState?.user
-    ? {label: t('menu.logout'), onClick: logout, id: 'LogoutTabs'}
-    : null;
+  const logoutMenuItem = authState?.user && {
+    label: t('menu.logout'),
+    onClick: () => logout(settings['about_link']),
+    id: 'LogoutTabs',
+  };
   const aboutMenuItem = {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useAuth} from 'strapi-react-context';
+import {useAuth, useStrapi} from 'strapi-react-context';
 import Layout from '../layouts/Centered';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
@@ -12,6 +12,8 @@ const ProfilePage = () => {
   const {t} = useTranslation();
   const {logout, updateProfile} = useAuth();
   const {profile} = useProfile();
+  const strapi = useStrapi();
+  const [settings] = strapi.stores?.settings || [{}];
 
   const menuActions = [
     {
@@ -33,7 +35,7 @@ const ProfilePage = () => {
       <Profile
         profile={profile}
         updateProfile={updateProfile}
-        logout={logout}
+        logout={() => logout(settings['about_link'])}
       />
     </Layout>
   );

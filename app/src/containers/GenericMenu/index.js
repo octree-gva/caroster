@@ -19,9 +19,11 @@ const GenericMenu = ({title, actions = []}) => {
   const [settings] = strapi.stores?.settings || [{}];
   const validActions = useMemo(() => actions.filter(Boolean), [actions]);
 
-  const logoutMenuItem = authState?.user
-    ? {label: t('menu.logout'), onClick: logout, id: 'LogoutTabs'}
-    : null;
+  const logoutMenuItem = authState?.user && {
+    label: t('menu.logout'),
+    onClick: () => logout(settings['about_link']),
+    id: 'LogoutTabs',
+  };
   const aboutMenuItem = {
     label: t('menu.about'),
     onClick: () => (window.location.href = settings['about_link']),

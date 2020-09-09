@@ -11,7 +11,7 @@ import EditPassword from './EditPassword';
 import {useToast} from '../../contexts/Toast';
 import ProfileField from './ProfileField';
 import {makeStyles} from '@material-ui/core';
-
+import {useStrapi} from 'strapi-react-context';
 const Profile = ({profile, updateProfile, logout}) => {
   const {t} = useTranslation();
   const {addToast} = useToast();
@@ -24,6 +24,8 @@ const Profile = ({profile, updateProfile, logout}) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+  const strapi = useStrapi();
+  const [settings] = strapi.stores?.settings || [{}];
 
   const resetPassword = () => {
     setIsEditingPassword(false);
@@ -141,7 +143,11 @@ const Profile = ({profile, updateProfile, logout}) => {
             </Button>
           )}
           {!isEditing && (
-            <Button type="button" color="default" onClick={() => logout()}>
+            <Button
+              type="button"
+              color="default"
+              onClick={() => logout(settings['about_link'])}
+            >
               {t('profile.actions.logout')}
             </Button>
           )}
