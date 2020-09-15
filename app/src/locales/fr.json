@@ -2,10 +2,10 @@
   "menu": {
     "logout": "Se déconnecter",
     "about": "À propos de Caroster",
-    "dashboard": "Mes évènements",
+    "dashboard": "Tableau de bord",
     "login": "Se connecter",
-    "register": "S'inscrire",
-    "new_event": "Créer un évènement",
+    "register": "Créer un compte",
+    "new_event": "Créer un caroster",
     "profile": "Profil"
   },
   "generic": {
@@ -44,9 +44,17 @@
       "next": "Suivant",
       "newsletter": "Me tenir informé des évolutions de Caroster par e-mail",
       "actions": {
-        "dashboard": "Mes évènements",
+        "dashboard": "$t(menu.dashboard)",
         "see_profile": "Profil",
         "about": "À propos de Caroster"
+      },
+      "addFromAccount": {
+        "title": "Voulez-vous ajouter ce caroster à vos évènements ?",
+        "subtitle": "Créez-le depuis votre compte",
+        "actions": {
+          "register": "$t(menu.register)",
+          "login": "$t(menu.login)"
+        }
       }
     },
     "actions": {
@@ -62,10 +70,10 @@
       "cant_update": "Impossible de modifier l'événement"
     },
     "add_to_my_events": {
-      "login": "Se connecter",
-      "register": "S'inscrire",
-      "title": "Ajouter {{eventName}} à sa liste d'évènement",
-      "text_html": "Pour ajouter <strong>{{eventName}}</strong>, il est nécessaire de se connecter ou de créer un compte."
+      "login": "$t(menu.login)",
+      "register": "$t(menu.register)",
+      "title": "Vous devez être connecté",
+      "text_html": "Pour ajouter <strong>{{eventName}}</strong> à vos carosters vous devez être connecté ou créer un compte."
     }
   },
   "car": {
@@ -101,27 +109,27 @@
     }
   },
   "dashboard": {
-    "title": "Évènements",
+    "title": "$t(menu.dashboard)",
     "actions": {
       "see_event": "Voir plus",
       "add_event": "Créer un caroster"
     },
     "sections": {
-      "future": "Évènement à venir",
-      "future_plural": "Évènements à venir",
-      "past": "Évènement passé",
-      "past_plural": "Évènements passés",
-      "noDate": "Évènement sans date",
-      "noDate_plural": "Évènements sans date"
+      "future": "Caroster à venir",
+      "future_plural": "Carosters à venir",
+      "past": "Caroster passé",
+      "past_plural": "Carosters passés",
+      "noDate": "Caroster sans date",
+      "noDate_plural": "Carosters sans date"
     },
     "noEvent": {
       "title": "Bienvenue sur Caroster",
-      "text_html": "Ici, vous y verrez <strong>les évènements auxquels vous participer</strong>, pour commencer créer un évènement !",
-      "create_event": "Créer un évènement"
+      "text_html": "Ici, vous y verrez <strong>les carosters auxquels vous participer</strong>, pour commencer créer un Caroster !",
+      "create_event": "$t(menu.new_event)"
     }
   },
   "profile": {
-    "title": "Mon profil",
+    "title": "Profil",
     "firstName": "Prénom",
     "lastName": "Nom",
     "email": "Email",
@@ -132,7 +140,7 @@
     "actions": {
       "save": "Enregistrer",
       "edit": "Editer",
-      "change_password": "Mot de passe oublié ?",
+      "change_password": "Changer son mot de passe",
       "logout": "Se déconnecter",
       "cancel": "Annuler",
       "save_new_password": "Mettre à jour"
@@ -167,7 +175,7 @@
     "lastName": "Nom",
     "password": "Mot de passe",
     "submit": "Créer son compte",
-    "login": "Se connecter",
+    "login": "$t(menu.login)",
     "errors": {
       "email_taken": "Email déjà pris"
     },
@@ -182,8 +190,8 @@
     "title": "Connexion",
     "email": "Email",
     "password": "Mot de passe",
-    "login": "Se connecter",
-    "register": "S'inscrire",
+    "login": "$t(menu.login)",
+    "register": "$t(menu.register)",
     "errors": "Vérifier votre email et mot de passe",
     "withGoogle": "Utiliser un compte Google"
   },

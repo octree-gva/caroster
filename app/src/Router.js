@@ -12,23 +12,26 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import LostPassword from './pages/LostPassword.js';
 import ResetPassword from './pages/ResetPassword.js';
-
+import ErrorBoundary from './containers/ErrorBoundary';
 const Router = () => {
   useGTM();
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/e/:eventId" component={Event} />
-        <Route path="/" exact component={Home} />
-        <Route path="/new" exact component={Home} />
-        <Route path="/register" exact component={SignUp} />
-        <Route path="/lost-password" exact component={LostPassword} />
-        <Route path="/reset-password" exact component={ResetPassword} />
-        <Route path="/login" exact component={SignIn} />
-        <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/profile" exact component={Profile} />
-        <Route component={NotFound} />
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route path="/e/:eventId" component={Event} />
+          <Route path="/" exact component={Home} />
+          <Route path="/new" exact component={Home} />
+          <Route path="/register" exact component={SignUp} />
+          <Route path="/lost-password" exact component={LostPassword} />
+          <Route path="/reset-password" exact component={ResetPassword} />
+          <Route path="/login" exact component={SignIn} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/error" exact component={NotFound} />
+          <Route component={NotFound} />
+        </Switch>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 };

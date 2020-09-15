@@ -9,6 +9,7 @@ const DefaultLayout = ({
   menuActions,
   pageTitle = undefined,
   displayMenu = true,
+  goBack = false,
 }) => {
   return (
     <>
@@ -16,7 +17,7 @@ const DefaultLayout = ({
         <title>{pageTitle || menuTitle}</title>
       </Helmet>
       {displayMenu && (menuTitle || menuActions) && (
-        <GenericMenu title={menuTitle} actions={menuActions} />
+        <GenericMenu title={menuTitle} actions={menuActions} goBack={goBack} />
       )}
       <div className={className}>{children}</div>
     </>
