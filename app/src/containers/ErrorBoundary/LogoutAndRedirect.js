@@ -6,7 +6,7 @@ const LogoutAndRedirect = () => {
   const {logout, token} = useAuth();
   useEffect(() => {
     logout();
-  }, []);
+  }, [logout]);
   if (token) return null;
   return <Redirect to="/" />;
 };
