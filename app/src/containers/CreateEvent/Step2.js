@@ -67,7 +67,11 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         id="NewEventSubmit"
       >
         {loading ? (
-          <CircularProgress className={classes.loader} size={20} />
+          <CircularProgress
+            className={classes.loader}
+            size={20}
+            color="primary"
+          />
         ) : (
           t('generic.create')
         )}

@@ -1,13 +1,11 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import {makeStyles} from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
 
 const EditPassword = ({
   oldPassword,
@@ -19,7 +17,7 @@ const EditPassword = ({
   cancel,
 }) => {
   const {t} = useTranslation();
-
+  const classes = useStyles();
   return (
     <form
       onSubmit={evt => {
@@ -29,20 +27,6 @@ const EditPassword = ({
       }}
     >
       <Card>
-        <CardHeader
-          title={t('profile.actions.change_password')}
-          action={
-            <IconButton
-              color="inherit"
-              id="ChangePasswordAction"
-              type="submit"
-              title={t('profile.actions.save')}
-              disabled={oldPassword.length < 4 || newPassword.length < 4}
-            >
-              <Icon>done</Icon>
-            </IconButton>
-          }
-        />
         <CardContent>
           <TextField
             label={t('profile.current_password')}
@@ -68,7 +52,7 @@ const EditPassword = ({
             name="new_password"
           />
         </CardContent>
-        <CardActions>
+        <CardActions className={classes.actions}>
           <Button type="button" onClick={cancel}>
             {t('profile.actions.cancel')}
           </Button>
@@ -86,4 +70,9 @@ const EditPassword = ({
   );
 };
 
+const useStyles = makeStyles(theme => ({
+  actions: {
+    justifyContent: 'flex-end',
+  },
+}));
 export default EditPassword;

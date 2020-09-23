@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -7,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
 import useProfile from '../../hooks/useProfile';
+import {CardActions} from '@material-ui/core';
 
 const isValidEmail = email =>
   // eslint-disable-next-line
@@ -15,9 +17,9 @@ const isValidEmail = email =>
   );
 
 const Step1 = ({nextStep, event, addToEvent}) => {
-  const classes = useStyles();
   const {t} = useTranslation();
   const {connected, user} = useProfile();
+  const classes = useStyles({connected});
 
   // States
   const [name, setName] = useState(event.name ?? '');
@@ -58,31 +60,31 @@ const Step1 = ({nextStep, event, addToEvent}) => {
         name="name"
       />
       {!connected && (
-        <TextField
-          label={t('event.creation.creator_email')}
-          fullWidth
-          margin="dense"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          id="NewEventEmail"
-          name="email"
-          type="email"
-        />
-      )}
-      {!connected && (
-        <FormControlLabel
-          className={classes.newsletter}
-          label={t('event.creation.newsletter')}
-          control={
-            <Checkbox
-              name="newsletter"
-              color="primary"
-              id="NewEventNewsletter"
-              checked={newsletter}
-              onChange={e => setNewsletter(e.target.checked)}
-            />
-          }
-        />
+        <>
+          <TextField
+            label={t('event.creation.creator_email')}
+            fullWidth
+            margin="dense"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            id="NewEventEmail"
+            name="email"
+            type="email"
+          />
+          <FormControlLabel
+            className={classes.newsletter}
+            label={t('event.creation.newsletter')}
+            control={
+              <Checkbox
+                name="newsletter"
+                color="primary"
+                id="NewEventNewsletter"
+                checked={newsletter}
+                onChange={e => setNewsletter(e.target.checked)}
+              />
+            }
+          />
+        </>
       )}
       <Button
         className={classes.button}
@@ -95,6 +97,25 @@ const Step1 = ({nextStep, event, addToEvent}) => {
       >
         {t('event.creation.next')}
       </Button>
+
+      {!connected && (
+        <div className={classes.addFromAccountSection}>
+          <Typography variant="body1">
+            {t('event.creation.addFromAccount.title')}
+          </Typography>
+          <Typography variant="body2">
+            {t('event.creation.addFromAccount.subtitle')}
+          </Typography>
+          <CardActions className={classes.actions}>
+            <Button variant="text" href="/register">
+              {t('event.creation.addFromAccount.actions.register')}
+            </Button>
+            <Button color="primary" href="/login">
+              {t('event.creation.addFromAccount.actions.login')}
+            </Button>
+          </CardActions>
+        </div>
+      )}
     </form>
   );
 };
@@ -105,6 +126,15 @@ const useStyles = makeStyles(theme => ({
   },
   newsletter: {
     marginTop: theme.spacing(2),
+  },
+  addFromAccountSection: {
+    marginTop: theme.spacing(8),
+    textAlign: 'center',
+  },
+  actions: {
+    marginTop: theme.spacing(1),
+    justifyContent: 'space-evenly',
+    textAlign: 'center',
   },
 }));
 

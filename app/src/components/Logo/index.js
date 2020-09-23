@@ -17,16 +17,18 @@ const useStyles = makeStyles(theme => ({
   layout: {
     display: 'flex',
     justifyContent: 'center',
-    paddingTop: '1rem',
-    paddingBottom: '1rem',
+    alignItems: 'center',
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   link: {
-    width: '60%',
+    width: '100%',
   },
   logo: {
     display: 'block',
-    width: '100%',
+    width: '40%',
     height: 'auto',
+    margin: '0 auto',
   },
 }));
 export default Logo;
