@@ -205,8 +205,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   iconButtons: {
-    marginRight: theme.spacing(0),
-    marginLeft: theme.spacing(1),
+    margin: theme.spacing(0),
   },
   avatar: {
     width: theme.spacing(3),
