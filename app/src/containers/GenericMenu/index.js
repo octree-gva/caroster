@@ -9,9 +9,11 @@ import {makeStyles} from '@material-ui/core/styles';
 import GenericToolbar from './Toolbar';
 import {useTranslation} from 'react-i18next';
 import {useStrapi, useAuth} from 'strapi-react-context';
+import {useHistory} from 'react-router-dom';
 
-const GenericMenu = ({title, actions = []}) => {
+const GenericMenu = ({title, actions = [], goBack = false}) => {
   const {t} = useTranslation();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
   const strapi = useStrapi();
@@ -42,6 +44,17 @@ const GenericMenu = ({title, actions = []}) => {
       id="Menu"
     >
       <Toolbar>
+        {goBack && (
+          <IconButton
+            edge="start"
+            className={classes.goBack}
+            onClick={() =>
+              history.length > 2 ? history.goBack() : history.push('/dashboard')
+            }
+          >
+            <Icon>arrow_back</Icon>
+          </IconButton>
+        )}
         <div className={classes.name}>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {title}

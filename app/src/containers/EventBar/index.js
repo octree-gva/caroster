@@ -124,8 +124,8 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
               color="inherit"
               edge="end"
               id="ShareBtn"
-              onClick={onShare}
-              className={classes.iconButtons}
+              onClick={toggleDetails}
+              className={classes.shareIcon}
             >
               <Icon>share</Icon>
             </IconButton>
@@ -174,7 +174,7 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
       </Toolbar>
       {detailsOpen && (
         <Container className={classes.container} maxWidth="sm">
-          <EventDetails toggleDetails={toggleDetails} />
+          <EventDetails toggleDetails={toggleDetails} onShare={onShare} />
         </Container>
       )}
     </AppBar>

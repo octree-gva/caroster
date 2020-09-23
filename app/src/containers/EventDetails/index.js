@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import Icon from '@material-ui/core/Icon';
 import {DatePicker} from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
@@ -18,11 +19,11 @@ const theme = createMuiTheme({
   },
 });
 
-const EventDetails = ({toggleDetails}) => {
+const EventDetails = ({toggleDetails, onShare}) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const {event, isEditing, setEditingEvent, editingEvent} = useEvent();
-
+  const shareInput = useRef(null);
   if (!event) return null;
 
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
@@ -113,11 +114,32 @@ const EventDetails = ({toggleDetails}) => {
             </Typography>
           )}
         </div>
-        <div className={classes.actions}>
-          <Button onClick={toggleDetails} variant="outlined" id={`CarFindBtn`}>
-            {t('event.actions.find_car')}
-          </Button>
-        </div>
+
+        <TextField
+          value={window.location.href}
+          inputProps={{
+            ref: shareInput,
+          }}
+          InputProps={{disableUnderline: true}}
+          onFocus={() => {
+            if (shareInput) shareInput.current.select();
+          }}
+          fullWidth
+          readOnly
+          name="eventShareLink"
+          id="ShareLink"
+        />
+
+        <Button
+          variant="outlined"
+          startIcon={<Icon>share</Icon>}
+          onClick={() => {
+            if (shareInput) shareInput.current.select();
+            onShare();
+          }}
+        >
+          Share Caroster
+        </Button>
       </div>
     </ThemeProvider>
   );
@@ -129,11 +151,6 @@ const useStyles = makeStyles(theme => ({
   },
   section: {
     marginBottom: theme.spacing(2),
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: theme.spacing(4),
   },
   map: {
     marginTop: theme.spacing(4),

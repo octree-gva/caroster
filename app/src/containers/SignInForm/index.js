@@ -110,7 +110,7 @@ const SignIn = () => {
         </RouterLink>
       </CardContent>
       <CardActions className={classes.actions} align="center">
-        <Button id="SignInRegister" href="/register" size="small">
+        <Button size="small" id="SignInRegister" href="/register">
           {t('signin.register')}
         </Button>
         <Button
@@ -137,7 +137,6 @@ const useStyles = makeStyles(theme => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
   },
   loader: {
     marginLeft: '14px',
