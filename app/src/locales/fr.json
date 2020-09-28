@@ -177,7 +177,7 @@
     "submit": "Créer son compte",
     "login": "$t(menu.login)",
     "errors": {
-      "email_taken": "Email déjà pris"
+      "email_taken": "Cet email est déjà associé à un compte"
     },
     "success": {
       "title": "Bienvenue !",
