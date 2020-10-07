@@ -33,7 +33,8 @@
       "starts_on": "Commence le",
       "address": "Adresse",
       "name": "Nom de l'événement",
-      "empty": "Non précisé"
+      "empty": "Non précisé",
+      "share": "Lien de partage"
     },
     "creation": {
       "title": "Nouvel évènement",

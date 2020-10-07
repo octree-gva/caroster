@@ -138,7 +138,7 @@ const EventDetails = ({toggleDetails, onShare}) => {
             onShare();
           }}
         >
-          Share Caroster
+          {t('event.fields.share')}
         </Button>
       </div>
     </ThemeProvider>
