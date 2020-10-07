@@ -122,6 +122,9 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(3),
     fontSize: 16,
   },
+  goBack: {
+    color: theme.palette.common.white,
+  },
 }));
 
 export default GenericMenu;
