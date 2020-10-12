@@ -12,7 +12,7 @@ RUN npm set registry $NPM_REGISTRY
 
 ## Install dependencies
 COPY . /srv/app/
-RUN npm ci --only=production
+RUN npm i --only=production
 
 # Build Strapi admin
 RUN npm run build
