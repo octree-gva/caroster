@@ -86,6 +86,7 @@ const EventBar = ({event, isEditing, setIsEditing, onAdd, onSave, onShare}) => {
       <Toolbar>
         <div className={classes.name}>
           <Link
+            to={''}
             onClick={() => {
               window.location.href = settings['about_link'];
             }}

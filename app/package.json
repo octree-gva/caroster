@@ -19,7 +19,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.7.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "react-slick": "^0.26.1",
     "strapi-react-context": "^0.3.2"
   },

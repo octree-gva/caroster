@@ -35,24 +35,24 @@ const CarDialog = ({cars, open, onClose, onSelect}) => {
       </AppBar>
       <div className={classes.offset}>
         <List disablePadding>
-          {cars?.map((car, i) => (
-            <ListItem
-              key={i}
-              button
-              divider
-              disabled={car.passengers?.length === car.seats}
-              onClick={() => onSelect(car)}
-            >
-              <ListItemText
-                primary={car.name}
-                secondary={t('passenger.creation.seats', {
-                  seats: `${car.passengers ? car.passengers.length : 0} / ${
-                    car.seats
-                  }`,
-                })}
-              />
-            </ListItem>
-          ))}
+          {cars?.map((car, i) => {
+            const passengers = car.passengers ? car.passengers.length : 0;
+            const counter = `${passengers} / ${car.seats}`;
+            return (
+              <ListItem
+                key={i}
+                button
+                divider
+                disabled={passengers === car.seats}
+                onClick={() => onSelect(car)}
+              >
+                <ListItemText
+                  primary={car.name}
+                  secondary={t('passenger.creation.seats', {seats: counter})}
+                />
+              </ListItem>
+            );
+          })}
         </List>
       </div>
     </Dialog>

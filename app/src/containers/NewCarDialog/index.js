@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
@@ -86,69 +85,67 @@ const NewCarDialog = ({open, toggle}) => {
       <form onSubmit={onCreate}>
         <DialogTitle>{t('car.creation.title')}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <TextField
-              label={t('car.creation.name')}
-              value={name}
-              onChange={e => setName(e.target.value)}
-              fullWidth
-              autoFocus
-              id="NewCarName"
-              name="name"
-            />
-            <DateTimePicker
-              label={t('event.creation.date')}
-              value={date}
-              onChange={setDate}
-              className={classes.picker}
-              fullWidth
-              disablePast
-              format="LLLL"
-              id="NewCarDateTime"
-              name="date"
-            />
-            <Typography variant="caption">{t('car.creation.seats')}</Typography>
-            <Slider
-              value={seats}
-              onChange={(e, value) => setSeats(value)}
-              step={1}
-              min={1}
-              max={marks.length}
-              marks={marks}
-              valueLabelDisplay="auto"
-            />
-            <TextField
-              label={t('car.creation.meeting')}
-              value={meeting}
-              onChange={e => setMeeting(e.target.value)}
-              fullWidth
-              margin="dense"
-              id="NewCarMeeting"
-              name="meeting"
-            />
-            <TextField
-              label={t('car.creation.phone')}
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              fullWidth
-              margin="dense"
-              id="NewCarPhone"
-              name="phone"
-            />
-            <TextField
-              label={t('car.creation.notes')}
-              value={details}
-              onChange={e => setDetails(e.target.value)}
-              fullWidth
-              margin="dense"
-              inputProps={{maxLength: 250}}
-              helperText={`${details.length}/250`}
-              multiline
-              rows={4}
-              id="NewCarDetails"
-              name="details"
-            />
-          </DialogContentText>
+          <TextField
+            label={t('car.creation.name')}
+            value={name}
+            onChange={e => setName(e.target.value)}
+            fullWidth
+            autoFocus
+            id="NewCarName"
+            name="name"
+          />
+          <DateTimePicker
+            label={t('event.creation.date')}
+            value={date}
+            onChange={setDate}
+            className={classes.picker}
+            fullWidth
+            disablePast
+            format="LLLL"
+            id="NewCarDateTime"
+            name="date"
+          />
+          <Typography variant="caption">{t('car.creation.seats')}</Typography>
+          <Slider
+            value={seats}
+            onChange={(e, value) => setSeats(value)}
+            step={1}
+            min={1}
+            max={marks.length}
+            marks={marks}
+            valueLabelDisplay="auto"
+          />
+          <TextField
+            label={t('car.creation.meeting')}
+            value={meeting}
+            onChange={e => setMeeting(e.target.value)}
+            fullWidth
+            margin="dense"
+            id="NewCarMeeting"
+            name="meeting"
+          />
+          <TextField
+            label={t('car.creation.phone')}
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
+            fullWidth
+            margin="dense"
+            id="NewCarPhone"
+            name="phone"
+          />
+          <TextField
+            label={t('car.creation.notes')}
+            value={details}
+            onChange={e => setDetails(e.target.value)}
+            fullWidth
+            margin="dense"
+            inputProps={{maxLength: 250}}
+            helperText={`${details.length}/250`}
+            multiline
+            rows={4}
+            id="NewCarDetails"
+            name="details"
+          />
         </DialogContent>
         <DialogActions>
           <Button

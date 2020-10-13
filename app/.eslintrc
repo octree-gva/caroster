@@ -38,7 +38,11 @@
     "max-len": ["warn", 110],
     "arrow-parens": "off",
     "prefer-destructuring": "error",
-    "indent": ["error", 2, {"ignoredNodes": ["ConditionalExpression"]}],
+    "indent": [
+      "error",
+      2,
+      {"ignoredNodes": ["ConditionalExpression", "TemplateLiteral"]}
+    ],
     "operator-linebreak": "off",
     "curly": "off",
     "no-extra-boolean-cast": "off",
