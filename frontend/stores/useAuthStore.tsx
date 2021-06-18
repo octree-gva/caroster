@@ -29,7 +29,7 @@ const useAuth = create<State>((set, get) => ({
     set({token: null, user: null});
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.href = '/login';
+    window.location.href = '/auth/login';
   },
 }));
 

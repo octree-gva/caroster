@@ -13,7 +13,7 @@ import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
 
-const GenericMenu = ({title, actions = [], goBack = false}) => {
+const GenericMenu = ({title, actions = [], goBack = null}) => {
   const {t} = useTranslation();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);

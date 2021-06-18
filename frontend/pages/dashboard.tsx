@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useEffect} from 'react';
 import LayoutDefault from '../layouts/Default';
 import moment from 'moment';
 import {useRouter} from 'next/router';
@@ -18,6 +18,10 @@ const Dashboard = () => {
   const {t} = useTranslation();
   const classes = useStyles();
   const {events = []} = profile || {};
+
+  useEffect(() => {
+    if (!isAuth) router.push('/');
+  }, [isAuth]);
 
   const pastEvents = useMemo(
     () =>

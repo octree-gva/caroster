@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import Layout from '../layouts/Centered';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
@@ -10,9 +11,14 @@ import {useUpdateMeMutation, EditUserInput} from '../generated/graphql';
 const ProfilePage = () => {
   const router = useRouter();
   const {t} = useTranslation();
+  const isAuth = useAuthStore(s => !!s.token);
   const logout = useAuthStore(s => s.logout);
   const {profile} = useProfile();
   const [updateProfile] = useUpdateMeMutation();
+
+  useEffect(() => {
+    if (!isAuth) router.push('/');
+  }, [isAuth]);
 
   const onUpdateProfile = (userUpdate: EditUserInput) =>
     updateProfile({variables: {userUpdate}});
@@ -37,7 +43,7 @@ const ProfilePage = () => {
       <Profile
         profile={profile}
         updateProfile={onUpdateProfile}
-        logout={() => logout()}
+        logout={logout}
       />
     </Layout>
   );
