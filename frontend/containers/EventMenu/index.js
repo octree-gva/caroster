@@ -6,12 +6,11 @@ import {useTranslation} from 'react-i18next';
 import {Typography} from '@material-ui/core';
 import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
-import {useSettingQuery} from '../../generated/graphql';
+import useSettings from '../../hooks/useSettings';
 
 const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
   const {t} = useTranslation();
-  const {data: {setting} = {}} = useSettingQuery();
-
+  const settings = useSettings();
   const logout = useAuthStore(s => s.logout);
   const {user} = useProfile();
 
@@ -20,13 +19,13 @@ const EventMenu = ({anchorEl, setAnchorEl, actions = []}) => {
     label: t('menu.logout'),
     onClick: () => {
       logout();
-      window.location.href = setting['about_link'];
+      window.location.href = settings['about_link'];
     },
     id: 'LogoutTabs',
   };
   const aboutMenuItem = {
     label: t('menu.about'),
-    onClick: () => (window.location.href = setting['about_link']),
+    onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
   };
 

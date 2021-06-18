@@ -22,7 +22,7 @@ Test:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - node_modules/
+      - frontend/node_modules/
       - ~/.npm
 
 Deploy Test:

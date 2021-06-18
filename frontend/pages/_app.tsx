@@ -14,11 +14,11 @@ export default function App(props: AppProps) {
   const {Component, pageProps} = props;
   const apolloClient = useApollo(pageProps);
 
-  // useEffect(() => {
-  //   // Remove the server-side injected CSS (MUI).
-  //   const jssStyles = document.querySelector('#jss-server-side');
-  //   jssStyles?.parentElement?.removeChild(jssStyles);
-  // }, []);
+  useEffect(() => {
+    // Remove the server-side injected CSS (MUI).
+    const jssStyles = document.querySelector('#jss-server-side');
+    jssStyles?.parentElement?.removeChild(jssStyles);
+  }, []);
 
   return (
     <ApolloProvider client={apolloClient}>

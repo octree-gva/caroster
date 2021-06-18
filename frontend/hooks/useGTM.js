@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useSettingQuery} from '../generated/graphql';
+import useSettings from './useSettings';
 
 const getHeadScript = gtmId => `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -13,16 +13,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>
 `;
 
 const useGTM = () => {
-  const {data: {setting} = {}} = useSettingQuery();
+  const settings = useSettings();
 
   if (process.env.NODE_ENV !== 'production') return null;
 
   useEffect(() => {
-    if (setting) {
-      const {gtm_id: gtmId} = setting;
+    if (settings) {
+      const {gtm_id: gtmId} = settings;
       if (gtmId) loadGTM(gtmId);
     }
-  }, [setting]);
+  }, [settings]);
 
   const loadGTM = gtmId => {
     const headScript = document.createElement('script');

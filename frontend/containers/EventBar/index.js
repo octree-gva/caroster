@@ -15,7 +15,7 @@ import EventDetails from '../EventDetails';
 import useAuthStore from '../../stores/useAuthStore';
 import useEventStore from '../../stores/useEventStore';
 import useProfile from '../../hooks/useProfile';
-import {useSettingQuery} from '../../generated/graphql';
+import useSettings from '../../hooks/useSettings';
 
 const EventBar = ({event, onAdd, onSave, onShare}) => {
   const {t} = useTranslation();
@@ -27,7 +27,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
   const classes = useStyles({detailsOpen});
   const token = useAuthStore(s => s.token);
   const {user} = useProfile();
-  const {data: {setting} = {}} = useSettingQuery();
+  const settings = useSettings();
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
@@ -94,7 +94,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
           <Link
             href={''}
             onClick={() => {
-              window.location.href = setting['about_link'];
+              window.location.href = settings['about_link'];
             }}
           >
             <img className={classes.logo} src="/assets/logo.svg" alt="Logo" />

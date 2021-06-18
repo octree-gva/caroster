@@ -11,8 +11,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import useProfile from '../hooks/useProfile';
 import useAuthStore from '../stores/useAuthStore';
 
-const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
-
 const Dashboard = () => {
   const isAuth = useAuthStore(s => !!s.token);
   const {profile, isReady} = useProfile();
@@ -37,10 +35,9 @@ const Dashboard = () => {
     [events]
   );
 
-  const noDateEvents = useMemo(
-    () => events.filter(({date}) => !date),
-    [events]
-  );
+  const noDateEvents = useMemo(() => events.filter(({date}) => !date), [
+    events,
+  ]);
 
   if (!isAuth || !isReady)
     return (
@@ -83,9 +80,13 @@ const Dashboard = () => {
     </LayoutDefault>
   );
 };
+
+const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.mixins.toolbar.minHeight,
   },
 }));
+
 export default Dashboard;

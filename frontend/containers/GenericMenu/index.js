@@ -11,7 +11,7 @@ import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
 import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
-import {useSettingQuery} from '../../generated/graphql';
+import useSettings from '../../hooks/useSettings';
 
 const GenericMenu = ({title, actions = [], goBack = false}) => {
   const {t} = useTranslation();
@@ -20,20 +20,21 @@ const GenericMenu = ({title, actions = [], goBack = false}) => {
   const classes = useStyles();
   const {user} = useProfile();
   const logout = useAuthStore(s => s.logout);
-  const {data: {setting} = {}} = useSettingQuery();
+  const settings = useSettings();
+
   const validActions = useMemo(() => actions.filter(Boolean), [actions]);
 
   const logoutMenuItem = user && {
     label: t('menu.logout'),
     onClick: () => {
       logout();
-      window.location.href = setting['about_link'];
+      window.location.href = settings['about_link'];
     },
     id: 'LogoutTabs',
   };
   const aboutMenuItem = {
     label: t('menu.about'),
-    onClick: () => (window.location.href = setting['about_link']),
+    onClick: () => (window.location.href = settings['about_link']),
     id: 'AboutTabs',
   };
   const userInfos = user

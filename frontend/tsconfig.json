@@ -21,7 +21,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "generated/graphql.tsx"
   ],
   "exclude": [
     "node_modules"

@@ -6,18 +6,20 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import useAuthStore from '../stores/useAuthStore';
 
+const {STRAPI_URL = ''} = process.env;
+
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 export let apolloClient;
 
 const httpLink = new HttpLink({
-  uri: '/graphql', // Server URL (must be absolute)
+  uri: `${STRAPI_URL}/graphql`, // Server URL (must be absolute)
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
 });
 
-const handleError = onError(({graphQLErrors = []}) => {
+const handleError = onError(({graphQLErrors = [], ...details}) => {
   const [error] = graphQLErrors;
-  console.error({graphQLErrors, error});
+  console.error({graphQLErrors, error, details});
 
   if (error?.message === 'Invalid token.') {
     useAuthStore.getState().logout();
