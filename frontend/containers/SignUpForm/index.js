@@ -11,6 +11,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
 import {useRegisterMutation} from '../../generated/graphql';
 import useAuthStore from '../../stores/useAuthStore';
+import useAddToEvents from '../../hooks/useAddToEvents';
 
 const SignUp = () => {
   const {t} = useTranslation();
@@ -26,6 +27,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [register] = useRegisterMutation();
+  const {saveStoredEvents} = useAddToEvents();
 
   const canSubmit = useMemo(
     () =>
@@ -48,6 +50,7 @@ const SignUp = () => {
       });
       setToken(data.register.jwt);
       setUser(data.register.user);
+      saveStoredEvents();
       router.push('/dashboard');
     } catch (error) {
       const strapiError = getStrapiError(error);
@@ -140,8 +143,11 @@ const SignUp = () => {
   );
 };
 
-const getStrapiError = error =>
-  error?.graphQLErrors?.[0].extensions.exception.data.message[0].messages[0].id;
+const getStrapiError = error => {
+  if (error.message?.[0]?.messages?.[0]) return error.message[0].messages[0].id;
+  return error?.graphQLErrors?.[0].extensions.exception.data.message[0]
+    .messages[0].id;
+};
 
 const useStyles = makeStyles(theme => ({
   content: {

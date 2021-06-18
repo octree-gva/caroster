@@ -31,9 +31,16 @@ module.exports = {
         'users-permissions'
       ].services.user.validatePassword(old_password, user.password);
       if (!validPassword) throw new Error('Auth.form.error.password.matching');
-
       delete ctx.request.body.old_password;
     }
+
+    const currentUser = await strapi.plugins[
+      'users-permissions'
+    ].services.user.fetch({id: user.id});
+
+    const updatedEvents = events
+      ? [...currentUser.events, ...events]
+      : currentUser.events;
 
     const data = await strapi.plugins['users-permissions'].services.user.edit(
       {id: user.id},
@@ -43,7 +50,7 @@ module.exports = {
         password,
         firstName,
         lastName,
-        events,
+        events: updatedEvents,
       })
     );
 

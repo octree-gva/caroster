@@ -15,6 +15,7 @@ import useLoginForm from '../../hooks/useLoginForm';
 import useToastsStore from '../../stores/useToastStore';
 import useAuthStore from '../../stores/useAuthStore';
 import useLoginWithProvider from '../../hooks/useLoginWithProvider';
+import useAddToEvents from '../../hooks/useAddToEvents';
 
 const SignIn = () => {
   const {t} = useTranslation();
@@ -27,6 +28,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const addToast = useToastsStore(s => s.addToast);
   const {login, loading} = useLoginForm(email, password);
+  const {saveStoredEvents} = useAddToEvents();
 
   useEffect(() => {
     if (token) router.replace('/dashboard');
@@ -41,8 +43,7 @@ const SignIn = () => {
     e.preventDefault?.();
     try {
       await login();
-      // TODO add to my event if saved in local storage
-      // TODO remove from local storage.
+      saveStoredEvents();
       router.push('/');
     } catch (error) {
       handleAuthError(error);

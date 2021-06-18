@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import {makeStyles} from '@material-ui/core/styles';
 import {Trans, useTranslation} from 'react-i18next';
-import useProfile from '../../hooks/useProfile';
+import useAddToEvents from '../../hooks/useAddToEvents';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import CarDialog from './CarDialog';
@@ -22,7 +22,7 @@ const WaitingList = ({car}) => {
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
-  const {addEvent} = useProfile();
+  const addToEvent = useAddToEvents();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
   const [adding, setAdding] = useState(null);
@@ -44,13 +44,13 @@ const WaitingList = ({car}) => {
         await updateEvent({
           variables: {id: event.id, eventUpdate: {waiting_list: waitingList}},
         });
-        addEvent(event);
+        addToEvent(event.id);
       } catch (error) {
         console.error(error);
         addToast(t(i18nError));
       }
     },
-    [event, addEvent] // eslint-disable-line
+    [event, addToEvent] // eslint-disable-line
   );
 
   const addPassenger = useCallback(

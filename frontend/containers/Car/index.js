@@ -3,12 +3,12 @@ import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import {useTranslation} from 'react-i18next';
-import useProfile from '../../hooks/useProfile';
 import PassengersList from '../PassengersList';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
+import useAddToEvents from '../../hooks/useAddToEvents';
 import {
   useUpdateCarMutation,
   useUpdateEventMutation,
@@ -18,11 +18,11 @@ const Car = ({car}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
-  const {addEvent} = useProfile();
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [updateEvent] = useUpdateEventMutation();
   const [updateCar] = useUpdateCarMutation();
+  const {addToEvent} = useAddToEvents();
 
   if (!car) return null;
 
@@ -36,7 +36,7 @@ const Car = ({car}) => {
           },
         },
       });
-      addEvent(event);
+      addToEvent(event.id);
     } catch (error) {
       console.error(error);
     }

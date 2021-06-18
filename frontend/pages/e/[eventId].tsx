@@ -26,11 +26,9 @@ const Event = ({eventId}: Props) => {
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
   const setIsEditing = useEventStore(s => s.setIsEditing);
-  const {
-    data: {event} = {},
-    loading,
-    error,
-  } = useEventQuery({variables: {id: eventId}});
+  const {data: {event} = {}, loading, error} = useEventQuery({
+    variables: {id: eventId},
+  });
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
@@ -85,11 +83,11 @@ const Event = ({eventId}: Props) => {
       <CarColumns toggleNewCar={toggleNewCar} />
       <Fab onClick={toggleNewCar} open={openNewCar} aria-label="add-car" />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
-      {/* <AddToMyEventDialog
+      <AddToMyEventDialog
         event={event}
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
-      /> */}
+      />
     </Layout>
   );
 };

@@ -24,7 +24,7 @@ const ResetPassword = () => {
       });
       setPasswordError('');
       addToast(t('lost_password.change_success'));
-      router.push('/login');
+      router.push('/auth/login');
     } catch (err) {
       if (err.message === 'Bad Request')
         setPasswordError(t('generic.errors.unknown'));

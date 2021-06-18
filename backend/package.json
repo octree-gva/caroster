@@ -8,7 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "echo 'DO TESTS!!!'"
+    "test": "echo 'DO TESTS!!!'",
+    "console": "PORT=1338 yarn strapi console"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

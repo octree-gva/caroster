@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-import useProfile from '../../hooks/useProfile';
+import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';
 import useToastsStore from '../../stores/useToastStore';
 import {useCreateCarMutation} from '../../generated/graphql';
@@ -20,8 +20,8 @@ const NewCarDialog = ({open, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const addToast = useToastsStore(s => s.addToast);
+  const addToEvent = useAddToEvents();
   const event = useEventStore(s => s.event);
-  const {addEvent} = useProfile();
   const [createCar] = useCreateCarMutation({refetchQueries: ['event']});
 
   // States
@@ -49,7 +49,7 @@ const NewCarDialog = ({open, toggle}) => {
           },
         },
       });
-      addEvent(event);
+      addToEvent(event.id);
       addToast(t('car.creation.created'));
       toggle();
 
@@ -57,7 +57,7 @@ const NewCarDialog = ({open, toggle}) => {
       setName('');
       setSeats(4);
       setMeeting('');
-      setDate(moment());
+      setDate(moment().format('YYYY-MM-DD'));
       setPhone('');
       setDetails('');
     } catch (error) {

@@ -9,30 +9,17 @@ const useProfile = () => {
   const [fetchProfile, {data}] = useProfileLazyQuery();
 
   useEffect(() => {
-    if (token) fetchProfile();
+    if (token) {
+      fetchProfile();
+    }
   }, [token]);
 
   useEffect(() => {
     if (data) setProfile(data.me?.profile);
   }, [data]);
 
-  // // TODO is useless ?
-  // const addEvent = async event => {
-  //   try {
-  //     if (!profile)
-  //       throw new Error(`Can't add event to logged user: profile empty`);
-  //     if (!profile?.events?.some(({id}) => id === event.id))
-  //       await strapi.services.users.update('me', {
-  //         events: [...profile.events, event.id],
-  //       });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   return {
     profile,
-    // addEvent,
     connected: !!token,
     user: user,
     isReady: typeof profile !== 'undefined',
