@@ -1,0 +1,32 @@
+fragment UserFields on UsersPermissionsUser {
+  id
+  username
+  email
+  confirmed
+  lastName
+  firstName
+  events {
+    id
+    name
+    date
+    address
+  }
+}
+
+query profile {
+  me {
+    id
+    username
+    profile {
+      ...UserFields
+    }
+  }
+}
+
+mutation updateMe($userUpdate: editUserInput!) {
+  updateMe(input: $userUpdate) {
+    user {
+      ...UserFields
+    }
+  }
+}

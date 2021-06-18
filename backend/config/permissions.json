@@ -1,0 +1,59 @@
+{
+  "roles": {
+    "public": [
+      {
+        "type": "application",
+        "controllers": [
+          {
+            "name": "car",
+            "actions": ["create", "delete", "find", "findone", "update"]
+          },
+          {
+            "name": "event",
+            "actions": ["create", "findone", "update"]
+          },
+          {
+            "name": "page",
+            "actions": ["find", "findone"]
+          },
+          {
+            "name": "settings",
+            "actions": ["find"]
+          }
+        ]
+      }
+    ],
+    "authenticated": [
+      {
+        "type": "application",
+        "controllers": [
+          {
+            "name": "car",
+            "actions": ["create", "delete", "find", "findone", "update"]
+          },
+          {
+            "name": "event",
+            "actions": ["create", "findone", "update"]
+          },
+          {
+            "name": "page",
+            "actions": ["find", "findone"]
+          },
+          {
+            "name": "settings",
+            "actions": ["find"]
+          }
+        ]
+      },
+      {
+        "type": "users-permissions",
+        "controllers": [
+          {
+            "name": "user",
+            "actions": ["me", "updateme"]
+          }
+        ]
+      }
+    ]
+  }
+}

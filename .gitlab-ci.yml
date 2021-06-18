@@ -1,10 +1,9 @@
-# Import des templates de jobs pré-configurés
 include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
+  - project: o/infra/templates
+    file: /gitlab-ci/includes/jobs.yaml
 
-# CI variables scopées:
-# - NPM_REGISTRY: URL du NPM registry à utiliser (default: https://npm-8ee.hidora.com/)
 Test:
   stage: test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
@@ -16,44 +15,29 @@ Test:
     - echo "45.66.221.1 npm-8ee.hidora.com" >> /etc/hosts
     - npm set registry ${NPM_REGISTRY:-https://npm-8ee.hidora.com/}
     - apk add --no-cache python3
-    - cd app
-    - npm i
-    - npm run lint
+    - cd frontend
+    - yarn install --production=false
+    - yarn lint
     # - npm run test
   cache:
-    key: '$CI_COMMIT_REF_SLUG'
+    key: "$CI_COMMIT_REF_SLUG"
     paths:
       - node_modules/
       - ~/.npm
 
-# CI variables:
-# - STRAPI_CHART_VERSION: Version du chart Strapi à utiliser
-# - ENV_CONFIG [scopée]: Fichier de configuration values.yaml (requis)
-# - ENV_NAMESPACE [scopée]: Namespace Kubernetes (default: KUBE_NAMESPACE)
-Deploy to Test:
-  extends: .deployStrapi
-  environment:
-    name: test
-    url: 'https://$CI_PROJECT_NAME.dev.octr.ee'
+Deploy Test:
+  extends: .deployHidora
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
-
-# CI variables:
-# - ENV_URL [scopée]: URL de l'environnement (requis)
-# - JELASTIC_HOSTER: nom de domaine de l'API Jelastic (requis)
-# - JELASTIC_PASSWORD: Mot de passe pour l'API Jelastic (requis)
-# - JELASTIC_LOGIN: Nom d'utilisateur pour l'API Jelastic (requis)
-# - JELASTIC_ENVNAME: Nom de l'environnement ciblé (requis)
-# - JELASTIC_NODEID: Node ID du container à déployer dans l'environnement (requis)
-# - USE_EXISTING_VOLUME: Indique s'il faut garder les volumes déclarés ou non
-Deploy to Production:
-  stage: deploy
   environment:
-    name: production
-    url: $ENV_URL
+    name: Test
+    url: "https://caroster-dev.hidora.com"
+
+Deploy to Prod:
+  extends: .deployHidora
   rules:
-    - if: '$CI_COMMIT_TAG =~ /v.*[^r][^c]$/'
-  image: mwienk/jelastic-cli
-  script:
-    - /root/jelastic/users/authentication/signin --login $JELASTIC_LOGIN --password $JELASTIC_PASSWORD --platformUrl ${JELASTIC_HOSTER:-app.hidora.com}
-    - /root/jelastic/environment/control/redeploycontainerbyid --envName $JELASTIC_ENVNAME --nodeId $JELASTIC_NODEID --tag ${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA} --useExistingVolumes ${USE_EXISTING_VOLUME:-true}
+    - if: "$CI_COMMIT_TAG =~ /v.*$/"
+      when: manual
+  environment:
+    name: Prod
+    url: https://app.caroster.io

@@ -1,0 +1,220 @@
+{
+  "menu": {
+    "logout": "Se déconnecter",
+    "about": "À propos de Caroster",
+    "dashboard": "Tableau de bord",
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "new_event": "Créer un caroster",
+    "profile": "Profil"
+  },
+  "generic": {
+    "loading": "Chargement...",
+    "close": "Fermer",
+    "create": "Créer",
+    "cancel": "Annuler",
+    "remove": "Supprimer",
+    "save": "Enregistrer",
+    "confirm": "Confirmer",
+    "errors": {
+      "date_min": "Sélectionnez une date à venir",
+      "unknown": "Une erreur inconnue c'est produite",
+      "rejected": "Quelque chose c'est mal passé",
+      "bad_data": "Il manque quelque chose",
+      "unauthorized": "Problème d'authentification",
+      "forbidden": "Vous n'avez pas le droit de faire cette action",
+      "not_found": "Resource introuvable",
+      "server": "Problème sur nos serveurs",
+      "timeout": "Connexion instable, re-essayé plus tard"
+    }
+  },
+  "event": {
+    "fields": {
+      "starts_on": "Commence le",
+      "address": "Adresse",
+      "name": "Nom de l'événement",
+      "empty": "Non précisé",
+      "share": "Lien de partage"
+    },
+    "creation": {
+      "title": "Nouvel évènement",
+      "event_name": "Nom de l'événement",
+      "creator_email": "Votre e-mail",
+      "date": "Date de l'événement",
+      "address": "Adresse de l'événement",
+      "next": "Suivant",
+      "newsletter": "Me tenir informé des évolutions de Caroster par e-mail",
+      "actions": {
+        "dashboard": "$t(menu.dashboard)",
+        "see_profile": "Profil",
+        "about": "À propos de Caroster"
+      },
+      "addFromAccount": {
+        "title": "Voulez-vous ajouter ce caroster à vos évènements ?",
+        "subtitle": "Créez-le depuis votre compte",
+        "actions": {
+          "register": "$t(menu.register)",
+          "login": "$t(menu.login)"
+        }
+      }
+    },
+    "actions": {
+      "show_details": "Détails de l'événement",
+      "hide_details": "Cacher les détails",
+      "find_car": "Trouver une voiture",
+      "copied": "Le lien a été copié dans votre presse-papier",
+      "add_to_my_events": "Ajouter à mes évènements",
+      "see_on_gmap": "Voir sur une carte"
+    },
+    "errors": {
+      "cant_create": "Impossible de créer l'événement",
+      "cant_update": "Impossible de modifier l'événement"
+    },
+    "add_to_my_events": {
+      "login": "$t(menu.login)",
+      "register": "$t(menu.register)",
+      "title": "Vous devez être connecté",
+      "text_html": "Pour ajouter <strong>{{eventName}}</strong> à vos carosters vous devez être connecté ou créer un compte."
+    }
+  },
+  "car": {
+    "fields": {
+      "meeting_point": "Lieu de rencontre",
+      "details": "Notes",
+      "phone": "Contact"
+    },
+    "creation": {
+      "date": "Départ",
+      "title": "Ajouter une voiture",
+      "name": "Nom de la voiture",
+      "seats": "Nombre de places",
+      "meeting": "Lieu de rencontre",
+      "phone": "Numéro de téléphone",
+      "notes": "Infos complémentaires",
+      "created": "La voiture a été créée"
+    },
+    "actions": {
+      "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
+      "removed": "La voiture a été supprimée"
+    },
+    "passengers": {
+      "empty": "Place disponible",
+      "add": "Ajouter un passager"
+    },
+    "errors": {
+      "cant_create": "Impossible de créer la voiture",
+      "cant_update": "Impossible de modifier la voiture",
+      "cant_remove": "Impossible de supprimer la voiture",
+      "cant_add_passenger": "Impossible d'ajouter un passager",
+      "cant_remove_passenger": "Impossible de supprimer le passager"
+    }
+  },
+  "dashboard": {
+    "title": "$t(menu.dashboard)",
+    "actions": {
+      "see_event": "Voir plus",
+      "add_event": "Créer un caroster"
+    },
+    "sections": {
+      "future": "Caroster à venir",
+      "future_plural": "Carosters à venir",
+      "past": "Caroster passé",
+      "past_plural": "Carosters passés",
+      "noDate": "Caroster sans date",
+      "noDate_plural": "Carosters sans date"
+    },
+    "noEvent": {
+      "title": "Bienvenue sur Caroster",
+      "text_html": "Ici, vous y verrez <strong>les carosters auxquels vous participer</strong>, pour commencer créer un Caroster !",
+      "create_event": "$t(menu.new_event)"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "current_password": "Mot de passe actuel",
+    "new_password": "Nouveau mot de passe",
+    "password_changed": "Mot de passe mis à jour",
+    "updated": "Profil mis à jour",
+    "not_defined": "Non précisé",
+    "actions": {
+      "save": "Enregistrer",
+      "edit": "Editer",
+      "change_password": "Changer son mot de passe",
+      "logout": "Se déconnecter",
+      "cancel": "Annuler",
+      "save_new_password": "Mettre à jour"
+    },
+    "errors": {
+      "password_nomatch": "Mot de passe erroné"
+    }
+  },
+  "passenger": {
+    "title": "Liste d'attente",
+    "availability": {
+      "seats": "{{count}} place disponible",
+      "seats_plural": "{{count}} places disponibles"
+    },
+    "creation": {
+      "seats": "Nombre de passagers: {{seats}}"
+    },
+    "actions": {
+      "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?"
+    },
+    "errors": {
+      "cant_add_passenger": "Impossible d'ajouter un passager",
+      "cant_save_passengers": "Impossible de mettre à jour passagers",
+      "cant_remove_passenger": "Impossible de retirer le passager",
+      "cant_select_car": "Impossible de sélectionner la voiture"
+    }
+  },
+  "signup": {
+    "title": "Inscription",
+    "email": "Email",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "password": "Mot de passe",
+    "submit": "Créer son compte",
+    "login": "$t(menu.login)",
+    "errors": {
+      "email_taken": "Cet email est déjà associé à un compte"
+    },
+    "success": {
+      "title": "Bienvenue !",
+      "text_html": "Lorem Ipsum dolor sit amet, consectetur <strong>adipiscing elit</strong>",
+      "dashboard": "Aller sur son tableau de bord",
+      "create_event": "Créer un évènement"
+    }
+  },
+  "signin": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "login": "$t(menu.login)",
+    "register": "$t(menu.register)",
+    "errors": "Vérifier votre email et mot de passe",
+    "unconfirmed": "Votre compte n'a pas été confirmé. Merci de vérifier vos emails",
+    "withGoogle": "Utiliser un compte Google"
+  },
+  "lost_password": {
+    "title": "Récupération de mot de passe",
+    "reset_title": "Définition d'un nouveau mot de passe",
+    "message": "Perdu son mot de passe ?",
+    "email": "Votre email",
+    "password": "Nouveau mot de passe",
+    "password_confirmation": "Confirmation du nouveau mot de passe",
+    "sent": "Un email a été envoyé à {{email}}, avec un lien pour récupérer votre mot de passe",
+    "error": "Cet email n'existe pas",
+    "change_success": "Votre mot de passe a été modifié",
+    "actions": {
+      "send": "Envoyer un email de récupération",
+      "cancel": "Annuler",
+      "login": "Retour à l'écran de connexion",
+      "resend": "Envoyer à nouveau",
+      "register": "Créer un compte ?",
+      "save_new_password": "Mettre à jour"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+fragment EventFiels on Event {
+  id
+  name
+  email
+  date
+  address
+  position
+  waiting_list
+  cars {
+    id
+    name
+    seats
+    meeting
+    departure
+    details
+    phone_number
+    passengers
+  }
+}
+
+mutation createEvent(
+  $name: String!
+  $email: String!
+  $date: Date
+  $address: String
+) {
+  createEvent(
+    input: {data: {name: $name, email: $email, date: $date, address: $address}}
+  ) {
+    event {
+      ...EventFiels
+    }
+  }
+}
+
+mutation updateEvent($id: ID!, $eventUpdate: editEventInput) {
+  updateEvent(input: {where: {id: $id}, data: $eventUpdate}) {
+    event {
+      ...EventFiels
+    }
+  }
+}
+
+query event($id: ID!) {
+  event(id: $id) {
+    ...EventFiels
+  }
+}

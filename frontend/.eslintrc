@@ -1,0 +1,61 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "google"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "jsx-a11y"],
+  "globals": {
+    "alert": true,
+    "confirm": true,
+    "FormData": true,
+    "XMLHttpRequest": true,
+    "document": true,
+    "window": true,
+    "$": true,
+    "jQuery": true,
+    "navigator": true,
+    "fetch": true
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "prefer-const": "error",
+    "complexity": ["warn", 16],
+    "max-len": ["warn", 110],
+    "arrow-parens": "off",
+    "prefer-destructuring": "error",
+    "indent": [
+      "error",
+      2,
+      {"ignoredNodes": ["ConditionalExpression", "TemplateLiteral"]}
+    ],
+    "operator-linebreak": "off",
+    "curly": "off",
+    "no-extra-boolean-cast": "off",
+    "quote-props": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "react/boolean-prop-naming": "error",
+    "react/prop-types": "off",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-max-depth": ["error", {"max": 5}],
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn"
+  }
+}

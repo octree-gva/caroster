@@ -1,0 +1,7 @@
+query setting {
+  setting {
+    id
+    gtm_id
+    about_link
+  }
+}

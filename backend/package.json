@@ -1,0 +1,47 @@
+{
+  "name": "caroster",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "test": "echo 'DO TESTS!!!'"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.3.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "knex": "^0.95.6",
+    "moment": "^2.27.0",
+    "next": "^11.0.0",
+    "pg": "^8.5.1",
+    "strapi": "3.6.3",
+    "strapi-admin": "3.6.3",
+    "strapi-connector-bookshelf": "3.6.2",
+    "strapi-middleware-sentry": "^0.0.11",
+    "strapi-plugin-content-manager": "3.6.3",
+    "strapi-plugin-content-type-builder": "3.6.3",
+    "strapi-plugin-email": "^0.1.1",
+    "strapi-plugin-graphql": "3.6.3",
+    "strapi-plugin-telemetree": "^0.1.0",
+    "strapi-plugin-upload": "^3.6.3",
+    "strapi-plugin-users-permissions": "3.6.3",
+    "strapi-utils": "3.6.3"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "8c3a2c9e-1c16-43af-811f-ed1101770497"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
