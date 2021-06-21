@@ -24,7 +24,7 @@ const App = function (props: AppProps) {
     <ApolloProvider client={apolloClient}>
       <Fragment>
         <Head>
-          <title>Caroster</title>
+          <title>{pageProps.meta?.title || 'Caroster'}</title>
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"

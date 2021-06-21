@@ -1,14 +1,17 @@
 module.exports = ({env}) => ({
   timeout: 10000,
   load: {
-    after: ['parser', 'router', 'next'],
+    after: ['parser', 'router', 'next', 'next-proxy'],
   },
   settings: {
-    next: {
+    'next-proxy': {
       enabled: true,
-      dir: '/srv/app/frontend',
-      quiet: false,
-      conf: {},
+      host: env('NEXT_URL', 'http://localhost:3000'),
+      conf: {
+        overrideResponseHeaders: {
+          'next-proxy': true,
+        },
+      },
     },
     sentry: {
       enabled: true,

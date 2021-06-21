@@ -46,7 +46,10 @@ const createApolloClient = token => {
   });
 };
 
-export const initializeApollo = (initialState: object, token: string) => {
+export const initializeApollo = (
+  initialState: object = {},
+  token: string = ''
+) => {
   const _apolloClient = createApolloClient(token);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here

@@ -9,26 +9,24 @@ import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
 import Loading from '../../containers/Loading';
 import EventBar from '../../containers/EventBar';
 import useToastStore from '../../stores/useToastStore';
+import {initializeApollo} from '../../lib/apolloClient';
 import {
-  useEventQuery,
   useUpdateEventMutation,
   Event as EventType,
+  EventDocument,
 } from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 
 interface Props {
-  eventId: string;
+  event: EventType;
 }
 
-const Event = ({eventId}: Props) => {
+const Event = ({event}: Props) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
   const setIsEditing = useEventStore(s => s.setIsEditing);
-  const {data: {event} = {}, loading, error} = useEventQuery({
-    variables: {id: eventId},
-  });
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
@@ -66,8 +64,6 @@ const Event = ({eventId}: Props) => {
     }
   };
 
-  if (loading) return <Loading />;
-
   return (
     <Layout
       pageTitle={t('event.title', {title: event.name})}
@@ -91,6 +87,25 @@ const Event = ({eventId}: Props) => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  const {eventId} = context.query;
+  const apolloClient = initializeApollo();
+  const {data = {}} = await apolloClient.query({
+    query: EventDocument,
+    variables: {id: eventId},
+  });
+  const {event} = data;
+
+  return {
+    props: {
+      event,
+      meta: {
+        title: event?.name,
+      },
+    },
+  };
+}
 
 export default props => {
   const router = useRouter();
