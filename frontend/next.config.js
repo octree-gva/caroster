@@ -1,6 +1,7 @@
+const withPWA = require('next-pwa');
 const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 
-module.exports = {
+module.exports = withPWA({
   async rewrites() {
     return [
       {
@@ -9,10 +10,13 @@ module.exports = {
       },
     ];
   },
+  pwa: {
+    dest: 'public',
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
   },
-};
+});

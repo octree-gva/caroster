@@ -8,9 +8,9 @@ export default class MyDocument extends Document {
     return (
       <Html lang="fr">
         <Head>
-          {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href="/favicon.png" />
+          <meta name="application-name" content="Caroster" />
+          <link rel="shortcut icon" href="/assets/favicon.ico" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -34,6 +34,27 @@ export default class MyDocument extends Document {
             type="text/css"
             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
           />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="default"
+          />
+          <meta name="apple-mobile-web-app-title" content="Caroster" />
+          <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/assets/favicon-16x16.png"
+          />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="mask-icon" href="/assets/logo.svg" color="#5bbad5" />
           <meta property="og:site_name" content="Caroster" />
           <meta
             property="og:title"
@@ -47,7 +68,7 @@ export default class MyDocument extends Document {
           />
           <meta
             property="og:image"
-            content="%REACT_APP_URL%/Caroster_Octree_Social.jpg"
+            content="/assets/Caroster_Octree_Social.jpg"
           />
           <meta property="og:image:width" content="1500" />
           <meta property="og:image:height" content="843" />
@@ -55,23 +76,17 @@ export default class MyDocument extends Document {
           <meta itemProp="url" content="%PUBLIC_URL%" />
           <meta
             itemProp="thumbnailUrl"
-            content="%REACT_APP_URL%/Caroster_Octree_Social.jpg"
+            content="/assets/Caroster_Octree_Social.jpg"
           />
-          <link
-            rel="image_src"
-            href="%REACT_APP_URL%/Caroster_Octree_Social.jpg"
-          />
-          <meta
-            itemProp="image"
-            content="%REACT_APP_URL%/Caroster_Octree_Social.jpg"
-          />
+          <link rel="image_src" href="/assets/Caroster_Octree_Social.jpg" />
+          <meta itemProp="image" content="/assets/Caroster_Octree_Social.jpg" />
           <meta
             name="twitter:title"
             content="Caroster - Covoiturage de groupe"
           />
           <meta
             name="twitter:image"
-            content="%REACT_APP_URL%/Caroster_Octree_Social.jpg"
+            content="/assets/Caroster_Octree_Social.jpg"
           />
           <meta name="twitter:url" content="%PUBLIC_URL%" />
           <meta name="twitter:card" content="summary" />
