@@ -96,7 +96,6 @@ const SignUp = () => {
         <TextField
           label={t('signup.password')}
           fullWidth
-          gutterBottom
           required={true}
           margin="dense"
           value={password}
@@ -118,7 +117,7 @@ const SignUp = () => {
           className={classes.button}
           aria-disabled={!canSubmit}
           id="SignUpSubmit"
-          iconEnd={
+          endIcon={
             isLoading && (
               <CircularProgress
                 class={classes.loader}

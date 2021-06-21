@@ -1,3 +1,4 @@
+import {useRef, useEffect} from 'react';
 import Slider from 'react-slick';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
@@ -7,28 +8,41 @@ import AddCar from './AddCar';
 import useEventStore from '../../stores/useEventStore';
 
 const CarColumns = ({...props}) => {
+  const wrapper = useRef();
+  const slider = useRef();
   const classes = useStyles();
   const event = useEventStore(s => s.event);
   const {cars} = event || {};
 
+  useEffect(() => {
+    if (wrapper.current)
+      wrapper.current.addEventListener('wheel', e => {
+        e.preventDefault();
+        if (e.deltaY < 0) slider.current.slickPrev();
+        else slider.current.slickNext();
+      });
+  }, [wrapper, slider]);
+
   return (
-    <Slider className={classes.slider} {...SETTINGS}>
-      <Container maxWidth="sm" className={classes.slide}>
-        <WaitingList />
-      </Container>
-      {cars?.length > 0 &&
-        cars
-          .slice()
-          .sort(sortCars)
-          .map(car => (
-            <Container key={car.id} maxWidth="sm" className={classes.slide}>
-              <Car car={car} {...props} />
-            </Container>
-          ))}
-      <Container maxWidth="sm" className={classes.slide}>
-        <AddCar {...props} />
-      </Container>
-    </Slider>
+    <div ref={wrapper}>
+      <Slider className={classes.slider} ref={slider} {...SETTINGS}>
+        <Container maxWidth="sm" className={classes.slide}>
+          <WaitingList />
+        </Container>
+        {cars?.length > 0 &&
+          cars
+            .slice()
+            .sort(sortCars)
+            .map(car => (
+              <Container key={car.id} maxWidth="sm" className={classes.slide}>
+                <Car car={car} {...props} />
+              </Container>
+            ))}
+        <Container maxWidth="sm" className={classes.slide}>
+          <AddCar {...props} />
+        </Container>
+      </Slider>
+    </div>
   );
 };
 
