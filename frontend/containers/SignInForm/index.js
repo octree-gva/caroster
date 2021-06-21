@@ -13,7 +13,6 @@ import CardActions from '@material-ui/core/CardActions';
 import {makeStyles} from '@material-ui/core/styles';
 import useLoginForm from '../../hooks/useLoginForm';
 import useToastsStore from '../../stores/useToastStore';
-import useAuthStore from '../../stores/useAuthStore';
 import useLoginWithProvider from '../../hooks/useLoginWithProvider';
 import useAddToEvents from '../../hooks/useAddToEvents';
 
@@ -21,7 +20,6 @@ const SignIn = () => {
   const {t} = useTranslation();
   const classes = useStyles();
   const router = useRouter();
-  const token = useAuthStore(s => s.token);
   const {loginWithProvider} = useLoginWithProvider();
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -29,10 +27,6 @@ const SignIn = () => {
   const addToast = useToastsStore(s => s.addToast);
   const {login, loading} = useLoginForm(email, password);
   const {saveStoredEvents} = useAddToEvents();
-
-  useEffect(() => {
-    if (token) router.replace('/dashboard');
-  }, [token]);
 
   const canSubmit = useMemo(
     () => [email, password].filter(s => s.length < 4).length === 0,
@@ -52,7 +46,6 @@ const SignIn = () => {
     return false;
   };
 
-  // If an access token is given in URL params, login with auth provider
   useEffect(() => {
     const authWithGoogle = async search => {
       try {
@@ -108,7 +101,6 @@ const SignIn = () => {
           name="password"
           type="password"
           error={!!error}
-          gutterBottom
         />
         <RouterLink href="/auth/lost-password">
           <Link>

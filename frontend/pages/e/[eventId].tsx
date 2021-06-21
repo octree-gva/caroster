@@ -70,8 +70,8 @@ const Event = ({eventId}: Props) => {
 
   return (
     <Layout
-      pageTitle={t('event.title')}
-      menuTitle={t('meta.title', {title: event.name})}
+      pageTitle={t('event.title', {title: event.name})}
+      menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
     >
       <EventBar

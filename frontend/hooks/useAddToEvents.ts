@@ -2,6 +2,7 @@ import {useCallback} from 'react';
 import {useUpdateMeMutation} from '../generated/graphql';
 import useAuthStore from '../stores/useAuthStore';
 import create from 'zustand';
+import {persist} from 'zustand/middleware';
 
 type Store = {
   eventsToBeAdded: string[];
@@ -9,12 +10,19 @@ type Store = {
   clear: () => void;
 };
 
-const store = create<Store>((set, get) => ({
-  eventsToBeAdded: [],
-  addEvent: eventId =>
-    set({eventsToBeAdded: [...get().eventsToBeAdded, eventId]}),
-  clear: () => set({eventsToBeAdded: []}),
-}));
+const store = create<Store>(
+  persist(
+    (set, get) => ({
+      eventsToBeAdded: [],
+      addEvent: eventId =>
+        set({eventsToBeAdded: [...get().eventsToBeAdded, eventId]}),
+      clear: () => set({eventsToBeAdded: []}),
+    }),
+    {
+      name: 'add-events',
+    }
+  )
+);
 
 const useAddToEvents = () => {
   const [updateProfile] = useUpdateMeMutation();
@@ -24,7 +32,6 @@ const useAddToEvents = () => {
   const clearStore = store(s => s.clear);
 
   const saveStoredEvents = useCallback(() => {
-    console.log('SAVE STORED EVENTS', {eventsToBeAdded});
     if (eventsToBeAdded.length > 0) {
       updateProfile({
         variables: {

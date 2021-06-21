@@ -10,16 +10,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
 import {useRegisterMutation} from '../../generated/graphql';
-import useAuthStore from '../../stores/useAuthStore';
-import useAddToEvents from '../../hooks/useAddToEvents';
 
 const SignUp = () => {
   const {t} = useTranslation();
   const classes = useStyles();
   const addToast = useToastsStore(s => s.addToast);
   const router = useRouter();
-  const setToken = useAuthStore(s => s.setToken);
-  const setUser = useAuthStore(s => s.setUser);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -27,7 +23,6 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [register] = useRegisterMutation();
-  const {saveStoredEvents} = useAddToEvents();
 
   const canSubmit = useMemo(
     () =>
@@ -41,17 +36,14 @@ const SignUp = () => {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      const {data} = await register({
+      await register({
         variables: {
           email,
           password,
           username: `${firstName} ${lastName}`,
         },
       });
-      setToken(data.register.jwt);
-      setUser(data.register.user);
-      saveStoredEvents();
-      router.push('/dashboard');
+      router.push('/auth/confirm');
     } catch (error) {
       const strapiError = getStrapiError(error);
       console.error({strapiError});

@@ -10,7 +10,7 @@ import Toasts from '../components/Toasts';
 import 'moment/locale/fr-ch';
 import '../i18n';
 
-export default function App(props: AppProps) {
+const App = function (props: AppProps) {
   const {Component, pageProps} = props;
   const apolloClient = useApollo(pageProps);
 
@@ -38,4 +38,6 @@ export default function App(props: AppProps) {
       </Fragment>
     </ApolloProvider>
   );
-}
+};
+
+export default App;

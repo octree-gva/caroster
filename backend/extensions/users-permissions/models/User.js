@@ -3,7 +3,7 @@ module.exports = {
     async afterCreate(user) {
       if (user.email) {
         try {
-          strapi.plugins['email'].services.contact.subscribe({
+          await strapi.plugins['email'].services.contact.subscribe({
             email: user.email,
           });
           strapi.log.info(
