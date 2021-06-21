@@ -20,7 +20,6 @@
     "knex": "^0.95.6",
     "koa-proxy": "^1.0.0-alpha.3",
     "moment": "^2.27.0",
-    "next": "^11.0.0",
     "pg": "^8.5.1",
     "strapi": "3.6.3",
     "strapi-admin": "3.6.3",
