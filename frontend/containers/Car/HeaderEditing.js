@@ -1,4 +1,4 @@
-import {useState, useReducer, useCallback, useEffect} from 'react';
+import {useState, useReducer, useCallback, useEffect, useMemo} from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -26,16 +26,17 @@ const HeaderEditing = ({car, toggleEditing}) => {
   const [updateCar] = useUpdateCarMutation();
   const [deleteCar] = useDeleteCarMutation({refetchQueries: ['event']});
   const [removing, toggleRemoving] = useReducer(i => !i, false);
+  const dateMoment = useMemo(() => {
+    if (!car?.departure) return moment();
+    else return moment(car.departure);
+  }, [car?.departure]);
 
   // States
   const [name, setName] = useState(car?.name ?? '');
   const [seats, setSeats] = useState(car?.seats ?? 4);
   const [meeting, setMeeting] = useState(car?.meeting ?? '');
-  const [date, setDate] = useState(
-    car?.departure
-      ? moment(car.departure).format('YYYY-MM-DD')
-      : moment().format('YYYY-MM-DD')
-  );
+  const [date, setDate] = useState(dateMoment.format('YYYY-MM-DD'));
+  const [time, setTime] = useState(dateMoment.format('HH:mm'));
   const [phone, setPhone] = useState(car ? car['phone_number'] : '');
   const [details, setDetails] = useState(car?.details ?? '');
 
@@ -73,6 +74,10 @@ const HeaderEditing = ({car, toggleEditing}) => {
             },
           });
       }
+      const departure = moment(
+        `${date} ${time}`,
+        'YYYY-MM-DD HH:mm'
+      ).toISOString();
       await updateCar({
         variables: {
           id: car.id,
@@ -80,7 +85,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
             name,
             seats,
             meeting,
-            departure: moment(date).toISOString(),
+            departure,
             phone_number: phone,
             details,
             passengers: car.passengers ? car.passengers.slice(0, seats) : [],
@@ -131,16 +136,28 @@ const HeaderEditing = ({car, toggleEditing}) => {
         >
           <Icon>done</Icon>
         </IconButton>
-        {/* TODO Add time input */}
         <TextField
           label={t('car.creation.date')}
           value={date}
           onChange={e => setDate(e.target.value)}
           className={classes.picker}
           fullWidth
-          id="NewCarDateTime"
+          id="NewCarDate"
           name="date"
           type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label={t('car.creation.time')}
+          value={time}
+          onChange={e => setTime(e.target.value)}
+          className={classes.picker}
+          fullWidth
+          id="NewCarTime"
+          name="time"
+          type="time"
           InputLabelProps={{
             shrink: true,
           }}

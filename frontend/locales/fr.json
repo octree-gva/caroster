@@ -86,7 +86,8 @@
       "phone": "Contact"
     },
     "creation": {
-      "date": "Départ",
+      "date": "Date du départ",
+      "time": "Heure du départ",
       "title": "Ajouter une voiture",
       "name": "Nom de la voiture",
       "seats": "Nombre de places",

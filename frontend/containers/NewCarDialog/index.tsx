@@ -1,4 +1,4 @@
-import {useState, forwardRef} from 'react';
+import {useState, forwardRef, useMemo} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -20,15 +20,20 @@ const NewCarDialog = ({open, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const addToast = useToastsStore(s => s.addToast);
-  const addToEvent = useAddToEvents();
+  const {addToEvent} = useAddToEvents();
   const event = useEventStore(s => s.event);
   const [createCar] = useCreateCarMutation({refetchQueries: ['event']});
+  const dateMoment = useMemo(() => {
+    if (!event?.date) return moment();
+    else return moment(event.date);
+  }, [event?.date]);
 
   // States
   const [name, setName] = useState('');
   const [seats, setSeats] = useState(4);
   const [meeting, setMeeting] = useState('');
-  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const [date, setDate] = useState(dateMoment.format('YYYY-MM-DD'));
+  const [time, setTime] = useState(dateMoment.format('HH:mm'));
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
   const canCreate = !!name && !!seats;
@@ -36,13 +41,17 @@ const NewCarDialog = ({open, toggle}) => {
   const onCreate = async e => {
     if (e.preventDefault) e.preventDefault();
     try {
+      const departure = moment(
+        `${date} ${time}`,
+        'YYYY-MM-DD HH:mm'
+      ).toISOString();
       await createCar({
         variables: {
           car: {
             name,
             seats,
             meeting,
-            departure: moment(date).toISOString(),
+            departure,
             phone_number: phone,
             details,
             event: event.id,
@@ -87,7 +96,6 @@ const NewCarDialog = ({open, toggle}) => {
             id="NewCarName"
             name="name"
           />
-          {/* TODO Add time input */}
           <TextField
             label={t('car.creation.date')}
             value={date}
@@ -97,6 +105,19 @@ const NewCarDialog = ({open, toggle}) => {
             id="NewCarDateTime"
             name="date"
             type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            label={t('car.creation.time')}
+            value={time}
+            onChange={e => setTime(e.target.value)}
+            className={classes.picker}
+            fullWidth
+            id="NewCarTime"
+            name="time"
+            type="time"
             InputLabelProps={{
               shrink: true,
             }}
