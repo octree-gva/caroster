@@ -8,6 +8,10 @@ export default class MyDocument extends Document {
     return (
       <Html lang="fr">
         <Head>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="application-name" content="Caroster" />
           <link rel="shortcut icon" href="/assets/favicon.ico" />
@@ -55,49 +59,6 @@ export default class MyDocument extends Document {
           />
           <link rel="manifest" href="/manifest.json" />
           <link rel="mask-icon" href="/assets/logo.svg" color="#5bbad5" />
-          <meta property="og:site_name" content="Caroster" />
-          <meta
-            property="og:title"
-            content="Caroster - Covoiturage de groupe"
-          />
-          <meta property="og:url" content="%PUBLIC_URL%" />
-          <meta property="og:type" content="website" />
-          <meta
-            property="og:description"
-            content="Covoiturez à un événement en proposant une voiture ou en prenant une place."
-          />
-          <meta
-            property="og:image"
-            content="/assets/Caroster_Octree_Social.jpg"
-          />
-          <meta property="og:image:width" content="1500" />
-          <meta property="og:image:height" content="843" />
-          <meta itemProp="name" content="Caroster - Covoiturage de groupe" />
-          <meta itemProp="url" content="%PUBLIC_URL%" />
-          <meta
-            itemProp="thumbnailUrl"
-            content="/assets/Caroster_Octree_Social.jpg"
-          />
-          <link rel="image_src" href="/assets/Caroster_Octree_Social.jpg" />
-          <meta itemProp="image" content="/assets/Caroster_Octree_Social.jpg" />
-          <meta
-            name="twitter:title"
-            content="Caroster - Covoiturage de groupe"
-          />
-          <meta
-            name="twitter:image"
-            content="/assets/Caroster_Octree_Social.jpg"
-          />
-          <meta name="twitter:url" content="%PUBLIC_URL%" />
-          <meta name="twitter:card" content="summary" />
-          <meta
-            name="twitter:description"
-            content="Covoiturez à un événement en proposant une voiture ou en prenant une place."
-          />
-          <meta
-            name="description"
-            content="Covoiturez à un événement en proposant une voiture ou en prenant une place."
-          />
         </Head>
         <body>
           <Main />

@@ -1555,7 +1555,6 @@ export type RegisterMutation = (
 export type LoginMutationVariables = Exact<{
   identifier: Scalars['String'];
   password: Scalars['String'];
-  provider?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -1661,7 +1660,7 @@ export type DeleteCarMutation = (
   )> }
 );
 
-export type EventFielsFragment = (
+export type EventFieldsFragment = (
   { __typename?: 'Event' }
   & Pick<Event, 'id' | 'name' | 'email' | 'date' | 'address' | 'position' | 'waiting_list'>
   & { cars?: Maybe<Array<Maybe<(
@@ -1684,7 +1683,7 @@ export type CreateEventMutation = (
     { __typename?: 'createEventPayload' }
     & { event?: Maybe<(
       { __typename?: 'Event' }
-      & EventFielsFragment
+      & EventFieldsFragment
     )> }
   )> }
 );
@@ -1701,7 +1700,7 @@ export type UpdateEventMutation = (
     { __typename?: 'updateEventPayload' }
     & { event?: Maybe<(
       { __typename?: 'Event' }
-      & EventFielsFragment
+      & EventFieldsFragment
     )> }
   )> }
 );
@@ -1715,7 +1714,7 @@ export type EventQuery = (
   { __typename?: 'Query' }
   & { event?: Maybe<(
     { __typename?: 'Event' }
-    & EventFielsFragment
+    & EventFieldsFragment
   )> }
 );
 
@@ -1794,8 +1793,8 @@ export const CarFieldsFragmentDoc = gql`
   }
 }
     `;
-export const EventFielsFragmentDoc = gql`
-    fragment EventFiels on Event {
+export const EventFieldsFragmentDoc = gql`
+    fragment EventFields on Event {
   id
   name
   email
@@ -1869,10 +1868,8 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const LoginDocument = gql`
-    mutation login($identifier: String!, $password: String!, $provider: String = "local") {
-  login(
-    input: {identifier: $identifier, password: $password, provider: $provider}
-  ) {
+    mutation login($identifier: String!, $password: String!) {
+  login(input: {identifier: $identifier, password: $password}) {
     jwt
     user {
       ...MeFields
@@ -1897,7 +1894,6 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   variables: {
  *      identifier: // value for 'identifier'
  *      password: // value for 'password'
- *      provider: // value for 'provider'
  *   },
  * });
  */
@@ -2090,11 +2086,11 @@ export const CreateEventDocument = gql`
     input: {data: {name: $name, email: $email, date: $date, address: $address}}
   ) {
     event {
-      ...EventFiels
+      ...EventFields
     }
   }
 }
-    ${EventFielsFragmentDoc}`;
+    ${EventFieldsFragmentDoc}`;
 export type CreateEventMutationFn = Apollo.MutationFunction<CreateEventMutation, CreateEventMutationVariables>;
 
 /**
@@ -2127,11 +2123,11 @@ export const UpdateEventDocument = gql`
     mutation updateEvent($id: ID!, $eventUpdate: editEventInput) {
   updateEvent(input: {where: {id: $id}, data: $eventUpdate}) {
     event {
-      ...EventFiels
+      ...EventFields
     }
   }
 }
-    ${EventFielsFragmentDoc}`;
+    ${EventFieldsFragmentDoc}`;
 export type UpdateEventMutationFn = Apollo.MutationFunction<UpdateEventMutation, UpdateEventMutationVariables>;
 
 /**
@@ -2161,10 +2157,10 @@ export type UpdateEventMutationOptions = Apollo.BaseMutationOptions<UpdateEventM
 export const EventDocument = gql`
     query event($id: ID!) {
   event(id: $id) {
-    ...EventFiels
+    ...EventFields
   }
 }
-    ${EventFielsFragmentDoc}`;
+    ${EventFieldsFragmentDoc}`;
 
 /**
  * __useEventQuery__

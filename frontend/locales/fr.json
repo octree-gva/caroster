@@ -23,13 +23,14 @@
       "bad_data": "Il manque quelque chose",
       "unauthorized": "Problème d'authentification",
       "forbidden": "Vous n'avez pas le droit de faire cette action",
-      "not_found": "Resource introuvable",
+      "not_found": "Ressource introuvable",
       "server": "Problème sur nos serveurs",
       "timeout": "Connexion instable, re-essayé plus tard"
     }
   },
   "event": {
     "title": "{{title}} - Caroster",
+    "not_found": "Projet introuvable",
     "fields": {
       "starts_on": "Commence le",
       "address": "Adresse",

@@ -1,5 +1,4 @@
 import {useEffect, Fragment} from 'react';
-import Head from 'next/head';
 import {AppProps} from 'next/app';
 import {ThemeProvider} from '@material-ui/core/styles';
 import {ApolloProvider} from '@apollo/client';
@@ -9,6 +8,7 @@ import theme from '../theme';
 import Toasts from '../components/Toasts';
 import 'moment/locale/fr-ch';
 import '../i18n';
+import Metas from '../containers/Metas';
 
 const App = function (props: AppProps) {
   const {Component, pageProps} = props;
@@ -23,13 +23,7 @@ const App = function (props: AppProps) {
   return (
     <ApolloProvider client={apolloClient}>
       <Fragment>
-        <Head>
-          <title>{pageProps.meta?.title || 'Caroster'}</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Head>
+        <Metas metas={pageProps.metas} />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Component {...pageProps} />

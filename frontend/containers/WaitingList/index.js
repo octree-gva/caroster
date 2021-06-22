@@ -17,12 +17,12 @@ import {
   useUpdateCarMutation,
 } from '../../generated/graphql';
 
-const WaitingList = ({car}) => {
+const WaitingList = () => {
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
-  const addToEvent = useAddToEvents();
+  const {addToEvent} = useAddToEvents();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removing, setRemoving] = useState(null);
   const [adding, setAdding] = useState(null);

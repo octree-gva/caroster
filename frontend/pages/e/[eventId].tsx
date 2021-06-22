@@ -1,27 +1,39 @@
 import {useState, useReducer, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useRouter} from 'next/router';
 import Layout from '../../layouts/Default';
 import Fab from '../../containers/Fab';
 import CarColumns from '../../containers/CarColumns';
 import NewCarDialog from '../../containers/NewCarDialog';
 import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
-import Loading from '../../containers/Loading';
 import EventBar from '../../containers/EventBar';
 import useToastStore from '../../stores/useToastStore';
 import {initializeApollo} from '../../lib/apolloClient';
+import ErrorPage from '../_error';
 import {
   useUpdateEventMutation,
   Event as EventType,
+  useEventQuery,
   EventDocument,
 } from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
+import Loading from '../../containers/Loading';
 
 interface Props {
   event: EventType;
+  eventId: string;
 }
 
-const Event = ({event}: Props) => {
+const EventPage = props => {
+  const {event} = props;
+  const {t} = useTranslation();
+
+  if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
+
+  return <Event {...props} />;
+};
+
+const Event = (props: Props) => {
+  const {eventId} = props;
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
@@ -30,6 +42,9 @@ const Event = ({event}: Props) => {
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
+  const {data: {event} = {}, loading} = useEventQuery({
+    variables: {id: eventId},
+  });
 
   useEffect(() => {
     if (event) setEvent(event as EventType);
@@ -64,6 +79,8 @@ const Event = ({event}: Props) => {
     }
   };
 
+  if (!event) return <Loading />;
+
   return (
     <Layout
       pageTitle={t('event.title', {title: event.name})}
@@ -88,30 +105,26 @@ const Event = ({event}: Props) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const {eventId} = context.query;
+export async function getServerSideProps(ctx) {
+  const {eventId} = ctx.query;
   const apolloClient = initializeApollo();
   const {data = {}} = await apolloClient.query({
     query: EventDocument,
     variables: {id: eventId},
   });
   const {event} = data;
+  const {host = ''} = ctx.req.headers;
 
   return {
     props: {
       event,
-      meta: {
-        title: event?.name,
+      eventId,
+      metas: {
+        title: event?.name || '',
+        url: `https://${host}${ctx.resolvedUrl}`,
       },
     },
   };
 }
 
-export default props => {
-  const router = useRouter();
-  const {eventId} = router.query;
-
-  if (!eventId) return null;
-
-  return <Event {...props} eventId={eventId} />;
-};
+export default EventPage;
