@@ -1,3 +1,5 @@
+const { HOST = "localhost" } = process.env;
+
 module.exports = {
   apps: [
     {
@@ -8,6 +10,9 @@ module.exports = {
       interpreter: "bash",
       restart_delay: 10000,
       max_restarts: 10,
+      env: {
+        PORT: 80,
+      },
     },
     {
       name: "next",
@@ -16,6 +21,10 @@ module.exports = {
       args: "start",
       interpreter: "bash",
       restart_delay: 10000,
+      env: {
+        PORT: 3000,
+        STRAPI_URL: `http://${HOST}`,
+      },
     },
   ],
 };
