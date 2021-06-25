@@ -1,18 +1,18 @@
 'use strict';
 const axios = require('axios');
 const moment = require('moment');
+const uuid = require('uuid');
 require('moment/locale/fr-ch');
 
 const {STRAPI_URL = '', CAROSTER_TEMPLATEID_EVENTCREATION} = process.env;
 
-/**
- * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
- * to customize this model
- */
-
 module.exports = {
   lifecycles: {
     async beforeCreate(event) {
+      if (!event.uuid) {
+        event.uuid = uuid.v4();
+      }
+
       // If user provides an address, get its lat/lng position using OSM API
       if (event.address) {
         const query = encodeURI(event.address);
@@ -50,6 +50,12 @@ module.exports = {
         }
     },
     async beforeUpdate(params, event) {
+      const eventInDb = await strapi.services.event.findOne(params);
+
+      if (!eventInDb.uuid) {
+        event.uuid = uuid.v4();
+      }
+
       if (event.address) {
         const query = encodeURI(event.address);
         try {

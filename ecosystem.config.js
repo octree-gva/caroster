@@ -12,6 +12,8 @@ module.exports = {
       max_restarts: 10,
       env: {
         PORT: 80,
+        STRAPI_LOG_LEVEL: "info",
+        STRAPI_LOG_FORCE_COLOR: false,
       },
     },
     {

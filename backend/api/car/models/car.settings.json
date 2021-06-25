@@ -30,8 +30,8 @@
       "type": "text"
     },
     "event": {
-      "model": "event",
-      "via": "cars"
+      "via": "cars",
+      "model": "event"
     },
     "passengers": {
       "type": "json"

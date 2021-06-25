@@ -12,15 +12,15 @@ import ErrorPage from '../_error';
 import {
   useUpdateEventMutation,
   Event as EventType,
-  useEventQuery,
-  EventDocument,
+  useEventByUuidQuery,
+  EventByUuidDocument,
 } from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import Loading from '../../containers/Loading';
 
 interface Props {
   event: EventType;
-  eventId: string;
+  eventUUID: string;
 }
 
 const EventPage = props => {
@@ -33,7 +33,7 @@ const EventPage = props => {
 };
 
 const Event = (props: Props) => {
-  const {eventId} = props;
+  const {eventUUID} = props;
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
@@ -42,8 +42,8 @@ const Event = (props: Props) => {
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
-  const {data: {event} = {}, loading} = useEventQuery({
-    variables: {id: eventId},
+  const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
+    variables: {uuid: eventUUID},
   });
 
   useEffect(() => {
@@ -106,19 +106,19 @@ const Event = (props: Props) => {
 };
 
 export async function getServerSideProps(ctx) {
-  const {eventId} = ctx.query;
+  const {uuid} = ctx.query;
   const apolloClient = initializeApollo();
   const {data = {}} = await apolloClient.query({
-    query: EventDocument,
-    variables: {id: eventId},
+    query: EventByUuidDocument,
+    variables: {uuid},
   });
-  const {event} = data;
+  const {eventByUUID: event} = data;
   const {host = ''} = ctx.req.headers;
 
   return {
     props: {
       event,
-      eventId,
+      eventUUID: uuid,
       metas: {
         title: event?.name || '',
         url: `https://${host}${ctx.resolvedUrl}`,

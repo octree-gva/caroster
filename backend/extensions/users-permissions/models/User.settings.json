@@ -67,8 +67,8 @@
       "configurable": false
     },
     "events": {
-      "collection": "event",
       "via": "users",
+      "collection": "event",
       "dominant": true
     },
     "confirmationToken": {

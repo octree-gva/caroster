@@ -1,5 +1,6 @@
 fragment EventFields on Event {
   id
+  uuid
   name
   email
   date
@@ -43,6 +44,12 @@ mutation updateEvent($id: ID!, $eventUpdate: editEventInput) {
 
 query event($id: ID!) {
   event(id: $id) {
+    ...EventFields
+  }
+}
+
+query eventByUUID($uuid: String!) {
+  eventByUUID(uuid: $uuid) {
     ...EventFields
   }
 }

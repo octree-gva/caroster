@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "events",
   "info": {
-    "name": "event"
+    "name": "event",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -37,6 +39,10 @@
       "via": "events",
       "plugin": "users-permissions",
       "collection": "user"
+    },
+    "uuid": {
+      "type": "string",
+      "unique": true
     }
   }
 }

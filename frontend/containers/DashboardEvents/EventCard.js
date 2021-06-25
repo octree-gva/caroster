@@ -27,7 +27,7 @@ const EventCard = ({event}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link href={`/e/${event.id}`}>
+        <Link href={`/e/${event.uuid}`}>
           <Button color="primary">{t('dashboard.actions.see_event')}</Button>
         </Link>
       </CardActions>

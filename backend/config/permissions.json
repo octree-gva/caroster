@@ -10,7 +10,7 @@
           },
           {
             "name": "event",
-            "actions": ["create", "findone", "update"]
+            "actions": ["create", "findone", "update", "getbyuuid"]
           },
           {
             "name": "page",
@@ -33,7 +33,7 @@
           },
           {
             "name": "event",
-            "actions": ["create", "findone", "update"]
+            "actions": ["create", "findone", "update", "getbyuuid"]
           },
           {
             "name": "page",
