@@ -32,11 +32,11 @@ const createApolloClient = token => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: setContext((_, {headers}) => {
-      // return the headers to the context so httpLink can read them
+      if (!token) return {headers};
       return {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${token}` : '',
+          authorization: `Bearer ${token}`,
         },
       };
     })
