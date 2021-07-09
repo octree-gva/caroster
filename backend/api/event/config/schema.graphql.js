@@ -1,4 +1,9 @@
 module.exports = {
+  definition: `
+    extend input EventInput {
+      newsletter: Boolean
+    }
+  `,
   query: `
         eventByUUID(uuid: String!): Event
     `,

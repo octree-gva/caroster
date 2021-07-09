@@ -34,9 +34,11 @@ const Step1 = ({nextStep, event, addToEvent}) => {
 
   const onNext = event => {
     if (event.preventDefault) event.preventDefault();
-    const e = connected ? user.email : email;
-    const n = connected ? true : newsletter;
-    addToEvent({name, email: e, newsletter: n});
+    addToEvent({
+      name,
+      email: connected ? user.email : email,
+      newsletter: connected ? true : newsletter,
+    });
     nextStep();
     return false;
   };

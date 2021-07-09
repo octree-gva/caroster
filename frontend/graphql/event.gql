@@ -24,9 +24,18 @@ mutation createEvent(
   $email: String!
   $date: Date
   $address: String
+  $newsletter: Boolean
 ) {
   createEvent(
-    input: {data: {name: $name, email: $email, date: $date, address: $address}}
+    input: {
+      data: {
+        name: $name
+        email: $email
+        date: $date
+        address: $address
+        newsletter: $newsletter
+      }
+    }
   ) {
     event {
       ...EventFields

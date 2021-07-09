@@ -91,12 +91,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     >
       <Toolbar>
         <div className={classes.name}>
-          <Link
-            href={''}
-            onClick={() => {
-              window.location.href = settings['about_link'];
-            }}
-          >
+          <Link href={settings?.['about_link'] || ''}>
             <img className={classes.logo} src="/assets/logo.svg" alt="Logo" />
           </Link>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">

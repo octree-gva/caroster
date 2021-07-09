@@ -191,6 +191,32 @@ export enum Enum_Page_Type {
   Tos = 'tos'
 }
 
+export type EmailDesignerEmailTemplate = {
+  __typename?: 'EmailDesignerEmailTemplate';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  design?: Maybe<Scalars['JSON']>;
+  name?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  bodyHtml?: Maybe<Scalars['String']>;
+  bodyText?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Scalars['JSON']>;
+};
+
+export type EmailTemplateInput = {
+  design?: Maybe<Scalars['JSON']>;
+  name?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  bodyHtml?: Maybe<Scalars['String']>;
+  bodyText?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Scalars['JSON']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type Event = {
   __typename?: 'Event';
   id: Scalars['ID'];
@@ -322,6 +348,7 @@ export type EventInput = {
   uuid?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
+  newsletter?: Maybe<Scalars['Boolean']>;
 };
 
 export type FileInfoInput = {
@@ -374,7 +401,7 @@ export type InputId = {
 
 
 
-export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CarConnectionPassengers | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionWaiting_List | EventConnectionUuid | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CarConnectionPassengers | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionWaiting_List | EventConnectionUuid | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -1408,6 +1435,18 @@ export type EditCarInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditEmailTemplateInput = {
+  design?: Maybe<Scalars['JSON']>;
+  name?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  bodyHtml?: Maybe<Scalars['String']>;
+  bodyText?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Scalars['JSON']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditEventInput = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -1690,6 +1729,7 @@ export type CreateEventMutationVariables = Exact<{
   email: Scalars['String'];
   date?: Maybe<Scalars['Date']>;
   address?: Maybe<Scalars['String']>;
+  newsletter?: Maybe<Scalars['Boolean']>;
 }>;
 
 
@@ -2112,9 +2152,9 @@ export type DeleteCarMutationHookResult = ReturnType<typeof useDeleteCarMutation
 export type DeleteCarMutationResult = Apollo.MutationResult<DeleteCarMutation>;
 export type DeleteCarMutationOptions = Apollo.BaseMutationOptions<DeleteCarMutation, DeleteCarMutationVariables>;
 export const CreateEventDocument = gql`
-    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String) {
+    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String, $newsletter: Boolean) {
   createEvent(
-    input: {data: {name: $name, email: $email, date: $date, address: $address}}
+    input: {data: {name: $name, email: $email, date: $date, address: $address, newsletter: $newsletter}}
   ) {
     event {
       ...EventFields
@@ -2141,6 +2181,7 @@ export type CreateEventMutationFn = Apollo.MutationFunction<CreateEventMutation,
  *      email: // value for 'email'
  *      date: // value for 'date'
  *      address: // value for 'address'
+ *      newsletter: // value for 'newsletter'
  *   },
  * });
  */

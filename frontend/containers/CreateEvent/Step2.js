@@ -27,7 +27,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     addToEvent(eventData);
     const result = await createEvent(eventData);
     if (!result) addToast(t('event.errors.cant_create'));
-    else router.push(`/e/${result.id}`);
+    else router.push(`/e/${result.uuid}`);
     setLoading(false);
     return false;
   };
