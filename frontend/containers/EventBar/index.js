@@ -200,6 +200,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     width: 32,
     height: 32,
+    cursor: 'pointer',
   },
   name: {
     flexGrow: 1,
