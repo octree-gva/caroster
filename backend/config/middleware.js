@@ -1,7 +1,7 @@
 module.exports = ({env}) => ({
   timeout: 10000,
   load: {
-    after: ['parser', 'router', 'next', 'next-proxy'],
+    after: ['parser', 'router', 'next-proxy'],
   },
   settings: {
     'next-proxy': {
