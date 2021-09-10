@@ -24,7 +24,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
   const addToast = useToastStore(s => s.addToast);
   const [updateEvent] = useUpdateEventMutation();
   const [updateCar] = useUpdateCarMutation();
-  const [deleteCar] = useDeleteCarMutation({refetchQueries: ['event']});
+  const [deleteCar] = useDeleteCarMutation({refetchQueries: ['eventByUUID']});
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(() => {
     if (!car?.departure) return moment();

@@ -22,7 +22,7 @@ const NewCarDialog = ({open, toggle}) => {
   const addToast = useToastsStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const event = useEventStore(s => s.event);
-  const [createCar] = useCreateCarMutation({refetchQueries: ['event']});
+  const [createCar] = useCreateCarMutation({refetchQueries: ['eventByUUID']});
   const dateMoment = useMemo(() => {
     if (!event?.date) return moment();
     else return moment(event.date);
