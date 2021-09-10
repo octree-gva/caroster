@@ -18,6 +18,8 @@ import {
 import useEventStore from '../../stores/useEventStore';
 import Loading from '../../containers/Loading';
 
+const POLL_INTERVAL = 10000;
+
 interface Props {
   event: EventType;
   eventUUID: string;
@@ -43,6 +45,7 @@ const Event = (props: Props) => {
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
   const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
+    pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
   });
 
