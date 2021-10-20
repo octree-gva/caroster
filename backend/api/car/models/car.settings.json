@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "cars",
   "info": {
-    "name": "car"
+    "name": "car",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -34,7 +36,9 @@
       "model": "event"
     },
     "passengers": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "passenger.passenger"
     }
   }
 }

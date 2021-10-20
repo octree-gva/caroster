@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
 import useProfile from '../../hooks/useProfile';
 import {CardActions} from '@material-ui/core';
+import {isValidEmail} from '../../lib/formValidation';
 
 const Step1 = ({nextStep, event, addToEvent}) => {
   const {t} = useTranslation();
@@ -133,11 +134,5 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
 }));
-
-const isValidEmail = email =>
-  // eslint-disable-next-line
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-    email
-  );
 
 export default Step1;

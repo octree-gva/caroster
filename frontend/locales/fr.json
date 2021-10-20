@@ -102,7 +102,9 @@
     },
     "passengers": {
       "empty": "Place disponible",
-      "add": "Ajouter un passager"
+      "add": "Ajouter un passager",
+      "email": "Votre email",
+      "emailHelper": "Optionnel - Soyez notifié si des voitures sont ajoutées"
     },
     "errors": {
       "cant_create": "Impossible de créer la voiture",

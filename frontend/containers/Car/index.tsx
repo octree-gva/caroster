@@ -12,9 +12,16 @@ import useAddToEvents from '../../hooks/useAddToEvents';
 import {
   useUpdateCarMutation,
   useUpdateEventMutation,
+  Car as CarType,
+  EditComponentPassengerPassengerInput as PassengerInput,
 } from '../../generated/graphql';
 
-const Car = ({car}) => {
+interface Props {
+  car: CarType;
+}
+
+const Car = (props: Props) => {
+  const {car} = props;
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
@@ -26,13 +33,16 @@ const Car = ({car}) => {
 
   if (!car) return null;
 
-  const addPassenger = async passenger => {
+  const addPassenger = async (passenger: PassengerInput) => {
     try {
+      const existingPassengers =
+        car.passengers?.map(({__typename, ...item}) => item) || [];
+      const passengers = [...existingPassengers, passenger];
       await updateCar({
         variables: {
           id: car.id,
           carUpdate: {
-            passengers: [...(car.passengers || []), passenger],
+            passengers,
           },
         },
       });
@@ -42,17 +52,24 @@ const Car = ({car}) => {
     }
   };
 
-  const removePassenger = async idx => {
+  const removePassenger = async (passengerId: string) => {
     if (car?.passengers) {
       try {
+        const {id, ...removedPassenger} =
+          car.passengers?.find(item => item.id === passengerId) || {};
+        const existingPassengers =
+          car.passengers?.map(({__typename, ...item}) => item) || [];
+        const waitingList = [...event.waitingList, removedPassenger].map(
+          ({__typename, ...item}) => item
+        );
+        const passengers = existingPassengers.filter(
+          item => item.id !== passengerId
+        );
         await updateEvent({
           variables: {
             id: event.id,
             eventUpdate: {
-              waiting_list: [
-                ...(event.waiting_list || []),
-                car.passengers[idx],
-              ],
+              waitingList,
             },
           },
         });
@@ -60,7 +77,7 @@ const Car = ({car}) => {
           variables: {
             id: car.id,
             carUpdate: {
-              passengers: car.passengers.filter((_, i) => i !== idx),
+              passengers,
             },
           },
         });

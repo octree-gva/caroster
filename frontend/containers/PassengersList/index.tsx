@@ -1,21 +1,28 @@
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+
 import {makeStyles} from '@material-ui/core/styles';
 import Input from './Input';
 import Passenger from './Passenger';
+import {
+  ComponentPassengerPassenger,
+  EditComponentPassengerPassengerInput as PassengerInput,
+} from '../../generated/graphql';
+import ClearButton from './ClearButton';
 
-const PassengersList = ({
-  passengers,
-  places,
-  addPassenger,
-  icon,
-  onClick,
-  onPress,
-  disabled,
-}) => {
+interface Props {
+  passengers: ComponentPassengerPassenger[];
+  icon: string;
+  disabled?: boolean;
+  places?: number;
+  onPress?: (passengerId: string) => void;
+  onClick?: (passengerId: string) => void;
+  addPassenger: (passenger: PassengerInput) => void;
+}
+
+const PassengersList = (props: Props) => {
+  const {passengers, places, addPassenger, icon, onClick, onPress, disabled} =
+    props;
   const classes = useStyles();
   let list = passengers;
 
@@ -42,29 +49,22 @@ const PassengersList = ({
               key={index}
               disabled={disabled}
               button={!!onPress}
-              onClick={() => !!onPress && onPress(index)}
+              onClick={() => !!onPress && onPress(passenger.id)}
             >
               <Passenger
                 key={index}
                 passenger={passenger}
-                button={getClearButton(index, onClick, icon)}
+                button={
+                  <ClearButton
+                    icon={icon}
+                    onClick={() => onClick && onClick(passenger.id)}
+                  />
+                }
               />
             </ListItem>
           ))}
       </List>
     </div>
-  );
-};
-
-const getClearButton = (index, onClick, icon) => {
-  return onClick ? (
-    <ListItemSecondaryAction>
-      <IconButton size="small" color="primary" onClick={() => onClick(index)}>
-        <Icon>{icon}</Icon>
-      </IconButton>
-    </ListItemSecondaryAction>
-  ) : (
-    <Icon color="primary">{icon}</Icon>
   );
 };
 

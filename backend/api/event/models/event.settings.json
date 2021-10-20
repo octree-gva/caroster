@@ -32,9 +32,6 @@
     "position": {
       "type": "json"
     },
-    "waiting_list": {
-      "type": "json"
-    },
     "users": {
       "via": "events",
       "plugin": "users-permissions",
@@ -43,6 +40,11 @@
     "uuid": {
       "type": "string",
       "unique": true
+    },
+    "waitingList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "passenger.passenger"
     }
   }
 }

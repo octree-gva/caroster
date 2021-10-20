@@ -24,8 +24,8 @@ const WaitingList = () => {
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
-  const [removing, setRemoving] = useState(null);
-  const [adding, setAdding] = useState(null);
+  const [removingPassenger, setRemovingPassenger] = useState(null);
+  const [addingPassenger, setAddingPassenger] = useState(null);
   const cars = event?.cars?.length > 0 ? event.cars.slice().sort(sortCars) : [];
   const [updateEvent] = useUpdateEventMutation();
   const [updateCar] = useUpdateCarMutation();
@@ -38,59 +38,65 @@ const WaitingList = () => {
     }, 0);
   }, [cars]);
 
-  const saveWaitingList = useCallback(
-    async (waitingList, i18nError) => {
+  const addPassenger = useCallback(
+    async passenger => {
       try {
+        const waitingList = [...event.waitingList, passenger].map(
+          ({__typename, ...item}) => item
+        );
         await updateEvent({
-          variables: {id: event.id, eventUpdate: {waiting_list: waitingList}},
+          variables: {id: event.id, eventUpdate: {waitingList}},
         });
         addToEvent(event.id);
       } catch (error) {
         console.error(error);
-        addToast(t(i18nError));
+        addToast(t('passenger.errors.cant_add_passenger'));
       }
     },
-    [event, addToEvent] // eslint-disable-line
-  );
-
-  const addPassenger = useCallback(
-    async passenger =>
-      saveWaitingList(
-        [...(event.waiting_list || []), passenger],
-        'passenger.errors.cant_add_passenger'
-      ),
-    [event, saveWaitingList] // eslint-disable-line
+    [event]
   );
 
   const removePassenger = useCallback(
-    async index => {
-      return saveWaitingList(
-        event.waiting_list.filter((_, i) => i !== index),
-        'passenger.errors.cant_remove_passenger'
-      );
+    async passengerIndex => {
+      try {
+        const waitingList = event.waitingList
+          .filter((_, idx) => idx !== passengerIndex)
+          .map(({__typename, ...item}) => item);
+        await updateEvent({
+          variables: {id: event.id, eventUpdate: {waitingList}},
+        });
+        addToEvent(event.id);
+      } catch (error) {
+        console.error(error);
+        addToast(t('passenger.errors.cant_remove_passenger'));
+      }
     },
-    [event, saveWaitingList] // eslint-disable-line
+    [event]
   );
 
   const selectCar = useCallback(
     async car => {
       try {
+        const {id, ...passenger} = addingPassenger;
+        const carPassengers = [...(car.passengers || []), passenger].map(
+          ({__typename, ...item}) => item
+        );
         await updateCar({
           variables: {
             id: car.id,
             carUpdate: {
-              passengers: [
-                ...(car.passengers || []),
-                event.waiting_list[adding],
-              ],
+              passengers: carPassengers,
             },
           },
         });
+        const waitingList = event.waitingList
+          .filter(item => item.id !== id)
+          .map(({__typename, ...item}) => item);
         await updateEvent({
           variables: {
             id: event.id,
             eventUpdate: {
-              waiting_list: event.waiting_list.filter((_, i) => i !== adding),
+              waitingList,
             },
           },
         });
@@ -98,17 +104,20 @@ const WaitingList = () => {
         console.error(error);
         addToast(t('passenger.errors.cant_select_car'));
       }
-      setAdding(null);
+      setAddingPassenger(null);
     },
-    [event, adding] // eslint-disable-line
+    [event, addingPassenger] // eslint-disable-line
   );
 
   const onPress = useCallback(
-    index => {
-      if (isEditing) setRemoving(index);
-      else setAdding(index);
+    (passengerId: string) => {
+      const selectedPassenger = event.waitingList.find(
+        item => item.id === passengerId
+      );
+      if (isEditing) setRemovingPassenger(selectedPassenger);
+      else setAddingPassenger(selectedPassenger);
     },
-    [isEditing]
+    [isEditing, event]
   );
 
   return (
@@ -119,7 +128,7 @@ const WaitingList = () => {
             size="small"
             color="primary"
             className={classes.editBtn}
-            disabled={!event.waiting_list || !event.waiting_list.length}
+            disabled={!event.waitingList?.length}
             onClick={toggleEditing}
           >
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
@@ -131,7 +140,7 @@ const WaitingList = () => {
         </div>
         <Divider />
         <PassengersList
-          passengers={event.waiting_list}
+          passengers={event.waitingList}
           addPassenger={addPassenger}
           onPress={onPress}
           icon={isEditing ? 'close' : 'chevron_right'}
@@ -143,19 +152,19 @@ const WaitingList = () => {
           <Trans
             i18nKey="passenger.actions.remove_alert"
             values={{
-              name: event.waiting_list ? event.waiting_list[removing] : null,
+              name: removingPassenger?.name,
             }}
             components={{italic: <i />, bold: <strong />}}
           />
         }
-        open={removing !== null}
-        onClose={() => setRemoving(null)}
-        onRemove={() => removePassenger(removing)}
+        open={!!removingPassenger}
+        onClose={() => setRemovingPassenger(null)}
+        onRemove={() => removePassenger(removingPassenger)}
       />
       <CarDialog
         cars={cars}
-        open={adding !== null}
-        onClose={() => setAdding(null)}
+        open={!!addingPassenger}
+        onClose={() => setAddingPassenger(null)}
         onSelect={selectCar}
       />
     </>

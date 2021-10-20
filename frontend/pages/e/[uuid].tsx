@@ -58,6 +58,7 @@ const Event = (props: Props) => {
       const {id, ...data} = eventUpdate;
       delete data.__typename;
       delete data.cars;
+      delete data.waitingList;
       await updateEvent({variables: {id, eventUpdate: data}});
       setIsEditing(false);
     } catch (error) {

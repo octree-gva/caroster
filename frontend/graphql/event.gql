@@ -6,7 +6,10 @@ fragment EventFields on Event {
   date
   address
   position
-  waiting_list
+  waitingList {
+    id
+    name
+  }
   cars {
     id
     name
@@ -15,7 +18,10 @@ fragment EventFields on Event {
     departure
     details
     phone_number
-    passengers
+    passengers {
+      id
+      name
+    }
   }
 }
 

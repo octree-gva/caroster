@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_passenger_passengers",
+  "info": {
+    "name": "passenger",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": false
+    }
+  }
+}

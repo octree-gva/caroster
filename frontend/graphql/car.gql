@@ -6,7 +6,10 @@ fragment CarFields on Car {
   departure
   phone_number
   details
-  passengers
+  passengers {
+    id
+    name
+  }
   event {
     id
     name
