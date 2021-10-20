@@ -7,7 +7,8 @@
     "description": ""
   },
   "options": {
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -66,15 +67,23 @@
       "plugin": "users-permissions",
       "configurable": false
     },
+    "confirmationToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
+    },
     "events": {
       "via": "users",
       "collection": "event",
       "dominant": true
     },
-    "confirmationToken": {
-      "type": "string",
-      "configurable": false,
-      "private": true
+    "onboardingUser": {
+      "type": "boolean",
+      "default": false
+    },
+    "onboardingCreator": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

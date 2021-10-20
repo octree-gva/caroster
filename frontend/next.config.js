@@ -1,6 +1,6 @@
 const withPWA = require('next-pwa');
 const {withSentryConfig} = require('@sentry/nextjs');
-const {STRAPI_URL = 'http://localhost:1337'} = process.env;
+const {STRAPI_URL = 'http://localhost:1337', NODE_ENV} = process.env;
 
 const moduleExports = withPWA({
   async rewrites() {
@@ -13,6 +13,7 @@ const moduleExports = withPWA({
   },
   pwa: {
     dest: 'public',
+    disable: NODE_ENV !== 'production',
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -25,6 +26,7 @@ const moduleExports = withPWA({
 const SentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
+  silent: true,
 };
 
 module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);
