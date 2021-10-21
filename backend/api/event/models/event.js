@@ -45,7 +45,9 @@ const getPosition = async address => {
 
 const sendEmailToCreator = async event => {
   try {
-    const templateId = getTemplateId('creator_notif');
+    const templateId = await strapi.plugins[
+      'email-designer'
+    ].services.template.getId('creator_notif');
     await strapi.plugins['email-designer'].services.email.sendTemplatedEmail(
       {
         to: event.email,
@@ -71,12 +73,4 @@ const sendEmailToCreator = async event => {
       }. Error: ${JSON.stringify(error)}`
     );
   }
-};
-
-const getTemplateId = async templateName => {
-  const template = await strapi.plugins[
-    'email-designer'
-  ].services.template.fetch({name: templateName});
-  if (!template) throw new Error(`No email template with name ${templateName}`);
-  return template.id;
 };

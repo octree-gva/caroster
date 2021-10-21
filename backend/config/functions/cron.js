@@ -1,5 +1,8 @@
 'use strict';
 
+const pMap = require('p-map');
+const moment = require('moment');
+
 /**
  * Cron config that gives you an opportunity
  * to run scheduled jobs.
@@ -12,10 +15,14 @@
 
 module.exports = {
   /**
-   * Simple example.
-   * Every monday at 1am.
+   * Send event recap to creators
+   * Everyday at 08:00
    */
-  // '0 1 * * 1': () => {
-  //
-  // }
+  '0 8 * * *': async () => {
+    const events = await strapi.services.event.find({
+      _limit: -1,
+      date_gte: moment().toISOString(),
+    });
+    await pMap(events, strapi.services.event.sendDailyRecap, {concurrency: 5});
+  },
 };
