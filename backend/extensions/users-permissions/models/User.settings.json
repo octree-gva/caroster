@@ -84,6 +84,15 @@
     "onboardingCreator": {
       "type": "boolean",
       "default": false
+    },
+    "lang": {
+      "type": "enumeration",
+      "enum": [
+        "FR",
+        "EN"
+      ],
+      "default": "FR",
+      "required": false
     }
   }
 }
