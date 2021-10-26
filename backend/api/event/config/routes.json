@@ -2,26 +2,10 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/events",
-      "handler": "event.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/events/count",
-      "handler": "event.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/events/:id",
+      "path": "/events/:uuid",
       "handler": "event.findOne",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -29,23 +13,15 @@
       "path": "/events",
       "handler": "event.create",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
       "method": "PUT",
-      "path": "/events/:id",
+      "path": "/events/:uuid",
       "handler": "event.update",
       "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/events/:id",
-      "handler": "event.delete",
-      "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     }
   ]

@@ -49,17 +49,11 @@ mutation createEvent(
   }
 }
 
-mutation updateEvent($id: ID!, $eventUpdate: editEventInput) {
-  updateEvent(input: {where: {id: $id}, data: $eventUpdate}) {
+mutation updateEvent($uuid: String!, $eventUpdate: editEventInput) {
+  updateEventByUUID(input: {where: {uuid: $uuid}, data: $eventUpdate}) {
     event {
       ...EventFields
     }
-  }
-}
-
-query event($id: ID!) {
-  event(id: $id) {
-    ...EventFields
   }
 }
 

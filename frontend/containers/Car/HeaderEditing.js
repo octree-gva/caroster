@@ -64,7 +64,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
         if (lostPassengers.length > 0)
           await updateEvent({
             variables: {
-              id: event.id,
+              uuid: event.uuid,
               eventUpdate: {
                 waiting_list: [
                   ...(event.waiting_list ?? []),
@@ -106,7 +106,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
       if (Array.isArray(car?.passengers) && car.passengers.length > 0)
         await updateEvent({
           variables: {
-            id: event.id,
+            uuid: event.uuid,
             eventUpdate: {
               waiting_list: [...(event.waiting_list ?? []), ...car.passengers],
             },

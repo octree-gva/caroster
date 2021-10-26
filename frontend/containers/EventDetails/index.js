@@ -44,7 +44,7 @@ const EventDetails = ({onShare}) => {
               fullWidth
               label={t('event.creation.date')}
               value={event.date}
-              onChange={date => setEventUpdate({date})}
+              onChange={e => setEventUpdate({date: e.target.value})}
               name="date"
               type="date"
               InputLabelProps={{shrink: true}}

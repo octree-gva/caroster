@@ -55,11 +55,12 @@ const Event = (props: Props) => {
 
   const onSave = async e => {
     try {
-      const {id, ...data} = eventUpdate;
+      const {uuid, ...data} = eventUpdate;
+      delete data.id;
       delete data.__typename;
       delete data.cars;
       delete data.waitingList;
-      await updateEvent({variables: {id, eventUpdate: data}});
+      await updateEvent({variables: {uuid, eventUpdate: data}});
       setIsEditing(false);
     } catch (error) {
       console.error(error);

@@ -45,7 +45,7 @@ const WaitingList = () => {
           ({__typename, ...item}) => item
         );
         await updateEvent({
-          variables: {id: event.id, eventUpdate: {waitingList}},
+          variables: {uuid: event.uuid, eventUpdate: {waitingList}},
         });
         addToEvent(event.id);
       } catch (error) {
@@ -63,7 +63,7 @@ const WaitingList = () => {
           .filter((_, idx) => idx !== passengerIndex)
           .map(({__typename, ...item}) => item);
         await updateEvent({
-          variables: {id: event.id, eventUpdate: {waitingList}},
+          variables: {uuid: event.uuid, eventUpdate: {waitingList}},
         });
         addToEvent(event.id);
       } catch (error) {
@@ -94,7 +94,7 @@ const WaitingList = () => {
           .map(({__typename, ...item}) => item);
         await updateEvent({
           variables: {
-            id: event.id,
+            uuid: event.uuid,
             eventUpdate: {
               waitingList,
             },

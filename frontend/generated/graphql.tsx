@@ -196,6 +196,11 @@ export enum Enum_Page_Type {
   Tos = 'tos'
 }
 
+export enum Enum_Userspermissionsuser_Lang {
+  Fr = 'FR',
+  En = 'EN'
+}
+
 export type EmailDesignerEmailTemplate = {
   __typename?: 'EmailDesignerEmailTemplate';
   id: Scalars['ID'];
@@ -399,9 +404,13 @@ export type InputId = {
   id: Scalars['ID'];
 };
 
+export type InputUuid = {
+  uuid: Scalars['String'];
+};
 
 
-export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
+
+export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -439,6 +448,7 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   updateMe: UpdateUserPayload;
+  updateEventByUUID?: Maybe<UpdateEventPayload>;
 };
 
 
@@ -581,6 +591,11 @@ export type MutationEmailConfirmationArgs = {
 
 export type MutationUpdateMeArgs = {
   input?: Maybe<EditUserInput>;
+};
+
+
+export type MutationUpdateEventByUuidArgs = {
+  input?: Maybe<UpdateEventByUuidInput>;
 };
 
 export type Page = {
@@ -1074,6 +1089,7 @@ export type UserInput = {
   events?: Maybe<Array<Maybe<Scalars['ID']>>>;
   onboardingUser?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
+  lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1217,6 +1233,7 @@ export type UsersPermissionsUser = {
   role?: Maybe<UsersPermissionsRole>;
   onboardingUser?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
+  lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   events?: Maybe<Array<Maybe<Event>>>;
 };
 
@@ -1277,6 +1294,12 @@ export type UsersPermissionsUserConnectionId = {
   connection?: Maybe<UsersPermissionsUserConnection>;
 };
 
+export type UsersPermissionsUserConnectionLang = {
+  __typename?: 'UsersPermissionsUserConnectionLang';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<UsersPermissionsUserConnection>;
+};
+
 export type UsersPermissionsUserConnectionLastName = {
   __typename?: 'UsersPermissionsUserConnectionLastName';
   key?: Maybe<Scalars['String']>;
@@ -1334,6 +1357,7 @@ export type UsersPermissionsUserGroupBy = {
   role?: Maybe<Array<Maybe<UsersPermissionsUserConnectionRole>>>;
   onboardingUser?: Maybe<Array<Maybe<UsersPermissionsUserConnectionOnboardingUser>>>;
   onboardingCreator?: Maybe<Array<Maybe<UsersPermissionsUserConnectionOnboardingCreator>>>;
+  lang?: Maybe<Array<Maybe<UsersPermissionsUserConnectionLang>>>;
 };
 
 export type CreateCarInput = {
@@ -1546,6 +1570,7 @@ export type EditUserInput = {
   events?: Maybe<Array<Maybe<Scalars['ID']>>>;
   onboardingUser?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
+  lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
   old_password?: Maybe<Scalars['String']>;
@@ -1559,6 +1584,11 @@ export type UpdateCarInput = {
 export type UpdateCarPayload = {
   __typename?: 'updateCarPayload';
   car?: Maybe<Car>;
+};
+
+export type UpdateEventByUuidInput = {
+  where?: Maybe<InputUuid>;
+  data?: Maybe<EditEventInput>;
 };
 
 export type UpdateEventInput = {
@@ -1782,32 +1812,19 @@ export type CreateEventMutation = (
 );
 
 export type UpdateEventMutationVariables = Exact<{
-  id: Scalars['ID'];
+  uuid: Scalars['String'];
   eventUpdate?: Maybe<EditEventInput>;
 }>;
 
 
 export type UpdateEventMutation = (
   { __typename?: 'Mutation' }
-  & { updateEvent?: Maybe<(
+  & { updateEventByUUID?: Maybe<(
     { __typename?: 'updateEventPayload' }
     & { event?: Maybe<(
       { __typename?: 'Event' }
       & EventFieldsFragment
     )> }
-  )> }
-);
-
-export type EventQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type EventQuery = (
-  { __typename?: 'Query' }
-  & { event?: Maybe<(
-    { __typename?: 'Event' }
-    & EventFieldsFragment
   )> }
 );
 
@@ -2238,8 +2255,8 @@ export type CreateEventMutationHookResult = ReturnType<typeof useCreateEventMuta
 export type CreateEventMutationResult = Apollo.MutationResult<CreateEventMutation>;
 export type CreateEventMutationOptions = Apollo.BaseMutationOptions<CreateEventMutation, CreateEventMutationVariables>;
 export const UpdateEventDocument = gql`
-    mutation updateEvent($id: ID!, $eventUpdate: editEventInput) {
-  updateEvent(input: {where: {id: $id}, data: $eventUpdate}) {
+    mutation updateEvent($uuid: String!, $eventUpdate: editEventInput) {
+  updateEventByUUID(input: {where: {uuid: $uuid}, data: $eventUpdate}) {
     event {
       ...EventFields
     }
@@ -2261,7 +2278,7 @@ export type UpdateEventMutationFn = Apollo.MutationFunction<UpdateEventMutation,
  * @example
  * const [updateEventMutation, { data, loading, error }] = useUpdateEventMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      uuid: // value for 'uuid'
  *      eventUpdate: // value for 'eventUpdate'
  *   },
  * });
@@ -2272,39 +2289,6 @@ export function useUpdateEventMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateEventMutationHookResult = ReturnType<typeof useUpdateEventMutation>;
 export type UpdateEventMutationResult = Apollo.MutationResult<UpdateEventMutation>;
 export type UpdateEventMutationOptions = Apollo.BaseMutationOptions<UpdateEventMutation, UpdateEventMutationVariables>;
-export const EventDocument = gql`
-    query event($id: ID!) {
-  event(id: $id) {
-    ...EventFields
-  }
-}
-    ${EventFieldsFragmentDoc}`;
-
-/**
- * __useEventQuery__
- *
- * To run a query within a React component, call `useEventQuery` and pass it any options that fit your needs.
- * When your component renders, `useEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useEventQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useEventQuery(baseOptions: Apollo.QueryHookOptions<EventQuery, EventQueryVariables>) {
-        return Apollo.useQuery<EventQuery, EventQueryVariables>(EventDocument, baseOptions);
-      }
-export function useEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventQuery, EventQueryVariables>) {
-          return Apollo.useLazyQuery<EventQuery, EventQueryVariables>(EventDocument, baseOptions);
-        }
-export type EventQueryHookResult = ReturnType<typeof useEventQuery>;
-export type EventLazyQueryHookResult = ReturnType<typeof useEventLazyQuery>;
-export type EventQueryResult = Apollo.QueryResult<EventQuery, EventQueryVariables>;
 export const EventByUuidDocument = gql`
     query eventByUUID($uuid: String!) {
   eventByUUID(uuid: $uuid) {

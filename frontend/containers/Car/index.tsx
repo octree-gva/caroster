@@ -67,7 +67,7 @@ const Car = (props: Props) => {
         );
         await updateEvent({
           variables: {
-            id: event.id,
+            uuid: event.uuid,
             eventUpdate: {
               waitingList,
             },
@@ -80,6 +80,7 @@ const Car = (props: Props) => {
               passengers,
             },
           },
+          refetchQueries: ['eventByUUID'],
         });
       } catch (error) {
         console.error(error);

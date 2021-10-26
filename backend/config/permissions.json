@@ -6,11 +6,11 @@
         "controllers": [
           {
             "name": "car",
-            "actions": ["create", "delete", "find", "findone", "update"]
+            "actions": ["create", "delete", "update"]
           },
           {
             "name": "event",
-            "actions": ["create", "findone", "update", "getbyuuid"]
+            "actions": ["create", "update", "findone"]
           },
           {
             "name": "page",
@@ -29,11 +29,11 @@
         "controllers": [
           {
             "name": "car",
-            "actions": ["create", "delete", "find", "findone", "update"]
+            "actions": ["create", "delete", "update"]
           },
           {
             "name": "event",
-            "actions": ["create", "findone", "update", "getbyuuid"]
+            "actions": ["create", "update", "findone"]
           },
           {
             "name": "page",

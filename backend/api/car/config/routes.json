@@ -5,7 +5,7 @@
       "path": "/cars",
       "handler": "car.find",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -21,7 +21,7 @@
       "path": "/cars/:id",
       "handler": "car.findOne",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -29,7 +29,7 @@
       "path": "/cars",
       "handler": "car.create",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -37,7 +37,7 @@
       "path": "/cars/:id",
       "handler": "car.update",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -45,7 +45,7 @@
       "path": "/cars/:id",
       "handler": "car.delete",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     }
   ]

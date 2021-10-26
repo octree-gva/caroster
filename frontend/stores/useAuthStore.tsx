@@ -18,7 +18,9 @@ const useAuth = create<State>((set, get) => ({
     set({token});
   },
   user:
-    hasStorage && localStorage.getItem('user')
+    hasStorage &&
+    localStorage.getItem('user') &&
+    localStorage.getItem('user') !== 'undefined'
       ? JSON.parse(localStorage.getItem('user'))
       : null,
   setUser: user => {
