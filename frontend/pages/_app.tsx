@@ -15,21 +15,21 @@ const App = function (props: AppProps) {
   const apolloClient = useApollo(pageProps);
 
   useEffect(() => {
-    // Remove the server-side injected CSS (MUI).
+    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
-    jssStyles?.parentElement?.removeChild(jssStyles);
+    if (jssStyles) {
+      jssStyles.parentElement!.removeChild(jssStyles);
+    }
   }, []);
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Fragment>
-        <Metas metas={pageProps.metas} />
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-          <Toasts />
-        </ThemeProvider>
-      </Fragment>
+      <Metas metas={pageProps.metas} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+        <Toasts />
+      </ThemeProvider>
     </ApolloProvider>
   );
 };

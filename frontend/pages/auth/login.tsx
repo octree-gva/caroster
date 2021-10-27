@@ -10,7 +10,7 @@ import SignInForm from '../../containers/SignInForm';
 import LoginGoogle from '../../containers/LoginGoogle';
 import useAuthStore from '../../stores/useAuthStore';
 
-const login = () => {
+const Login = () => {
   const {t} = useTranslation();
   const router = useRouter();
   const token = useAuthStore(s => s.token);
@@ -31,4 +31,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

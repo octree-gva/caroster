@@ -8,10 +8,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="fr">
         <Head>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="application-name" content="Caroster" />
           <link rel="shortcut icon" href="/assets/favicon.ico" />
@@ -97,11 +93,14 @@ MyDocument.getInitialProps = async ctx => {
   // Render app and page and get the context of the page with collected side effects.
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
+
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: App => props => sheets.collect(<App {...props} />),
     });
+
   const initialProps = await Document.getInitialProps(ctx);
+
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.

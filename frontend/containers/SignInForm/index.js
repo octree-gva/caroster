@@ -134,7 +134,7 @@ const SignIn = () => {
 
 const getStrapiError = error => {
   if (error.message?.[0]?.messages?.[0]) return error.message[0].messages[0].id;
-  return error?.graphQLErrors?.[0].extensions.exception.data.message[0]
+  return error?.graphQLErrors?.[0]?.extensions.exception.data.message[0]
     .messages[0].id;
 };
 

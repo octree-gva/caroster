@@ -60,7 +60,10 @@ const Event = (props: Props) => {
       delete data.__typename;
       delete data.cars;
       delete data.waitingList;
-      await updateEvent({variables: {uuid, eventUpdate: data}});
+      await updateEvent({
+        variables: {uuid, eventUpdate: data},
+        refetchQueries: ['eventByUUID'],
+      });
       setIsEditing(false);
     } catch (error) {
       console.error(error);

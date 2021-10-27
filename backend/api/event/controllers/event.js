@@ -29,6 +29,7 @@ module.exports = {
       );
       return strapi.services.event.sanitize(updatedEvent);
     } catch (error) {
+      strapi.log.error(error);
       return ctx.badRequest('No event found');
     }
   },

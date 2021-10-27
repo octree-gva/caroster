@@ -46,6 +46,7 @@ const WaitingList = () => {
         );
         await updateEvent({
           variables: {uuid: event.uuid, eventUpdate: {waitingList}},
+          refetchQueries: ['eventByUUID'],
         });
         addToEvent(event.id);
       } catch (error) {

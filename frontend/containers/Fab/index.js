@@ -3,7 +3,7 @@ import Icon from '@material-ui/core/Icon';
 import FabMui from '@material-ui/core/Fab';
 import {makeStyles} from '@material-ui/core/styles';
 
-const Fab = ({open, children, ...props}) => {
+const Fab = ({open, children = null, ...props}) => {
   const variant = children ? 'extended' : 'round';
   const classes = useStyles({open, variant});
 

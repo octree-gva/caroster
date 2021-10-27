@@ -4,7 +4,12 @@ import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 
-const AddCar = ({toggleNewCar}) => {
+interface Props {
+  toggleNewCar: () => void;
+}
+
+const AddCar = (props: Props) => {
+  const {toggleNewCar} = props;
   const classes = useStyles();
   const {t} = useTranslation();
   return (

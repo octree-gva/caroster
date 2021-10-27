@@ -14,6 +14,7 @@ module.exports = {
       const car = await strapi.services.car.update({id}, ctx.request.body);
       return strapi.services.car.sanitize(car);
     } catch (error) {
+      strapi.log.error(error);
       return ctx.badRequest('No car found');
     }
   },
@@ -25,6 +26,7 @@ module.exports = {
       const car = await strapi.services.car.delete({id});
       return strapi.services.car.sanitize(car);
     } catch (error) {
+      strapi.log.error(error);
       return ctx.badRequest('No car found');
     }
   },

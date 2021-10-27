@@ -3,9 +3,9 @@ import {UsersPermissionsUser} from '../generated/graphql';
 
 type State = {
   token: string | null;
-  setToken: (token: string) => void;
-  user: UsersPermissionsUser;
-  setUser: (user: UsersPermissionsUser) => void;
+  setToken: (token?: string) => void;
+  user: UsersPermissionsUser | null;
+  setUser: (user?: UsersPermissionsUser) => void;
   logout: () => void;
 };
 

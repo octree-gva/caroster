@@ -66,12 +66,13 @@ const HeaderEditing = ({car, toggleEditing}) => {
             variables: {
               uuid: event.uuid,
               eventUpdate: {
-                waiting_list: [
-                  ...(event.waiting_list ?? []),
-                  ...lostPassengers,
-                ],
+                waitingList: formatPassengers([
+                  ...(event.waitingList || []),
+                  ...lostPassengers.map(({name}) => ({name})),
+                ]),
               },
             },
+            refetchQueries: ['eventByUUID'],
           });
       }
       const departure = moment(
@@ -88,7 +89,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
             departure,
             phone_number: phone,
             details,
-            passengers: car.passengers ? car.passengers.slice(0, seats) : [],
+            passengers: formatPassengers(car.passengers, seats),
           },
         },
       });
@@ -108,9 +109,13 @@ const HeaderEditing = ({car, toggleEditing}) => {
           variables: {
             uuid: event.uuid,
             eventUpdate: {
-              waiting_list: [...(event.waiting_list ?? []), ...car.passengers],
+              waitingList: formatPassengers([
+                ...(event.waitingList || []),
+                ...car.passengers.map(({name}) => ({name})),
+              ]),
             },
           },
+          refetchQueries: ['eventByUUID'],
         });
       await deleteCar({
         variables: {
@@ -249,6 +254,14 @@ const HeaderEditing = ({car, toggleEditing}) => {
       />
     </div>
   );
+};
+
+const formatPassengers = (passengers = [], seats: number = 1000) => {
+  if (!passengers) return [];
+
+  return passengers
+    .slice(0, seats)
+    .map(({__typename, ...passenger}) => passenger);
 };
 
 const useStyles = makeStyles(theme => ({

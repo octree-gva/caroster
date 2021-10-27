@@ -24,6 +24,11 @@ const Meta = (props: Props) => {
     <Head>
       {/* General */}
       <title>{title}</title>
+      <meta
+        name="viewport"
+        content="minimum-scale=1, initial-scale=1, width=device-width"
+      />
+
       <meta itemProp="name" content={siteName} />
       {metas?.url && <meta itemProp="url" content={metas.url} />}
       <meta itemProp="thumbnailUrl" content={socialImage} />
