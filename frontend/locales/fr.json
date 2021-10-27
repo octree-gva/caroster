@@ -36,11 +36,13 @@
     "title": "{{title}} - Caroster",
     "not_found": "Projet introuvable",
     "fields": {
-      "starts_on": "Commence le",
-      "address": "Adresse",
+      "starts_on": "Date de l'événement",
+      "address": "Adresse de l'événement",
       "name": "Nom de l'événement",
       "empty": "Non précisé",
-      "share": "Lien de partage"
+      "link": "Lien de partage",
+      "link_desc": "Partager ce lien pour inviter les gens à faire du covoiturage",
+      "share": "Copier le lien"
     },
     "creation": {
       "title": "Nouvel évènement",

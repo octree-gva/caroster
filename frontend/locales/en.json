@@ -36,11 +36,13 @@
     "title": "{{title}} - Caroster",
     "not_found": "Project not found",
     "fields": {
-      "starts_on": "Start on",
-      "address": "Address",
+      "starts_on": "Event date",
+      "address": "Event address",
       "name": "Name of the event",
       "empty": "Not specified",
-      "share": "Share link"
+      "link": "Share link",
+      "link_desc": "Share this link to invite people to carpool",
+      "share": "Copy link"
     },
     "creation": {
       "title": "New event",

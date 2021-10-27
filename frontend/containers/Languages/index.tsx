@@ -11,6 +11,7 @@ import {
   useUpdateMeMutation,
   Enum_Userspermissionsuser_Lang,
 } from '../../generated/graphql';
+import moment from 'moment';
 
 const Languages = () => {
   const {t, i18n} = useTranslation();
@@ -21,6 +22,8 @@ const Languages = () => {
   const [updateProfile] = useUpdateMeMutation();
 
   useEffect(() => {
+    const momentLang = language === 'FR' ? 'fr-ch' : 'en';
+    moment.locale(momentLang);
     i18n.changeLanguage(language?.toLowerCase());
   }, [language]);
 

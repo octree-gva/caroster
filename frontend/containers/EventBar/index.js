@@ -2,7 +2,6 @@ import {useEffect, useState, useReducer} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -175,18 +174,13 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
         />
       </Toolbar>
       {detailsOpen && (
-        <Container className={classes.container} maxWidth="sm">
-          <EventDetails toggleDetails={toggleDetails} onShare={onShare} />
-        </Container>
+        <EventDetails toggleDetails={toggleDetails} onShare={onShare} />
       )}
     </AppBar>
   );
 };
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    padding: theme.spacing(2),
-  },
   appbar: ({detailsOpen}) => ({
     overflow: 'hidden',
     height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,

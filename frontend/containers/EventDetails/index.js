@@ -1,8 +1,9 @@
-import React, {useRef} from 'react';
+import {useRef} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Icon from '@material-ui/core/Icon';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
@@ -23,7 +24,7 @@ const EventDetails = ({onShare}) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.container}>
+      <Box className={classes.container}>
         <div className={classes.section}>
           {isEditing && (
             <div className={classes.section}>
@@ -89,7 +90,8 @@ const EventDetails = ({onShare}) => {
             </Typography>
           )}
         </div>
-
+        <Typography variant="h6">{t('event.fields.link')}</Typography>
+        <Typography variant="body">{t('event.fields.link_desc')}</Typography>
         <TextField
           value={window.location.href}
           inputProps={{
@@ -115,7 +117,7 @@ const EventDetails = ({onShare}) => {
         >
           {t('event.fields.share')}
         </Button>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 };
@@ -130,7 +132,12 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles(theme => ({
   container: {
+    padding: theme.spacing(2, 9),
     marginBottom: theme.spacing(12),
+
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2),
+    },
   },
   section: {
     marginBottom: theme.spacing(2),

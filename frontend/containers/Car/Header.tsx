@@ -1,4 +1,3 @@
-import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -6,9 +5,18 @@ import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Link from '@material-ui/core/Link';
-const Header = ({car, toggleEditing}) => {
+import {Car} from '../../generated/graphql';
+
+interface Props {
+  car: Car;
+  toggleEditing: () => void;
+}
+
+const Header = (props: Props) => {
+  const {car, toggleEditing} = props;
   const classes = useStyles();
   const {t} = useTranslation();
+
   return (
     <div className={classes.header}>
       <IconButton
@@ -44,7 +52,6 @@ const Header = ({car, toggleEditing}) => {
           <Typography variant="body2" id="CarMeeting">
             <Link
               component="a"
-              size="small"
               target="_blank"
               rel="noopener noreferrer"
               href={`https://maps.google.com/?q=${encodeURI(car.meeting)}`}
