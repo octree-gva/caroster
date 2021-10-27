@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
+import useLangStore from '../../stores/useLangStore';
 import {useRegisterMutation} from '../../generated/graphql';
 
 const SignUp = () => {
@@ -18,6 +19,7 @@ const SignUp = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const lang = useLangStore(s => s.language);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,9 +40,14 @@ const SignUp = () => {
     try {
       await register({
         variables: {
-          email,
-          password,
-          username: `${firstName} ${lastName}`,
+          user: {
+            username: `${firstName} ${lastName}`,
+            email,
+            password,
+            firstName,
+            lastName,
+            lang,
+          },
         },
       });
       router.push('/auth/confirm');
@@ -135,9 +142,14 @@ const SignUp = () => {
 };
 
 const getStrapiError = error => {
-  if (error.message?.[0]?.messages?.[0]) return error.message[0].messages[0].id;
-  return error?.graphQLErrors?.[0].extensions.exception.data.message?.[0]
-    ?.messages[0].id;
+  try {
+    if (error.message?.[0]?.messages?.[0])
+      return error.message[0].messages[0].id;
+    return error?.graphQLErrors?.[0].extensions.exception.data.message?.[0]
+      ?.messages[0].id;
+  } catch {
+    return 'generic.error';
+  }
 };
 
 const useStyles = makeStyles(theme => ({

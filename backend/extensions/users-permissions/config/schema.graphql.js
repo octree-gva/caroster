@@ -7,6 +7,12 @@ module.exports = {
     extend input editUserInput {
       old_password: String
     }
+
+    extend input UsersPermissionsRegisterInput {
+      firstName: String
+      lastName: String
+      lang: String
+    }
   `,
   mutation: `
     updateMe(input: editUserInput): updateUserPayload!

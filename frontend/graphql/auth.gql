@@ -5,8 +5,8 @@ fragment MeFields on UsersPermissionsMe {
   confirmed
 }
 
-mutation register($email: String!, $password: String!, $username: String!) {
-  register(input: {email: $email, password: $password, username: $username}) {
+mutation register($user: UsersPermissionsRegisterInput!) {
+  register(input: $user) {
     jwt
     user {
       ...MeFields

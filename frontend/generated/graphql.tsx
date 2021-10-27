@@ -1145,6 +1145,9 @@ export type UsersPermissionsRegisterInput = {
   username: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  lang?: Maybe<Scalars['String']>;
 };
 
 export type UsersPermissionsRole = {
@@ -1646,9 +1649,7 @@ export type MeFieldsFragment = (
 );
 
 export type RegisterMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-  username: Scalars['String'];
+  user: UsersPermissionsRegisterInput;
 }>;
 
 
@@ -1966,8 +1967,8 @@ export const UserFieldsFragmentDoc = gql`
 }
     `;
 export const RegisterDocument = gql`
-    mutation register($email: String!, $password: String!, $username: String!) {
-  register(input: {email: $email, password: $password, username: $username}) {
+    mutation register($user: UsersPermissionsRegisterInput!) {
+  register(input: $user) {
     jwt
     user {
       ...MeFields
@@ -1990,9 +1991,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
- *      username: // value for 'username'
+ *      user: // value for 'user'
  *   },
  * });
  */
