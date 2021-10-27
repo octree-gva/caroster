@@ -4,7 +4,8 @@ module.exports = {
   async findOne(ctx) {
     const uuid = ctx.params._uuid || ctx.params.uuid;
     const event = await strapi.services.event.findOne({uuid});
-    return strapi.services.event.sanitize(event);
+    if (event) return strapi.services.event.sanitize(event);
+    else return ctx.badRequest('No event found');
   },
 
   async create(ctx) {
@@ -21,10 +22,14 @@ module.exports = {
     const uuid = ctx.params._uuid || ctx.params.uuid;
     const eventUpdate = ctx.request.body;
 
-    const updatedEvent = await strapi.services.event.update(
-      {uuid},
-      eventUpdate
-    );
-    return strapi.services.event.sanitize(updatedEvent);
+    try {
+      const updatedEvent = await strapi.services.event.update(
+        {uuid},
+        eventUpdate
+      );
+      return strapi.services.event.sanitize(updatedEvent);
+    } catch (error) {
+      return ctx.badRequest('No event found');
+    }
   },
 };
