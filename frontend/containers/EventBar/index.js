@@ -35,7 +35,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
 
   const signUp = () =>
     router.push({
-      pathname: '/register',
+      pathname: '/auth/register',
       state: {event: event?.id},
     });
   const signIn = () => router.push('/auth/login');

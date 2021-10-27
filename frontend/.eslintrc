@@ -1,5 +1,5 @@
 {
-  "extends": "next",
+  "extends": ["next", "prettier"],
   "rules": {
     "react/display-name": "off",
     "react-hooks/exhaustive-deps": "off"

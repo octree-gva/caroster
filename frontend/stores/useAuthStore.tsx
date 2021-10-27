@@ -11,7 +11,7 @@ type State = {
 
 const hasStorage = typeof localStorage !== 'undefined';
 
-const useAuth = create<State>((set, get) => ({
+const useAuthStore = create<State>((set, get) => ({
   token: hasStorage ? localStorage.getItem('token') : null,
   setToken: (token: string) => {
     if (hasStorage) localStorage.setItem('token', token);
@@ -35,4 +35,4 @@ const useAuth = create<State>((set, get) => ({
   },
 }));
 
-export default useAuth;
+export default useAuthStore;

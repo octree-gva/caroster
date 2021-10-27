@@ -1854,7 +1854,7 @@ export type SettingQuery = (
 
 export type UserFieldsFragment = (
   { __typename?: 'UsersPermissionsUser' }
-  & Pick<UsersPermissionsUser, 'id' | 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName'>
+  & Pick<UsersPermissionsUser, 'id' | 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName' | 'lang'>
   & { events?: Maybe<Array<Maybe<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'uuid' | 'name' | 'date' | 'address'>
@@ -1955,6 +1955,7 @@ export const UserFieldsFragmentDoc = gql`
   confirmed
   lastName
   firstName
+  lang
   events {
     id
     uuid

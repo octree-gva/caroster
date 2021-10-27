@@ -90,6 +90,7 @@ const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.mixins.toolbar.minHeight,
+    height: '100vh',
   },
 }));
 

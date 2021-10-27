@@ -5,7 +5,7 @@ import {useProfileLazyQuery} from '../generated/graphql';
 const useProfile = () => {
   const token = useAuthStore(s => s.token);
   const user = useAuthStore(s => s.user);
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState(null);
   const [fetchProfile, {data}] = useProfileLazyQuery();
 
   useEffect(() => {

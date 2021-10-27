@@ -1,0 +1,234 @@
+{
+  "generic": {
+    "loading": "Loading ...",
+    "close": "Close",
+    "create": "Create",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "save": "Save",
+    "confirm": "Confirm",
+    "errors": {
+      "date_min": "Select an upcoming date",
+      "unknown": "An unknown error occurred",
+      "rejected": "Something went wrong",
+      "bad_data": "Something is missing",
+      "unauthorized": "Authentication problem",
+      "forbidden": "You do not have the right to do this action",
+      "not_found": "Resource not found",
+      "server": "Problem on our servers",
+      "timeout": "Unstable connection, retry later"
+    }
+  },
+  "languages": {
+    "fr": "French",
+    "en": "English"
+  },
+  "menu": {
+    "logout": "Logout",
+    "about": "About Caroster",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Sign-Up",
+    "new_event": "Create a caroster",
+    "profile": "Profile"
+  },
+  "event": {
+    "title": "{{title}} - Caroster",
+    "not_found": "Project not found",
+    "fields": {
+      "starts_on": "Start on",
+      "address": "Address",
+      "name": "Name of the event",
+      "empty": "Not specified",
+      "share": "Share link"
+    },
+    "creation": {
+      "title": "New event",
+      "event_name": "Event name",
+      "creator_email": "Your e-mail",
+      "date": "Date of the event",
+      "address": "Address of the event",
+      "next": "Next",
+      "newsletter": "Keep me informed of developments in Caroster by e-mail",
+      "actions": {
+        "dashboard": "$t(menu.dashboard)",
+        "see_profile": "Profile",
+        "about": "About Caroster"
+      },
+      "addFromAccount": {
+        "title": "Do you want to add this caroster to your events?",
+        "subtitle": "Create it from your account",
+        "actions": {
+          "register": "$t(menu.register)",
+          "login": "$t(menu.login)"
+        }
+      }
+    },
+    "actions": {
+      "show_details": "Event details",
+      "hide_details": "Hide details",
+      "find_car": "Find a car",
+      "copied": "The link has been copied to your clipboard",
+      "add_to_my_events": "Add to my events",
+      "see_on_gmap": "See on a map"
+    },
+    "errors": {
+      "cant_create": "Unable to create event",
+      "cant_update": "Unable to modify event"
+    },
+    "add_to_my_events": {
+      "login": "$t(menu.login)",
+      "register": "$t(menu.register)",
+      "title": "You must be logged in",
+      "text_html": "To add <strong> {{eventName}} </strong> to your carosters you must be logged in or create an account."
+    }
+  },
+  "car": {
+    "fields": {
+      "meeting_point": "Meeting place",
+      "details": "Notes",
+      "phone": "Contact"
+    },
+    "creation": {
+      "date": "Date of departure",
+      "time": "Departure time",
+      "title": "Add a car",
+      "name": "Name of the car",
+      "seats": "Number of seats",
+      "meeting": "Meeting place",
+      "phone": "Telephone number",
+      "notes": "Additional information",
+      "created": "The car has been created"
+    },
+    "actions": {
+      "remove_alert": "Are you sure you want to remove this car and add the subscribers to the waiting list?",
+      "removed": "The car has been removed"
+    },
+    "passengers": {
+      "empty": "Available seat",
+      "add": "Add a passenger",
+      "email": "Your email",
+      "emailHelper": "Optional - Get notified if cars are added"
+    },
+    "errors": {
+      "cant_create": "Unable to create the car",
+      "cant_update": "Unable to modify the car",
+      "cant_remove": "Unable to remove the car",
+      "cant_add_passenger": "Unable to add a passenger",
+      "cant_remove_passenger": "Unable to remove passenger"
+    }
+  },
+  "dashboard": {
+    "title": "$t(menu.dashboard)",
+    "actions": {
+      "see_event": "See more",
+      "add_event": "Create a caroster"
+    },
+    "sections": {
+      "future": "Caroster to come",
+      "future_plural": "Carosters to come",
+      "past": "Caroster passed",
+      "past_plural": "Past carosters",
+      "noDate": "Caroster without date",
+      "noDate_plural": "Carosters without date"
+    },
+    "noEvent": {
+      "title": "Welcome to Caroster",
+      "text_html": "Here you will see <strong> the carosters you are participating in </strong>, to start creating a Caroster!",
+      "create_event": "$t(menu.new_event)"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "current_password": "Current password",
+    "new_password": "New password",
+    "password_changed": "Password updated",
+    "updated": "Profile updated",
+    "not_defined": "Not specified",
+    "actions": {
+      "save": "Save",
+      "edit": "Edit",
+      "change_password": "Change your password",
+      "logout": "Logout",
+      "cancel": "Cancel",
+      "save_new_password": "Update"
+    },
+    "errors": {
+      "password_nomatch": "Wrong password"
+    }
+  },
+  "passenger": {
+    "title": "Waiting list",
+    "availability": {
+      "seats": "{{count}} seat available",
+      "seats_plural": "{{count}} seats available"
+    },
+    "creation": {
+      "seats": "Number of passengers: {{seats}}"
+    },
+    "actions": {
+      "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?"
+    },
+    "errors": {
+      "cant_add_passenger": "Unable to add a passenger",
+      "cant_save_passengers": "Unable to update passengers",
+      "cant_remove_passenger": "Unable to remove the passenger",
+      "cant_select_car": "Unable to select the car"
+    }
+  },
+  "signup": {
+    "title": "Sign up",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "submit": "Create your account",
+    "login": "$t(menu.login)",
+    "errors": {
+      "email_taken": "This email is already associated with an account"
+    },
+    "success": {
+      "title": "Welcome!",
+      "text_html": "Lorem Ipsum dolor sit amet, consectetur <strong> adipiscing elit </strong>",
+      "dashboard": "Go to your dashboard",
+      "create_event": "Create an event"
+    }
+  },
+  "confirm": {
+    "title": "Confirm your account",
+    "text": "You have received an email with a link. Please click on this link to confirm your account.",
+    "login": "Return to the login screen"
+  },
+  "signin": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "login": "$t(menu.login)",
+    "register": "$t(menu.register)",
+    "errors": "Check your email and password",
+    "unconfirmed": "Your account has not been confirmed. Please check your emails",
+    "withGoogle": "Use a Google account"
+  },
+  "lost_password": {
+    "title": "Password recovery",
+    "reset_title": "Definition of a new password",
+    "message": "Lost your password?",
+    "email": "Your email",
+    "password": "New password",
+    "password_confirmation": "Confirmation of the new password",
+    "sent": "An email has been sent to {{email}}, with a link to recover your password",
+    "error": "This email does not exist",
+    "change_success": "Your password has been changed",
+    "actions": {
+      "send": "Send a recovery email",
+      "cancel": "Cancel",
+      "login": "Return to the login screen",
+      "resend": "Send again",
+      "register": "Create an account?",
+      "save_new_password": "Update"
+    }
+  }
+}

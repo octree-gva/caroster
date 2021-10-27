@@ -1,10 +1,14 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import translationFr from './locales/fr.json';
+import translationEn from './locales/en.json';
 
 const resources = {
   fr: {
     translation: translationFr,
+  },
+  en: {
+    translation: translationEn,
   },
 };
 

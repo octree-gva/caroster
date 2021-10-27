@@ -1,13 +1,4 @@
 {
-  "menu": {
-    "logout": "Se déconnecter",
-    "about": "À propos de Caroster",
-    "dashboard": "Tableau de bord",
-    "login": "Se connecter",
-    "register": "Créer un compte",
-    "new_event": "Créer un caroster",
-    "profile": "Profil"
-  },
   "generic": {
     "loading": "Chargement...",
     "close": "Fermer",
@@ -27,6 +18,19 @@
       "server": "Problème sur nos serveurs",
       "timeout": "Connexion instable, re-essayé plus tard"
     }
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "menu": {
+    "logout": "Se déconnecter",
+    "about": "À propos de Caroster",
+    "dashboard": "Tableau de bord",
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "new_event": "Créer un caroster",
+    "profile": "Profil"
   },
   "event": {
     "title": "{{title}} - Caroster",

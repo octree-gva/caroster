@@ -23,6 +23,7 @@ module.exports = {
       old_password,
       firstName,
       lastName,
+      lang,
       events,
     } = body;
 
@@ -50,6 +51,7 @@ module.exports = {
         password,
         firstName,
         lastName,
+        lang,
         events: updatedEvents,
       })
     );
