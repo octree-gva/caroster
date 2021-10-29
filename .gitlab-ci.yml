@@ -4,26 +4,33 @@ include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/jobs.yaml
 
-Test:
+Tests:
   stage: test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
-  image: node:current-alpine3.12
+  image: strapi/base:14-alpine
+	variables:
+    POSTGRES_HOST: timescale__timescaledb
+    POSTGRES_PORT: 5432
+    POSTGRES_DB: strapi_test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+    POSTGRES_HOST_AUTH_METHOD: trust
+    TZ: Europe/Zurich
+  services:
+    - timescale/timescaledb:latest-pg12
   only:
     - merge_requests
     - master
+    - main
+  cache:
+    key: node_modules
+    paths:
+      - backend/node_modules
   script:
     - echo "45.66.221.1 npm-8ee.hidora.com" >> /etc/hosts
-    - npm set registry ${NPM_REGISTRY:-https://npm-8ee.hidora.com/}
-    - apk add --no-cache python3
-    - cd frontend
-    - yarn install --production=false
-    - yarn lint
-    # - npm run test
-  cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-      - frontend/node_modules/
-      - ~/.npm
+    - cd backend
+    - yarn
+    - yarn test:ci
 
 Deploy Test:
   extends: .deployHidora

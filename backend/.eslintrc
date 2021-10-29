@@ -5,7 +5,8 @@
     "commonjs": true,
     "es6": true,
     "node": true,
-    "browser": false
+    "browser": false,
+    "jest": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -15,7 +16,8 @@
     "sourceType": "module"
   },
   "globals": {
-    "strapi": true
+    "strapi": true,
+    "getContext": true
   },
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],

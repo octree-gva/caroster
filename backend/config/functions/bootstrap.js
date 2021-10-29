@@ -1,5 +1,5 @@
 'use strict';
-
+const {NODE_ENV} = process.env;
 const permissions = require('../permissions.json');
 
 /**
@@ -43,9 +43,11 @@ module.exports = async () => {
               });
             if (existingPerm) {
               if (existingPerm.enabled) return false; // If permission already enabled, skip
-              strapi.log.info(
-                `Enable permission ${type}.${controller}.${action} for role ${roleType}.`
-              );
+              if (NODE_ENV !== 'test')
+                strapi.log.debug(
+                  `Enable permission ${type}.${controller}.${action} for role ${roleType}.`
+                );
+
               return strapi
                 .query('permission', 'users-permissions')
                 .update(

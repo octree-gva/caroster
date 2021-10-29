@@ -8,12 +8,17 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "echo 'DO TESTS!!!'",
+    "test": "jest --forceExit --detectOpenHandles",
+    "test:watch": "jest --watch --forceExit --detectOpenHandles",
+    "test:cov": "jest --coverage --forceExit --detectOpenHandles",
+    "test:ci": "jest --ci --bail --forceExit --detectOpenHandles",
     "console": "PORT=1338 yarn strapi console"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.3.1"
+    "eslint": "^7.3.1",
+    "faker": "^5.5.3",
+    "jest": "^27.3.1"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -47,5 +52,18 @@
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "globalSetup": "<rootDir>/tests/setup/setupDatabase.js",
+    "globalTeardown": "<rootDir>/tests/setup/destroyDatabase.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup/setupStrapi.js"
+    ],
+    "testEnvironment": "node"
+  }
 }

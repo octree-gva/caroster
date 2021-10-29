@@ -22,7 +22,7 @@ module.exports = {
 
     async beforeUpdate(params, event) {
       const eventInDb = await strapi.services.event.findOne(params);
-      if (!eventInDb.uuid) event.uuid = uuid.v4();
+      if (eventInDb && !eventInDb.uuid) event.uuid = uuid.v4();
       if (event.address) event.position = getPosition(event.address);
     },
   },
