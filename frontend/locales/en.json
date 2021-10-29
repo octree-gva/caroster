@@ -108,9 +108,7 @@
     },
     "passengers": {
       "empty": "Available seat",
-      "add": "Add a passenger",
-      "email": "Your email",
-      "emailHelper": "Optional - Get notified if cars are added"
+      "add": "Add a passenger"
     },
     "errors": {
       "cant_create": "Unable to create the car",
@@ -179,6 +177,11 @@
       "cant_save_passengers": "Unable to update passengers",
       "cant_remove_passenger": "Unable to remove the passenger",
       "cant_select_car": "Unable to select the car"
+    },
+    "input": {
+      "email": "Your email",
+      "email_helper": "Optional - Get notified if cars are added",
+      "email_helper_car": "Optional"
     }
   },
   "signup": {

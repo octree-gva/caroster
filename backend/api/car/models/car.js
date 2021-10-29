@@ -7,12 +7,13 @@ const {STRAPI_URL = ''} = process.env;
 module.exports = {
   lifecycles: {
     async afterCreate(result) {
-      sendEmailsToWaitingList(result.event);
+      sendEmailsToWaitingList(result);
     },
   },
 };
 
-const sendEmailsToWaitingList = async event => {
+const sendEmailsToWaitingList = async car => {
+  const event = car.event;
   const eventWaitingList = event?.waitingList || [];
   const userEmails = eventWaitingList.map(user => user.email).filter(Boolean);
   const templateId = await strapi.plugins[
@@ -30,7 +31,8 @@ const sendEmailsToWaitingList = async event => {
           subject: `Caroster: nouvelle voiture pour ${event.name}`,
         },
         {
-          eventName: event.name,
+          event,
+          car,
           eventLink: `${STRAPI_URL}/e/${event.uuid}`,
         }
       );

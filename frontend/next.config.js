@@ -1,7 +1,16 @@
 const withPWA = require('next-pwa');
-const {NODE_ENV} = process.env;
+const {STRAPI_URL = 'http://localhost:1337', NODE_ENV} = process.env;
 
 module.exports = withPWA({
+  async rewrites() {
+    return [
+      {
+        source: '/graphql',
+        destination: `${STRAPI_URL}/graphql`,
+      },
+    ];
+  },
+
   pwa: {
     dest: 'public',
     disable: NODE_ENV !== 'production',

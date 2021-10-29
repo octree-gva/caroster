@@ -4,6 +4,7 @@ const _pick = require('lodash/pick');
 
 const TEMPLATE_NAME_RECAP = 'event_recap';
 const PUBLIC_FIELDS = [
+  'id',
   'uuid',
   'name',
   'email',
@@ -54,7 +55,7 @@ module.exports = {
             subject: `Caroster: ${event.name}`,
           },
           {
-            eventName: event.name,
+            event,
             eventLink: `${STRAPI_URL}/e/${event.uuid}`,
             waitingListCount: event.waitingList?.length || 0,
             carsCount: event.cars?.length || 0,

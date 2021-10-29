@@ -6,7 +6,7 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import useAuthStore from '../stores/useAuthStore';
 
-const {STRAPI_URL = 'http://localhost:1337'} = process.env;
+const {STRAPI_URL = ''} = process.env;
 
 // https://github.com/vercel/next.js/tree/canary/examples/with-apollo
 // https://github.com/vercel/next.js/tree/canary/examples/layout-component
@@ -46,7 +46,7 @@ const errorLink = onError(({graphQLErrors = []}) => {
 
 const httpLink = uri =>
   new HttpLink({
-    uri, // Server URL (must be absolute)
+    uri,
     credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
   });
 

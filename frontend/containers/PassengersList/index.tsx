@@ -14,6 +14,7 @@ interface Props {
   passengers: ComponentPassengerPassenger[];
   icon: string;
   disabled?: boolean;
+  isCar?: boolean;
   places?: number;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
@@ -21,8 +22,16 @@ interface Props {
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, places, addPassenger, icon, onClick, onPress, disabled} =
-    props;
+  const {
+    passengers,
+    places,
+    addPassenger,
+    icon,
+    onClick,
+    onPress,
+    disabled,
+    isCar,
+  } = props;
   const classes = useStyles();
   let list = passengers;
 
@@ -40,7 +49,11 @@ const PassengersList = (props: Props) => {
           ? places - passengers.length > 0
           : places > 0
         : true) && (
-        <Input addPassenger={addPassenger} id={!!places ? 'Car' : 'Waiting'} />
+        <Input
+          addPassenger={addPassenger}
+          id={!!places ? 'Car' : 'Waiting'}
+          isCar={isCar}
+        />
       )}
       <List disablePadding>
         {!!list &&

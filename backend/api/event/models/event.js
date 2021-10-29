@@ -57,11 +57,10 @@ const sendEmailToCreator = async event => {
         subject: `Caroster: ${event.name}`,
       },
       {
-        eventName: event.name,
+        event,
         eventTime: event.date
           ? moment(event.date).format('dddd D MMMM YYYY')
           : null,
-        eventAddress: event.address,
         eventLink: `${STRAPI_URL}/e/${event.uuid}`,
       }
     );

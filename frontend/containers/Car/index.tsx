@@ -104,6 +104,7 @@ const Car = (props: Props) => {
           addPassenger={addPassenger}
           onClick={removePassenger}
           icon="close"
+          isCar
         />
       )}
     </Paper>

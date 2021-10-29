@@ -12,10 +12,11 @@ import {isValidEmail} from '../../lib/formValidation';
 interface Props {
   addPassenger: (passenger: PassengerInput) => void;
   id: number;
+  isCar?: boolean;
 }
 
 const Input = (props: Props) => {
-  const {addPassenger, id} = props;
+  const {addPassenger, id, isCar} = props;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string>();
@@ -64,10 +65,14 @@ const Input = (props: Props) => {
           onChange={e => setEmail(e.target.value)}
           onKeyDown={onKeyDown}
           fullWidth
-          label={t`car.passengers.email`}
+          label={t`passenger.input.email`}
           id={`NewPassenger-${id}-email`}
           name={`passenger-${id}-email`}
-          helperText={t`car.passengers.emailHelper`}
+          helperText={
+            isCar
+              ? t`passenger.input.email_helper_car`
+              : t`passenger.input.email_helper`
+          }
           error={error === 'email'}
         />
       </Box>
@@ -79,7 +84,7 @@ const Input = (props: Props) => {
 const useStyles = makeStyles(theme => ({
   emailBox: {
     transition: 'all 0.3s ease',
-    maxHeight: ({showEmail}) => (showEmail ? '5rem' : 0),
+    maxHeight: ({showEmail}) => (showEmail ? '6rem' : 0),
     overflow: 'hidden',
   },
 }));
