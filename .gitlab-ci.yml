@@ -1,14 +1,12 @@
 include:
   - project: o/infra/templates
-    file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
-  - project: o/infra/templates
     file: /gitlab-ci/includes/jobs.yaml
 
 Tests:
   stage: test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
   image: strapi/base:14-alpine
-	variables:
+  variables:
     POSTGRES_HOST: timescale__timescaledb
     POSTGRES_PORT: 5432
     POSTGRES_DB: strapi_test
