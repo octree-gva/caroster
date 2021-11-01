@@ -15,7 +15,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   const addToast = useToastStore(s => s.addToast);
 
   // States
-  const [date, setDate] = useState(moment().format('DD.MM.YYYY'));
+  const [date, setDate] = useState();
   const [address, setAddress] = useState(event.address ?? '');
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     if (evt.preventDefault) evt.preventDefault();
     if (loading) return false;
     setLoading(true);
-    const eventData = {date, address};
+    const eventData = {date: date ? date : null, address};
     addToEvent(eventData);
     const result = await createEvent(eventData);
     if (!result) addToast(t('event.errors.cant_create'));
