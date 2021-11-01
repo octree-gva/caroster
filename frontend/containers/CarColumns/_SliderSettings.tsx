@@ -1,26 +1,12 @@
-import Box from '@material-ui/core/Box';
 import CustomArrow from './CustomArrow';
+import Dots from './Dots';
 
 const sliderSettings = {
   accessibility: true,
   dots: true,
-  appendDots: dots => (
-    <Box
-      top={0}
-      left={0}
-      p={1}
-      height={36}
-      component="ul"
-      overflow="auto"
-      display="flex"
-    >
-      <Box display="flex" margin="0 auto">
-        {dots}
-      </Box>
-    </Box>
-  ),
-  nextArrow: <CustomArrow right={16} />,
-  prevArrow: <CustomArrow left={16} />,
+  appendDots: dots => <Dots>{dots}</Dots>,
+  nextArrow: <CustomArrow right={0} />,
+  prevArrow: <CustomArrow left={0} />,
   arrows: true,
   infinite: false,
   speed: 500,

@@ -18,20 +18,31 @@ const CustomArrow = (props: Props) => {
   return (
     <Box
       className={clsx(className, classes.arrow)}
-      style={{...style, left, right}}
+      style={{
+        ...style,
+        left,
+        right,
+        display: 'flex',
+      }}
       onClick={onClick}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
     />
   );
 };
 
 const useStyles = makeStyles(theme => ({
   arrow: {
+    alignItems: 'center',
+    justifyContent: 'center',
     zIndex: 2,
-    width: 24,
-    height: 24,
+    width: 40,
+    height: '100%',
+    transition: 'background-color 0.5s ease',
+    '&:not(.slick-disabled)': {
+      backgroundColor: 'rgba(0,0,0,0.05)',
+    },
+    '&:not(.slick-disabled):hover': {
+      backgroundColor: 'rgba(0,0,0,0.1)',
+    },
     '&::before': {
       fontSize: 23,
       color: theme.palette.primary.main,
