@@ -1,7 +1,7 @@
 include:
   - project: o/infra/templates
-    file: /gitlab-ci/includes/jobs.yaml
-
+    file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
+    
 Tests:
   stage: test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
