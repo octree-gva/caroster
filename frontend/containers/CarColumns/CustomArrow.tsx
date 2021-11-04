@@ -31,17 +31,19 @@ const CustomArrow = (props: Props) => {
 
 const useStyles = makeStyles(theme => ({
   arrow: {
+    position: 'fixed',
+    zIndex: 20,
+    width: 40,
+    minHeight: '100vh',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 2,
-    width: 40,
-    height: '100%',
-    transition: 'background-color 0.5s ease',
+    transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
     '&:not(.slick-disabled)': {
-      backgroundColor: 'rgba(0,0,0,0.05)',
+      backgroundColor: 'rgba(255,255,255,1)',
+      boxShadow: '0 0 4px rgb(1 1 1 / 20%)',
     },
     '&:not(.slick-disabled):hover': {
-      backgroundColor: 'rgba(0,0,0,0.1)',
+      boxShadow: '0 0 0 rgb(1 1 1 / 20%)',
     },
     '&::before': {
       fontSize: 23,

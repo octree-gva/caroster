@@ -7,6 +7,7 @@
     "remove": "Supprimer",
     "save": "Enregistrer",
     "confirm": "Confirmer",
+    "clear": "Effacer",
     "errors": {
       "date_min": "Sélectionnez une date à venir",
       "unknown": "Une erreur inconnue c'est produite",

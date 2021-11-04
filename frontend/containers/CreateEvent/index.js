@@ -1,8 +1,8 @@
 import {useState, useReducer} from 'react';
-import Step1 from './Step1';
-import Step2 from './Step2';
 import {useCreateEventMutation} from '../../generated/graphql';
 import useAddToEvents from '../../hooks/useAddToEvents';
+import Step1 from './Step1';
+import Step2 from './Step2';
 
 const STEPS = [Step1, Step2];
 

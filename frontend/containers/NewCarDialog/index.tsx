@@ -1,4 +1,5 @@
 import {useState, forwardRef, useMemo} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,12 +9,12 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import {DatePicker, TimePicker} from '@material-ui/pickers';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';
 import useToastsStore from '../../stores/useToastStore';
+import useAddToEvents from '../../hooks/useAddToEvents';
 import {useCreateCarMutation} from '../../generated/graphql';
 
 const NewCarDialog = ({open, toggle}) => {
@@ -32,8 +33,8 @@ const NewCarDialog = ({open, toggle}) => {
   const [name, setName] = useState('');
   const [seats, setSeats] = useState(4);
   const [meeting, setMeeting] = useState('');
-  const [date, setDate] = useState(dateMoment.format('YYYY-MM-DD'));
-  const [time, setTime] = useState(dateMoment.format('HH:mm'));
+  const [date, setDate] = useState(dateMoment);
+  const [time, setTime] = useState(dateMoment);
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
   const canCreate = !!name && !!seats;
@@ -42,7 +43,7 @@ const NewCarDialog = ({open, toggle}) => {
     if (e.preventDefault) e.preventDefault();
     try {
       const departure = moment(
-        `${date} ${time}`,
+        `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
         'YYYY-MM-DD HH:mm'
       ).toISOString();
       await createCar({
@@ -66,7 +67,7 @@ const NewCarDialog = ({open, toggle}) => {
       setName('');
       setSeats(4);
       setMeeting('');
-      setDate(moment().format('YYYY-MM-DD'));
+      setDate(moment());
       setPhone('');
       setDetails('');
     } catch (error) {
@@ -96,31 +97,24 @@ const NewCarDialog = ({open, toggle}) => {
             id="NewCarName"
             name="name"
           />
-          <TextField
-            label={t('car.creation.date')}
-            value={date}
-            onChange={e => setDate(e.target.value)}
+          <DatePicker
+            id="NewCarDateTime"
             className={classes.picker}
             fullWidth
-            id="NewCarDateTime"
-            name="date"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            label={t('car.creation.date')}
+            format="DD/MM/YYYY"
+            value={date}
+            onChange={setDate}
           />
-          <TextField
+          <TimePicker
+            id="NewCarTime"
+            className={classes.picker}
+            fullWidth
             label={t('car.creation.time')}
             value={time}
-            onChange={e => setTime(e.target.value)}
-            className={classes.picker}
-            fullWidth
-            id="NewCarTime"
-            name="time"
-            type="time"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            onChange={setTime}
+            ampm={false}
+            minutesStep={5}
           />
           <Typography variant="caption">{t('car.creation.seats')}</Typography>
           <Slider

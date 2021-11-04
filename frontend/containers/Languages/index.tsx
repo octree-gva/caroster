@@ -52,7 +52,7 @@ const Languages = () => {
 
   return (
     <>
-      <Box p={1} position="fixed" bottom={0} left={0}>
+      <Box p={1} position="fixed" bottom={0} left={0} zIndex={1050}>
         <IconButton
           color="primary"
           aria-label="Languages"

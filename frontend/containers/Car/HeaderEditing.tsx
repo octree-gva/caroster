@@ -1,16 +1,17 @@
 import {useState, useReducer, useCallback, useEffect, useMemo} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import moment from 'moment';
-import {makeStyles} from '@material-ui/core/styles';
-import {useTranslation} from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
-import RemoveDialog from '../RemoveDialog';
+import {DatePicker, TimePicker} from '@material-ui/pickers';
+import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
+import RemoveDialog from '../RemoveDialog';
 import {
   useUpdateEventMutation,
   useUpdateCarMutation,
@@ -35,8 +36,8 @@ const HeaderEditing = ({car, toggleEditing}) => {
   const [name, setName] = useState(car?.name ?? '');
   const [seats, setSeats] = useState(car?.seats ?? 4);
   const [meeting, setMeeting] = useState(car?.meeting ?? '');
-  const [date, setDate] = useState(dateMoment.format('YYYY-MM-DD'));
-  const [time, setTime] = useState(dateMoment.format('HH:mm'));
+  const [date, setDate] = useState(dateMoment);
+  const [time, setTime] = useState(dateMoment);
   const [phone, setPhone] = useState(car ? car['phone_number'] : '');
   const [details, setDetails] = useState(car?.details ?? '');
 
@@ -76,7 +77,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           });
       }
       const departure = moment(
-        `${date} ${time}`,
+        `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
         'YYYY-MM-DD HH:mm'
       ).toISOString();
       await updateCar({
@@ -141,31 +142,24 @@ const HeaderEditing = ({car, toggleEditing}) => {
         >
           <Icon>done</Icon>
         </IconButton>
-        <TextField
-          label={t('car.creation.date')}
-          value={date}
-          onChange={e => setDate(e.target.value)}
+        <DatePicker
+          id="NewCarDate"
           className={classes.picker}
           fullWidth
-          id="NewCarDate"
-          name="date"
-          type="date"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          label={t('car.creation.date')}
+          format="DD/MM/YYYY"
+          value={date}
+          onChange={setDate}
         />
-        <TextField
+        <TimePicker
+          id="NewCarTime"
+          className={classes.picker}
+          fullWidth
           label={t('car.creation.time')}
           value={time}
-          onChange={e => setTime(e.target.value)}
-          className={classes.picker}
-          fullWidth
-          id="NewCarTime"
-          name="time"
-          type="time"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          onChange={setTime}
+          ampm={false}
+          minutesStep={5}
         />
         <TextField
           label={t('car.creation.name')}

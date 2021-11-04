@@ -1,4 +1,3 @@
-import {useRef, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
@@ -14,26 +13,15 @@ interface Props {
 }
 
 const CarColumns = (props: Props) => {
-  const wrapper = useRef(null);
-  const slider = useRef(null);
   const event = useEventStore(s => s.event);
   const {cars} = event || {};
   const classes = useStyles();
 
-  useEffect(() => {
-    if (wrapper.current)
-      wrapper.current.addEventListener('wheel', e => {
-        e.preventDefault();
-        if (e.deltaY < 0) slider.current.slickPrev();
-        else slider.current.slickNext();
-      });
-  }, [wrapper, slider]);
-
   return (
     <div className={classes.container}>
       <div className={classes.dots} id="slider-dots" />
-      <div className={classes.slider} ref={wrapper}>
-        <Slider ref={slider} {...sliderSettings}>
+      <div className={classes.slider}>
+        <Slider {...sliderSettings}>
           <Container maxWidth="sm" className={classes.slide}>
             <WaitingList />
           </Container>
@@ -65,17 +53,20 @@ const sortCars = (a: CarType, b: CarType) => {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-    overflow: 'hidden',
-    position: 'relative',
-    top: theme.mixins.toolbar.minHeight,
+    minHeight: '100vh',
+    paddingTop: theme.mixins.toolbar.minHeight,
+    paddingLeft: theme.spacing(6),
+    paddingRight: theme.spacing(6),
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing(),
+      paddingRight: theme.spacing(),
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    overflowX: 'hidden',
+    overflowY: 'auto',
   },
   dots: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    zIndex: 20,
-    width: '100%',
     height: 32,
     overflow: 'auto',
     '& overflow': '-moz-scrollbars-none',
@@ -84,7 +75,7 @@ const useStyles = makeStyles(theme => ({
       height: '0 !important',
     },
     '& .slick-dots': {
-      bottom: 0,
+      position: 'static',
       '& li': {
         display: 'block',
       },
@@ -95,15 +86,10 @@ const useStyles = makeStyles(theme => ({
       },
   },
   slider: {
-    height: '100%',
-    zIndex: -20,
-    overflow: 'hidden',
-    '& > div': {
+    flexGrow: 1,
+    height: 1,
+    '& .slick-slider': {
       height: '100%',
-      padding: theme.spacing(4, 6, 0, 6),
-      [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(4, 1, 0, 1),
-      },
       '& .slick-list': {
         overflow: 'visible',
       },
@@ -111,10 +97,9 @@ const useStyles = makeStyles(theme => ({
     },
   },
   slide: {
-    minHeight: '100%',
-    outline: 'none',
     padding: theme.spacing(1),
     marginBottom: theme.spacing(12),
+    outline: 'none',
     '& > *': {
       cursor: 'default',
     },

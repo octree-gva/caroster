@@ -4,8 +4,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {CircularProgress} from '@material-ui/core';
-import {useTranslation} from 'react-i18next';
+import {DatePicker} from '@material-ui/pickers';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 
 const Step2 = ({event, addToEvent, createEvent}) => {
@@ -15,7 +16,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   const addToast = useToastStore(s => s.addToast);
 
   // States
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
   const [address, setAddress] = useState(event.address ?? '');
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +24,10 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     if (evt.preventDefault) evt.preventDefault();
     if (loading) return false;
     setLoading(true);
-    const eventData = {date: date ? date : null, address};
+    const eventData = {
+      date: !date ? null : moment(date).format('YYYY-MM-DD'),
+      address,
+    };
     addToEvent(eventData);
     const result = await createEvent(eventData);
     if (!result) addToast(t('event.errors.cant_create'));
@@ -34,15 +38,16 @@ const Step2 = ({event, addToEvent, createEvent}) => {
 
   return (
     <form onSubmit={onCreate}>
-      <TextField
+      <DatePicker
         id="NewEventDate"
         fullWidth
         label={t('event.creation.date')}
+        format="DD/MM/YYYY"
         value={date}
-        onChange={e => setDate(e.target.value)}
-        name="date"
-        type="date"
-        InputLabelProps={{shrink: true}}
+        onChange={setDate}
+        clearable
+        clearLabel={t('generic.clear')}
+        cancelLabel={t('generic.cancel')}
       />
       <TextField
         label={t('event.creation.address')}

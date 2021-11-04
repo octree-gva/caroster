@@ -1,15 +1,16 @@
 import {useRef} from 'react';
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
+import {DatePicker} from '@material-ui/pickers';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
-import {caroster} from '../../theme';
 import useEventStore from '../../stores/useEventStore';
+import {caroster} from '../../theme';
 
 const EventDetails = ({onShare}) => {
   const {t} = useTranslation();
@@ -40,20 +41,25 @@ const EventDetails = ({onShare}) => {
           )}
           <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
           {isEditing ? (
-            <TextField
+            <DatePicker
               id={`${idPrefix}Date`}
               fullWidth
               label={t('event.creation.date')}
+              format="DD/MM/YYYY"
               value={event.date}
-              onChange={e => setEventUpdate({date: e.target.value})}
-              name="date"
-              type="date"
-              InputLabelProps={{shrink: true}}
+              onChange={date =>
+                setEventUpdate({
+                  date: !date ? null : moment(date).format('YYYY-MM-DD'),
+                })
+              }
+              clearable
+              clearLabel={t('generic.clear')}
+              cancelLabel={t('generic.cancel')}
             />
           ) : (
             <Typography variant="body1" id={`${idPrefix}Date`}>
               {event.date
-                ? moment(event.date).format('DD.MM.YYYY')
+                ? moment(event.date).format('DD/MM/YYYY')
                 : t('event.fields.empty')}
             </Typography>
           )}
@@ -91,7 +97,7 @@ const EventDetails = ({onShare}) => {
           )}
         </div>
         <Typography variant="h6">{t('event.fields.link')}</Typography>
-        <Typography variant="body">{t('event.fields.link_desc')}</Typography>
+        <Typography>{t('event.fields.link_desc')}</Typography>
         <TextField
           value={window.location.href}
           inputProps={{
