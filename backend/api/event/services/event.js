@@ -52,7 +52,6 @@ module.exports = {
           },
           {
             templateId,
-            subject: `Caroster: ${event.name}`,
           },
           {
             event,

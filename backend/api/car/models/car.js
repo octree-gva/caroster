@@ -28,7 +28,6 @@ const sendEmailsToWaitingList = async car => {
         },
         {
           templateId,
-          subject: `Caroster: nouvelle voiture pour ${event.name}`,
         },
         {
           event,

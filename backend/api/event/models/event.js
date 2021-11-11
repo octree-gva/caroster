@@ -54,7 +54,6 @@ const sendEmailToCreator = async event => {
       },
       {
         templateId,
-        subject: `Caroster: ${event.name}`,
       },
       {
         event,
