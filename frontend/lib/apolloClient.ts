@@ -54,7 +54,19 @@ const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: from([authLink, errorLink, httpLink(`${STRAPI_URL}/graphql`)]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Event: {
+          fields: {
+            waitingList: {
+              merge(existing, incoming) {
+                return incoming;
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 };
 

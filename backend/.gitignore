@@ -114,3 +114,4 @@ exports
 build
 .env
 .env.bckp
+.strapi-updater.json

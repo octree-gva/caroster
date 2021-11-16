@@ -15,6 +15,7 @@ import useEventStore from '../../stores/useEventStore';
 import {
   useUpdateEventMutation,
   useUpdateCarMutation,
+  ComponentPassengerPassenger,
 } from '../../generated/graphql';
 
 const WaitingList = () => {
@@ -58,12 +59,13 @@ const WaitingList = () => {
   );
 
   const removePassenger = useCallback(
-    async passengerIndex => {
+    async (removingPassenger: ComponentPassengerPassenger) => {
       try {
         const waitingList = event.waitingList
-          .filter((_, idx) => idx !== passengerIndex)
+          .filter(passenger => passenger.id !== removingPassenger?.id)
           .map(({__typename, ...item}) => item);
         await updateEvent({
+          refetchQueries: ['eventByUUID'],
           variables: {uuid: event.uuid, eventUpdate: {waitingList}},
         });
         addToEvent(event.id);
