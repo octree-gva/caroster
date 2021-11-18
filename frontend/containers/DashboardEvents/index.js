@@ -1,12 +1,16 @@
-import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import {useTranslation} from 'react-i18next';
 import EventCard from './EventCard';
 import Section from './Section';
 
-const DashboardEvents = ({futureEvents, noDateEvents, pastEvents}) => {
-  const classes = useStyles();
+const DashboardEvents = ({
+  futureEvents = [],
+  noDateEvents = [],
+  pastEvents = [],
+}) => {
   const {t} = useTranslation();
+  const classes = useStyles();
 
   return (
     <Grid container className={classes.root} spacing={4}>
@@ -53,9 +57,10 @@ const cardsForEvents = events =>
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    maxWidth: '90rem',
     width: '100%',
+    maxWidth: '90rem',
     margin: '0 auto',
+    paddingBottom: theme.spacing(10),
   },
 }));
 

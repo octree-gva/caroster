@@ -1,7 +1,8 @@
 import {ReactNode} from 'react';
 import {Helmet} from 'react-helmet';
-import GenericMenu from '../containers/GenericMenu';
 import useGTM from '../hooks/useGTM';
+import GenericToolbar from '../containers/GenericToolbar';
+import Languages from '../containers/Languages';
 
 interface Props {
   children: ReactNode;
@@ -17,25 +18,30 @@ const DefaultLayout = (props: Props) => {
   const {
     children,
     className,
-    menuTitle = 'Caroster',
-    menuActions,
     pageTitle = undefined,
     displayMenu = true,
-    goBack = () => {},
+    menuTitle = 'Caroster',
+    menuActions,
+    goBack = null,
   } = props;
 
   useGTM();
 
   return (
-    <>
+    <div className={className}>
       <Helmet>
         <title>{pageTitle || menuTitle}</title>
       </Helmet>
       {displayMenu && (menuTitle || menuActions) && (
-        <GenericMenu title={menuTitle} actions={menuActions} goBack={goBack} />
+        <GenericToolbar
+          title={menuTitle}
+          actions={menuActions}
+          goBack={goBack}
+        />
       )}
-      <div className={className}>{children}</div>
-    </>
+      {children}
+      <Languages />
+    </div>
   );
 };
 

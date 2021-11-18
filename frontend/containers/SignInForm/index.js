@@ -1,8 +1,8 @@
 import {useState, useMemo, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
-import TextField from '@material-ui/core/TextField';
 import {useRouter} from 'next/router';
 import RouterLink from 'next/link';
+import {makeStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -10,15 +10,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActions from '@material-ui/core/CardActions';
-import {makeStyles} from '@material-ui/core/styles';
-import useLoginForm from '../../hooks/useLoginForm';
+import {useTranslation} from 'react-i18next';
 import useToastsStore from '../../stores/useToastStore';
 import useLoginWithProvider from '../../hooks/useLoginWithProvider';
+import useLoginForm from '../../hooks/useLoginForm';
 import useAddToEvents from '../../hooks/useAddToEvents';
 
 const SignIn = () => {
   const {t} = useTranslation();
-  const classes = useStyles();
   const router = useRouter();
   const {loginWithProvider} = useLoginWithProvider();
   const [error, setError] = useState('');
@@ -27,6 +26,7 @@ const SignIn = () => {
   const addToast = useToastsStore(s => s.addToast);
   const {login, loading} = useLoginForm(email, password);
   const {saveStoredEvents} = useAddToEvents();
+  const classes = useStyles();
 
   const canSubmit = useMemo(
     () => [email, password].filter(s => s.length < 4).length === 0,

@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
+import {useTranslation} from 'react-i18next';
+import useToastStore from '../../stores/useToastStore';
 import Layout from '../../layouts/Centered';
 import ResetPasswordContainer from '../../containers/ResetPassword';
-import useToastStore from '../../stores/useToastStore';
 import {useResetPasswordMutation} from '../../generated/graphql';
 
 const ResetPassword = () => {

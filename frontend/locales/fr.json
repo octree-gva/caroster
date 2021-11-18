@@ -24,11 +24,41 @@
     "fr": "Français",
     "en": "English"
   },
+  "tour": {
+    "welcome": {
+      "text": "Bienvenue sur Caroster ! Voulez-vous faire un tour des fonctionnalités ?",
+      "nope": "Plus tard",
+      "onboard": "Montrez-moi"
+    },
+    "creator": {
+      "step1": "Les informations de l'événement peuvent être modifiées depuis ce menu.",
+      "step2": "L'événement peut être édité en cliquant sur le bouton d'édition.",
+      "step3": "Partager dès maintenant l'événement en copiant le lien et en le partageant par email ou dans un groupe de messagerie.",
+      "step4": "La liste d'attente regroupe les passagers qui n'ont pas encore de place dans une voiture.",
+      "step5": "Les nouvelles voitures sont ajouté depuis la colonne de droite.",
+      "step6": "Une nouvelle voiture peut également être ajouté directement depuis le bouton d'action flottant."
+    },
+    "user": {
+      "step1": "Une nouvelle voiture peut être ajoutée directement depuis le bouton d'action flottant.",
+      "step2": "Il est également possible d'ajouter une voiture depuis la colonne de droite.",
+      "step3": "Vous aimeriez une place dans une voiture ? Inscrivez-vous dans la liste d'attente ou directement dans une voiture.",
+      "step4": "Les informations de l'événement sont accessibles depuis ce menu.",
+      "step5": "Partager dès maintenant l'événement en copiant le lien et en le partageant par email ou dans un groupe de messagerie."
+    }
+  },
+  "joyride": {
+    "back": "Retour",
+    "close": "Fermer",
+    "last": "Terminer",
+    "next": "Suivant",
+    "skip": "Passer"
+  },
   "menu": {
-    "logout": "Se déconnecter",
     "about": "À propos de Caroster",
+    "tour": "Tour de Caroster",
     "dashboard": "Tableau de bord",
     "login": "Se connecter",
+    "logout": "Se déconnecter",
     "register": "Créer un compte",
     "new_event": "Créer un caroster",
     "profile": "Profil"
@@ -37,9 +67,10 @@
     "title": "{{title}} - Caroster",
     "not_found": "Projet introuvable",
     "fields": {
-      "starts_on": "Date de l'événement",
-      "address": "Adresse de l'événement",
       "name": "Nom de l'événement",
+      "date": "Date de l'événement",
+      "date_placeholder": "DD/MM/YYYY",
+      "address": "Adresse de l'événement",
       "empty": "Non précisé",
       "link": "Lien de partage",
       "link_desc": "Partager ce lien pour inviter les gens à faire du covoiturage",
@@ -47,10 +78,10 @@
     },
     "creation": {
       "title": "Nouvel évènement",
-      "event_name": "Nom de l'événement",
-      "creator_email": "Votre e-mail",
+      "name": "Nom de l'événement",
       "date": "Date de l'événement",
       "address": "Adresse de l'événement",
+      "creator_email": "Votre e-mail",
       "next": "Suivant",
       "newsletter": "Me tenir informé des évolutions de Caroster par e-mail",
       "actions": {

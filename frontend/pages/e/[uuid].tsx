@@ -1,22 +1,27 @@
 import {useState, useReducer, useEffect} from 'react';
+import {useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
+import Joyride from 'react-joyride';
+import {initializeApollo} from '../../lib/apolloClient';
+import useToastStore from '../../stores/useToastStore';
+import useEventStore from '../../stores/useEventStore';
+import useTour from '../../hooks/useTour';
 import Layout from '../../layouts/Default';
-import Fab from '../../containers/Fab';
+import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
 import CarColumns from '../../containers/CarColumns';
 import NewCarDialog from '../../containers/NewCarDialog';
-import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
+import WelcomeDialog from '../../containers/WelcomeDialog';
 import EventBar from '../../containers/EventBar';
-import useToastStore from '../../stores/useToastStore';
-import {initializeApollo} from '../../lib/apolloClient';
-import ErrorPage from '../_error';
+import Loading from '../../containers/Loading';
+import Fab from '../../containers/Fab';
 import {
   useUpdateEventMutation,
   Event as EventType,
   useEventByUuidQuery,
   EventByUuidDocument,
+  EditEventInput,
 } from '../../generated/graphql';
-import useEventStore from '../../stores/useEventStore';
-import Loading from '../../containers/Loading';
+import ErrorPage from '../_error';
 
 const POLL_INTERVAL = 10000;
 
@@ -26,8 +31,8 @@ interface Props {
 }
 
 const EventPage = props => {
-  const {event} = props;
   const {t} = useTranslation();
+  const {event} = props;
 
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
 
@@ -37,6 +42,7 @@ const EventPage = props => {
 const Event = (props: Props) => {
   const {eventUUID} = props;
   const {t} = useTranslation();
+  const theme = useTheme();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
@@ -48,6 +54,7 @@ const Event = (props: Props) => {
     pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
   });
+  const {run, steps, step, onTourChange, onTourRestart} = useTour();
 
   useEffect(() => {
     if (event) setEvent(event as EventType);
@@ -56,12 +63,9 @@ const Event = (props: Props) => {
   const onSave = async e => {
     try {
       const {uuid, ...data} = eventUpdate;
-      delete data.id;
-      delete data.__typename;
-      delete data.cars;
-      delete data.waitingList;
+      const {id, __typename, cars, users, waitingList, ...input} = data;
       await updateEvent({
-        variables: {uuid, eventUpdate: data},
+        variables: {uuid, eventUpdate: input as EditEventInput},
         refetchQueries: ['eventByUUID'],
       });
       setIsEditing(false);
@@ -73,7 +77,7 @@ const Event = (props: Props) => {
 
   const onShare = async () => {
     if (!event) return null;
-    // If navigator as share capability
+    // If navigator share capability
     if (!!navigator.share)
       return await navigator.share({
         title: `Caroster ${event.name}`,
@@ -100,14 +104,39 @@ const Event = (props: Props) => {
         onAdd={setIsAddToMyEvent}
         onSave={onSave}
         onShare={onShare}
+        onTourRestart={onTourRestart}
       />
       <CarColumns toggleNewCar={toggleNewCar} />
-      <Fab onClick={toggleNewCar} open={openNewCar} aria-label="add-car" />
+      <Fab open={openNewCar} onClick={toggleNewCar} aria-label="add-car" />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
       <AddToMyEventDialog
         event={event}
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
+      />
+      <WelcomeDialog />
+      <Joyride
+        run={run}
+        steps={steps}
+        stepIndex={step}
+        callback={onTourChange}
+        locale={t('joyride', {returnObjects: true})}
+        continuous={true}
+        showProgress={true}
+        disableScrolling={true}
+        disableScrollParentFix={true}
+        scrollToFirstStep={false}
+        floaterProps={{
+          disableAnimation: true,
+        }}
+        styles={{
+          options: {
+            primaryColor: theme.palette.primary.main,
+          },
+          tooltipContent: {
+            whiteSpace: 'pre-wrap',
+          },
+        }}
       />
     </Layout>
   );

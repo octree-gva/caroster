@@ -12,6 +12,7 @@ const {STRAPI_URL = ''} = process.env;
 // https://github.com/vercel/next.js/tree/canary/examples/layout-component
 // https://www.apollographql.com/docs/react/networking/authentication/
 // https://www.apollographql.com/docs/react/data/error-handling/
+// https://www.apollographql.com/docs/react/caching/cache-field-behavior/#the-merge-function
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient;
@@ -59,7 +60,16 @@ const createApolloClient = () => {
         Event: {
           fields: {
             waitingList: {
-              merge(existing, incoming) {
+              merge(_, incoming) {
+                return incoming;
+              },
+            },
+          },
+        },
+        Car: {
+          fields: {
+            passengers: {
+              merge(_, incoming) {
                 return incoming;
               },
             },

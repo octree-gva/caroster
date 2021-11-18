@@ -17,7 +17,6 @@ const useLangStore = create<State>(
     }),
     {
       name: STORAGE_KEY,
-      getStorage: () => sessionStorage,
     }
   )
 );

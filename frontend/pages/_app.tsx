@@ -9,7 +9,6 @@ import MomentUtils from '@date-io/moment';
 import {useApollo} from '../lib/apolloClient';
 import {Enum_Userspermissionsuser_Lang} from '../generated/graphql';
 import useLangStore from '../stores/useLangStore';
-import Languages from '../containers/Languages';
 import Metas from '../containers/Metas';
 import Toasts from '../components/Toasts';
 import theme from '../theme';
@@ -45,7 +44,6 @@ const App = function (props: AppProps) {
           <CssBaseline />
           <Component {...pageProps} />
           <Toasts />
-          <Languages />
         </MuiPickersUtilsProvider>
       </ThemeProvider>
     </ApolloProvider>

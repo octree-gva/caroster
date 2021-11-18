@@ -14,12 +14,12 @@ import {caroster} from '../../theme';
 
 const EventDetails = ({onShare}) => {
   const {t} = useTranslation();
-  const classes = useStyles();
   const event = useEventStore(s => s.event);
   const setEventUpdate = useEventStore(s => s.setEventUpdate);
   const isEditing = useEventStore(s => s.isEditing);
   const shareInput = useRef(null);
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
+  const classes = useStyles();
 
   if (!event) return null;
 
@@ -31,30 +31,30 @@ const EventDetails = ({onShare}) => {
             <div className={classes.section}>
               <Typography variant="h6">{t('event.fields.name')}</Typography>
               <TextField
+                fullWidth
                 value={event.name}
                 onChange={e => setEventUpdate({name: e.target.value})}
-                fullWidth
-                id="EditEventName"
                 name="name"
+                id="EditEventName"
               />
             </div>
           )}
-          <Typography variant="h6">{t('event.fields.starts_on')}</Typography>
+          <Typography variant="h6">{t('event.fields.date')}</Typography>
           {isEditing ? (
             <DatePicker
-              id={`${idPrefix}Date`}
               fullWidth
-              label={t('event.creation.date')}
-              format="DD/MM/YYYY"
+              placeholder={t('event.fields.date_placeholder')}
               value={event.date}
               onChange={date =>
                 setEventUpdate({
                   date: !date ? null : moment(date).format('YYYY-MM-DD'),
                 })
               }
+              format="DD/MM/YYYY"
+              cancelLabel={t('generic.cancel')}
               clearable
               clearLabel={t('generic.clear')}
-              cancelLabel={t('generic.cancel')}
+              id={`${idPrefix}Date`}
             />
           ) : (
             <Typography variant="body1" id={`${idPrefix}Date`}>
@@ -68,12 +68,14 @@ const EventDetails = ({onShare}) => {
           <Typography variant="h6">{t('event.fields.address')}</Typography>
           {isEditing ? (
             <TextField
+              fullWidth
+              multiline
+              rowsMax={4}
+              inputProps={{maxLength: 250}}
+              helperText={`${event.address.length}/250`}
               defaultValue={event.address}
               value={event.address}
               onChange={e => setEventUpdate({address: e.target.value})}
-              fullWidth
-              multiline
-              rows={4}
               id={`${idPrefix}Address`}
               name="address"
             />
@@ -114,6 +116,7 @@ const EventDetails = ({onShare}) => {
         />
 
         <Button
+          className={'tour_event_share'}
           variant="outlined"
           startIcon={<Icon>share</Icon>}
           onClick={() => {

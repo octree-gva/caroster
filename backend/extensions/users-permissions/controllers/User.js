@@ -23,6 +23,8 @@ module.exports = {
       old_password,
       firstName,
       lastName,
+      onboardingUser,
+      onboardingCreator,
       lang,
       events,
     } = body;
@@ -51,6 +53,8 @@ module.exports = {
         password,
         firstName,
         lastName,
+        onboardingUser,
+        onboardingCreator,
         lang,
         events: updatedEvents,
       })

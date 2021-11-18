@@ -88,75 +88,83 @@ const NewCarDialog = ({open, toggle}) => {
       <form onSubmit={onCreate}>
         <DialogTitle>{t('car.creation.title')}</DialogTitle>
         <DialogContent>
-          <TextField
-            label={t('car.creation.name')}
-            value={name}
-            onChange={e => setName(e.target.value)}
-            fullWidth
-            autoFocus
-            id="NewCarName"
-            name="name"
-          />
           <DatePicker
-            id="NewCarDateTime"
-            className={classes.picker}
-            fullWidth
             label={t('car.creation.date')}
-            format="DD/MM/YYYY"
+            fullWidth
+            helperText=" "
             value={date}
             onChange={setDate}
+            format="DD/MM/YYYY"
+            cancelLabel={t('generic.cancel')}
+            autoFocus
+            id="NewCarDateTime"
           />
           <TimePicker
-            id="NewCarTime"
-            className={classes.picker}
-            fullWidth
             label={t('car.creation.time')}
+            fullWidth
+            helperText=" "
             value={time}
             onChange={setTime}
+            cancelLabel={t('generic.cancel')}
             ampm={false}
             minutesStep={5}
-          />
-          <Typography variant="caption">{t('car.creation.seats')}</Typography>
-          <Slider
-            value={seats}
-            onChange={(e, value) => setSeats(value)}
-            step={1}
-            min={1}
-            max={MARKS.length}
-            marks={MARKS}
-            valueLabelDisplay="auto"
+            id="NewCarTime"
           />
           <TextField
-            label={t('car.creation.meeting')}
-            value={meeting}
-            onChange={e => setMeeting(e.target.value)}
+            label={t('car.creation.name')}
             fullWidth
-            margin="dense"
-            id="NewCarMeeting"
-            name="meeting"
+            helperText=" "
+            value={name}
+            onChange={e => setName(e.target.value)}
+            name="name"
+            id="NewCarName"
           />
           <TextField
             label={t('car.creation.phone')}
+            fullWidth
+            helperText=" "
             value={phone}
             onChange={e => setPhone(e.target.value)}
-            fullWidth
-            margin="dense"
-            id="NewCarPhone"
             name="phone"
+            id="NewCarPhone"
+          />
+          <TextField
+            label={t('car.creation.meeting')}
+            fullWidth
+            multiline
+            rowsMax={4}
+            inputProps={{maxLength: 250}}
+            helperText={`${meeting.length}/250`}
+            value={meeting}
+            onChange={e => setMeeting(e.target.value)}
+            name="meeting"
+            id="NewCarMeeting"
           />
           <TextField
             label={t('car.creation.notes')}
-            value={details}
-            onChange={e => setDetails(e.target.value)}
             fullWidth
-            margin="dense"
+            multiline
+            rowsMax={4}
             inputProps={{maxLength: 250}}
             helperText={`${details.length}/250`}
-            multiline
-            rows={4}
-            id="NewCarDetails"
+            value={details}
+            onChange={e => setDetails(e.target.value)}
             name="details"
+            id="NewCarDetails"
           />
+          <div className={classes.slider}>
+            <Typography variant="caption">{t('car.creation.seats')}</Typography>
+            <Slider
+              value={seats}
+              onChange={(e, value) => setSeats(value)}
+              step={1}
+              marks={MARKS}
+              min={1}
+              max={MARKS.length}
+              valueLabelDisplay="auto"
+              id="NewCarSeats"
+            />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button
@@ -193,9 +201,8 @@ const MARKS = [1, 2, 3, 4, 5, 6, 7, 8].map(value => ({
 }));
 
 const useStyles = makeStyles(theme => ({
-  picker: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+  slider: {
+    marginTop: theme.spacing(2),
   },
 }));
 

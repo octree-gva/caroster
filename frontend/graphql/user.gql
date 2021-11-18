@@ -6,6 +6,8 @@ fragment UserFields on UsersPermissionsUser {
   lastName
   firstName
   lang
+  onboardingUser
+  onboardingCreator
   events {
     id
     uuid

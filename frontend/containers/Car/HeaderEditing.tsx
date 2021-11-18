@@ -143,67 +143,68 @@ const HeaderEditing = ({car, toggleEditing}) => {
           <Icon>done</Icon>
         </IconButton>
         <DatePicker
-          id="NewCarDate"
-          className={classes.picker}
-          fullWidth
           label={t('car.creation.date')}
-          format="DD/MM/YYYY"
+          fullWidth
+          helperText=" "
           value={date}
           onChange={setDate}
+          format="DD/MM/YYYY"
+          cancelLabel={t('generic.cancel')}
+          autoFocus
+          id="NewCarDate"
         />
         <TimePicker
-          id="NewCarTime"
-          className={classes.picker}
-          fullWidth
           label={t('car.creation.time')}
+          fullWidth
+          helperText=" "
           value={time}
           onChange={setTime}
+          cancelLabel={t('generic.cancel')}
           ampm={false}
           minutesStep={5}
+          id="NewCarTime"
         />
         <TextField
           label={t('car.creation.name')}
           fullWidth
-          autoFocus
-          margin="dense"
+          helperText=" "
           value={name}
           onChange={e => setName(e.target.value)}
-          id="EditCarName"
           name="name"
+          id="EditCarName"
         />
         <TextField
           label={t('car.creation.phone')}
           fullWidth
-          autoFocus
-          margin="dense"
+          helperText=" "
           value={phone}
           onChange={e => setPhone(e.target.value)}
-          id="EditCarPhone"
           name="phone"
+          id="EditCarPhone"
         />
         <TextField
           label={t('car.creation.meeting')}
           fullWidth
-          margin="dense"
           multiline
-          rows={2}
+          rowsMax={4}
+          inputProps={{maxLength: 250}}
+          helperText={`${meeting.length}/250`}
           value={meeting}
           onChange={e => setMeeting(e.target.value)}
-          id="EditCarMeeting"
           name="meeting"
+          id="EditCarMeeting"
         />
         <TextField
           label={t('car.creation.notes')}
           fullWidth
-          margin="dense"
+          multiline
+          rowsMax={4}
           inputProps={{maxLength: 250}}
           helperText={`${details.length}/250`}
-          multiline
-          rows={2}
           value={details}
           onChange={e => setDetails(e.target.value)}
-          id="EditCarDetails"
           name="details"
+          id="EditCarDetails"
         />
         <div className={classes.slider}>
           <Typography variant="caption">{t('car.creation.seats')}</Typography>
@@ -283,9 +284,6 @@ const useStyles = makeStyles(theme => ({
     '& > *:first-child': {
       marginBottom: theme.spacing(2),
     },
-  },
-  picker: {
-    marginBottom: theme.spacing(2),
   },
 }));
 

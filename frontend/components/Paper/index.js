@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const Paper = ({className, ...props}) => {
   const classes = useStyles();
+
   return (
     <PaperMUI classes={{root: classes.root, parent: className}} {...props} />
   );

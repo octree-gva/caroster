@@ -1,19 +1,19 @@
 import {useState, useEffect, useMemo} from 'react';
+import {useRouter} from 'next/router';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
-import GenericToolbar from './Toolbar';
 import {useTranslation} from 'react-i18next';
-import {useRouter} from 'next/router';
 import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
+import GenericMenu from './GenericMenu';
 
-const GenericMenu = ({title, actions = [], goBack = null}) => {
+const GenericToolbar = ({title, actions = [], goBack = null}) => {
   const {t} = useTranslation();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,7 +47,7 @@ const GenericMenu = ({title, actions = [], goBack = null}) => {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       color="primary"
       className={classes.appbar}
       id="Menu"
@@ -86,7 +86,7 @@ const GenericMenu = ({title, actions = [], goBack = null}) => {
               )}
             </IconButton>
 
-            <GenericToolbar
+            <GenericMenu
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
               actions={[
@@ -109,12 +109,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   appbar: {
-    overflow: 'hidden',
     height: theme.mixins.toolbar.minHeight,
     transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
-    position: 'fixed',
-    top: 0,
   },
   name: {
     flexGrow: 1,
@@ -134,4 +131,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default GenericMenu;
+export default GenericToolbar;

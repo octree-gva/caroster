@@ -1,8 +1,11 @@
 import {createPortal} from 'react-dom';
 import Box from '@material-ui/core/Box';
 
-const Dots = ({children}) =>
-  createPortal(
+const Dots = ({children}) => {
+  const element = document.getElementById('slider-dots');
+  if (!element) return null;
+
+  return createPortal(
     <Box
       className="slick-dots"
       component="ul"
@@ -16,5 +19,6 @@ const Dots = ({children}) =>
     </Box>,
     document.getElementById('slider-dots')
   );
+};
 
 export default Dots;

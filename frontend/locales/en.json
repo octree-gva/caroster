@@ -24,11 +24,41 @@
     "fr": "Français",
     "en": "English"
   },
+  "tour": {
+    "welcome": {
+      "text": "Welcome to Caroster! Would you like to take a feature tour?",
+      "nope": "Later",
+      "onboard": "Show me"
+    },
+    "creator": {
+      "step1": "The event information can be modified from this menu.",
+      "step2": "The event can be edited by clicking on the edit button.",
+      "step3": "Share the event now by copying the link and sharing it by email or in a messaging group.",
+      "step4": "The waiting list includes passengers who do not yet have a seat in a car.",
+      "step5": "New cars are added from the right column.",
+      "step6": "A new car can also be added directly from the floating action button."
+    },
+    "user": {
+      "step1": "A new car can be added directly from the floating action button.",
+      "step2": "It is also possible to add a car from the right column.",
+      "step3": "Would you like a place in a car? Register on the waiting list or directly in a car.",
+      "step4": "The event information can be accessed from this menu.",
+      "step5": "Share the event now by copying the link and sharing it by email or in a group messaging."
+    }
+  },
+  "joyride": {
+    "back": "Back",
+    "close": "Close",
+    "last": "Finish",
+    "next": "Next",
+    "skip": "Skip"
+  },
   "menu": {
-    "logout": "Logout",
     "about": "About Caroster",
+    "tour": "Caroster tour",
     "dashboard": "Dashboard",
     "login": "Login",
+    "logout": "Logout",
     "register": "Sign-Up",
     "new_event": "Create a caroster",
     "profile": "Profile"
@@ -37,9 +67,10 @@
     "title": "{{title}} - Caroster",
     "not_found": "Project not found",
     "fields": {
-      "starts_on": "Event date",
-      "address": "Event address",
       "name": "Name of the event",
+      "date": "Event date",
+      "date_placeholder": "DD/MM/YYYY",
+      "address": "Event address",
       "empty": "Not specified",
       "link": "Share link",
       "link_desc": "Share this link to invite people to carpool",
@@ -47,10 +78,10 @@
     },
     "creation": {
       "title": "New event",
-      "event_name": "Event name",
-      "creator_email": "Your e-mail",
+      "name": "Event name",
       "date": "Date of the event",
       "address": "Address of the event",
+      "creator_email": "Your e-mail",
       "next": "Next",
       "newsletter": "Keep me informed of developments in Caroster by e-mail",
       "actions": {

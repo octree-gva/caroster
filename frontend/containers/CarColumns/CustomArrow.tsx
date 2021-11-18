@@ -40,10 +40,10 @@ const useStyles = makeStyles(theme => ({
     transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
     '&:not(.slick-disabled)': {
       backgroundColor: 'rgba(255,255,255,1)',
-      boxShadow: '0 0 4px rgb(1 1 1 / 20%)',
+      boxShadow: '0 0 6px rgb(1 1 1 / 20%)',
     },
     '&:not(.slick-disabled):hover': {
-      boxShadow: '0 0 0 rgb(1 1 1 / 20%)',
+      boxShadow: '0 0 1px rgb(1 1 1 / 20%)',
     },
     '&::before': {
       fontSize: 23,

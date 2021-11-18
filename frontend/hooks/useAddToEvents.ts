@@ -56,7 +56,7 @@ const useAddToEvents = () => {
     } else addEvent(eventId);
   };
 
-  return {saveStoredEvents, addToEvent};
+  return {eventsToBeAdded, saveStoredEvents, addToEvent};
 };
 
 export default useAddToEvents;

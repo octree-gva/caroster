@@ -47,7 +47,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
   return (
     <form onSubmit={onNext}>
       <TextField
-        label={t('event.creation.event_name')}
+        label={t('event.creation.name')}
         fullWidth
         autoFocus
         margin="dense"
@@ -61,12 +61,11 @@ const Step1 = ({nextStep, event, addToEvent}) => {
           <TextField
             label={t('event.creation.creator_email')}
             fullWidth
-            margin="dense"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            id="NewEventEmail"
             name="email"
             type="email"
+            id="NewEventEmail"
           />
           <FormControlLabel
             className={classes.newsletter}

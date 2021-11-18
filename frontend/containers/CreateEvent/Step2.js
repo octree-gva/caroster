@@ -39,26 +39,27 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   return (
     <form onSubmit={onCreate}>
       <DatePicker
-        id="NewEventDate"
         fullWidth
         label={t('event.creation.date')}
-        format="DD/MM/YYYY"
         value={date}
         onChange={setDate}
+        format="DD/MM/YYYY"
+        cancelLabel={t('generic.cancel')}
         clearable
         clearLabel={t('generic.clear')}
-        cancelLabel={t('generic.cancel')}
+        id="NewEventDate"
       />
       <TextField
         label={t('event.creation.address')}
         fullWidth
-        margin="dense"
         multiline
-        rows={4}
+        rowsMax={4}
+        inputProps={{maxLength: 250}}
+        helperText={`${address.length}/250`}
         value={address}
         onChange={e => setAddress(e.target.value)}
-        id="NewEventAddress"
         name="address"
+        id="NewEventAddress"
       />
       <Button
         disabled={loading}

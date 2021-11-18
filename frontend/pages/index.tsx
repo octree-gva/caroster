@@ -1,15 +1,15 @@
 import {useRouter} from 'next/router';
+import {useTranslation} from 'react-i18next';
+import useProfile from '../hooks/useProfile';
 import Layout from '../layouts/Centered';
+import CreateEvent from '../containers/CreateEvent';
 import Paper from '../components/Paper';
 import Logo from '../components/Logo';
-import CreateEvent from '../containers/CreateEvent';
-import {useTranslation} from 'react-i18next';
-import useAuthStore from '../stores/useAuthStore';
 
 const Home = () => {
-  const router = useRouter();
   const {t} = useTranslation();
-  const {token} = useAuthStore();
+  const router = useRouter();
+  const {notReady, profile} = useProfile();
 
   const noUserMenuActions = [
     {
@@ -37,13 +37,15 @@ const Home = () => {
     },
   ];
 
-  const menuActions = token ? loggedMenuActions : noUserMenuActions;
+  const menuActions = !!profile ? loggedMenuActions : noUserMenuActions;
+
+  if (notReady) return null;
 
   return (
     <Layout
       menuTitle={t('event.creation.title')}
       menuActions={menuActions}
-      displayMenu={!!token}
+      displayMenu={!!profile}
     >
       <Paper className={null}>
         <Logo />

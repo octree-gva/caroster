@@ -1,22 +1,23 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
-import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import {Trans, useTranslation} from 'react-i18next';
-import useAddToEvents from '../../hooks/useAddToEvents';
-import PassengersList from '../PassengersList';
-import RemoveDialog from '../RemoveDialog';
-import CarDialog from './CarDialog';
-import useToastStore from '../../stores/useToastStore';
-import useEventStore from '../../stores/useEventStore';
 import {
   useUpdateEventMutation,
   useUpdateCarMutation,
   ComponentPassengerPassenger,
 } from '../../generated/graphql';
+import useToastStore from '../../stores/useToastStore';
+import useEventStore from '../../stores/useEventStore';
+import useAddToEvents from '../../hooks/useAddToEvents';
+import PassengersList from '../PassengersList';
+import RemoveDialog from '../RemoveDialog';
+import CarDialog from './CarDialog';
 
 const WaitingList = () => {
   const classes = useStyles();
@@ -65,8 +66,8 @@ const WaitingList = () => {
           .filter(passenger => passenger.id !== removingPassenger?.id)
           .map(({__typename, ...item}) => item);
         await updateEvent({
-          refetchQueries: ['eventByUUID'],
           variables: {uuid: event.uuid, eventUpdate: {waitingList}},
+          refetchQueries: ['eventByUUID'],
         });
         addToEvent(event.id);
       } catch (error) {
@@ -102,6 +103,7 @@ const WaitingList = () => {
               waitingList,
             },
           },
+          refetchQueries: ['eventByUUID'],
         });
       } catch (error) {
         console.error(error);
@@ -126,7 +128,7 @@ const WaitingList = () => {
   return (
     <>
       <Paper className={classes.root}>
-        <div className={classes.header}>
+        <div className={clsx(classes.header, 'tour_waiting_list')}>
           <IconButton
             size="small"
             color="primary"
@@ -177,7 +179,8 @@ const WaitingList = () => {
 const sortCars = (a, b) => {
   const dateA = new Date(a.departure).getTime();
   const dateB = new Date(b.departure).getTime();
-  if (dateA === dateB) return new Date(a.createdAt) - new Date(b.createdAt);
+  if (dateA === dateB)
+    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   else return dateA - dateB;
 };
 

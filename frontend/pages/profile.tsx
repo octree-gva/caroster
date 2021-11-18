@@ -1,12 +1,12 @@
 import {useEffect} from 'react';
-import Layout from '../layouts/Centered';
-import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
+import {useTranslation} from 'react-i18next';
+import {useUpdateMeMutation, EditUserInput} from '../generated/graphql';
+import useAuthStore from '../stores/useAuthStore';
+import useProfile from '../hooks/useProfile';
 import Loading from '../containers/Loading';
 import Profile from '../containers/Profile';
-import useProfile from '../hooks/useProfile';
-import useAuthStore from '../stores/useAuthStore';
-import {useUpdateMeMutation, EditUserInput} from '../generated/graphql';
+import Layout from '../layouts/Centered';
 
 const ProfilePage = () => {
   const router = useRouter();

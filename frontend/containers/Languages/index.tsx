@@ -22,13 +22,18 @@ const Languages = () => {
   const [updateProfile] = useUpdateMeMutation();
 
   useEffect(() => {
+    if (navigator?.language === 'en')
+      setLanguage(Enum_Userspermissionsuser_Lang.En);
+  }, []);
+
+  useEffect(() => {
     const momentLang = language === 'FR' ? 'fr-ch' : 'en';
     moment.locale(momentLang);
     i18n.changeLanguage(language?.toLowerCase());
   }, [language]);
 
   useEffect(() => {
-    if (profile) setLanguage(profile.lang);
+    if (profile?.lang) setLanguage(profile.lang);
   }, [profile]);
 
   const handleClick = event => {
@@ -52,7 +57,7 @@ const Languages = () => {
 
   return (
     <>
-      <Box p={1} position="fixed" bottom={0} left={0} zIndex={1050}>
+      <Box position="fixed" bottom={0} left={0} zIndex={1050} p={1}>
         <IconButton
           color="primary"
           aria-label="Languages"

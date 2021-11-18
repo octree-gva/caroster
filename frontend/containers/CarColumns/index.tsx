@@ -1,9 +1,11 @@
+import {useEffect, useRef} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
-import WaitingList from '../WaitingList';
-import useEventStore from '../../stores/useEventStore';
 import {Car as CarType} from '../../generated/graphql';
+import useEventStore from '../../stores/useEventStore';
+import useTourStore from '../../stores/useTourStore';
+import WaitingList from '../WaitingList';
 import Car from '../Car';
 import AddCar from './AddCar';
 import sliderSettings from './_SliderSettings';
@@ -15,13 +17,22 @@ interface Props {
 const CarColumns = (props: Props) => {
   const event = useEventStore(s => s.event);
   const {cars} = event || {};
+  const slider = useRef(null);
+  const isCreator = useTourStore(s => s.isCreator);
+  const step = useTourStore(s => s.step);
+  const prev = useTourStore(s => s.prev);
   const classes = useStyles();
+
+  // On tour step changes : component update
+  useEffect(() => {
+    tourStep(prev, step, isCreator, slider.current);
+  }, [step]);
 
   return (
     <div className={classes.container}>
       <div className={classes.dots} id="slider-dots" />
       <div className={classes.slider}>
-        <Slider {...sliderSettings}>
+        <Slider ref={slider} {...sliderSettings}>
           <Container maxWidth="sm" className={classes.slide}>
             <WaitingList />
           </Container>
@@ -40,6 +51,21 @@ const CarColumns = (props: Props) => {
       </div>
     </div>
   );
+};
+
+const tourStep = (prev, step, isCreator, slider) => {
+  const fromTo = (step1, step2) => prev === step1 && step === step2;
+  const first = () => slider?.slickGoTo(0, true);
+  const last = () =>
+    slider?.slickGoTo(slider?.innerSlider.state.slideCount, true);
+
+  if (isCreator) {
+    if (fromTo(2, 3) || fromTo(4, 3)) first();
+    else if (fromTo(3, 4)) last();
+  } else {
+    if (fromTo(1, 2)) first();
+    else if (fromTo(0, 1) || fromTo(2, 1)) last();
+  }
 };
 
 const sortCars = (a: CarType, b: CarType) => {

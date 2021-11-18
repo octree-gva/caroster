@@ -1,32 +1,42 @@
 import {useEffect, useState, useReducer} from 'react';
+import {useRouter} from 'next/router';
+import Link from 'next/link';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
-import {useRouter} from 'next/router';
-import Link from 'next/link';
-import EventMenu from '../EventMenu';
-import EventDetails from '../EventDetails';
 import useAuthStore from '../../stores/useAuthStore';
 import useEventStore from '../../stores/useEventStore';
+import useTourStore from '../../stores/useTourStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
+import EventMenu from '../EventMenu';
+import EventDetails from '../EventDetails';
 
-const EventBar = ({event, onAdd, onSave, onShare}) => {
+const EventBar = ({event, onAdd, onSave, onShare, onTourRestart}) => {
   const {t} = useTranslation();
   const router = useRouter();
   const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
   const [anchorEl, setAnchorEl] = useState(null);
   const isEditing = useEventStore(s => s.isEditing);
   const setIsEditing = useEventStore(s => s.setIsEditing);
-  const classes = useStyles({detailsOpen});
   const token = useAuthStore(s => s.token);
   const {user} = useProfile();
   const settings = useSettings();
+  const isCreator = useTourStore(s => s.isCreator);
+  const prev = useTourStore(s => s.prev);
+  const step = useTourStore(s => s.step);
+  const classes = useStyles({detailsOpen});
+
+  // On tour step changes : component update
+  useEffect(() => {
+    tourStep(prev, step, isCreator, toggleDetails);
+  }, [step]);
 
   useEffect(() => {
     if (!detailsOpen) setIsEditing(false);
@@ -60,6 +70,12 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       onClick: signUp,
       id: 'SignUpTab',
     },
+    {divider: true},
+    {
+      label: t('menu.tour'),
+      onClick: onTourRestart,
+      id: 'TourTab',
+    },
   ];
 
   const loggedMenuActions = [
@@ -74,6 +90,11 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       id: 'ProfileTab',
     },
     {divider: true},
+    {
+      label: t('menu.tour'),
+      onClick: onTourRestart,
+      id: 'TourTab',
+    },
   ];
 
   const menuActions = token ? loggedMenuActions : noUserMenuActions;
@@ -83,9 +104,9 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
 
   return (
     <AppBar
+      className={classes.appbar}
       position="static"
       color="primary"
-      className={classes.appbar}
       id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
     >
       <Toolbar>
@@ -98,6 +119,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
           </Typography>
           {detailsOpen && (
             <IconButton
+              className="tour_event_edit"
               color="inherit"
               edge="end"
               id="HeaderAction"
@@ -122,20 +144,20 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
         ) : (
           <>
             <IconButton
+              className={classes.shareIcon}
               color="inherit"
               edge="end"
               id="ShareBtn"
               onClick={toggleDetails}
-              className={classes.shareIcon}
             >
               <Icon>share</Icon>
             </IconButton>
             <IconButton
+              className={clsx(classes.iconButtons, 'tour_event_infos')}
               color="inherit"
               edge="end"
               id="ShareBtn"
               onClick={toggleDetails}
-              className={classes.iconButtons}
             >
               <Icon>information_outline</Icon>
             </IconButton>
@@ -178,6 +200,17 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       )}
     </AppBar>
   );
+};
+
+const tourStep = (prev, step, isCreator, toggleDetails) => {
+  const fromTo = (step1, step2) => prev === step1 && step === step2;
+
+  if (isCreator) {
+    if (fromTo(1, 0) || fromTo(0, 1) || fromTo(3, 2) || fromTo(2, 3))
+      toggleDetails();
+  } else {
+    if (fromTo(4, 3) || fromTo(3, 4)) toggleDetails();
+  }
 };
 
 const useStyles = makeStyles(theme => ({

@@ -1,6 +1,6 @@
-import LostPasswordContainer from '../../containers/LostPassword';
-import Layout from '../../layouts/Centered';
 import {useTranslation} from 'react-i18next';
+import Layout from '../../layouts/Centered';
+import LostPasswordContainer from '../../containers/LostPassword';
 
 const LostPassword = () => {
   const {t} = useTranslation();

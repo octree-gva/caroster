@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const Toolbar = ({anchorEl, setAnchorEl, actions = []}) => {
+const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {
   const classes = useStyles();
   if (actions.length === 0) return null;
   return (
@@ -73,4 +73,4 @@ const useStyles = makeStyles(theme => ({
     '&:focus': {outline: 0},
   },
 }));
-export default Toolbar;
+export default GenericMenu;

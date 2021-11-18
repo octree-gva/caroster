@@ -1,14 +1,14 @@
+import {useRouter} from 'next/router';
+import {makeStyles} from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
-import {useRouter} from 'next/router';
 
-const EmptyDashboard = () => {
+const DashboardEmpty = () => {
   const {t} = useTranslation();
   const router = useRouter();
   const classes = useStyles();
@@ -43,7 +43,9 @@ const EmptyDashboard = () => {
 };
 
 const useStyles = makeStyles(theme => ({
-  container: {paddingTop: theme.spacing(8)},
+  container: {
+    paddingTop: theme.spacing(8),
+  },
 }));
 
-export default EmptyDashboard;
+export default DashboardEmpty;

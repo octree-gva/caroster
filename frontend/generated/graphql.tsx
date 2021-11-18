@@ -206,7 +206,6 @@ export type EmailDesignerEmailTemplate = {
   id: Scalars['ID'];
   created_at: Scalars['DateTime'];
   updated_at: Scalars['DateTime'];
-  sourceCodeToTemplateId?: Maybe<Scalars['Int']>;
   design?: Maybe<Scalars['JSON']>;
   name?: Maybe<Scalars['String']>;
   subject?: Maybe<Scalars['String']>;
@@ -217,7 +216,6 @@ export type EmailDesignerEmailTemplate = {
 };
 
 export type EmailTemplateInput = {
-  sourceCodeToTemplateId?: Maybe<Scalars['Int']>;
   design?: Maybe<Scalars['JSON']>;
   name?: Maybe<Scalars['String']>;
   subject?: Maybe<Scalars['String']>;
@@ -1487,7 +1485,6 @@ export type EditComponentPassengerPassengerInput = {
 };
 
 export type EditEmailTemplateInput = {
-  sourceCodeToTemplateId?: Maybe<Scalars['Int']>;
   design?: Maybe<Scalars['JSON']>;
   name?: Maybe<Scalars['String']>;
   subject?: Maybe<Scalars['String']>;
@@ -1855,7 +1852,7 @@ export type SettingQuery = (
 
 export type UserFieldsFragment = (
   { __typename?: 'UsersPermissionsUser' }
-  & Pick<UsersPermissionsUser, 'id' | 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName' | 'lang'>
+  & Pick<UsersPermissionsUser, 'id' | 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName' | 'lang' | 'onboardingUser' | 'onboardingCreator'>
   & { events?: Maybe<Array<Maybe<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'uuid' | 'name' | 'date' | 'address'>
@@ -1957,6 +1954,8 @@ export const UserFieldsFragmentDoc = gql`
   lastName
   firstName
   lang
+  onboardingUser
+  onboardingCreator
   events {
     id
     uuid
