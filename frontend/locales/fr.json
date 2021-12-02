@@ -26,24 +26,23 @@
   },
   "tour": {
     "welcome": {
-      "text": "Bienvenue sur Caroster ! Voulez-vous faire un tour des fonctionnalités ?",
-      "nope": "Plus tard",
-      "onboard": "Montrez-moi"
+      "text": "Bienvenue sur Caroster ! Faire un tour des fonctionnalités",
+      "nope": "Pas maintenant",
+      "onboard": "OK, c'est parti!"
     },
     "creator": {
-      "step1": "Les informations de l'événement peuvent être modifiées depuis ce menu.",
-      "step2": "L'événement peut être édité en cliquant sur le bouton d'édition.",
-      "step3": "Partager dès maintenant l'événement en copiant le lien et en le partageant par email ou dans un groupe de messagerie.",
-      "step4": "La liste d'attente regroupe les passagers qui n'ont pas encore de place dans une voiture.",
-      "step5": "Les nouvelles voitures sont ajouté depuis la colonne de droite.",
-      "step6": "Une nouvelle voiture peut également être ajouté directement depuis le bouton d'action flottant."
+      "step1": "Vous pouvez voir et modifier les informations de l'événement depuis ce menu.✨",
+      "step2": "Editez l'événement en cliquant sur le bouton d'édition.",
+      "step3": "Vous pouvez copier le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.. ",
+      "step5": "Les nouvelles voitures sont ajoutées depuis la colonne de droite.",
+      "step6": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton."
     },
     "user": {
-      "step1": "Une nouvelle voiture peut être ajoutée directement depuis le bouton d'action flottant.",
+      "step1": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton.",
       "step2": "Il est également possible d'ajouter une voiture depuis la colonne de droite.",
       "step3": "Vous aimeriez une place dans une voiture ? Inscrivez-vous dans la liste d'attente ou directement dans une voiture.",
       "step4": "Les informations de l'événement sont accessibles depuis ce menu.",
-      "step5": "Partager dès maintenant l'événement en copiant le lien et en le partageant par email ou dans un groupe de messagerie."
+      "step5": "Vous pouvez copier le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.."
     }
   },
   "joyride": {
@@ -51,11 +50,11 @@
     "close": "Fermer",
     "last": "Terminer",
     "next": "Suivant",
-    "skip": "Passer"
+    "skip": "Fermer"
   },
   "menu": {
     "about": "À propos de Caroster",
-    "tour": "Tour de Caroster",
+    "tour": "Découverte de Caroster",
     "dashboard": "Tableau de bord",
     "login": "Se connecter",
     "logout": "Se déconnecter",
