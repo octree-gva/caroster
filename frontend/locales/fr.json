@@ -33,8 +33,8 @@
     "creator": {
       "step1": "Vous pouvez voir et modifier les informations de l'événement depuis ce menu.✨",
       "step2": "Editez l'événement en cliquant sur le bouton d'édition.",
-      "step3": "Vous pouvez copier le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.. ",
-      "step5": "Les nouvelles voitures sont ajoutées depuis la colonne de droite.",
+      "step3": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.. ",        
+      "step4": "La liste d'attente regroupe les personnes qui n'ont pas encore été placées dans une voiture.",
       "step6": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton."
     },
     "user": {
