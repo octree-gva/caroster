@@ -39,10 +39,9 @@
     },
     "user": {
       "step1": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton.",
-      "step2": "Il est également possible d'ajouter une voiture depuis la colonne de droite.",
       "step3": "Vous aimeriez une place dans une voiture ? Inscrivez-vous dans la liste d'attente ou directement dans une voiture.",
       "step4": "Les informations de l'événement sont accessibles depuis ce menu.",
-      "step5": "Vous pouvez copier le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.."
+      "step5": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.."
     }
   },
   "joyride": {
