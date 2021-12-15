@@ -5,6 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import useTourStore from '../../stores/useTourStore';
@@ -21,13 +22,16 @@ const WelcomeDialog = () => {
   const onCancel = () => setTour({showWelcome: false});
 
   return (
-    <Dialog open={showWelcome}>
+    <Dialog open={showWelcome} fullWidth maxWidth="xs">
       <CardMedia
         className={classes.media}
         image="/assets/Caroster_Octree_Social.jpg"
       />
       <DialogContent>
-        <DialogContentText>{t('tour.welcome.text')}</DialogContentText>
+        <DialogContentText align="center">
+          <Typography variant="h6">{t('tour.welcome.title')}</Typography>
+          {t('tour.welcome.text')}
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} id="TourCancel">

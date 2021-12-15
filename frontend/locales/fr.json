@@ -26,7 +26,8 @@
   },
   "tour": {
     "welcome": {
-      "text": "Bienvenue sur Caroster ! Faire un tour des fonctionnalités",
+      "title": "Bienvenue sur Caroster !",
+      "text": "Faire un tour des fonctionnalités.",
       "nope": "Pas maintenant",
       "onboard": "OK, c'est parti!"
     },

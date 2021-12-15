@@ -26,9 +26,10 @@
   },
   "tour": {
     "welcome": {
-      "text": "Welcome to Caroster! Would you like to take a feature tour?",
+      "title": "Welcome to Caroster!",
+      "text": "Would you like to take a feature tour?",
       "nope": "Later",
-      "onboard": "Show me"
+      "onboard": "OK, let's go!"
     },
     "creator": {
       "step1": "The event information can be modified from this menu.",
