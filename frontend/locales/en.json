@@ -35,15 +35,13 @@
       "step2": "The event can be edited by clicking on the edit button.",
       "step3": "Share the event now by copying the link and sharing it by email or in a messaging group.",
       "step4": "The waiting list includes passengers who do not yet have a seat in a car.",
-      "step5": "New cars are added from the right column.",
-      "step6": "A new car can also be added directly from the floating action button."
+      "step5": "A new car can also be added directly from the floating action button."
     },
     "user": {
       "step1": "A new car can be added directly from the floating action button.",
-      "step2": "It is also possible to add a car from the right column.",
-      "step3": "Would you like a place in a car? Register on the waiting list or directly in a car.",
-      "step4": "The event information can be accessed from this menu.",
-      "step5": "Share the event now by copying the link and sharing it by email or in a group messaging."
+      "step2": "Would you like a place in a car? Register on the waiting list or directly in a car.",
+      "step3": "The event information can be accessed from this menu.",
+      "step4": "Share the event now by copying the link and sharing it by email or in a group messaging."
     }
   },
   "joyride": {

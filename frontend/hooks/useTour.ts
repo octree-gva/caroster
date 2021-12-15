@@ -57,14 +57,12 @@ const useTour = () => {
           {content: t`tour.creator.step3`, target: '.tour_event_share'},
           {content: t`tour.creator.step4`, target: '.tour_waiting_list'},
           {content: t`tour.creator.step5`, target: '.tour_car_add1'},
-          {content: t`tour.creator.step6`, target: '.tour_car_add2'},
         ].map(step => ({...step, ...STEP_SETTINGS}))
       : [
-          {content: t`tour.user.step1`, target: '.tour_car_add2'},
-          {content: t`tour.user.step2`, target: '.tour_car_add1'},
-          {content: t`tour.user.step3`, target: '.tour_waiting_list'},
-          {content: t`tour.user.step4`, target: '.tour_event_infos'},
-          {content: t`tour.user.step5`, target: '.tour_event_share'},
+          {content: t`tour.user.step1`, target: '.tour_car_add1'},
+          {content: t`tour.user.step2`, target: '.tour_waiting_list'},
+          {content: t`tour.user.step3`, target: '.tour_event_infos'},
+          {content: t`tour.user.step4`, target: '.tour_event_share'},
         ].map(step => ({...step, ...STEP_SETTINGS}));
   }, [isCreator]);
 
@@ -100,10 +98,6 @@ const useTour = () => {
     }
   };
 
-  const onTourRestart = () => {
-    setTour({showWelcome: true});
-  };
-
   const onTourChange = (data: CallBackProps) => {
     const {action, index, type, status} = data;
 
@@ -132,7 +126,6 @@ const useTour = () => {
     steps,
     step,
     onTourChange,
-    onTourRestart,
   };
 };
 

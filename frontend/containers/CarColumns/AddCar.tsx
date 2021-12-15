@@ -15,7 +15,6 @@ const AddCar = (props: Props) => {
   return (
     <Container maxWidth="sm" className={classes.container}>
       <Button
-        className="tour_car_add1"
         classes={{containedSecondary: classes.button}}
         fullWidth
         variant="contained"

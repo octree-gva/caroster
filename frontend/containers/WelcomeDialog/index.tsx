@@ -15,6 +15,11 @@ const WelcomeDialog = () => {
   const setTour = useTourStore(s => s.setTour);
   const classes = useStyles();
 
+  const onStartTour = () =>
+    setTour({showWelcome: false, run: true, step: 0, prev: -1});
+
+  const onCancel = () => setTour({showWelcome: false});
+
   return (
     <Dialog open={showWelcome}>
       <CardMedia
@@ -25,15 +30,10 @@ const WelcomeDialog = () => {
         <DialogContentText>{t('tour.welcome.text')}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setTour({showWelcome: false})} id="TourCancel">
+        <Button onClick={onCancel} id="TourCancel">
           {t('tour.welcome.nope')}
         </Button>
-        <Button
-          onClick={() =>
-            setTour({showWelcome: false, run: false, step: 0, prev: -1})
-          }
-          id="TourConfirm"
-        >
+        <Button onClick={onStartTour} id="TourConfirm">
           {t('tour.welcome.onboard')}
         </Button>
       </DialogActions>

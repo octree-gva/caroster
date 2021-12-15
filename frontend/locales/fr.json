@@ -33,15 +33,15 @@
     "creator": {
       "step1": "Vous pouvez voir et modifier les informations de l'événement depuis ce menu.✨",
       "step2": "Editez l'événement en cliquant sur le bouton d'édition.",
-      "step3": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.. ",        
+      "step3": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.. ",
       "step4": "La liste d'attente regroupe les personnes qui n'ont pas encore été placées dans une voiture.",
-      "step6": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton."
+      "step5": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton."
     },
     "user": {
       "step1": "Ajoutez une nouvelle voiture en cliquant directement sur ce bouton.",
-      "step3": "Vous aimeriez une place dans une voiture ? Inscrivez-vous dans la liste d'attente ou directement dans une voiture.",
-      "step4": "Les informations de l'événement sont accessibles depuis ce menu.",
-      "step5": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.."
+      "step2": "Vous aimeriez une place dans une voiture ? Inscrivez-vous dans la liste d'attente ou directement dans une voiture.",
+      "step3": "Les informations de l'événement sont accessibles depuis ce menu.",
+      "step4": "Copiez le lien de l'événement dès maintenant pour le partager par email, whatsapp, telegram, etc.."
     }
   },
   "joyride": {

@@ -18,15 +18,13 @@ const CarColumns = (props: Props) => {
   const event = useEventStore(s => s.event);
   const {cars} = event || {};
   const slider = useRef(null);
-  const isCreator = useTourStore(s => s.isCreator);
-  const step = useTourStore(s => s.step);
-  const prev = useTourStore(s => s.prev);
+  const tourStep = useTourStore(s => s.step);
   const classes = useStyles();
 
   // On tour step changes : component update
   useEffect(() => {
-    tourStep(prev, step, isCreator, slider.current);
-  }, [step]);
+    onTourChange(slider.current);
+  }, [tourStep]);
 
   return (
     <div className={classes.container}>
@@ -53,19 +51,14 @@ const CarColumns = (props: Props) => {
   );
 };
 
-const tourStep = (prev, step, isCreator, slider) => {
-  const fromTo = (step1, step2) => prev === step1 && step === step2;
-  const first = () => slider?.slickGoTo(0, true);
-  const last = () =>
-    slider?.slickGoTo(slider?.innerSlider.state.slideCount, true);
+const onTourChange = slider => {
+  const {prev, step, isCreator} = useTourStore.getState();
+  const fromTo = (step1: number, step2: number) =>
+    prev === step1 && step === step2;
 
   if (isCreator) {
-    if (fromTo(2, 3) || fromTo(4, 3)) first();
-    else if (fromTo(3, 4)) last();
-  } else {
-    if (fromTo(1, 2)) first();
-    else if (fromTo(0, 1) || fromTo(2, 1)) last();
-  }
+    if (fromTo(2, 3) || fromTo(4, 3)) slider?.slickGoTo(0, true);
+  } else if (fromTo(0, 1)) slider?.slickGoTo(0, true);
 };
 
 const sortCars = (a: CarType, b: CarType) => {
@@ -106,10 +99,9 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
       },
     },
-    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
-      {
-        color: theme.palette.primary.main,
-      },
+    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before': {
+      color: theme.palette.primary.main,
+    },
   },
   slider: {
     flexGrow: 1,

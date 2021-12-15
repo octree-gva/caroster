@@ -10,7 +10,7 @@ const Fab = ({open = false, children = null, ...props}) => {
   return (
     <div className={classes.container}>
       <FabMui
-        className="tour_car_add2"
+        className="tour_car_add1"
         color="secondary"
         variant={variant}
         {...props}
