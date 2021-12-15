@@ -29,15 +29,22 @@ const WelcomeDialog = () => {
       />
       <DialogContent>
         <DialogContentText align="center">
-          <Typography variant="h6">{t('tour.welcome.title')}</Typography>
-          {t('tour.welcome.text')}
+          <Typography variant="h6" color="primary">
+            {t('tour.welcome.title')}
+          </Typography>
+          <Typography color="textPrimary">{t('tour.welcome.text')}</Typography>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} id="TourCancel">
           {t('tour.welcome.nope')}
         </Button>
-        <Button onClick={onStartTour} id="TourConfirm">
+        <Button
+          onClick={onStartTour}
+          id="TourConfirm"
+          variant="contained"
+          color="primary"
+        >
           {t('tour.welcome.onboard')}
         </Button>
       </DialogActions>
