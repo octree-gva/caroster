@@ -32,6 +32,12 @@ export const caroster = {
       },
     },
   },
+  typography: {
+    fontFamily:  [
+      'Inter',
+      'sans-serif'
+    ]
+  },
   breakpoints: {
     values: {
       xs: 0,
