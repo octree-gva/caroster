@@ -18,7 +18,7 @@ const AddCar = (props: Props) => {
         classes={{containedSecondary: classes.button}}
         fullWidth
         variant="contained"
-        color="secondary"
+        color="primary"
         onClick={toggleNewCar}
       >
         {t('car.creation.title')}
