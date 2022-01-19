@@ -71,6 +71,7 @@ const PassengersList = (props: Props) => {
                   <ClearButton
                     icon={icon}
                     onClick={() => onClick && onClick(passenger.id)}
+                    tabIndex={-1}
                   />
                 }
               />
