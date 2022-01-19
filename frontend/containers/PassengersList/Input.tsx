@@ -55,6 +55,7 @@ const Input = (props: Props) => {
           size="small"
           disabled={!name}
           onClick={onSave}
+          tabIndex={-1}
         >
           <Icon>check</Icon>
         </IconButton>
@@ -83,6 +84,8 @@ const Input = (props: Props) => {
 
 const useStyles = makeStyles(theme => ({
   emailBox: {
+    //We need this to prevent the placeholder to unexpectedly show when the element is selected with tab key
+    visibility: ({showEmail}) => (showEmail ? 'visible' : 'hidden'),
     transition: 'all 0.3s ease',
     maxHeight: ({showEmail}) => (showEmail ? '6rem' : 0),
     overflow: 'hidden',
