@@ -100,7 +100,7 @@ const Event = (props: Props) => {
         onShare={onShare}
       />
       <CarColumns toggleNewCar={toggleNewCar} />
-      <Fab open={openNewCar} onClick={toggleNewCar} aria-label="add-car" />
+      <Fab color="primary" open={openNewCar} onClick={toggleNewCar} aria-label="add-car" />
       <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
       <AddToMyEventDialog
         event={event}
