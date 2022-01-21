@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from 'react';
+import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,36 +7,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
-import {useTranslation} from 'react-i18next';
-import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
-import useSettings from '../../hooks/useSettings';
-import GenericMenu from './GenericMenu';
+import GenericMenu from '../GenericMenu';
 
 const GenericToolbar = ({title, actions = [], goBack = null}) => {
-  const {t} = useTranslation();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
   const {user} = useProfile();
-  const logout = useAuthStore(s => s.logout);
-  const settings = useSettings();
 
-  const validActions = useMemo(() => actions.filter(Boolean), [actions]);
-
-  const logoutMenuItem = user && {
-    label: t('menu.logout'),
-    onClick: () => {
-      logout();
-      window.location.href = settings['about_link'];
-    },
-    id: 'LogoutTabs',
-  };
-  const aboutMenuItem = {
-    label: t('menu.about'),
-    onClick: () => (window.location.href = settings['about_link']),
-    id: 'AboutTabs',
-  };
   const userInfos = user
     ? [{label: user.username, id: 'Email'}, {divider: true}]
     : [];
@@ -69,7 +48,7 @@ const GenericToolbar = ({title, actions = [], goBack = null}) => {
             {title}
           </Typography>
         </div>
-        {validActions.length > 0 && (
+        {actions.length > 0 && (
           <>
             <IconButton
               color="inherit"
@@ -89,13 +68,7 @@ const GenericToolbar = ({title, actions = [], goBack = null}) => {
             <GenericMenu
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[
-                ...userInfos,
-                ...validActions,
-                {divider: true},
-                aboutMenuItem,
-                logoutMenuItem,
-              ].filter(Boolean)}
+              actions={[...userInfos, ...actions, {divider: true}]}
             />
           </>
         )}
@@ -117,9 +90,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
-  },
-  shareIcon: {
-    marginRight: theme.spacing(0),
   },
   avatar: {
     width: theme.spacing(3),

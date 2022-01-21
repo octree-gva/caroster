@@ -1,9 +1,7 @@
 import {useState, useEffect} from 'react';
-import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Menu from '@material-ui/core/Menu';
+import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import useLangStore from '../../stores/useLangStore';
 import useProfile from '../../hooks/useProfile';
@@ -15,11 +13,12 @@ import moment from 'moment';
 
 const Languages = () => {
   const {t, i18n} = useTranslation();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [isSelecting, setSelecting] = useState(false);
   const language = useLangStore(s => s.language);
   const setLanguage = useLangStore(s => s.setLanguage);
   const {profile, connected} = useProfile();
   const [updateProfile] = useUpdateMeMutation();
+  const { languagesList } = useStyles({ isSelecting });
 
   useEffect(() => {
     if (navigator?.language === 'en')
@@ -37,12 +36,12 @@ const Languages = () => {
   }, [profile]);
 
   const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+    setSelecting(!isSelecting);
   };
 
   const onConfirm = (lang: Enum_Userspermissionsuser_Lang) => {
     setLanguage(lang);
-    setAnchorEl(null);
+    setSelecting(false);
 
     if (connected) {
       updateProfile({
@@ -57,22 +56,10 @@ const Languages = () => {
 
   return (
     <>
-      <Box position="fixed" bottom={0} left={0} zIndex={1050} p={1}>
-        <IconButton
-          color="primary"
-          aria-label="Languages"
-          onClick={handleClick}
-        >
-          <Icon>language</Icon>
-        </IconButton>
-      </Box>
-      <Menu
-        id="LanguagesMenu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
+      <MenuItem onClick={handleClick} >
+        {t('menu.language')}
+      </MenuItem>
+      <MenuList className={languagesList} dense>
         <MenuItem
           disabled={language === Enum_Userspermissionsuser_Lang.Fr}
           onClick={() => onConfirm(Enum_Userspermissionsuser_Lang.Fr)}
@@ -81,9 +68,19 @@ const Languages = () => {
           disabled={language === Enum_Userspermissionsuser_Lang.En}
           onClick={() => onConfirm(Enum_Userspermissionsuser_Lang.En)}
         >{t`languages.en`}</MenuItem>
-      </Menu>
+      </MenuList>
     </>
   );
 };
+
+
+const useStyles = makeStyles(theme => ({
+  languagesList: ({ isSelecting }: { isSelecting: boolean }) => ({
+    visibility: isSelecting ? 'visible' : 'hidden',
+    maxHeight: isSelecting ? 'none' : 0, 
+    padding: isSelecting ? `0 ${theme.spacing(.5)}px` : 0, 
+    overflow: 'hidden', 
+  }),
+}));
 
 export default Languages;

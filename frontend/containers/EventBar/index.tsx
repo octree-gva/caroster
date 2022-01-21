@@ -15,7 +15,7 @@ import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
-import EventMenu from '../EventMenu';
+import GenericMenu from '../GenericMenu';
 import EventDetails from '../EventDetails';
 
 const EventBar = ({event, onAdd, onSave, onShare}) => {
@@ -177,7 +177,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
             </IconButton>
           </>
         )}
-        <EventMenu
+        <GenericMenu
           anchorEl={anchorEl}
           setAnchorEl={setAnchorEl}
           actions={[
@@ -242,8 +242,8 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(3),
     fontSize: 16,
   },
-  withDivider: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
+  shareIcon: {
+    marginRight: 0,
   },
 }));
 

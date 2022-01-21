@@ -2,7 +2,6 @@ import {ReactNode} from 'react';
 import {Helmet} from 'react-helmet';
 import useGTM from '../hooks/useGTM';
 import GenericToolbar from '../containers/GenericToolbar';
-import Languages from '../containers/Languages';
 
 interface Props {
   children: ReactNode;
@@ -40,7 +39,6 @@ const DefaultLayout = (props: Props) => {
         />
       )}
       {children}
-      <Languages />
     </div>
   );
 };
