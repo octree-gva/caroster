@@ -12,11 +12,11 @@ import {isValidEmail} from '../../lib/formValidation';
 interface Props {
   addPassenger: (passenger: PassengerInput) => void;
   id: number;
-  isCar?: boolean;
+  isTravel?: boolean;
 }
 
 const Input = (props: Props) => {
-  const {addPassenger, id, isCar} = props;
+  const {addPassenger, id, isTravel} = props;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string>();
@@ -45,7 +45,7 @@ const Input = (props: Props) => {
           onChange={e => setName(e.target.value)}
           onKeyDown={onKeyDown}
           fullWidth
-          label={t('car.passengers.add')}
+          label={t('travel.passengers.add')}
           id={`NewPassenger-${id}-name`}
           name={`passenger-${id}-name`}
         />
@@ -70,8 +70,8 @@ const Input = (props: Props) => {
           id={`NewPassenger-${id}-email`}
           name={`passenger-${id}-email`}
           helperText={
-            isCar
-              ? t`passenger.input.email_helper_car`
+            isTravel
+              ? t`passenger.input.email_helper_travel`
               : t`passenger.input.email_helper`
           }
           error={error === 'email'}

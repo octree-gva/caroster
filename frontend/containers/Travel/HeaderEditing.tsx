@@ -14,32 +14,34 @@ import useEventStore from '../../stores/useEventStore';
 import RemoveDialog from '../RemoveDialog';
 import {
   useUpdateEventMutation,
-  useUpdateCarMutation,
-  useDeleteCarMutation,
+  useDeleteTravelMutation,
 } from '../../generated/graphql';
+import useActions from './useActions';
 
-const HeaderEditing = ({car, toggleEditing}) => {
+const HeaderEditing = ({travel, toggleEditing}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
+  const actions = useActions({travel});
   const [updateEvent] = useUpdateEventMutation();
-  const [updateCar] = useUpdateCarMutation();
-  const [deleteCar] = useDeleteCarMutation({refetchQueries: ['eventByUUID']});
+  const [deleteTravel] = useDeleteTravelMutation({
+    refetchQueries: ['eventByUUID'],
+  });
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(() => {
-    if (!car?.departure) return moment();
-    else return moment(car.departure);
-  }, [car?.departure]);
+    if (!travel?.departure) return moment();
+    else return moment(travel.departure);
+  }, [travel?.departure]);
 
   // States
-  const [name, setName] = useState(car?.name ?? '');
-  const [seats, setSeats] = useState(car?.seats ?? 4);
-  const [meeting, setMeeting] = useState(car?.meeting ?? '');
+  const [name, setName] = useState(travel?.vehicle?.name ?? '');
+  const [seats, setSeats] = useState(travel?.vehicle?.seats ?? 4);
+  const [meeting, setMeeting] = useState(travel?.meeting ?? '');
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
-  const [phone, setPhone] = useState(car ? car['phone_number'] : '');
-  const [details, setDetails] = useState(car?.details ?? '');
+  const [phone, setPhone] = useState(travel?.vehicle?.phone_number ?? '');
+  const [details, setDetails] = useState(travel?.details ?? '');
 
   // Click on ESQ closes the form
   const escFunction = useCallback(
@@ -56,79 +58,23 @@ const HeaderEditing = ({car, toggleEditing}) => {
     };
   }, [escFunction]);
 
-  const onSave = async evt => {
-    if (evt.preventDefault) evt.preventDefault();
-    try {
-      // If new seats count is under current passengers count, put excedent in event waiting list
-      if (!!car.passengers && car.passengers.length > seats) {
-        const lostPassengers = car.passengers.slice(seats);
-        if (lostPassengers.length > 0)
-          await updateEvent({
-            variables: {
-              uuid: event.uuid,
-              eventUpdate: {
-                waitingList: formatPassengers([
-                  ...(event.waitingList || []),
-                  ...lostPassengers.map(({name}) => ({name})),
-                ]),
-              },
-            },
-            refetchQueries: ['eventByUUID'],
-          });
-      }
-      const departure = moment(
-        `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
-        'YYYY-MM-DD HH:mm'
-      ).toISOString();
-      await updateCar({
-        variables: {
-          id: car.id,
-          carUpdate: {
-            name,
-            seats,
-            meeting,
-            departure,
-            phone_number: phone,
-            details,
-            passengers: formatPassengers(car.passengers, seats),
-          },
-        },
-      });
-      toggleEditing();
-    } catch (error) {
-      console.error(error);
-      addToast('car.errors.cant_update');
-    }
-    return false;
+  const onSave = async event => {
+    if (event.preventDefault) event.preventDefault();
+    const update = {
+      vehicle: {
+        name,
+        seats,
+        phone_number: phone,
+      },
+      travel: {meeting, date, time, details},
+    };
+    await actions.updateTravel(update);
+    toggleEditing();
   };
 
   const onRemove = async () => {
-    try {
-      // Put passengers in event waiting list (if any)
-      if (Array.isArray(car?.passengers) && car.passengers.length > 0)
-        await updateEvent({
-          variables: {
-            uuid: event.uuid,
-            eventUpdate: {
-              waitingList: formatPassengers([
-                ...(event.waitingList || []),
-                ...car.passengers.map(({name}) => ({name})),
-              ]),
-            },
-          },
-          refetchQueries: ['eventByUUID'],
-        });
-      await deleteCar({
-        variables: {
-          id: car.id,
-        },
-      });
-      addToast(t('car.actions.removed'));
-      toggleEditing();
-    } catch (error) {
-      console.error(error);
-      addToast('car.errors.cant_remove');
-    }
+    await actions.removeTravel();
+    toggleEditing();
   };
 
   return (
@@ -143,7 +89,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           <Icon>done</Icon>
         </IconButton>
         <DatePicker
-          label={t('car.creation.date')}
+          label={t('travel.creation.date')}
           fullWidth
           helperText=" "
           value={date}
@@ -151,10 +97,10 @@ const HeaderEditing = ({car, toggleEditing}) => {
           format="DD/MM/YYYY"
           cancelLabel={t('generic.cancel')}
           autoFocus
-          id="NewCarDate"
+          id="NewTravelDate"
         />
         <TimePicker
-          label={t('car.creation.time')}
+          label={t('travel.creation.time')}
           fullWidth
           helperText=" "
           value={time}
@@ -162,28 +108,28 @@ const HeaderEditing = ({car, toggleEditing}) => {
           cancelLabel={t('generic.cancel')}
           ampm={false}
           minutesStep={5}
-          id="NewCarTime"
+          id="NewTravelTime"
         />
         <TextField
-          label={t('car.creation.name')}
+          label={t('travel.creation.name')}
           fullWidth
           helperText=" "
           value={name}
           onChange={e => setName(e.target.value)}
           name="name"
-          id="EditCarName"
+          id="EditTravelName"
         />
         <TextField
-          label={t('car.creation.phone')}
+          label={t('travel.creation.phone')}
           fullWidth
           helperText=" "
           value={phone}
           onChange={e => setPhone(e.target.value)}
           name="phone"
-          id="EditCarPhone"
+          id="EditTravelPhone"
         />
         <TextField
-          label={t('car.creation.meeting')}
+          label={t('travel.creation.meeting')}
           fullWidth
           multiline
           rowsMax={4}
@@ -192,10 +138,10 @@ const HeaderEditing = ({car, toggleEditing}) => {
           value={meeting}
           onChange={e => setMeeting(e.target.value)}
           name="meeting"
-          id="EditCarMeeting"
+          id="EditTravelMeeting"
         />
         <TextField
-          label={t('car.creation.notes')}
+          label={t('travel.creation.notes')}
           fullWidth
           multiline
           rowsMax={4}
@@ -204,10 +150,12 @@ const HeaderEditing = ({car, toggleEditing}) => {
           value={details}
           onChange={e => setDetails(e.target.value)}
           name="details"
-          id="EditCarDetails"
+          id="EditTravelDetails"
         />
         <div className={classes.slider}>
-          <Typography variant="caption">{t('car.creation.seats')}</Typography>
+          <Typography variant="caption">
+            {t('travel.creation.seats')}
+          </Typography>
           <Slider
             value={seats}
             onChange={(e, value) => setSeats(value)}
@@ -219,7 +167,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
             min={1}
             max={8}
             valueLabelDisplay="auto"
-            id="EditCarSeats"
+            id="EditTravelSeats"
           />
         </div>
       </form>
@@ -228,7 +176,7 @@ const HeaderEditing = ({car, toggleEditing}) => {
           variant="outlined"
           color="primary"
           onClick={onSave}
-          id="CarSave"
+          id="TravelSave"
         >
           {t('generic.save')}
         </Button>
@@ -236,27 +184,19 @@ const HeaderEditing = ({car, toggleEditing}) => {
           variant="outlined"
           color="primary"
           onClick={toggleRemoving}
-          id="CarRemove"
+          id="TravelRemove"
         >
           {t('generic.remove')}
         </Button>
       </div>
       <RemoveDialog
-        text={t('car.actions.remove_alert')}
+        text={t('travel.actions.remove_alert')}
         open={removing}
         onClose={toggleRemoving}
         onRemove={onRemove}
       />
     </div>
   );
-};
-
-const formatPassengers = (passengers = [], seats: number = 1000) => {
-  if (!passengers) return [];
-
-  return passengers
-    .slice(0, seats)
-    .map(({__typename, ...passenger}) => passenger);
 };
 
 const useStyles = makeStyles(theme => ({

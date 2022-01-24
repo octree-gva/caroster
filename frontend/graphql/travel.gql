@@ -1,0 +1,46 @@
+fragment TravelFields on Travel {
+  id
+  meeting
+  departure
+  details
+  vehicle {
+    id
+    name
+    phone_number
+    seats
+  }
+  passengers {
+    id
+    name
+    location
+    user {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+
+mutation createTravel($travel: TravelInput!) {
+  createTravel(input: {data: $travel}) {
+    travel {
+      ...TravelFields
+    }
+  }
+}
+
+mutation updateTravel($id: ID!, $travelUpdate: editTravelInput!) {
+  updateTravel(input: {where: {id: $id}, data: $travelUpdate}) {
+    travel {
+      ...TravelFields
+    }
+  }
+}
+
+mutation deleteTravel($id: ID!) {
+  deleteTravel(input: {where: {id: $id}}) {
+    travel {
+      id
+    }
+  }
+}

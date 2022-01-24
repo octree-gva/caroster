@@ -11,7 +11,7 @@ import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 
-const CarDialog = ({cars, open, onClose, onSelect}) => {
+const TravelDialog = ({travels, open, onClose, onSelect}) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -31,19 +31,19 @@ const CarDialog = ({cars, open, onClose, onSelect}) => {
       </AppBar>
       <div className={classes.offset}>
         <List disablePadding>
-          {cars?.map((car, i) => {
-            const passengers = car.passengers ? car.passengers.length : 0;
-            const counter = `${passengers} / ${car.seats}`;
+          {travels?.map((travel, i) => {
+            const passengers = travel.passengers ? travel.passengers.length : 0;
+            const counter = `${passengers} / ${travel?.vehicle?.seats}`;
             return (
               <ListItem
                 key={i}
                 button
                 divider
-                disabled={passengers === car.seats}
-                onClick={() => onSelect(car)}
+                disabled={passengers === travel.seats}
+                onClick={() => onSelect(travel)}
               >
                 <ListItemText
-                  primary={car.name}
+                  primary={travel.vehicle?.name}
                   secondary={t('passenger.creation.seats', {seats: counter})}
                 />
               </ListItem>
@@ -65,4 +65,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default CarDialog;
+export default TravelDialog;

@@ -117,7 +117,7 @@
       "text_html": "To add <strong> {{eventName}} </strong> to your carosters you must be logged in or create an account."
     }
   },
-  "car": {
+  "travel": {
     "fields": {
       "meeting_point": "Meeting place",
       "details": "Notes",

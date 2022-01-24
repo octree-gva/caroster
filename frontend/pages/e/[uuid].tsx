@@ -5,8 +5,8 @@ import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import Layout from '../../layouts/Default';
 import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
-import CarColumns from '../../containers/CarColumns';
-import NewCarDialog from '../../containers/NewCarDialog';
+import TravelColumns from '../../containers/TravelColumns';
+import NewTravelDialog from '../../containers/NewTravelDialog';
 import WelcomeDialog from '../../containers/WelcomeDialog';
 import EventBar from '../../containers/EventBar';
 import Loading from '../../containers/Loading';
@@ -44,7 +44,7 @@ const Event = (props: Props) => {
   const setIsEditing = useEventStore(s => s.setIsEditing);
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
-  const [openNewCar, toggleNewCar] = useReducer(i => !i, false);
+  const [openNewTravel, toggleNewTravel] = useReducer(i => !i, false);
   const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
     pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
@@ -57,7 +57,7 @@ const Event = (props: Props) => {
   const onSave = async e => {
     try {
       const {uuid, ...data} = eventUpdate;
-      const {id, __typename, cars, users, waitingList, ...input} = data;
+      const {id, __typename, travels, users, waitingList, ...input} = data;
       await updateEvent({
         variables: {uuid, eventUpdate: input as EditEventInput},
         refetchQueries: ['eventByUUID'],
@@ -99,9 +99,14 @@ const Event = (props: Props) => {
         onSave={onSave}
         onShare={onShare}
       />
-      <CarColumns toggleNewCar={toggleNewCar} />
-      <Fab color="primary" open={openNewCar} onClick={toggleNewCar} aria-label="add-car" />
-      <NewCarDialog open={openNewCar} toggle={toggleNewCar} />
+      <TravelColumns toggleNewTravel={toggleNewTravel} />
+      <Fab
+        color="primary"
+        open={openNewTravel}
+        onClick={toggleNewTravel}
+        aria-label="add-travel"
+      />
+      <NewTravelDialog open={openNewTravel} toggle={toggleNewTravel} />
       <AddToMyEventDialog
         event={event}
         open={isAddToMyEvent}

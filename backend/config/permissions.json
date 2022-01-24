@@ -9,6 +9,14 @@
             "actions": ["create", "delete", "update"]
           },
           {
+            "name": "travel",
+            "actions": ["create", "delete", "update"]
+          },
+          {
+            "name": "vehicle",
+            "actions": ["create", "delete", "update"]
+          },
+          {
             "name": "event",
             "actions": ["create", "update", "findone"]
           },
@@ -29,6 +37,14 @@
         "controllers": [
           {
             "name": "car",
+            "actions": ["create", "delete", "update"]
+          },
+          {
+            "name": "travel",
+            "actions": ["create", "delete", "update"]
+          },
+          {
+            "name": "vehicle",
             "actions": ["create", "delete", "update"]
           },
           {

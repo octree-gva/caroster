@@ -9,18 +9,33 @@ fragment EventFields on Event {
   waitingList {
     id
     name
+    location
+    user {
+      id
+      firstName
+      lastName
+    }
   }
-  cars {
+  travels {
     id
-    name
-    seats
     meeting
     departure
     details
-    phone_number
+    vehicle {
+      id
+      name
+      phone_number
+      seats
+    }
     passengers {
       id
       name
+      location
+      user {
+        id
+        firstName
+        lastName
+      }
     }
   }
 }

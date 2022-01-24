@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "travels",
+  "info": {
+    "name": "travel",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "meeting": {
+      "type": "string"
+    },
+    "departure": {
+      "type": "datetime"
+    },
+    "details": {
+      "type": "text"
+    },
+    "passengers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "passenger.passenger"
+    },
+    "event": {
+      "model": "event",
+      "via": "travels"
+    },
+    "vehicle": {
+      "via": "travels",
+      "model": "vehicle"
+    }
+  }
+}

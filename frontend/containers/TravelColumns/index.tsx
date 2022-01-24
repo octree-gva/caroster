@@ -2,21 +2,21 @@ import {useEffect, useRef} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
-import {Car as CarType} from '../../generated/graphql';
+import {Travel as TravelType} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';
 import WaitingList from '../WaitingList';
-import Car from '../Car';
-import AddCar from './AddCar';
+import Travel from '../Travel';
+import AddTravel from './AddTravel';
 import sliderSettings from './_SliderSettings';
 
 interface Props {
-  toggleNewCar: () => void;
+  toggleNewTravel: () => void;
 }
 
-const CarColumns = (props: Props) => {
+const TravelColumns = (props: Props) => {
   const event = useEventStore(s => s.event);
-  const {cars} = event || {};
+  const {travels = []} = event || {};
   const slider = useRef(null);
   const tourStep = useTourStore(s => s.step);
   const classes = useStyles();
@@ -34,16 +34,20 @@ const CarColumns = (props: Props) => {
           <Container maxWidth="sm" className={classes.slide}>
             <WaitingList />
           </Container>
-          {cars
+          {travels
             ?.slice()
-            .sort(sortCars)
-            .map(car => (
-              <Container key={car.id} maxWidth="sm" className={classes.slide}>
-                <Car car={car} {...props} />
+            .sort(sortTravels)
+            .map(travel => (
+              <Container
+                key={travel.id}
+                maxWidth="sm"
+                className={classes.slide}
+              >
+                <Travel travel={travel} {...props} />
               </Container>
             ))}
           <Container maxWidth="sm" className={classes.slide}>
-            <AddCar {...props} />
+            <AddTravel {...props} />
           </Container>
         </Slider>
       </div>
@@ -61,7 +65,7 @@ const onTourChange = slider => {
   } else if (fromTo(0, 1)) slider?.slickGoTo(0, true);
 };
 
-const sortCars = (a: CarType, b: CarType) => {
+const sortTravels = (a: TravelType, b: TravelType) => {
   if (!b) return 1;
   const dateA = new Date(a.departure).getTime();
   const dateB = new Date(b.departure).getTime();
@@ -124,4 +128,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default CarColumns;
+export default TravelColumns;

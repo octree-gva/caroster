@@ -45,6 +45,10 @@
       "type": "component",
       "repeatable": true,
       "component": "passenger.passenger"
+    },
+    "travels": {
+      "via": "event",
+      "collection": "travel"
     }
   }
 }

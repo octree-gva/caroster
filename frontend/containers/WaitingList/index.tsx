@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import {Trans, useTranslation} from 'react-i18next';
 import {
   useUpdateEventMutation,
-  useUpdateCarMutation,
+  useUpdateTravelMutation,
   ComponentPassengerPassenger,
 } from '../../generated/graphql';
 import useToastStore from '../../stores/useToastStore';
@@ -17,7 +17,7 @@ import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
-import CarDialog from './CarDialog';
+import TravelDialog from './TravelDialog';
 
 const WaitingList = () => {
   const classes = useStyles();
@@ -28,17 +28,18 @@ const WaitingList = () => {
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
   const [addingPassenger, setAddingPassenger] = useState(null);
-  const cars = event?.cars?.length > 0 ? event.cars.slice().sort(sortCars) : [];
+  const travels =
+    event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
   const [updateEvent] = useUpdateEventMutation();
-  const [updateCar] = useUpdateCarMutation();
+  const [updateTravel] = useUpdateTravelMutation();
 
   const availability = useMemo(() => {
-    if (!cars) return;
-    return cars.reduce((count, {seats, passengers = []}) => {
+    if (!travels) return;
+    return travels.reduce((count, {seats, passengers = []}) => {
       if (!passengers) return count + seats;
       return count + seats - passengers.length;
     }, 0);
-  }, [cars]);
+  }, [travels]);
 
   const addPassenger = useCallback(
     async passenger => {
@@ -78,18 +79,18 @@ const WaitingList = () => {
     [event]
   );
 
-  const selectCar = useCallback(
-    async car => {
+  const selectTravel = useCallback(
+    async travel => {
       try {
         const {id, ...passenger} = addingPassenger;
-        const carPassengers = [...(car.passengers || []), passenger].map(
+        const travelPassengers = [...(travel.passengers || []), passenger].map(
           ({__typename, ...item}) => item
         );
-        await updateCar({
+        await updateTravel({
           variables: {
-            id: car.id,
-            carUpdate: {
-              passengers: carPassengers,
+            id: travel.id,
+            travelUpdate: {
+              passengers: travelPassengers,
             },
           },
         });
@@ -107,7 +108,7 @@ const WaitingList = () => {
         });
       } catch (error) {
         console.error(error);
-        addToast(t('passenger.errors.cant_select_car'));
+        addToast(t('passenger.errors.cant_select_travel'));
       }
       setAddingPassenger(null);
     },
@@ -166,17 +167,17 @@ const WaitingList = () => {
         onClose={() => setRemovingPassenger(null)}
         onRemove={() => removePassenger(removingPassenger)}
       />
-      <CarDialog
-        cars={cars}
+      <TravelDialog
+        travels={travels}
         open={!!addingPassenger}
         onClose={() => setAddingPassenger(null)}
-        onSelect={selectCar}
+        onSelect={selectTravel}
       />
     </>
   );
 };
 
-const sortCars = (a, b) => {
+const sortTravels = (a, b) => {
   const dateA = new Date(a.departure).getTime();
   const dateB = new Date(b.departure).getTime();
   if (dateA === dateB)

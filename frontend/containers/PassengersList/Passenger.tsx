@@ -33,7 +33,7 @@ const Passenger = (props: Props) => {
           </ListItemIcon>
         </ListItemAvatar>
         <ListItemText
-          primary={t('car.passengers.empty')}
+          primary={t('travel.passengers.empty')}
           classes={{
             root: classes.empty,
           }}

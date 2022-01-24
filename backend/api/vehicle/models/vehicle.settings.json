@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vehicles",
+  "info": {
+    "name": "vehicle",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "seats": {
+      "type": "integer",
+      "min": 0,
+      "default": 4
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "vehicles"
+    },
+    "travels": {
+      "via": "vehicle",
+      "collection": "travel"
+    },
+    "phone_number": {
+      "type": "string"
+    }
+  }
+}

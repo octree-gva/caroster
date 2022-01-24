@@ -5,11 +5,11 @@ import {makeStyles} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 
 interface Props {
-  toggleNewCar: () => void;
+  toggleNewTravel: () => void;
 }
 
-const AddCar = (props: Props) => {
-  const {toggleNewCar} = props;
+const AddTravel = (props: Props) => {
+  const {toggleNewTravel} = props;
   const classes = useStyles();
   const {t} = useTranslation();
   return (
@@ -19,9 +19,9 @@ const AddCar = (props: Props) => {
         fullWidth
         variant="contained"
         color="primary"
-        onClick={toggleNewCar}
+        onClick={toggleNewTravel}
       >
-        {t('car.creation.title')}
+        {t('travel.creation.title')}
       </Button>
     </Container>
   );
@@ -40,4 +40,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default AddCar;
+export default AddTravel;

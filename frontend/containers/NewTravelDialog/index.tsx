@@ -13,17 +13,14 @@ import {DatePicker, TimePicker} from '@material-ui/pickers';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
-import useToastsStore from '../../stores/useToastStore';
-import useAddToEvents from '../../hooks/useAddToEvents';
-import {useCreateCarMutation} from '../../generated/graphql';
+import useActions from './useActions';
 
-const NewCarDialog = ({open, toggle}) => {
+const NewTravelDialog = ({open, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
-  const addToast = useToastsStore(s => s.addToast);
-  const {addToEvent} = useAddToEvents();
   const event = useEventStore(s => s.event);
-  const [createCar] = useCreateCarMutation({refetchQueries: ['eventByUUID']});
+  const actions = useActions({event});
+
   const dateMoment = useMemo(() => {
     if (!event?.date) return moment();
     else return moment(event.date);
@@ -41,40 +38,28 @@ const NewCarDialog = ({open, toggle}) => {
 
   const onCreate = async e => {
     if (e.preventDefault) e.preventDefault();
-    try {
-      const departure = moment(
-        `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
-        'YYYY-MM-DD HH:mm'
-      ).toISOString();
-      await createCar({
-        variables: {
-          car: {
-            name,
-            seats,
-            meeting,
-            departure,
-            phone_number: phone,
-            details,
-            event: event.id,
-          },
-        },
-      });
-      addToEvent(event.id);
-      addToast(t('car.creation.created'));
-      toggle();
 
-      // Clear states
-      setName('');
-      setSeats(4);
-      setMeeting('');
-      setDate(moment());
-      setPhone('');
-      setDetails('');
-    } catch (error) {
-      console.error(error);
-      addToast(t('car.errors.cant_create'));
-    }
-    return false;
+    const travel = {
+      meeting,
+      date,
+      time,
+      details,
+      vehicle: {
+        name,
+        seats,
+        phone_number: phone,
+      },
+    };
+    await actions.createTravel(travel);
+    toggle();
+
+    // Clear states
+    setName('');
+    setSeats(4);
+    setMeeting('');
+    setDate(moment());
+    setPhone('');
+    setDetails('');
   };
 
   return (
@@ -86,10 +71,10 @@ const NewCarDialog = ({open, toggle}) => {
       TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>
-        <DialogTitle>{t('car.creation.title')}</DialogTitle>
+        <DialogTitle>{t('travel.creation.title')}</DialogTitle>
         <DialogContent>
           <DatePicker
-            label={t('car.creation.date')}
+            label={t('travel.creation.date')}
             fullWidth
             helperText=" "
             value={date}
@@ -97,10 +82,10 @@ const NewCarDialog = ({open, toggle}) => {
             format="DD/MM/YYYY"
             cancelLabel={t('generic.cancel')}
             autoFocus
-            id="NewCarDateTime"
+            id="NewTravelDateTime"
           />
           <TimePicker
-            label={t('car.creation.time')}
+            label={t('travel.creation.time')}
             fullWidth
             helperText=" "
             value={time}
@@ -108,28 +93,28 @@ const NewCarDialog = ({open, toggle}) => {
             cancelLabel={t('generic.cancel')}
             ampm={false}
             minutesStep={5}
-            id="NewCarTime"
+            id="NewTravelTime"
           />
           <TextField
-            label={t('car.creation.name')}
+            label={t('travel.creation.name')}
             fullWidth
             helperText=" "
             value={name}
             onChange={e => setName(e.target.value)}
             name="name"
-            id="NewCarName"
+            id="NewTravelName"
           />
           <TextField
-            label={t('car.creation.phone')}
+            label={t('travel.creation.phone')}
             fullWidth
             helperText=" "
             value={phone}
             onChange={e => setPhone(e.target.value)}
             name="phone"
-            id="NewCarPhone"
+            id="NewTravelPhone"
           />
           <TextField
-            label={t('car.creation.meeting')}
+            label={t('travel.creation.meeting')}
             fullWidth
             multiline
             rowsMax={4}
@@ -138,10 +123,10 @@ const NewCarDialog = ({open, toggle}) => {
             value={meeting}
             onChange={e => setMeeting(e.target.value)}
             name="meeting"
-            id="NewCarMeeting"
+            id="NewTravelMeeting"
           />
           <TextField
-            label={t('car.creation.notes')}
+            label={t('travel.creation.notes')}
             fullWidth
             multiline
             rowsMax={4}
@@ -150,10 +135,12 @@ const NewCarDialog = ({open, toggle}) => {
             value={details}
             onChange={e => setDetails(e.target.value)}
             name="details"
-            id="NewCarDetails"
+            id="NewTravelDetails"
           />
           <div className={classes.slider}>
-            <Typography variant="caption">{t('car.creation.seats')}</Typography>
+            <Typography variant="caption">
+              {t('travel.creation.seats')}
+            </Typography>
             <Slider
               value={seats}
               onChange={(e, value) => setSeats(value)}
@@ -162,14 +149,14 @@ const NewCarDialog = ({open, toggle}) => {
               min={1}
               max={MARKS.length}
               valueLabelDisplay="auto"
-              id="NewCarSeats"
+              id="NewTravelSeats"
             />
           </div>
         </DialogContent>
         <DialogActions>
           <Button
             color="primary"
-            id="NewCarCancel"
+            id="NewTravelCancel"
             onClick={toggle}
             tabIndex={-1}
           >
@@ -181,7 +168,7 @@ const NewCarDialog = ({open, toggle}) => {
             type="submit"
             disabled={!canCreate}
             aria-disabled={!canCreate}
-            id="NewCarSubmit"
+            id="NewTravelSubmit"
           >
             {t('generic.create')}
           </Button>
@@ -206,4 +193,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default NewCarDialog;
+export default NewTravelDialog;

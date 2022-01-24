@@ -5,15 +5,15 @@ import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Link from '@material-ui/core/Link';
-import {Car} from '../../generated/graphql';
+import {Travel} from '../../generated/graphql';
 
 interface Props {
-  car: Car;
+  travel: Travel;
   toggleEditing: () => void;
 }
 
 const Header = (props: Props) => {
-  const {car, toggleEditing} = props;
+  const {travel, toggleEditing} = props;
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -24,48 +24,52 @@ const Header = (props: Props) => {
         color="primary"
         className={classes.editBtn}
         onClick={toggleEditing}
-        id="EditCarBtn"
+        id="EditTravelBtn"
       >
         <Icon>edit</Icon>
       </IconButton>
-      {!!car.departure && (
-        <Typography variant="overline" id="CarDeparture">
-          {moment(car.departure).format('LLLL')}
+      {!!travel.departure && (
+        <Typography variant="overline" id="TravelDeparture">
+          {moment(travel.departure).format('LLLL')}
         </Typography>
       )}
-      <Typography variant="h5" id="CarName">
-        {car.name}
+      <Typography variant="h5" id="TravelName">
+        {travel.vehicle?.name}
       </Typography>
-      {!!car.phone_number && (
+      {!!travel.vehicle?.phone_number && (
         <div className={classes.section}>
-          <Typography variant="subtitle2">{t('car.fields.phone')}</Typography>
-          <Typography variant="body2" id="CarPhone">
-            {car.phone_number}
+          <Typography variant="subtitle2">
+            {t('travel.fields.phone')}
+          </Typography>
+          <Typography variant="body2" id="TravelPhone">
+            {travel.vehicle?.phone_number}
           </Typography>
         </div>
       )}
-      {!!car.meeting && (
+      {!!travel.meeting && (
         <div className={classes.section}>
           <Typography variant="subtitle2">
-            {t('car.fields.meeting_point')}
+            {t('travel.fields.meeting_point')}
           </Typography>
-          <Typography variant="body2" id="CarMeeting">
+          <Typography variant="body2" id="TravelMeeting">
             <Link
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://maps.google.com/?q=${encodeURI(car.meeting)}`}
+              href={`https://maps.google.com/?q=${encodeURI(travel.meeting)}`}
             >
-              {car.meeting}
+              {travel.meeting}
             </Link>
           </Typography>
         </div>
       )}
-      {!!car.details && (
+      {!!travel.details && (
         <div className={classes.section}>
-          <Typography variant="subtitle2">{t('car.fields.details')}</Typography>
-          <Typography variant="body2" id="CarDetails">
-            {car.details}
+          <Typography variant="subtitle2">
+            {t('travel.fields.details')}
+          </Typography>
+          <Typography variant="body2" id="TravelDetails">
+            {travel.details}
           </Typography>
         </div>
       )}
