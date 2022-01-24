@@ -177,23 +177,28 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
             </IconButton>
           </>
         )}
-        <GenericMenu
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-          actions={[
-            ...userInfos,
-            ...[
-              {
-                label: detailsOpen
-                  ? t('event.actions.hide_details')
-                  : t('event.actions.show_details'),
-                onClick: toggleDetails,
-                id: 'DetailsTab',
-              },
-            ],
-            ...menuActions,
-          ]}
-        />
+        {!detailsOpen && (
+          <GenericMenu
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            actions={[
+              ...userInfos,
+              ...[
+                {
+                  label: detailsOpen
+                    ? t('event.actions.hide_details')
+                    : t('event.actions.show_details'),
+                  onClick: e => {
+                    setAnchorEl(null);
+                    toggleDetails();
+                  },
+                  id: 'DetailsTab',
+                },
+              ],
+              ...menuActions,
+            ]}
+          />
+        )}
       </Toolbar>
       {detailsOpen && (
         <EventDetails toggleDetails={toggleDetails} onShare={onShare} />
