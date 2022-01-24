@@ -1,8 +1,12 @@
 import {useEffect} from 'react';
-import {useSettingLazyQuery} from '../generated/graphql';
+import {useSettingLazyQuery, SettingQuery} from '../generated/graphql';
 
 const useSettings = () => {
-  const [fetchSettings, {data: {setting} = {}}] = useSettingLazyQuery();
+  const defaulData: SettingQuery =
+    {};
+
+  const [fetchSettings, {data: {setting} = defaulData}] =
+    useSettingLazyQuery();
 
   useEffect(() => {
     fetchSettings();

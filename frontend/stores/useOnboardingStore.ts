@@ -3,10 +3,10 @@ import {persist} from 'zustand/middleware';
 
 const STORAGE_KEY = 'caroster-onboarding';
 
-type State = {
-  onboardingUser: boolean;
-  onboardingCreator: boolean;
-  setOnboarding: (onboarding: any) => void;
+type OnBoarding = {onboardingUser: boolean; onboardingCreator: boolean};
+
+type State = OnBoarding & {
+  setOnboarding: (onboarding: Partial<OnBoarding>) => void;
 };
 
 const useOnboardingStore = create<State>(

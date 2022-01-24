@@ -1,12 +1,15 @@
 import create from 'zustand';
 
-type State = {
+type Tour = {
   showWelcome: boolean;
   isCreator: boolean | null;
   run: boolean;
   step: number;
   prev: number;
-  setTour: (tour: any) => void;
+}
+
+type State = Tour & {
+  setTour: (tour: Partial<Tour>) => void;
 };
 
 const useTourStore = create<State>(set => ({

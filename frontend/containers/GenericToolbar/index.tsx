@@ -9,8 +9,17 @@ import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import useProfile from '../../hooks/useProfile';
 import GenericMenu from '../GenericMenu';
+import {ActionType} from '../GenericMenu/Action';
 
-const GenericToolbar = ({title, actions = [], goBack = null}) => {
+const GenericToolbar = ({
+  title,
+  actions = [],
+  goBack = null,
+}: {
+  title: string;
+  actions: Array<ActionType>;
+  goBack: () => void | null;
+}) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
@@ -37,7 +46,7 @@ const GenericToolbar = ({title, actions = [], goBack = null}) => {
             edge="start"
             className={classes.goBack}
             onClick={() =>
-              router.length > 2 ? router.goBack() : router.push('/dashboard')
+              router.basePath.split('/').length > 2 ? router.back() : router.push('/dashboard')
             }
           >
             <Icon>arrow_back</Icon>

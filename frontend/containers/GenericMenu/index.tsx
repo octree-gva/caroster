@@ -30,7 +30,7 @@ const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {
     id: 'AboutTabs',
   };
   const languageMenuItem = {
-    label: <Languages />,
+    label: Languages,
     isComponentLabel: true,
     id: 'LanguageSelection',
   };
@@ -58,7 +58,7 @@ const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {
       onClose={() => setAnchorEl(null)}
     >
       {validActions?.map((action, index) => (
-        <Action action={action} key={index} setAnchorEl={setAnchorEl} />
+        <Action action={action} key={index} />
       ))}
     </Menu>
   );

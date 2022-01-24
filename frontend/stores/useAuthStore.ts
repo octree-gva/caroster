@@ -4,8 +4,10 @@ import {UsersPermissionsUser} from '../generated/graphql';
 type State = {
   token: string | null;
   setToken: (token?: string) => void;
-  user: UsersPermissionsUser | null;
-  setUser: (user?: UsersPermissionsUser) => void;
+  user: Omit<UsersPermissionsUser, 'created_at' | 'updated_at' | '__typename'> | null;
+  setUser: (
+    user?: Omit<UsersPermissionsUser, 'created_at' | 'updated_at' | '__typename'>
+  ) => void;
   logout: () => void;
 };
 

@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import useAuthStore from '../stores/useAuthStore';
-import {useProfileLazyQuery} from '../generated/graphql';
+import {useProfileLazyQuery, ProfileQuery} from '../generated/graphql';
 
 const useProfile = () => {
   const token = useAuthStore(s => s.token);
   const user = useAuthStore(s => s.user);
-  const [profile, setProfile] = useState(undefined);
+  const [profile, setProfile] = useState<ProfileQuery['me']['profile']>(undefined);
   const [fetchProfile, {data}] = useProfileLazyQuery();
 
   useEffect(() => {

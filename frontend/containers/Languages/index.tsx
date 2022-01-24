@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import moment from 'moment';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import {makeStyles} from '@material-ui/core/styles';
@@ -9,7 +10,6 @@ import {
   useUpdateMeMutation,
   Enum_Userspermissionsuser_Lang,
 } from '../../generated/graphql';
-import moment from 'moment';
 
 const Languages = () => {
   const {t, i18n} = useTranslation();
