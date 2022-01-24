@@ -20,17 +20,17 @@
       "min": 0,
       "default": 4
     },
-    "user": {
-      "plugin": "users-permissions",
-      "model": "user",
-      "via": "vehicles"
-    },
     "travels": {
       "via": "vehicle",
       "collection": "travel"
     },
     "phone_number": {
       "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "vehicles"
     }
   }
 }

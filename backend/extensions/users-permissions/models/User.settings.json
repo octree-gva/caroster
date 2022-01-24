@@ -93,6 +93,10 @@
       ],
       "default": "FR",
       "required": false
+    },
+    "vehicles": {
+      "via": "user",
+      "collection": "vehicle"
     }
   }
 }
