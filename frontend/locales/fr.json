@@ -140,7 +140,17 @@
     },
     "passengers": {
       "empty": "Place disponible",
-      "add": "Ajouter un passager"
+      "add": "Ajouter un passager",
+      "add_to_car": "Ajouter à la voiture",
+      "register_to_waiting_list": "Inscription à la liste d'attente",
+      "add_someone": "Ajouter quelqu'un",
+      "location": "Lieu de rencontre",
+      "location_helper": "Indiquez votre lieu de départ de préférence",
+      "location_placeholder": "Lieu de rencontre (optionnel)",
+      "email": "Email",
+      "email_placeholder": "Email",
+      "name": "Nom",
+      "name_placeholder": "Nom"
     },
     "errors": {
       "cant_create": "Impossible de créer la voiture",

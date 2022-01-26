@@ -3,14 +3,15 @@ import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import PassengersList from '../PassengersList';
+import AddPassengerButtons from '../AddPassengerButtons';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
-
-import {Travel as TravelType} from '../../generated/graphql';
 import useActions from './useActions';
+import {Travel as TravelType} from '../../generated/graphql';
 
 interface Props {
   travel: TravelType;
+  toggleNewPassenger: () => void;
 }
 
 const Travel = (props: Props) => {
@@ -29,6 +30,8 @@ const Travel = (props: Props) => {
         <Header travel={travel} toggleEditing={toggleEditing} />
       )}
       <Divider />
+        <AddPassengerButtons toggleNewPassenger={props.toggleNewPassenger} />
+      <Divider />
       {!isEditing && (
         <PassengersList
           passengers={travel.passengers}
@@ -36,7 +39,6 @@ const Travel = (props: Props) => {
           addPassenger={actions.addPassenger}
           onClick={actions.removePassenger}
           icon="close"
-          isTravel
         />
       )}
     </Paper>

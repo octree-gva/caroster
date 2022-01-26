@@ -140,14 +140,25 @@
     },
     "passengers": {
       "empty": "Available seat",
-      "add": "Add a passenger"
+      "add": "Add a passenger",
+      "add_to_car": "Add to car",
+      "register_to_waiting_list": "Register to waiting list",
+      "add_someone": "Add someone",
+      "location": "Meeting place",
+      "location_helper": "Indicate your preferred departure location",
+      "location_placeholder": "Meeting place (optionnal)",
+      "email": "Email",
+      "email_placeholder": "email",
+      "name": "Name",
+      "name_placeholder": "name"
     },
     "errors": {
       "cant_create": "Unable to create the car",
       "cant_update": "Unable to modify the car",
       "cant_remove": "Unable to remove the car",
       "cant_add_passenger": "Unable to add a passenger",
-      "cant_remove_passenger": "Unable to remove passenger"
+      "cant_remove_passenger": "Unable to remove passenger",
+      "add_someone": "Add someone"
     }
   },
   "dashboard": {

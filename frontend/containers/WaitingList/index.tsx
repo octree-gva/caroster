@@ -17,9 +17,14 @@ import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
+import AddPassengerButtons from '../AddPassengerButtons';
 import TravelDialog from './TravelDialog';
 
-const WaitingList = () => {
+const WaitingList = ({
+  toggleNewPassenger,
+}: {
+  toggleNewPassenger: () => void;
+}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
@@ -144,6 +149,8 @@ const WaitingList = () => {
             {t('passenger.availability.seats', {count: availability})}
           </Typography>
         </div>
+        <Divider />
+        <AddPassengerButtons toggleNewPassenger={toggleNewPassenger} />
         <Divider />
         <PassengersList
           passengers={event.waitingList}

@@ -2,7 +2,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
 import {makeStyles} from '@material-ui/core/styles';
-import Input from './Input';
 import Passenger from './Passenger';
 import {
   ComponentPassengerPassenger,
@@ -30,7 +29,6 @@ const PassengersList = (props: Props) => {
     onClick,
     onPress,
     disabled,
-    isVehicle,
   } = props;
   const classes = useStyles();
   let list = passengers;
@@ -44,17 +42,6 @@ const PassengersList = (props: Props) => {
 
   return (
     <div className={classes.container}>
-      {(places
-        ? passengers
-          ? places - passengers.length > 0
-          : places > 0
-        : true) && (
-        <Input
-          addPassenger={addPassenger}
-          id={!!places ? 'Vehicle' : 'Waiting'}
-          isVehicle={isVehicle}
-        />
-      )}
       <List disablePadding>
         {!!list &&
           list.map((passenger, index) => (
@@ -84,7 +71,7 @@ const PassengersList = (props: Props) => {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(0, 0, 1, 0),
   },
 }));
 

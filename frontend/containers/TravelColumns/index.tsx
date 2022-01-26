@@ -1,10 +1,14 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useReducer, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
 import {Travel as TravelType} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';
+import {
+  AddPassengerToTravel,
+  AddPassengerToWaitingList,
+} from '../NewPassengerDialog';
 import WaitingList from '../WaitingList';
 import Travel from '../Travel';
 import AddTravel from './AddTravel';
@@ -20,6 +24,9 @@ const TravelColumns = (props: Props) => {
   const slider = useRef(null);
   const tourStep = useTourStore(s => s.step);
   const classes = useStyles();
+  const [newPassengerTravel, toggleNewPassengerToTravel] = useState<TravelType | null>(null);
+  const [openNewPassengerToWaitingList, toggleNewPassengerToWaitingList] =
+    useReducer(i => !i, false);
 
   // On tour step changes : component update
   useEffect(() => {
@@ -32,7 +39,7 @@ const TravelColumns = (props: Props) => {
       <div className={classes.slider}>
         <Slider ref={slider} {...sliderSettings}>
           <Container maxWidth="sm" className={classes.slide}>
-            <WaitingList />
+            <WaitingList toggleNewPassenger={toggleNewPassengerToWaitingList} />
           </Container>
           {travels
             ?.slice()
@@ -43,7 +50,13 @@ const TravelColumns = (props: Props) => {
                 maxWidth="sm"
                 className={classes.slide}
               >
-                <Travel travel={travel} {...props} />
+                <Travel
+                  travel={travel}
+                  {...props}
+                  toggleNewPassenger={() =>
+                    toggleNewPassengerToTravel(travel)
+                  }
+                />
               </Container>
             ))}
           <Container maxWidth="sm" className={classes.slide}>
@@ -51,6 +64,17 @@ const TravelColumns = (props: Props) => {
           </Container>
         </Slider>
       </div>
+      {!!newPassengerTravel && (
+        <AddPassengerToTravel
+          travel={newPassengerTravel}
+          open={!!newPassengerTravel}
+          toggle={() => toggleNewPassengerToTravel(null)}
+        />
+      )}
+      <AddPassengerToWaitingList
+        open={openNewPassengerToWaitingList}
+        toggle={toggleNewPassengerToWaitingList}
+      />
     </div>
   );
 };
@@ -103,9 +127,10 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
       },
     },
-    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before': {
-      color: theme.palette.primary.main,
-    },
+    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
+      {
+        color: theme.palette.primary.main,
+      },
   },
   slider: {
     flexGrow: 1,
