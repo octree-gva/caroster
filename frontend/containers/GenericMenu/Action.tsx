@@ -1,4 +1,4 @@
-import {isValidElement} from 'React';
+import {isValidElement} from 'react';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
