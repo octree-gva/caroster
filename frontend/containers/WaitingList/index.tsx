@@ -19,6 +19,8 @@ import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import TravelDialog from './TravelDialog';
+import ClearButton from '../ClearButton';
+import AssignButton from './AssignButton';
 
 const WaitingList = ({
   toggleNewPassenger,
@@ -131,6 +133,14 @@ const WaitingList = ({
     [isEditing, event]
   );
 
+  const ListButton = isEditing
+    ? ({onClick}: {onClick: () => void}) => (
+        <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+      )
+    : ({onClick}: {onClick: () => void}) => (
+        <AssignButton onClick={onClick} tabIndex={-1} />
+      );
+
   return (
     <>
       <Paper className={classes.root}>
@@ -156,7 +166,7 @@ const WaitingList = ({
           passengers={event.waitingList}
           addPassenger={addPassenger}
           onPress={onPress}
-          icon={isEditing ? 'close' : 'chevron_right'}
+          Button={ListButton}
           disabled={!isEditing && availability <= 0}
         />
       </Paper>

@@ -43,6 +43,7 @@ const NewPassengerDialog = ({
     const passenger = {
       email,
       name,
+      location,
     };
 
     try {

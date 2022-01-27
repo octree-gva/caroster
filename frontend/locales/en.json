@@ -213,7 +213,8 @@
       "seats": "Number of passengers: {{seats}}"
     },
     "actions": {
-      "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?"
+      "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",
+      "place": "Assign"
     },
     "errors": {
       "cant_add_passenger": "Unable to add a passenger",

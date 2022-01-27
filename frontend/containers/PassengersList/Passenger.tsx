@@ -10,21 +10,27 @@ import {ComponentPassengerPassenger} from '../../generated/graphql';
 interface Props {
   passenger?: ComponentPassengerPassenger;
   button?: ReactNode;
+  isVehicle?: boolean;
 }
 
 const Passenger = (props: Props) => {
-  const {passenger, button} = props;
+  const {passenger, button, isVehicle} = props;
   const {t} = useTranslation();
   const classes = useStyles();
 
-  if (passenger)
+  const showLocation = isVehicle ? false : passenger.location
+
+  if (passenger) {
     return (
       <>
-        <ListItemText primary={passenger.name} />
+        <ListItemText
+          primary={passenger.name}
+          secondary={showLocation}
+        />
         {button}
       </>
     );
-  else
+  } else
     return (
       <>
         <ListItemAvatar>

@@ -8,6 +8,7 @@ import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import useActions from './useActions';
 import {Travel as TravelType} from '../../generated/graphql';
+import ClearButton from '../ClearButton';
 
 interface Props {
   travel: TravelType;
@@ -30,7 +31,7 @@ const Travel = (props: Props) => {
         <Header travel={travel} toggleEditing={toggleEditing} />
       )}
       <Divider />
-        <AddPassengerButtons toggleNewPassenger={props.toggleNewPassenger} />
+      <AddPassengerButtons toggleNewPassenger={props.toggleNewPassenger} />
       <Divider />
       {!isEditing && (
         <PassengersList
@@ -38,7 +39,11 @@ const Travel = (props: Props) => {
           places={travel?.vehicle?.seats}
           addPassenger={actions.addPassenger}
           onClick={actions.removePassenger}
-          icon="close"
+          isVehicle
+          Button={({onClick}: {onClick: () => void}) => (
+            <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+          )}
+          isTravel
         />
       )}
     </Paper>

@@ -212,7 +212,8 @@
       "seats": "Nombre de passagers: {{seats}}"
     },
     "actions": {
-      "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?"
+      "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?",
+      "place": "Placer"
     },
     "errors": {
       "cant_add_passenger": "Impossible d'ajouter un passager",

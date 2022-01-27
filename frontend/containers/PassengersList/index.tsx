@@ -1,17 +1,15 @@
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
 import {makeStyles} from '@material-ui/core/styles';
 import Passenger from './Passenger';
 import {
   ComponentPassengerPassenger,
   EditComponentPassengerPassengerInput as PassengerInput,
 } from '../../generated/graphql';
-import ClearButton from './ClearButton';
 
 interface Props {
   passengers: ComponentPassengerPassenger[];
-  icon: string;
+  Button: JSX.Element;
   disabled?: boolean;
   isVehicle?: boolean;
   places?: number;
@@ -24,11 +22,11 @@ const PassengersList = (props: Props) => {
   const {
     passengers,
     places,
-    addPassenger,
-    icon,
+    Button,
     onClick,
     onPress,
     disabled,
+    isVehicle,
   } = props;
   const classes = useStyles();
   let list = passengers;
@@ -54,11 +52,10 @@ const PassengersList = (props: Props) => {
               <Passenger
                 key={index}
                 passenger={passenger}
+                isVehicle={isVehicle}
                 button={
-                  <ClearButton
-                    icon={icon}
+                  <Button
                     onClick={() => onClick && onClick(passenger.id)}
-                    tabIndex={-1}
                   />
                 }
               />
