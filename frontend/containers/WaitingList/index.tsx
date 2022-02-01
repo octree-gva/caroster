@@ -7,11 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
 import {Trans, useTranslation} from 'react-i18next';
-import {
-  useUpdateEventMutation,
-  useUpdateTravelMutation,
-  ComponentPassengerPassenger,
-} from '../../generated/graphql';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
@@ -21,12 +16,17 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import TravelDialog from './TravelDialog';
 import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
+import usePassengersActions from '../../hooks/usePassengersActions';
+
+interface Props {
+  getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
+  canAddSelf: boolean;
+}
 
 const WaitingList = ({
-  toggleNewPassenger,
-}: {
-  toggleNewPassenger: () => void;
-}) => {
+  getToggleNewPassengerDialogFunction,
+  canAddSelf,
+}: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
@@ -37,87 +37,40 @@ const WaitingList = ({
   const [addingPassenger, setAddingPassenger] = useState(null);
   const travels =
     event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
-  const [updateEvent] = useUpdateEventMutation();
-  const [updateTravel] = useUpdateTravelMutation();
+  const {addPassengerToTravel, removePassengerFromWaitingList} = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
-    return travels.reduce((count, {seats, passengers = []}) => {
-      if (!passengers) return count + seats;
-      return count + seats - passengers.length;
+    return travels.reduce((count, {vehicle, passengers = []}) => {
+      if (!passengers) return count + vehicle.seats;
+      return count + vehicle.seats - passengers.length;
     }, 0);
   }, [travels]);
 
-  const addPassenger = useCallback(
-    async passenger => {
-      try {
-        const waitingList = [...event.waitingList, passenger].map(
-          ({__typename, ...item}) => item
-        );
-        await updateEvent({
-          variables: {uuid: event.uuid, eventUpdate: {waitingList}},
-          refetchQueries: ['eventByUUID'],
-        });
-        addToEvent(event.id);
-      } catch (error) {
-        console.error(error);
-        addToast(t('passenger.errors.cant_add_passenger'));
-      }
-    },
-    [event]
-  );
-
-  const removePassenger = useCallback(
-    async (removingPassenger: ComponentPassengerPassenger) => {
-      try {
-        const waitingList = event.waitingList
-          .filter(passenger => passenger.id !== removingPassenger?.id)
-          .map(({__typename, ...item}) => item);
-        await updateEvent({
-          variables: {uuid: event.uuid, eventUpdate: {waitingList}},
-          refetchQueries: ['eventByUUID'],
-        });
-        addToEvent(event.id);
-      } catch (error) {
-        console.error(error);
-        addToast(t('passenger.errors.cant_remove_passenger'));
-      }
-    },
-    [event]
-  );
+  const removePassengerFromWaitingListFallBack = useCallback(removePassengerFromWaitingList, [event]);
 
   const selectTravel = useCallback(
     async travel => {
-      try {
-        const {id, ...passenger} = addingPassenger;
-        const travelPassengers = [...(travel.passengers || []), passenger].map(
-          ({__typename, ...item}) => item
-        );
-        await updateTravel({
-          variables: {
-            id: travel.id,
-            travelUpdate: {
-              passengers: travelPassengers,
+      const {id, ...passenger} = addingPassenger;
+      const onError = () => addToast(t('passenger.errors.cant_select_travel'));
+      addPassengerToTravel({
+        travel,
+        passenger,
+        onError,
+        onSucceed: () =>
+          removePassengerFromWaitingListFallBack({
+            passenger: addingPassenger,
+            event: {
+              ...event,
+              waitingList: event.waitingList.filter(
+                item => item.id !== addingPassenger.id
+              ),
             },
-          },
-        });
-        const waitingList = event.waitingList
-          .filter(item => item.id !== id)
-          .map(({__typename, ...item}) => item);
-        await updateEvent({
-          variables: {
-            uuid: event.uuid,
-            eventUpdate: {
-              waitingList,
-            },
-          },
-          refetchQueries: ['eventByUUID'],
-        });
-      } catch (error) {
-        console.error(error);
-        addToast(t('passenger.errors.cant_select_travel'));
-      }
-      setAddingPassenger(null);
+
+            onError,
+            onSucceed: () => setAddingPassenger(null),
+          }),
+      });
     },
     [event, addingPassenger] // eslint-disable-line
   );
@@ -160,11 +113,13 @@ const WaitingList = ({
           </Typography>
         </div>
         <Divider />
-        <AddPassengerButtons toggleNewPassenger={toggleNewPassenger} />
+        <AddPassengerButtons
+          getOnClickFunction={getToggleNewPassengerDialogFunction}
+          canAddSelf={canAddSelf}
+        />
         <Divider />
         <PassengersList
           passengers={event.waitingList}
-          addPassenger={addPassenger}
           onPress={onPress}
           Button={ListButton}
           disabled={!isEditing && availability <= 0}
@@ -182,7 +137,15 @@ const WaitingList = ({
         }
         open={!!removingPassenger}
         onClose={() => setRemovingPassenger(null)}
-        onRemove={() => removePassenger(removingPassenger)}
+        onRemove={() =>
+          removePassengerFromWaitingListFallBack({
+            passenger: removingPassenger,
+            event,
+            onSucceed: () => addToEvent(event.id),
+            onError: () =>
+              addToast(t('passenger.errors.cant_remove_passenger')),
+          })
+        }
       />
       <TravelDialog
         travels={travels}

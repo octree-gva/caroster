@@ -15,7 +15,6 @@ interface Props {
   places?: number;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
-  addPassenger: (passenger: PassengerInput) => void;
 }
 
 const PassengersList = (props: Props) => {

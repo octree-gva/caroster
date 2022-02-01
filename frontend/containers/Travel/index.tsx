@@ -12,7 +12,8 @@ import ClearButton from '../ClearButton';
 
 interface Props {
   travel: TravelType;
-  toggleNewPassenger: () => void;
+  getAddPassengerFunction: (addSelf: boolean) => () => void;
+  canAddSelf: boolean;
 }
 
 const Travel = (props: Props) => {
@@ -31,14 +32,16 @@ const Travel = (props: Props) => {
         <Header travel={travel} toggleEditing={toggleEditing} />
       )}
       <Divider />
-      <AddPassengerButtons toggleNewPassenger={props.toggleNewPassenger} />
+      <AddPassengerButtons
+        getOnClickFunction={props.getAddPassengerFunction}
+        canAddSelf={props.canAddSelf}
+      />
       <Divider />
       {!isEditing && (
         <PassengersList
           passengers={travel.passengers}
           places={travel?.vehicle?.seats}
-          addPassenger={actions.addPassenger}
-          onClick={actions.removePassenger}
+          onClick={actions.sendPassengerToWaitingList}
           isVehicle
           Button={({onClick}: {onClick: () => void}) => (
             <ClearButton icon="close" onClick={onClick} tabIndex={-1} />

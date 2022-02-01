@@ -7,13 +7,14 @@ import {useTranslation} from 'react-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';
 import {
-  useUpdateTravelMutation,
   Travel as TravelType,
 } from '../../generated/graphql';
 import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
+import useToastStore from '../../stores/useToastStore';
+import usePassengersActions from '../../hooks/usePassengersActions';
 
 interface Props {
   travel: TravelType;
@@ -25,38 +26,27 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const event = useEventStore(s => s.event);
-  const [updateTravel] = useUpdateTravelMutation();
   const {addToEvent} = useAddToEvents();
+  const addToast = useToastStore(s => s.addToast);
 
   // States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const canAddPassenger = !!name && !!email;
+  const {addPassengerToTravel} = usePassengersActions();
 
-  const addPassenger = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const passenger = {
       email,
       name,
     };
 
-    try {
-      const existingPassengers =
-        travel.passengers?.map(({__typename, ...item}) => item) || [];
-      const passengers = [...existingPassengers, passenger];
-      await updateTravel({
-        variables: {
-          id: travel.id,
-          travelUpdate: {
-            passengers,
-          },
-        },
-      });
+    return addPassengerToTravel({passenger, travel, onSucceed: () => {
       addToEvent(event.id);
+      addToast(t('passenger.success.added_to_car', {name}));
       toggle();
-    } catch (error) {
-      console.error(error);
-    }
+    }});
   };
 
   return (
@@ -67,7 +57,7 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
       onClose={toggle}
       TransitionComponent={Transition}
     >
-      <form onSubmit={addPassenger}>
+      <form onSubmit={onSubmit}>
         <DialogTitle className={classes.title}>
           {travel.vehicle.name}
           <Icon

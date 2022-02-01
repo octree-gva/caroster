@@ -4,19 +4,19 @@ import Icon from '@material-ui/core/Icon';
 import {ReactNode} from 'react';
 import useStyles from './useStyles';
 
-const SubmitButton = ({
-  disabled,
-  children,
-}: {
+interface Props {
   disabled: boolean;
   children: ReactNode;
-}) => {
+  important?: boolean;
+}
+
+const SubmitButton = ({disabled, children, important}: Props) => {
   const classes = useStyles();
   return (
     <Box className={classes.buttonBox}>
       <Button
-        color="primary"
-        variant="outlined"
+        color={important ? 'secondary' : 'primary'}
+        variant={important ? 'contained' : 'outlined'}
         fullWidth
         type="submit"
         disabled={disabled}

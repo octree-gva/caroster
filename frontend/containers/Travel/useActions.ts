@@ -1,15 +1,13 @@
-import {useTranslation} from 'react-i18next';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
-import useAddToEvents from '../../hooks/useAddToEvents';
 import {
   useUpdateTravelMutation,
   useUpdateEventMutation,
   useUpdateVehicleMutation,
   useDeleteTravelMutation,
   EventByUuidDocument,
-  EditComponentPassengerPassengerInput as PassengerInput,
   Travel,
 } from '../../generated/graphql';
 
@@ -26,36 +24,23 @@ const useActions = (props: Props) => {
   const [updateTravelMutation] = useUpdateTravelMutation();
   const [updateVehicleMutation] = useUpdateVehicleMutation();
   const [deleteTravelMutation] = useDeleteTravelMutation();
-  const {addToEvent} = useAddToEvents();
 
-  const addPassenger = async (passenger: PassengerInput) => {
-    try {
-      const existingPassengers =
-        travel.passengers?.map(({__typename, ...item}) => item) || [];
-      const passengers = [...existingPassengers, passenger];
-      await updateTravelMutation({
-        variables: {
-          id: travel.id,
-          travelUpdate: {
-            passengers,
-          },
-        },
-      });
-      addToEvent(event.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const removePassenger = async (passengerId: string) => {
+  const sendPassengerToWaitingList = async (passengerId: string) => {
     if (travel?.passengers) {
       try {
-        const {id, ...removedPassenger} =
-          travel.passengers?.find(item => item.id === passengerId) || {};
+        const {id, ...removedPassenger} = travel.passengers?.find(
+          item => item.id === passengerId
+        );
+        if (!removedPassenger) {
+          throw 'No corresponding passenger';
+        }
         const existingPassengers =
-          travel.passengers?.map(({__typename, ...item}) => item) || [];
+          travel.passengers?.map(({__typename, user, ...item}) =>
+            user && user.id ? {...item, user: user.id} : item
+          ) || [];
         const waitingList = [...event.waitingList, removedPassenger].map(
-          ({__typename, ...item}) => item
+          ({__typename, user, ...item}) =>
+            user && user.id ? {...item, user: user.id} : item
         );
         const passengers = existingPassengers.filter(
           item => item.id !== passengerId
@@ -166,7 +151,7 @@ const useActions = (props: Props) => {
     }
   };
 
-  return {removePassenger, addPassenger, updateTravel, removeTravel};
+  return {sendPassengerToWaitingList, updateTravel, removeTravel};
 };
 
 const formatPassengers = (passengers = [], seats: number = 1000) => {

@@ -141,6 +141,7 @@
     "passengers": {
       "empty": "Place disponible",
       "add": "Ajouter un passager",
+      "add_me": "S'ajouter",
       "add_to_car": "Ajouter à la voiture",
       "register_to_waiting_list": "Inscription à la liste d'attente",
       "add_someone": "Ajouter quelqu'un",
@@ -220,6 +221,12 @@
       "cant_save_passengers": "Impossible de mettre à jour passagers",
       "cant_remove_passenger": "Impossible de retirer le passager",
       "cant_select_car": "Impossible de sélectionner la voiture"
+    },
+    "success": {
+      "added_self_to_car": "Vous avez été ajouté à la voiture",
+      "added_to_car": "{{name}} a été ajouté à la voiture",
+      "added_self_to_waitlist": "Vous avez été ajouté à la liste d’attente. Vous serez notifié à l’ajout de nouvelles voitures",
+      "added_to_waitlist": "{{name}} ajouté à la liste d'attente"
     },
     "input": {
       "email": "Votre email",

@@ -142,6 +142,7 @@
       "empty": "Available seat",
       "add": "Add a passenger",
       "add_to_car": "Add to car",
+      "add_me": "Add me",
       "register_to_waiting_list": "Register to waiting list",
       "add_someone": "Add someone",
       "location": "Meeting place",
@@ -221,6 +222,12 @@
       "cant_save_passengers": "Unable to update passengers",
       "cant_remove_passenger": "Unable to remove the passenger",
       "cant_select_car": "Unable to select the car"
+    },
+    "success": {
+      "added_self_to_car": "You have been added to this car",
+      "added_to_car": "{{name}} has been added to this car",
+      "added_self_to_waitlist": "You have been added to the waitlist. You'll be notified when new cars will be added.",
+      "added_to_waitlist": "{{name}} has been added to the waitlist"
     },
     "input": {
       "email": "Your email",

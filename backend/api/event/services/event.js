@@ -24,7 +24,7 @@ module.exports = {
   sanitize: event => {
     const cars = event?.cars?.map(strapi.services.car.sanitize);
     const waitingList = event?.waitingList?.map(list =>
-      _pick(list, ['id', 'name', 'location'])
+      _pick(list, ['id', 'name', 'location', 'user'])
     );
     const sanitizedEvent = _pick(event, PUBLIC_FIELDS);
     return {...sanitizedEvent, cars, waitingList};

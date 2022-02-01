@@ -10,56 +10,67 @@ import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
+import usepassengersActions from '../../hooks/usePassengersActions';
+import useProfile from '../../hooks/useProfile';
 import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
-import {useUpdateEventMutation} from '../../generated/graphql';
 
 interface Props {
   toggle: () => void;
   open: boolean;
+  addSelf: boolean;
 }
 
-const NewPassengerDialog = ({
-  open,
-  toggle,
-}: Props) => {
+const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
-  const [updateEvent] = useUpdateEventMutation();
 
   // States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [location, setlocation] = useState('');
   const canAddPassenger = !!name && !!email;
+  const {user} = useProfile();
+  const {addPassengerToWaitingList} = usepassengersActions();
 
   const addPassenger = async (e: FormEvent) => {
     e.preventDefault();
-    const passenger = {
-      email,
-      name,
-      location,
-    };
+    const passenger =
+      addSelf && user
+        ? {
+            user: user,
+            email: user.email,
+            name: user.username,
+            location,
+          }
+        : {
+            email,
+            name,
+            location,
+          };
 
-    try {
-      const waitingList = [...event.waitingList, passenger].map(
-        ({__typename, ...item}) => item
-      );
-      await updateEvent({
-        variables: {uuid: event.uuid, eventUpdate: {waitingList}},
-        refetchQueries: ['eventByUUID'],
-      });
-      addToEvent(event.id);
-      toggle();
-    } catch (error) {
-      console.error(error);
-      addToast(t('passenger.errors.cant_add_passenger'));
-    }
+    addPassengerToWaitingList({
+      passenger,
+      event,
+      onError: () => addToast(t('passenger.errors.cant_add_passenger')),
+      onSucceed: () => {
+        addToEvent(event.id);
+        addToast(
+          t(
+            addSelf
+              ? 'passenger.success.added_self_to_waitlist'
+              : 'passenger.success.added_to_waitlist',
+            {name}
+          )
+        );
+        toggle();
+      },
+    });
   };
 
   return (
@@ -82,18 +93,18 @@ const NewPassengerDialog = ({
           </Icon>
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
-          <AddPassengerCommonFields
-            email={email}
-            setEmail={setEmail}
-            name={name}
-            setName={setName}
-          />
+          {!addSelf && (
+            <AddPassengerCommonFields
+              email={email}
+              setEmail={setEmail}
+              name={name}
+              setName={setName}
+            />
+          )}
           <Box className={classes.inputBox}>
             <label htmlFor="location">
               <Typography>
-                <Icon className={classes.labelIcon}>
-                  place
-                </Icon>{' '}
+                <Icon className={classes.labelIcon}>place</Icon>{' '}
                 {t('travel.passengers.location')}
               </Typography>
             </label>
@@ -112,8 +123,12 @@ const NewPassengerDialog = ({
               {t('travel.passengers.location_helper')}
             </Typography>
           </Box>
-          <SubmitButton disabled={!canAddPassenger}>
-            {t('travel.passengers.add_someone')}
+          <SubmitButton
+            disabled={!addSelf && !canAddPassenger}
+            important={addSelf}
+          >
+            {!addSelf && t('travel.passengers.add_someone')}
+            {addSelf && t('travel.passengers.add_me')}
           </SubmitButton>
         </DialogContent>
       </form>

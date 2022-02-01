@@ -1,10 +1,17 @@
-import {useEffect, useReducer, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
-import {Travel as TravelType} from '../../generated/graphql';
+import {useTranslation} from 'react-i18next';
+import {
+  Travel as TravelType,
+  useUpdateTravelMutation,
+} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';
+import useToastStore from '../../stores/useToastStore';
+import useProfile from '../../hooks/useProfile';
+import useAddToEvents from '../../hooks/useAddToEvents';
 import {
   AddPassengerToTravel,
   AddPassengerToWaitingList,
@@ -13,6 +20,11 @@ import WaitingList from '../WaitingList';
 import Travel from '../Travel';
 import AddTravel from './AddTravel';
 import sliderSettings from './_SliderSettings';
+import usePassengersActions from '../../hooks/usePassengersActions';
+
+interface NewPassengerDialogContext {
+  addSelf: boolean;
+}
 
 interface Props {
   toggleNewTravel: () => void;
@@ -22,11 +34,46 @@ const TravelColumns = (props: Props) => {
   const event = useEventStore(s => s.event);
   const {travels = []} = event || {};
   const slider = useRef(null);
+  const {t} = useTranslation();
   const tourStep = useTourStore(s => s.step);
+  const addToast = useToastStore(s => s.addToast);
+  const [updateTravel] = useUpdateTravelMutation();
+  const {addToEvent} = useAddToEvents();
+  const {user} = useProfile();
   const classes = useStyles();
-  const [newPassengerTravel, toggleNewPassengerToTravel] = useState<TravelType | null>(null);
-  const [openNewPassengerToWaitingList, toggleNewPassengerToWaitingList] =
-    useReducer(i => !i, false);
+  const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
+    travel: TravelType;
+  } | null>(null);
+  const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
+    useState<NewPassengerDialogContext | null>(null);
+  const {addPassengerToTravel} = usePassengersActions();
+
+  const canAddSelf = useMemo(() => {
+    const isInWaitingList = event?.waitingList?.some(
+      passenger => passenger.user?.id === user.id
+    );
+    const isInTravel = event?.travels.some(travel =>
+      travel.passengers.some(passenger => passenger.user?.id === user.id)
+    );
+    return !(isInWaitingList || isInTravel);
+  }, [event, user]);
+
+  const addSelfToTravel = async (travel: TravelType) => {
+    const passenger = {
+      user: user,
+      email: user.email,
+      name: user.username,
+    };
+
+    return addPassengerToTravel({
+      passenger,
+      travel,
+      onSucceed: () => {
+        addToEvent(event.id);
+        addToast(t('passenger.success.added_self_to_car'));
+      },
+    });
+  };
 
   // On tour step changes : component update
   useEffect(() => {
@@ -39,7 +86,11 @@ const TravelColumns = (props: Props) => {
       <div className={classes.slider}>
         <Slider ref={slider} {...sliderSettings}>
           <Container maxWidth="sm" className={classes.slide}>
-            <WaitingList toggleNewPassenger={toggleNewPassengerToWaitingList} />
+            <WaitingList
+              canAddSelf={canAddSelf}
+              getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
+                toggleNewPassengerToWaitingList({addSelf})}
+            />
           </Container>
           {travels
             ?.slice()
@@ -53,9 +104,14 @@ const TravelColumns = (props: Props) => {
                 <Travel
                   travel={travel}
                   {...props}
-                  toggleNewPassenger={() =>
-                    toggleNewPassengerToTravel(travel)
-                  }
+                  canAddSelf={canAddSelf}
+                  getAddPassengerFunction={(addSelf: boolean) => () => {
+                    if (addSelf) {
+                      return addSelfToTravel(travel);
+                    } else {
+                      return toggleNewPassengerToTravel({travel});
+                    }
+                  }}
                 />
               </Container>
             ))}
@@ -64,17 +120,20 @@ const TravelColumns = (props: Props) => {
           </Container>
         </Slider>
       </div>
-      {!!newPassengerTravel && (
+      {!!newPassengerTravelContext && (
         <AddPassengerToTravel
-          travel={newPassengerTravel}
-          open={!!newPassengerTravel}
+          open={!!newPassengerTravelContext}
           toggle={() => toggleNewPassengerToTravel(null)}
+          travel={newPassengerTravelContext.travel}
         />
       )}
-      <AddPassengerToWaitingList
-        open={openNewPassengerToWaitingList}
-        toggle={toggleNewPassengerToWaitingList}
-      />
+      {!!addPassengerToWaitingListContext && (
+        <AddPassengerToWaitingList
+          open={!!addPassengerToWaitingListContext}
+          toggle={() => toggleNewPassengerToWaitingList(null)}
+          addSelf={addPassengerToWaitingListContext.addSelf}
+        />
+      )}
     </div>
   );
 };
