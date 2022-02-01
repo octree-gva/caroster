@@ -26,8 +26,8 @@
       "component": "passenger.passenger"
     },
     "event": {
-      "model": "event",
-      "via": "travels"
+      "via": "travels",
+      "model": "event"
     },
     "vehicle": {
       "via": "travels",

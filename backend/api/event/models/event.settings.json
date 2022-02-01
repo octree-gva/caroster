@@ -49,6 +49,10 @@
     "travels": {
       "via": "event",
       "collection": "travel"
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 250
     }
   }
 }

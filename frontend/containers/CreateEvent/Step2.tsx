@@ -18,6 +18,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   // States
   const [date, setDate] = useState(null);
   const [address, setAddress] = useState(event.address ?? '');
+  const [description, setDescription] = useState(event.description ?? '');
   const [loading, setLoading] = useState(false);
 
   const onCreate = async evt => {
@@ -27,6 +28,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     const eventData = {
       date: !date ? null : moment(date).format('YYYY-MM-DD'),
       address,
+      description,
     };
     addToEvent(eventData);
     const result = await createEvent(eventData);
@@ -61,6 +63,22 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         name="address"
         id="NewEventAddress"
       />
+      <TextField
+        label={t('event.creation.description')}
+        fullWidth
+        multiline
+        rowsMax={4}
+        inputProps={{maxLength: 250}}
+        helperText={
+          description.length === 0
+            ? t('event.creation.description_helper')
+            : `${description.length}/250`
+        }
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        name="address"
+        id="NewEventDescription"
+      />
       <Button
         disabled={loading}
         className={classes.button}
@@ -71,11 +89,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         id="NewEventSubmit"
       >
         {loading ? (
-          <CircularProgress
-            className={classes.loader}
-            size={20}
-            color="primary"
-          />
+          <CircularProgress size={20} color="primary" />
         ) : (
           t('generic.create')
         )}

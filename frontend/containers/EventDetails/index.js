@@ -98,6 +98,27 @@ const EventDetails = ({onShare}) => {
             </Typography>
           )}
         </div>
+        <div className={classes.section}>
+          <Typography variant="h6">{t('event.fields.description')}</Typography>
+          {isEditing ? (
+            <TextField
+              fullWidth
+              multiline
+              rowsMax={4}
+              inputProps={{maxLength: 250}}
+              helperText={`${event.description.length}/250`}
+              defaultValue={event.description}
+              value={event.description}
+              onChange={e => setEventUpdate({description: e.target.value})}
+              id={`${idPrefix}Description`}
+              name="description"
+            />
+          ) : (
+            <Typography variant="body1" id={`${idPrefix}Description`}>
+              {event.description ?? t('event.fields.empty')}
+            </Typography>
+          )}
+        </div>
         <Typography variant="h6">{t('event.fields.link')}</Typography>
         <Typography>{t('event.fields.link_desc')}</Typography>
         <TextField

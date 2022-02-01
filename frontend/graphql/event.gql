@@ -2,6 +2,7 @@ fragment EventFields on Event {
   id
   uuid
   name
+  description
   email
   date
   address
@@ -45,6 +46,7 @@ mutation createEvent(
   $email: String!
   $date: Date
   $address: String
+  $description: String
   $newsletter: Boolean
 ) {
   createEvent(
@@ -54,6 +56,7 @@ mutation createEvent(
         email: $email
         date: $date
         address: $address
+        description: $description
         newsletter: $newsletter
       }
     }

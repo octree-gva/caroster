@@ -46,7 +46,6 @@ export type Car = {
   details?: Maybe<Scalars['String']>;
   event?: Maybe<Event>;
   passengers?: Maybe<Array<Maybe<ComponentPassengerPassenger>>>;
-  user?: Maybe<UsersPermissionsUser>;
 };
 
 export type CarAggregator = {
@@ -146,12 +145,6 @@ export type CarConnectionUpdated_At = {
   connection?: Maybe<CarConnection>;
 };
 
-export type CarConnectionUser = {
-  __typename?: 'CarConnectionUser';
-  key?: Maybe<Scalars['ID']>;
-  connection?: Maybe<CarConnection>;
-};
-
 export type CarGroupBy = {
   __typename?: 'CarGroupBy';
   id?: Maybe<Array<Maybe<CarConnectionId>>>;
@@ -164,7 +157,6 @@ export type CarGroupBy = {
   phone_number?: Maybe<Array<Maybe<CarConnectionPhone_Number>>>;
   details?: Maybe<Array<Maybe<CarConnectionDetails>>>;
   event?: Maybe<Array<Maybe<CarConnectionEvent>>>;
-  user?: Maybe<Array<Maybe<CarConnectionUser>>>;
 };
 
 export type CarInput = {
@@ -176,7 +168,6 @@ export type CarInput = {
   details?: Maybe<Scalars['String']>;
   event?: Maybe<Scalars['ID']>;
   passengers?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
-  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -254,6 +245,7 @@ export type Event = {
   position?: Maybe<Scalars['JSON']>;
   uuid?: Maybe<Scalars['String']>;
   waitingList?: Maybe<Array<Maybe<ComponentPassengerPassenger>>>;
+  description?: Maybe<Scalars['String']>;
   cars?: Maybe<Array<Maybe<Car>>>;
   users?: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   travels?: Maybe<Array<Maybe<Travel>>>;
@@ -314,6 +306,12 @@ export type EventConnectionDate = {
   connection?: Maybe<EventConnection>;
 };
 
+export type EventConnectionDescription = {
+  __typename?: 'EventConnectionDescription';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<EventConnection>;
+};
+
 export type EventConnectionEmail = {
   __typename?: 'EventConnectionEmail';
   key?: Maybe<Scalars['String']>;
@@ -361,6 +359,7 @@ export type EventGroupBy = {
   address?: Maybe<Array<Maybe<EventConnectionAddress>>>;
   position?: Maybe<Array<Maybe<EventConnectionPosition>>>;
   uuid?: Maybe<Array<Maybe<EventConnectionUuid>>>;
+  description?: Maybe<Array<Maybe<EventConnectionDescription>>>;
 };
 
 export type EventInput = {
@@ -374,6 +373,7 @@ export type EventInput = {
   uuid?: Maybe<Scalars['String']>;
   waitingList?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  description?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
   newsletter?: Maybe<Scalars['Boolean']>;
@@ -433,7 +433,7 @@ export type InputUuid = {
 
 
 
-export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CarConnectionUser | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicle | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionUser | VehicleConnectionPhone_Number | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
+export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | EventConnectionDescription | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicle | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionPhone_Number | VehicleConnectionUser | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -1298,7 +1298,6 @@ export type UserInput = {
   onboardingUser?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
-  cars?: Maybe<Array<Maybe<Scalars['ID']>>>;
   vehicles?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1448,20 +1447,11 @@ export type UsersPermissionsUser = {
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   events?: Maybe<Array<Maybe<Event>>>;
-  cars?: Maybe<Array<Maybe<Car>>>;
   vehicles?: Maybe<Array<Maybe<Vehicle>>>;
 };
 
 
 export type UsersPermissionsUserEventsArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
-
-export type UsersPermissionsUserCarsArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -1598,8 +1588,8 @@ export type Vehicle = {
   updated_at: Scalars['DateTime'];
   name: Scalars['String'];
   seats?: Maybe<Scalars['Int']>;
-  user?: Maybe<UsersPermissionsUser>;
   phone_number?: Maybe<Scalars['String']>;
+  user?: Maybe<UsersPermissionsUser>;
   travels?: Maybe<Array<Maybe<Travel>>>;
 };
 
@@ -1697,16 +1687,16 @@ export type VehicleGroupBy = {
   updated_at?: Maybe<Array<Maybe<VehicleConnectionUpdated_At>>>;
   name?: Maybe<Array<Maybe<VehicleConnectionName>>>;
   seats?: Maybe<Array<Maybe<VehicleConnectionSeats>>>;
-  user?: Maybe<Array<Maybe<VehicleConnectionUser>>>;
   phone_number?: Maybe<Array<Maybe<VehicleConnectionPhone_Number>>>;
+  user?: Maybe<Array<Maybe<VehicleConnectionUser>>>;
 };
 
 export type VehicleInput = {
   name: Scalars['String'];
   seats?: Maybe<Scalars['Int']>;
-  user?: Maybe<Scalars['ID']>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   phone_number?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1860,7 +1850,6 @@ export type EditCarInput = {
   details?: Maybe<Scalars['String']>;
   event?: Maybe<Scalars['ID']>;
   passengers?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
-  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1897,6 +1886,7 @@ export type EditEventInput = {
   uuid?: Maybe<Scalars['String']>;
   waitingList?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  description?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1973,7 +1963,6 @@ export type EditUserInput = {
   onboardingUser?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
-  cars?: Maybe<Array<Maybe<Scalars['ID']>>>;
   vehicles?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1983,9 +1972,9 @@ export type EditUserInput = {
 export type EditVehicleInput = {
   name?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
-  user?: Maybe<Scalars['ID']>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   phone_number?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -2148,7 +2137,7 @@ export type ResetPasswordMutation = (
 
 export type EventFieldsFragment = (
   { __typename?: 'Event' }
-  & Pick<Event, 'id' | 'uuid' | 'name' | 'email' | 'date' | 'address' | 'position'>
+  & Pick<Event, 'id' | 'uuid' | 'name' | 'description' | 'email' | 'date' | 'address' | 'position'>
   & { waitingList?: Maybe<Array<Maybe<(
     { __typename?: 'ComponentPassengerPassenger' }
     & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
@@ -2178,6 +2167,7 @@ export type CreateEventMutationVariables = Exact<{
   email: Scalars['String'];
   date?: Maybe<Scalars['Date']>;
   address?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   newsletter?: Maybe<Scalars['Boolean']>;
 }>;
 
@@ -2406,6 +2396,7 @@ export const EventFieldsFragmentDoc = gql`
   id
   uuid
   name
+  description
   email
   date
   address
@@ -2641,9 +2632,9 @@ export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPassword
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const CreateEventDocument = gql`
-    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String, $newsletter: Boolean) {
+    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String, $description: String, $newsletter: Boolean) {
   createEvent(
-    input: {data: {name: $name, email: $email, date: $date, address: $address, newsletter: $newsletter}}
+    input: {data: {name: $name, email: $email, date: $date, address: $address, description: $description, newsletter: $newsletter}}
   ) {
     event {
       ...EventFields
@@ -2670,6 +2661,7 @@ export type CreateEventMutationFn = Apollo.MutationFunction<CreateEventMutation,
  *      email: // value for 'email'
  *      date: // value for 'date'
  *      address: // value for 'address'
+ *      description: // value for 'description'
  *      newsletter: // value for 'newsletter'
  *   },
  * });

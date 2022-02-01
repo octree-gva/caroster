@@ -7,6 +7,7 @@ const PUBLIC_FIELDS = [
   'id',
   'uuid',
   'name',
+  'description',
   'email',
   'id',
   'date',
