@@ -27,7 +27,7 @@ interface NewPassengerDialogContext {
 }
 
 interface Props {
-  toggleNewTravel: () => void;
+  toggle: () => void;
 }
 
 const TravelColumns = (props: Props) => {

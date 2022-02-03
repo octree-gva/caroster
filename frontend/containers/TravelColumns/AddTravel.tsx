@@ -5,11 +5,11 @@ import {makeStyles} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 
 interface Props {
-  toggleNewTravel: () => void;
+  toggle: () => void;
 }
 
 const AddTravel = (props: Props) => {
-  const {toggleNewTravel} = props;
+  const {toggle} = props;
   const classes = useStyles();
   const {t} = useTranslation();
   return (
@@ -19,7 +19,7 @@ const AddTravel = (props: Props) => {
         fullWidth
         variant="contained"
         color="primary"
-        onClick={toggleNewTravel}
+        onClick={toggle}
       >
         {t('travel.creation.title')}
       </Button>

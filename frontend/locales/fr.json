@@ -141,6 +141,10 @@
       "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
       "removed": "La voiture a été supprimée"
     },
+    "vehicle": {
+      "add": "Ajouter un nouveau véhicule",
+      "title": "Mes véhicules"
+    },
     "passengers": {
       "empty": "Place disponible",
       "add": "Ajouter un passager",

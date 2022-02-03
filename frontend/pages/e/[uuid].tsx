@@ -1,4 +1,6 @@
 import {useState, useReducer, useEffect} from 'react';
+import Box from '@material-ui/core/Box';
+import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {initializeApollo} from '../../lib/apolloClient';
 import useToastStore from '../../stores/useToastStore';
@@ -7,10 +9,10 @@ import Layout from '../../layouts/Default';
 import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
 import TravelColumns from '../../containers/TravelColumns';
 import NewTravelDialog from '../../containers/NewTravelDialog';
+import VehicleChoiceDialog from '../../containers/VehicleChoiceDialog';
 import WelcomeDialog from '../../containers/WelcomeDialog';
 import EventBar from '../../containers/EventBar';
 import Loading from '../../containers/Loading';
-import Fab from '../../containers/Fab';
 import OnBoardingTour from '../../containers/OnBoardingTour';
 import {
   useUpdateEventMutation,
@@ -20,6 +22,8 @@ import {
   EditEventInput,
 } from '../../generated/graphql';
 import ErrorPage from '../_error';
+import AddTravel from '../../containers/TravelColumns/AddTravel';
+import useProfile from '../../hooks/useProfile';
 
 const POLL_INTERVAL = 10000;
 
@@ -37,7 +41,9 @@ const EventPage = props => {
 
 const Event = (props: Props) => {
   const {eventUUID} = props;
+  const classes = useStyles();
   const {t} = useTranslation();
+  const {user} = useProfile();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
@@ -45,6 +51,7 @@ const Event = (props: Props) => {
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const [openNewTravel, toggleNewTravel] = useReducer(i => !i, false);
+  const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
   const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
     pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
@@ -99,14 +106,16 @@ const Event = (props: Props) => {
         onSave={onSave}
         onShare={onShare}
       />
-      <TravelColumns toggleNewTravel={toggleNewTravel} />
-      <Fab
-        color="primary"
-        open={openNewTravel}
-        onClick={toggleNewTravel}
-        aria-label="add-travel"
-      />
+      <TravelColumns toggle={toggleVehicleChoice} />
+      <Box className={classes.bottomRight}>
+        <AddTravel toggle={user ? toggleVehicleChoice : toggleNewTravel} />
+      </Box>
       <NewTravelDialog open={openNewTravel} toggle={toggleNewTravel} />
+      <VehicleChoiceDialog
+        open={openVehicleChoice}
+        toggle={toggleVehicleChoice}
+        toggleNewTravel={toggleNewTravel}
+      />
       <AddToMyEventDialog
         event={event}
         open={isAddToMyEvent}
@@ -139,5 +148,14 @@ export async function getServerSideProps(ctx) {
     },
   };
 }
+
+const useStyles = makeStyles(theme => ({
+  bottomRight: {
+    position: 'absolute',
+    bottom: theme.spacing(1),
+    right: theme.spacing(6),
+    width: 200,
+  },
+}));
 
 export default EventPage;

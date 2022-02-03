@@ -141,6 +141,10 @@
       "remove_alert": "Are you sure you want to remove this car and add the subscribers to the waiting list?",
       "removed": "The car has been removed"
     },
+    "vehicle": {
+      "add": "Add a new vehicle",
+      "title": "My Vehicles"
+    },
     "passengers": {
       "empty": "Available seat",
       "add": "Add a passenger",

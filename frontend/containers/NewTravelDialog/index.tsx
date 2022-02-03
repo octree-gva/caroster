@@ -14,10 +14,12 @@ import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
+import useProfile from '../../hooks/useProfile';
 
 const NewTravelDialog = ({open, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
+  const {user} = useProfile();
   const event = useEventStore(s => s.event);
   const actions = useActions({event});
 
@@ -48,6 +50,7 @@ const NewTravelDialog = ({open, toggle}) => {
         name,
         seats,
         phone_number: phone,
+        ...(user ? {user: user.id} : {}),
       },
     };
     await actions.createTravel(travel);
