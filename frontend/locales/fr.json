@@ -213,7 +213,10 @@
       "seats_plural": "{{count}} places disponibles"
     },
     "creation": {
-      "seats": "Nombre de passagers: {{seats}}"
+      "seats": "Nombre de passagers: {{seats}}",
+      "departure": "Depart: ",
+      "assign": "Placer",
+      "available_cars": "Voitures disponibles"
     },
     "actions": {
       "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?",

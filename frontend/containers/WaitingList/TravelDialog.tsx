@@ -1,13 +1,17 @@
 import {forwardRef} from 'react';
+import moment from 'moment';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 
@@ -27,6 +31,9 @@ const TravelDialog = ({travels, open, onClose, onSelect}) => {
           <IconButton onClick={onClose} color="inherit">
             <Icon>arrow_back_ios</Icon>
           </IconButton>
+          <Typography variant="h5">
+            {t('passenger.creation.available_cars')}
+          </Typography>
         </Toolbar>
       </AppBar>
       <div className={classes.offset}>
@@ -37,15 +44,42 @@ const TravelDialog = ({travels, open, onClose, onSelect}) => {
             return (
               <ListItem
                 key={i}
-                button
                 divider
                 disabled={passengers === travel.seats}
-                onClick={() => onSelect(travel)}
+                className={classes.listItem}
               >
-                <ListItemText
-                  primary={travel.vehicle?.name}
-                  secondary={t('passenger.creation.seats', {seats: counter})}
-                />
+                <Box className={classes.rtlBox}>
+                  <Box className={classes.info}>
+                    <Typography variant="subtitle1" className={classes.date}>
+                      {t('passenger.creation.departure')}
+                      {moment(travel.departure).format('LLLL')}
+                    </Typography>
+                    <Link
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        travel.meeting
+                      )}`}
+                      onClick={e => e.preventDefault}
+                    >
+                      {travel.meeting}
+                    </Link>
+                  </Box>
+                  <Box className={classes.info}>
+                    <Typography variant="h6">{travel.vehicle?.name}</Typography>
+                    <Typography variant="body2">
+                      {t('passenger.creation.seats', {seats: counter})}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => onSelect(travel)}
+                  className={classes.button}
+                >
+                  {t('passenger.creation.assign')}
+                </Button>
               </ListItem>
             );
           })}
@@ -62,6 +96,39 @@ const Transition = forwardRef(function Transition(props, ref) {
 const useStyles = makeStyles(theme => ({
   offset: {
     paddingTop: theme.spacing(7),
+  },
+  rtlBox: {
+    display: 'flex',
+    padding: 0,
+    margin: 0,
+    direction: 'rtl',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+      paddingBottom: theme.spacing(1),
+    },
+  },
+  info: {
+    padding: theme.spacing(0, 4, 0, 0),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0.5, 1),
+      width: '100%',
+      textAlign: 'left',
+    },
+  },
+  listItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+      textAlign: 'center',
+    },
+  },
+  date: {
+    textTransform: 'capitalize',
+    padding: theme.spacing(0, 0, 0.5, 0),
+  },
+  button: {
+    padding: theme.spacing(1, 15),
   },
 }));
 

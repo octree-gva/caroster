@@ -21,11 +21,13 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
+  slideToTravel: (travelId: string) => void;
 }
 
 const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
+  slideToTravel,
 }: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -68,7 +70,11 @@ const WaitingList = ({
             },
 
             onError,
-            onSucceed: () => setAddingPassenger(null),
+            onSucceed: () => {
+              setAddingPassenger(null);
+              slideToTravel(travel.id);
+              addToast(t('passenger.success.added_to_car', {name: addingPassenger.name}));
+            },
           }),
       });
     },

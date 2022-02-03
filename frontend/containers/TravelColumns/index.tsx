@@ -37,7 +37,6 @@ const TravelColumns = (props: Props) => {
   const {t} = useTranslation();
   const tourStep = useTourStore(s => s.step);
   const addToast = useToastStore(s => s.addToast);
-  const [updateTravel] = useUpdateTravelMutation();
   const {addToEvent} = useAddToEvents();
   const {user} = useProfile();
   const classes = useStyles();
@@ -47,8 +46,10 @@ const TravelColumns = (props: Props) => {
   const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
     useState<NewPassengerDialogContext | null>(null);
   const {addPassengerToTravel} = usePassengersActions();
+  const sortedTravels = travels?.slice().sort(sortTravels);
 
   const canAddSelf = useMemo(() => {
+    if (!user) return false;
     const isInWaitingList = event?.waitingList?.some(
       passenger => passenger.user?.id === user.id
     );
@@ -75,6 +76,14 @@ const TravelColumns = (props: Props) => {
     });
   };
 
+  const slideToTravel = (travelId: string) => {
+    const travelIndex = sortedTravels.findIndex(
+      travel => travel.id === travelId
+    );
+    const slideIndex = travelIndex + 1;
+    slider.current.slickGoTo(slideIndex);
+  };
+
   // On tour step changes : component update
   useEffect(() => {
     onTourChange(slider.current);
@@ -87,34 +96,28 @@ const TravelColumns = (props: Props) => {
         <Slider ref={slider} {...sliderSettings}>
           <Container maxWidth="sm" className={classes.slide}>
             <WaitingList
+              slideToTravel={slideToTravel}
               canAddSelf={canAddSelf}
               getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
                 toggleNewPassengerToWaitingList({addSelf})}
             />
           </Container>
-          {travels
-            ?.slice()
-            .sort(sortTravels)
-            .map(travel => (
-              <Container
-                key={travel.id}
-                maxWidth="sm"
-                className={classes.slide}
-              >
-                <Travel
-                  travel={travel}
-                  {...props}
-                  canAddSelf={canAddSelf}
-                  getAddPassengerFunction={(addSelf: boolean) => () => {
-                    if (addSelf) {
-                      return addSelfToTravel(travel);
-                    } else {
-                      return toggleNewPassengerToTravel({travel});
-                    }
-                  }}
-                />
-              </Container>
-            ))}
+          {sortedTravels?.map(travel => (
+            <Container key={travel.id} maxWidth="sm" className={classes.slide}>
+              <Travel
+                travel={travel}
+                {...props}
+                canAddSelf={canAddSelf}
+                getAddPassengerFunction={(addSelf: boolean) => () => {
+                  if (addSelf) {
+                    return addSelfToTravel(travel);
+                  } else {
+                    return toggleNewPassengerToTravel({travel});
+                  }
+                }}
+              />
+            </Container>
+          ))}
           <Container maxWidth="sm" className={classes.slide}>
             <AddTravel {...props} />
           </Container>

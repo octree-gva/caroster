@@ -214,7 +214,10 @@
       "seats_plural": "{{count}} seats available"
     },
     "creation": {
-      "seats": "Number of passengers: {{seats}}"
+      "seats": "Number of passengers: {{seats}}",
+      "departure": "Departure: ",
+      "assign": "Assign",
+      "available_cars": "Available cars"
     },
     "actions": {
       "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",
