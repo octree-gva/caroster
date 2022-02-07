@@ -15,7 +15,7 @@ const Dashboard = () => {
   const {t} = useTranslation();
   const router = useRouter();
   const isAuth = useAuthStore(s => !!s.token);
-  const {profile, notReady} = useProfile();
+  const {profile, isReady} = useProfile();
   const {events} = profile || {};
   const classes = useStyles();
 
@@ -41,10 +41,9 @@ const Dashboard = () => {
     [events]
   );
 
-  const noDateEvents = useMemo(
-    () => events?.filter(({date}) => !date),
-    [events]
-  );
+  const noDateEvents = useMemo(() => events?.filter(({date}) => !date), [
+    events,
+  ]);
 
   const menuActions = [
     {
@@ -59,7 +58,7 @@ const Dashboard = () => {
     },
   ];
 
-  if (!events || !isAuth || notReady)
+  if (!events || !isAuth || !isReady)
     return (
       <LayoutDefault menuTitle={t('dashboard.title')}>
         <Loading />

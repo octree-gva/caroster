@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
+import clsx from 'clsx';
 
 interface Props {
   toggle: () => void;
@@ -13,7 +14,10 @@ const AddTravel = (props: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
   return (
-    <Container maxWidth="sm" className={classes.container}>
+    <Container
+      maxWidth="sm"
+      className={clsx([classes.container, 'tour_travel_add'])}
+    >
       <Button
         classes={{containedSecondary: classes.button}}
         fullWidth

@@ -32,21 +32,20 @@ const useTour = () => {
   const onboardingUser = useOnboardingStore(s => s.onboardingUser);
   const onboardingCreator = useOnboardingStore(s => s.onboardingCreator);
   const setOnboarding = useOnboardingStore(s => s.setOnboarding);
-  const {profile, notReady} = useProfile();
+  const {profile, isReady} = useProfile();
   const event = useEventStore(s => s.event);
   const {eventsToBeAdded} = useAddToEvents();
   const [updateProfile] = useUpdateMeMutation();
 
   // Check if user is the event creator
   useEffect(() => {
-    if (notReady || !event) return;
+    if (!isReady || !event) return;
 
-    if (profile) {
-      setTour({isCreator: profile.events.map(e => e.id).includes(event?.id)});
-    } else {
-      setTour({isCreator: eventsToBeAdded.includes(event?.id)});
-    }
-  }, [notReady, event, eventsToBeAdded, profile]);
+    let isCreator = eventsToBeAdded.includes(event?.id);
+    if (profile) isCreator = profile.events.map(e => e.id).includes(event?.id);
+
+    setTour({isCreator});
+  }, [isReady, event, eventsToBeAdded, profile]);
 
   const steps = useMemo(() => {
     if (isCreator === null) return [];
@@ -56,10 +55,10 @@ const useTour = () => {
           {content: t`tour.creator.step2`, target: '.tour_event_edit'},
           {content: t`tour.creator.step3`, target: '.tour_event_share'},
           {content: t`tour.creator.step4`, target: '.tour_waiting_list'},
-          {content: t`tour.creator.step5`, target: '.tour_car_add1'},
+          {content: t`tour.creator.step5`, target: '.tour_travel_add'},
         ].map(step => ({...step, ...STEP_SETTINGS}))
       : [
-          {content: t`tour.user.step1`, target: '.tour_car_add1'},
+          {content: t`tour.user.step1`, target: '.tour_travel_add'},
           {content: t`tour.user.step2`, target: '.tour_waiting_list'},
           {content: t`tour.user.step3`, target: '.tour_event_infos'},
           {content: t`tour.user.step4`, target: '.tour_event_share'},
@@ -68,13 +67,14 @@ const useTour = () => {
 
   // Init tour
   useEffect(() => {
-    const hasOnboarded = () => {
-      if (isCreator) return profile?.onboardingCreator || onboardingCreator;
-      else return profile?.onboardingUser || onboardingUser;
-    };
-    if (!hasOnboarded() && steps.length > 0) setTour({showWelcome: true});
-    else setTour({showWelcome: false});
-  }, [steps, isCreator, onboardingCreator, onboardingUser, profile]);
+    if (!isReady) return;
+    let hasOnboarded = profile?.onboardingUser || onboardingUser;
+    if (isCreator)
+      hasOnboarded = profile?.onboardingCreator || onboardingCreator;
+    const hasSteps = steps.length > 0;
+    const showWelcome = hasSteps && !hasOnboarded;
+    setTour({showWelcome});
+  }, [steps, isCreator, onboardingCreator, onboardingUser, profile, isReady]);
 
   // On step change : wait for the UI a little and run it
   useEffect(() => {

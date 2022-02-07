@@ -9,7 +9,7 @@ import Logo from '../components/Logo';
 const Home = () => {
   const {t} = useTranslation();
   const router = useRouter();
-  const {notReady, profile} = useProfile();
+  const {isReady, profile} = useProfile();
 
   const noUserMenuActions = [
     {
@@ -39,7 +39,7 @@ const Home = () => {
 
   const menuActions = !!profile ? loggedMenuActions : noUserMenuActions;
 
-  if (notReady) return null;
+  if (!isReady) return null;
 
   return (
     <Layout

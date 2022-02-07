@@ -1,27 +1,29 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import useAuthStore from '../stores/useAuthStore';
-import {useProfileLazyQuery, ProfileQuery} from '../generated/graphql';
+import {useProfileLazyQuery} from '../generated/graphql';
 
 const useProfile = () => {
   const token = useAuthStore(s => s.token);
   const user = useAuthStore(s => s.user);
-  const [profile, setProfile] = useState<ProfileQuery['me']['profile']>(undefined);
-  const [fetchProfile, {data}] = useProfileLazyQuery();
+  const [isReady, setIsReady] = useState(false);
+  const [
+    fetchProfile,
+    {data: {me: {profile = null} = {}} = {}},
+  ] = useProfileLazyQuery({
+    onCompleted: () => setIsReady(true),
+  });
 
   useEffect(() => {
-    if (token) fetchProfile();
-  }, [token]);
-
-  useEffect(() => {
-    if (data) setProfile(data.me?.profile);
-    else setProfile(null);
-  }, [data]);
+    if (profile) setIsReady(true);
+    else if (token) fetchProfile();
+    else setIsReady(true);
+  }, [token, profile]);
 
   return {
     profile,
     connected: !!token,
     user: user,
-    notReady: typeof profile === 'undefined',
+    isReady,
   };
 };
 
