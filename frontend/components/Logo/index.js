@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <div className={classes.layout}>
       <a href="https://caroster.io" className={classes.link}>
-        <img src={'/assets/logo.png'} alt="Caroster" className={classes.logo} />
+        <img src={'/assets/Caroster_beta.png'} alt="Caroster" className={classes.logo} />
       </a>
     </div>
   );
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     display: 'block',
-    width: '40%',
+    width: '55%',
     height: 'auto',
     margin: '0 auto',
   },

@@ -112,7 +112,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       <Toolbar>
         <div className={classes.name}>
           <Link href={settings?.['about_link'] || ''}>
-            <img className={classes.logo} src="/assets/logo.svg" alt="Logo" />
+            <img className={classes.logo} src="/assets/Logo_in_beta.svg" alt="Logo" />
           </Link>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {event.name}
@@ -230,7 +230,7 @@ const useStyles = makeStyles(theme => ({
   }),
   logo: {
     marginRight: theme.spacing(2),
-    width: 32,
+    width: 64,
     height: 32,
     cursor: 'pointer',
   },
