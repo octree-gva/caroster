@@ -122,6 +122,7 @@ const WaitingList = ({
         <AddPassengerButtons
           getOnClickFunction={getToggleNewPassengerDialogFunction}
           canAddSelf={canAddSelf}
+          variant="waitingList"
         />
         <Divider />
         <PassengersList

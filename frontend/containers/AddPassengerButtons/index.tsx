@@ -7,9 +7,10 @@ import {useTranslation} from 'react-i18next';
 interface Props {
   getOnClickFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
+  variant: 'waitingList' | 'travel';
 }
 
-const AddPassengerButtons = ({getOnClickFunction, canAddSelf}: Props) => {
+const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant}: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -38,7 +39,7 @@ const AddPassengerButtons = ({getOnClickFunction, canAddSelf}: Props) => {
           onClick={getOnClickFunction(false)}
         >
           <Icon>person_add</Icon>
-          {t('travel.passengers.add')}
+          {t(`travel.passengers.add_to_${variant}`)}
         </Button>
       </Box>
     </Box>

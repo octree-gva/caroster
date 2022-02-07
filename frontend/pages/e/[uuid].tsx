@@ -24,6 +24,7 @@ import {
 import ErrorPage from '../_error';
 import AddTravel from '../../containers/TravelColumns/AddTravel';
 import useProfile from '../../hooks/useProfile';
+import Fab from '../../containers/Fab';
 
 const POLL_INTERVAL = 10000;
 
@@ -108,7 +109,13 @@ const Event = (props: Props) => {
       />
       <TravelColumns toggle={toggleVehicleChoice} />
       <Box className={classes.bottomRight}>
-        <AddTravel toggle={user ? toggleVehicleChoice : toggleNewTravel} />
+        <Fab
+          onClick={(user ? toggleVehicleChoice : toggleNewTravel)}
+          aria-label="add-car"
+          color="primary"
+        >
+          {t('travel.creation.title')}
+        </Fab>
       </Box>
       <NewTravelDialog open={openNewTravel} toggle={toggleNewTravel} />
       <VehicleChoiceDialog

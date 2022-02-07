@@ -148,6 +148,8 @@
     "passengers": {
       "empty": "Place disponible",
       "add": "Ajouter un passager",
+      "add_to_travel": "Ajouter un passager",
+      "add_to_waitingList": "Ajouter quelqu'un",
       "add_me": "S'ajouter",
       "add_to_car": "Ajouter à la voiture",
       "register_to_waiting_list": "Inscription à la liste d'attente",

@@ -4,9 +4,13 @@ const useStyles = makeStyles(theme => ({
     dialogContent: {
       padding: theme.spacing(1, 3, 3, 3),
     },
+    label: {
+      verticalAlign: 'text-bottom',
+    },
     labelIcon: {
-      verticalAlign: 'middle',
-      fontSize: '1rem'
+      verticalAlign: 'text-bottom',
+      fontSize: '1rem',
+      margin: theme.spacing(0, 0, .125, 0)
     },
     inputBox: {
       padding: theme.spacing(1, 0),

@@ -103,7 +103,7 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
           )}
           <Box className={classes.inputBox}>
             <label htmlFor="location">
-              <Typography>
+              <Typography className={classes.label}>
                 <Icon className={classes.labelIcon}>place</Icon>{' '}
                 {t('travel.passengers.location')}
               </Typography>

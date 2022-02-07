@@ -16,7 +16,7 @@ const AssignButton = (props: Props) => {
 
   return (
     <ListItemSecondaryAction  className={classes.action} onClick={onClick} tabIndex={tabIndex}>
-      <IconButton className={classes.button} size="small" color="primary">
+      <IconButton className={classes.button} color="primary">
         {t('passenger.actions.place')}
         <Icon>chevron_right</Icon>
       </IconButton>
@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     borderRadius: theme.spacing(1),
+    margin: theme.spacing(1, 0, 0, 0),
+    padding: 0,
+    fontSize: '1rem',
+    lineHeight: 1.5,
   },
 }));
 

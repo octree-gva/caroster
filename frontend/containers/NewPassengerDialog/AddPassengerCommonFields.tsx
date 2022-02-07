@@ -21,10 +21,8 @@ const AddPassengerCommonFields = ({name, setName, email, setEmail}: Props) => {
     <Fragment>
       <Box className={classes.inputBox}>
         <label htmlFor="name">
-          <Typography>
-            <Icon className={classes.labelIcon}>
-              person
-            </Icon>{' '}
+          <Typography className={classes.label}>
+            <Icon className={classes.labelIcon}>person</Icon>{' '}
             {t('travel.passengers.name')}
           </Typography>
         </label>
@@ -42,10 +40,8 @@ const AddPassengerCommonFields = ({name, setName, email, setEmail}: Props) => {
       </Box>
       <Box className={classes.inputBox}>
         <label htmlFor="email">
-          <Typography>
-            <Icon className={classes.labelIcon}>
-              mail_outlined
-            </Icon>{' '}
+          <Typography className={classes.label}>
+            <Icon className={classes.labelIcon}>mail_outlined</Icon>{' '}
             {t('travel.passengers.email')}
           </Typography>
         </label>

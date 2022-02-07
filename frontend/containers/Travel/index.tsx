@@ -35,6 +35,7 @@ const Travel = (props: Props) => {
       <AddPassengerButtons
         getOnClickFunction={props.getAddPassengerFunction}
         canAddSelf={props.canAddSelf}
+        variant="travel"
       />
       <Divider />
       {!isEditing && (
