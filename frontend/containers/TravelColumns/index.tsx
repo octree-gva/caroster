@@ -43,18 +43,20 @@ const TravelColumns = (props: Props) => {
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
   } | null>(null);
-  const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
-    useState<NewPassengerDialogContext | null>(null);
+  const [
+    addPassengerToWaitingListContext,
+    toggleNewPassengerToWaitingList,
+  ] = useState<NewPassengerDialogContext | null>(null);
   const {addPassengerToTravel} = usePassengersActions();
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const canAddSelf = useMemo(() => {
     if (!user) return false;
     const isInWaitingList = event?.waitingList?.some(
-      passenger => passenger.user?.id === user.id
+      passenger => passenger.user?.id === `${user.id}`
     );
     const isInTravel = event?.travels.some(travel =>
-      travel.passengers.some(passenger => passenger.user?.id === user.id)
+      travel.passengers.some(passenger => passenger.user?.id === `${user.id}`)
     );
     return !(isInWaitingList || isInTravel);
   }, [event, user]);
@@ -189,10 +191,9 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
       },
     },
-    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
-      {
-        color: theme.palette.primary.main,
-      },
+    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before': {
+      color: theme.palette.primary.main,
+    },
   },
   slider: {
     flexGrow: 1,
