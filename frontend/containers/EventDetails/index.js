@@ -106,9 +106,9 @@ const EventDetails = ({onShare}) => {
               multiline
               rowsMax={4}
               inputProps={{maxLength: 250}}
-              helperText={`${event.description.length}/250`}
+              helperText={`${event.description?.length || 0}/250`}
               defaultValue={event.description}
-              value={event.description}
+              value={event.description || ''}
               onChange={e => setEventUpdate({description: e.target.value})}
               id={`${idPrefix}Description`}
               name="description"
