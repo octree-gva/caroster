@@ -38,9 +38,11 @@ const useActions = (props: Props) => {
           travel.passengers?.map(({__typename, user, ...item}) =>
             user && user.id ? {...item, user: user.id} : item
           ) || [];
-        const waitingList = [...event.waitingList, removedPassenger].map(
-          ({__typename, user, ...item}) =>
-            user && user.id ? {...item, user: user.id} : item
+        const waitingList = [
+          ...event.waitingList,
+          removedPassenger,
+        ].map(({__typename, user, ...item}) =>
+          user && user.id ? {...item, user: user.id} : item
         );
         const passengers = existingPassengers.filter(
           item => item.id !== passengerId
@@ -100,6 +102,8 @@ const useActions = (props: Props) => {
           id: travel.id,
           travelUpdate: {
             departure,
+            meeting: update.travel.meeting,
+            details: update.travel.details,
             passengers: formatPassengers(
               travel.passengers,
               travel.vehicle?.seats
@@ -115,7 +119,7 @@ const useActions = (props: Props) => {
       });
     } catch (error) {
       console.error(error);
-      addToast('travel.errors.cant_update');
+      addToast(t('travel.errors.cant_update'));
     }
     return false;
   };
@@ -147,7 +151,7 @@ const useActions = (props: Props) => {
       addToast(t('travel.actions.removed'));
     } catch (error) {
       console.error(error);
-      addToast('travel.errors.cant_remove');
+      addToast(t('travel.errors.cant_remove'));
     }
   };
 

@@ -9,30 +9,18 @@ import Slider from '@material-ui/core/Slider';
 import {DatePicker, TimePicker} from '@material-ui/pickers';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-import useToastStore from '../../stores/useToastStore';
-import useEventStore from '../../stores/useEventStore';
 import RemoveDialog from '../RemoveDialog';
-import {
-  useUpdateEventMutation,
-  useDeleteTravelMutation,
-} from '../../generated/graphql';
 import useActions from './useActions';
 
 const HeaderEditing = ({travel, toggleEditing}) => {
   const classes = useStyles();
   const {t} = useTranslation();
-  const event = useEventStore(s => s.event);
-  const addToast = useToastStore(s => s.addToast);
   const actions = useActions({travel});
-  const [updateEvent] = useUpdateEventMutation();
-  const [deleteTravel] = useDeleteTravelMutation({
-    refetchQueries: ['eventByUUID'],
-  });
   const [removing, toggleRemoving] = useReducer(i => !i, false);
-  const dateMoment = useMemo(() => {
-    if (!travel?.departure) return moment();
-    else return moment(travel.departure);
-  }, [travel?.departure]);
+  const dateMoment = useMemo(
+    () => (travel?.departure ? moment(travel.departure) : moment()),
+    [travel?.departure]
+  );
 
   // States
   const [name, setName] = useState(travel?.vehicle?.name ?? '');
