@@ -22,7 +22,7 @@ const Action = (props: Props): JSX.Element => {
 
   if (divider)
     return <Divider variant="fullWidth" className={classes.divider} />;
-  else if (isValidElement(action.label)) return action.label;
+  else if (isValidElement(label)) return label;
   else if (onClick)
     return (
       <MenuItem id={id} onClick={onClick} {...menuItemProps}>

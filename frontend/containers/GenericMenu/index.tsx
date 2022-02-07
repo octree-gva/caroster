@@ -30,8 +30,7 @@ const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {
     id: 'AboutTabs',
   };
   const languageMenuItem = {
-    label: Languages,
-    isComponentLabel: true,
+    label: <Languages />,
     id: 'LanguageSelection',
   };
 
