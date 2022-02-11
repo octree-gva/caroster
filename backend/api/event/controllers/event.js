@@ -3,6 +3,7 @@
 module.exports = {
   async findOne(ctx) {
     const uuid = ctx.params._uuid || ctx.params.uuid;
+    if (!uuid) throw new Error('No uuid provided');
     const event = await strapi.services.event.findOne({uuid});
     if (event) return strapi.services.event.sanitize(event);
     else return ctx.badRequest('No event found');
