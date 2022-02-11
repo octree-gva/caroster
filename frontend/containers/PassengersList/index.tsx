@@ -18,15 +18,8 @@ interface Props {
 }
 
 const PassengersList = (props: Props) => {
-  const {
-    passengers,
-    places,
-    Button,
-    onClick,
-    onPress,
-    disabled,
-    isVehicle,
-  } = props;
+  const {passengers, places, Button, onClick, onPress, disabled, isVehicle} =
+    props;
   const classes = useStyles();
   let list = passengers;
 
@@ -43,6 +36,7 @@ const PassengersList = (props: Props) => {
         {!!list &&
           list.map((passenger, index) => (
             <ListItem
+              className={classes.passenger}
               key={index}
               disabled={disabled}
               button={!!onPress}
@@ -53,9 +47,7 @@ const PassengersList = (props: Props) => {
                 passenger={passenger}
                 isVehicle={isVehicle}
                 button={
-                  <Button
-                    onClick={() => onClick && onClick(passenger.id)}
-                  />
+                  <Button onClick={() => onClick && onClick(passenger.id)} />
                 }
               />
             </ListItem>
@@ -68,6 +60,9 @@ const PassengersList = (props: Props) => {
 const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(0, 0, 1, 0),
+  },
+  passenger: {
+    paddingRight: theme.spacing(12),
   },
 }));
 

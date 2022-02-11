@@ -2334,6 +2334,24 @@ export type VehicleFieldsFragment = (
   & Pick<Vehicle, 'id' | 'name' | 'seats' | 'phone_number'>
 );
 
+export type FindUserVehiclesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindUserVehiclesQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'UsersPermissionsMe' }
+    & Pick<UsersPermissionsMe, 'id' | 'username'>
+    & { profile?: Maybe<(
+      { __typename?: 'UsersPermissionsUser' }
+      & { vehicles?: Maybe<Array<Maybe<(
+        { __typename?: 'Vehicle' }
+        & VehicleFieldsFragment
+      )>>> }
+    )> }
+  )> }
+);
+
 export type CreateVehicleMutationVariables = Exact<{
   vehicle: VehicleInput;
 }>;
@@ -2947,6 +2965,44 @@ export function useUpdateMeMutation(baseOptions?: Apollo.MutationHookOptions<Upd
 export type UpdateMeMutationHookResult = ReturnType<typeof useUpdateMeMutation>;
 export type UpdateMeMutationResult = Apollo.MutationResult<UpdateMeMutation>;
 export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<UpdateMeMutation, UpdateMeMutationVariables>;
+export const FindUserVehiclesDocument = gql`
+    query findUserVehicles {
+  me {
+    id
+    username
+    profile {
+      vehicles {
+        ...VehicleFields
+      }
+    }
+  }
+}
+    ${VehicleFieldsFragmentDoc}`;
+
+/**
+ * __useFindUserVehiclesQuery__
+ *
+ * To run a query within a React component, call `useFindUserVehiclesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindUserVehiclesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindUserVehiclesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindUserVehiclesQuery(baseOptions?: Apollo.QueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
+        return Apollo.useQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, baseOptions);
+      }
+export function useFindUserVehiclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
+          return Apollo.useLazyQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, baseOptions);
+        }
+export type FindUserVehiclesQueryHookResult = ReturnType<typeof useFindUserVehiclesQuery>;
+export type FindUserVehiclesLazyQueryHookResult = ReturnType<typeof useFindUserVehiclesLazyQuery>;
+export type FindUserVehiclesQueryResult = Apollo.QueryResult<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>;
 export const CreateVehicleDocument = gql`
     mutation createVehicle($vehicle: VehicleInput!) {
   createVehicle(input: {data: $vehicle}) {

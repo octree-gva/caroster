@@ -1,34 +1,80 @@
-import {forwardRef} from 'react';
+import {forwardRef, Fragment} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
 import {useTranslation} from 'react-i18next';
+import VehicleItem from './VehicleItem';
+import Typography from '@material-ui/core/Typography';
+import {VehicleFieldsFragment} from '../../generated/graphql';
 
-const VehicleChoiceDialog = ({open, toggle, toggleNewTravel}) => {
+interface Props {
+  open: boolean;
+  toggle: () => void;
+  toggleNewTravel: ({
+    opened,
+    vehicle,
+  }: {
+    opened: boolean;
+    vehicle?: VehicleFieldsFragment;
+  }) => void;
+  vehicles: Array<VehicleFieldsFragment>;
+}
+
+const VehicleChoiceDialog = ({
+  open,
+  toggle,
+  toggleNewTravel,
+  vehicles,
+}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
   return (
     <Dialog
       fullWidth
-      maxWidth="sm"
+      maxWidth="xs"
       open={open}
       onClose={toggle}
       TransitionComponent={Transition}
     >
       <DialogTitle>{t('travel.vehicle.title')}</DialogTitle>
-      <DialogContent dividers></DialogContent>
+      <DialogContent dividers className={classes.content}>
+        {(vehicles && vehicles.length != 0 && (
+          <List>
+            {vehicles.map((vehicle, index, {length}) => (
+              <Fragment key={index}>
+                <VehicleItem
+                  vehicle={vehicle}
+                  select={() => {
+                    toggleNewTravel({vehicle, opened: true});
+                    toggle();
+                  }}
+                />
+                {index + 1 < length && <Divider />}
+              </Fragment>
+            ))}
+          </List>
+        )) || (
+          <Container>
+            <Typography>{t('travel.vehicle.empty')}</Typography>
+          </Container>
+        )}
+      </DialogContent>
       <DialogActions className={classes.actions}>
         <Button
+          className={classes.new}
           color="primary"
-          variant="outlined"
           fullWidth
+          variant="outlined"
           onClick={() => {
-            toggleNewTravel();
+            toggleNewTravel({opened: true});
             toggle();
           }}
         >
@@ -45,7 +91,13 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles(theme => ({
   actions: {
-    padding: theme.spacing(2, 3),
+    justifyContent: 'center',
+  },
+  content: {
+    padding: 0,
+  },
+  new: {
+    maxWidth: '300px',
   },
 }));
 

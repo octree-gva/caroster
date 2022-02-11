@@ -1,10 +1,13 @@
 {
   "generic": {
+    "me": "Me",
     "loading": "Loading ...",
     "close": "Close",
     "create": "Create",
+    "delete": "Delete",
     "cancel": "Cancel",
     "remove": "Remove",
+    "select": "Select",
     "save": "Save",
     "confirm": "Confirm",
     "clear": "Clear",
@@ -143,7 +146,11 @@
     },
     "vehicle": {
       "add": "Add a new vehicle",
-      "title": "My Vehicles"
+      "title": "My Vehicles",
+      "name": "Name of the vehicle",
+      "license_plate": "License plate",
+      "seats_number": "Seats number",
+      "empty": "There is no vehicle assigned to you. Click the button bellow in order to create one."
     },
     "passengers": {
       "empty": "Available seat",

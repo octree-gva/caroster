@@ -20,9 +20,9 @@ import {
   useEventByUuidQuery,
   EventByUuidDocument,
   EditEventInput,
+  useFindUserVehiclesQuery,
 } from '../../generated/graphql';
 import ErrorPage from '../_error';
-import AddTravel from '../../containers/TravelColumns/AddTravel';
 import useProfile from '../../hooks/useProfile';
 import Fab from '../../containers/Fab';
 
@@ -45,13 +45,17 @@ const Event = (props: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const {user} = useProfile();
+  const {
+    data: {me: {profile: {vehicles = []} = {}} = {}} = {},
+    loading
+  } = useFindUserVehiclesQuery();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
   const setIsEditing = useEventStore(s => s.setIsEditing);
   const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
-  const [openNewTravel, toggleNewTravel] = useReducer(i => !i, false);
+  const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
   const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
     pollInterval: POLL_INTERVAL,
@@ -93,7 +97,12 @@ const Event = (props: Props) => {
     }
   };
 
-  if (!event) return <Loading />;
+  const addTravelClickHandler =
+    user && vehicles?.length != 0
+      ? toggleVehicleChoice
+      : () => toggleNewTravel({opened: true});
+
+  if (!event || loading) return <Loading />;
 
   return (
     <Layout
@@ -107,21 +116,25 @@ const Event = (props: Props) => {
         onSave={onSave}
         onShare={onShare}
       />
-      <TravelColumns toggle={toggleVehicleChoice} />
+      <TravelColumns toggle={addTravelClickHandler} />
       <Box className={classes.bottomRight}>
         <Fab
-          onClick={(user ? toggleVehicleChoice : toggleNewTravel)}
+          onClick={addTravelClickHandler}
           aria-label="add-car"
           color="primary"
         >
           {t('travel.creation.title')}
         </Fab>
       </Box>
-      <NewTravelDialog open={openNewTravel} toggle={toggleNewTravel} />
+      <NewTravelDialog
+        context={openNewTravelContext}
+        toggle={() => toggleNewTravel({opened: false})}
+      />
       <VehicleChoiceDialog
         open={openVehicleChoice}
         toggle={toggleVehicleChoice}
         toggleNewTravel={toggleNewTravel}
+        vehicles={vehicles}
       />
       <AddToMyEventDialog
         event={event}
@@ -162,6 +175,9 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(1),
     right: theme.spacing(6),
     width: 200,
+    [theme.breakpoints.down('sm')]: {
+      right: theme.spacing(1),
+    },
   },
 }));
 

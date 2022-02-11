@@ -5,7 +5,6 @@ import Slider from 'react-slick';
 import {useTranslation} from 'react-i18next';
 import {
   Travel as TravelType,
-  useUpdateTravelMutation,
 } from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';

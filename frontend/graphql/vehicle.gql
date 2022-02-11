@@ -5,6 +5,18 @@ fragment VehicleFields on Vehicle {
   phone_number
 }
 
+query findUserVehicles {
+  me {
+    id
+    username
+    profile {
+      vehicles {
+        ...VehicleFields
+      }
+    }
+  }
+}
+
 mutation createVehicle($vehicle: VehicleInput!) {
   createVehicle(input: {data: $vehicle}) {
     vehicle {

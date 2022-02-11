@@ -11,7 +11,7 @@ type State = {
 
 const useEventStore = create<State>((set, get) => ({
   event: null,
-  setEvent: event => set({event}),
+  setEvent: event => set({event: formatEvent(event)}),
   setEventUpdate: eventUpdate => {
     const event = get().event;
     set({event: {...event, ...eventUpdate}});
@@ -19,5 +19,10 @@ const useEventStore = create<State>((set, get) => ({
   isEditing: false,
   setIsEditing: isEditing => set({isEditing}),
 }));
+
+const formatEvent = (event: Event): Event => {
+  const travels = event.travels?.filter(travel => !!travel.vehicle);
+  return {...event, travels};
+};
 
 export default useEventStore;

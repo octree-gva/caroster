@@ -1,4 +1,4 @@
-import {useState, forwardRef, useMemo} from 'react';
+import {useState, forwardRef, useMemo, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,7 +16,7 @@ import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
 import useProfile from '../../hooks/useProfile';
 
-const NewTravelDialog = ({open, toggle}) => {
+const NewTravelDialog = ({context, toggle}) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const {user} = useProfile();
@@ -38,6 +38,14 @@ const NewTravelDialog = ({open, toggle}) => {
   const [details, setDetails] = useState('');
   const canCreate = !!name && !!seats;
 
+  useEffect(() => {
+    if (context.vehicle) {
+      setName(context.vehicle.name);
+      setSeats(context.vehicle.seats);
+      setPhone(context.vehicle.phone_number);
+    }
+  }, [context.vehicle]);
+
   const onCreate = async e => {
     if (e.preventDefault) e.preventDefault();
 
@@ -50,11 +58,26 @@ const NewTravelDialog = ({open, toggle}) => {
         name,
         seats,
         phone_number: phone,
-        ...(user ? {user: user.id} : {}),
       },
     };
-    await actions.createTravel(travel);
-    toggle();
+    if (context.vehicle && user) {
+      // The authenticated user choose an existing vehicle and assign it to the travel
+      await actions.createTravel({
+        ...travel,
+        vehicle: context.vehicle,
+      });
+    } else if (user) {
+      // The autenticated user create a vehicle and assign it to the travel
+      await actions.createTravel({
+        ...travel,
+        vehicle: {...travel.vehicle, user: user.id, created_by: user.id},
+      });
+    } else {
+      // The anonymous user create a vehicle and assign it to the travel 
+      await actions.createTravel(travel);
+    }
+
+    toggle({opened: false});
 
     // Clear states
     setName('');
@@ -68,9 +91,9 @@ const NewTravelDialog = ({open, toggle}) => {
   return (
     <Dialog
       fullWidth
-      maxWidth="sm"
-      open={open}
-      onClose={toggle}
+      maxWidth="xs"
+      open={context?.opened}
+      onClose={() => toggle({opened: false})}
       TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>
@@ -103,6 +126,7 @@ const NewTravelDialog = ({open, toggle}) => {
             fullWidth
             helperText=" "
             value={name}
+            disabled={!!context.vehicle}
             onChange={e => setName(e.target.value)}
             name="name"
             id="NewTravelName"
@@ -112,6 +136,7 @@ const NewTravelDialog = ({open, toggle}) => {
             fullWidth
             helperText=" "
             value={phone}
+            disabled={!!context.vehicle}
             onChange={e => setPhone(e.target.value)}
             name="phone"
             id="NewTravelPhone"
@@ -146,6 +171,7 @@ const NewTravelDialog = ({open, toggle}) => {
             </Typography>
             <Slider
               value={seats}
+              disabled={!!context.vehicle}
               onChange={(e, value) => setSeats(value)}
               step={1}
               marks={MARKS}
@@ -160,7 +186,7 @@ const NewTravelDialog = ({open, toggle}) => {
           <Button
             color="primary"
             id="NewTravelCancel"
-            onClick={toggle}
+            onClick={() => toggle({opened: false})}
             tabIndex={-1}
           >
             {t('generic.cancel')}

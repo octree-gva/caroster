@@ -39,17 +39,24 @@ const WaitingList = ({
   const [addingPassenger, setAddingPassenger] = useState(null);
   const travels =
     event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
-  const {addPassengerToTravel, removePassengerFromWaitingList} = usePassengersActions();
+  const {
+    addPassengerToTravel,
+    removePassengerFromWaitingList,
+  } = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
     return travels.reduce((count, {vehicle, passengers = []}) => {
-      if (!passengers) return count + vehicle.seats;
+      if (!vehicle) return 0;
+      else if (!passengers) return count + vehicle.seats;
       return count + vehicle.seats - passengers.length;
     }, 0);
   }, [travels]);
 
-  const removePassengerFromWaitingListFallBack = useCallback(removePassengerFromWaitingList, [event]);
+  const removePassengerFromWaitingListFallBack = useCallback(
+    removePassengerFromWaitingList,
+    [event]
+  );
 
   const selectTravel = useCallback(
     async travel => {
@@ -73,7 +80,11 @@ const WaitingList = ({
             onSucceed: () => {
               setAddingPassenger(null);
               slideToTravel(travel.id);
-              addToast(t('passenger.success.added_to_car', {name: addingPassenger.name}));
+              addToast(
+                t('passenger.success.added_to_car', {
+                  name: addingPassenger.name,
+                })
+              );
             },
           }),
       });

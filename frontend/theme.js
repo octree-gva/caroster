@@ -8,6 +8,10 @@ export const caroster = {
     secondary: {
       main: '#FFEB3B',
     },
+    error: {
+      light: '#efbcc4',
+      main: '#d4485e'
+    },
     background: {
       default: '#F4F4FF',
     },

@@ -117,7 +117,7 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'left',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
       textAlign: 'center',

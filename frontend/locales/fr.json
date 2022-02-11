@@ -1,10 +1,13 @@
 {
   "generic": {
+    "me": "Moi",
     "loading": "Chargement...",
     "close": "Fermer",
     "create": "Créer",
+    "delete": "Supprimer",
     "cancel": "Annuler",
     "remove": "Supprimer",
+    "select": "Selectionner",
     "save": "Enregistrer",
     "confirm": "Confirmer",
     "clear": "Effacer",
@@ -143,7 +146,11 @@
     },
     "vehicle": {
       "add": "Ajouter un nouveau véhicule",
-      "title": "Mes véhicules"
+      "title": "Mes véhicules",
+      "name": "Nom du véhicule",
+      "license_plate": "Plaque d'immatriculation",
+      "seats_number": "Nombre de places",
+      "empty": "Vous n'avez aucun véhicule assigné. Utilisez le bouton ci-dessous pour en créer un."
     },
     "passengers": {
       "empty": "Place disponible",

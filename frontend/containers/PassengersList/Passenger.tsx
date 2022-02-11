@@ -6,6 +6,8 @@ import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {ComponentPassengerPassenger} from '../../generated/graphql';
+import useProfile from '../../hooks/useProfile';
+import Chip from '@material-ui/core/Chip';
 
 interface Props {
   passenger?: ComponentPassengerPassenger;
@@ -17,14 +19,16 @@ const Passenger = (props: Props) => {
   const {passenger, button, isVehicle} = props;
   const {t} = useTranslation();
   const classes = useStyles();
+  const {user} = useProfile();
 
+  const isUser = user && user.id === passenger?.user?.id;
   const showLocation = isVehicle ? false : passenger.location
 
   if (passenger) {
     return (
       <>
         <ListItemText
-          primary={passenger.name}
+          primary={<>{passenger.name}{isUser && <Chip className={classes.me} label={t('generic.me')} variant="outlined" />}</>}
           secondary={showLocation}
         />
         {button}
@@ -52,6 +56,9 @@ const useStyles = makeStyles(theme => ({
   empty: {
     color: theme.palette.text.secondary,
   },
+  me: {
+    marginLeft: theme.spacing(2),
+  }
 }));
 
 export default Passenger;
