@@ -23,6 +23,8 @@ const Travel = (props: Props) => {
   const actions = useActions({travel});
 
   if (!travel) return null;
+  const disableNewPassengers =
+    travel.passengers.length >= travel.vehicle?.seats;
 
   return (
     <Paper className={classes.root}>
@@ -36,6 +38,7 @@ const Travel = (props: Props) => {
         getOnClickFunction={props.getAddPassengerFunction}
         canAddSelf={props.canAddSelf}
         variant="travel"
+        disabled={disableNewPassengers}
       />
       <Divider />
       {!isEditing && (

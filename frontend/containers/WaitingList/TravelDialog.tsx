@@ -75,6 +75,7 @@ const TravelDialog = ({travels, open, onClose, onSelect}) => {
                 <Button
                   color="primary"
                   variant="contained"
+                  disabled={travel?.vehicle?.seats === passengers}
                   onClick={() => onSelect(travel)}
                   className={classes.button}
                 >
@@ -109,6 +110,7 @@ const useStyles = makeStyles(theme => ({
   },
   info: {
     padding: theme.spacing(0, 4, 0, 0),
+    width: '350px',
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0.5, 1),
       width: '100%',
@@ -129,6 +131,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     padding: theme.spacing(1, 15),
+    margin: theme.spacing(1),
   },
 }));
 

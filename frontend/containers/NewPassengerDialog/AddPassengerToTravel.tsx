@@ -6,9 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';
-import {
-  Travel as TravelType,
-} from '../../generated/graphql';
+import {Travel as TravelType} from '../../generated/graphql';
 import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
@@ -42,11 +40,16 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
       name,
     };
 
-    return addPassengerToTravel({passenger, travel, onSucceed: () => {
+    try {
+      await addPassengerToTravel({passenger, travel});
       addToEvent(event.id);
       addToast(t('passenger.success.added_to_car', {name}));
       toggle();
-    }});
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'no_enough_seats')
+        addToast(t`passenger.errors.car_full`);
+    }
   };
 
   return (

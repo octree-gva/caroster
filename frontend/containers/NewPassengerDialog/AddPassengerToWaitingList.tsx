@@ -53,24 +53,25 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
             name,
             location,
           };
-
-    addPassengerToWaitingList({
-      passenger,
-      event,
-      onError: () => addToast(t('passenger.errors.cant_add_passenger')),
-      onSucceed: () => {
-        addToEvent(event.id);
-        addToast(
-          t(
-            addSelf
-              ? 'passenger.success.added_self_to_waitlist'
-              : 'passenger.success.added_to_waitlist',
-            {name}
-          )
-        );
-        toggle();
-      },
-    });
+    try {
+      await addPassengerToWaitingList({
+        passenger,
+        event,
+      });
+      addToEvent(event.id);
+      addToast(
+        t(
+          addSelf
+            ? 'passenger.success.added_self_to_waitlist'
+            : 'passenger.success.added_to_waitlist',
+          {name}
+        )
+      );
+      toggle();
+    } catch (error) {
+      console.error(error);
+      addToast(t('passenger.errors.cant_add_passenger'));
+    }
   };
 
   return (

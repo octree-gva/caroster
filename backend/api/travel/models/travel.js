@@ -6,6 +6,14 @@ const {STRAPI_URL = ''} = process.env;
 
 module.exports = {
   lifecycles: {
+    async beforeUpdate(query, update) {
+      const travel = await strapi.services.travel.findOne(query);
+      if (update.passengers && travel?.vehicle) {
+        if (travel?.vehicle?.seats < update.passengers.length)
+          throw new Error('no_enough_seats');
+      }
+    },
+
     async afterCreate(result) {
       sendEmailsToWaitingList(result);
     },

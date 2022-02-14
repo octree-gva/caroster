@@ -9,7 +9,13 @@ import {
 
 interface Props {
   passengers: ComponentPassengerPassenger[];
-  Button: JSX.Element;
+  Button: ({
+    onClick,
+    disabled,
+  }: {
+    onClick: () => void;
+    disabled?: boolean;
+  }) => JSX.Element;
   disabled?: boolean;
   isVehicle?: boolean;
   places?: number;
@@ -47,7 +53,10 @@ const PassengersList = (props: Props) => {
                 passenger={passenger}
                 isVehicle={isVehicle}
                 button={
-                  <Button onClick={() => onClick && onClick(passenger.id)} />
+                  <Button
+                    onClick={() => onClick && onClick(passenger.id)}
+                    disabled={disabled}
+                  />
                 }
               />
             </ListItem>

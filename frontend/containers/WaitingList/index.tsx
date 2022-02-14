@@ -61,33 +61,32 @@ const WaitingList = ({
   const selectTravel = useCallback(
     async travel => {
       const {id, ...passenger} = addingPassenger;
-      const onError = () => addToast(t('passenger.errors.cant_select_travel'));
-      addPassengerToTravel({
-        travel,
-        passenger,
-        onError,
-        onSucceed: () =>
-          removePassengerFromWaitingListFallBack({
-            passenger: addingPassenger,
-            event: {
-              ...event,
-              waitingList: event.waitingList.filter(
-                item => item.id !== addingPassenger.id
-              ),
-            },
 
-            onError,
-            onSucceed: () => {
-              setAddingPassenger(null);
-              slideToTravel(travel.id);
-              addToast(
-                t('passenger.success.added_to_car', {
-                  name: addingPassenger.name,
-                })
-              );
-            },
-          }),
-      });
+      try {
+        await addPassengerToTravel({
+          travel,
+          passenger,
+        });
+        await removePassengerFromWaitingListFallBack({
+          passenger: addingPassenger,
+          event: {
+            ...event,
+            waitingList: event.waitingList.filter(
+              item => item.id !== addingPassenger.id
+            ),
+          },
+        });
+        setAddingPassenger(null);
+        slideToTravel(travel.id);
+        addToast(
+          t('passenger.success.added_to_car', {
+            name: addingPassenger.name,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        addToast(t('passenger.errors.cant_select_travel'));
+      }
     },
     [event, addingPassenger] // eslint-disable-line
   );
@@ -103,12 +102,25 @@ const WaitingList = ({
     [isEditing, event]
   );
 
+  const onRemove = async () => {
+    try {
+      await removePassengerFromWaitingListFallBack({
+        passenger: removingPassenger,
+        event,
+      });
+      addToEvent(event.id);
+    } catch (error) {
+      console.error(error);
+      addToast(t('passenger.errors.cant_remove_passenger'));
+    }
+  };
+
   const ListButton = isEditing
     ? ({onClick}: {onClick: () => void}) => (
         <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
       )
-    : ({onClick}: {onClick: () => void}) => (
-        <AssignButton onClick={onClick} tabIndex={-1} />
+    : ({onClick, disabled}: {onClick: () => void, disabled: boolean}) => (
+        <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled}/>
       );
 
   return (
@@ -155,15 +167,7 @@ const WaitingList = ({
         }
         open={!!removingPassenger}
         onClose={() => setRemovingPassenger(null)}
-        onRemove={() =>
-          removePassengerFromWaitingListFallBack({
-            passenger: removingPassenger,
-            event,
-            onSucceed: () => addToEvent(event.id),
-            onError: () =>
-              addToast(t('passenger.errors.cant_remove_passenger')),
-          })
-        }
+        onRemove={onRemove}
       />
       <TravelDialog
         travels={travels}

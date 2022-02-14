@@ -8,9 +8,10 @@ interface Props {
   getOnClickFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
   variant: 'waitingList' | 'travel';
+  disabled?: boolean;
 }
 
-const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant}: Props) => {
+const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant, disabled}: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -24,6 +25,7 @@ const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant}: Props) =
             color="secondary"
             fullWidth
             onClick={getOnClickFunction(true)}
+            disabled={disabled}
           >
             <Icon>person_add</Icon>
             {t('travel.passengers.add_me')}
@@ -37,6 +39,7 @@ const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant}: Props) =
           color="primary"
           fullWidth
           onClick={getOnClickFunction(false)}
+          disabled={disabled}
         >
           <Icon>person_add</Icon>
           {t(`travel.passengers.add_to_${variant}`)}

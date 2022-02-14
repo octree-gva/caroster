@@ -38,7 +38,12 @@ const VehicleItem = ({vehicle, select}: Props) => {
         <Typography variant="overline" className={classes.label}>
           {t('travel.vehicle.name')}
         </Typography>
-        <Button color="primary" variant="text" onClick={() => unlinkUserCar()}>
+        <Button
+          color="primary"
+          variant="text"
+          size="small"
+          onClick={() => unlinkUserCar()}
+        >
           {t('generic.delete')}
         </Button>
       </Box>
@@ -78,27 +83,10 @@ const useStyles = makeStyles(theme => ({
     opacity: 0.6,
     marginRight: theme.spacing(2),
   },
-  delete: {
-    color: theme.palette.error.main,
-    position: 'absolute',
-    right: theme.spacing(2),
-    '& > span': {
-      '&::after': {
-        content: '""',
-        display: 'block',
-        position: 'absolute',
-        width: `calc(100% - ${theme.spacing(2)}px)`,
-        height: theme.spacing(0.25),
-        bottom: theme.spacing(1),
-        left: theme.spacing(1),
-        backgroundColor: theme.palette.error.light,
-      },
-    },
-  },
   select: {
     display: 'block',
     maxWidth: '300px',
-    margin: '0 auto',
+    margin: `0 auto ${theme.spacing(1.5)}px auto`,
   },
 }));
 
