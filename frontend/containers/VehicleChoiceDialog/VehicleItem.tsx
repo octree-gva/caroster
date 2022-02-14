@@ -6,8 +6,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {
   VehicleFieldsFragment,
-  useUpdateVehicleMutation,
   FindUserVehiclesDocument,
+  useDeleteVehicleMutation,
 } from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 
@@ -20,13 +20,8 @@ const VehicleItem = ({vehicle, select}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const {user} = useProfile();
-  const [unlinkUserCar] = useUpdateVehicleMutation({
-    variables: {
-      id: vehicle.id,
-      vehicleUpdate: {
-        user: null,
-      },
-    },
+  const [deleteVehicleMutation] = useDeleteVehicleMutation({
+    variables: {id: vehicle.id},
     refetchQueries: [
       {query: FindUserVehiclesDocument, variables: {userId: user.id}},
     ],
@@ -42,7 +37,7 @@ const VehicleItem = ({vehicle, select}: Props) => {
           color="primary"
           variant="text"
           size="small"
-          onClick={() => unlinkUserCar()}
+          onClick={() => deleteVehicleMutation()}
         >
           {t('generic.delete')}
         </Button>

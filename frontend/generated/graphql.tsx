@@ -433,7 +433,7 @@ export type InputUuid = {
 
 
 
-export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | EventConnectionDescription | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicle | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionPhone_Number | VehicleConnectionUser | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
+export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Car | CarConnection | CarAggregator | CarAggregatorSum | CarAggregatorAvg | CarAggregatorMin | CarAggregatorMax | CarGroupBy | CarConnectionId | CarConnectionCreated_At | CarConnectionUpdated_At | CarConnectionName | CarConnectionSeats | CarConnectionMeeting | CarConnectionDeparture | CarConnectionPhone_Number | CarConnectionDetails | CarConnectionEvent | CreateCarPayload | UpdateCarPayload | DeleteCarPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | EventConnectionDescription | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelAggregatorSum | TravelAggregatorAvg | TravelAggregatorMin | TravelAggregatorMax | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicleName | TravelConnectionSeats | TravelConnectionPhone_Number | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionPhone_Number | VehicleConnectionUser | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -996,13 +996,39 @@ export type Travel = {
   details?: Maybe<Scalars['String']>;
   passengers?: Maybe<Array<Maybe<ComponentPassengerPassenger>>>;
   event?: Maybe<Event>;
-  vehicle?: Maybe<Vehicle>;
+  vehicleName?: Maybe<Scalars['String']>;
+  seats?: Maybe<Scalars['Int']>;
+  phone_number?: Maybe<Scalars['String']>;
 };
 
 export type TravelAggregator = {
   __typename?: 'TravelAggregator';
   count?: Maybe<Scalars['Int']>;
   totalCount?: Maybe<Scalars['Int']>;
+  sum?: Maybe<TravelAggregatorSum>;
+  avg?: Maybe<TravelAggregatorAvg>;
+  min?: Maybe<TravelAggregatorMin>;
+  max?: Maybe<TravelAggregatorMax>;
+};
+
+export type TravelAggregatorAvg = {
+  __typename?: 'TravelAggregatorAvg';
+  seats?: Maybe<Scalars['Float']>;
+};
+
+export type TravelAggregatorMax = {
+  __typename?: 'TravelAggregatorMax';
+  seats?: Maybe<Scalars['Float']>;
+};
+
+export type TravelAggregatorMin = {
+  __typename?: 'TravelAggregatorMin';
+  seats?: Maybe<Scalars['Float']>;
+};
+
+export type TravelAggregatorSum = {
+  __typename?: 'TravelAggregatorSum';
+  seats?: Maybe<Scalars['Float']>;
 };
 
 export type TravelConnection = {
@@ -1048,15 +1074,27 @@ export type TravelConnectionMeeting = {
   connection?: Maybe<TravelConnection>;
 };
 
+export type TravelConnectionPhone_Number = {
+  __typename?: 'TravelConnectionPhone_number';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<TravelConnection>;
+};
+
+export type TravelConnectionSeats = {
+  __typename?: 'TravelConnectionSeats';
+  key?: Maybe<Scalars['Int']>;
+  connection?: Maybe<TravelConnection>;
+};
+
 export type TravelConnectionUpdated_At = {
   __typename?: 'TravelConnectionUpdated_at';
   key?: Maybe<Scalars['DateTime']>;
   connection?: Maybe<TravelConnection>;
 };
 
-export type TravelConnectionVehicle = {
-  __typename?: 'TravelConnectionVehicle';
-  key?: Maybe<Scalars['ID']>;
+export type TravelConnectionVehicleName = {
+  __typename?: 'TravelConnectionVehicleName';
+  key?: Maybe<Scalars['String']>;
   connection?: Maybe<TravelConnection>;
 };
 
@@ -1069,7 +1107,9 @@ export type TravelGroupBy = {
   departure?: Maybe<Array<Maybe<TravelConnectionDeparture>>>;
   details?: Maybe<Array<Maybe<TravelConnectionDetails>>>;
   event?: Maybe<Array<Maybe<TravelConnectionEvent>>>;
-  vehicle?: Maybe<Array<Maybe<TravelConnectionVehicle>>>;
+  vehicleName?: Maybe<Array<Maybe<TravelConnectionVehicleName>>>;
+  seats?: Maybe<Array<Maybe<TravelConnectionSeats>>>;
+  phone_number?: Maybe<Array<Maybe<TravelConnectionPhone_Number>>>;
 };
 
 export type TravelInput = {
@@ -1078,9 +1118,12 @@ export type TravelInput = {
   details?: Maybe<Scalars['String']>;
   passengers?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
   event?: Maybe<Scalars['ID']>;
-  vehicle?: Maybe<Scalars['ID']>;
+  vehicleName?: Maybe<Scalars['String']>;
+  seats?: Maybe<Scalars['Int']>;
+  phone_number?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
+  createVehicle?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -1590,15 +1633,6 @@ export type Vehicle = {
   seats?: Maybe<Scalars['Int']>;
   phone_number?: Maybe<Scalars['String']>;
   user?: Maybe<UsersPermissionsUser>;
-  travels?: Maybe<Array<Maybe<Travel>>>;
-};
-
-
-export type VehicleTravelsArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
 };
 
 export type VehicleAggregator = {
@@ -1694,7 +1728,6 @@ export type VehicleGroupBy = {
 export type VehicleInput = {
   name: Scalars['String'];
   seats?: Maybe<Scalars['Int']>;
-  travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   phone_number?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
@@ -1942,7 +1975,9 @@ export type EditTravelInput = {
   details?: Maybe<Scalars['String']>;
   passengers?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
   event?: Maybe<Scalars['ID']>;
-  vehicle?: Maybe<Scalars['ID']>;
+  vehicleName?: Maybe<Scalars['String']>;
+  seats?: Maybe<Scalars['Int']>;
+  phone_number?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1972,7 +2007,6 @@ export type EditUserInput = {
 export type EditVehicleInput = {
   name?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
-  travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   phone_number?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['ID']>;
   created_by?: Maybe<Scalars['ID']>;
@@ -2147,11 +2181,8 @@ export type EventFieldsFragment = (
     )> }
   )>>>, travels?: Maybe<Array<Maybe<(
     { __typename?: 'Travel' }
-    & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details'>
-    & { vehicle?: Maybe<(
-      { __typename?: 'Vehicle' }
-      & Pick<Vehicle, 'id' | 'name' | 'phone_number' | 'seats'>
-    )>, passengers?: Maybe<Array<Maybe<(
+    & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details' | 'vehicleName' | 'phone_number' | 'seats'>
+    & { passengers?: Maybe<Array<Maybe<(
       { __typename?: 'ComponentPassengerPassenger' }
       & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
       & { user?: Maybe<(
@@ -2226,11 +2257,8 @@ export type SettingQuery = (
 
 export type TravelFieldsFragment = (
   { __typename?: 'Travel' }
-  & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details'>
-  & { vehicle?: Maybe<(
-    { __typename?: 'Vehicle' }
-    & Pick<Vehicle, 'id' | 'name' | 'phone_number' | 'seats'>
-  )>, passengers?: Maybe<Array<Maybe<(
+  & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details' | 'vehicleName' | 'phone_number' | 'seats'>
+  & { passengers?: Maybe<Array<Maybe<(
     { __typename?: 'ComponentPassengerPassenger' }
     & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
     & { user?: Maybe<(
@@ -2352,39 +2380,6 @@ export type FindUserVehiclesQuery = (
   )> }
 );
 
-export type CreateVehicleMutationVariables = Exact<{
-  vehicle: VehicleInput;
-}>;
-
-
-export type CreateVehicleMutation = (
-  { __typename?: 'Mutation' }
-  & { createVehicle?: Maybe<(
-    { __typename?: 'createVehiclePayload' }
-    & { vehicle?: Maybe<(
-      { __typename?: 'Vehicle' }
-      & VehicleFieldsFragment
-    )> }
-  )> }
-);
-
-export type UpdateVehicleMutationVariables = Exact<{
-  id: Scalars['ID'];
-  vehicleUpdate: EditVehicleInput;
-}>;
-
-
-export type UpdateVehicleMutation = (
-  { __typename?: 'Mutation' }
-  & { updateVehicle?: Maybe<(
-    { __typename?: 'updateVehiclePayload' }
-    & { vehicle?: Maybe<(
-      { __typename?: 'Vehicle' }
-      & VehicleFieldsFragment
-    )> }
-  )> }
-);
-
 export type DeleteVehicleMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -2434,12 +2429,9 @@ export const EventFieldsFragmentDoc = gql`
     meeting
     departure
     details
-    vehicle {
-      id
-      name
-      phone_number
-      seats
-    }
+    vehicleName
+    phone_number
+    seats
     passengers {
       id
       name
@@ -2459,12 +2451,9 @@ export const TravelFieldsFragmentDoc = gql`
   meeting
   departure
   details
-  vehicle {
-    id
-    name
-    phone_number
-    seats
-  }
+  vehicleName
+  phone_number
+  seats
   passengers {
     id
     name
@@ -3003,75 +2992,6 @@ export function useFindUserVehiclesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type FindUserVehiclesQueryHookResult = ReturnType<typeof useFindUserVehiclesQuery>;
 export type FindUserVehiclesLazyQueryHookResult = ReturnType<typeof useFindUserVehiclesLazyQuery>;
 export type FindUserVehiclesQueryResult = Apollo.QueryResult<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>;
-export const CreateVehicleDocument = gql`
-    mutation createVehicle($vehicle: VehicleInput!) {
-  createVehicle(input: {data: $vehicle}) {
-    vehicle {
-      ...VehicleFields
-    }
-  }
-}
-    ${VehicleFieldsFragmentDoc}`;
-export type CreateVehicleMutationFn = Apollo.MutationFunction<CreateVehicleMutation, CreateVehicleMutationVariables>;
-
-/**
- * __useCreateVehicleMutation__
- *
- * To run a mutation, you first call `useCreateVehicleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateVehicleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createVehicleMutation, { data, loading, error }] = useCreateVehicleMutation({
- *   variables: {
- *      vehicle: // value for 'vehicle'
- *   },
- * });
- */
-export function useCreateVehicleMutation(baseOptions?: Apollo.MutationHookOptions<CreateVehicleMutation, CreateVehicleMutationVariables>) {
-        return Apollo.useMutation<CreateVehicleMutation, CreateVehicleMutationVariables>(CreateVehicleDocument, baseOptions);
-      }
-export type CreateVehicleMutationHookResult = ReturnType<typeof useCreateVehicleMutation>;
-export type CreateVehicleMutationResult = Apollo.MutationResult<CreateVehicleMutation>;
-export type CreateVehicleMutationOptions = Apollo.BaseMutationOptions<CreateVehicleMutation, CreateVehicleMutationVariables>;
-export const UpdateVehicleDocument = gql`
-    mutation updateVehicle($id: ID!, $vehicleUpdate: editVehicleInput!) {
-  updateVehicle(input: {where: {id: $id}, data: $vehicleUpdate}) {
-    vehicle {
-      ...VehicleFields
-    }
-  }
-}
-    ${VehicleFieldsFragmentDoc}`;
-export type UpdateVehicleMutationFn = Apollo.MutationFunction<UpdateVehicleMutation, UpdateVehicleMutationVariables>;
-
-/**
- * __useUpdateVehicleMutation__
- *
- * To run a mutation, you first call `useUpdateVehicleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateVehicleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateVehicleMutation, { data, loading, error }] = useUpdateVehicleMutation({
- *   variables: {
- *      id: // value for 'id'
- *      vehicleUpdate: // value for 'vehicleUpdate'
- *   },
- * });
- */
-export function useUpdateVehicleMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVehicleMutation, UpdateVehicleMutationVariables>) {
-        return Apollo.useMutation<UpdateVehicleMutation, UpdateVehicleMutationVariables>(UpdateVehicleDocument, baseOptions);
-      }
-export type UpdateVehicleMutationHookResult = ReturnType<typeof useUpdateVehicleMutation>;
-export type UpdateVehicleMutationResult = Apollo.MutationResult<UpdateVehicleMutation>;
-export type UpdateVehicleMutationOptions = Apollo.BaseMutationOptions<UpdateVehicleMutation, UpdateVehicleMutationVariables>;
 export const DeleteVehicleDocument = gql`
     mutation deleteVehicle($id: ID!) {
   deleteVehicle(input: {where: {id: $id}}) {

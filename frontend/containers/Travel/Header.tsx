@@ -35,15 +35,15 @@ const Header = (props: Props) => {
         </Typography>
       )}
       <Typography variant="h5" id="TravelName">
-        {travel.vehicle?.name}
+        {travel.vehicleName}
       </Typography>
-      {!!travel.vehicle?.phone_number && (
+      {!!travel.phone_number && (
         <div className={classes.section}>
           <Typography variant="subtitle2">
             {t('travel.fields.phone')}
           </Typography>
           <Typography variant="body2" id="TravelPhone">
-            {travel.vehicle?.phone_number}
+            {travel.phone_number}
           </Typography>
         </div>
       )}

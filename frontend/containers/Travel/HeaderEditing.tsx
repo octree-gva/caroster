@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import {DatePicker, TimePicker} from '@material-ui/pickers';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
@@ -23,12 +23,12 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   );
 
   // States
-  const [name, setName] = useState(travel?.vehicle?.name ?? '');
-  const [seats, setSeats] = useState(travel?.vehicle?.seats ?? 4);
+  const [name, setName] = useState(travel?.vehicleName ?? '');
+  const [seats, setSeats] = useState(travel?.seats ?? 4);
   const [meeting, setMeeting] = useState(travel?.meeting ?? '');
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
-  const [phone, setPhone] = useState(travel?.vehicle?.phone_number ?? '');
+  const [phone, setPhone] = useState(travel?.phone_number ?? '');
   const [details, setDetails] = useState(travel?.details ?? '');
 
   // Click on ESQ closes the form
@@ -48,15 +48,15 @@ const HeaderEditing = ({travel, toggleEditing}) => {
 
   const onSave = async event => {
     if (event.preventDefault) event.preventDefault();
-    const update = {
-      vehicle: {
-        name,
-        seats,
-        phone_number: phone,
-      },
-      travel: {meeting, date, time, details},
+    const travelUpdate = {
+      meeting,
+      details,
+      seats,
+      phone_number: phone,
+      vehicleName: name,
+      departure: formatDate(date, time),
     };
-    await actions.updateTravel(update);
+    await actions.updateTravel(travelUpdate);
     toggleEditing();
   };
 
@@ -185,6 +185,13 @@ const HeaderEditing = ({travel, toggleEditing}) => {
       />
     </div>
   );
+};
+
+const formatDate = (date: Moment, time: Moment) => {
+  return moment(
+    `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
+    'YYYY-MM-DD HH:mm'
+  ).toISOString();
 };
 
 const useStyles = makeStyles(theme => ({

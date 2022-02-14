@@ -10,18 +10,25 @@ import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import {DatePicker, TimePicker} from '@material-ui/pickers';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
-import useProfile from '../../hooks/useProfile';
+import {Vehicle} from '../../generated/graphql';
 
-const NewTravelDialog = ({context, toggle}) => {
+interface Props {
+  context: {
+    vehicle: Vehicle;
+    opened: boolean;
+  };
+  toggle: ({opened: boolean}) => void;
+}
+
+const NewTravelDialog = ({context, toggle}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
-  const {user} = useProfile();
   const event = useEventStore(s => s.event);
-  const actions = useActions({event});
+  const {createTravel} = useActions({event});
 
   const dateMoment = useMemo(() => {
     if (!event?.date) return moment();
@@ -51,32 +58,16 @@ const NewTravelDialog = ({context, toggle}) => {
 
     const travel = {
       meeting,
-      date,
-      time,
       details,
-      vehicle: {
-        name,
-        seats,
-        phone_number: phone,
-      },
+      seats,
+      vehicleName: name,
+      phone_number: phone,
+      departure: formatDate(date, time),
+      event: event.id,
     };
-    if (context.vehicle && user) {
-      // The authenticated user choose an existing vehicle and assign it to the travel
-      await actions.createTravel({
-        ...travel,
-        vehicle: context.vehicle,
-      });
-    } else if (user) {
-      // The autenticated user create a vehicle and assign it to the travel
-      await actions.createTravel({
-        ...travel,
-        vehicle: {...travel.vehicle, user: user.id, created_by: user.id},
-      });
-    } else {
-      // The anonymous user create a vehicle and assign it to the travel 
-      await actions.createTravel(travel);
-    }
+    const createVehicle = !context.vehicle;
 
+    await createTravel({...travel, createVehicle});
     toggle({opened: false});
 
     // Clear states
@@ -126,7 +117,6 @@ const NewTravelDialog = ({context, toggle}) => {
             fullWidth
             helperText=" "
             value={name}
-            disabled={!!context.vehicle}
             onChange={e => setName(e.target.value)}
             name="name"
             id="NewTravelName"
@@ -136,7 +126,6 @@ const NewTravelDialog = ({context, toggle}) => {
             fullWidth
             helperText=" "
             value={phone}
-            disabled={!!context.vehicle}
             onChange={e => setPhone(e.target.value)}
             name="phone"
             id="NewTravelPhone"
@@ -171,7 +160,6 @@ const NewTravelDialog = ({context, toggle}) => {
             </Typography>
             <Slider
               value={seats}
-              disabled={!!context.vehicle}
               onChange={(e, value) => setSeats(value)}
               step={1}
               marks={MARKS}
@@ -210,6 +198,13 @@ const NewTravelDialog = ({context, toggle}) => {
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const formatDate = (date: Moment, time: Moment) => {
+  return moment(
+    `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
+    'YYYY-MM-DD HH:mm'
+  ).toISOString();
+};
 
 const MARKS = [1, 2, 3, 4, 5, 6, 7, 8].map(value => ({
   value,

@@ -62,7 +62,7 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
     >
       <form onSubmit={onSubmit}>
         <DialogTitle className={classes.title}>
-          {travel.vehicle.name}
+          {travel.vehicleName}
           <Icon
             className={classes.closeIcon}
             onClick={toggle}

@@ -20,10 +20,6 @@
       "min": 0,
       "default": 4
     },
-    "travels": {
-      "via": "vehicle",
-      "collection": "travel"
-    },
     "phone_number": {
       "type": "string"
     },

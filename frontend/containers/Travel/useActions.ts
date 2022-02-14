@@ -1,14 +1,13 @@
-import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {
   useUpdateTravelMutation,
   useUpdateEventMutation,
-  useUpdateVehicleMutation,
   useDeleteTravelMutation,
   EventByUuidDocument,
   Travel,
+  EditTravelInput,
 } from '../../generated/graphql';
 
 interface Props {
@@ -22,7 +21,6 @@ const useActions = (props: Props) => {
   const addToast = useToastStore(s => s.addToast);
   const [updateEventMutation] = useUpdateEventMutation();
   const [updateTravelMutation] = useUpdateTravelMutation();
-  const [updateVehicleMutation] = useUpdateVehicleMutation();
   const [deleteTravelMutation] = useDeleteTravelMutation();
 
   const sendPassengerToWaitingList = async (passengerId: string) => {
@@ -38,11 +36,9 @@ const useActions = (props: Props) => {
           travel.passengers?.map(({__typename, user, ...item}) =>
             user && user.id ? {...item, user: user.id} : item
           ) || [];
-        const waitingList = [
-          ...event.waitingList,
-          removedPassenger,
-        ].map(({__typename, user, ...item}) =>
-          user && user.id ? {...item, user: user.id} : item
+        const waitingList = [...event.waitingList, removedPassenger].map(
+          ({__typename, user, ...item}) =>
+            user && user.id ? {...item, user: user.id} : item
         );
         const passengers = existingPassengers.filter(
           item => item.id !== passengerId
@@ -71,12 +67,12 @@ const useActions = (props: Props) => {
     }
   };
 
-  const updateTravel = async update => {
+  const updateTravel = async (travelUpdate: EditTravelInput) => {
     try {
       // If new seats count is under current passengers count, put excedent in event waiting list
       // TODO: Move these logics to backend
-      if (travel.passengers?.length > update.vehicle?.seats) {
-        const lostPassengers = travel.passengers.slice(update.vehicle?.seats);
+      if (travel.passengers?.length > travelUpdate.seats) {
+        const lostPassengers = travel.passengers.slice(travelUpdate.seats);
         if (lostPassengers.length > 0)
           await updateEventMutation({
             variables: {
@@ -91,30 +87,13 @@ const useActions = (props: Props) => {
             refetchQueries: ['eventByUUID'],
           });
       }
-      const departure = moment(
-        `${moment(update.travel.date).format('YYYY-MM-DD')} ${moment(
-          update.travel.time
-        ).format('HH:mm')}`,
-        'YYYY-MM-DD HH:mm'
-      ).toISOString();
       await updateTravelMutation({
         variables: {
           id: travel.id,
           travelUpdate: {
-            departure,
-            meeting: update.travel.meeting,
-            details: update.travel.details,
-            passengers: formatPassengers(
-              travel.passengers,
-              travel.vehicle?.seats
-            ),
+            ...travelUpdate,
+            passengers: formatPassengers(travel.passengers, travel.seats),
           },
-        },
-      });
-      await updateVehicleMutation({
-        variables: {
-          id: travel?.vehicle?.id,
-          vehicleUpdate: update.vehicle,
         },
       });
     } catch (error) {

@@ -29,9 +29,16 @@
       "via": "travels",
       "model": "event"
     },
-    "vehicle": {
-      "via": "travels",
-      "model": "vehicle"
+    "vehicleName": {
+      "type": "string"
+    },
+    "seats": {
+      "type": "integer",
+      "default": 4,
+      "min": 0
+    },
+    "phone_number": {
+      "type": "string"
     }
   }
 }

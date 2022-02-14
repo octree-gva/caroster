@@ -17,22 +17,6 @@ query findUserVehicles {
   }
 }
 
-mutation createVehicle($vehicle: VehicleInput!) {
-  createVehicle(input: {data: $vehicle}) {
-    vehicle {
-      ...VehicleFields
-    }
-  }
-}
-
-mutation updateVehicle($id: ID!, $vehicleUpdate: editVehicleInput!) {
-  updateVehicle(input: {where: {id: $id}, data: $vehicleUpdate}) {
-    vehicle {
-      ...VehicleFields
-    }
-  }
-}
-
 mutation deleteVehicle($id: ID!) {
   deleteVehicle(input: {where: {id: $id}}) {
     vehicle {

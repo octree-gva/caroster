@@ -22,12 +22,9 @@ fragment EventFields on Event {
     meeting
     departure
     details
-    vehicle {
-      id
-      name
-      phone_number
-      seats
-    }
+    vehicleName
+    phone_number
+    seats
     passengers {
       id
       name
