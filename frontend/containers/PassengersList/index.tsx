@@ -18,6 +18,7 @@ interface Props {
   }) => JSX.Element;
   disabled?: boolean;
   isVehicle?: boolean;
+  isTravel?: boolean;
   places?: number;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;

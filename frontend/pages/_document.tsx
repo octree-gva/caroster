@@ -6,7 +6,7 @@ import theme from '../theme';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="fr">
+      <Html>
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="application-name" content="Caroster" />

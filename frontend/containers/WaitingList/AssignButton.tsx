@@ -14,7 +14,6 @@ const AssignButton = (props: Props) => {
   const {onClick, tabIndex} = props;
   const classes = useStyles();
   const {t} = useTranslation();
-  console.log(props.disabled)
 
   return (
     <ListItemSecondaryAction  className={classes.action} onClick={onClick} tabIndex={tabIndex}>

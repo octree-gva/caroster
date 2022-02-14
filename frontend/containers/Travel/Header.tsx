@@ -6,6 +6,7 @@ import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Link from '@material-ui/core/Link';
 import {Travel} from '../../generated/graphql';
+import getMapsLink from '../../utils/getMapsLink';
 
 interface Props {
   travel: Travel;
@@ -56,7 +57,7 @@ const Header = (props: Props) => {
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://maps.google.com/?q=${encodeURI(travel.meeting)}`}
+              href={getMapsLink(travel.meeting)}
             >
               {travel.meeting}
             </Link>

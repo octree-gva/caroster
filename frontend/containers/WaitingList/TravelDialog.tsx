@@ -1,4 +1,4 @@
-import {forwardRef} from 'react';
+import {forwardRef, useEffect} from 'react';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -12,12 +12,28 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
+import {ComponentPassengerPassenger, Travel} from '../../generated/graphql';
+import getMapsLink from '../../utils/getMapsLink';
 
-const TravelDialog = ({travels, open, onClose, onSelect}) => {
+interface Props {
+  travels: Array<Travel>;
+  passenger: ComponentPassengerPassenger;
+  open: boolean;
+  onClose: () => void;
+  onSelect: (travel: Travel) => void;
+}
+
+const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
+
+  const availableTravels = travels?.filter(
+    travel =>
+      travel.passengers && travel?.vehicle?.seats > travel.passengers.length
+  );
 
   return (
     <Dialog
@@ -36,56 +52,58 @@ const TravelDialog = ({travels, open, onClose, onSelect}) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <div className={classes.offset}>
-        <List disablePadding>
-          {travels?.map((travel, i) => {
-            const passengers = travel.passengers ? travel.passengers.length : 0;
-            const counter = `${passengers} / ${travel?.vehicle?.seats}`;
-            return (
-              <ListItem
-                key={i}
-                divider
-                disabled={passengers === travel.seats}
-                className={classes.listItem}
-              >
-                <Box className={classes.rtlBox}>
-                  <Box className={classes.info}>
-                    <Typography variant="subtitle1" className={classes.date}>
-                      {t('passenger.creation.departure')}
-                      {moment(travel.departure).format('LLLL')}
-                    </Typography>
-                    <Link
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        travel.meeting
-                      )}`}
-                      onClick={e => e.preventDefault}
-                    >
-                      {travel.meeting}
-                    </Link>
+      {(availableTravels.length === 0 && (
+        <Typography className={classes.noTravel}>
+          {t('passenger.creation.no_travel', {name: passenger?.name})}
+        </Typography>
+      )) || (
+        <div className={classes.offset}>
+          <List disablePadding>
+            {availableTravels.map((travel, i) => {
+              const passengersCount = travel?.passengers?.length || 0;
+              const counter = `${passengersCount} / ${
+                travel?.vehicle?.seats || 0
+              }`;
+              return (
+                <ListItem key={i} divider className={classes.listItem}>
+                  <Box className={classes.rtlBox}>
+                    <Box className={classes.info}>
+                      <Typography variant="subtitle1" className={classes.date}>
+                        {t('passenger.creation.departure')}
+                        {moment(travel.departure).format('LLLL')}
+                      </Typography>
+                      <Link
+                        target="_blank"
+                        rel="noreferrer"
+                        href={getMapsLink(travel.meeting)}
+                        onClick={e => e.preventDefault}
+                      >
+                        {travel.meeting}
+                      </Link>
+                    </Box>
+                    <Box className={classes.info}>
+                      <Typography variant="h6">
+                        {travel.vehicle?.name}
+                      </Typography>
+                      <Typography variant="body2">
+                        {t('passenger.creation.seats', {seats: counter})}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Box className={classes.info}>
-                    <Typography variant="h6">{travel.vehicle?.name}</Typography>
-                    <Typography variant="body2">
-                      {t('passenger.creation.seats', {seats: counter})}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  disabled={travel?.vehicle?.seats === passengers}
-                  onClick={() => onSelect(travel)}
-                  className={classes.button}
-                >
-                  {t('passenger.creation.assign')}
-                </Button>
-              </ListItem>
-            );
-          })}
-        </List>
-      </div>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={() => onSelect(travel)}
+                    className={classes.button}
+                  >
+                    {t('passenger.creation.assign')}
+                  </Button>
+                </ListItem>
+              );
+            })}
+          </List>
+        </div>
+      )}
     </Dialog>
   );
 };
@@ -132,6 +150,10 @@ const useStyles = makeStyles(theme => ({
   button: {
     padding: theme.spacing(1, 15),
     margin: theme.spacing(1),
+  },
+  noTravel: {
+    margin: '45vh auto',
+    textAlign: 'center',
   },
 }));
 

@@ -152,7 +152,6 @@ const WaitingList = ({
           passengers={event.waitingList}
           onPress={onPress}
           Button={ListButton}
-          disabled={!isEditing && availability <= 0}
         />
       </Paper>
       <RemoveDialog
@@ -171,6 +170,7 @@ const WaitingList = ({
       />
       <TravelDialog
         travels={travels}
+        passenger={addingPassenger}
         open={!!addingPassenger}
         onClose={() => setAddingPassenger(null)}
         onSelect={selectTravel}

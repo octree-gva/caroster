@@ -62,7 +62,7 @@ const VehicleChoiceDialog = ({
             ))}
           </List>
         )) || (
-          <Container>
+          <Container className={classes.empty}>
             <Typography>{t('travel.vehicle.empty')}</Typography>
           </Container>
         )}
@@ -99,6 +99,9 @@ const useStyles = makeStyles(theme => ({
   new: {
     maxWidth: '300px',
   },
+  empty: {
+    padding: theme.spacing(2, 3)
+  }
 }));
 
 export default VehicleChoiceDialog;

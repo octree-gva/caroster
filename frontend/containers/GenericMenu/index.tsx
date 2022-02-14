@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
-import Languages from '../Languages';
+import Languages from '../Languages/MenuItem';
 import Action from './Action';
 
 const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {

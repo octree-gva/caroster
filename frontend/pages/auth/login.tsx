@@ -9,6 +9,7 @@ import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
 import SignInForm from '../../containers/SignInForm';
 import LoginGoogle from '../../containers/LoginGoogle';
+import LanguagesIcon from '../../containers/Languages/Icon';
 
 const Login = () => {
   const {t} = useTranslation();
@@ -27,6 +28,7 @@ const Login = () => {
         <Divider />
         <LoginGoogle />
       </Card>
+      <LanguagesIcon/>
     </Layout>
   );
 };

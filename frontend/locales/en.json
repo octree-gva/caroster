@@ -230,7 +230,8 @@
       "seats": "Number of passengers: {{seats}}",
       "departure": "Departure: ",
       "assign": "Assign",
-      "available_cars": "Available cars"
+      "available_cars": "Available cars",
+      "no_travel": "No available cars. {{name}} will receive an email when new cars will be available."
     },
     "actions": {
       "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",

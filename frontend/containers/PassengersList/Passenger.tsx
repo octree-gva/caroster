@@ -21,14 +21,25 @@ const Passenger = (props: Props) => {
   const classes = useStyles();
   const {user} = useProfile();
 
-  const isUser = user && user.id === passenger?.user?.id;
-  const showLocation = isVehicle ? false : passenger.location
+  const isUser = user && `${user.id}` === passenger?.user?.id;
+  const showLocation = isVehicle ? false : passenger.location;
 
   if (passenger) {
     return (
       <>
         <ListItemText
-          primary={<>{passenger.name}{isUser && <Chip className={classes.me} label={t('generic.me')} variant="outlined" />}</>}
+          primary={
+            <>
+              {passenger.name}
+              {isUser && (
+                <Chip
+                  className={classes.me}
+                  label={t('generic.me')}
+                  variant="outlined"
+                />
+              )}
+            </>
+          }
           secondary={showLocation}
         />
         {button}
@@ -58,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   },
   me: {
     marginLeft: theme.spacing(2),
-  }
+  },
 }));
 
 export default Passenger;
