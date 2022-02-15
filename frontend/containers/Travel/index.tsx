@@ -24,7 +24,7 @@ const Travel = (props: Props) => {
 
   if (!travel) return null;
   const disableNewPassengers =
-    travel.passengers.length >= travel.vehicle?.seats;
+    travel.passengers.length >= travel.seats;
 
   return (
     <Paper className={classes.root}>
@@ -44,7 +44,7 @@ const Travel = (props: Props) => {
       {!isEditing && (
         <PassengersList
           passengers={travel.passengers}
-          places={travel?.vehicle?.seats}
+          places={travel?.seats}
           onClick={actions.sendPassengerToWaitingList}
           isVehicle
           Button={({onClick}: {onClick: () => void}) => (

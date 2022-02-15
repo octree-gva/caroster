@@ -7,6 +7,7 @@ import {
   EventByUuidDocument,
   useCreateTravelMutation,
   TravelInput,
+  FindUserVehiclesDocument,
 } from '../../generated/graphql';
 
 interface Props {
@@ -30,6 +31,9 @@ const useActions = (props: Props) => {
             variables: {
               uuid: event.uuid,
             },
+          },
+          {
+            query: FindUserVehiclesDocument,
           },
         ],
       });

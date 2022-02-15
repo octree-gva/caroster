@@ -32,7 +32,7 @@ const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
 
   const availableTravels = travels?.filter(
     travel =>
-      travel.passengers && travel?.vehicle?.seats > travel.passengers.length
+      travel.passengers && travel?.seats > travel.passengers.length
   );
 
   return (
@@ -62,7 +62,7 @@ const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
             {availableTravels.map((travel, i) => {
               const passengersCount = travel?.passengers?.length || 0;
               const counter = `${passengersCount} / ${
-                travel?.vehicle?.seats || 0
+                travel?.seats || 0
               }`;
               return (
                 <ListItem key={i} divider className={classes.listItem}>
@@ -83,7 +83,7 @@ const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
                     </Box>
                     <Box className={classes.info}>
                       <Typography variant="h6">
-                        {travel.vehicle?.name}
+                        {travel.vehicleName}
                       </Typography>
                       <Typography variant="body2">
                         {t('passenger.creation.seats', {seats: counter})}
