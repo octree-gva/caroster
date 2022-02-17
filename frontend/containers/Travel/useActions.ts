@@ -108,17 +108,17 @@ const useActions = (props: Props) => {
       // Put passengers in event waiting list (if any)
       // TODO Move these logics to backend and delete vehicle if no user linked
       if (Array.isArray(travel?.passengers) && travel.passengers.length > 0)
-        await updateEventMutation({
-          variables: {
-            uuid: event.uuid,
-            eventUpdate: {
-              waitingList: formatPassengers([
-                ...(event.waitingList || []),
-                ...travel.passengers.map(({name}) => ({name})),
-              ]),
-            },
+      await updateEventMutation({
+        variables: {
+          uuid: event.uuid,
+          eventUpdate: {
+            waitingList: formatPassengers([
+              ...(event.waitingList || []),
+              ...travel.passengers.map(({user, name}) => ({name, user})),
+            ]),
           },
-        });
+        },
+      });
       await deleteTravelMutation({
         variables: {
           id: travel.id,
@@ -141,7 +141,10 @@ const formatPassengers = (passengers = [], seats: number = 1000) => {
   if (!passengers) return [];
   return passengers
     .slice(0, seats)
-    .map(({__typename, ...passenger}) => passenger);
+    .map(({__typename, user, ...passenger}) => ({
+      ...passenger,
+      user: user?.id,
+    }));
 };
 
 export default useActions;

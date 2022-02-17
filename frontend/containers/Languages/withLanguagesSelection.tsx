@@ -5,8 +5,6 @@ import {
   useUpdateMeMutation,
   Enum_Userspermissionsuser_Lang,
 } from '../../generated/graphql';
-import moment from 'moment';
-import {useTranslation} from 'react-i18next';
 
 type LangFunction = (lang: Enum_Userspermissionsuser_Lang) => void;
 
@@ -23,22 +21,10 @@ const withLanguagesSelection =
     ) => JSX.Element
   ) =>
   () => {
-    const {i18n} = useTranslation();
     const language = useLangStore(s => s.language);
     const setLanguage = useLangStore(s => s.setLanguage);
     const {profile, connected} = useProfile();
     const [updateProfile] = useUpdateMeMutation();
-
-    useEffect(() => {
-      if (i18n.language === 'en')
-        setLanguage(Enum_Userspermissionsuser_Lang.En);
-    }, []);
-
-    useEffect(() => {
-      const momentLang = language === 'FR' ? 'fr-ch' : 'en';
-      moment.locale(momentLang);
-      i18n.changeLanguage(language?.toLowerCase());
-    }, [language]);
 
     useEffect(() => {
       if (profile?.lang) setLanguage(profile.lang);

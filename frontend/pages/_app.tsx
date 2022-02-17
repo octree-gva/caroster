@@ -14,13 +14,36 @@ import Toasts from '../components/Toasts';
 import theme from '../theme';
 import 'moment/locale/fr-ch';
 import '../i18n';
+import {useTranslation} from 'react-i18next';
+import useAuthStore from '../stores/useAuthStore';
 
 moment.locale('fr-ch');
 
 const App = function (props: AppProps) {
   const {Component, pageProps} = props;
   const apolloClient = useApollo(pageProps);
+  const user = useAuthStore();
+  const {i18n} = useTranslation();
   const language = useLangStore(s => s.language);
+  const setLanguage = useLangStore(s => s.setLanguage);
+
+  const i18nLang = i18n.language.split('-')[1] ?? i18n.language;
+
+  useEffect(() => {
+    if (i18nLang === 'FR') {
+      setLanguage(Enum_Userspermissionsuser_Lang.Fr);
+    } else {
+      // Fallback language
+      setLanguage(Enum_Userspermissionsuser_Lang.En);
+    }
+  }, []);
+
+  useEffect(() => {
+    const languageProfile = user?.lang ?? language;
+    const momentLang = languageProfile === 'FR' ? 'fr-ch' : 'en';
+    moment.locale(momentLang);
+    i18n.changeLanguage(languageProfile?.toLowerCase());
+  }, [language, user?.lang]);
 
   useEffect(() => {
     // Remove the server-side injected CSS.

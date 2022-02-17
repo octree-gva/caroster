@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import useProfile from '../hooks/useProfile';
 import Layout from '../layouts/Centered';
 import CreateEvent from '../containers/CreateEvent';
+import LanguagesIcon from '../containers/Languages/Icon';
 import Paper from '../components/Paper';
 import Logo from '../components/Logo';
 
@@ -51,6 +52,7 @@ const Home = () => {
         <Logo />
         <CreateEvent />
       </Paper>
+      <LanguagesIcon/>
     </Layout>
   );
 };
