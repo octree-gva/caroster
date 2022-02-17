@@ -45,6 +45,15 @@ const NewTravelDialog = ({context, toggle}: Props) => {
   const [details, setDetails] = useState('');
   const canCreate = !!name && !!seats;
 
+  const clearState = () => {
+    setName('');
+    setSeats(4);
+    setMeeting('');
+    setDate(moment());
+    setPhone('');
+    setDetails('');
+  };
+
   useEffect(() => {
     if (context.vehicle) {
       setName(context.vehicle.name);
@@ -70,13 +79,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
     await createTravel({...travel, createVehicle});
     toggle({opened: false});
 
-    // Clear states
-    setName('');
-    setSeats(4);
-    setMeeting('');
-    setDate(moment());
-    setPhone('');
-    setDetails('');
+    clearState();
   };
 
   return (
@@ -84,7 +87,10 @@ const NewTravelDialog = ({context, toggle}: Props) => {
       fullWidth
       maxWidth="xs"
       open={context?.opened}
-      onClose={() => toggle({opened: false})}
+      onClose={() => {
+        toggle({opened: false});
+        clearState();
+      }}
       TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>

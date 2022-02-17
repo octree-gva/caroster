@@ -30,7 +30,7 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
   // States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const canAddPassenger = !!name && !!email;
+  const canAddPassenger = !!name;
   const {addPassengerToTravel} = usePassengersActions();
 
   const onSubmit = async (e: FormEvent) => {
