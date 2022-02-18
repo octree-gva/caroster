@@ -34,7 +34,7 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [location, setlocation] = useState('');
-  const canAddPassenger = !!name;
+  const canAddPassenger = !!name && !!email;
   const {user} = useProfile();
   const {addPassengerToWaitingList} = usepassengersActions();
 
