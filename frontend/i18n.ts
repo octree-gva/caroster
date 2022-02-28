@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import translationFr from './locales/fr.json';
 import translationEn from './locales/en.json';
+import {Enum_Userspermissionsuser_Lang} from './generated/graphql';
 
 const resources = {
   fr: {
@@ -12,7 +13,17 @@ const resources = {
   },
 };
 
-const getUserLng = () => typeof window !== 'undefined' && typeof window.navigator !== 'undefined' ? navigator.language : 'en';
+export const getUserLng = () => {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window.navigator !== 'undefined'
+  ) {
+    if (navigator.language === 'fr' || navigator.language.includes('fr-')) {
+      return Enum_Userspermissionsuser_Lang.Fr
+    }
+  }
+  return Enum_Userspermissionsuser_Lang.En
+};
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next

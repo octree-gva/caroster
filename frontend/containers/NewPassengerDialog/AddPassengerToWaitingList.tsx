@@ -16,6 +16,7 @@ import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
+import { validateEmail } from './validation';
 
 interface Props {
   toggle: () => void;
@@ -33,6 +34,7 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
   // States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const emailValidated = validateEmail(email);
   const [location, setlocation] = useState('');
   const canAddPassenger = !!name && !!email;
   const {user} = useProfile();
@@ -97,6 +99,7 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
           {!addSelf && (
             <AddPassengerCommonFields
               email={email}
+              emailError={!emailValidated}
               setEmail={setEmail}
               name={name}
               setName={setName}

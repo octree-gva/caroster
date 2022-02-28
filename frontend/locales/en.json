@@ -165,9 +165,10 @@
       "location_helper": "Indicate your preferred departure location",
       "location_placeholder": "Meeting place (optionnal)",
       "email": "Email",
-      "email_placeholder": "email",
+      "email_placeholder": "Email",
+      "email_helpertext": "Email is not valid",
       "name": "Name",
-      "name_placeholder": "name"
+      "name_placeholder": "Name"
     },
     "errors": {
       "cant_create": "Unable to create the car",

@@ -12,7 +12,6 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {ComponentPassengerPassenger, Travel} from '../../generated/graphql';

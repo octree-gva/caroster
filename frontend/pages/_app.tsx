@@ -16,6 +16,7 @@ import 'moment/locale/fr-ch';
 import '../i18n';
 import {useTranslation} from 'react-i18next';
 import useAuthStore from '../stores/useAuthStore';
+import {getUserLng} from '../i18n';
 
 moment.locale('fr-ch');
 
@@ -27,15 +28,10 @@ const App = function (props: AppProps) {
   const language = useLangStore(s => s.language);
   const setLanguage = useLangStore(s => s.setLanguage);
 
-  const i18nLang = i18n.language.split('-')[1] ?? i18n.language;
+  const i18nLang = i18n.language.split('-')[1];
 
   useEffect(() => {
-    if (i18nLang === 'FR') {
-      setLanguage(Enum_Userspermissionsuser_Lang.Fr);
-    } else {
-      // Fallback language
-      setLanguage(Enum_Userspermissionsuser_Lang.En);
-    }
+    setLanguage(getUserLng());
   }, []);
 
   useEffect(() => {

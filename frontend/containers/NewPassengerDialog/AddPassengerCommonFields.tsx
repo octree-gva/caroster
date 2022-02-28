@@ -10,10 +10,11 @@ interface Props {
   name: string;
   setName: (name: string) => void;
   email: string;
+  emailError: boolean;
   setEmail: (email: string) => void;
 }
 
-const AddPassengerCommonFields = ({name, setName, email, setEmail}: Props) => {
+const AddPassengerCommonFields = ({name, setName, email, emailError, setEmail}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -54,6 +55,8 @@ const AddPassengerCommonFields = ({name, setName, email, setEmail}: Props) => {
           size="small"
           fullWidth
           label=""
+          error={email && emailError}
+          helperText={email && t('travel.passengers.email_helpertext')}
           placeholder={t('travel.passengers.email_placeholder')}
         />
       </Box>

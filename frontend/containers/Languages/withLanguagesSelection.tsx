@@ -19,7 +19,7 @@ const withLanguagesSelection =
     LanguageSelectionComponent: (
       args: LanguageSelectionComponentProps
     ) => JSX.Element
-  ) =>
+  ) => 
   () => {
     const language = useLangStore(s => s.language);
     const setLanguage = useLangStore(s => s.setLanguage);

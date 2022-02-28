@@ -13,6 +13,7 @@ import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
 import useToastStore from '../../stores/useToastStore';
 import usePassengersActions from '../../hooks/usePassengersActions';
+import {validateEmail} from './validation';
 
 interface Props {
   travel: TravelType;
@@ -30,6 +31,7 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
   // States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const emailValidated = validateEmail(email);
   const canAddPassenger = !!name;
   const {addPassengerToTravel} = usePassengersActions();
 
@@ -74,6 +76,7 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
         <DialogContent className={classes.dialogContent}>
           <AddPassengerCommonFields
             email={email}
+            emailError={!emailValidated}
             setEmail={setEmail}
             name={name}
             setName={setName}

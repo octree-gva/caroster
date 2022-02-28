@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 import VehicleItem from './VehicleItem';
 import Typography from '@material-ui/core/Typography';
 import {VehicleFieldsFragment} from '../../generated/graphql';
+import Icon from '@material-ui/core/Icon';
 
 interface Props {
   open: boolean;
@@ -44,7 +45,12 @@ const VehicleChoiceDialog = ({
       onClose={toggle}
       TransitionComponent={Transition}
     >
-      <DialogTitle>{t('travel.vehicle.title')}</DialogTitle>
+      <DialogTitle>
+        {t('travel.vehicle.title')}
+        <Icon className={classes.closeIcon} onClick={toggle} aria-label="close">
+          close
+        </Icon>
+      </DialogTitle>
       <DialogContent dividers className={classes.content}>
         {(vehicles && vehicles.length != 0 && (
           <List>
@@ -100,8 +106,17 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '300px',
   },
   empty: {
-    padding: theme.spacing(2, 3)
-  }
+    padding: theme.spacing(2, 3),
+  },
+  closeIcon: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    right: theme.spacing(2),
+    cursor: 'pointer',
+    padding: theme.spacing(0.5),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
 }));
 
 export default VehicleChoiceDialog;

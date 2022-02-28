@@ -166,6 +166,7 @@
       "location_placeholder": "Lieu de rencontre (optionnel)",
       "email": "Email",
       "email_placeholder": "Email",
+      "email_helpertext": "Email non valide",
       "name": "Nom",
       "name_placeholder": "Nom"
     },
@@ -193,7 +194,7 @@
     },
     "noEvent": {
       "title": "Bienvenue sur Caroster",
-      "text_html": "Ici, vous y verrez <strong>les carosters auxquels vous participer</strong>, pour commencer créer un Caroster !",
+      "text_html": "Ici, vous y verrez <strong>les carosters auxquels vous participez</strong>, pour commencer créer un Caroster !",
       "create_event": "$t(menu.new_event)"
     }
   },
