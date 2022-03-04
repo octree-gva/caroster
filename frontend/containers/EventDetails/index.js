@@ -72,7 +72,7 @@ const EventDetails = ({onShare}) => {
               multiline
               rowsMax={4}
               inputProps={{maxLength: 250}}
-              helperText={`${event.address.length}/250`}
+              helperText={`${event.address?.length ?? 0}/250`}
               defaultValue={event.address}
               value={event.address}
               onChange={e => setEventUpdate({address: e.target.value})}
