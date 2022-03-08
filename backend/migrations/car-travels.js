@@ -35,7 +35,7 @@ const splitCar = async car => {
     phone_number: car.phone_number,
   };
 
-  const newVehicle = await strapi.services.vehicle.create(vehicle);
+  await strapi.services.vehicle.create(vehicle);
 
   const travel = {
     meeting: car.meeting,
@@ -43,7 +43,9 @@ const splitCar = async car => {
     details: car.details,
     passengers: car.passengers,
     event: car.event?.id,
-    vehicle: newVehicle.id,
+    vehicleName: car.name,
+    seats: car.seats,
+    phone_number: car.phone_number,
   };
 
   await strapi.services.travel.create(travel);
