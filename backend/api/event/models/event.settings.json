@@ -25,10 +25,6 @@
     "address": {
       "type": "text"
     },
-    "cars": {
-      "via": "event",
-      "collection": "car"
-    },
     "position": {
       "type": "json"
     },
