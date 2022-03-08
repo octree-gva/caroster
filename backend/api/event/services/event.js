@@ -14,7 +14,7 @@ const PUBLIC_FIELDS = [
   'address',
   'position',
   'waitingList',
-  'cars',
+  'travels',
   'created_at',
   'updated_at',
 ];
@@ -23,12 +23,12 @@ const {STRAPI_URL = ''} = process.env;
 
 module.exports = {
   sanitize: event => {
-    const cars = event?.cars?.map(strapi.services.car.sanitize);
+    const travels = event?.travels?.map(strapi.services.travel.sanitize);
     const waitingList = event?.waitingList?.map(list =>
       _pick(list, ['id', 'name', 'location', 'user'])
     );
     const sanitizedEvent = _pick(event, PUBLIC_FIELDS);
-    return {...sanitizedEvent, cars, waitingList};
+    return {...sanitizedEvent, travels, waitingList};
   },
 
   sendDailyRecap: async event => {
@@ -38,8 +38,8 @@ module.exports = {
       strapi.log.debug(
         `Send daily recap to ${event.email} for event #${event.id}`
       );
-      const newCars = event.cars?.filter(car =>
-        referenceDate.isSameOrBefore(car.created_at)
+      const newTravels = event.travels?.filter(travel =>
+        referenceDate.isSameOrBefore(travel.created_at)
       );
       try {
         const templateId = await strapi.plugins[
@@ -58,8 +58,8 @@ module.exports = {
             event,
             eventLink: `${STRAPI_URL}/e/${event.uuid}`,
             waitingListCount: event.waitingList?.length || 0,
-            carsCount: event.cars?.length || 0,
-            newCarsCount: newCars?.length || 0,
+            travelsCount: event.travels?.length || 0,
+            newTravelsCount: newTravels?.length || 0,
           }
         );
       } catch (error) {
