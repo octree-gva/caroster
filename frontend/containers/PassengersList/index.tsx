@@ -4,7 +4,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import Passenger from './Passenger';
 import {
   ComponentPassengerPassenger,
-  EditComponentPassengerPassengerInput as PassengerInput,
 } from '../../generated/graphql';
 
 interface Props {

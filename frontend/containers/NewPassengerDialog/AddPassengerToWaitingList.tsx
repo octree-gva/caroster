@@ -24,7 +24,7 @@ interface Props {
   addSelf: boolean;
 }
 
-const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
+const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const event = useEventStore(s => s.event);
@@ -140,4 +140,4 @@ const NewPassengerDialog = ({open, toggle, addSelf}: Props) => {
   );
 };
 
-export default NewPassengerDialog;
+export default AddPassengerToWaitingList;

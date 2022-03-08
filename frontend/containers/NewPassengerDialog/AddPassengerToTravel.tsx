@@ -21,7 +21,7 @@ interface Props {
   open: boolean;
 }
 
-const NewPassengerDialog = ({open, toggle, travel}: Props) => {
+const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
   const event = useEventStore(s => s.event);
@@ -90,4 +90,4 @@ const NewPassengerDialog = ({open, toggle, travel}: Props) => {
   );
 };
 
-export default NewPassengerDialog;
+export default AddPassengerToTravel;

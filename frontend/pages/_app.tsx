@@ -13,7 +13,6 @@ import Metas from '../containers/Metas';
 import Toasts from '../components/Toasts';
 import theme from '../theme';
 import 'moment/locale/fr-ch';
-import '../i18n';
 import {useTranslation} from 'react-i18next';
 import useAuthStore from '../stores/useAuthStore';
 import {getUserLng} from '../i18n';
@@ -27,8 +26,6 @@ const App = function (props: AppProps) {
   const {i18n} = useTranslation();
   const language = useLangStore(s => s.language);
   const setLanguage = useLangStore(s => s.setLanguage);
-
-  const i18nLang = i18n.language.split('-')[1];
 
   useEffect(() => {
     setLanguage(getUserLng());

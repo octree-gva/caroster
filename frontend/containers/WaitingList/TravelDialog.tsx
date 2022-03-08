@@ -1,4 +1,4 @@
-import {forwardRef, useEffect} from 'react';
+import {forwardRef} from 'react';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';

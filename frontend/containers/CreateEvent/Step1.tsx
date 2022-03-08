@@ -33,8 +33,8 @@ const Step1 = ({nextStep, event, addToEvent}) => {
     return connected ? n : n && e;
   }, [name, email, emailIsValid, connected]);
 
-  const onNext = event => {
-    if (event.preventDefault) event.preventDefault();
+  const onNext = submitEvent => {
+    if (submitEvent.preventDefault) submitEvent.preventDefault();
     addToEvent({
       name,
       email: connected ? user.email : email,

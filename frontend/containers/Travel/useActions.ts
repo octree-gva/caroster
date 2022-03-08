@@ -107,27 +107,28 @@ const useActions = (props: Props) => {
     try {
       // Put passengers in event waiting list (if any)
       // TODO Move these logics to backend and delete vehicle if no user linked
-      if (Array.isArray(travel?.passengers) && travel.passengers.length > 0)
-      await updateEventMutation({
-        variables: {
-          uuid: event.uuid,
-          eventUpdate: {
-            waitingList: formatPassengers([
-              ...(event.waitingList || []),
-              ...travel.passengers.map(({user, name}) => ({name, user})),
-            ]),
+      if (Array.isArray(travel?.passengers) && travel.passengers.length > 0) {
+        await updateEventMutation({
+          variables: {
+            uuid: event.uuid,
+            eventUpdate: {
+              waitingList: formatPassengers([
+                ...(event.waitingList || []),
+                ...travel.passengers.map(({user, name}) => ({name, user})),
+              ]),
+            },
           },
-        },
-      });
-      await deleteTravelMutation({
-        variables: {
-          id: travel.id,
-        },
-        refetchQueries: [
-          {query: EventByUuidDocument, variables: {uuid: event.uuid}},
-        ],
-      });
-      addToast(t('travel.actions.removed'));
+        });
+        await deleteTravelMutation({
+          variables: {
+            id: travel.id,
+          },
+          refetchQueries: [
+            {query: EventByUuidDocument, variables: {uuid: event.uuid}},
+          ],
+        });
+        addToast(t('travel.actions.removed'));
+      }
     } catch (error) {
       console.error(error);
       addToast(t('travel.errors.cant_remove'));
@@ -139,12 +140,10 @@ const useActions = (props: Props) => {
 
 const formatPassengers = (passengers = [], seats: number = 1000) => {
   if (!passengers) return [];
-  return passengers
-    .slice(0, seats)
-    .map(({__typename, user, ...passenger}) => ({
-      ...passenger,
-      user: user?.id,
-    }));
+  return passengers.slice(0, seats).map(({__typename, user, ...passenger}) => ({
+    ...passenger,
+    user: user?.id,
+  }));
 };
 
 export default useActions;

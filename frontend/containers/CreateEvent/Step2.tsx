@@ -23,7 +23,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
 
   const onCreate = async evt => {
     if (evt.preventDefault) evt.preventDefault();
-    if (loading) return false;
+    if (loading) return;
     setLoading(true);
     const eventData = {
       date: !date ? null : moment(date).format('YYYY-MM-DD'),
@@ -35,7 +35,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     if (!result) addToast(t('event.errors.cant_create'));
     else router.push(`/e/${result.uuid}`);
     setLoading(false);
-    return false;
+    return;
   };
 
   return (

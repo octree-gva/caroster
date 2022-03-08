@@ -41,10 +41,10 @@ const useTour = () => {
   useEffect(() => {
     if (!isReady || !event) return;
 
-    let isCreator = eventsToBeAdded.includes(event?.id);
-    if (profile) isCreator = profile.events.map(e => e.id).includes(event?.id);
+    let newIsCreator = eventsToBeAdded.includes(event?.id);
+    if (profile) newIsCreator = profile.events.map(e => e.id).includes(event?.id);
 
-    setTour({isCreator});
+    setTour({isCreator: newIsCreator});
   }, [isReady, event, eventsToBeAdded, profile]);
 
   const steps = useMemo(() => {
@@ -56,13 +56,13 @@ const useTour = () => {
           {content: t`tour.creator.step3`, target: '.tour_event_share'},
           {content: t`tour.creator.step4`, target: '.tour_waiting_list'},
           {content: t`tour.creator.step5`, target: '.tour_travel_add'},
-        ].map(step => ({...step, ...STEP_SETTINGS}))
+        ].map(currentStep => ({...currentStep, ...STEP_SETTINGS}))
       : [
           {content: t`tour.user.step1`, target: '.tour_travel_add'},
           {content: t`tour.user.step2`, target: '.tour_waiting_list'},
           {content: t`tour.user.step3`, target: '.tour_event_infos'},
           {content: t`tour.user.step4`, target: '.tour_event_share'},
-        ].map(step => ({...step, ...STEP_SETTINGS}));
+        ].map(currentStep => ({...currentStep, ...STEP_SETTINGS}));
   }, [isCreator]);
 
   // Init tour

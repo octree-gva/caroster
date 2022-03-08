@@ -102,6 +102,14 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     ? [{label: user.username, id: 'Email'}, {divider: true}]
     : [];
 
+  const UserIcon = user ? (
+    <Avatar className={classes.avatar}>
+      {`${user.username[0]}`.toUpperCase()}
+    </Avatar>
+  ) : (
+    <Icon>more_vert</Icon>
+  );
+
   return (
     <AppBar
       className={classes.appbar}
@@ -167,13 +175,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
               id="MenuMoreInfo"
               onClick={e => setAnchorEl(e.currentTarget)}
             >
-              {user ? (
-                <Avatar className={classes.avatar}>
-                  {`${user.username[0]}`.toUpperCase()}
-                </Avatar>
-              ) : (
-                <Icon>more_vert</Icon>
-              )}
+              {UserIcon}
             </IconButton>
           </>
         )}

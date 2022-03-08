@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import useToastsStore from '../../stores/useToastStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
