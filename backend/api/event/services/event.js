@@ -23,12 +23,11 @@ const {STRAPI_URL = ''} = process.env;
 
 module.exports = {
   sanitize: event => {
-    const travels = event?.travels?.map(strapi.services.travel.sanitize);
     const waitingList = event?.waitingList?.map(list =>
       _pick(list, ['id', 'name', 'location', 'user'])
     );
     const sanitizedEvent = _pick(event, PUBLIC_FIELDS);
-    return {...sanitizedEvent, travels, waitingList};
+    return {...sanitizedEvent, waitingList};
   },
 
   sendDailyRecap: async event => {

@@ -7,9 +7,8 @@ beforeAll(() => {
   global.strapi.plugins['email-designer'].services.template.fetch = jest.fn(
     () => 1
   );
-  global.strapi.plugins[
-    'email-designer'
-  ].services.email.sendTemplatedEmail = jest.fn();
+  global.strapi.plugins['email-designer'].services.email.sendTemplatedEmail =
+    jest.fn();
 
   axios.get.mockResolvedValue({data: [{lat: 0, lng: 0}]});
 });
