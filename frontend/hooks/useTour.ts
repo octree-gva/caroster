@@ -65,17 +65,6 @@ const useTour = () => {
         ].map(currentStep => ({...currentStep, ...STEP_SETTINGS}));
   }, [isCreator]);
 
-  // Init tour
-  useEffect(() => {
-    if (!isReady) return;
-    let hasOnboarded = profile?.onboardingUser || onboardingUser;
-    if (isCreator)
-      hasOnboarded = profile?.onboardingCreator || onboardingCreator;
-    const hasSteps = steps.length > 0;
-    const showWelcome = hasSteps && !hasOnboarded;
-    setTour({showWelcome});
-  }, [steps, isCreator, onboardingCreator, onboardingUser, profile, isReady]);
-
   // On step change : wait for the UI a little and run it
   useEffect(() => {
     let timer;

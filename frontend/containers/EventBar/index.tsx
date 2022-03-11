@@ -73,7 +73,10 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     {divider: true},
     {
       label: t('menu.tour'),
-      onClick: onTourRestart,
+      onClick: () => {
+        setAnchorEl(null);
+        onTourRestart();
+      },
       id: 'TourTab',
     },
   ];
@@ -92,7 +95,10 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     {divider: true},
     {
       label: t('menu.tour'),
-      onClick: onTourRestart,
+      onClick: () => {
+        setAnchorEl(null);
+        onTourRestart();
+      },
       id: 'TourTab',
     },
   ];
@@ -120,7 +126,11 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       <Toolbar>
         <div className={classes.name}>
           <Link href={settings?.['about_link'] || ''}>
-            <img className={classes.logo} src="/assets/Logo_in_beta.svg" alt="Logo" />
+            <img
+              className={classes.logo}
+              src="/assets/Logo_in_beta.svg"
+              alt="Logo"
+            />
           </Link>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {event.name}

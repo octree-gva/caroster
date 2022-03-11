@@ -19,7 +19,7 @@ const WelcomeDialog = () => {
   const onStartTour = () =>
     setTour({showWelcome: false, run: true, step: 0, prev: -1});
 
-  const onCancel = () => setTour({showWelcome: false});
+  const onCancel = () => setTour({showWelcome: false}); 
 
   return (
     <Dialog open={showWelcome} fullWidth maxWidth="xs">
