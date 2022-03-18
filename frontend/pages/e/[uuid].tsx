@@ -1,6 +1,6 @@
 import {useState, useReducer, useEffect} from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {initializeApollo} from '../../lib/apolloClient';
 import useToastStore from '../../stores/useToastStore';
@@ -25,6 +25,7 @@ import {
 import ErrorPage from '../_error';
 import useProfile from '../../hooks/useProfile';
 import Fab from '../../containers/Fab';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const POLL_INTERVAL = 10000;
 
@@ -43,6 +44,7 @@ const EventPage = props => {
 const Event = (props: Props) => {
   const {eventUUID} = props;
   const classes = useStyles();
+  const theme = useTheme();
   const {t} = useTranslation();
   const {user} = useProfile();
   const {
@@ -61,7 +63,9 @@ const Event = (props: Props) => {
     pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
   });
-
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const addCarClasses = matches ? 'tour_travel_add' : '';
+  
   useEffect(() => {
     if (event) setEvent(event as EventType);
   }, [event]);
@@ -122,6 +126,7 @@ const Event = (props: Props) => {
           onClick={addTravelClickHandler}
           aria-label="add-car"
           color="primary"
+          className={addCarClasses}
         >
           {t('travel.creation.title')}
         </Fab>

@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import {makeStyles} from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {useTheme, makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 
@@ -13,10 +14,16 @@ const AddTravel = (props: Props) => {
   const {toggle} = props;
   const classes = useStyles();
   const {t} = useTranslation();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  let containerClasses = [classes.container]
+  if (matches) {
+    containerClasses = [...containerClasses, 'tour_travel_add']
+  }
   return (
     <Container
       maxWidth="sm"
-      className={clsx([classes.container, 'tour_travel_add'])}
+      className={clsx(containerClasses)}
     >
       <Button
         classes={{containedSecondary: classes.button}}
