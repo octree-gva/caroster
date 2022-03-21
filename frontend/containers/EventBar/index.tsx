@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import clsx from 'clsx';
@@ -132,9 +133,17 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
               alt="Logo"
             />
           </Link>
-          <Typography variant="h6" noWrap id="MenuHeaderTitle">
-            {event.name}
-          </Typography>
+          <Tooltip title={event.name}>
+            <Typography
+              variant="h6"
+              noWrap
+              id="MenuHeaderTitle"
+              className={classes.title}
+            >
+              {event.name}
+            </Typography>
+          </Tooltip>
+
           {detailsOpen && (
             <IconButton
               className="tour_event_edit"
@@ -249,6 +258,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
+  },
+  title: {
+    maxWidth: `calc(100vw - ${theme.spacing(30)}px)`,
   },
   iconButtons: {
     margin: theme.spacing(0),
