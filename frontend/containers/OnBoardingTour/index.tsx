@@ -9,11 +9,15 @@ const OnBoardingTour = (props: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
   const {run, steps, step, onTourChange} = useTour();
+  const translateStep = ({content, ...step}) => ({
+    content: t(content),
+    ...step,
+  });
 
   return (
     <Joyride
       run={run}
-      steps={steps}
+      steps={steps.map(translateStep)}
       stepIndex={step}
       callback={onTourChange}
       locale={t('joyride', {returnObjects: true})}

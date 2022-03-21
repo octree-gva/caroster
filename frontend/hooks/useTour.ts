@@ -1,5 +1,4 @@
 import {useEffect, useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
 import {CallBackProps, STATUS, EVENTS, ACTIONS} from 'react-joyride';
 import {useUpdateMeMutation} from '../generated/graphql';
 import useOnboardingStore from '../stores/useOnboardingStore';
@@ -23,7 +22,6 @@ const STEP_SETTINGS = {
 };
 
 const useTour = () => {
-  const {t} = useTranslation();
   const isCreator = useTourStore(s => s.isCreator);
   const run = useTourStore(s => s.run);
   const step = useTourStore(s => s.step);
@@ -51,17 +49,17 @@ const useTour = () => {
     if (isCreator === null) return [];
     return isCreator
       ? [
-          {content: t`tour.creator.step1`, target: '.tour_event_infos'},
-          {content: t`tour.creator.step2`, target: '.tour_event_edit'},
-          {content: t`tour.creator.step3`, target: '.tour_event_share'},
-          {content: t`tour.creator.step4`, target: '.tour_waiting_list'},
-          {content: t`tour.creator.step5`, target: '.tour_travel_add'},
+          {content: 'tour.creator.step1', target: '.tour_travel_add'},
+          {content: 'tour.creator.step2', target: '.tour_waiting_list'},
+          {content: 'tour.creator.step3', target: '.tour_event_infos'},
+          {content: 'tour.creator.step4', target: '.tour_event_edit'},
+          {content: 'tour.creator.step5', target: '.tour_event_share'},
         ].map(currentStep => ({...currentStep, ...STEP_SETTINGS}))
       : [
-          {content: t`tour.user.step1`, target: '.tour_travel_add'},
-          {content: t`tour.user.step2`, target: '.tour_waiting_list'},
-          {content: t`tour.user.step3`, target: '.tour_event_infos'},
-          {content: t`tour.user.step4`, target: '.tour_event_share'},
+          {content: 'tour.user.step1', target: '.tour_travel_add'},
+          {content: 'tour.user.step2', target: '.tour_waiting_list'},
+          {content: 'tour.user.step3', target: '.tour_event_infos'},
+          {content: 'tour.user.step4', target: '.tour_event_share'},
         ].map(currentStep => ({...currentStep, ...STEP_SETTINGS}));
   }, [isCreator]);
 

@@ -225,9 +225,8 @@ const onTourChange = (toggleDetails: Function) => {
     prev === step1 && step === step2;
 
   if (isCreator) {
-    if (fromTo(1, 0) || fromTo(0, 1) || fromTo(3, 2) || fromTo(2, 3))
-      toggleDetails();
-  } else if (fromTo(2, 3) || fromTo(3, 2)) toggleDetails();
+    if (fromTo(3, 2) || fromTo(2, 3) || fromTo(4, 5)) toggleDetails();
+  } else if (fromTo(2, 3) || fromTo(3, 2) || fromTo(3, 4)) toggleDetails();
 };
 
 const useStyles = makeStyles(theme => ({
