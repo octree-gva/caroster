@@ -119,16 +119,16 @@ const useActions = (props: Props) => {
             },
           },
         });
-        await deleteTravelMutation({
-          variables: {
-            id: travel.id,
-          },
-          refetchQueries: [
-            {query: EventByUuidDocument, variables: {uuid: event.uuid}},
-          ],
-        });
-        addToast(t('travel.actions.removed'));
       }
+      await deleteTravelMutation({
+        variables: {
+          id: travel.id,
+        },
+        refetchQueries: [
+          {query: EventByUuidDocument, variables: {uuid: event.uuid}},
+        ],
+      });
+      addToast(t('travel.actions.removed'));
     } catch (error) {
       console.error(error);
       addToast(t('travel.errors.cant_remove'));

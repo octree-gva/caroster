@@ -8,6 +8,9 @@ import {
   TravelInput,
   FindUserVehiclesDocument,
 } from '../../generated/graphql';
+import useProfile from '../../hooks/useProfile';
+import {DocumentNode, PureQueryOptions} from '@apollo/client/core';
+import {RefetchQueriesFunction} from '@apollo/client/react/types/types';
 
 interface Props {
   event: Event;
@@ -19,22 +22,26 @@ const useActions = (props: Props) => {
   const addToast = useToastsStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const [createTravelMutation] = useCreateTravelMutation();
+  const {user} = useProfile();
 
   const createTravel = async (travelInput: TravelInput) => {
+    const refetchQueries: Array<PureQueryOptions> = [
+      {
+        query: EventByUuidDocument,
+        variables: {
+          uuid: event.uuid,
+        },
+      },
+    ];
+    if (user) {
+      refetchQueries.push({
+        query: FindUserVehiclesDocument,
+      });
+    }
     try {
       await createTravelMutation({
         variables: {travel: travelInput},
-        refetchQueries: [
-          {
-            query: EventByUuidDocument,
-            variables: {
-              uuid: event.uuid,
-            },
-          },
-          {
-            query: FindUserVehiclesDocument,
-          },
-        ],
+        refetchQueries,
       });
       addToEvent(event.id);
       addToast(t('travel.creation.created'));
