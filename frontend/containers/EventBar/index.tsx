@@ -109,6 +109,8 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     ? [{label: user.username, id: 'Email'}, {divider: true}]
     : [];
 
+  const appLink = user ? '/dashboard' : settings?.['about_link'] || '';
+
   const UserIcon = user ? (
     <Avatar className={classes.avatar}>
       {`${user.username[0]}`.toUpperCase()}
@@ -126,7 +128,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     >
       <Toolbar>
         <div className={classes.name}>
-          <Link href={settings?.['about_link'] || ''}>
+          <Link href={appLink}>
             <img
               className={classes.logo}
               src="/assets/Logo_in_beta.svg"
