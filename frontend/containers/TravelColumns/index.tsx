@@ -177,7 +177,7 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'auto',
   },
   dots: {
-    height: 32,
+    height: '56px',
     overflow: 'auto',
     '& overflow': '-moz-scrollbars-none',
     '-ms-overflow-style': 'none',
@@ -188,6 +188,9 @@ const useStyles = makeStyles(theme => ({
       position: 'static',
       '& li': {
         display: 'block',
+        '& button:before': {
+          fontSize: '20px'
+        },
       },
     },
     '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before': {
