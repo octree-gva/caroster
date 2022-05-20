@@ -14,7 +14,7 @@ import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {ComponentPassengerPassenger, Travel} from '../../generated/graphql';
+import {Passenger, Travel} from '../../generated/graphql';
 import getMapsLink from '../../utils/getMapsLink';
 import Copylink from '../../components/CopyLink';
 import useToastStore from '../../stores/useToastStore';
@@ -22,7 +22,7 @@ import useToastStore from '../../stores/useToastStore';
 interface Props {
   eventName: string;
   travels: Array<Travel>;
-  passenger: ComponentPassengerPassenger;
+  passenger: Passenger;
   open: boolean;
   onClose: () => void;
   onSelect: (travel: Travel) => void;

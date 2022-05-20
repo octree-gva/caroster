@@ -28,7 +28,7 @@ describe('controller.event.findOne', () => {
         date: '2022-01-12',
         address: 'Uni-mail, Geneva, CH',
         uuid: '00000000-0000-0000-0000-000000000000',
-        waitingList: expect.any(Array),
+        waitingPassengers: expect.any(Array),
       })
     );
     expect(result).toEqual(

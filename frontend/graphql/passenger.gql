@@ -1,0 +1,35 @@
+fragment PassengerFields on Passenger {
+  id
+  name
+  location
+  email
+  user {
+    id
+    firstName
+    lastName
+  }
+}
+
+mutation createPassenger($passenger: PassengerInput) {
+  createPassenger(input: {data: $passenger}) {
+    passenger {
+      ...PassengerFields
+    }
+  }
+}
+
+mutation updatePassenger($id: ID!, $passengerUpdate: editPassengerInput!) {
+  updatePassenger(input: {where: {id: $id}, data: $passengerUpdate}) {
+    passenger {
+      ...PassengerFields
+    }
+  }
+}
+
+mutation deletePassenger($id: ID!) {
+  deletePassenger(input: {where: {id: $id}}) {
+    passenger {
+      id
+    }
+  }
+}

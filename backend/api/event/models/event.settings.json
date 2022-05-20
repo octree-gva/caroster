@@ -49,6 +49,10 @@
     "description": {
       "type": "text",
       "maxLength": 250
+    },
+    "waitingPassengers": {
+      "via": "event",
+      "collection": "passenger"
     }
   }
 }

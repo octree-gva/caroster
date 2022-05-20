@@ -109,6 +109,7 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   users?: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   travels?: Maybe<Array<Maybe<Travel>>>;
+  waitingPassengers?: Maybe<Array<Maybe<Passenger>>>;
 };
 
 
@@ -121,6 +122,14 @@ export type EventUsersArgs = {
 
 
 export type EventTravelsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type EventWaitingPassengersArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -225,6 +234,7 @@ export type EventInput = {
   waitingList?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   description?: Maybe<Scalars['String']>;
+  waitingPassengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
   newsletter?: Maybe<Scalars['Boolean']>;
@@ -284,7 +294,7 @@ export type InputUuid = {
 
 
 
-export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | EventConnectionDescription | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelAggregatorSum | TravelAggregatorAvg | TravelAggregatorMin | TravelAggregatorMax | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicleName | TravelConnectionSeats | TravelConnectionPhone_Number | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionPhone_Number | VehicleConnectionUser | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
+export type Morph = Dependency | Info | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Event | EventConnection | EventAggregator | EventGroupBy | EventConnectionId | EventConnectionCreated_At | EventConnectionUpdated_At | EventConnectionName | EventConnectionEmail | EventConnectionDate | EventConnectionAddress | EventConnectionPosition | EventConnectionUuid | EventConnectionDescription | CreateEventPayload | UpdateEventPayload | DeleteEventPayload | Page | PageConnection | PageAggregator | PageGroupBy | PageConnectionId | PageConnectionCreated_At | PageConnectionUpdated_At | PageConnectionName | PageConnectionContent | PageConnectionType | CreatePagePayload | UpdatePagePayload | DeletePagePayload | Passenger | PassengerConnection | PassengerAggregator | PassengerGroupBy | PassengerConnectionId | PassengerConnectionCreated_At | PassengerConnectionUpdated_At | PassengerConnectionName | PassengerConnectionEmail | PassengerConnectionLocation | PassengerConnectionUser | PassengerConnectionEvent | PassengerConnectionTravel | CreatePassengerPayload | UpdatePassengerPayload | DeletePassengerPayload | Settings | UpdateSettingPayload | DeleteSettingPayload | Travel | TravelConnection | TravelAggregator | TravelAggregatorSum | TravelAggregatorAvg | TravelAggregatorMin | TravelAggregatorMax | TravelGroupBy | TravelConnectionId | TravelConnectionCreated_At | TravelConnectionUpdated_At | TravelConnectionMeeting | TravelConnectionDeparture | TravelConnectionDetails | TravelConnectionEvent | TravelConnectionVehicleName | TravelConnectionSeats | TravelConnectionPhone_Number | CreateTravelPayload | UpdateTravelPayload | DeleteTravelPayload | Vehicle | VehicleConnection | VehicleAggregator | VehicleAggregatorSum | VehicleAggregatorAvg | VehicleAggregatorMin | VehicleAggregatorMax | VehicleGroupBy | VehicleConnectionId | VehicleConnectionCreated_At | VehicleConnectionUpdated_At | VehicleConnectionName | VehicleConnectionSeats | VehicleConnectionPhone_Number | VehicleConnectionUser | CreateVehiclePayload | UpdateVehiclePayload | DeleteVehiclePayload | EmailDesignerEmailTemplate | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionFirstName | UsersPermissionsUserConnectionLastName | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionOnboardingUser | UsersPermissionsUserConnectionOnboardingCreator | UsersPermissionsUserConnectionLang | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentPassengerPassenger;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -294,6 +304,9 @@ export type Mutation = {
   createPage?: Maybe<CreatePagePayload>;
   updatePage?: Maybe<UpdatePagePayload>;
   deletePage?: Maybe<DeletePagePayload>;
+  createPassenger?: Maybe<CreatePassengerPayload>;
+  updatePassenger?: Maybe<UpdatePassengerPayload>;
+  deletePassenger?: Maybe<DeletePassengerPayload>;
   updateSetting?: Maybe<UpdateSettingPayload>;
   deleteSetting?: Maybe<DeleteSettingPayload>;
   createTravel?: Maybe<CreateTravelPayload>;
@@ -356,6 +369,21 @@ export type MutationUpdatePageArgs = {
 
 export type MutationDeletePageArgs = {
   input?: Maybe<DeletePageInput>;
+};
+
+
+export type MutationCreatePassengerArgs = {
+  input?: Maybe<CreatePassengerInput>;
+};
+
+
+export type MutationUpdatePassengerArgs = {
+  input?: Maybe<UpdatePassengerInput>;
+};
+
+
+export type MutationDeletePassengerArgs = {
+  input?: Maybe<DeletePassengerInput>;
 };
 
 
@@ -567,6 +595,110 @@ export type PageInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type Passenger = {
+  __typename?: 'Passenger';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  name: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  user?: Maybe<UsersPermissionsUser>;
+  event?: Maybe<Event>;
+  travel?: Maybe<Travel>;
+};
+
+export type PassengerAggregator = {
+  __typename?: 'PassengerAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PassengerConnection = {
+  __typename?: 'PassengerConnection';
+  values?: Maybe<Array<Maybe<Passenger>>>;
+  groupBy?: Maybe<PassengerGroupBy>;
+  aggregate?: Maybe<PassengerAggregator>;
+};
+
+export type PassengerConnectionCreated_At = {
+  __typename?: 'PassengerConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionEmail = {
+  __typename?: 'PassengerConnectionEmail';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionEvent = {
+  __typename?: 'PassengerConnectionEvent';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionId = {
+  __typename?: 'PassengerConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionLocation = {
+  __typename?: 'PassengerConnectionLocation';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionName = {
+  __typename?: 'PassengerConnectionName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionTravel = {
+  __typename?: 'PassengerConnectionTravel';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionUpdated_At = {
+  __typename?: 'PassengerConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerConnectionUser = {
+  __typename?: 'PassengerConnectionUser';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<PassengerConnection>;
+};
+
+export type PassengerGroupBy = {
+  __typename?: 'PassengerGroupBy';
+  id?: Maybe<Array<Maybe<PassengerConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<PassengerConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<PassengerConnectionUpdated_At>>>;
+  name?: Maybe<Array<Maybe<PassengerConnectionName>>>;
+  email?: Maybe<Array<Maybe<PassengerConnectionEmail>>>;
+  location?: Maybe<Array<Maybe<PassengerConnectionLocation>>>;
+  user?: Maybe<Array<Maybe<PassengerConnectionUser>>>;
+  event?: Maybe<Array<Maybe<PassengerConnectionEvent>>>;
+  travel?: Maybe<Array<Maybe<PassengerConnectionTravel>>>;
+};
+
+export type PassengerInput = {
+  name: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['ID']>;
+  event?: Maybe<Scalars['ID']>;
+  travel?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW'
@@ -580,6 +712,9 @@ export type Query = {
   page?: Maybe<Page>;
   pages?: Maybe<Array<Maybe<Page>>>;
   pagesConnection?: Maybe<PageConnection>;
+  passenger?: Maybe<Passenger>;
+  passengers?: Maybe<Array<Maybe<Passenger>>>;
+  passengersConnection?: Maybe<PassengerConnection>;
   setting?: Maybe<Settings>;
   travel?: Maybe<Travel>;
   travels?: Maybe<Array<Maybe<Travel>>>;
@@ -641,6 +776,29 @@ export type QueryPagesArgs = {
 
 
 export type QueryPagesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryPassengerArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryPassengersArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryPassengersConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -803,11 +961,20 @@ export type Travel = {
   meeting?: Maybe<Scalars['String']>;
   departure?: Maybe<Scalars['DateTime']>;
   details?: Maybe<Scalars['String']>;
-  passengers?: Maybe<Array<Maybe<ComponentPassengerPassenger>>>;
+  passengersCompo?: Maybe<Array<Maybe<ComponentPassengerPassenger>>>;
   event?: Maybe<Event>;
   vehicleName?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
   phone_number?: Maybe<Scalars['String']>;
+  passengers?: Maybe<Array<Maybe<Passenger>>>;
+};
+
+
+export type TravelPassengersArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 export type TravelAggregator = {
@@ -925,11 +1092,12 @@ export type TravelInput = {
   meeting?: Maybe<Scalars['String']>;
   departure?: Maybe<Scalars['DateTime']>;
   details?: Maybe<Scalars['String']>;
-  passengers?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
+  passengersCompo?: Maybe<Array<Maybe<ComponentPassengerPassengerInput>>>;
   event?: Maybe<Scalars['ID']>;
   vehicleName?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
   phone_number?: Maybe<Scalars['String']>;
+  passengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
   createVehicle?: Maybe<Scalars['Boolean']>;
@@ -1151,6 +1319,7 @@ export type UserInput = {
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   vehicles?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  passengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1300,6 +1469,7 @@ export type UsersPermissionsUser = {
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   events?: Maybe<Array<Maybe<Event>>>;
   vehicles?: Maybe<Array<Maybe<Vehicle>>>;
+  passengers?: Maybe<Array<Maybe<Passenger>>>;
 };
 
 
@@ -1312,6 +1482,14 @@ export type UsersPermissionsUserEventsArgs = {
 
 
 export type UsersPermissionsUserVehiclesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type UsersPermissionsUserPassengersArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -1561,6 +1739,15 @@ export type CreatePagePayload = {
   page?: Maybe<Page>;
 };
 
+export type CreatePassengerInput = {
+  data?: Maybe<PassengerInput>;
+};
+
+export type CreatePassengerPayload = {
+  __typename?: 'createPassengerPayload';
+  passenger?: Maybe<Passenger>;
+};
+
 export type CreateRoleInput = {
   data?: Maybe<RoleInput>;
 };
@@ -1622,6 +1809,15 @@ export type DeletePageInput = {
 export type DeletePagePayload = {
   __typename?: 'deletePagePayload';
   page?: Maybe<Page>;
+};
+
+export type DeletePassengerInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeletePassengerPayload = {
+  __typename?: 'deletePassengerPayload';
+  passenger?: Maybe<Passenger>;
 };
 
 export type DeleteRoleInput = {
@@ -1697,6 +1893,7 @@ export type EditEventInput = {
   waitingList?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
   travels?: Maybe<Array<Maybe<Scalars['ID']>>>;
   description?: Maybe<Scalars['String']>;
+  waitingPassengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1729,6 +1926,17 @@ export type EditPageInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditPassengerInput = {
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['ID']>;
+  event?: Maybe<Scalars['ID']>;
+  travel?: Maybe<Scalars['ID']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditRoleInput = {
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -1751,11 +1959,12 @@ export type EditTravelInput = {
   meeting?: Maybe<Scalars['String']>;
   departure?: Maybe<Scalars['DateTime']>;
   details?: Maybe<Scalars['String']>;
-  passengers?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
+  passengersCompo?: Maybe<Array<Maybe<EditComponentPassengerPassengerInput>>>;
   event?: Maybe<Scalars['ID']>;
   vehicleName?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
   phone_number?: Maybe<Scalars['String']>;
+  passengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1777,6 +1986,7 @@ export type EditUserInput = {
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   vehicles?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  passengers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
   old_password?: Maybe<Scalars['String']>;
@@ -1814,6 +2024,16 @@ export type UpdatePageInput = {
 export type UpdatePagePayload = {
   __typename?: 'updatePagePayload';
   page?: Maybe<Page>;
+};
+
+export type UpdatePassengerInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditPassengerInput>;
+};
+
+export type UpdatePassengerPayload = {
+  __typename?: 'updatePassengerPayload';
+  passenger?: Maybe<Passenger>;
 };
 
 export type UpdateRoleInput = {
@@ -1940,9 +2160,9 @@ export type ResetPasswordMutation = (
 export type EventFieldsFragment = (
   { __typename?: 'Event' }
   & Pick<Event, 'id' | 'uuid' | 'name' | 'description' | 'email' | 'date' | 'address' | 'position'>
-  & { waitingList?: Maybe<Array<Maybe<(
-    { __typename?: 'ComponentPassengerPassenger' }
-    & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
+  & { waitingPassengers?: Maybe<Array<Maybe<(
+    { __typename?: 'Passenger' }
+    & Pick<Passenger, 'id' | 'name' | 'email' | 'location'>
     & { user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id' | 'firstName' | 'lastName'>
@@ -1951,8 +2171,8 @@ export type EventFieldsFragment = (
     { __typename?: 'Travel' }
     & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details' | 'vehicleName' | 'phone_number' | 'seats'>
     & { passengers?: Maybe<Array<Maybe<(
-      { __typename?: 'ComponentPassengerPassenger' }
-      & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
+      { __typename?: 'Passenger' }
+      & Pick<Passenger, 'id' | 'name' | 'location'>
       & { user?: Maybe<(
         { __typename?: 'UsersPermissionsUser' }
         & Pick<UsersPermissionsUser, 'id' | 'firstName' | 'lastName'>
@@ -2012,6 +2232,64 @@ export type EventByUuidQuery = (
   )> }
 );
 
+export type PassengerFieldsFragment = (
+  { __typename?: 'Passenger' }
+  & Pick<Passenger, 'id' | 'name' | 'location' | 'email'>
+  & { user?: Maybe<(
+    { __typename?: 'UsersPermissionsUser' }
+    & Pick<UsersPermissionsUser, 'id' | 'firstName' | 'lastName'>
+  )> }
+);
+
+export type CreatePassengerMutationVariables = Exact<{
+  passenger?: Maybe<PassengerInput>;
+}>;
+
+
+export type CreatePassengerMutation = (
+  { __typename?: 'Mutation' }
+  & { createPassenger?: Maybe<(
+    { __typename?: 'createPassengerPayload' }
+    & { passenger?: Maybe<(
+      { __typename?: 'Passenger' }
+      & PassengerFieldsFragment
+    )> }
+  )> }
+);
+
+export type UpdatePassengerMutationVariables = Exact<{
+  id: Scalars['ID'];
+  passengerUpdate: EditPassengerInput;
+}>;
+
+
+export type UpdatePassengerMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePassenger?: Maybe<(
+    { __typename?: 'updatePassengerPayload' }
+    & { passenger?: Maybe<(
+      { __typename?: 'Passenger' }
+      & PassengerFieldsFragment
+    )> }
+  )> }
+);
+
+export type DeletePassengerMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeletePassengerMutation = (
+  { __typename?: 'Mutation' }
+  & { deletePassenger?: Maybe<(
+    { __typename?: 'deletePassengerPayload' }
+    & { passenger?: Maybe<(
+      { __typename?: 'Passenger' }
+      & Pick<Passenger, 'id'>
+    )> }
+  )> }
+);
+
 export type SettingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2027,8 +2305,8 @@ export type TravelFieldsFragment = (
   { __typename?: 'Travel' }
   & Pick<Travel, 'id' | 'meeting' | 'departure' | 'details' | 'vehicleName' | 'phone_number' | 'seats'>
   & { passengers?: Maybe<Array<Maybe<(
-    { __typename?: 'ComponentPassengerPassenger' }
-    & Pick<ComponentPassengerPassenger, 'id' | 'name' | 'location'>
+    { __typename?: 'Passenger' }
+    & Pick<Passenger, 'id' | 'name' | 'location'>
     & { user?: Maybe<(
       { __typename?: 'UsersPermissionsUser' }
       & Pick<UsersPermissionsUser, 'id' | 'firstName' | 'lastName'>
@@ -2182,9 +2460,10 @@ export const EventFieldsFragmentDoc = gql`
   date
   address
   position
-  waitingList {
+  waitingPassengers {
     id
     name
+    email
     location
     user {
       id
@@ -2210,6 +2489,19 @@ export const EventFieldsFragmentDoc = gql`
         lastName
       }
     }
+  }
+}
+    `;
+export const PassengerFieldsFragmentDoc = gql`
+    fragment PassengerFields on Passenger {
+  id
+  name
+  location
+  email
+  user {
+    id
+    firstName
+    lastName
   }
 }
     `;
@@ -2515,6 +2807,109 @@ export function useEventByUuidLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type EventByUuidQueryHookResult = ReturnType<typeof useEventByUuidQuery>;
 export type EventByUuidLazyQueryHookResult = ReturnType<typeof useEventByUuidLazyQuery>;
 export type EventByUuidQueryResult = Apollo.QueryResult<EventByUuidQuery, EventByUuidQueryVariables>;
+export const CreatePassengerDocument = gql`
+    mutation createPassenger($passenger: PassengerInput) {
+  createPassenger(input: {data: $passenger}) {
+    passenger {
+      ...PassengerFields
+    }
+  }
+}
+    ${PassengerFieldsFragmentDoc}`;
+export type CreatePassengerMutationFn = Apollo.MutationFunction<CreatePassengerMutation, CreatePassengerMutationVariables>;
+
+/**
+ * __useCreatePassengerMutation__
+ *
+ * To run a mutation, you first call `useCreatePassengerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePassengerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPassengerMutation, { data, loading, error }] = useCreatePassengerMutation({
+ *   variables: {
+ *      passenger: // value for 'passenger'
+ *   },
+ * });
+ */
+export function useCreatePassengerMutation(baseOptions?: Apollo.MutationHookOptions<CreatePassengerMutation, CreatePassengerMutationVariables>) {
+        return Apollo.useMutation<CreatePassengerMutation, CreatePassengerMutationVariables>(CreatePassengerDocument, baseOptions);
+      }
+export type CreatePassengerMutationHookResult = ReturnType<typeof useCreatePassengerMutation>;
+export type CreatePassengerMutationResult = Apollo.MutationResult<CreatePassengerMutation>;
+export type CreatePassengerMutationOptions = Apollo.BaseMutationOptions<CreatePassengerMutation, CreatePassengerMutationVariables>;
+export const UpdatePassengerDocument = gql`
+    mutation updatePassenger($id: ID!, $passengerUpdate: editPassengerInput!) {
+  updatePassenger(input: {where: {id: $id}, data: $passengerUpdate}) {
+    passenger {
+      ...PassengerFields
+    }
+  }
+}
+    ${PassengerFieldsFragmentDoc}`;
+export type UpdatePassengerMutationFn = Apollo.MutationFunction<UpdatePassengerMutation, UpdatePassengerMutationVariables>;
+
+/**
+ * __useUpdatePassengerMutation__
+ *
+ * To run a mutation, you first call `useUpdatePassengerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePassengerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePassengerMutation, { data, loading, error }] = useUpdatePassengerMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      passengerUpdate: // value for 'passengerUpdate'
+ *   },
+ * });
+ */
+export function useUpdatePassengerMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePassengerMutation, UpdatePassengerMutationVariables>) {
+        return Apollo.useMutation<UpdatePassengerMutation, UpdatePassengerMutationVariables>(UpdatePassengerDocument, baseOptions);
+      }
+export type UpdatePassengerMutationHookResult = ReturnType<typeof useUpdatePassengerMutation>;
+export type UpdatePassengerMutationResult = Apollo.MutationResult<UpdatePassengerMutation>;
+export type UpdatePassengerMutationOptions = Apollo.BaseMutationOptions<UpdatePassengerMutation, UpdatePassengerMutationVariables>;
+export const DeletePassengerDocument = gql`
+    mutation deletePassenger($id: ID!) {
+  deletePassenger(input: {where: {id: $id}}) {
+    passenger {
+      id
+    }
+  }
+}
+    `;
+export type DeletePassengerMutationFn = Apollo.MutationFunction<DeletePassengerMutation, DeletePassengerMutationVariables>;
+
+/**
+ * __useDeletePassengerMutation__
+ *
+ * To run a mutation, you first call `useDeletePassengerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePassengerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePassengerMutation, { data, loading, error }] = useDeletePassengerMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePassengerMutation(baseOptions?: Apollo.MutationHookOptions<DeletePassengerMutation, DeletePassengerMutationVariables>) {
+        return Apollo.useMutation<DeletePassengerMutation, DeletePassengerMutationVariables>(DeletePassengerDocument, baseOptions);
+      }
+export type DeletePassengerMutationHookResult = ReturnType<typeof useDeletePassengerMutation>;
+export type DeletePassengerMutationResult = Apollo.MutationResult<DeletePassengerMutation>;
+export type DeletePassengerMutationOptions = Apollo.BaseMutationOptions<DeletePassengerMutation, DeletePassengerMutationVariables>;
 export const SettingDocument = gql`
     query setting {
   setting {

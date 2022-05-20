@@ -3,9 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
 import {useTranslation} from 'react-i18next';
-import {
-  Travel as TravelType,
-} from '../../generated/graphql';
+import {Travel as TravelType} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useTourStore from '../../stores/useTourStore';
 import useToastStore from '../../stores/useToastStore';
@@ -42,16 +40,14 @@ const TravelColumns = (props: Props) => {
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
   } | null>(null);
-  const [
-    addPassengerToWaitingListContext,
-    toggleNewPassengerToWaitingList,
-  ] = useState<NewPassengerDialogContext | null>(null);
-  const {addPassengerToTravel} = usePassengersActions();
+  const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
+    useState<NewPassengerDialogContext | null>(null);
+  const {addPassenger} = usePassengersActions();
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const canAddSelf = useMemo(() => {
     if (!user) return false;
-    const isInWaitingList = event?.waitingList?.some(
+    const isInWaitingList = event?.waitingPassengers?.some(
       passenger => passenger.user?.id === `${user.id}`
     );
     const isInTravel = event?.travels.some(travel =>
@@ -61,20 +57,18 @@ const TravelColumns = (props: Props) => {
   }, [event, user]);
 
   const addSelfToTravel = async (travel: TravelType) => {
-    const passenger = {
-      user: user,
-      email: user.email,
-      name: user.username,
-    };
-
-    return addPassengerToTravel({
-      passenger,
-      travel,
-      onSucceed: () => {
-        addToEvent(event.id);
-        addToast(t('passenger.success.added_self_to_car'));
-      },
-    });
+    try {
+      await addPassenger({
+        user: user?.id,
+        email: user.email,
+        name: user.username,
+        travel: travel.id,
+      });
+      addToEvent(event.id);
+      addToast(t('passenger.success.added_self_to_car'));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const slideToTravel = (travelId: string) => {
@@ -186,13 +180,14 @@ const useStyles = makeStyles(theme => ({
       '& li': {
         display: 'block',
         '& button:before': {
-          fontSize: '20px'
+          fontSize: '20px',
         },
       },
     },
-    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before': {
-      color: theme.palette.primary.main,
-    },
+    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
+      {
+        color: theme.palette.primary.main,
+      },
   },
   slider: {
     flexGrow: 1,

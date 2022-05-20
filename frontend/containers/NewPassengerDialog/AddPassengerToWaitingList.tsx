@@ -10,13 +10,14 @@ import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
-import usepassengersActions from '../../hooks/usePassengersActions';
+import usePassengersActions from '../../hooks/usePassengersActions';
 import useProfile from '../../hooks/useProfile';
 import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
-import { validateEmail } from './validation';
+import {validateEmail} from './validation';
+import {PassengerInput} from '../../generated/graphql';
 
 interface Props {
   toggle: () => void;
@@ -38,28 +39,25 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
   const [location, setlocation] = useState('');
   const canAddPassenger = !!name && !!email;
   const {user} = useProfile();
-  const {addPassengerToWaitingList} = usepassengersActions();
+  const {addPassenger} = usePassengersActions();
 
-  const addPassenger = async (e: FormEvent) => {
+  const onAddPassenger = async (e: FormEvent) => {
     e.preventDefault();
-    const passenger =
-      addSelf && user
-        ? {
-            user: user,
-            email: user.email,
-            name: user.username,
-            location,
-          }
-        : {
-            email,
-            name,
-            location,
-          };
+    let passenger: PassengerInput = {
+      email,
+      name,
+      location,
+    };
+    if (addSelf && user)
+      passenger = {
+        user: user.id,
+        email: user.email,
+        name: user.username,
+        location,
+      };
+
     try {
-      await addPassengerToWaitingList({
-        passenger,
-        event,
-      });
+      await addPassenger({...passenger, event: event.id});
       addToEvent(event.id);
       addToast(
         t(
@@ -84,7 +82,7 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
       onClose={toggle}
       TransitionComponent={Transition}
     >
-      <form onSubmit={addPassenger}>
+      <form onSubmit={onAddPassenger}>
         <DialogTitle className={classes.title}>
           {t('travel.passengers.register_to_waiting_list')}
           <Icon

@@ -33,7 +33,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
   const [email, setEmail] = useState('');
   const emailValidated = validateEmail(email);
   const canAddPassenger = !!name;
-  const {addPassengerToTravel} = usePassengersActions();
+  const {addPassenger} = usePassengersActions();
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
     };
 
     try {
-      await addPassengerToTravel({passenger, travel});
+      await addPassenger({...passenger, travel: travel.id});
       addToEvent(event.id);
       addToast(t('passenger.success.added_to_car', {name}));
       toggle();
@@ -78,7 +78,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
             email={email}
             emailError={!emailValidated}
             setEmail={setEmail}
-            optionalEmail 
+            optionalEmail
             name={name}
             setName={setName}
           />

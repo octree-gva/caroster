@@ -9,7 +9,6 @@ import clsx from 'clsx';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
-import useAddToEvents from '../../hooks/useAddToEvents';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
@@ -33,14 +32,12 @@ const WaitingList = ({
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
-  const {addToEvent} = useAddToEvents();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
   const [addingPassenger, setAddingPassenger] = useState(null);
   const travels =
     event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
-  const {addPassengerToTravel, removePassengerFromWaitingList} =
-    usePassengersActions();
+  const {updatePassenger, removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
@@ -51,28 +48,14 @@ const WaitingList = ({
     }, 0);
   }, [travels]);
 
-  const removePassengerFromWaitingListFallBack = useCallback(
-    removePassengerFromWaitingList,
-    [event]
-  );
+  const removePassengerCallback = useCallback(removePassenger, [event]);
 
   const selectTravel = useCallback(
     async travel => {
-      const {id, ...passenger} = addingPassenger;
-
       try {
-        await addPassengerToTravel({
-          travel,
-          passenger,
-        });
-        await removePassengerFromWaitingListFallBack({
-          passenger: addingPassenger,
-          event: {
-            ...event,
-            waitingList: event.waitingList.filter(
-              item => item.id !== addingPassenger.id
-            ),
-          },
+        await updatePassenger(addingPassenger.id, {
+          event: null,
+          travel: travel.id,
         });
         setAddingPassenger(null);
         slideToTravel(travel.id);
@@ -91,7 +74,7 @@ const WaitingList = ({
 
   const onPress = useCallback(
     (passengerId: string) => {
-      const selectedPassenger = event.waitingList.find(
+      const selectedPassenger = event.waitingPassengers.find(
         item => item.id === passengerId
       );
       if (isEditing) setRemovingPassenger(selectedPassenger);
@@ -102,11 +85,7 @@ const WaitingList = ({
 
   const onRemove = async () => {
     try {
-      await removePassengerFromWaitingListFallBack({
-        passenger: removingPassenger,
-        event,
-      });
-      addToEvent(event.id);
+      await removePassengerCallback(removingPassenger.id);
     } catch (error) {
       console.error(error);
       addToast(t('passenger.errors.cant_remove_passenger'));
@@ -129,7 +108,7 @@ const WaitingList = ({
             size="small"
             color="primary"
             className={classes.editBtn}
-            disabled={!event.waitingList?.length}
+            disabled={!event.waitingPassengers?.length}
             onClick={toggleEditing}
           >
             {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
@@ -147,7 +126,7 @@ const WaitingList = ({
         />
         <Divider />
         <PassengersList
-          passengers={event.waitingList}
+          passengers={event.waitingPassengers}
           onPress={onPress}
           Button={ListButton}
         />

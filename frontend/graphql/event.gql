@@ -7,9 +7,10 @@ fragment EventFields on Event {
   date
   address
   position
-  waitingList {
+  waitingPassengers {
     id
     name
+    email
     location
     user {
       id

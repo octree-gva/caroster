@@ -5,12 +5,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {ComponentPassengerPassenger} from '../../generated/graphql';
+import {Passenger as PassengerType} from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 import Chip from '@material-ui/core/Chip';
 
 interface Props {
-  passenger?: ComponentPassengerPassenger;
+  passenger?: PassengerType;
   button?: ReactNode;
   isVehicle?: boolean;
 }

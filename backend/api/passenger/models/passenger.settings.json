@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "passengers",
+  "info": {
+    "name": "Passenger",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "location": {
+      "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "passengers"
+    },
+    "event": {
+      "via": "waitingPassengers",
+      "model": "event"
+    },
+    "travel": {
+      "via": "passengers",
+      "model": "travel"
+    }
+  }
+}

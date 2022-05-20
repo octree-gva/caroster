@@ -97,6 +97,10 @@
     "vehicles": {
       "via": "user",
       "collection": "vehicle"
+    },
+    "passengers": {
+      "via": "user",
+      "collection": "passenger"
     }
   }
 }

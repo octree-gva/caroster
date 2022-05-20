@@ -21,6 +21,10 @@
             "actions": ["create", "update", "findone"]
           },
           {
+            "name": "passenger",
+            "actions": ["create", "delete", "update"]
+          },
+          {
             "name": "page",
             "actions": ["find", "findone"]
           },
@@ -50,6 +54,10 @@
           {
             "name": "event",
             "actions": ["create", "update", "findone"]
+          },
+          {
+            "name": "passenger",
+            "actions": ["create", "delete", "update"]
           },
           {
             "name": "page",

@@ -20,7 +20,7 @@
     "details": {
       "type": "text"
     },
-    "passengers": {
+    "passengersCompo": {
       "type": "component",
       "repeatable": true,
       "component": "passenger.passenger"
@@ -39,6 +39,10 @@
     },
     "phone_number": {
       "type": "string"
+    },
+    "passengers": {
+      "via": "travel",
+      "collection": "passenger"
     }
   }
 }

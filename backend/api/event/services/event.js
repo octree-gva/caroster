@@ -13,7 +13,7 @@ const PUBLIC_FIELDS = [
   'date',
   'address',
   'position',
-  'waitingList',
+  'waitingPassengers',
   'travels',
   'created_at',
   'updated_at',
@@ -23,11 +23,11 @@ const {STRAPI_URL = ''} = process.env;
 
 module.exports = {
   sanitize: event => {
-    const waitingList = event?.waitingList?.map(list =>
+    const waitingPassengers = event?.waitingPassengers?.map(list =>
       _pick(list, ['id', 'name', 'location', 'user'])
     );
     const sanitizedEvent = _pick(event, PUBLIC_FIELDS);
-    return {...sanitizedEvent, waitingList};
+    return {...sanitizedEvent, waitingPassengers};
   },
 
   sendDailyRecap: async event => {
@@ -56,7 +56,7 @@ module.exports = {
           {
             event,
             eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-            waitingListCount: event.waitingList?.length || 0,
+            waitingPassengersCount: event.waitingPassengers?.length || 0,
             travelsCount: event.travels?.length || 0,
             newTravelsCount: newTravels?.length || 0,
           }
