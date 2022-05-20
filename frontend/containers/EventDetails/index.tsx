@@ -169,6 +169,8 @@ const useStyles = makeStyles(theme => ({
   },
   section: {
     marginBottom: theme.spacing(2),
+    width: '540px',
+    maxWidth: '100%',
   },
   map: {
     marginTop: theme.spacing(4),
