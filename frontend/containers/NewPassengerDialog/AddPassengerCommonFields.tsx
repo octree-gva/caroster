@@ -67,7 +67,7 @@ const AddPassengerCommonFields = ({
           fullWidth
           label=""
           error={email && emailError}
-          helperText={email && t('travel.passengers.email_helpertext')}
+          helperText={email  && emailError && t('travel.passengers.email_helpertext')}
           placeholder={emailPlaceholder}
         />
       </Box>
