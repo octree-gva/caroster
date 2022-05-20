@@ -233,7 +233,8 @@
       "departure": "Departure: ",
       "assign": "Assign",
       "available_cars": "Available cars",
-      "no_travel": "No available cars. {{name}} will receive an email when new cars will be available."
+      "no_travel.title": "No available seats at the moment...",
+      "no_travel.desc": "{{name}} will receive an email when new cars will be available. You can share the event in the meantime."
     },
     "actions": {
       "remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",

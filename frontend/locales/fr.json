@@ -232,7 +232,8 @@
       "departure": "Depart: ",
       "assign": "Placer",
       "available_cars": "Voitures disponibles",
-      "no_travel": "Aucune place disponible. {{name}} recevra un email lorsque des places seront ajoutées."
+      "no_travel.title": "Pas de place disponible en ce moment...",
+      "no_travel.desc": "{{name}} recevra un email lorsqu’une voiture sera ajoutée. En attendant, partagez l’événement"
     },
     "actions": {
       "remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?",

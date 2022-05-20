@@ -39,10 +39,8 @@ const WaitingList = ({
   const [addingPassenger, setAddingPassenger] = useState(null);
   const travels =
     event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
-  const {
-    addPassengerToTravel,
-    removePassengerFromWaitingList,
-  } = usePassengersActions();
+  const {addPassengerToTravel, removePassengerFromWaitingList} =
+    usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
@@ -119,8 +117,8 @@ const WaitingList = ({
     ? ({onClick}: {onClick: () => void}) => (
         <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
       )
-    : ({onClick, disabled}: {onClick: () => void, disabled: boolean}) => (
-        <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled}/>
+    : ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => (
+        <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled} />
       );
 
   return (
@@ -169,6 +167,7 @@ const WaitingList = ({
         onRemove={onRemove}
       />
       <TravelDialog
+        eventName={event.name}
         travels={travels}
         passenger={addingPassenger}
         open={!!addingPassenger}

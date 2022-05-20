@@ -2,19 +2,20 @@ import {useRef} from 'react';
 import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
 import {DatePicker} from '@material-ui/pickers';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import useEventStore from '../../stores/useEventStore';
 import {caroster} from '../../theme';
+import CopyLink from '../../components/CopyLink';
+import useToastStore from '../../stores/useToastStore';
 
-const EventDetails = ({onShare}) => {
+const EventDetails = () => {
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
+  const addToast = useToastStore(s => s.addToast);
   const setEventUpdate = useEventStore(s => s.setEventUpdate);
   const isEditing = useEventStore(s => s.isEditing);
   const shareInput = useRef(null);
@@ -136,17 +137,14 @@ const EventDetails = ({onShare}) => {
           id="ShareLink"
         />
 
-        <Button
-          className={'tour_event_share'}
-          variant="outlined"
-          startIcon={<Icon>share</Icon>}
-          onClick={() => {
-            if (shareInput) shareInput.current.select();
-            onShare();
+        <CopyLink
+          buttonText={t('event.fields.share')}
+          title={`Caroster ${event.name}`}
+          url={`${window.location.href}`}
+          onShare={() => {
+            addToast(t('event.actions.copied'));
           }}
-        >
-          {t('event.fields.share')}
-        </Button>
+        />
       </Box>
     </ThemeProvider>
   );

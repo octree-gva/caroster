@@ -85,22 +85,6 @@ const Event = (props: Props) => {
     }
   };
 
-  const onShare = async () => {
-    if (!event) return null;
-    // If navigator share capability
-    if (!!navigator.share)
-      return await navigator.share({
-        title: `Caroster ${event.name}`,
-        url: `${window.location.href}`,
-      });
-    // Else copy URL in clipboard
-    else if (!!navigator.clipboard) {
-      await navigator.clipboard.writeText(window.location.href);
-      addToast(t('event.actions.copied'));
-      return true;
-    }
-  };
-
   const addTravelClickHandler =
     user && vehicles?.length != 0
       ? toggleVehicleChoice
@@ -118,7 +102,6 @@ const Event = (props: Props) => {
         event={event}
         onAdd={setIsAddToMyEvent}
         onSave={onSave}
-        onShare={onShare}
       />
       <TravelColumns toggle={addTravelClickHandler} />
       <Box className={classes.bottomRight}>

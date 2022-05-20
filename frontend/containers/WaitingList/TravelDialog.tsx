@@ -16,8 +16,11 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {ComponentPassengerPassenger, Travel} from '../../generated/graphql';
 import getMapsLink from '../../utils/getMapsLink';
+import Copylink from '../../components/CopyLink';
+import useToastStore from '../../stores/useToastStore';
 
 interface Props {
+  eventName: string;
   travels: Array<Travel>;
   passenger: ComponentPassengerPassenger;
   open: boolean;
@@ -25,13 +28,20 @@ interface Props {
   onSelect: (travel: Travel) => void;
 }
 
-const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
+const TravelDialog = ({
+  eventName,
+  travels,
+  passenger,
+  open,
+  onClose,
+  onSelect,
+}: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
+  const addToast = useToastStore(s => s.addToast);
 
   const availableTravels = travels?.filter(
-    travel =>
-      travel.passengers && travel?.seats > travel.passengers.length
+    travel => travel.passengers && travel?.seats > travel.passengers.length
   );
 
   return (
@@ -52,17 +62,29 @@ const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
         </Toolbar>
       </AppBar>
       {(availableTravels.length === 0 && (
-        <Typography className={classes.noTravel}>
-          {t('passenger.creation.no_travel', {name: passenger?.name})}
-        </Typography>
+        <Box className={classes.noTravel}>
+          <Typography variant="h5">
+            {t('passenger.creation.no_travel.title')}
+          </Typography>
+          <img className={classes.noTravelImage} src="/assets/car.png" />
+          <Typography>
+            {t('passenger.creation.no_travel.desc', {name: passenger?.name})}
+          </Typography>
+          <Copylink
+            color="primary"
+            className={classes.share}
+            buttonText={t('event.fields.share')}
+            title={`Caroster ${eventName}`}
+            url={`${window.location.href}`}
+            onShare={() => addToast(t('event.actions.copied'))}
+          />
+        </Box>
       )) || (
         <div className={classes.offset}>
           <List disablePadding>
             {availableTravels.map((travel, i) => {
               const passengersCount = travel?.passengers?.length || 0;
-              const counter = `${passengersCount} / ${
-                travel?.seats || 0
-              }`;
+              const counter = `${passengersCount} / ${travel?.seats || 0}`;
               return (
                 <ListItem key={i} divider className={classes.listItem}>
                   <Box className={classes.rtlBox}>
@@ -81,9 +103,7 @@ const TravelDialog = ({travels, passenger, open, onClose, onSelect}: Props) => {
                       </Link>
                     </Box>
                     <Box className={classes.info}>
-                      <Typography variant="h6">
-                        {travel.vehicleName}
-                      </Typography>
+                      <Typography variant="h6">{travel.vehicleName}</Typography>
                       <Typography variant="body2">
                         {t('passenger.creation.seats', {seats: counter})}
                       </Typography>
@@ -151,9 +171,17 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
   },
   noTravel: {
-    margin: '45vh auto',
+    margin: '120px auto 0 auto',
+    width: '330px',
+    maxWidth: '100%',
     textAlign: 'center',
   },
+  noTravelImage: {
+    width: '100%',
+  },
+  share: {
+    marginTop: theme.spacing(2)
+  }
 }));
 
 export default TravelDialog;
