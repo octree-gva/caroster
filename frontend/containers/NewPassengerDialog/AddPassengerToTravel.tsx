@@ -78,6 +78,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
             email={email}
             emailError={!emailValidated}
             setEmail={setEmail}
+            optionalEmail 
             name={name}
             setName={setName}
           />

@@ -166,6 +166,7 @@
       "location_placeholder": "Lieu de rencontre (optionnel)",
       "email": "Email",
       "email_placeholder": "Email",
+      "email_placeholder_optional": "Email (optionnel)",
       "email_helpertext": "Email non valide",
       "name": "Nom",
       "name_placeholder": "Nom"
