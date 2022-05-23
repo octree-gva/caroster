@@ -7,6 +7,7 @@ import useProfile from '../hooks/useProfile';
 import Loading from '../containers/Loading';
 import Profile from '../containers/Profile';
 import Layout from '../layouts/Centered';
+import Banner from '../components/Banner';
 
 const ProfilePage = () => {
   const router = useRouter();

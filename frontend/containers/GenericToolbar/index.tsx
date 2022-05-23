@@ -10,6 +10,14 @@ import Icon from '@material-ui/core/Icon';
 import useProfile from '../../hooks/useProfile';
 import GenericMenu from '../GenericMenu';
 import {ActionType} from '../GenericMenu/Action';
+import useBannerStore from '../../stores/useBannerStore';
+import Banner from '../../components/Banner';
+import useSettings from '../../hooks/useSettings';
+
+let persistedLastAnnouncementSeen = '';
+if (typeof localStorage !== 'undefined') {
+  persistedLastAnnouncementSeen = localStorage.getItem('lastAnnouncementSeen');
+}
 
 const GenericToolbar = ({
   title,
@@ -22,8 +30,24 @@ const GenericToolbar = ({
 }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
-  const classes = useStyles();
+  const bannerOffset = useBannerStore(s => s.offset);
+  const bannerHeight = useBannerStore(s => s.height);
+  const classes = useStyles({bannerOffset, bannerHeight});
   const {user} = useProfile();
+  const settings = useSettings();
+  const announcement = settings?.announcement || '';
+  const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
+    persistedLastAnnouncementSeen
+  );
+  const showAnnouncement =
+    announcement !== '' && announcement !== lastAnnouncementSeen;
+
+  const onBannerClear = () => {
+    if (typeof announcement != 'undefined') {
+      localStorage.setItem('lastAnnouncementSeen', String(announcement));
+    }
+    setLastAnnouncementSeen(announcement);
+  };
 
   const userInfos = user
     ? [{label: user.username, id: 'Email'}, {divider: true}]
@@ -40,13 +64,20 @@ const GenericToolbar = ({
       className={classes.appbar}
       id="Menu"
     >
+      <Banner
+        message={announcement}
+        open={showAnnouncement}
+        onClear={onBannerClear}
+      />
       <Toolbar>
         {goBack && (
           <IconButton
             edge="start"
             className={classes.goBack}
             onClick={() =>
-              router.basePath.split('/').length > 2 ? router.back() : router.push('/dashboard')
+              router.basePath.split('/').length > 2
+                ? router.back()
+                : router.push('/dashboard')
             }
           >
             <Icon>arrow_back</Icon>
@@ -87,14 +118,13 @@ const GenericToolbar = ({
 };
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    padding: theme.spacing(2),
-  },
-  appbar: {
-    height: theme.mixins.toolbar.minHeight,
+  appbar: ({bannerHeight, bannerOffset}) => ({
+    minHeight: theme.mixins.toolbar.minHeight,
     transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
-  },
+    display: 'block',
+    marginTop: bannerOffset - bannerHeight,
+  }),
   name: {
     flexGrow: 1,
     display: 'flex',

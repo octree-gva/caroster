@@ -1,0 +1,81 @@
+import {Icon} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import {makeStyles} from '@material-ui/core/styles';
+import {useEffect} from 'react';
+import {useElementSize, useEventListener} from 'usehooks-ts';
+import Markdown from '../Markdown';
+import useBannerStore from '../../stores/useBannerStore';
+
+interface Props {
+  message: string;
+  open: boolean;
+  onClear?: () => void;
+}
+
+const Banner = (props: Props) => {
+  const {message, open, onClear} = props;
+  const classes = useStyles();
+  const [bannerRef, {height}] = useElementSize();
+  const setBannerHeight = useBannerStore(s => s.setBannerHeight);
+  const setBannerOffset = useBannerStore(s => s.setBannerOffset);
+  useEffect(() => setBannerHeight({height}), [height]);
+
+  if (typeof document != 'undefined') {
+    useEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y > height) {
+        setBannerOffset({offset: 0})
+      }
+      if (y <= height) {
+        setBannerOffset({offset: height - y});
+      }
+    })
+  }
+
+  if (!open) return null;
+
+  return (
+    <div className={classes.banner} ref={bannerRef}>
+      <Markdown className={classes.htmlReset}>{message}</Markdown>
+      <Button
+        className={classes.clear}
+        onClick={e => {
+          e.stopPropagation();
+          onClear();
+        }}
+      >
+        <Icon>close</Icon>
+      </Button>
+    </div>
+  );
+};
+
+const useStyles = makeStyles(theme => ({
+  banner: {
+    position: 'relative',
+    background: `linear-gradient(90deg, ${theme.palette.secondary.main} 20%, ${theme.palette.primary.main} 90%)`,
+    width: '100%',
+    padding: '12px 60px',
+    textAlign: 'center',
+    zIndex: theme.zIndex.appBar - 1,
+  },
+  clear: {
+    position: 'absolute',
+    right: '12px',
+    bottom: '0',
+    minWidth: '44px',
+    padding: '12px',
+    lineHeight: '1.4em',
+  },
+  htmlReset: {
+    '& a': {
+      color: 'inherit',
+      margin: 0,
+    },
+    '& p': {
+      margin: 0,
+    },
+  },
+}));
+
+export default Banner;

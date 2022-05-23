@@ -13,7 +13,7 @@ const Confirm = () => {
   const {t} = useTranslation();
 
   return (
-    <Layout>
+    <Layout  displayMenu={false}>
       <Card>
         <CardMedia component={Logo} />
         <CardContent>

@@ -9,6 +9,7 @@ import {Enum_Userspermissionsuser_Lang} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
+import useBannerStore from '../../stores/useBannerStore';
 
 const IconLanguageSelection = ({
   language,
@@ -17,6 +18,8 @@ const IconLanguageSelection = ({
 }: LanguageSelectionComponentProps) => {
   const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
+  const bannerHeight = useBannerStore(s => s.height);
+  const bannerOffset = useBannerStore(s => s.offset);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -31,7 +34,7 @@ const IconLanguageSelection = ({
 
   return (
     <>
-      <Box position="fixed" top={0} right={0} zIndex={1050} p={1}>
+      <Box position="absolute" top={bannerOffset - bannerHeight} right={0} zIndex={1050} p={1}>
         <IconButton
           color="primary"
           aria-label="Languages"

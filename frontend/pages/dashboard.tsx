@@ -10,6 +10,7 @@ import DashboardEvents from '../containers/DashboardEvents';
 import DashboardEmpty from '../containers/DashboardEmpty';
 import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
+import useBannerStore from '../stores/useBannerStore';
 
 const Dashboard = () => {
   const {t} = useTranslation();
@@ -17,7 +18,8 @@ const Dashboard = () => {
   const isAuth = useAuthStore(s => !!s.token);
   const {profile, isReady} = useProfile();
   const {events} = profile || {};
-  const classes = useStyles();
+  const bannerOffset = useBannerStore(s => s.offset);
+  const classes = useStyles({bannerOffset});
 
   useEffect(() => {
     if (!isAuth) router.push('/');
@@ -41,9 +43,10 @@ const Dashboard = () => {
     [events]
   );
 
-  const noDateEvents = useMemo(() => events?.filter(({date}) => !date), [
-    events,
-  ]);
+  const noDateEvents = useMemo(
+    () => events?.filter(({date}) => !date),
+    [events]
+  );
 
   const menuActions = [
     {
@@ -90,10 +93,10 @@ const Dashboard = () => {
 const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  root: ({bannerOffset}) => ({
     minHeight: '100vh',
-    paddingTop: theme.mixins.toolbar.minHeight,
-  },
+    paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
+  }),
 }));
 
 export default Dashboard;

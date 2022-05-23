@@ -8,11 +8,13 @@ import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
+import useBannerStore from '../../stores/useBannerStore';
 
 const Profile = ({profile, updateProfile, logout}) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
-  const classes = useStyles();
+  const bannerHeight = useBannerStore(s => s.height);
+  const classes = useStyles({bannerHeight});
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [firstName, setFirstName] = useState(profile.firstName);
@@ -69,7 +71,7 @@ const Profile = ({profile, updateProfile, logout}) => {
 
   return (
     <form>
-      <Card>
+      <Card className={classes.container}>
         <CardContent>
           <ProfileField
             name="firstName"
@@ -146,9 +148,13 @@ const Profile = ({profile, updateProfile, logout}) => {
 };
 
 const useStyles = makeStyles(theme => ({
+  container: ({bannerHeight}) => ({
+    marginTop: bannerHeight + theme.mixins.toolbar.minHeight,
+  }),
   actions: {
     marginTop: theme.spacing(2),
     justifyContent: 'flex-end',
   },
 }));
+
 export default Profile;

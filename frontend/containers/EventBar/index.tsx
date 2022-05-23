@@ -18,12 +18,18 @@ import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
 import GenericMenu from '../GenericMenu';
 import EventDetails from '../EventDetails';
+import useBannerStore from '../../stores/useBannerStore';
+import Banner from '../../components/Banner';
+
+let persistedLastAnnouncementSeen = '';
+if (typeof localStorage !== 'undefined') {
+  persistedLastAnnouncementSeen = localStorage.getItem('lastAnnouncementSeen');
+}
 
 const EventBar = ({event, onAdd, onSave, onShare}) => {
   const {t} = useTranslation();
   const router = useRouter();
   const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
-  const classes = useStyles({detailsOpen});
   const [anchorEl, setAnchorEl] = useState(null);
   const isEditing = useEventStore(s => s.isEditing);
   const setIsEditing = useEventStore(s => s.setIsEditing);
@@ -32,6 +38,22 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
   const settings = useSettings();
   const setTour = useTourStore(s => s.setTour);
   const tourStep = useTourStore(s => s.step);
+  const bannerOffset = useBannerStore(s => s.offset);
+  const bannerHeight = useBannerStore(s => s.height);
+  const classes = useStyles({detailsOpen, bannerOffset, bannerHeight});
+  const announcement = settings?.announcement || '';
+  const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
+    persistedLastAnnouncementSeen
+  );
+  const showAnnouncement =
+    announcement !== '' && announcement !== lastAnnouncementSeen;
+
+  const onBannerClear = () => {
+    if (typeof announcement != 'undefined') {
+      localStorage.setItem('lastAnnouncementSeen', String(announcement));
+    }
+    setLastAnnouncementSeen(announcement);
+  };
 
   useEffect(() => {
     onTourChange(toggleDetails);
@@ -122,10 +144,15 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
   return (
     <AppBar
       className={classes.appbar}
-      position="static"
+      position="fixed"
       color="primary"
       id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
     >
+      <Banner
+        message={announcement}
+        open={showAnnouncement}
+        onClear={onBannerClear}
+      />
       <Toolbar>
         <div className={classes.name}>
           <Link href={appLink}>
@@ -241,14 +268,13 @@ const onTourChange = (toggleDetails: Function) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  appbar: ({detailsOpen}) => ({
+  appbar: ({detailsOpen, bannerOffset, bannerHeight}) => ({
     overflow: 'hidden',
-    height: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
+    minHeight: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
     overflowY: detailsOpen ? 'scroll' : 'hidden',
     transition: 'height 0.3s ease',
     zIndex: theme.zIndex.appBar,
-    position: 'fixed',
-    top: 0,
+    marginTop: bannerOffset - bannerHeight ,
   }),
   logo: {
     marginRight: theme.spacing(2),

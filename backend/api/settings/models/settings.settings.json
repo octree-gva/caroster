@@ -2,11 +2,13 @@
   "kind": "singleType",
   "collectionName": "settings",
   "info": {
-    "name": "settings"
+    "name": "settings",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "gtm_id": {
@@ -15,6 +17,9 @@
     },
     "about_link": {
       "type": "string"
+    },
+    "announcement": {
+      "type": "richtext"
     }
   }
 }

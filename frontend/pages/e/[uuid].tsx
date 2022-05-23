@@ -26,6 +26,7 @@ import ErrorPage from '../_error';
 import useProfile from '../../hooks/useProfile';
 import Fab from '../../containers/Fab';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useBannerStore from '../../stores/useBannerStore';
 
 const POLL_INTERVAL = 10000;
 
@@ -43,14 +44,13 @@ const EventPage = props => {
 
 const Event = (props: Props) => {
   const {eventUUID} = props;
-  const classes = useStyles();
+  const bannerOffset = useBannerStore(s => s.offset)
+  const classes = useStyles({bannerOffset});
   const theme = useTheme();
   const {t} = useTranslation();
   const {user} = useProfile();
-  const {
-    data: {me: {profile: {vehicles = []} = {}} = {}} = {},
-    loading
-  } = useFindUserVehiclesQuery();
+  const {data: {me: {profile: {vehicles = []} = {}} = {}} = {}, loading} =
+    useFindUserVehiclesQuery();
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
@@ -65,7 +65,7 @@ const Event = (props: Props) => {
   });
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const addCarClasses = matches ? 'tour_travel_add' : '';
-  
+
   useEffect(() => {
     if (event) setEvent(event as EventType);
   }, [event]);
@@ -94,6 +94,7 @@ const Event = (props: Props) => {
 
   return (
     <Layout
+      className={classes.layout}
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
@@ -158,6 +159,9 @@ export async function getServerSideProps(ctx) {
 }
 
 const useStyles = makeStyles(theme => ({
+  layout:  ({bannerOffset}) => ({
+    paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
+  }),
   bottomRight: {
     position: 'absolute',
     bottom: theme.spacing(1),

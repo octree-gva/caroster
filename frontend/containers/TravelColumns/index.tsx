@@ -164,7 +164,6 @@ const sortTravels = (a: TravelType, b: TravelType) => {
 const useStyles = makeStyles(theme => ({
   container: {
     minHeight: '100vh',
-    paddingTop: theme.mixins.toolbar.minHeight,
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
     [theme.breakpoints.down('sm')]: {
@@ -173,8 +172,6 @@ const useStyles = makeStyles(theme => ({
     },
     display: 'flex',
     flexDirection: 'column',
-    overflowX: 'hidden',
-    overflowY: 'auto',
   },
   dots: {
     height: '56px',

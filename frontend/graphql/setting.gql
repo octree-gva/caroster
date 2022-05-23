@@ -3,5 +3,6 @@ query setting {
     id
     gtm_id
     about_link
+    announcement
   }
 }

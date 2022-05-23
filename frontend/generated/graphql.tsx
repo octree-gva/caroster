@@ -779,6 +779,7 @@ export type RoleInput = {
 export type SettingInput = {
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
+  announcement?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -790,6 +791,7 @@ export type Settings = {
   updated_at: Scalars['DateTime'];
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
+  announcement?: Maybe<Scalars['String']>;
 };
 
 
@@ -1740,6 +1742,7 @@ export type EditRoleInput = {
 export type EditSettingInput = {
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
+  announcement?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -2016,7 +2019,7 @@ export type SettingQuery = (
   { __typename?: 'Query' }
   & { setting?: Maybe<(
     { __typename?: 'Settings' }
-    & Pick<Settings, 'id' | 'gtm_id' | 'about_link'>
+    & Pick<Settings, 'id' | 'gtm_id' | 'about_link' | 'announcement'>
   )> }
 );
 
@@ -2518,6 +2521,7 @@ export const SettingDocument = gql`
     id
     gtm_id
     about_link
+    announcement
   }
 }
     `;
