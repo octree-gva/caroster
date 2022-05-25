@@ -938,6 +938,7 @@ export type SettingInput = {
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  faq_link?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -950,6 +951,7 @@ export type Settings = {
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  faq_link?: Maybe<Scalars['String']>;
 };
 
 
@@ -1951,6 +1953,7 @@ export type EditSettingInput = {
   gtm_id?: Maybe<Scalars['String']>;
   about_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  faq_link?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -2297,7 +2300,7 @@ export type SettingQuery = (
   { __typename?: 'Query' }
   & { setting?: Maybe<(
     { __typename?: 'Settings' }
-    & Pick<Settings, 'id' | 'gtm_id' | 'about_link' | 'announcement'>
+    & Pick<Settings, 'id' | 'gtm_id' | 'about_link' | 'announcement' | 'faq_link'>
   )> }
 );
 
@@ -2917,6 +2920,7 @@ export const SettingDocument = gql`
     gtm_id
     about_link
     announcement
+    faq_link
   }
 }
     `;

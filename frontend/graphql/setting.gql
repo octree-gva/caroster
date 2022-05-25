@@ -4,5 +4,6 @@ query setting {
     gtm_id
     about_link
     announcement
+    faq_link
   }
 }

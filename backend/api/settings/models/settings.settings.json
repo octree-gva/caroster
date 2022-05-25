@@ -20,6 +20,9 @@
     },
     "announcement": {
       "type": "richtext"
+    },
+    "faq_link": {
+      "type": "string"
     }
   }
 }

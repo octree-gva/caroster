@@ -133,12 +133,17 @@
       "date": "Date of departure",
       "time": "Departure time",
       "title": "Add a car",
+      "car.title": "Car and driver",
+      "travel.title": "Travel",
       "name": "Name of the car",
       "seats": "Number of seats",
       "meeting": "Meeting place",
       "phone": "Telephone number",
+      "phoneHelper.faq": "/en/terms",
+      "phoneHelper.why": "Why do we ask for a phone number ?",
       "notes": "Additional information",
-      "created": "The car has been created"
+      "created": "The car has been created",
+      "submit": "Add"
     },
     "actions": {
       "remove_alert": "Are you sure you want to remove this car and add the subscribers to the waiting list?",

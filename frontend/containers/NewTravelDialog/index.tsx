@@ -15,6 +15,8 @@ import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
 import {Vehicle} from '../../generated/graphql';
+import {Box, Divider} from '@material-ui/core';
+import FAQLink from './FAQLink';
 
 interface Props {
   context: {
@@ -94,31 +96,17 @@ const NewTravelDialog = ({context, toggle}: Props) => {
       TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>
-        <DialogTitle>{t('travel.creation.title')}</DialogTitle>
-        <DialogContent>
-          <DatePicker
-            label={t('travel.creation.date')}
-            fullWidth
-            helperText=" "
-            value={date}
-            onChange={setDate}
-            format="DD/MM/YYYY"
-            cancelLabel={t('generic.cancel')}
-            autoFocus
-            id="NewTravelDateTime"
-          />
-          <TimePicker
-            label={t('travel.creation.time')}
-            fullWidth
-            helperText=" "
-            value={time}
-            onChange={setTime}
-            cancelLabel={t('generic.cancel')}
-            ampm={false}
-            minutesStep={5}
-            id="NewTravelTime"
-          />
+        <DialogTitle className={classes.title}>
+          {t('travel.creation.title')}
+        </DialogTitle>
+        <DialogContent className={classes.content}>
+          <Typography className={classes.sectionTitle}>
+            {t('travel.creation.car.title')}
+          </Typography>
           <TextField
+            variant="outlined"
+            size="small"
+            className={classes.field}
             label={t('travel.creation.name')}
             fullWidth
             helperText=" "
@@ -128,37 +116,24 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             id="NewTravelName"
           />
           <TextField
+            variant="outlined"
+            size="small"
+            className={classes.field}
             label={t('travel.creation.phone')}
             fullWidth
             helperText=" "
             value={phone}
             onChange={e => setPhone(e.target.value)}
             name="phone"
+            FormHelperTextProps={{
+              component: () => (
+                <FAQLink
+                  link={t('travel.creation.phoneHelper.faq')}
+                  text={t('travel.creation.phoneHelper.why')}
+                />
+              ),
+            }}
             id="NewTravelPhone"
-          />
-          <TextField
-            label={t('travel.creation.meeting')}
-            fullWidth
-            multiline
-            rowsMax={4}
-            inputProps={{maxLength: 250}}
-            helperText={`${meeting.length}/250`}
-            value={meeting}
-            onChange={e => setMeeting(e.target.value)}
-            name="meeting"
-            id="NewTravelMeeting"
-          />
-          <TextField
-            label={t('travel.creation.notes')}
-            fullWidth
-            multiline
-            rowsMax={4}
-            inputProps={{maxLength: 250}}
-            helperText={`${details.length}/250`}
-            value={details}
-            onChange={e => setDetails(e.target.value)}
-            name="details"
-            id="NewTravelDetails"
           />
           <div className={classes.slider}>
             <Typography variant="caption">
@@ -175,8 +150,70 @@ const NewTravelDialog = ({context, toggle}: Props) => {
               id="NewTravelSeats"
             />
           </div>
+          <Divider className={classes.divider} />
+          <Typography className={classes.sectionTitle}>
+            {t('travel.creation.travel.title')}
+          </Typography>
+          <Box className={classes.halfWidthWrapper}>
+            <DatePicker
+              className={classes.halfWidthField}
+              inputVariant="outlined"
+              size="small"
+              label={t('travel.creation.date')}
+              helperText=" "
+              value={date}
+              onChange={setDate}
+              format="DD/MM/YYYY"
+              cancelLabel={t('generic.cancel')}
+              autoFocus
+              id="NewTravelDateTime"
+            />
+            <TimePicker
+              className={classes.halfWidthField}
+              inputVariant="outlined"
+              size="small"
+              label={t('travel.creation.time')}
+              helperText=" "
+              value={time}
+              onChange={setTime}
+              cancelLabel={t('generic.cancel')}
+              ampm={false}
+              minutesStep={5}
+              id="NewTravelTime"
+            />
+          </Box>
+          <TextField
+            variant="outlined"
+            size="small"
+            className={classes.field}
+            label={t('travel.creation.meeting')}
+            fullWidth
+            multiline
+            rowsMax={4}
+            inputProps={{maxLength: 250}}
+            helperText={`${meeting.length}/250`}
+            value={meeting}
+            onChange={e => setMeeting(e.target.value)}
+            name="meeting"
+            id="NewTravelMeeting"
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            className={classes.field}
+            label={t('travel.creation.notes')}
+            fullWidth
+            multiline
+            rowsMax={4}
+            inputProps={{maxLength: 250}}
+            helperText={`${details.length}/250`}
+            value={details}
+            onChange={e => setDetails(e.target.value)}
+            name="details"
+            id="NewTravelDetails"
+          />
         </DialogContent>
-        <DialogActions>
+        <DialogActions className={classes.actions}>
           <Button
             color="primary"
             id="NewTravelCancel"
@@ -193,7 +230,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             aria-disabled={!canCreate}
             id="NewTravelSubmit"
           >
-            {t('generic.create')}
+            {t('travel.creation.submit')}
           </Button>
         </DialogActions>
       </form>
@@ -217,10 +254,42 @@ const MARKS = [1, 2, 3, 4, 5, 6, 7, 8].map(value => ({
   label: value,
 }));
 
+const addSpacing = (theme, ratio) => ({
+  margin: `0 ${theme.spacing(3 * ratio)}px`,
+  width: `calc(100% - ${theme.spacing(6 * ratio)}px)`,
+});
+
 const useStyles = makeStyles(theme => ({
-  slider: {
-    marginTop: theme.spacing(2),
+  title: {
+    paddingBottom: 0,
   },
+  sectionTitle: {
+    ...addSpacing(theme, 1),
+    paddingBottom: theme.spacing(1.5),
+  },
+  content: {
+    padding: `${theme.spacing(2)}px 0`,
+  },
+  field: {
+    ...addSpacing(theme, 1),
+    paddingBottom: theme.spacing(1)
+  },
+  halfWidthWrapper: {
+    ...addSpacing(theme, .5)
+  },
+  halfWidthField: {
+    margin: `0 ${theme.spacing(1.5)}px`,
+    width: `calc(50% - ${theme.spacing(3)}px)`,
+  },
+  slider: {
+    ...addSpacing(theme, 1),
+  },
+  divider: {
+    margin: `${theme.spacing(2)}px 0`,
+  },
+  actions: {
+    paddingTop: 0,
+  }
 }));
 
 export default NewTravelDialog;

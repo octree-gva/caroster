@@ -133,12 +133,17 @@
       "date": "Date du départ",
       "time": "Heure du départ",
       "title": "Ajouter une voiture",
+      "car.title": "Voiture et contact",
+      "travel.title": "Trajet",
       "name": "Nom de la voiture",
       "seats": "Nombre de places",
       "meeting": "Lieu de rencontre",
       "phone": "Numéro de téléphone",
+      "phoneHelper.faq": "/fr/conditions-utilisation",
+      "phoneHelper.why": "Pourquoi le num. de tél. est-il demandé?",
       "notes": "Infos complémentaires",
-      "created": "La voiture a été créée"
+      "created": "La voiture a été créée",
+      "submit": "Ajouter"
     },
     "actions": {
       "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
