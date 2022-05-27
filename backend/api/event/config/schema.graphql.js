@@ -1,9 +1,5 @@
 module.exports = {
   definition: `
-    extend input EventInput {
-      newsletter: Boolean
-    }
-
     input updateEventByUUIDInput {
       where: InputUUID
       data: editEventInput

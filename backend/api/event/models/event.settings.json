@@ -53,6 +53,9 @@
     "waitingPassengers": {
       "via": "event",
       "collection": "passenger"
+    },
+    "newsletter": {
+      "type": "boolean"
     }
   }
 }
