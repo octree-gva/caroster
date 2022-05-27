@@ -27,6 +27,7 @@ import useProfile from '../../hooks/useProfile';
 import Fab from '../../containers/Fab';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useBannerStore from '../../stores/useBannerStore';
+import DrawerMenu from '../../containers/DrawerMenu';
 
 const POLL_INTERVAL = 10000;
 
@@ -44,7 +45,7 @@ const EventPage = props => {
 
 const Event = (props: Props) => {
   const {eventUUID} = props;
-  const bannerOffset = useBannerStore(s => s.offset)
+  const bannerOffset = useBannerStore(s => s.offset);
   const classes = useStyles({bannerOffset});
   const theme = useTheme();
   const {t} = useTranslation();
@@ -99,11 +100,8 @@ const Event = (props: Props) => {
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
     >
-      <EventBar
-        event={event}
-        onAdd={setIsAddToMyEvent}
-        onSave={onSave}
-      />
+      <EventBar event={event} onAdd={setIsAddToMyEvent} onSave={onSave} />
+      <DrawerMenu />
       <TravelColumns toggle={addTravelClickHandler} />
       <Box className={classes.bottomRight}>
         <Fab
@@ -159,7 +157,7 @@ export async function getServerSideProps(ctx) {
 }
 
 const useStyles = makeStyles(theme => ({
-  layout:  ({bannerOffset}) => ({
+  layout: ({bannerOffset}) => ({
     paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
   }),
   bottomRight: {

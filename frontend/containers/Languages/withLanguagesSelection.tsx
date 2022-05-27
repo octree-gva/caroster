@@ -20,7 +20,7 @@ const withLanguagesSelection =
       args: LanguageSelectionComponentProps
     ) => JSX.Element
   ) => 
-  () => {
+  (props) => {
     const language = useLangStore(s => s.language);
     const setLanguage = useLangStore(s => s.setLanguage);
     const {profile, connected} = useProfile();
@@ -47,6 +47,7 @@ const withLanguagesSelection =
         language={language}
         setLanguage={setLanguage}
         onConfirmCallback={onConfirmCallback}
+        {...props}
       />
     );
   };

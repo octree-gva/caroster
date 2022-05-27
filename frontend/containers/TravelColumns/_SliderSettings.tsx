@@ -6,7 +6,7 @@ const sliderSettings = {
   dots: true,
   appendDots: dots => <Dots>{dots}</Dots>,
   nextArrow: <CustomArrow right={0} />,
-  prevArrow: <CustomArrow left={0} />,
+  prevArrow: <CustomArrow left={80} />,
   arrows: true,
   infinite: false,
   speed: 500,

@@ -1,4 +1,7 @@
 {
+  "drawer.information": "Information",
+  "drawer.travels": "Travels",
+  "drawer.waitingList": "Waiting list",
   "generic": {
     "me": "Me",
     "loading": "Loading ...",

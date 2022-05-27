@@ -15,11 +15,11 @@ const IconLanguageSelection = ({
   language,
   setLanguage,
   onConfirmCallback,
-}: LanguageSelectionComponentProps) => {
+  displayMenu
+}: LanguageSelectionComponentProps & {displayMenu?: boolean}) => {
   const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const bannerHeight = useBannerStore(s => s.height);
-  const bannerOffset = useBannerStore(s => s.offset);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -34,7 +34,13 @@ const IconLanguageSelection = ({
 
   return (
     <>
-      <Box position="absolute" top={bannerOffset - bannerHeight} right={0} zIndex={1050} p={1}>
+      <Box
+        position="absolute"
+        top={displayMenu ? 56 : 0 + bannerHeight}
+        right={0}
+        zIndex={1050}
+        p={1}
+      >
         <IconButton
           color="primary"
           aria-label="Languages"

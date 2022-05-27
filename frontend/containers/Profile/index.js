@@ -8,13 +8,11 @@ import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
-import useBannerStore from '../../stores/useBannerStore';
 
 const Profile = ({profile, updateProfile, logout}) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
-  const bannerHeight = useBannerStore(s => s.height);
-  const classes = useStyles({bannerHeight});
+  const classes = useStyles();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [firstName, setFirstName] = useState(profile.firstName);
@@ -148,9 +146,6 @@ const Profile = ({profile, updateProfile, logout}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  container: ({bannerHeight}) => ({
-    marginTop: bannerHeight + theme.mixins.toolbar.minHeight,
-  }),
   actions: {
     marginTop: theme.spacing(2),
     justifyContent: 'flex-end',

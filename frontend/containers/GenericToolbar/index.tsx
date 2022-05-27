@@ -14,11 +14,6 @@ import useBannerStore from '../../stores/useBannerStore';
 import Banner from '../../components/Banner';
 import useSettings from '../../hooks/useSettings';
 
-let persistedLastAnnouncementSeen = '';
-if (typeof localStorage !== 'undefined') {
-  persistedLastAnnouncementSeen = localStorage.getItem('lastAnnouncementSeen');
-}
-
 const GenericToolbar = ({
   title,
   actions = [],
@@ -35,10 +30,12 @@ const GenericToolbar = ({
   const classes = useStyles({bannerOffset, bannerHeight});
   const {user} = useProfile();
   const settings = useSettings();
-  const announcement = settings?.announcement || '';
   const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
-    persistedLastAnnouncementSeen
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem('lastAnnouncementSeen')
+      : ''
   );
+  const announcement = settings?.announcement || '';
   const showAnnouncement =
     announcement !== '' && announcement !== lastAnnouncementSeen;
 
@@ -121,7 +118,6 @@ const useStyles = makeStyles(theme => ({
   appbar: ({bannerHeight, bannerOffset}) => ({
     minHeight: theme.mixins.toolbar.minHeight,
     transition: 'height 0.3s ease',
-    zIndex: theme.zIndex.appBar,
     display: 'block',
     marginTop: bannerOffset - bannerHeight,
   }),

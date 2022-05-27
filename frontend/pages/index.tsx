@@ -52,7 +52,7 @@ const Home = () => {
         <Logo />
         <CreateEvent />
       </Paper>
-      <LanguagesIcon/>
+      <LanguagesIcon displayMenu={!!profile}/>
     </Layout>
   );
 };

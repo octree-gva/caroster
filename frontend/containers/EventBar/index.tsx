@@ -21,11 +21,6 @@ import EventDetails from '../EventDetails';
 import useBannerStore from '../../stores/useBannerStore';
 import Banner from '../../components/Banner';
 
-let persistedLastAnnouncementSeen = '';
-if (typeof localStorage !== 'undefined') {
-  persistedLastAnnouncementSeen = localStorage.getItem('lastAnnouncementSeen');
-}
-
 const EventBar = ({event, onAdd, onSave, onShare}) => {
   const {t} = useTranslation();
   const router = useRouter();
@@ -43,7 +38,9 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
   const classes = useStyles({detailsOpen, bannerOffset, bannerHeight});
   const announcement = settings?.announcement || '';
   const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
-    persistedLastAnnouncementSeen
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem('lastAnnouncementSeen')
+      : ''
   );
   const showAnnouncement =
     announcement !== '' && announcement !== lastAnnouncementSeen;
@@ -273,8 +270,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
     overflowY: detailsOpen ? 'scroll' : 'hidden',
     transition: 'height 0.3s ease',
-    zIndex: theme.zIndex.appBar,
-    marginTop: bannerOffset - bannerHeight ,
+    marginTop: bannerOffset - bannerHeight,
   }),
   logo: {
     marginRight: theme.spacing(2),

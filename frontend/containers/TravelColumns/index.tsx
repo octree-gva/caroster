@@ -158,7 +158,7 @@ const sortTravels = (a: TravelType, b: TravelType) => {
 const useStyles = makeStyles(theme => ({
   container: {
     minHeight: '100vh',
-    paddingLeft: theme.spacing(6),
+    paddingLeft: `calc(${theme.spacing(6)}px + 80px)`,
     paddingRight: theme.spacing(6),
     [theme.breakpoints.down('sm')]: {
       paddingLeft: theme.spacing(),
