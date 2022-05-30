@@ -21,13 +21,14 @@ import EventDetails from '../EventDetails';
 import useBannerStore from '../../stores/useBannerStore';
 import Banner from '../../components/Banner';
 
-const EventBar = ({event, onAdd, onSave, onShare}) => {
+const EventBar = ({event, onAdd, onSave}) => {
   const {t} = useTranslation();
   const router = useRouter();
-  const [detailsOpen, toggleDetails] = useReducer(i => !i, false);
   const [anchorEl, setAnchorEl] = useState(null);
   const isEditing = useEventStore(s => s.isEditing);
+  const areDetailsOpened = useEventStore(s => s.areDetailsOpened);
   const setIsEditing = useEventStore(s => s.setIsEditing);
+  const setAreDetailsOpened = useEventStore(s => s.setAreDetailsOpened);
   const token = useAuthStore(s => s.token);
   const {user} = useProfile();
   const settings = useSettings();
@@ -35,7 +36,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
   const tourStep = useTourStore(s => s.step);
   const bannerOffset = useBannerStore(s => s.offset);
   const bannerHeight = useBannerStore(s => s.height);
-  const classes = useStyles({detailsOpen, bannerOffset, bannerHeight});
+  const classes = useStyles({areDetailsOpened, bannerOffset, bannerHeight});
   const announcement = settings?.announcement || '';
   const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
     typeof localStorage !== 'undefined'
@@ -51,14 +52,6 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     }
     setLastAnnouncementSeen(announcement);
   };
-
-  useEffect(() => {
-    onTourChange(toggleDetails);
-  }, [tourStep]);
-
-  useEffect(() => {
-    if (!detailsOpen) setIsEditing(false);
-  }, [detailsOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const signUp = () =>
     router.push({
@@ -128,7 +121,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
     ? [{label: user.username, id: 'Email'}, {divider: true}]
     : [];
 
-  const appLink = user ? '/dashboard' : settings?.['about_link'] || '';
+  const appLink = user ? '/dashboard' : `/e/${event.uuid}` || '';
 
   const UserIcon = user ? (
     <Avatar className={classes.avatar}>
@@ -143,7 +136,9 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
       className={classes.appbar}
       position="fixed"
       color="primary"
-      id={(isEditing && 'EditEvent') || (detailsOpen && 'Details') || 'Menu'}
+      id={
+        (isEditing && 'EditEvent') || (areDetailsOpened && 'Details') || 'Menu'
+      }
     >
       <Banner
         message={announcement}
@@ -170,7 +165,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
             </Typography>
           </Tooltip>
 
-          {detailsOpen && (
+          {areDetailsOpened && (
             <IconButton
               className="tour_event_edit"
               color="inherit"
@@ -182,14 +177,14 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
             </IconButton>
           )}
         </div>
-        {detailsOpen ? (
+        {areDetailsOpened ? (
           <IconButton
             color="inherit"
             edge="end"
             id="CloseDetailsBtn"
             onClick={() => {
               setIsEditing(false);
-              toggleDetails();
+              setAreDetailsOpened(!areDetailsOpened);
             }}
           >
             <Icon>close</Icon>
@@ -201,7 +196,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
               color="inherit"
               edge="end"
               id="ShareBtn"
-              onClick={toggleDetails}
+              onClick={() => setAreDetailsOpened(!areDetailsOpened)}
             >
               <Icon>share</Icon>
             </IconButton>
@@ -210,7 +205,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
               color="inherit"
               edge="end"
               id="ShareBtn"
-              onClick={toggleDetails}
+              onClick={() => setAreDetailsOpened(!areDetailsOpened)}
             >
               <Icon>information_outline</Icon>
             </IconButton>
@@ -224,7 +219,7 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
             </IconButton>
           </>
         )}
-        {!detailsOpen && (
+        {!areDetailsOpened && (
           <GenericMenu
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
@@ -232,12 +227,12 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
               ...userInfos,
               ...[
                 {
-                  label: detailsOpen
+                  label: areDetailsOpened
                     ? t('event.actions.hide_details')
                     : t('event.actions.show_details'),
                   onClick: e => {
                     setAnchorEl(null);
-                    toggleDetails();
+                    setAreDetailsOpened(!areDetailsOpened);
                   },
                   id: 'DetailsTab',
                 },
@@ -247,21 +242,20 @@ const EventBar = ({event, onAdd, onSave, onShare}) => {
           />
         )}
       </Toolbar>
-      {detailsOpen && (
-        <EventDetails toggleDetails={toggleDetails} onShare={onShare} />
-      )}
+      {areDetailsOpened && <EventDetails />}
     </AppBar>
   );
 };
 
-const onTourChange = (toggleDetails: Function) => {
+const onTourChange = (toggleDetailsOpened: Function) => {
   const {prev, step, isCreator} = useTourStore.getState();
   const fromTo = (step1: number, step2: number) =>
     prev === step1 && step === step2;
 
   if (isCreator) {
-    if (fromTo(3, 2) || fromTo(2, 3) || fromTo(4, 5)) toggleDetails();
-  } else if (fromTo(2, 3) || fromTo(3, 2) || fromTo(3, 4)) toggleDetails();
+    if (fromTo(3, 2) || fromTo(2, 3) || fromTo(4, 5)) toggleDetailsOpened();
+  } else if (fromTo(2, 3) || fromTo(3, 2) || fromTo(3, 4))
+    toggleDetailsOpened();
 };
 
 const useStyles = makeStyles(theme => ({

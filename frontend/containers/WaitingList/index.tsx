@@ -1,42 +1,47 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
-import clsx from 'clsx';
+import {makeStyles} from '@material-ui/core/styles';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
+import usePassengersActions from '../../hooks/usePassengersActions';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
-import TravelDialog from './TravelDialog';
 import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
-import usePassengersActions from '../../hooks/usePassengersActions';
+import TravelDialog from './TravelDialog';
+import Button from '@material-ui/core/Button';
+import router from 'next/dist/client/router';
+import useBannerStore from '../../stores/useBannerStore';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
-  slideToTravel: (travelId: string) => void;
 }
 
 const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
-  slideToTravel,
 }: Props) => {
-  const classes = useStyles();
+  const bannerOffset = useBannerStore(s => s.offset);
+  const classes = useStyles({bannerOffset});
   const {t} = useTranslation();
+  const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
   const [addingPassenger, setAddingPassenger] = useState(null);
   const travels =
-    event?.travels?.length > 0 ? event.travels.slice().sort(sortTravels) : [];
+    event?.travels?.length > 0 ? event?.travels.slice().sort(sortTravels) : [];
   const {updatePassenger, removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
@@ -58,11 +63,21 @@ const WaitingList = ({
           travel: travel.id,
         });
         setAddingPassenger(null);
-        slideToTravel(travel.id);
         addToast(
           t('passenger.success.added_to_car', {
             name: addingPassenger.name,
-          })
+          }),
+          <Button
+            size="small"
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              router.push(`/e/${event.uuid}`);
+              clearToast();
+            }}
+          >
+            {t('passenger.success.goToTravels')}
+          </Button>
         );
       } catch (error) {
         console.error(error);
@@ -74,7 +89,7 @@ const WaitingList = ({
 
   const onPress = useCallback(
     (passengerId: string) => {
-      const selectedPassenger = event.waitingPassengers.find(
+      const selectedPassenger = event?.waitingPassengers.find(
         item => item.id === passengerId
       );
       if (isEditing) setRemovingPassenger(selectedPassenger);
@@ -101,36 +116,38 @@ const WaitingList = ({
       );
 
   return (
-    <>
-      <Paper className={classes.root}>
-        <div className={clsx(classes.header, 'tour_waiting_list')}>
-          <IconButton
-            size="small"
-            color="primary"
-            className={classes.editBtn}
-            disabled={!event.waitingPassengers?.length}
-            onClick={toggleEditing}
-          >
-            {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
-          </IconButton>
-          <Typography variant="h5">{t('passenger.title')}</Typography>
-          <Typography variant="overline">
-            {t('passenger.availability.seats', {count: availability})}
-          </Typography>
-        </div>
-        <Divider />
-        <AddPassengerButtons
-          getOnClickFunction={getToggleNewPassengerDialogFunction}
-          canAddSelf={canAddSelf}
-          variant="waitingList"
-        />
-        <Divider />
-        <PassengersList
-          passengers={event.waitingPassengers}
-          onPress={onPress}
-          Button={ListButton}
-        />
-      </Paper>
+    <Box className={classes.root}>
+      <Container maxWidth="sm" className={classes.card}>
+        <Paper>
+          <div className={classes.header}>
+            <IconButton
+              size="small"
+              color="primary"
+              className={classes.editBtn}
+              disabled={!event?.waitingPassengers?.length}
+              onClick={toggleEditing}
+            >
+              {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
+            </IconButton>
+            <Typography variant="h5">{t('passenger.title')}</Typography>
+            <Typography variant="overline">
+              {t('passenger.availability.seats', {count: availability})}
+            </Typography>
+          </div>
+          <Divider />
+          <AddPassengerButtons
+            getOnClickFunction={getToggleNewPassengerDialogFunction}
+            canAddSelf={canAddSelf}
+            variant="waitingList"
+          />
+          <Divider />
+          <PassengersList
+            passengers={event?.waitingPassengers}
+            onPress={onPress}
+            Button={ListButton}
+          />
+        </Paper>
+      </Container>
       <RemoveDialog
         text={
           <Trans
@@ -146,14 +163,14 @@ const WaitingList = ({
         onRemove={onRemove}
       />
       <TravelDialog
-        eventName={event.name}
+        eventName={event?.name}
         travels={travels}
         passenger={addingPassenger}
         open={!!addingPassenger}
         onClose={() => setAddingPassenger(null)}
         onSelect={selectTravel}
       />
-    </>
+    </Box>
   );
 };
 
@@ -168,8 +185,17 @@ const sortTravels = (a, b) => {
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
+    paddingLeft: '80px',
+
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: 0,
+    },
+  },
+  card: {
+    marginTop: theme.spacing(6),
   },
   header: {
+    position: 'relative',
     padding: theme.spacing(2),
   },
   editBtn: {

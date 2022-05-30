@@ -19,9 +19,8 @@ const useStyles = makeStyles(theme => ({
       [theme.breakpoints.down('sm')]: {
         bottom: 0,
         top: 'auto',
-        paddingTop: theme.spacing(0.5),
-        paddingBottom: theme.spacing(2.5),
-        height: '80px',
+        paddingTop: 0,
+        height: '56px',
         width: '100%',
         flexDirection: 'row',
       },
@@ -34,18 +33,18 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     borderRadius: '50%',
   },
-  drawerMenuItem: {
+  drawerMenuItem: ({active}) => ({
     margin: `${theme.spacing(3)}px auto`,
     width: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
     height: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
     textAlign: 'center',
+    color: active ? '#fff' : 'rgba(256, 256, 256, .76)',
 
     [theme.breakpoints.down('sm')]: {
-      margin: '8px auto',
+      margin: '0 auto',
     },
-  },
+  }),
   drawerText: {
-    paddingTop: theme.spacing(1),
     fontSize: '0.7em',
     lineHeight: '1.1em',
     display: 'flex',

@@ -72,6 +72,9 @@
   "event": {
     "title": "{{title}} - Caroster",
     "not_found": "Projet introuvable",
+    "no_travel.title": "Pas de voitures pour le moment",
+    "no_other_travel.title": "Pas d'autres voitures pour le moment",
+    "no_travel.desc": "Partagez l’événement et inscrivez-vous dans liste d’attente pour être notifié lorsqu’une voiture sera ajoutée !",
     "fields": {
       "name": "Nom de l'événement",
       "date": "Date de l'événement",
@@ -142,7 +145,7 @@
       "seats": "Nombre de places",
       "meeting": "Lieu de rencontre",
       "phone": "Numéro de téléphone",
-      "phoneHelper.faq": "/fr/conditions-utilisation",
+      "phoneHelper.faq": "/fr/faq",
       "phoneHelper.why": "Pourquoi le num. de tél. est-il demandé?",
       "notes": "Infos complémentaires",
       "created": "La voiture a été créée",
@@ -258,7 +261,8 @@
       "added_self_to_car": "Vous avez été ajouté à la voiture",
       "added_to_car": "{{name}} a été ajouté à la voiture",
       "added_self_to_waitlist": "Vous avez été ajouté à la liste d’attente. Vous serez notifié à l’ajout de nouvelles voitures",
-      "added_to_waitlist": "{{name}} ajouté à la liste d'attente"
+      "added_to_waitlist": "{{name}} ajouté à la liste d'attente",
+      "goToTravels": "Aller aux trajets"
     },
     "input": {
       "email": "Votre email",

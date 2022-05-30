@@ -272,14 +272,21 @@ const useStyles = makeStyles(theme => ({
   },
   field: {
     ...addSpacing(theme, 1),
-    paddingBottom: theme.spacing(1)
+    paddingBottom: theme.spacing(1),
   },
   halfWidthWrapper: {
-    ...addSpacing(theme, .5)
+    ...addSpacing(theme, 0.5),
   },
   halfWidthField: {
     margin: `0 ${theme.spacing(1.5)}px`,
     width: `calc(50% - ${theme.spacing(3)}px)`,
+
+    '& > .MuiFormLabel-root': {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      width: '100%',
+      overflow: 'hidden',
+    },
   },
   slider: {
     ...addSpacing(theme, 1),
@@ -289,7 +296,7 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     paddingTop: 0,
-  }
+  },
 }));
 
 export default NewTravelDialog;

@@ -4,6 +4,7 @@ import useToastStore from '../../stores/useToastStore';
 
 const Toasts = () => {
   const toast = useToastStore(s => s.toast);
+  const action = useToastStore(s => s.action);
   const clearToast = useToastStore(s => s.clearToast);
   const classes = useStyles();
 
@@ -18,6 +19,7 @@ const Toasts = () => {
       open={!!toast}
       message={toast}
       onClose={clearToast}
+      action={action}
     />
   );
 };

@@ -11,6 +11,7 @@ import useEventStore from '../../stores/useEventStore';
 import {caroster} from '../../theme';
 import CopyLink from '../../components/CopyLink';
 import useToastStore from '../../stores/useToastStore';
+import useBannerStore from '../../stores/useBannerStore';
 
 const EventDetails = () => {
   const {t} = useTranslation();
@@ -20,7 +21,8 @@ const EventDetails = () => {
   const isEditing = useEventStore(s => s.isEditing);
   const shareInput = useRef(null);
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
-  const classes = useStyles();
+  const bannerOffset = useBannerStore(s => s.offset);
+  const classes = useStyles({bannerOffset});
 
   if (!event) return null;
 
@@ -159,14 +161,20 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles(theme => ({
-  container: {
+  container: ({bannerOffset}) => ({
     padding: theme.spacing(2, 9),
     marginBottom: theme.spacing(12),
+    minHeight: `calc(100vh - ${
+      theme.mixins.toolbar.minHeight + bannerOffset
+    }px)`,
 
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(2),
+      minHeight: `calc(100vh - ${
+        theme.mixins.toolbar.minHeight + bannerOffset + 56
+      }px)`,
     },
-  },
+  }),
   section: {
     marginBottom: theme.spacing(2),
     width: '540px',

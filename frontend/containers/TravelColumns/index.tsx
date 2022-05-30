@@ -1,27 +1,18 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
 import {useTranslation} from 'react-i18next';
 import {Travel as TravelType} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
-import useTourStore from '../../stores/useTourStore';
 import useToastStore from '../../stores/useToastStore';
 import useProfile from '../../hooks/useProfile';
 import useAddToEvents from '../../hooks/useAddToEvents';
-import {
-  AddPassengerToTravel,
-  AddPassengerToWaitingList,
-} from '../NewPassengerDialog';
-import WaitingList from '../WaitingList';
+import {AddPassengerToTravel} from '../NewPassengerDialog';
 import Travel from '../Travel';
-import AddTravel from './AddTravel';
 import sliderSettings from './_SliderSettings';
 import usePassengersActions from '../../hooks/usePassengersActions';
-
-interface NewPassengerDialogContext {
-  addSelf: boolean;
-}
+import NoCar from './NoCar';
 
 interface Props {
   toggle: () => void;
@@ -32,7 +23,6 @@ const TravelColumns = (props: Props) => {
   const {travels = []} = event || {};
   const slider = useRef(null);
   const {t} = useTranslation();
-  const tourStep = useTourStore(s => s.step);
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const {user} = useProfile();
@@ -40,8 +30,6 @@ const TravelColumns = (props: Props) => {
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
   } | null>(null);
-  const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
-    useState<NewPassengerDialogContext | null>(null);
   const {addPassenger} = usePassengersActions();
   const sortedTravels = travels?.slice().sort(sortTravels);
 
@@ -71,53 +59,47 @@ const TravelColumns = (props: Props) => {
     }
   };
 
-  const slideToTravel = (travelId: string) => {
-    const travelIndex = sortedTravels.findIndex(
-      travel => travel.id === travelId
-    );
-    const slideIndex = travelIndex + 1;
-    slider.current.slickGoTo(slideIndex);
-  };
-
-  // On tour step changes : component update
-  useEffect(() => {
-    onTourChange(slider.current);
-  }, [tourStep]);
-
   return (
     <div className={classes.container}>
       <div className={classes.dots} id="slider-dots" />
-      <div className={classes.slider}>
-        <Slider ref={slider} {...sliderSettings}>
-          <Container maxWidth="sm" className={classes.slide}>
-            <WaitingList
-              slideToTravel={slideToTravel}
-              canAddSelf={canAddSelf}
-              getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
-                toggleNewPassengerToWaitingList({addSelf})}
-            />
-          </Container>
-          {sortedTravels?.map(travel => (
-            <Container key={travel.id} maxWidth="sm" className={classes.slide}>
-              <Travel
-                travel={travel}
-                {...props}
-                canAddSelf={canAddSelf}
-                getAddPassengerFunction={(addSelf: boolean) => () => {
-                  if (addSelf) {
-                    return addSelfToTravel(travel);
-                  } else {
-                    return toggleNewPassengerToTravel({travel});
-                  }
-                }}
+      {(travels.length === 0 && (
+        <NoCar
+          image
+          eventName={event?.name}
+          title={t('event.no_travel.title')}
+        />
+      )) || (
+        <div className={classes.slider}>
+          <Slider ref={slider} {...sliderSettings}>
+            {sortedTravels?.map(travel => (
+              <Container
+                key={travel.id}
+                maxWidth="sm"
+                className={classes.slide}
+              >
+                <Travel
+                  travel={travel}
+                  {...props}
+                  canAddSelf={canAddSelf}
+                  getAddPassengerFunction={(addSelf: boolean) => () => {
+                    if (addSelf) {
+                      return addSelfToTravel(travel);
+                    } else {
+                      return toggleNewPassengerToTravel({travel});
+                    }
+                  }}
+                />
+              </Container>
+            ))}
+            <Container maxWidth="sm" className={classes.slide}>
+              <NoCar
+                eventName={event?.name}
+                title={t('event.no_other_travel.title')}
               />
             </Container>
-          ))}
-          <Container maxWidth="sm" className={classes.slide}>
-            <AddTravel {...props} />
-          </Container>
-        </Slider>
-      </div>
+          </Slider>
+        </div>
+      )}
       {!!newPassengerTravelContext && (
         <AddPassengerToTravel
           open={!!newPassengerTravelContext}
@@ -125,25 +107,8 @@ const TravelColumns = (props: Props) => {
           travel={newPassengerTravelContext.travel}
         />
       )}
-      {!!addPassengerToWaitingListContext && (
-        <AddPassengerToWaitingList
-          open={!!addPassengerToWaitingListContext}
-          toggle={() => toggleNewPassengerToWaitingList(null)}
-          addSelf={addPassengerToWaitingListContext.addSelf}
-        />
-      )}
     </div>
   );
-};
-
-const onTourChange = slider => {
-  const {prev, step, isCreator} = useTourStore.getState();
-  const fromTo = (step1: number, step2: number) =>
-    prev === step1 && step === step2;
-
-  if (isCreator) {
-    if (fromTo(2, 3) || fromTo(4, 3)) slider?.slickGoTo(0, true);
-  } else if (fromTo(0, 1)) slider?.slickGoTo(0, true);
 };
 
 const sortTravels = (a: TravelType, b: TravelType) => {
@@ -180,7 +145,7 @@ const useStyles = makeStyles(theme => ({
       '& li': {
         display: 'block',
         '& button:before': {
-          fontSize: '20px',
+          fontSize: '10px',
         },
       },
     },
@@ -202,10 +167,14 @@ const useStyles = makeStyles(theme => ({
   },
   slide: {
     padding: theme.spacing(1),
-    marginBottom: theme.spacing(12),
+    marginBottom: theme.spacing(10),
     outline: 'none',
     '& > *': {
       cursor: 'default',
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: `${theme.spacing(10) + 56}px`,
     },
   },
 }));

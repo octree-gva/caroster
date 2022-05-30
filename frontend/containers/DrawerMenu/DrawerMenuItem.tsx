@@ -6,14 +6,15 @@ import useStyles from './styles';
 interface Props {
   Icon: JSX.Element;
   title: string;
-  href: string;
+  onClick: () => void;
+  active: boolean;
 }
 
-const DrawerMenuItem = ({Icon, title, href}: Props) => {
-  const classes = useStyles();
+const DrawerMenuItem = ({Icon, title, onClick, active}: Props) => {
+  const classes = useStyles({active});
   return (
     <Box className={classes.drawerMenuItem}>
-      <Button className={classes.button} color="primary" variant='contained' href={href}>
+      <Button className={classes.button} color="inherit" onClick={onClick}>
         {Icon}
       </Button>
       <Typography

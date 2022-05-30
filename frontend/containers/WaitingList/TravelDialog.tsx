@@ -178,10 +178,13 @@ const useStyles = makeStyles(theme => ({
   },
   noTravelImage: {
     width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      width: '50%',
+    },
   },
   share: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default TravelDialog;

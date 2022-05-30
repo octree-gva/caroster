@@ -1,15 +1,18 @@
+import {ReactNode} from 'react';
 import create from 'zustand';
 
 type State = {
   toast?: string;
-  addToast: (message: string) => void;
+  action?: ReactNode;
+  addToast: (message: string, action?: ReactNode) => void;
   clearToast: () => void;
 };
 
 const useToastStore = create<State>(set => ({
   toast: null,
-  addToast: toast => set({toast}),
-  clearToast: () => set({toast: null}),
+  action: null,
+  addToast: (toast, action = null) => set({toast, action}),
+  clearToast: () => set({toast: null, action: null}),
 }));
 
 export default useToastStore;

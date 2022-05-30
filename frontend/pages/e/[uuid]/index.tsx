@@ -2,18 +2,18 @@ import {useState, useReducer, useEffect} from 'react';
 import Box from '@material-ui/core/Box';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {initializeApollo} from '../../lib/apolloClient';
-import useToastStore from '../../stores/useToastStore';
-import useEventStore from '../../stores/useEventStore';
-import Layout from '../../layouts/Default';
-import AddToMyEventDialog from '../../containers/AddToMyEventDialog';
-import TravelColumns from '../../containers/TravelColumns';
-import NewTravelDialog from '../../containers/NewTravelDialog';
-import VehicleChoiceDialog from '../../containers/VehicleChoiceDialog';
-import WelcomeDialog from '../../containers/WelcomeDialog';
-import EventBar from '../../containers/EventBar';
-import Loading from '../../containers/Loading';
-import OnBoardingTour from '../../containers/OnBoardingTour';
+import {initializeApollo} from '../../../lib/apolloClient';
+import useToastStore from '../../../stores/useToastStore';
+import useEventStore from '../../../stores/useEventStore';
+import Layout from '../../../layouts/Default';
+import AddToMyEventDialog from '../../../containers/AddToMyEventDialog';
+import TravelColumns from '../../../containers/TravelColumns';
+import NewTravelDialog from '../../../containers/NewTravelDialog';
+import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
+import WelcomeDialog from '../../../containers/WelcomeDialog';
+import EventBar from '../../../containers/EventBar';
+import Loading from '../../../containers/Loading';
+import OnBoardingTour from '../../../containers/OnBoardingTour';
 import {
   useUpdateEventMutation,
   Event as EventType,
@@ -21,13 +21,13 @@ import {
   EventByUuidDocument,
   EditEventInput,
   useFindUserVehiclesQuery,
-} from '../../generated/graphql';
-import ErrorPage from '../_error';
-import useProfile from '../../hooks/useProfile';
-import Fab from '../../containers/Fab';
+} from '../../../generated/graphql';
+import ErrorPage from '../../_error';
+import useProfile from '../../../hooks/useProfile';
+import Fab from '../../../containers/Fab';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useBannerStore from '../../stores/useBannerStore';
-import DrawerMenu from '../../containers/DrawerMenu';
+import useBannerStore from '../../../stores/useBannerStore';
+import DrawerMenu from '../../../containers/DrawerMenu';
 
 const POLL_INTERVAL = 10000;
 
@@ -65,11 +65,6 @@ const Event = (props: Props) => {
     variables: {uuid: eventUUID},
   });
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
-  const addCarClasses = matches ? 'tour_travel_add' : '';
-
-  useEffect(() => {
-    if (event) setEvent(event as EventType);
-  }, [event]);
 
   const onSave = async e => {
     try {
@@ -85,6 +80,10 @@ const Event = (props: Props) => {
       addToast(t('event.errors.cant_update'));
     }
   };
+
+  useEffect(() => {
+    if (event) setEvent(event as EventType);
+  }, [event]);
 
   const addTravelClickHandler =
     user && vehicles?.length != 0
@@ -103,16 +102,14 @@ const Event = (props: Props) => {
       <EventBar event={event} onAdd={setIsAddToMyEvent} onSave={onSave} />
       <DrawerMenu />
       <TravelColumns toggle={addTravelClickHandler} />
-      <Box className={classes.bottomRight}>
-        <Fab
-          onClick={addTravelClickHandler}
-          aria-label="add-car"
-          color="primary"
-          className={addCarClasses}
-        >
-          {t('travel.creation.title')}
-        </Fab>
-      </Box>
+      <Fab
+        onClick={addTravelClickHandler}
+        aria-label="add-car"
+        color="primary"
+        className={classes.bottomRight}
+      >
+        {t('travel.creation.title')}
+      </Fab>
       <NewTravelDialog
         context={openNewTravelContext}
         toggle={() => toggleNewTravel({opened: false})}
@@ -161,12 +158,12 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
   }),
   bottomRight: {
-    position: 'absolute',
-    bottom: theme.spacing(1),
+    bottom: 0,
     right: theme.spacing(6),
-    width: 200,
+
     [theme.breakpoints.down('sm')]: {
       right: theme.spacing(1),
+      bottom: 56,
     },
   },
 }));

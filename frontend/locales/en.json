@@ -72,6 +72,9 @@
   "event": {
     "title": "{{title}} - Caroster",
     "not_found": "Project not found",
+    "no_travel.title": "There are currently no cars",
+    "no_other_travel.title": "There are currently no other car",
+    "no_travel.desc": "Share the event and register to the waiting list to get notified when a car will be available!",
     "fields": {
       "name": "Name of the event",
       "date": "Event date",
@@ -142,7 +145,7 @@
       "seats": "Number of seats",
       "meeting": "Meeting place",
       "phone": "Telephone number",
-      "phoneHelper.faq": "/en/terms",
+      "phoneHelper.faq": "/en/faq",
       "phoneHelper.why": "Why do we ask for a phone number ?",
       "notes": "Additional information",
       "created": "The car has been created",
@@ -258,7 +261,8 @@
       "added_self_to_car": "You have been added to this car",
       "added_to_car": "{{name}} has been added to this car",
       "added_self_to_waitlist": "You have been added to the waitlist. You'll be notified when new cars will be added.",
-      "added_to_waitlist": "{{name}} has been added to the waitlist"
+      "added_to_waitlist": "{{name}} has been added to the waitlist",
+      "goToTravels": "Go to travels"
     },
     "input": {
       "email": "Your email",

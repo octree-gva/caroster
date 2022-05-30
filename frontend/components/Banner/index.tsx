@@ -24,12 +24,12 @@ const Banner = (props: Props) => {
     useEventListener('scroll', () => {
       const y = window.scrollY;
       if (y > height) {
-        setBannerOffset({offset: 0})
+        setBannerOffset({offset: 0});
       }
       if (y <= height) {
         setBannerOffset({offset: height - y});
       }
-    })
+    });
   }
 
   if (!open) return null;
@@ -53,11 +53,12 @@ const Banner = (props: Props) => {
 const useStyles = makeStyles(theme => ({
   banner: {
     position: 'relative',
-    background: `linear-gradient(90deg, ${theme.palette.secondary.main} 20%, ${theme.palette.primary.main} 90%)`,
+    background: `linear-gradient(90deg, #FCDC61 20%, #78B2AC 90%)`,
     width: '100%',
     padding: '12px 60px',
     textAlign: 'center',
     zIndex: theme.zIndex.appBar - 1,
+    color: 'black',
   },
   clear: {
     position: 'absolute',
