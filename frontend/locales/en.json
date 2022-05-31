@@ -142,7 +142,7 @@
       "car.title": "Car and driver",
       "travel.title": "Travel",
       "name": "Name of the car",
-      "seats": "Number of seats",
+      "seats": "Number of available seats",
       "meeting": "Meeting place",
       "phone": "Telephone number",
       "phoneHelper.faq": "/en/faq",

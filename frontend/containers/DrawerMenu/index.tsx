@@ -22,7 +22,7 @@ const DrawerMenu = () => {
       <DrawerMenuItem
         title={t('drawer.travels')}
         onClick={() => {
-          router.push(`/e/${uuid}`);
+          router.push(`/e/${uuid}`, null, {shallow: true} );
           setAreDetailsOpened(false);
         }}
         Icon={<Icon>directions_car</Icon>}
@@ -31,7 +31,7 @@ const DrawerMenu = () => {
       <DrawerMenuItem
         title={t('drawer.waitingList')}
         onClick={() => {
-          router.push(`/e/${uuid}/waitingList`);
+          router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
           setAreDetailsOpened(false);
         }}
         Icon={<Icon>group</Icon>}

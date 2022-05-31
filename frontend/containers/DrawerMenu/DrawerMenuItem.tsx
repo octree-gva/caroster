@@ -18,7 +18,6 @@ const DrawerMenuItem = ({Icon, title, onClick, active}: Props) => {
         {Icon}
       </Button>
       <Typography
-        variant="overline"
         color="inherit"
         className={classes.drawerText}
       >

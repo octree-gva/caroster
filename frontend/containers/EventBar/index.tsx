@@ -1,4 +1,4 @@
-import {useEffect, useState, useReducer} from 'react';
+import {useState} from 'react';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import {makeStyles} from '@material-ui/core/styles';
@@ -13,7 +13,6 @@ import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import useAuthStore from '../../stores/useAuthStore';
 import useEventStore from '../../stores/useEventStore';
-import useTourStore from '../../stores/useTourStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
 import GenericMenu from '../GenericMenu';
@@ -32,8 +31,6 @@ const EventBar = ({event, onAdd, onSave}) => {
   const token = useAuthStore(s => s.token);
   const {user} = useProfile();
   const settings = useSettings();
-  const setTour = useTourStore(s => s.setTour);
-  const tourStep = useTourStore(s => s.step);
   const bannerOffset = useBannerStore(s => s.offset);
   const bannerHeight = useBannerStore(s => s.height);
   const classes = useStyles({areDetailsOpened, bannerOffset, bannerHeight});
@@ -62,8 +59,6 @@ const EventBar = ({event, onAdd, onSave}) => {
   const goToDashboard = () => router.push('/dashboard');
   const goProfile = () => router.push('/profile');
 
-  const onTourRestart = () => setTour({showWelcome: true});
-
   const noUserMenuActions = [
     {
       label: t('event.actions.add_to_my_events'),
@@ -84,14 +79,6 @@ const EventBar = ({event, onAdd, onSave}) => {
       id: 'SignUpTab',
     },
     {divider: true},
-    {
-      label: t('menu.tour'),
-      onClick: () => {
-        setAnchorEl(null);
-        onTourRestart();
-      },
-      id: 'TourTab',
-    },
   ];
 
   const loggedMenuActions = [
@@ -106,14 +93,6 @@ const EventBar = ({event, onAdd, onSave}) => {
       id: 'ProfileTab',
     },
     {divider: true},
-    {
-      label: t('menu.tour'),
-      onClick: () => {
-        setAnchorEl(null);
-        onTourRestart();
-      },
-      id: 'TourTab',
-    },
   ];
 
   const menuActions = token ? loggedMenuActions : noUserMenuActions;
@@ -245,17 +224,6 @@ const EventBar = ({event, onAdd, onSave}) => {
       {areDetailsOpened && <EventDetails />}
     </AppBar>
   );
-};
-
-const onTourChange = (toggleDetailsOpened: Function) => {
-  const {prev, step, isCreator} = useTourStore.getState();
-  const fromTo = (step1: number, step2: number) =>
-    prev === step1 && step === step2;
-
-  if (isCreator) {
-    if (fromTo(3, 2) || fromTo(2, 3) || fromTo(4, 5)) toggleDetailsOpened();
-  } else if (fromTo(2, 3) || fromTo(3, 2) || fromTo(3, 4))
-    toggleDetailsOpened();
 };
 
 const useStyles = makeStyles(theme => ({

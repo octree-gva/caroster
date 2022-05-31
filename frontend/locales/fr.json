@@ -136,13 +136,13 @@
       "phone": "Contact"
     },
     "creation": {
-      "date": "Date du départ",
-      "time": "Heure du départ",
+      "date": "Date de départ",
+      "time": "Heure de départ",
       "title": "Ajouter une voiture",
       "car.title": "Voiture et contact",
       "travel.title": "Trajet",
       "name": "Nom de la voiture",
-      "seats": "Nombre de places",
+      "seats": "Nombre de places disponibles",
       "meeting": "Lieu de rencontre",
       "phone": "Numéro de téléphone",
       "phoneHelper.faq": "/fr/faq",

@@ -39,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: image ? 0 : theme.spacing(8),
     width: '280px',
     maxWidth: '100%',
+    paddingBottom: theme.spacing(16),
     textAlign: 'center',
   }),
   noTravelImage: ({image}) => ({
@@ -47,6 +48,7 @@ const useStyles = makeStyles(theme => ({
   }),
   share: {
     marginTop: theme.spacing(6),
+    backgroundColor: theme.palette.background.default
   },
 }));
 

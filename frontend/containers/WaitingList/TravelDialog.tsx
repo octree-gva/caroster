@@ -177,13 +177,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   noTravelImage: {
-    width: '100%',
+    width: 'calc(100% - 2px)',
     [theme.breakpoints.down('sm')]: {
-      width: '50%',
+      width: 'calc(50% - 2px)',
     },
   },
   share: {
     marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.background.default
   },
 }));
 

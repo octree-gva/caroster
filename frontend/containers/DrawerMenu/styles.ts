@@ -34,25 +34,32 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '50%',
   },
   drawerMenuItem: ({active}) => ({
+    position: 'relative',
     margin: `${theme.spacing(3)}px auto`,
     width: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
     height: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
     textAlign: 'center',
-    color: active ? '#fff' : 'rgba(256, 256, 256, .76)',
+    color: active
+      ? theme.palette.background.default
+      : 'rgba(256, 256, 256, .76)',
 
     [theme.breakpoints.down('sm')]: {
       margin: '0 auto',
     },
   }),
   drawerText: {
+    position: 'relative',
     fontSize: '0.7em',
     lineHeight: '1.1em',
+    height: 'auto',
     display: 'flex',
     justifyContent: 'center',
     textTransform: 'none',
 
     [theme.breakpoints.down('sm')]: {
       whiteSpace: 'nowrap',
+      lineHeight: '.5em',
+      fontSize: '11px',
     },
   },
 }));

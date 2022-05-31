@@ -18,7 +18,7 @@ if(typeof localStorage !== 'undefined')
     persistedShowWelcome = JSON.parse(localStorage.getItem(ONBOARDING_STORAGE_KEY));
 
 const useTourStore = create<State>(set => ({
-  showWelcome: typeof persistedShowWelcome === 'boolean' ? persistedShowWelcome : true,
+  showWelcome: false,
   isCreator: null,
   run: false,
   step: -1,

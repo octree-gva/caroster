@@ -128,6 +128,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             FormHelperTextProps={{
               component: () => (
                 <FAQLink
+                  className={classes.faqHelper}
                   link={t('travel.creation.phoneHelper.faq')}
                   text={t('travel.creation.phoneHelper.why')}
                 />
@@ -269,6 +270,9 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     padding: `${theme.spacing(2)}px 0`,
+  },
+  faqHelper: {
+    fontSize: '12px',
   },
   field: {
     ...addSpacing(theme, 1),

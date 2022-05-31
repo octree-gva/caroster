@@ -145,7 +145,7 @@ const useStyles = makeStyles(theme => ({
       '& li': {
         display: 'block',
         '& button:before': {
-          fontSize: '10px',
+          fontSize: '12px',
         },
       },
     },
