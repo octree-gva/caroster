@@ -17,20 +17,7 @@ const Banner = (props: Props) => {
   const classes = useStyles();
   const [bannerRef, {height}] = useElementSize();
   const setBannerHeight = useBannerStore(s => s.setBannerHeight);
-  const setBannerOffset = useBannerStore(s => s.setBannerOffset);
   useEffect(() => setBannerHeight({height}), [height]);
-
-  if (typeof document != 'undefined') {
-    useEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y > height) {
-        setBannerOffset({offset: 0});
-      }
-      if (y <= height) {
-        setBannerOffset({offset: height - y});
-      }
-    });
-  }
 
   if (!open) return null;
 
@@ -63,7 +50,8 @@ const useStyles = makeStyles(theme => ({
   clear: {
     position: 'absolute',
     right: '12px',
-    bottom: '0',
+    bottom: '50%',
+    transform: 'translateY(50%)',
     minWidth: '44px',
     padding: '12px',
     lineHeight: '1.4em',

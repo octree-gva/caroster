@@ -1,5 +1,4 @@
 import {useState, useReducer, useEffect} from 'react';
-import Box from '@material-ui/core/Box';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {initializeApollo} from '../../../lib/apolloClient';
@@ -47,7 +46,6 @@ const Event = (props: Props) => {
   const {eventUUID} = props;
   const bannerOffset = useBannerStore(s => s.offset);
   const classes = useStyles({bannerOffset});
-  const theme = useTheme();
   const {t} = useTranslation();
   const {user} = useProfile();
   const {data: {me: {profile: {vehicles = []} = {}} = {}} = {}, loading} =
@@ -64,7 +62,6 @@ const Event = (props: Props) => {
     pollInterval: POLL_INTERVAL,
     variables: {uuid: eventUUID},
   });
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
   const onSave = async e => {
     try {

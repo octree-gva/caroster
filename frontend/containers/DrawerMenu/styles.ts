@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }),
   drawerText: {
     position: 'relative',
-    fontSize: '0.7em',
+    fontSize: '11px',
     lineHeight: '1.1em',
     height: 'auto',
     display: 'flex',
@@ -59,7 +59,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       whiteSpace: 'nowrap',
       lineHeight: '.5em',
-      fontSize: '11px',
     },
   },
 }));
