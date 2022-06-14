@@ -1,5 +1,5 @@
 import {useState, useReducer, useEffect} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {initializeApollo} from '../../../lib/apolloClient';
 import useToastStore from '../../../stores/useToastStore';

@@ -45,10 +45,13 @@ const useStyles = makeStyles(theme => ({
   noTravelImage: ({image}) => ({
     width: image ? '100%' : 0,
     height: image ? 'auto' : theme.spacing(6),
+    [theme.breakpoints.down('sm')]: {
+      width: image ? '50%' : 0,
+    },
   }),
   share: {
     marginTop: theme.spacing(6),
-    backgroundColor: theme.palette.background.default
+    backgroundColor: '#fff',
   },
 }));
 

@@ -13,6 +13,7 @@ import {ActionType} from '../GenericMenu/Action';
 import useBannerStore from '../../stores/useBannerStore';
 import Banner from '../../components/Banner';
 import useSettings from '../../hooks/useSettings';
+import useLangStore from '../../stores/useLangStore';
 
 const GenericToolbar = ({
   title,
@@ -27,6 +28,7 @@ const GenericToolbar = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const bannerOffset = useBannerStore(s => s.offset);
   const bannerHeight = useBannerStore(s => s.height);
+  const language = useLangStore(s => s.language);
   const classes = useStyles({bannerOffset, bannerHeight});
   const {user} = useProfile();
   const settings = useSettings();
@@ -37,7 +39,9 @@ const GenericToolbar = ({
   );
   const announcement = settings?.announcement || '';
   const showAnnouncement =
-    announcement !== '' && announcement !== lastAnnouncementSeen;
+    language === 'FR' &&
+    announcement !== '' &&
+    announcement !== lastAnnouncementSeen;
 
   const onBannerClear = () => {
     if (typeof announcement != 'undefined') {

@@ -184,7 +184,7 @@ const useStyles = makeStyles(theme => ({
   },
   share: {
     marginTop: theme.spacing(2),
-    backgroundColor: theme.palette.background.default
+    backgroundColor: '#fff',
   },
 }));
 

@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
-import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import useAuthStore from '../../stores/useAuthStore';
 import useEventStore from '../../stores/useEventStore';
@@ -178,15 +177,6 @@ const EventBar = ({event, onAdd, onSave}) => {
               onClick={() => setAreDetailsOpened(!areDetailsOpened)}
             >
               <Icon>share</Icon>
-            </IconButton>
-            <IconButton
-              className={clsx(classes.iconButtons, 'tour_event_infos')}
-              color="inherit"
-              edge="end"
-              id="ShareBtn"
-              onClick={() => setAreDetailsOpened(!areDetailsOpened)}
-            >
-              <Icon>information_outline</Icon>
             </IconButton>
             <IconButton
               color="inherit"
