@@ -1,5 +1,5 @@
-query setting {
-  setting {
+query setting ($locale: String!) {
+  setting (locale: $locale) {
     id
     gtm_id
     about_link

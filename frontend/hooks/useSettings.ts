@@ -1,16 +1,20 @@
 import {useEffect} from 'react';
 import {useSettingLazyQuery, SettingQuery} from '../generated/graphql';
+import useLangStore from '../stores/useLangStore';
 
 const useSettings = () => {
-  const defaulData: SettingQuery =
-    {};
+  const language = useLangStore(s => s.language);
 
-  const [fetchSettings, {data: {setting} = defaulData}] =
-    useSettingLazyQuery();
+  const locale = {FR: 'fr', EN: 'en'}[language];
+
+  const defaulData: SettingQuery = {};
+  const [fetchSettings, {data: {setting} = defaulData}] = useSettingLazyQuery({
+    variables: {locale},
+  });
 
   useEffect(() => {
     fetchSettings();
-  }, []);
+  }, [locale]);
 
   return setting;
 };

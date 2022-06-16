@@ -10,19 +10,44 @@
     "timestamps": true,
     "draftAndPublish": false
   },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "gtm_id": {
       "type": "string",
-      "regex": "GTM-.*"
+      "regex": "GTM-.*",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "about_link": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "announcement": {
-      "type": "richtext"
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "faq_link": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }
