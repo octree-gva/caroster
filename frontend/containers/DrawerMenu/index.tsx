@@ -23,7 +23,7 @@ const DrawerMenu = () => {
       <DrawerMenuItem
         title={t('drawer.travels')}
         onClick={() => {
-          router.push(`/e/${uuid}`, undefined, {shallow: true});
+          router.push(`/e/${uuid}`, null, {shallow: true});
           setAreDetailsOpened(false);
         }}
         Icon={<Icon>directions_car</Icon>}
