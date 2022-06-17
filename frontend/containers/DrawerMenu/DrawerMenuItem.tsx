@@ -13,17 +13,14 @@ interface Props {
 const DrawerMenuItem = ({Icon, title, onClick, active}: Props) => {
   const classes = useStyles({active});
   return (
-    <Box className={classes.drawerMenuItem}>
-      <Button className={classes.button} color="inherit" onClick={onClick}>
+    <Button className={classes.drawerMenuButton} onClick={onClick}>
+      <Box className={classes.icon} color="inherit">
         {Icon}
-      </Button>
-      <Typography
-        color="inherit"
-        className={classes.drawerText}
-      >
+      </Box>
+      <Typography color="inherit" className={classes.drawerText}>
         {title}
       </Typography>
-    </Box>
+    </Button>
   );
 };
 

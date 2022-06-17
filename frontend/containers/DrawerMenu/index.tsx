@@ -6,7 +6,6 @@ import DrawerMenuItem from './DrawerMenuItem';
 import useStyles from './styles';
 import useBannerStore from '../../stores/useBannerStore';
 import useEventStore from '../../stores/useEventStore';
-import Box from '@material-ui/core/Box';
 
 const DrawerMenu = () => {
   const {t} = useTranslation();
@@ -29,18 +28,15 @@ const DrawerMenu = () => {
         Icon={<Icon>directions_car</Icon>}
         active={router.pathname == `/e/[uuid]`}
       />
-      <Box mb={1.5}>
-        <DrawerMenuItem
-          title={t('drawer.waitingList')}
-          onClick={() => {
-            router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
-            setAreDetailsOpened(false);
-          }}
-          Icon={<Icon>group</Icon>}
-          active={router.pathname == `/e/[uuid]/waitingList`}
-        />
-      </Box>
-
+      <DrawerMenuItem
+        title={t('drawer.waitingList')}
+        onClick={() => {
+          router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
+          setAreDetailsOpened(false);
+        }}
+        Icon={<Icon>group</Icon>}
+        active={router.pathname == `/e/[uuid]/waitingList`}
+      />
       <DrawerMenuItem
         title={t('drawer.information')}
         onClick={() => setAreDetailsOpened(true)}

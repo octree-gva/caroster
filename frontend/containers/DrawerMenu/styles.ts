@@ -26,18 +26,20 @@ const useStyles = makeStyles(theme => ({
       },
     },
   }),
-  button: {
+  icon: {
+    position: 'relative',
+    display: 'block',
     width: '100%',
     height: '100%',
-    minWidth: 0,
     padding: 0,
-    borderRadius: '50%',
   },
-  drawerMenuItem: ({active}) => ({
+  drawerMenuButton: ({active}) => ({
+    display: 'block',
     position: 'relative',
-    margin: `${theme.spacing(3)}px auto`,
-    width: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
-    height: `calc(${theme.mixins.toolbar.minHeight}px - 16px)`,
+    minWidth: 0,
+    margin: 0,
+    width: '84px',
+    height: '84px',
     textAlign: 'center',
     color: active
       ? theme.palette.background.default
@@ -45,6 +47,8 @@ const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.down('sm')]: {
       margin: '0 auto',
+      height: '56px',
+      width: '100%',
     },
   }),
   drawerText: {
