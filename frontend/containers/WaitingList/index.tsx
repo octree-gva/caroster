@@ -1,5 +1,4 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';

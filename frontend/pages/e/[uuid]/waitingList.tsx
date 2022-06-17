@@ -1,8 +1,6 @@
 import {useState, useMemo, PropsWithChildren} from 'react';
-import EventLayout, { TabComponent } from '../../../layouts/Event';
-import {
-  EventByUuidDocument,
-} from '../../../generated/graphql';
+import EventLayout, {TabComponent} from '../../../layouts/Event';
+import {EventByUuidDocument} from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
 import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
@@ -20,7 +18,7 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={WaitingListTab} />;
 };
 
-const WaitingListTab: TabComponent = (props: {event}) => {
+const WaitingListTab: TabComponent = ({event}) => {
   const {user} = useProfile();
   const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
     useState<NewPassengerDialogContext | null>(null);
@@ -30,8 +28,8 @@ const WaitingListTab: TabComponent = (props: {event}) => {
     const isInWaitingList = event?.waitingPassengers?.some(
       passenger => passenger.user?.id === `${user.id}`
     );
-    const isInTravel = event?.travels.some(travel =>
-      travel.passengers.some(passenger => passenger.user?.id === `${user.id}`)
+    const isInTravel = event?.travels?.some(travel =>
+      travel.passengers?.some(passenger => passenger.user?.id === `${user.id}`)
     );
     return !(isInWaitingList || isInTravel);
   }, [event, user]);

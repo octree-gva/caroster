@@ -38,8 +38,8 @@ const TravelColumns = (props: Props) => {
     const isInWaitingList = event?.waitingPassengers?.some(
       passenger => passenger.user?.id === `${user.id}`
     );
-    const isInTravel = event?.travels.some(travel =>
-      travel.passengers.some(passenger => passenger.user?.id === `${user.id}`)
+    const isInTravel = event?.travels?.some(travel =>
+      travel.passengers?.some(passenger => passenger.user?.id === `${user.id}`)
     );
     return !(isInWaitingList || isInTravel);
   }, [event, user]);
@@ -69,36 +69,24 @@ const TravelColumns = (props: Props) => {
           title={t('event.no_travel.title')}
         />
       )) || (
-        <div className={classes.slider}>
-          <Slider ref={slider} {...sliderSettings}>
-            {sortedTravels?.map(travel => (
-              <Container
-                key={travel.id}
-                maxWidth="sm"
-                className={classes.slide}
-              >
-                <Travel
-                  travel={travel}
-                  {...props}
-                  canAddSelf={canAddSelf}
-                  getAddPassengerFunction={(addSelf: boolean) => () => {
-                    if (addSelf) {
-                      return addSelfToTravel(travel);
-                    } else {
-                      return toggleNewPassengerToTravel({travel});
-                    }
-                  }}
-                />
-              </Container>
-            ))}
-            <Container maxWidth="sm" className={classes.slide}>
-              <NoCar
-                eventName={event?.name}
-                title={t('event.no_other_travel.title')}
+        <Slider ref={slider} {...sliderSettings}>
+          {sortedTravels?.map(travel => (
+            <Container key={travel.id} maxWidth="sm" className={classes.slide}>
+              <Travel
+                travel={travel}
+                {...props}
+                canAddSelf={canAddSelf}
+                getAddPassengerFunction={(addSelf: boolean) => () => addSelf ? addSelfToTravel(travel): toggleNewPassengerToTravel({travel})}
               />
             </Container>
-          </Slider>
-        </div>
+          ))}
+          <Container maxWidth="sm" className={classes.slide}>
+            <NoCar
+              eventName={event?.name}
+              title={t('event.no_other_travel.title')}
+            />
+          </Container>
+        </Slider>
       )}
       {!!newPassengerTravelContext && (
         <AddPassengerToTravel
@@ -153,17 +141,6 @@ const useStyles = makeStyles(theme => ({
       {
         color: theme.palette.primary.main,
       },
-  },
-  slider: {
-    flexGrow: 1,
-    height: 1,
-    '& .slick-slider': {
-      height: '100%',
-      '& .slick-list': {
-        overflow: 'visible',
-      },
-      cursor: 'grab',
-    },
   },
   slide: {
     padding: theme.spacing(1),
