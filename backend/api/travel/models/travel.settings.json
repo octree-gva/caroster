@@ -20,11 +20,6 @@
     "details": {
       "type": "text"
     },
-    "passengersCompo": {
-      "type": "component",
-      "repeatable": true,
-      "component": "passenger.passenger"
-    },
     "event": {
       "via": "travels",
       "model": "event"

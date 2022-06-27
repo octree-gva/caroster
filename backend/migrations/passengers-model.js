@@ -38,7 +38,15 @@ const main = async () => {
   const travels = await strapi.services.travel.find({_limit: -1});
   for (let i = 0; i < travels.length; i++) {
     const travel = travels[i];
-    const {passengers} = travel;
+
+    const knex = strapi.connections.default;
+    const passengers = await knex('travels_components')
+      .where('travel_id', travel.id)
+      .leftJoin(
+        'components_passenger_passengers',
+        'components_passenger_passengers.id',
+        'component_id'
+      );
 
     if (!passengers || passengers.length === 0) continue;
 
@@ -51,7 +59,7 @@ const main = async () => {
         user: passengerCompo.user?.id,
         travel: travel.id,
       });
-      console.log(passengerModel);
+      console.log(passengerModel.id);
     }
   }
 

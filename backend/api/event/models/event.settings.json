@@ -37,11 +37,6 @@
       "type": "string",
       "unique": true
     },
-    "waitingList": {
-      "type": "component",
-      "repeatable": true,
-      "component": "passenger.passenger"
-    },
     "travels": {
       "via": "event",
       "collection": "travel"
