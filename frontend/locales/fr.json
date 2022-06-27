@@ -74,7 +74,7 @@
     "not_found": "Projet introuvable",
     "no_travel.title": "Pas de voitures pour le moment",
     "no_other_travel.title": "Pas d'autres voitures pour le moment",
-    "no_travel.desc": "Partagez l’événement et inscrivez-vous dans liste d’attente pour être notifié lorsqu’une voiture sera ajoutée !",
+    "no_travel.desc": "Partagez l’événement et inscrivez-vous dans la liste d’attente pour être notifié lorsqu’une voiture sera ajoutée !",
     "fields": {
       "name": "Nom de l'événement",
       "date": "Date de l'événement",

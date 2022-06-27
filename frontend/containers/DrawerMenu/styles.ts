@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
       top: 0,
       backgroundColor: theme.overrides.MuiAppBar.colorPrimary.backgroundColor,
       color: theme.overrides.MuiAppBar.colorPrimary.color,
+      overflowX: 'hidden',
 
       [theme.breakpoints.down('sm')]: {
         bottom: 0,
