@@ -9,17 +9,15 @@ import {Enum_Userspermissionsuser_Lang} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
-import useBannerStore from '../../stores/useBannerStore';
 
 const IconLanguageSelection = ({
   language,
   setLanguage,
   onConfirmCallback,
-  displayMenu
+  displayMenu,
 }: LanguageSelectionComponentProps & {displayMenu?: boolean}) => {
   const {t} = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const bannerHeight = useBannerStore(s => s.height);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +34,7 @@ const IconLanguageSelection = ({
     <>
       <Box
         position="absolute"
-        top={displayMenu ? 56 : 0 + bannerHeight}
+        top={displayMenu ? 56 : 0}
         right={0}
         zIndex={1050}
         p={1}

@@ -13,11 +13,8 @@ import {useTranslation} from 'react-i18next';
 import useAuthStore from '../../stores/useAuthStore';
 import useEventStore from '../../stores/useEventStore';
 import useProfile from '../../hooks/useProfile';
-import useSettings from '../../hooks/useSettings';
 import GenericMenu from '../GenericMenu';
 import EventDetails from '../EventDetails';
-import useBannerStore from '../../stores/useBannerStore';
-import Banner from '../../components/Banner';
 
 const EventBar = ({event, onAdd, onSave}) => {
   const {t} = useTranslation();
@@ -29,25 +26,7 @@ const EventBar = ({event, onAdd, onSave}) => {
   const setAreDetailsOpened = useEventStore(s => s.setAreDetailsOpened);
   const token = useAuthStore(s => s.token);
   const {user} = useProfile();
-  const settings = useSettings();
-  const bannerOffset = useBannerStore(s => s.offset);
-  const bannerHeight = useBannerStore(s => s.height);
-  const classes = useStyles({areDetailsOpened, bannerOffset, bannerHeight});
-  const announcement = settings?.announcement || '';
-  const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
-    typeof localStorage !== 'undefined'
-      ? localStorage.getItem('lastAnnouncementSeen')
-      : ''
-  );
-  const showAnnouncement =
-    announcement !== '' && announcement !== lastAnnouncementSeen;
-
-  const onBannerClear = () => {
-    if (typeof announcement != 'undefined') {
-      localStorage.setItem('lastAnnouncementSeen', String(announcement));
-    }
-    setLastAnnouncementSeen(announcement);
-  };
+  const classes = useStyles({areDetailsOpened});
 
   const signUp = () =>
     router.push({
@@ -112,17 +91,12 @@ const EventBar = ({event, onAdd, onSave}) => {
   return (
     <AppBar
       className={classes.appbar}
-      position="fixed"
       color="primary"
+      position="static"
       id={
         (isEditing && 'EditEvent') || (areDetailsOpened && 'Details') || 'Menu'
       }
     >
-      <Banner
-        message={announcement}
-        open={showAnnouncement}
-        onClear={onBannerClear}
-      />
       <Toolbar>
         <div className={classes.name}>
           <Link href={appLink}>
@@ -217,12 +191,11 @@ const EventBar = ({event, onAdd, onSave}) => {
 };
 
 const useStyles = makeStyles(theme => ({
-  appbar: ({detailsOpen, bannerOffset, bannerHeight}) => ({
+  appbar: ({detailsOpen}) => ({
     overflow: 'hidden',
     minHeight: detailsOpen ? '100vh' : theme.mixins.toolbar.minHeight,
     overflowY: detailsOpen ? 'scroll' : 'hidden',
     transition: 'height 0.3s ease',
-    marginTop: bannerOffset - bannerHeight,
   }),
   logo: {
     marginRight: theme.spacing(2),

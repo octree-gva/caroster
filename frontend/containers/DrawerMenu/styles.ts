@@ -1,11 +1,15 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  drawer: ({bannerOffset}) => ({
+  drawer: () => ({
     width: '85px',
-    flexShrink: 0,
+
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+
     '& .MuiDrawer-paper': {
-      paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
+      paddingTop: theme.mixins.toolbar.minHeight,
       zIndex: theme.zIndex.appBar - 1,
       width: '84px',
       display: 'flex',
@@ -16,6 +20,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.overrides.MuiAppBar.colorPrimary.backgroundColor,
       color: theme.overrides.MuiAppBar.colorPrimary.color,
       overflowX: 'hidden',
+      position: 'static',
 
       [theme.breakpoints.down('sm')]: {
         bottom: 0,

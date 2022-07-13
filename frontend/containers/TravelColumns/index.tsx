@@ -76,7 +76,10 @@ const TravelColumns = (props: Props) => {
                 travel={travel}
                 {...props}
                 canAddSelf={canAddSelf}
-                getAddPassengerFunction={(addSelf: boolean) => () => addSelf ? addSelfToTravel(travel): toggleNewPassengerToTravel({travel})}
+                getAddPassengerFunction={(addSelf: boolean) => () =>
+                  addSelf
+                    ? addSelfToTravel(travel)
+                    : toggleNewPassengerToTravel({travel})}
               />
             </Container>
           ))}
@@ -110,7 +113,6 @@ const sortTravels = (a: TravelType, b: TravelType) => {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    minHeight: '100vh',
     paddingLeft: `calc(${theme.spacing(6)}px + 80px)`,
     paddingRight: theme.spacing(6),
     [theme.breakpoints.down('sm')]: {

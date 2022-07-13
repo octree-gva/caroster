@@ -1,10 +1,7 @@
 import {Icon} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
-import {useEffect} from 'react';
-import {useElementSize, useEventListener} from 'usehooks-ts';
 import Markdown from '../Markdown';
-import useBannerStore from '../../stores/useBannerStore';
 
 interface Props {
   message: string;
@@ -15,14 +12,11 @@ interface Props {
 const Banner = (props: Props) => {
   const {message, open, onClear} = props;
   const classes = useStyles();
-  const [bannerRef, {height}] = useElementSize();
-  const setBannerHeight = useBannerStore(s => s.setBannerHeight);
-  useEffect(() => setBannerHeight({height}), [height]);
 
   if (!open) return null;
 
   return (
-    <div className={classes.banner} ref={bannerRef}>
+    <div className={classes.banner}>
       <Markdown className={classes.htmlReset}>{message}</Markdown>
       <Button
         className={classes.clear}

@@ -17,7 +17,6 @@ import AssignButton from './AssignButton';
 import TravelDialog from './TravelDialog';
 import Button from '@material-ui/core/Button';
 import router from 'next/dist/client/router';
-import useBannerStore from '../../stores/useBannerStore';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
@@ -30,8 +29,7 @@ const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
 }: Props) => {
-  const bannerOffset = useBannerStore(s => s.offset);
-  const classes = useStyles({bannerOffset});
+  const classes = useStyles();
   const {t} = useTranslation();
   const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);

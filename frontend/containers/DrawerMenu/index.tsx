@@ -1,21 +1,20 @@
 import Drawer from '@material-ui/core/Drawer';
 import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
-import router, {useRouter} from 'next/router';
+import {useRouter} from 'next/router';
 import DrawerMenuItem from './DrawerMenuItem';
 import useStyles from './styles';
-import useBannerStore from '../../stores/useBannerStore';
 import useEventStore from '../../stores/useEventStore';
 
 const DrawerMenu = () => {
   const {t} = useTranslation();
-  const bannerOffset = useBannerStore(s => s.offset);
   const areDetailsOpened = useEventStore(s => s.areDetailsOpened);
   const setAreDetailsOpened = useEventStore(s => s.setAreDetailsOpened);
-  const classes = useStyles({bannerOffset});
+  const classes = useStyles();
+  const router = useRouter();
   const {
     query: {uuid},
-  } = useRouter();
+  } = router;
 
   return (
     <Drawer variant="permanent" className={classes.drawer}>

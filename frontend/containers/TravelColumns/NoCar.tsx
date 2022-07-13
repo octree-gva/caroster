@@ -11,6 +11,8 @@ interface Props {
   image?: boolean;
 }
 
+const url = typeof window !== 'undefined' ? window.location.href : '';
+
 const NoCar = ({eventName, title, image}: Props) => {
   const classes = useStyles({image});
   const {t} = useTranslation();
@@ -26,7 +28,7 @@ const NoCar = ({eventName, title, image}: Props) => {
         className={classes.share}
         buttonText={t('event.fields.share')}
         title={`Caroster ${eventName}`}
-        url={`${window.location.href}`}
+        url={`${url}`}
         onShare={() => addToast(t('event.actions.copied'))}
       />
     </Box>

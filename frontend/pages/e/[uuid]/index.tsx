@@ -1,7 +1,7 @@
 import {useState, useReducer, PropsWithChildren} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import EventLayout, { TabComponent } from '../../../layouts/Event';
+import EventLayout, {TabComponent} from '../../../layouts/Event';
 import TravelColumns from '../../../containers/TravelColumns';
 import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
@@ -11,8 +11,10 @@ import {
 } from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import Fab from '../../../containers/Fab';
-import useBannerStore from '../../../stores/useBannerStore';
-import {initializeApollo} from '../../../lib/apolloClient';
+import {
+  initializeApollo,
+  APOLLO_STATE_PROP_NAME,
+} from '../../../lib/apolloClient';
 
 interface Props {
   eventUUID: string;
@@ -23,11 +25,10 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const TravelsTab: TabComponent = (props: {event}) => {
-  const bannerOffset = useBannerStore(s => s.offset);
-  const classes = useStyles({bannerOffset});
+  const classes = useStyles();
   const {t} = useTranslation();
   const {user} = useProfile();
-  const {data: {me: {profile: {vehicles = []} = {}} = {}} = {}, loading} =
+  const {data: {me: {profile: {vehicles = []} = {}} = {}} = {}} =
     useFindUserVehiclesQuery();
   const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
@@ -76,24 +77,29 @@ const useStyles = makeStyles(theme => ({
 
 export async function getServerSideProps(ctx) {
   const {uuid} = ctx.query;
+  const {host = ''} = ctx.req.headers;
+
   const apolloClient = initializeApollo();
-  const {data = {}} = await apolloClient.query({
+  const {data: {eventByUUID: event = null} = {}} = await apolloClient.query({
     query: EventByUuidDocument,
     variables: {uuid},
   });
-  const {eventByUUID: event} = data;
-  const {host = ''} = ctx.req.headers;
 
-  return {
-    props: {
-      event,
-      eventUUID: uuid,
-      metas: {
-        title: event?.name || '',
-        url: `https://${host}${ctx.resolvedUrl}`,
+  try {
+    return {
+      props: {
+        [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
+        eventUUID: uuid,
+        metas: {
+          title: event?.name || '',
+          url: `https://${host}${ctx.resolvedUrl}`,
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    console.error(error);
+    return {props: {}};
+  }
 }
 
 export default Page;

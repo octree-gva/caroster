@@ -1,6 +1,5 @@
 import {useMemo, useEffect} from 'react';
 import {useRouter} from 'next/router';
-import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import useAuthStore from '../stores/useAuthStore';
@@ -10,7 +9,6 @@ import DashboardEvents from '../containers/DashboardEvents';
 import DashboardEmpty from '../containers/DashboardEmpty';
 import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
-import useBannerStore from '../stores/useBannerStore';
 
 const Dashboard = () => {
   const {t} = useTranslation();
@@ -18,8 +16,6 @@ const Dashboard = () => {
   const isAuth = useAuthStore(s => !!s.token);
   const {profile, isReady} = useProfile();
   const {events} = profile || {};
-  const bannerOffset = useBannerStore(s => s.offset);
-  const classes = useStyles({bannerOffset});
 
   useEffect(() => {
     if (!isAuth) router.push('/');
@@ -69,11 +65,7 @@ const Dashboard = () => {
     );
 
   return (
-    <LayoutDefault
-      className={classes.root}
-      menuActions={menuActions}
-      menuTitle={t('dashboard.title')}
-    >
+    <LayoutDefault menuActions={menuActions} menuTitle={t('dashboard.title')}>
       {events.length === 0 ? (
         <DashboardEmpty />
       ) : (
@@ -91,12 +83,5 @@ const Dashboard = () => {
 };
 
 const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
-
-const useStyles = makeStyles(theme => ({
-  root: ({bannerOffset}) => ({
-    minHeight: '100vh',
-    paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
-  }),
-}));
 
 export default Dashboard;

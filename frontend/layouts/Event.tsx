@@ -1,5 +1,6 @@
 import {PropsWithChildren, useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
@@ -11,10 +12,10 @@ import {
   useUpdateEventMutation,
   EditEventInput,
 } from '../generated/graphql';
-import useBannerStore from '../stores/useBannerStore';
 import DrawerMenu from '../containers/DrawerMenu';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
 import useToastStore from '../stores/useToastStore';
+import Box from '@material-ui/core/Box';
 
 const POLL_INTERVAL = 10000;
 
@@ -27,9 +28,9 @@ interface Props {
 
 const EventLayout = (props: PropsWithChildren<Props>) => {
   const {eventUUID, Tab} = props;
-  const bannerOffset = useBannerStore(s => s.offset);
-  const classes = useStyles({bannerOffset});
   const {t} = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
   const eventUpdate = useEventStore(s => s.event);
@@ -64,14 +65,24 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
 
   return (
     <Layout
-      className={classes.layout}
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
+      Topbar={() => (
+        <EventBar event={event} onAdd={setIsAddToMyEvent} onSave={onSave} />
+      )}
     >
-      <EventBar event={event} onAdd={setIsAddToMyEvent} onSave={onSave} />
-      <DrawerMenu />
-      <Tab event={event} />
+      <Box
+        flex={1}
+        display="flex"
+        alignItems="stretch"
+        flexDirection={isMobile ? 'column-reverse' : 'row'}
+      >
+        <DrawerMenu />
+        <Box flex={1}>
+          <Tab event={event} />
+        </Box>
+      </Box>
       <AddToMyEventDialog
         event={event}
         open={isAddToMyEvent}
@@ -80,11 +91,5 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
     </Layout>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  layout: ({bannerOffset}) => ({
-    paddingTop: theme.mixins.toolbar.minHeight + bannerOffset,
-  }),
-}));
 
 export default EventLayout;

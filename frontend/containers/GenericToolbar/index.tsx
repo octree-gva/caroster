@@ -10,9 +10,6 @@ import Icon from '@material-ui/core/Icon';
 import useProfile from '../../hooks/useProfile';
 import GenericMenu from '../GenericMenu';
 import {ActionType} from '../GenericMenu/Action';
-import useBannerStore from '../../stores/useBannerStore';
-import Banner from '../../components/Banner';
-import useSettings from '../../hooks/useSettings';
 
 const GenericToolbar = ({
   title,
@@ -25,27 +22,8 @@ const GenericToolbar = ({
 }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
-  const bannerOffset = useBannerStore(s => s.offset);
-  const bannerHeight = useBannerStore(s => s.height);
-  const classes = useStyles({bannerOffset, bannerHeight});
+  const classes = useStyles();
   const {user} = useProfile();
-  const settings = useSettings();
-  const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
-    typeof localStorage !== 'undefined'
-      ? localStorage.getItem('lastAnnouncementSeen')
-      : ''
-  );
-  const announcement = settings?.announcement || '';
-  const showAnnouncement =
-    announcement !== '' &&
-    announcement !== lastAnnouncementSeen;
-
-  const onBannerClear = () => {
-    if (typeof announcement != 'undefined') {
-      localStorage.setItem('lastAnnouncementSeen', String(announcement));
-    }
-    setLastAnnouncementSeen(announcement);
-  };
 
   const userInfos = user
     ? [{label: user.username, id: 'Email'}, {divider: true}]
@@ -57,16 +35,11 @@ const GenericToolbar = ({
 
   return (
     <AppBar
-      position="fixed"
+      position="static"
       color="primary"
       className={classes.appbar}
       id="Menu"
     >
-      <Banner
-        message={announcement}
-        open={showAnnouncement}
-        onClear={onBannerClear}
-      />
       <Toolbar>
         {goBack && (
           <IconButton
@@ -116,11 +89,10 @@ const GenericToolbar = ({
 };
 
 const useStyles = makeStyles(theme => ({
-  appbar: ({bannerHeight, bannerOffset}) => ({
+  appbar: () => ({
     minHeight: theme.mixins.toolbar.minHeight,
     transition: 'height 0.3s ease',
     display: 'block',
-    marginTop: bannerOffset - bannerHeight,
   }),
   name: {
     flexGrow: 1,
