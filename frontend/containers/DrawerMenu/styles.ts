@@ -6,10 +6,12 @@ const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.down('sm')]: {
       width: '100%',
+      position: 'fixed',
+      bottom: 0,
+      zIndex: 1,
     },
 
     '& .MuiDrawer-paper': {
-      paddingTop: theme.mixins.toolbar.minHeight,
       zIndex: theme.zIndex.appBar - 1,
       width: '84px',
       display: 'flex',

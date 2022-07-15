@@ -48,11 +48,11 @@ const Home = () => {
       menuActions={menuActions}
       displayMenu={!!profile}
     >
-      <Paper className={null}>
+      <Paper>
         <Logo />
         <CreateEvent />
       </Paper>
-      <LanguagesIcon displayMenu={!!profile}/>
+      {!profile && <LanguagesIcon displayMenu={!!profile} />}
     </Layout>
   );
 };

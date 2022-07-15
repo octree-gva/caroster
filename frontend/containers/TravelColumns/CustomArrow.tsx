@@ -32,7 +32,7 @@ const CustomArrow = (props: Props) => {
 const useStyles = makeStyles(theme => ({
   arrow: {
     position: 'fixed',
-    zIndex: 20,
+    zIndex: 0,
     width: 40,
     minHeight: '100vh',
     alignItems: 'center',

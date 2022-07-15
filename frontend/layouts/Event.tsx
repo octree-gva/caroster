@@ -1,6 +1,6 @@
 import {PropsWithChildren, useEffect, useState} from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {useTheme} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
@@ -30,6 +30,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   const {eventUUID, Tab} = props;
   const {t} = useTranslation();
   const theme = useTheme();
+  const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
@@ -79,7 +80,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
         <DrawerMenu />
-        <Box flex={1}>
+        <Box className={classes.content}>
           <Tab event={event} />
         </Box>
       </Box>
@@ -91,5 +92,16 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
     </Layout>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  content: {
+    flex: 1,
+    maxWidth: 'calc(100% - 85px)',
+
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%',
+    },
+  },
+}));
 
 export default EventLayout;
