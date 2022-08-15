@@ -28,7 +28,8 @@ module.exports = {
         {uuid},
         eventUpdate
       );
-      return strapi.services.event.sanitize(updatedEvent);
+      const event = strapi.services.event.sanitize(updatedEvent);
+      return {event};
     } catch (error) {
       return ctx.badRequest('No event found');
     }

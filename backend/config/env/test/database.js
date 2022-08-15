@@ -5,14 +5,16 @@ module.exports = ({env}) => {
       default: {
         connector: 'bookshelf',
         settings: {
-          client: 'postgres',
-          host: env('POSTGRES_HOST', 'localhost'),
-          port: env('POSTGRES_PORT', 5432),
-          database: env('POSTGRES_DB', 'strapi_test'),
-          username: env('POSTGRES_USER', 'postgres'),
-          password: env('POSTGRES_PASSWORD', 'password'),
+          client: 'sqlite',
+          filename: env('DATABASE_PATH', '.tmp/test.db'),
         },
-        options: {},
+        options: {
+          useNullAsDefault: true,
+          pool: {
+            min: 0,
+            max: 1,
+          },
+        },
       },
     },
   };
