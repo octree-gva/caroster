@@ -75,6 +75,9 @@
     "no_travel.title": "Pas de voitures pour le moment",
     "no_other_travel.title": "Pas d'autres voitures pour le moment",
     "no_travel.desc": "Partagez l’événement et inscrivez-vous dans la liste d’attente pour être notifié lorsqu’une voiture sera ajoutée !",
+    "details.modify": "Modifier",
+    "details.save": "Enregistrer",
+    "details.aboutCaroster": "En savoir plus sur Caroster",
     "fields": {
       "name": "Nom de l'événement",
       "date": "Date de l'événement",
@@ -83,8 +86,9 @@
       "address": "Adresse de l'événement",
       "empty": "Non précisé",
       "link": "Lien de partage",
-      "link_desc": "Partager ce lien pour inviter les gens à faire du covoiturage",
-      "share": "Copier le lien"
+      "link_desc": "Partager l'évènement à d'autres personnes",
+      "share": "Partager",
+      "copyLink": "Copier le lien"
     },
     "creation": {
       "title": "Nouvel évènement",
@@ -111,10 +115,9 @@
       }
     },
     "actions": {
-      "show_details": "Détails de l'événement",
-      "hide_details": "Cacher les détails",
       "find_car": "Trouver une voiture",
       "copied": "Le lien a été copié dans votre presse-papier",
+      "noShareCapability": "Votre navigateur ne permet pas de partager ou de copier dans le presse papier, veuillez copier l'URL de la page.",
       "add_to_my_events": "Ajouter à mes évènements",
       "see_on_gmap": "Voir sur une carte"
     },

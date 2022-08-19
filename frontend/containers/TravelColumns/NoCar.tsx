@@ -2,8 +2,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import Copylink from '../../components/CopyLink';
-import useToastStore from '../../stores/useToastStore';
+import ShareEvent from '../ShareEvent';
 
 interface Props {
   eventName: string;
@@ -16,20 +15,17 @@ const url = typeof window !== 'undefined' ? window.location.href : '';
 const NoCar = ({eventName, title, image}: Props) => {
   const classes = useStyles({image});
   const {t} = useTranslation();
-  const addToast = useToastStore(s => s.addToast);
 
   return (
     <Box className={classes.noTravel}>
       <Typography variant="h5">{title}</Typography>
       <img className={classes.noTravelImage} src="/assets/car.png" />
       <Typography>{t('event.no_travel.desc')}</Typography>
-      <Copylink
+      <ShareEvent
         color="primary"
         className={classes.share}
-        buttonText={t('event.fields.share')}
         title={`Caroster ${eventName}`}
         url={`${url}`}
-        onShare={() => addToast(t('event.actions.copied'))}
       />
     </Box>
   );

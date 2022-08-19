@@ -1,4 +1,3 @@
-import {forwardRef} from 'react';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -14,10 +13,10 @@ import Icon from '@material-ui/core/Icon';
 import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {Passenger, Travel} from '../../generated/graphql';
+import {forwardRef} from 'react';
 import getMapsLink from '../../utils/getMapsLink';
-import Copylink from '../../components/CopyLink';
-import useToastStore from '../../stores/useToastStore';
+import ShareEvent from '../ShareEvent';
+import {Passenger, Travel} from '../../generated/graphql';
 
 interface Props {
   eventName: string;
@@ -38,7 +37,6 @@ const TravelDialog = ({
 }: Props) => {
   const classes = useStyles();
   const {t} = useTranslation();
-  const addToast = useToastStore(s => s.addToast);
 
   const availableTravels = travels?.filter(
     travel => travel.passengers && travel?.seats > travel.passengers.length
@@ -70,13 +68,11 @@ const TravelDialog = ({
           <Typography>
             {t('passenger.creation.no_travel.desc', {name: passenger?.name})}
           </Typography>
-          <Copylink
+          <ShareEvent
             color="primary"
             className={classes.share}
-            buttonText={t('event.fields.share')}
             title={`Caroster ${eventName}`}
             url={`${window.location.href}`}
-            onShare={() => addToast(t('event.actions.copied'))}
           />
         </Box>
       )) || (

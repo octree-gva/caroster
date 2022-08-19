@@ -32,11 +32,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const addToast = useToastStore(s => s.addToast);
   const setEvent = useEventStore(s => s.setEvent);
-  const eventUpdate = useEventStore(s => s.event);
-  const setIsEditing = useEventStore(s => s.setIsEditing);
-  const [updateEvent] = useUpdateEventMutation();
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
     pollInterval: POLL_INTERVAL,
@@ -49,29 +45,12 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
 
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
 
-  const onSave = async e => {
-    try {
-      const {uuid, ...data} = eventUpdate;
-      const {id, __typename, travels, users, waitingList, ...input} = data;
-      await updateEvent({
-        variables: {uuid, eventUpdate: input as EditEventInput},
-        refetchQueries: ['eventByUUID'],
-      });
-      setIsEditing(false);
-    } catch (error) {
-      console.error(error);
-      addToast(t('event.errors.cant_update'));
-    }
-  };
-
   return (
     <Layout
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
-      Topbar={() => (
-        <EventBar event={event} onAdd={setIsAddToMyEvent} onSave={onSave} />
-      )}
+      Topbar={() => <EventBar event={event} onAdd={setIsAddToMyEvent} />}
     >
       <Box
         flex={1}

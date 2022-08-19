@@ -75,6 +75,9 @@
     "no_travel.title": "There are currently no cars",
     "no_other_travel.title": "There are currently no other car",
     "no_travel.desc": "Share the event and register to the waiting list to get notified when a car will be available!",
+    "details.modify": "Modify",
+    "details.save": "Save",
+    "details.aboutCaroster": "Learn more about Caroster",
     "fields": {
       "name": "Name of the event",
       "date": "Event date",
@@ -83,8 +86,9 @@
       "address": "Event address",
       "empty": "Not specified",
       "link": "Share link",
-      "link_desc": "Share this link to invite people to carpool",
-      "share": "Copy link"
+      "link_desc": "Share this link with other people",
+      "share": "Share",
+      "copyLink": "Copy link"
     },
     "creation": {
       "title": "New event",
@@ -111,10 +115,9 @@
       }
     },
     "actions": {
-      "show_details": "Event details",
-      "hide_details": "Hide details",
       "find_car": "Find a car",
       "copied": "The link has been copied to your clipboard",
+      "noShareCapability": "Your browser cannot share nor copy to clipboard, please copy the page's URL instead.",
       "add_to_my_events": "Add to my events",
       "see_on_gmap": "See on a map"
     },
