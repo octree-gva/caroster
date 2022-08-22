@@ -50,21 +50,22 @@ const DefaultLayout = (props: Props) => {
         <title>{pageTitle || menuTitle}</title>
       </Helmet>
       <Box display="flex" flexDirection="column" height="100vh" width="100%">
-        <Headroom>
+        <Box position="sticky" top={0} zIndex={1100}>
           <Banner
             message={announcement}
             open={showBanner}
             onClear={onBannerClear}
           />
-          {displayMenu && (menuTitle || menuActions) && (
-            <GenericToolbar
-              title={menuTitle}
-              actions={menuActions}
-              goBack={goBack}
-            />
-          )}
           {Topbar && <Topbar />}
-        </Headroom>
+        </Box>
+        {displayMenu && (menuTitle || menuActions) && (
+          <GenericToolbar
+            title={menuTitle}
+            actions={menuActions}
+            goBack={goBack}
+          />
+        )}
+
         {children}
       </Box>
     </div>

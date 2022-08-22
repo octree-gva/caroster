@@ -116,3 +116,4 @@ build
 .env.bckp
 .strapi-updater.json
 restart.test
+dist/
