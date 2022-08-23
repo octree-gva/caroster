@@ -56,6 +56,8 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         flex={1}
         display="flex"
         alignItems="stretch"
+        height="calc(100% - 56px)"
+        overflow="hidden"
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
         <DrawerMenu />
@@ -76,6 +78,8 @@ const useStyles = makeStyles(theme => ({
   content: {
     flex: 1,
     maxWidth: 'calc(100% - 85px)',
+    overflow: 'auto',
+    paddingBottom: theme.spacing(4),
 
     [theme.breakpoints.down('sm')]: {
       maxWidth: '100%',
