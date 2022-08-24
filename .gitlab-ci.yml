@@ -1,7 +1,6 @@
 include:
   - project: o/infra/templates
-    file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
-
+    file: /gitlab-ci/includes/jobs.yaml
 
 Test E2E:
   stage: test
@@ -24,3 +23,46 @@ Test E2E:
     - cd ../e2e/
     - yarn
     - yarn test
+
+Build NextJS:
+  extends: .build
+  variables:
+    CI_PROJECT_DIR: frontend/
+    CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE/next
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - frontend/**/*
+
+Build Strapi:
+  extends: .build
+  variables:
+    CI_PROJECT_DIR: backend/
+    CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE/strapi
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - backend/**/*
+    
+Deploy NextJS to Test:
+  extends: .deployJelasticNode
+  needs: ["Build NextJS"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME && $NODE_ID_NEXT
+      changes:
+        - frontend/**/*
+  variables:
+    NODE_ID: $NODE_ID_NEXT
+  environment:
+    name: Test
+    url: "https://$ENVNAME.hidora.com"
+
+Deploy Strapi to Test:
+  extends: .deployJelasticNode
+  needs: ["Build Strapi"]
+  variables:
+    NODE_ID: $NODE_ID_STRAPI
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME && $NODE_ID_STRAPI
+      changes:
+        - backend/**/*
