@@ -1,9 +1,8 @@
 import { EVENT, EVENT_ID, EVENT_UUID } from "../constants";
-import { EventInput } from "../graphql";
 import { sdk } from "../lib/gqlSdk";
 
 test("createEvent returns created event with minimal parameters", async () => {
-  const event: EventInput = {
+  const event = {
     email: "test+event@octree.ch",
     name: "Test event",
   };
@@ -11,17 +10,19 @@ test("createEvent returns created event with minimal parameters", async () => {
 
   await expect(request).resolves.toMatchObject({
     createEvent: {
-      event: {
+      data: {
         id: expect.stringMatching(/\d/),
-        waitingPassengers: [],
-        ...event,
+        attributes: {
+          waitingPassengers: { data: [] },
+          ...event,
+        },
       },
     },
   });
 });
 
 test("createEvent returns created event with all parameters", async () => {
-  const event: EventInput = {
+  const event = {
     email: "test+event@octree.ch",
     name: "Test event",
     address: "Test address",
@@ -32,10 +33,12 @@ test("createEvent returns created event with all parameters", async () => {
 
   await expect(request).resolves.toMatchObject({
     createEvent: {
-      event: {
+      data: {
         id: expect.stringMatching(/\d/),
-        waitingPassengers: [],
-        ...event,
+        attributes: {
+          waitingPassengers: { data: [] },
+          ...event,
+        },
       },
     },
   });
@@ -52,16 +55,18 @@ test("updateEvent returns updated event", async () => {
 
   await expect(request).resolves.toMatchObject({
     updateEventByUUID: {
-      event: {
+      data: {
         id: EVENT_ID,
-        description: EVENT.description,
-        name: updatedName,
+        attributes: {
+          description: EVENT.description,
+          name: updatedName,
+        },
       },
     },
   });
 });
 
-test("updateEvent returns no event if UUID doesn´t exist", async () => {
+test("updateEvent throws error if UUID doesn´t exist", async () => {
   const request = sdk.updateEvent({
     uuid: "uuid-that-not-exists",
     eventUpdate: {
@@ -69,11 +74,7 @@ test("updateEvent returns no event if UUID doesn´t exist", async () => {
     },
   });
 
-  await expect(request).resolves.toMatchObject({
-    updateEventByUUID: {
-      event: null,
-    },
-  });
+  await expect(request).rejects.toThrow("No matching event");
 });
 
 test("eventByUUID returns event corresponding to UUID", async () => {
@@ -83,7 +84,9 @@ test("eventByUUID returns event corresponding to UUID", async () => {
 
   await expect(request).resolves.toMatchObject({
     eventByUUID: {
-      id: EVENT_ID,
+      data: {
+        id: EVENT_ID,
+      },
     },
   });
 });
@@ -93,7 +96,5 @@ test("eventByUUID fails if UUID doesn't exist", async () => {
     uuid: "uuid-that-not-exists",
   });
 
-  await expect(request).rejects.toThrow(
-    "Cannot return null for non-nullable field Event.id"
-  );
+  await expect(request).rejects.toThrow("No matching event");
 });

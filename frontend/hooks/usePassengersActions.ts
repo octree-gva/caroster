@@ -1,5 +1,4 @@
 import {
-  EditPassengerInput,
   PassengerInput,
   useCreatePassengerMutation,
   useDeletePassengerMutation,
@@ -21,7 +20,7 @@ const usePassengersActions = () => {
 
   const updatePassenger = async (
     passengerId: string,
-    passenger: EditPassengerInput
+    passenger: PassengerInput
   ) =>
     setPassenger({
       variables: {id: passengerId, passengerUpdate: passenger},

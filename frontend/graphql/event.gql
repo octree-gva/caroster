@@ -1,39 +1,61 @@
-fragment EventFields on Event {
+fragment EventFields on EventEntity {
   id
-  uuid
-  name
-  description
-  email
-  date
-  address
-  position
-  waitingPassengers {
-    id
+  attributes {
+    uuid
     name
+    description
     email
-    location
-    user {
-      id
-      firstName
-      lastName
-    }
-  }
-  travels {
-    id
-    meeting
-    departure
-    details
-    vehicleName
-    phone_number
-    seats
-    passengers {
-      id
-      name
-      location
-      user {
+    date
+    address
+    position
+    waitingPassengers {
+      data {
         id
-        firstName
-        lastName
+        attributes {
+          name
+          email
+          location
+          user {
+            data {
+              id
+              attributes {
+                firstName
+                lastName
+              }
+            }
+          }
+        }
+      }
+    }
+    travels {
+      data {
+        id
+        attributes {
+          meeting
+          departure
+          details
+          vehicleName
+          phone_number
+          seats
+          passengers {
+            data {
+              id
+              attributes {
+                name
+                location
+                user {
+                  data {
+                    id
+                    attributes {
+                      firstName
+                      lastName
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -48,26 +70,24 @@ mutation createEvent(
   $newsletter: Boolean
 ) {
   createEvent(
-    input: {
-      data: {
-        name: $name
-        email: $email
-        date: $date
-        address: $address
-        description: $description
-        newsletter: $newsletter
-      }
+    data: {
+      name: $name
+      email: $email
+      date: $date
+      address: $address
+      description: $description
+      newsletter: $newsletter
     }
   ) {
-    event {
+    data {
       ...EventFields
     }
   }
 }
 
-mutation updateEvent($uuid: String!, $eventUpdate: editEventInput) {
-  updateEventByUUID(input: {where: {uuid: $uuid}, data: $eventUpdate}) {
-    event {
+mutation updateEvent($uuid: String!, $eventUpdate: EventInput!) {
+  updateEventByUUID(uuid: $uuid, data: $eventUpdate) {
+    data {
       ...EventFields
     }
   }
@@ -75,6 +95,8 @@ mutation updateEvent($uuid: String!, $eventUpdate: editEventInput) {
 
 query eventByUUID($uuid: String!) {
   eventByUUID(uuid: $uuid) {
-    ...EventFields
+    data {
+      ...EventFields
+    }
   }
 }

@@ -6,12 +6,12 @@ import {
   useDeleteTravelMutation,
   EventByUuidDocument,
   Travel,
-  EditTravelInput,
   useUpdatePassengerMutation,
+  TravelInput
 } from '../../generated/graphql';
 
 interface Props {
-  travel: Travel;
+  travel: Travel & {id: string};
 }
 
 const useActions = (props: Props) => {
@@ -41,7 +41,7 @@ const useActions = (props: Props) => {
     }
   };
 
-  const updateTravel = async (travelUpdate: EditTravelInput) => {
+  const updateTravel = async (travelUpdate: TravelInput) => {
     try {
       await updateTravelMutation({
         variables: {

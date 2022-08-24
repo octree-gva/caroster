@@ -1,5 +1,4 @@
 fragment UserFields on UsersPermissionsUser {
-  id
   username
   email
   confirmed
@@ -9,11 +8,15 @@ fragment UserFields on UsersPermissionsUser {
   onboardingUser
   onboardingCreator
   events {
-    id
-    uuid
-    name
-    date
-    address
+    data {
+      id
+      attributes {
+        uuid
+        name
+        date
+        address
+      }
+    }
   }
 }
 
@@ -27,10 +30,13 @@ query profile {
   }
 }
 
-mutation updateMe($userUpdate: editUserInput!) {
-  updateMe(input: $userUpdate) {
-    user {
-      ...UserFields
+mutation updateMe($userUpdate: UsersPermissionsUserInput!) {
+  updateMe(data: $userUpdate) {
+    data {
+      id
+      attributes {
+        ...UserFields
+      }
     }
   }
 }

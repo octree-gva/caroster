@@ -40,7 +40,7 @@ const useTour = () => {
     if (!isReady || !event) return;
 
     let newIsCreator = eventsToBeAdded.includes(event?.id);
-    if (profile) newIsCreator = profile.events.map(e => e.id).includes(event?.id);
+    if (profile) newIsCreator = profile.events?.data.map(e => e.id).includes(event?.id);
 
     setTour({isCreator: newIsCreator});
   }, [isReady, event, eventsToBeAdded, profile]);

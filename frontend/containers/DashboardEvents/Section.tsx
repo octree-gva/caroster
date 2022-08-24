@@ -3,10 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import EventCard from './EventCard';
+import { EventEntity } from '../../generated/graphql';
 
 interface Props {
   label: string;
-  events: object[];
+  events: EventEntity[];
 }
 
 const Section = (props: Props) => {

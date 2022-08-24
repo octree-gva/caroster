@@ -5,14 +5,14 @@ import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {
-  VehicleFieldsFragment,
+  Vehicle,
   FindUserVehiclesDocument,
   useDeleteVehicleMutation,
 } from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 
 interface Props {
-  vehicle: VehicleFieldsFragment;
+  vehicle: Vehicle & {id: string};
   select: () => void;
 }
 

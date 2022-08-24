@@ -1,4 +1,4 @@
-import { USER, USER_ID } from "../constants";
+import { USER, USER_ID, USER_PASSWORD } from "../constants";
 import { sdk } from "../lib/gqlSdk";
 import { getJwtToken } from "../lib/strapi-utils";
 
@@ -20,7 +20,7 @@ test("profile returns logged user profile", async () => {
 
 test("profile throws error if no auth", async () => {
   const request = sdk.profile();
-  await expect(request).rejects.toThrow("no_user");
+  await expect(request).rejects.toThrow("Forbidden access");
 });
 
 test("updateMe returns updated user", async () => {
@@ -38,9 +38,37 @@ test("updateMe returns updated user", async () => {
 
   await expect(request).resolves.toMatchObject({
     updateMe: {
-      user: {
-        id: USER_ID,
-        firstName: "Updated firstname",
+      data: {
+        id: expect.any(String),
+        attributes: {
+          firstName: "Updated firstname",
+        },
+      },
+    },
+  });
+});
+
+test("updateMe updates password", async () => {
+  const jwt = await getJwtToken();
+  const request = sdk.updateMe(
+    {
+      userUpdate: {
+        password: USER_PASSWORD,
+        oldPassword: USER_PASSWORD,
+      },
+    },
+    {
+      authorization: `Bearer ${jwt}`,
+    }
+  );
+
+  await expect(request).resolves.toMatchObject({
+    updateMe: {
+      data: {
+        id: expect.any(String),
+        attributes: {
+          firstName: "Updated firstname",
+        },
       },
     },
   });
@@ -53,4 +81,31 @@ test("updateMe throws error if no auth", async () => {
     },
   });
   await expect(request).rejects.toThrow("Forbidden");
+});
+
+test("updateMe link user to an event", async () => {
+  const jwt = await getJwtToken();
+  const request = sdk.updateMe(
+    {
+      userUpdate: {
+        events: ["2"],
+      },
+    },
+    {
+      authorization: `Bearer ${jwt}`,
+    }
+  );
+
+  await expect(request).resolves.toMatchObject({
+    updateMe: {
+      data: {
+        id: expect.any(String),
+        attributes: {
+          events: {
+            data: [{ id: "1" }, { id: "2" }],
+          },
+        },
+      },
+    },
+  });
 });

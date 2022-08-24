@@ -16,7 +16,7 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import {validateEmail} from './validation';
 
 interface Props {
-  travel: TravelType;
+  travel: TravelType & {id: string};
   toggle: () => void;
   open: boolean;
 }

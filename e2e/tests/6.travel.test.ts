@@ -1,6 +1,7 @@
 import { EVENT_ID, TRAVEL, TRAVEL_ID } from "../constants";
-import { EditTravelInput, TravelInput } from "../graphql";
+import { TravelInput } from "../graphql";
 import { sdk } from "../lib/gqlSdk";
+import { getJwtToken } from "../lib/strapi-utils";
 
 test("createTravel returns created travel", async () => {
   const travel: TravelInput = {
@@ -13,15 +14,16 @@ test("createTravel returns created travel", async () => {
 
   await expect(request).resolves.toMatchObject({
     createTravel: {
-      travel: {
-        ...travel,
+      data: {
+        id: expect.any(String),
+        attributes: travel,
       },
     },
   });
 });
 
 test("updateTravel returns updated travel", async () => {
-  const travelUpdate: EditTravelInput = {
+  const travelUpdate = {
     vehicleName: "Updated travel car name",
     seats: 12,
   };
@@ -29,9 +31,12 @@ test("updateTravel returns updated travel", async () => {
 
   await expect(request).resolves.toMatchObject({
     updateTravel: {
-      travel: {
-        ...travelUpdate,
-        meeting: TRAVEL.meeting,
+      data: {
+        id: expect.any(String),
+        attributes: {
+          ...travelUpdate,
+          meeting: TRAVEL.meeting,
+        },
       },
     },
   });
@@ -42,8 +47,35 @@ test("deleteTravel returns ID of deleted travel", async () => {
 
   await expect(request).resolves.toMatchObject({
     deleteTravel: {
-      travel: {
+      data: {
         id: TRAVEL_ID,
+      },
+    },
+  });
+});
+
+test("createTravel creates a vehicle with 'createVehicle' param and logged user", async () => {
+  const jwt = await getJwtToken();
+
+  const travel = {
+    vehicleName: "My travel's car",
+    seats: 2,
+    phone_number: "12",
+  };
+  const request = sdk.createTravel(
+    {
+      createVehicle: true,
+      travel,
+    },
+    {
+      authorization: `Bearer ${jwt}`,
+    }
+  );
+
+  await expect(request).resolves.toMatchObject({
+    createTravel: {
+      data: {
+        attributes: travel,
       },
     },
   });

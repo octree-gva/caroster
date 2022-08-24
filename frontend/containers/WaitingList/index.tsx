@@ -19,6 +19,7 @@ import Button from '@material-ui/core/Button';
 import router from 'next/dist/client/router';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import {PassengerEntity} from '../../generated/graphql';
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
@@ -36,17 +37,19 @@ const WaitingList = ({
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
-  const [addingPassenger, setAddingPassenger] = useState(null);
+  const [addingPassenger, setAddingPassenger] = useState<PassengerEntity>(null);
   const travels =
-    event?.travels?.length > 0 ? event?.travels.slice().sort(sortTravels) : [];
+    event?.travels?.data?.length > 0
+      ? event?.travels?.data.slice().sort(sortTravels)
+      : [];
   const {updatePassenger, removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
-    return travels.reduce((count, {vehicle, passengers = []}) => {
-      if (!vehicle) return 0;
-      else if (!passengers) return count + vehicle.seats;
-      return count + vehicle.seats - passengers.length;
+    return travels.reduce((count, {attributes: {seats, passengers}}) => {
+      if (!seats) return 0;
+      else if (!passengers) return count + seats;
+      return count + seats - passengers?.data?.length;
     }, 0);
   }, [travels]);
 
@@ -62,7 +65,7 @@ const WaitingList = ({
         setAddingPassenger(null);
         addToast(
           t('passenger.success.added_to_car', {
-            name: addingPassenger.name,
+            name: addingPassenger.attributes.name,
           }),
           <Button
             size="small"
@@ -86,7 +89,7 @@ const WaitingList = ({
 
   const onPress = useCallback(
     (passengerId: string) => {
-      const selectedPassenger = event?.waitingPassengers.find(
+      const selectedPassenger = event?.waitingPassengers?.data.find(
         item => item.id === passengerId
       );
       if (isEditing) setRemovingPassenger(selectedPassenger);
@@ -121,7 +124,7 @@ const WaitingList = ({
               size="small"
               color="primary"
               className={classes.editBtn}
-              disabled={!event?.waitingPassengers?.length}
+              disabled={!event?.waitingPassengers?.data?.length}
               onClick={toggleEditing}
             >
               {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
@@ -139,7 +142,7 @@ const WaitingList = ({
           />
           <Divider />
           <PassengersList
-            passengers={event?.waitingPassengers}
+            passengers={event?.waitingPassengers?.data}
             onPress={onPress}
             Button={ListButton}
           />

@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "passengers",
+  "info": {
+    "name": "Passenger",
+    "description": "",
+    "singularName": "passenger",
+    "pluralName": "passengers",
+    "displayName": "Passenger"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": false
+    },
+    "location": {
+      "type": "string"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "waitingPassengers"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "passengers"
+    },
+    "travel": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::travel.travel",
+      "inversedBy": "passengers"
+    }
+  }
+}

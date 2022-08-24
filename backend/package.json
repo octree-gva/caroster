@@ -1,5 +1,5 @@
 {
-  "name": "caroster",
+  "name": "backend-v-4",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -8,7 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "start-test": "NODE_ENV=test DATABASE_PATH=../e2e/strapi/test.db strapi develop",
+    "start-test": "NODE_ENV=test DATABASE_FILENAME=../e2e/strapi/test.db strapi develop",
     "test": "jest --forceExit --detectOpenHandles",
     "test:watch": "jest --watch --forceExit --detectOpenHandles",
     "test:cov": "jest --coverage --forceExit --detectOpenHandles",
@@ -16,6 +16,7 @@
     "console": "PORT=1338 yarn strapi console"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.3.1",
     "faker": "^5.5.3",
@@ -23,35 +24,23 @@
     "sqlite3": "^5.0.11"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "knex": "^0.95.6",
-    "koa-proxy": "^1.0.0-alpha.3",
-    "moment": "^2.27.0",
-    "pg": "^8.5.1",
-    "strapi": "3.6.8",
-    "strapi-admin": "3.6.8",
-    "strapi-connector-bookshelf": "3.6.8",
-    "strapi-middleware-sentry": "^0.0.11",
-    "strapi-plugin-content-manager": "3.6.8",
-    "strapi-plugin-content-type-builder": "3.6.8",
-    "strapi-plugin-email": "^3.6.8",
-    "strapi-plugin-email-designer": "^1.1.3",
-    "strapi-plugin-graphql": "3.6.8",
-    "strapi-plugin-i18n": "3.6.8",
-    "strapi-plugin-upload": "^3.6.8",
-    "strapi-plugin-users-permissions": "3.6.8",
-    "strapi-provider-email-sendgrid": "^3.6.8",
-    "strapi-utils": "3.6.8",
-    "uuid": "^8.3.2"
+    "@sendgrid/client": "^7.7.0",
+    "@strapi/plugin-graphql": "4.3.4",
+    "@strapi/plugin-i18n": "4.3.4",
+    "@strapi/plugin-sentry": "^4.3.4",
+    "@strapi/plugin-users-permissions": "4.3.4",
+    "@strapi/strapi": "4.3.4",
+    "pg": "8.6.0",
+    "strapi-plugin-email-designer": "^2.1.1"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "8c3a2c9e-1c16-43af-811f-ed1101770497"
+    "uuid": "51461872-4126-4ff4-8697-4cf9227a48dc"
   },
   "engines": {
-    "node": ">=10.0.0",
+    "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
@@ -60,11 +49,6 @@
       "/node_modules/",
       ".tmp",
       ".cache"
-    ],
-    "globalSetup": "<rootDir>/tests/setup/setupDatabase.js",
-    "globalTeardown": "<rootDir>/tests/setup/destroyDatabase.js",
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setup/setupStrapi.js"
     ],
     "testEnvironment": "node"
   }

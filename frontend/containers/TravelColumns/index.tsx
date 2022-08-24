@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
 import {useTranslation} from 'react-i18next';
-import {Travel as TravelType} from '../../generated/graphql';
+import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import useProfile from '../../hooks/useProfile';
@@ -14,13 +14,15 @@ import sliderSettings from './_SliderSettings';
 import usePassengersActions from '../../hooks/usePassengersActions';
 import NoCar from './NoCar';
 
+type TravelType = TravelData & {id: string};
+
 interface Props {
   toggle: () => void;
 }
 
 const TravelColumns = (props: Props) => {
   const event = useEventStore(s => s.event);
-  const {travels = []} = event || {};
+  const travels = event?.travels?.data || [];
   const slider = useRef(null);
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
@@ -35,11 +37,13 @@ const TravelColumns = (props: Props) => {
 
   const canAddSelf = useMemo(() => {
     if (!user) return false;
-    const isInWaitingList = event?.waitingPassengers?.some(
-      passenger => passenger.user?.id === `${user.id}`
+    const isInWaitingList = event?.waitingPassengers?.data.some(
+      passenger => passenger.attributes.user?.data?.id === `${user.id}`
     );
-    const isInTravel = event?.travels?.some(travel =>
-      travel.passengers?.some(passenger => passenger.user?.id === `${user.id}`)
+    const isInTravel = event?.travels?.data.some(travel =>
+      travel.attributes.passengers?.data.some(
+        passenger => passenger.attributes.user?.data?.id === `${user.id}`
+      )
     );
     return !(isInWaitingList || isInTravel);
   }, [event, user]);
@@ -62,7 +66,7 @@ const TravelColumns = (props: Props) => {
   return (
     <div className={classes.container}>
       <div className={classes.dots} id="slider-dots" />
-      {(travels.length === 0 && (
+      {(travels?.length === 0 && (
         <NoCar
           image
           eventName={event?.name}
@@ -70,19 +74,26 @@ const TravelColumns = (props: Props) => {
         />
       )) || (
         <Slider ref={slider} {...sliderSettings}>
-          {sortedTravels?.map(travel => (
-            <Container key={travel.id} maxWidth="sm" className={classes.slide}>
-              <Travel
-                travel={travel}
-                {...props}
-                canAddSelf={canAddSelf}
-                getAddPassengerFunction={(addSelf: boolean) => () =>
-                  addSelf
-                    ? addSelfToTravel(travel)
-                    : toggleNewPassengerToTravel({travel})}
-              />
-            </Container>
-          ))}
+          {sortedTravels?.map(({id, attributes}) => {
+            const travel = {id, ...attributes};
+            return (
+              <Container
+                key={travel.id}
+                maxWidth="sm"
+                className={classes.slide}
+              >
+                <Travel
+                  travel={travel}
+                  {...props}
+                  canAddSelf={canAddSelf}
+                  getAddPassengerFunction={(addSelf: boolean) => () =>
+                    addSelf
+                      ? addSelfToTravel(travel)
+                      : toggleNewPassengerToTravel({travel})}
+                />
+              </Container>
+            );
+          })}
           <Container maxWidth="sm" className={classes.slide}>
             <NoCar
               eventName={event?.name}
@@ -102,12 +113,15 @@ const TravelColumns = (props: Props) => {
   );
 };
 
-const sortTravels = (a: TravelType, b: TravelType) => {
+const sortTravels = (
+  {attributes: a}: TravelEntity,
+  {attributes: b}: TravelEntity
+) => {
   if (!b) return 1;
   const dateA = new Date(a.departure).getTime();
   const dateB = new Date(b.departure).getTime();
   if (dateA === dateB)
-    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   else return dateA - dateB;
 };
 

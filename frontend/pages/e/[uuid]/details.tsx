@@ -44,7 +44,7 @@ const DetailsTab: TabComponent = ({}) => {
   const onSave = async e => {
     try {
       const {uuid, ...data} = event;
-      const {id, __typename, travels, users, waitingList, ...input} = data;
+      const {id, travels, waitingPassengers, __typename, ...input} = data;
       await updateEvent({
         variables: {uuid, eventUpdate: input},
         refetchQueries: ['eventByUUID'],

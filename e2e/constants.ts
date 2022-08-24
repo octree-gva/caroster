@@ -1,6 +1,6 @@
 import {
   Event,
-  Settings,
+  Setting,
   Travel,
   UsersPermissionsUser,
   Vehicle,
@@ -12,7 +12,6 @@ export const DATABASE_PATH = "./strapi/test.db";
 export const USER_PASSWORD = "Testtest1";
 export const USER_ID = "1";
 export const USER: Partial<UsersPermissionsUser> = {
-  id: USER_ID,
   email: "test@octree.ch",
   username: "test",
   firstName: "Kai",
@@ -22,47 +21,56 @@ export const USER: Partial<UsersPermissionsUser> = {
 export const EVENT_UUID = "2c336e59-087d-4dec-bf9b-f74b1ca22cd4";
 export const EVENT_ID = "1";
 export const EVENT: Event = {
-  id: EVENT_ID,
   uuid: EVENT_UUID,
   email: "test+event@octree.ch",
   name: "A Test Event",
   address: "442, rue Auguste Lebon, 78 432 Fernandes, France",
   description: "Description de l'événement de test",
-  created_at: "2022-08-12",
-  updated_at: "2022-08-20",
+  createdAt: "2022-08-12",
+  updatedAt: "2022-08-20",
 };
 
 export const TRAVEL_ID = "1";
 export const TRAVEL: Travel = {
-  id: TRAVEL_ID,
   details: "Travel details",
-  event: EVENT,
+  event: {
+    data: {
+      id: EVENT_ID,
+      attributes: EVENT,
+    },
+  },
   meeting: "Meeting test point",
-  passengers: [],
+  passengers: {
+    data: [],
+  },
   phone_number: "+41 79 632 58 85",
   seats: 4,
   vehicleName: "The Test Car",
   departure: "2023-08-12T13:57:40.093Z",
-  created_at: "2022-08-12",
-  updated_at: "2022-08-20",
+  createdAt: "2022-08-12",
+  updatedAt: "2022-08-20",
 };
 
 export const VEHICLE_ID = "1";
 export const VEHICLE: Partial<Vehicle> = {
-  id: VEHICLE_ID,
   name: "My Test Car",
   seats: 4,
   phone_number: "+41 79 632 58 85",
-  user: USER as UsersPermissionsUser,
+  user: {
+    data: {
+      id: USER_ID,
+      attributes: USER as UsersPermissionsUser,
+    },
+  },
 };
 
-export const SETTING_FR: Partial<Settings> = {
+export const SETTING_FR: Partial<Setting> = {
   announcement: "Annonce en français",
   about_link: "https://about.test",
   faq_link: "https://faq.test",
 };
 
-export const SETTING_EN: Partial<Settings> = {
+export const SETTING_EN: Partial<Setting> = {
   announcement: "Annoucement in english",
   about_link: "https://about.test",
   faq_link: "https://faq.test",

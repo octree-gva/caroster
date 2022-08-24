@@ -1,13 +1,11 @@
 import create from 'zustand';
-import {UsersPermissionsUser} from '../generated/graphql';
+import {UsersPermissionsMe} from '../generated/graphql';
 
 type State = {
   token: string | null;
   setToken: (token?: string) => void;
-  user: Omit<UsersPermissionsUser, 'created_at' | 'updated_at' | '__typename'> | null;
-  setUser: (
-    user?: Omit<UsersPermissionsUser, 'created_at' | 'updated_at' | '__typename'>
-  ) => void;
+  user: UsersPermissionsMe | null;
+  setUser: (user?: UsersPermissionsMe) => void;
   logout: () => void;
 };
 

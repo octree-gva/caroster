@@ -1,4 +1,4 @@
-import {useState, useReducer, PropsWithChildren} from 'react';
+import {useState, useReducer, PropsWithChildren, useMemo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
@@ -7,7 +7,7 @@ import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
 import {
   EventByUuidDocument,
-  useFindUserVehiclesQuery,
+  useFindUserVehiclesLazyQuery,
 } from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import Fab from '../../../containers/Fab';
@@ -28,10 +28,14 @@ const TravelsTab: TabComponent = (props: {event}) => {
   const classes = useStyles();
   const {t} = useTranslation();
   const {user} = useProfile();
-  const {data: {me: {profile: {vehicles = []} = {}} = {}} = {}} =
-    useFindUserVehiclesQuery();
+  const [findUserVehicle, {data}] = useFindUserVehiclesLazyQuery();
+  const vehicles = data?.me?.profile?.vehicles?.data || [];
   const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
+
+  useMemo(() => {
+    if (user) findUserVehicle();
+  }, [user]);
 
   const addTravelClickHandler =
     user && vehicles?.length != 0
@@ -80,10 +84,11 @@ export async function getServerSideProps(ctx) {
   const {host = ''} = ctx.req.headers;
 
   const apolloClient = initializeApollo();
-  const {data: {eventByUUID: event = null} = {}} = await apolloClient.query({
-    query: EventByUuidDocument,
-    variables: {uuid},
-  });
+  const {data: {eventByUUID: {data: event = null} = {}} = {}} =
+    await apolloClient.query({
+      query: EventByUuidDocument,
+      variables: {uuid},
+    });
 
   try {
     return {

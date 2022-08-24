@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
-import {useUpdateMeMutation, EditUserInput} from '../generated/graphql';
+import {UsersPermissionsUserInput, useUpdateMeMutation} from '../generated/graphql';
 import useAuthStore from '../stores/useAuthStore';
 import useProfile from '../hooks/useProfile';
 import Loading from '../containers/Loading';
@@ -20,7 +20,7 @@ const ProfilePage = () => {
     if (!isAuth) router.push('/');
   }, [isAuth]);
 
-  const onUpdateProfile = (userUpdate: EditUserInput) =>
+  const onUpdateProfile = (userUpdate: UsersPermissionsUserInput) =>
     updateProfile({variables: {userUpdate}});
 
   const menuActions = [

@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "name": "event",
+    "description": "",
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date"
+    },
+    "address": {
+      "type": "text"
+    },
+    "position": {
+      "type": "json"
+    },
+    "uuid": {
+      "type": "string",
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 250
+    },
+    "newsletter": {
+      "type": "boolean",
+      "private": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "events"
+    },
+    "travels": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::travel.travel",
+      "mappedBy": "event"
+    },
+    "waitingPassengers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::passenger.passenger",
+      "mappedBy": "event"
+    }
+  }
+}

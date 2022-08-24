@@ -13,9 +13,10 @@ const useLoginForm = (identifier: string, password: string) => {
         password,
       },
     });
-    if (data?.login?.jwt) {
-      setToken(data.login.jwt);
-      setUser(data.login.user);
+    const token = data?.login?.jwt;
+    if (token) {
+      setToken(token);
+      setUser(data?.login?.user);
     } else throw new Error('no_token');
   };
 

@@ -52,9 +52,9 @@ const SignUp = () => {
       });
       router.push('/auth/confirm');
     } catch (error) {
-      const strapiError = getStrapiError(error);
+      const strapiError = error.message;
       console.error({strapiError});
-      if (strapiError === 'Auth.form.error.email.taken')
+      if (strapiError === 'Email or Username are already taken')
         setError(t('signup.errors.email_taken'));
       else addToast(t(`generic.errors.unknown`));
     }
@@ -127,7 +127,7 @@ const SignUp = () => {
           endIcon={
             isLoading && (
               <CircularProgress
-                class={classes.loader}
+                className={classes.loader}
                 size={20}
                 color="secondary"
               />

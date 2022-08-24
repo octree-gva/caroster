@@ -5,12 +5,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {Passenger as PassengerType} from '../../generated/graphql';
+import {PassengerEntity} from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 import Chip from '@material-ui/core/Chip';
 
 interface Props {
-  passenger?: PassengerType;
+  passenger?: PassengerEntity;
   button?: ReactNode;
   isVehicle?: boolean;
 }
@@ -21,8 +21,8 @@ const Passenger = (props: Props) => {
   const classes = useStyles();
   const {user} = useProfile();
 
-  const isUser = user && `${user.id}` === passenger?.user?.id;
-  const showLocation = isVehicle ? false : passenger.location;
+  const isUser = user && `${user.id}` === passenger?.attributes.user?.data?.id;
+  const showLocation = isVehicle ? false : passenger.attributes.location;
 
   if (passenger) {
     return (
@@ -30,7 +30,7 @@ const Passenger = (props: Props) => {
         <ListItemText
           primary={
             <>
-              {passenger.name}
+              {passenger.attributes.name}
               {isUser && (
                 <Chip
                   className={classes.me}

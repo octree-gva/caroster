@@ -6,8 +6,10 @@ test("settings are returned in french", async () => {
 
   await expect(request).resolves.toMatchObject({
     setting: {
-      ...SETTING_FR,
-      id: expect.stringMatching(/\d/),
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: SETTING_FR,
+      },
     },
   });
 });
@@ -17,8 +19,10 @@ test("settings are returned in english", async () => {
 
   await expect(request).resolves.toMatchObject({
     setting: {
-      ...SETTING_EN,
-      id: expect.stringMatching(/\d/),
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: SETTING_EN,
+      },
     },
   });
 });

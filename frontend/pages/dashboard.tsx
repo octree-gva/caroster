@@ -15,7 +15,7 @@ const Dashboard = () => {
   const router = useRouter();
   const isAuth = useAuthStore(s => !!s.token);
   const {profile, isReady} = useProfile();
-  const {events} = profile || {};
+  const events = profile?.events?.data || [];
 
   useEffect(() => {
     if (!isAuth) router.push('/');

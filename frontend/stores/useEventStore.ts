@@ -2,9 +2,9 @@ import create from 'zustand';
 import {Event} from '../generated/graphql';
 
 type State = {
-  event: Event;
-  setEvent: (event: Event) => void;
-  setEventUpdate: (event: Partial<Event>) => void;
+  event: Event & {id: string};
+  setEvent: (event: Event & {id: string}) => void;
+  setEventUpdate: (event: Partial<Event & {id: string}>) => void;
 };
 
 const useEventStore = create<State>((set, get) => ({

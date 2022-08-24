@@ -1,22 +1,33 @@
-const Strapi = require('strapi');
-const http = require('http');
+const Strapi = require("@strapi/strapi");
+const fs = require("fs");
 
 let instance;
 
-const setupStrapi = async () => {
+async function setupStrapi() {
   if (!instance) {
     await Strapi().load();
-    instance = strapi; // strapi is global now
-    await instance.app
-      .use(instance.router.routes()) // populate KOA routes
-      .use(instance.router.allowedMethods()); // populate KOA methods
-    instance.server = http.createServer(instance.app.callback());
+    instance = strapi;
+
+    await instance.server.mount();
   }
   return instance;
-};
+}
 
-const destroyStrapi = async () => {
-  strapi.destroy();
-};
+async function cleanupStrapi() {
+  const dbSettings = strapi.config.get("database.connections.default.settings");
 
-module.exports = {setupStrapi, destroyStrapi};
+  //close server to release the db-file
+  await strapi.server.httpServer.close();
+
+  //delete test database after all tests have completed
+  if (dbSettings && dbSettings.filename) {
+    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
+    }
+  }
+  // close the connection to the database
+  await strapi.db.connection.destroy();
+}
+
+module.exports = { setupStrapi, cleanupStrapi };

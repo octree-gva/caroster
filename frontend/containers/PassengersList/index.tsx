@@ -2,10 +2,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {makeStyles} from '@material-ui/core/styles';
 import Passenger from './Passenger';
-import {Passenger as PassengerType} from '../../generated/graphql';
+import {PassengerEntity} from '../../generated/graphql';
 
 interface Props {
-  passengers: PassengerType[];
+  passengers: PassengerEntity[];
   Button: ({
     onClick,
     disabled,

@@ -6,20 +6,16 @@ import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
 import Layout from '../layouts/Default';
 import EventBar from '../containers/EventBar';
-import {
-  Event as EventType,
-  useEventByUuidQuery,
-  useUpdateEventMutation,
-  EditEventInput,
-} from '../generated/graphql';
+import {Event as EventType, useEventByUuidQuery} from '../generated/graphql';
 import DrawerMenu from '../containers/DrawerMenu';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
-import useToastStore from '../stores/useToastStore';
 import Box from '@material-ui/core/Box';
 
 const POLL_INTERVAL = 10000;
 
-export type TabComponent = (props: {event: EventType}) => JSX.Element;
+export type TabComponent = (props: {
+  event: EventType & {id: string};
+}) => JSX.Element;
 
 interface Props {
   eventUUID: string;
@@ -34,13 +30,15 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const setEvent = useEventStore(s => s.setEvent);
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
-  const {data: {eventByUUID: event} = {}} = useEventByUuidQuery({
-    pollInterval: POLL_INTERVAL,
-    variables: {uuid: eventUUID},
-  });
+  const {data: {eventByUUID: {data: {attributes, id} = {}} = {}} = {}} =
+    useEventByUuidQuery({
+      pollInterval: POLL_INTERVAL,
+      variables: {uuid: eventUUID},
+    });
+  const event = {id, ...attributes};
 
   useEffect(() => {
-    if (event) setEvent(event as EventType);
+    if (event) setEvent(event);
   }, [event]);
 
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;

@@ -78,7 +78,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
     };
     const createVehicle = !context.vehicle;
 
-    await createTravel({...travel, createVehicle});
+    await createTravel(travel, createVehicle);
     toggle({opened: false});
 
     clearState();

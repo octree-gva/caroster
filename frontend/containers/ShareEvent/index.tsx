@@ -6,7 +6,7 @@ import useShare from '../../hooks/useShare';
 interface Props {
   title: string;
   url: string;
-  className: string;
+  className?: string;
 }
 
 const ShareEvent = ({title, url, className}: ButtonProps & Props) => {

@@ -1,11 +1,16 @@
 import {useTranslation} from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import Section from './Section';
+import { EventEntity } from '../../generated/graphql';
 
 const DashboardEvents = ({
   futureEvents = [],
   noDateEvents = [],
   pastEvents = [],
+}: {
+  futureEvents: EventEntity[];
+  noDateEvents: EventEntity[];
+  pastEvents: EventEntity[];
 }) => {
   const {t} = useTranslation();
 

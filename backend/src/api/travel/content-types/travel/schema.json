@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "travels",
+  "info": {
+    "name": "travel",
+    "description": "",
+    "singularName": "travel",
+    "pluralName": "travels",
+    "displayName": "Travel"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "meeting": {
+      "type": "string"
+    },
+    "departure": {
+      "type": "datetime"
+    },
+    "details": {
+      "type": "text"
+    },
+    "vehicleName": {
+      "type": "string"
+    },
+    "seats": {
+      "type": "integer",
+      "default": 4,
+      "min": 0
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "travels"
+    },
+    "passengers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::passenger.passenger",
+      "mappedBy": "travel"
+    }
+  }
+}

@@ -11,7 +11,7 @@ import Header from './Header';
 import useActions from './useActions';
 
 interface Props {
-  travel: TravelType;
+  travel: TravelType & {id: string};
   getAddPassengerFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
 }
@@ -23,8 +23,7 @@ const Travel = (props: Props) => {
   const actions = useActions({travel});
 
   if (!travel) return null;
-  const disableNewPassengers =
-    travel.passengers.length >= travel.seats;
+  const disableNewPassengers = travel.passengers.data?.length >= travel.seats;
 
   return (
     <Paper className={classes.root}>
@@ -43,7 +42,7 @@ const Travel = (props: Props) => {
       <Divider />
       {!isEditing && (
         <PassengersList
-          passengers={travel.passengers}
+          passengers={travel.passengers.data}
           places={travel?.seats}
           onClick={actions.sendPassengerToWaitingList}
           isVehicle

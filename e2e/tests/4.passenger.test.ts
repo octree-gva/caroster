@@ -1,10 +1,10 @@
 import { EVENT_ID, EVENT_UUID, TRAVEL_ID, USER, USER_ID } from "../constants";
-import { EditPassengerInput, PassengerInput } from "../graphql";
+import { PassengerInput } from "../graphql";
 import { sdk } from "../lib/gqlSdk";
 
 test("createPassenger add a new passenger to event's waiting list", async () => {
   const passenger: PassengerInput = {
-    name: "Oki Doki",
+    name: "Test waiting list passenger",
     email: "okidoki@octree.ch",
     location: "Church place",
   };
@@ -14,7 +14,10 @@ test("createPassenger add a new passenger to event's waiting list", async () => 
 
   await expect(createPassengerRequest).resolves.toMatchObject({
     createPassenger: {
-      passenger,
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: passenger,
+      },
     },
   });
 
@@ -23,13 +26,19 @@ test("createPassenger add a new passenger to event's waiting list", async () => 
   });
   await expect(getEventRequest).resolves.toMatchObject({
     eventByUUID: {
-      waitingPassengers: [
-        {
-          ...passenger,
-          user: null,
-          id: "1",
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: {
+          waitingPassengers: {
+            data: [
+              {
+                id: expect.stringMatching(/\d/),
+                attributes: { ...passenger },
+              },
+            ],
+          },
         },
-      ],
+      },
     },
   });
 });
@@ -47,12 +56,18 @@ test("createPassenger add a new known user to event's waiting list", async () =>
 
   await expect(createPassengerRequest).resolves.toMatchObject({
     createPassenger: {
-      passenger: {
-        ...passenger,
-        user: {
-          id: USER.id,
-          firstName: USER.firstName,
-          lastName: USER.lastName,
+      data: {
+        attributes: {
+          ...passenger,
+          user: {
+            data: {
+              id: USER_ID,
+              attributes: {
+                firstName: expect.any(String),
+                lastName: USER.lastName,
+              },
+            },
+          },
         },
       },
     },
@@ -63,23 +78,38 @@ test("createPassenger add a new known user to event's waiting list", async () =>
   });
   await expect(getEventRequest).resolves.toMatchObject({
     eventByUUID: {
-      waitingPassengers: expect.arrayContaining([
-        expect.objectContaining({
-          ...passenger,
-          user: {
-            id: USER.id,
-            firstName: USER.firstName,
-            lastName: USER.lastName,
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: {
+          waitingPassengers: {
+            data: expect.arrayContaining([
+              expect.any(Object),
+              {
+                id: expect.stringMatching(/./),
+                attributes: {
+                  ...passenger,
+                  user: {
+                    data: {
+                      id: USER_ID,
+                      attributes: {
+                        firstName: expect.any(String),
+                        lastName: USER.lastName,
+                      },
+                    },
+                  },
+                },
+              },
+            ]),
           },
-        }),
-      ]),
+        },
+      },
     },
   });
 });
 
 test("createPassenger add a new passenger to travel's passengers list", async () => {
   const passenger: PassengerInput = {
-    name: "Oki Doki",
+    name: "Test travel list passenger",
     email: "okidoki@octree.ch",
     location: "Church place",
   };
@@ -89,7 +119,10 @@ test("createPassenger add a new passenger to travel's passengers list", async ()
 
   await expect(createPassengerRequest).resolves.toMatchObject({
     createPassenger: {
-      passenger,
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: passenger,
+      },
     },
   });
 
@@ -98,24 +131,39 @@ test("createPassenger add a new passenger to travel's passengers list", async ()
   });
   await expect(getEventRequest).resolves.toMatchObject({
     eventByUUID: {
-      travels: [
-        {
-          id: TRAVEL_ID,
-          passengers: [
-            {
-              name: passenger.name,
-              location: passenger.location,
-              user: null,
-            },
-          ],
+      data: {
+        id: expect.stringMatching(/\d/),
+        attributes: {
+          travels: {
+            data: [
+              {
+                attributes: {
+                  passengers: {
+                    data: [
+                      {
+                        id: expect.any(String),
+                        attributes: {
+                          name: passenger.name,
+                          location: passenger.location,
+                          user: {
+                            data: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
         },
-      ],
+      },
     },
   });
 });
 
 test("updatePassenger returns updated passenger", async () => {
-  const passengerUpdate: EditPassengerInput = {
+  const passengerUpdate: PassengerInput = {
     name: "Updated name",
   };
   const request = sdk.updatePassenger({
@@ -125,23 +173,26 @@ test("updatePassenger returns updated passenger", async () => {
 
   await expect(request).resolves.toMatchObject({
     updatePassenger: {
-      passenger: expect.objectContaining({
-        name: passengerUpdate.name,
-        email: "okidoki@octree.ch",
-      }),
+      data: {
+        id: "1",
+        attributes: {
+          name: passengerUpdate.name,
+          email: "okidoki@octree.ch",
+        },
+      },
     },
   });
 });
 
 test("deletePassenger returns ID of deleted passenger", async () => {
   const request = sdk.deletePassenger({
-    id: "1",
+    id: "2",
   });
 
   await expect(request).resolves.toMatchObject({
     deletePassenger: {
-      passenger: {
-        id: "1",
+      data: {
+        id: "2",
       },
     },
   });

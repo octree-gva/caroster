@@ -25,11 +25,13 @@ const WaitingListTab: TabComponent = ({event}) => {
 
   const canAddSelf = useMemo(() => {
     if (!user) return false;
-    const isInWaitingList = event?.waitingPassengers?.some(
-      passenger => passenger.user?.id === `${user.id}`
+    const isInWaitingList = event?.waitingPassengers?.data?.some(
+      passenger => passenger.attributes.user?.data?.id === `${user.id}`
     );
-    const isInTravel = event?.travels?.some(travel =>
-      travel.passengers?.some(passenger => passenger.user?.id === `${user.id}`)
+    const isInTravel = event?.travels?.data?.some(travel =>
+      travel.attributes.passengers?.data?.some(
+        passenger => passenger.attributes.user?.data?.id === `${user.id}`
+      )
     );
     return !(isInWaitingList || isInTravel);
   }, [event, user]);

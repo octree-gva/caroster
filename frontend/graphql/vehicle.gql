@@ -1,8 +1,10 @@
-fragment VehicleFields on Vehicle {
+fragment VehicleFields on VehicleEntity {
   id
-  name
-  seats
-  phone_number
+  attributes {
+    name
+    seats
+    phone_number
+  }
 }
 
 query findUserVehicles {
@@ -11,17 +13,21 @@ query findUserVehicles {
     username
     profile {
       vehicles {
-        ...VehicleFields
+        data {
+          ...VehicleFields
+        }
       }
     }
   }
 }
 
 mutation deleteVehicle($id: ID!) {
-  deleteVehicle(input: {where: {id: $id}}) {
-    vehicle {
+  deleteVehicle(id: $id) {
+    data {
       id
-      name
+      attributes {
+        name
+      }
     }
   }
 }

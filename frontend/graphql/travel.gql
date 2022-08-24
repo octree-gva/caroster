@@ -1,42 +1,52 @@
-fragment TravelFields on Travel {
+fragment TravelFields on TravelEntity {
   id
-  meeting
-  departure
-  details
-  vehicleName
-  phone_number
-  seats
-  passengers {
-    id
-    name
-    location
-    user {
-      id
-      firstName
-      lastName
+  attributes {
+    meeting
+    departure
+    details
+    vehicleName
+    phone_number
+    seats
+    passengers {
+      data {
+        id
+        attributes {
+          name
+          location
+          user {
+            data {
+              id
+              attributes {
+                firstName
+                lastName
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
 
-mutation createTravel($travel: TravelInput!) {
-  createTravel(input: {data: $travel}) {
-    travel {
+mutation createTravel($travel: TravelInput!, $createVehicle: Boolean) {
+  createTravel(data: $travel, createVehicle: $createVehicle) {
+    data {
       ...TravelFields
     }
   }
 }
 
-mutation updateTravel($id: ID!, $travelUpdate: editTravelInput!) {
-  updateTravel(input: {where: {id: $id}, data: $travelUpdate}) {
-    travel {
+mutation updateTravel($id: ID!, $travelUpdate: TravelInput!) {
+  updateTravel(id: $id, data: $travelUpdate) {
+    data {
       ...TravelFields
     }
   }
 }
 
 mutation deleteTravel($id: ID!) {
-  deleteTravel(input: {where: {id: $id}}) {
-    travel {
+  deleteTravel(id: $id) {
+    data {
       id
     }
   }

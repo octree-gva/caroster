@@ -12,7 +12,7 @@ import Slide from '@material-ui/core/Slide';
 import {useTranslation} from 'react-i18next';
 import VehicleItem from './VehicleItem';
 import Typography from '@material-ui/core/Typography';
-import {VehicleFieldsFragment} from '../../generated/graphql';
+import {Vehicle, VehicleEntity} from '../../generated/graphql';
 import Icon from '@material-ui/core/Icon';
 
 interface Props {
@@ -23,9 +23,9 @@ interface Props {
     vehicle,
   }: {
     opened: boolean;
-    vehicle?: VehicleFieldsFragment;
+    vehicle?: Vehicle & {id: string};
   }) => void;
-  vehicles: Array<VehicleFieldsFragment>;
+  vehicles: Array<VehicleEntity>;
 }
 
 const VehicleChoiceDialog = ({
@@ -54,12 +54,15 @@ const VehicleChoiceDialog = ({
       <DialogContent dividers className={classes.content}>
         {(vehicles && vehicles.length != 0 && (
           <List>
-            {vehicles.map((vehicle, index, {length}) => (
+            {vehicles.map(({id, attributes}, index, {length}) => (
               <Fragment key={index}>
                 <VehicleItem
-                  vehicle={vehicle}
+                  vehicle={{id, ...attributes}}
                   select={() => {
-                    toggleNewTravel({vehicle, opened: true});
+                    toggleNewTravel({
+                      vehicle: {id, ...attributes},
+                      opened: true,
+                    });
                     toggle();
                   }}
                 />

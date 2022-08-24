@@ -7,6 +7,7 @@ test("register creates a new user", async () => {
     username: `testregister-${userRandomId}`,
     firstName: `firstname-${userRandomId}`,
     lastName: `lastname-${userRandomId}`,
+    lang: "FR",
     password: "TestPassword34",
   };
   const request = sdk.register({
@@ -18,6 +19,7 @@ test("register creates a new user", async () => {
       jwt: expect.stringMatching(/(^[\w-]*\.[\w-]*\.[\w-]*$)/),
       user: expect.objectContaining({
         id: expect.stringMatching(/\d/),
+        email: `test+${userRandomId}@test.com`,
       }),
     }),
   });

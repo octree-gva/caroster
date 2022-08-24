@@ -8,7 +8,7 @@ const useSettings = () => {
   const locale = {FR: 'fr', EN: 'en'}[language];
 
   const defaulData: SettingQuery = {};
-  const [fetchSettings, {data: {setting} = defaulData}] = useSettingLazyQuery({
+  const [fetchSettings, {data: {setting: {data: {attributes: setting ={}}={}}={}} = defaulData}] = useSettingLazyQuery({
     variables: {locale},
   });
 

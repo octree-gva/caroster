@@ -5,7 +5,7 @@ import { wait } from "./wait";
 
 export const restartStrapi = async () => {
   await fs.promises.writeFile("../backend/restart.test", "Restart Strapi");
-  await wait(2500);
+  await wait(4000);
 };
 
 export const getJwtToken = async () => {

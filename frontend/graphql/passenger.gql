@@ -1,34 +1,40 @@
-fragment PassengerFields on Passenger {
+fragment PassengerFields on PassengerEntity {
   id
-  name
-  location
-  email
-  user {
-    id
-    firstName
-    lastName
+  attributes {
+    name
+    location
+    email
+    user {
+      data {
+        id
+        attributes {
+          firstName
+          lastName
+        }
+      }
+    }
   }
 }
 
-mutation createPassenger($passenger: PassengerInput) {
-  createPassenger(input: {data: $passenger}) {
-    passenger {
+mutation createPassenger($passenger: PassengerInput!) {
+  createPassenger(data: $passenger) {
+    data {
       ...PassengerFields
     }
   }
 }
 
-mutation updatePassenger($id: ID!, $passengerUpdate: editPassengerInput!) {
-  updatePassenger(input: {where: {id: $id}, data: $passengerUpdate}) {
-    passenger {
+mutation updatePassenger($id: ID!, $passengerUpdate: PassengerInput!) {
+  updatePassenger(id: $id, data: $passengerUpdate) {
+    data {
       ...PassengerFields
     }
   }
 }
 
 mutation deletePassenger($id: ID!) {
-  deletePassenger(input: {where: {id: $id}}) {
-    passenger {
+  deletePassenger(id: $id) {
+    data {
       id
     }
   }

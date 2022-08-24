@@ -1,9 +1,13 @@
-query setting ($locale: String!) {
-  setting (locale: $locale) {
-    id
-    gtm_id
-    about_link
-    announcement
-    faq_link
+query setting($locale: I18NLocaleCode!) {
+  setting(locale: $locale) {
+    data {
+      id
+      attributes {
+        gtm_id
+        about_link
+        faq_link
+        announcement
+      }
+    }
   }
 }

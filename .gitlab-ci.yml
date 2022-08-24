@@ -1,3 +1,26 @@
 include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
+
+
+Test E2E:
+  stage: test
+  image: node:16-alpine
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - backend/**/*
+        - e2e/**/*
+      exists:
+        - backend/tests
+  cache:
+    key: node_modules
+    paths:
+      - backend/node_modules
+      - e2e/node_modules
+  script:
+    - cd backend/
+    - yarn
+    - cd ../e2e/
+    - yarn
+    - yarn test

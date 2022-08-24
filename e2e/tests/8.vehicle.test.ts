@@ -12,14 +12,18 @@ test("findUserVehicles returns vehicles of logged user", async () => {
     me: {
       id: USER_ID,
       profile: {
-        vehicles: [
-          {
-            id: VEHICLE.id,
-            name: VEHICLE.name,
-            phone_number: VEHICLE.phone_number,
-            seats: VEHICLE.seats,
-          },
-        ],
+        vehicles: {
+          data: expect.arrayContaining([
+            {
+              id: VEHICLE_ID,
+              attributes: {
+                name: VEHICLE.name,
+                phone_number: VEHICLE.phone_number,
+                seats: VEHICLE.seats,
+              },
+            },
+          ]),
+        },
       },
     },
   });
@@ -27,7 +31,7 @@ test("findUserVehicles returns vehicles of logged user", async () => {
 
 test("findUserVehicles throws error if no auth", async () => {
   const request = sdk.findUserVehicles();
-  await expect(request).rejects.toThrow("no_user");
+  await expect(request).rejects.toThrow("Forbidden access:");
 });
 
 test("deleteVehicle returns ID of deleted vehicle", async () => {
@@ -41,14 +45,17 @@ test("deleteVehicle returns ID of deleted vehicle", async () => {
 
   await expect(request).resolves.toMatchObject({
     deleteVehicle: {
-      vehicle: {
+      data: {
         id: VEHICLE_ID,
+        attributes: {
+          name: expect.any(String),
+        },
       },
     },
   });
 });
 
-test.skip("deleteVehicle fails if logged user doesn't own vehicle", async () => {
+test("deleteVehicle fails if logged user doesn't own the vehicle", async () => {
   const jwt = await getJwtToken();
   const request = sdk.deleteVehicle(
     { id: "2" },
@@ -57,5 +64,5 @@ test.skip("deleteVehicle fails if logged user doesn't own vehicle", async () => 
     }
   );
 
-  await expect(request).rejects.toThrow("yolo");
+  await expect(request).rejects.toThrow("Not Authorized");
 });

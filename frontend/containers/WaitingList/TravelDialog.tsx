@@ -16,15 +16,15 @@ import {useTranslation} from 'react-i18next';
 import {forwardRef} from 'react';
 import getMapsLink from '../../utils/getMapsLink';
 import ShareEvent from '../ShareEvent';
-import {Passenger, Travel} from '../../generated/graphql';
+import {Passenger, TravelEntity, Travel} from '../../generated/graphql';
 
 interface Props {
   eventName: string;
-  travels: Array<Travel>;
+  travels: Array<TravelEntity>;
   passenger: Passenger;
   open: boolean;
   onClose: () => void;
-  onSelect: (travel: Travel) => void;
+  onSelect: (travel: Travel & {id: string}) => void;
 }
 
 const TravelDialog = ({
@@ -39,7 +39,9 @@ const TravelDialog = ({
   const {t} = useTranslation();
 
   const availableTravels = travels?.filter(
-    travel => travel.passengers && travel?.seats > travel.passengers.length
+    ({attributes}) =>
+      attributes.passengers &&
+      attributes?.seats > attributes.passengers.data.length
   );
 
   return (
@@ -72,14 +74,15 @@ const TravelDialog = ({
             color="primary"
             className={classes.share}
             title={`Caroster ${eventName}`}
-            url={`${window.location.href}`}
+            url={`${typeof window !== 'undefined' ? window.location.href : ''}`}
           />
         </Box>
       )) || (
         <div className={classes.offset}>
           <List disablePadding>
-            {availableTravels.map((travel, i) => {
-              const passengersCount = travel?.passengers?.length || 0;
+            {availableTravels.map(({id, attributes}, i) => {
+              const travel = {id, ...attributes};
+              const passengersCount = travel?.passengers?.data.length || 0;
               const counter = `${passengersCount} / ${travel?.seats || 0}`;
               return (
                 <ListItem key={i} divider className={classes.listItem}>

@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vehicles",
+  "info": {
+    "name": "vehicle",
+    "description": "",
+    "singularName": "vehicle",
+    "pluralName": "vehicles",
+    "displayName": "Vehicle"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "seats": {
+      "type": "integer",
+      "min": 0,
+      "default": 4
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "vehicles"
+    }
+  }
+}

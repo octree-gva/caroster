@@ -27,7 +27,7 @@ test("login returns bad request for erroneous credentials", async () => {
     response: {
       errors: expect.arrayContaining([
         expect.objectContaining({
-          message: "Bad Request",
+          message: "Invalid identifier or password",
         }),
       ]),
     },
