@@ -12,6 +12,18 @@ module.exports = withPWA({
         source: '/api/:slug*',
         destination: `${STRAPI_URL}/api/:slug*`,
       },
+      {
+        source: '/admin/:slug*',
+        destination: `${STRAPI_URL}/admin/:slug*`,
+      },
+      {
+        source: '/i18n/:slug*',
+        destination: `${STRAPI_URL}/i18n/:slug*`,
+      },
+      {
+        source: '/content-manager/:slug*',
+        destination: `${STRAPI_URL}/content-manager/:slug*`,
+      },
     ];
   },
 

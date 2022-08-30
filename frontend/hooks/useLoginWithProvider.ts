@@ -5,7 +5,7 @@ const useLoginWithProvider = () => {
   const setUser = useAuthStore(s => s.setUser);
 
   const loginWithProvider = async (provider: string, search: string) => {
-    const resultRaw = await fetch(`/auth/${provider}/callback${search}`);
+    const resultRaw = await fetch(`/api/auth/${provider}/callback${search}`);
     const result = await resultRaw.json();
     if (result.hasOwnProperty('error')) throw result;
     setToken(result.jwt);
