@@ -12,7 +12,7 @@ const LoginGoogle = () => {
       <Button
         variant="outlined"
         color="primary"
-        href="/connect/google"
+        href="/api/connect/google"
         startIcon={<img src="/assets/google-icon.svg" alt="Google Login" />}
       >
         {t('signin.withGoogle')}
