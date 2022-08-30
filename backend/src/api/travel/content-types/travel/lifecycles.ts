@@ -3,8 +3,9 @@ import _uniq from "lodash/uniq";
 const { STRAPI_URL = "" } = process.env;
 
 export default {
-  async afterCreate({ result }) {
-    if (result?.event) sendEmailsToWaitingPassengers(result);
+  async afterCreate({ result, params }) {
+    const eventId = params?.data?.event;
+    if (eventId) sendEmailsToWaitingPassengers(result, eventId);
   },
 
   async beforeUpdate(event) {
@@ -50,9 +51,9 @@ export default {
   },
 };
 
-const sendEmailsToWaitingPassengers = async (travel) => {
+const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
   const event = await strapi.db.query("api::event.event").findOne({
-    where: { id: travel.event?.id },
+    where: { id: eventId },
     populate: ["waitingPassengers"],
   });
   const eventWaitingPassengers = event?.waitingPassengers || [];
