@@ -1,6 +1,8 @@
 include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/jobs.yaml
+  - project: o/infra/templates
+    file: /gitlab-ci/includes/helm-deploy.yaml
 
 Test E2E:
   stage: test
@@ -66,3 +68,9 @@ Deploy Strapi to Test:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME && $NODE_ID_STRAPI
       changes:
         - backend/**/*
+
+Deploy to Kubernetes Test:
+  extends: .deployStrapiNextjs
+  stage: deploy
+  variables:
+    ENVNAME: test
