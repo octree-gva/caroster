@@ -38,7 +38,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const passenger = {
-      email,
+      email: email || null,
       name,
     };
 
