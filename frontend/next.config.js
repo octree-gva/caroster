@@ -24,6 +24,10 @@ module.exports = withPWA({
         source: '/content-manager/:slug*',
         destination: `${STRAPI_URL}/content-manager/:slug*`,
       },
+      {
+        source: '/email-designer/:slug*',
+        destination: `${STRAPI_URL}/email-designer/:slug*`,
+      },
     ];
   },
 

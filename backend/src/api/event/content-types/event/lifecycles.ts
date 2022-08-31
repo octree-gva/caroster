@@ -1,7 +1,6 @@
 import axios from "axios";
 import { DateTime } from "luxon";
 import { v4 as uuid } from "uuid";
-import sendgrid from "../../../../lib/sendgrid";
 
 const { STRAPI_URL = "" } = process.env;
 
@@ -11,8 +10,6 @@ export default {
     if (!data.uuid) data.uuid = uuid();
     // If user provides an address, get its lat/lng position using OSM API
     if (data.address) data.position = getPosition(data.address);
-    // If user accepts newsletters, subscribe it
-    if (data.newsletter) sendgrid.subscribe(data.email);
   },
   async afterCreate(event) {
     sendEmailToCreator(event.result);

@@ -25,12 +25,12 @@
     "sqlite3": "^5.0.11"
   },
   "dependencies": {
-    "@sendgrid/client": "^7.7.0",
-    "@strapi/plugin-graphql": "4.3.4",
-    "@strapi/plugin-i18n": "4.3.4",
-    "@strapi/plugin-sentry": "^4.3.4",
-    "@strapi/plugin-users-permissions": "4.3.4",
-    "@strapi/strapi": "4.3.4",
+    "@strapi/plugin-graphql": "4.3.6",
+    "@strapi/plugin-i18n": "4.3.6",
+    "@strapi/plugin-sentry": "^4.3.6",
+    "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/provider-email-nodemailer": "^4.3.6",
+    "@strapi/strapi": "4.3.6",
     "pg": "8.6.0",
     "strapi-plugin-email-designer": "^2.1.1"
   },
