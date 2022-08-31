@@ -29,15 +29,13 @@ const authLink = setContext((_, {headers}) => {
   };
 });
 
-const errorLink = onError(({graphQLErrors = []}) => {
-  const [error] = graphQLErrors;
-  console.error({graphQLErrors});
+const errorLink = onError(error => {
+  const {networkError, graphQLErrors} = error;
+  console.error({networkError, graphQLErrors});
+  const isUnauthorized = networkError?.response?.status === 401;
 
-  if (
-    error?.message === 'Invalid token.' ||
-    error?.message === 'User Not Found' ||
-    error?.message === 'Your account has been blocked by the administrator.'
-  ) {
+  if (isUnauthorized) {
+    console.error('Unauthorized response received from GraphQL. Logout user.');
     useAuthStore.getState().setToken();
     useAuthStore.getState().setUser();
     localStorage.removeItem('token');
