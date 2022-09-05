@@ -9,17 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
-import useLangStore from '../../stores/useLangStore';
 import {useRegisterMutation} from '../../generated/graphql';
 
 const SignUp = () => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const classes = useStyles();
   const addToast = useToastsStore(s => s.addToast);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const lang = useLangStore(s => s.language);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,6 +36,7 @@ const SignUp = () => {
     if (isLoading) return;
     setIsLoading(true);
     try {
+      const lang = i18n.language.toUpperCase();
       await register({
         variables: {
           user: {

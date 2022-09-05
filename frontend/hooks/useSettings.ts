@@ -1,10 +1,11 @@
+import {useTranslation} from 'react-i18next';
 import {useSettingQuery, SettingQuery} from '../generated/graphql';
-import useLangStore from '../stores/useLangStore';
+
+const defaulData: SettingQuery = {};
 
 const useSettings = () => {
-  const language = useLangStore(s => s.language);
-  const locale = {FR: 'fr', EN: 'en'}[language];
-  const defaulData: SettingQuery = {};
+  const {i18n} = useTranslation();
+  const locale = i18n.language;
   const {data = defaulData} = useSettingQuery({variables: {locale}});
   return data?.setting?.data?.attributes;
 };

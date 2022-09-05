@@ -4,9 +4,16 @@ import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
 import Languages from '../Languages/MenuItem';
-import Action from './Action';
+import Action, {ActionType} from './Action';
 
-const GenericMenu = ({anchorEl, setAnchorEl, actions = []}) => {
+interface Props {
+  anchorEl: Element;
+  setAnchorEl: (el: Element) => void;
+  actions: ActionType[];
+}
+
+const GenericMenu = (props: Props) => {
+  const {anchorEl, setAnchorEl, actions = []} = props;
   const {t} = useTranslation();
   const settings = useSettings();
   const logout = useAuthStore(s => s.logout);

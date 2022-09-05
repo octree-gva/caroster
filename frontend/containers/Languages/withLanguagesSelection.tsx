@@ -1,17 +1,15 @@
-import {useEffect} from 'react';
-import useLangStore from '../../stores/useLangStore';
 import useProfile from '../../hooks/useProfile';
 import {
   useUpdateMeMutation,
-  Enum_Userspermissionsuser_Lang,
+  Enum_Userspermissionsuser_Lang as Lang,
 } from '../../generated/graphql';
-
-type LangFunction = (lang: Enum_Userspermissionsuser_Lang) => void;
+import {useTranslation} from 'react-i18next';
+import {changeLang} from '../../lib/i18n';
 
 export interface LanguageSelectionComponentProps {
-  language: Enum_Userspermissionsuser_Lang;
-  setLanguage: LangFunction;
-  onConfirmCallback: LangFunction;
+  language: Lang;
+  Lang;
+  onChangeLang: (lang: Lang) => void;
 }
 
 const withLanguagesSelection =
@@ -19,18 +17,15 @@ const withLanguagesSelection =
     LanguageSelectionComponent: (
       args: LanguageSelectionComponentProps
     ) => JSX.Element
-  ) => 
-  (props) => {
-    const language = useLangStore(s => s.language);
-    const setLanguage = useLangStore(s => s.setLanguage);
-    const {profile, connected} = useProfile();
+  ) =>
+  props => {
+    const {connected} = useProfile();
     const [updateProfile] = useUpdateMeMutation();
+    const {i18n} = useTranslation();
+    const language = i18n.language.toUpperCase();
 
-    useEffect(() => {
-      if (profile?.lang) setLanguage(profile.lang);
-    }, [profile]);
-
-    const onConfirmCallback = (lang: Enum_Userspermissionsuser_Lang) => {
+    const onChangeLang = (lang: Lang) => {
+      changeLang(lang);
       if (connected) {
         updateProfile({
           variables: {
@@ -45,8 +40,7 @@ const withLanguagesSelection =
     return (
       <LanguageSelectionComponent
         language={language}
-        setLanguage={setLanguage}
-        onConfirmCallback={onConfirmCallback}
+        onChangeLang={onChangeLang}
         {...props}
       />
     );

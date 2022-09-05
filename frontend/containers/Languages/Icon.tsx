@@ -5,15 +5,14 @@ import Icon from '@material-ui/core/Icon';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useTranslation} from 'react-i18next';
-import {Enum_Userspermissionsuser_Lang} from '../../generated/graphql';
+import {Enum_Userspermissionsuser_Lang as Lang} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
 
 const IconLanguageSelection = ({
   language,
-  setLanguage,
-  onConfirmCallback,
+  onChangeLang,
   displayMenu,
 }: LanguageSelectionComponentProps & {displayMenu?: boolean}) => {
   const {t} = useTranslation();
@@ -23,11 +22,9 @@ const IconLanguageSelection = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const onConfirm = (lang: Enum_Userspermissionsuser_Lang) => {
-    setLanguage(lang);
+  const onConfirm = (lang: Lang) => {
     setAnchorEl(null);
-
-    onConfirmCallback(lang);
+    onChangeLang(lang);
   };
 
   return (
@@ -55,12 +52,12 @@ const IconLanguageSelection = ({
         onClose={() => setAnchorEl(null)}
       >
         <MenuItem
-          disabled={language === Enum_Userspermissionsuser_Lang.Fr}
-          onClick={() => onConfirm(Enum_Userspermissionsuser_Lang.Fr)}
+          disabled={language === Lang.Fr}
+          onClick={() => onConfirm(Lang.Fr)}
         >{t`languages.fr`}</MenuItem>
         <MenuItem
-          disabled={language === Enum_Userspermissionsuser_Lang.En}
-          onClick={() => onConfirm(Enum_Userspermissionsuser_Lang.En)}
+          disabled={language === Lang.En}
+          onClick={() => onConfirm(Lang.En)}
         >{t`languages.en`}</MenuItem>
       </Menu>
     </>

@@ -8,7 +8,7 @@ export type ActionType = {
   divider?: boolean;
   label: JSX.Element | string;
   id: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 interface Props {
