@@ -45,7 +45,7 @@ export default factories.createCoreService(
               {
                 event,
                 eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-                waitingPassengersCount: event.waitingPassengers?.length || 0,
+                waitingListCount: event.waitingPassengers?.length || 0,
                 travelsCount: event.travels?.length || 0,
                 newTravelsCount: newTravels?.length || 0,
               }

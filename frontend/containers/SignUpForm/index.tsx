@@ -40,7 +40,7 @@ const SignUp = () => {
       await register({
         variables: {
           user: {
-            username: `${firstName} ${lastName}`,
+            username: email,
             email,
             password,
             firstName,
