@@ -953,6 +953,7 @@ export type Setting = {
   about_link?: Maybe<Scalars['String']>;
   faq_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  matomo_script_url?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   localizations?: Maybe<SettingRelationResponseCollection>;
@@ -975,6 +976,7 @@ export type SettingInput = {
   about_link?: Maybe<Scalars['String']>;
   faq_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  matomo_script_url?: Maybe<Scalars['String']>;
 };
 
 export type SettingRelationResponseCollection = {
@@ -1797,7 +1799,7 @@ export type SettingQuery = (
       & Pick<SettingEntity, 'id'>
       & { attributes?: Maybe<(
         { __typename?: 'Setting' }
-        & Pick<Setting, 'gtm_id' | 'about_link' | 'faq_link' | 'announcement'>
+        & Pick<Setting, 'gtm_id' | 'about_link' | 'faq_link' | 'announcement' | 'matomo_script_url'>
       )> }
     )> }
   )> }
@@ -2508,6 +2510,7 @@ export const SettingDocument = gql`
         about_link
         faq_link
         announcement
+        matomo_script_url
       }
     }
   }

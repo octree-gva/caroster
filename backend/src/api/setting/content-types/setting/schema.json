@@ -4,7 +4,8 @@
   "info": {
     "singularName": "setting",
     "pluralName": "settings",
-    "displayName": "Settings"
+    "displayName": "Settings",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -47,6 +48,14 @@
         }
       },
       "type": "richtext"
+    },
+    "matomo_script_url": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string"
     }
   }
 }

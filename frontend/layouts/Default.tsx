@@ -5,8 +5,8 @@ import GenericToolbar from '../containers/GenericToolbar';
 import {ActionType} from '../containers/GenericMenu/Action';
 import Box from '@material-ui/core/Box';
 import Banner from '../components/Banner';
-import Headroom from 'react-headroom';
 import useSettings from '../hooks/useSettings';
+import useMatomo from '../hooks/useMatomo';
 
 const ANNOUNCEMENT_STORAGE_KEY = 'lastAnnouncementSeen';
 
@@ -23,6 +23,7 @@ interface Props {
 
 const DefaultLayout = (props: Props) => {
   useGTM();
+  useMatomo();
   const {
     children,
     Topbar = null,
