@@ -1,4 +1,6 @@
-# Caroster - Group carpool to your event 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
+# Caroster - Group carpool to your event
 
 Caroster is an easy and free app to organize group carpooling for an event, a party, a seminar, a sports event, a camp, a ski trip…
 
