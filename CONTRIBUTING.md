@@ -2,7 +2,7 @@
 
 #### **Did you find a bug?**
 
-- **Do not open up a GitHub issue if the bug is a security vulnerability**, and instead to send an email to caroster@caroster.io.
+- **Do not open up a GitHub issue if the bug is a security vulnerability**, and instead to send an email to caroster@octree.ch.
 
 - **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/octree-gva/caroster/issues).
 
