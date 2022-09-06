@@ -6,7 +6,7 @@ export default {
    * Send event recap to creators
    * Everyday at 08:00
    */
-  "*/1 * * * *": async ({ strapi }) => {
+  "0 8 * * *": async ({ strapi }) => {
     const events = await strapi.entityService.findMany("api::event.event", {
       filters: {
         date: {

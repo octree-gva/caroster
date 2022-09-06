@@ -63,7 +63,9 @@ const sendEmailToCreator = async (event) => {
       {
         event,
         eventTime: event.date
-          ? DateTime.fromISO(event.date).format("dddd D MMMM YYYY")
+          ? DateTime.fromISO(event.date).toLocaleString(
+              DateTime.DATE_MED_WITH_WEEKDAY
+            )
           : null,
         eventLink: `${STRAPI_URL}/e/${event.uuid}`,
       }
