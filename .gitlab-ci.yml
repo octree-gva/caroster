@@ -1,8 +1,6 @@
 include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/jobs.yaml
-  - project: o/infra/templates
-    file: /gitlab-ci/includes/helm-deploy.yaml
 
 Test E2E:
   stage: test
@@ -12,8 +10,6 @@ Test E2E:
       changes:
         - backend/**/*
         - e2e/**/*
-      exists:
-        - backend/tests
   cache:
     key: node_modules
     paths:
@@ -45,32 +41,3 @@ Build Strapi:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
         - backend/**/*
-    
-Deploy NextJS to Test:
-  extends: .deployJelasticNode
-  needs: ["Build NextJS"]
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME && $NODE_ID_NEXT
-      changes:
-        - frontend/**/*
-  variables:
-    NODE_ID: $NODE_ID_NEXT
-  environment:
-    name: Test
-    url: "https://$ENVNAME.hidora.com"
-
-Deploy Strapi to Test:
-  extends: .deployJelasticNode
-  needs: ["Build Strapi"]
-  variables:
-    NODE_ID: $NODE_ID_STRAPI
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME && $NODE_ID_STRAPI
-      changes:
-        - backend/**/*
-
-Deploy to Kubernetes Test:
-  extends: .deployStrapiNextjs
-  stage: deploy
-  variables:
-    ENVNAME: test
