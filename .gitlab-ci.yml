@@ -4,3 +4,13 @@ include:
 
 Build:
   extends: .build
+
+Deploy Test:
+  extends: .deployJelastic
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $ENVNAME
+  variables:
+    MANIFEST_PATH: manifest-jps/strapi.yml
+  environment:
+    name: Test
+    url: "https://$ENVNAME.hidora.com"
