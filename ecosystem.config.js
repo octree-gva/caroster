@@ -16,6 +16,10 @@ module.exports = {
       args: "start",
       interpreter: "sh",
       restart_delay: 10000,
+      env: {
+        PORT: 3000,
+        STRAPI_URL: `http://localhost:1337`,
+      },
     },
   ],
 };
