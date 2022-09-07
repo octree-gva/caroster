@@ -8,11 +8,13 @@ import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
+import {useUpdateMeMutation} from '../../generated/graphql';
 
-const Profile = ({profile, updateProfile, logout}) => {
+const Profile = ({profile, logout}) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const classes = useStyles();
+  const [updateProfile] = useUpdateMeMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [firstName, setFirstName] = useState(profile.firstName);
@@ -33,13 +35,14 @@ const Profile = ({profile, updateProfile, logout}) => {
   const savePassword = async () => {
     try {
       await updateProfile({
-        oldPassword,
-        password: newPassword,
+        variables: {
+          userUpdate: {oldPassword, password: newPassword},
+        },
       });
       addToast(t('profile.password_changed'));
       resetPassword();
     } catch (err) {
-      if (err.message === 'Auth.form.error.password.matching') {
+      if (err.message === 'Wrong password') {
         setErrorPassword(t('profile.errors.password_nomatch'));
         return;
       }
@@ -48,7 +51,11 @@ const Profile = ({profile, updateProfile, logout}) => {
 
   const onSave = async () => {
     try {
-      await updateProfile({firstName, lastName, email});
+      await updateProfile({
+        variables: {
+          userUpdate: {firstName, lastName, email},
+        },
+      });
       setIsEditing(false);
     } catch (error) {
       console.error(error);
@@ -69,7 +76,7 @@ const Profile = ({profile, updateProfile, logout}) => {
     );
 
   return (
-    <form>
+    <>
       <Card>
         <CardContent>
           <ProfileField
@@ -143,7 +150,7 @@ const Profile = ({profile, updateProfile, logout}) => {
           )}
         </CardActions>
       </Card>
-    </form>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
-import {UsersPermissionsUserInput, useUpdateMeMutation} from '../generated/graphql';
 import useAuthStore from '../stores/useAuthStore';
 import useProfile from '../hooks/useProfile';
 import Loading from '../containers/Loading';
@@ -14,14 +13,10 @@ const ProfilePage = () => {
   const isAuth = useAuthStore(s => !!s.token);
   const logout = useAuthStore(s => s.logout);
   const {profile} = useProfile();
-  const [updateProfile] = useUpdateMeMutation();
 
   useEffect(() => {
     if (!isAuth) router.push('/');
   }, [isAuth]);
-
-  const onUpdateProfile = (userUpdate: UsersPermissionsUserInput) =>
-    updateProfile({variables: {userUpdate}});
 
   const menuActions = [
     {
@@ -40,11 +35,7 @@ const ProfilePage = () => {
 
   return (
     <Layout menuTitle={t('profile.title')} menuActions={menuActions} goBack>
-      <Profile
-        profile={profile}
-        updateProfile={onUpdateProfile}
-        logout={logout}
-      />
+      <Profile profile={profile} logout={logout} />
     </Layout>
   );
 };
