@@ -1391,6 +1391,7 @@ export type UsersPermissionsUser = {
   __typename?: 'UsersPermissionsUser';
   username: Scalars['String'];
   email: Scalars['String'];
+  provider?: Maybe<Scalars['String']>;
   confirmed?: Maybe<Scalars['Boolean']>;
   role?: Maybe<UsersPermissionsRoleEntityResponse>;
   events?: Maybe<EventRelationResponseCollection>;
@@ -1888,7 +1889,7 @@ export type DeleteTravelMutation = (
 
 export type UserFieldsFragment = (
   { __typename?: 'UsersPermissionsUser' }
-  & Pick<UsersPermissionsUser, 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName' | 'lang' | 'onboardingUser' | 'onboardingCreator'>
+  & Pick<UsersPermissionsUser, 'username' | 'email' | 'confirmed' | 'lastName' | 'firstName' | 'lang' | 'onboardingUser' | 'onboardingCreator' | 'provider'>
   & { events?: Maybe<(
     { __typename?: 'EventRelationResponseCollection' }
     & { data: Array<(
@@ -2119,6 +2120,7 @@ export const UserFieldsFragmentDoc = gql`
   lang
   onboardingUser
   onboardingCreator
+  provider
   events {
     data {
       id

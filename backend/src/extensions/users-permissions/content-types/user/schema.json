@@ -29,7 +29,7 @@
     "provider": {
       "type": "string",
       "configurable": false,
-      "private": true
+      "private": false
     },
     "password": {
       "type": "password",

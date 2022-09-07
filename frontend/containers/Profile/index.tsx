@@ -21,6 +21,7 @@ const Profile = ({profile, updateProfile, logout}) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+  const isStrapiUser = profile.provider === 'local';
 
   const resetPassword = () => {
     setIsEditingPassword(false);
@@ -32,7 +33,7 @@ const Profile = ({profile, updateProfile, logout}) => {
   const savePassword = async () => {
     try {
       await updateProfile({
-        old_password: oldPassword,
+        oldPassword,
         password: newPassword,
       });
       addToast(t('profile.password_changed'));
@@ -100,6 +101,7 @@ const Profile = ({profile, updateProfile, logout}) => {
             })}
             onChange={setEmail}
             isEditing={isEditing}
+            disabled={!isStrapiUser}
           />
         </CardContent>
         <CardActions className={classes.actions}>
@@ -118,26 +120,26 @@ const Profile = ({profile, updateProfile, logout}) => {
               </Button>
             </>
           )}
+          {isEditing && isStrapiUser && (
+            <Button
+              type="button"
+              onClick={evt => {
+                if (evt.preventDefault) evt.preventDefault();
+                setIsEditingPassword(true);
+              }}
+            >
+              {t('profile.actions.change_password')}
+            </Button>
+          )}
           {isEditing && (
-            <>
-              <Button
-                type="button"
-                onClick={evt => {
-                  if (evt.preventDefault) evt.preventDefault();
-                  setIsEditingPassword(true);
-                }}
-              >
-                {t('profile.actions.change_password')}
-              </Button>
-              <Button
-                type="submit"
-                color="primary"
-                onClick={onSave}
-                variant="contained"
-              >
-                {t('profile.actions.save')}
-              </Button>
-            </>
+            <Button
+              type="submit"
+              color="primary"
+              onClick={onSave}
+              variant="contained"
+            >
+              {t('profile.actions.save')}
+            </Button>
           )}
         </CardActions>
       </Card>

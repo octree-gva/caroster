@@ -21,8 +21,7 @@ const EditPassword = ({
   return (
     <form
       onSubmit={evt => {
-        // Stop editing
-        if (evt.preventDefault) evt.preventDefault();
+        evt?.preventDefault?.();
         save();
       }}
     >

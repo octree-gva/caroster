@@ -1,25 +1,21 @@
-import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-const ProfileField = ({
-  name,
-  label,
-  value,
-  defaultValue = '',
-  onChange,
-  isEditing,
-  ...inputProps
-}) => {
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
+
+type Props = TextFieldProps & {
+  isEditing: boolean;
+};
+
+const ProfileField = (props: Props) => {
+  const {onChange, isEditing, ...inputProps} = props;
+  const {name, label, value, defaultValue = ''} = inputProps;
+
   if (isEditing) {
     return (
       <TextField
-        label={label}
         fullWidth
         margin="dense"
-        value={value}
-        onChange={({target: {value = ''}}) => onChange(value)}
+        onChange={e => onChange(e.target.value)}
         id={`Profile${name}`}
-        name={name}
         {...inputProps}
       />
     );
