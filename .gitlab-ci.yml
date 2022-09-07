@@ -2,22 +2,5 @@ include:
   - project: o/infra/templates
     file: /gitlab-ci/includes/jobs.yaml
 
-Build NextJS:
+Build:
   extends: .build
-  variables:
-    CI_PROJECT_DIR: frontend/
-    CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE/next
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      changes:
-        - frontend/**/*
-
-Build Strapi:
-  extends: .build
-  variables:
-    CI_PROJECT_DIR: backend/
-    CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE/strapi
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      changes:
-        - backend/**/*

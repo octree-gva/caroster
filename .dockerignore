@@ -1,0 +1,8 @@
+**/*/node_modules
+**/*/Dockerfile
+**/*/.dockerignore
+**/*/.env
+backend/.cache
+backend/.tmp
+backend/build
+frontend/.next
