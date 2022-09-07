@@ -145,9 +145,7 @@ test("createPassenger add a new passenger to travel's passengers list", async ()
                         attributes: {
                           name: passenger.name,
                           location: passenger.location,
-                          user: {
-                            data: null,
-                          },
+                          user: null,
                         },
                       },
                     ],
