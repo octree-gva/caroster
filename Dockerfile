@@ -10,9 +10,11 @@ EXPOSE 80
 WORKDIR /srv/app
 
 RUN apk add --no-cache nginx && yarn global add pm2
+
 COPY ./frontend /srv/app/frontend
 COPY ./backend /srv/app/backend
 COPY ./ecosystem.config.js /srv/app/
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
+COPY ./docker-entrypoint.sh /usr/local/bin
 
-CMD nginx && pm2-runtime start ecosystem.config.js
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
