@@ -7,7 +7,6 @@ const useMatomo = () => {
   useEffect(() => {
     if (settings) {
       const {matomo_script_url} = settings;
-      console.log({matomo_script_url});
       if (matomo_script_url && typeof window !== 'undefined')
         loadMatomo(matomo_script_url);
     }

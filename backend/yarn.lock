@@ -11698,6 +11698,13 @@ spdy-transport@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/spdy-transport/-/spdy-transport-3.0.0.tgz#00d4863a6400ad75df93361a1608605e5dcdcf31"
   integrity sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==
+  dependencies:
+    debug "^4.1.0"
+    detect-node "^2.0.4"
+    hpack.js "^2.1.6"
+    obuf "^1.1.2"
+    readable-stream "^3.0.6"
+    wbuf "^1.7.3"
 
 spdy@^4.0.2:
   version "4.0.2"
@@ -11813,6 +11820,11 @@ strapi-plugin-email-designer@^2.1.1:
     react-github-btn "^1.2.0"
     react-syntax-highlighter "^15.4.3"
     striptags "^3.2.0"
+
+strapi-plugin-init-admin-user@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-init-admin-user/-/strapi-plugin-init-admin-user-0.1.3.tgz#10e2b585468fc34551550476c3f8b044fbd2dbf1"
+  integrity sha512-5LRaSIHqz2lN6JB7+iYmiqdVMDoI4rRLVMqx/+KwUWVu0w59wfMmRi9wjfDP2gi79ePf55JW0bAR3g5ovbUjUA==
 
 stream-browserify@^3.0.0:
   version "3.0.0"

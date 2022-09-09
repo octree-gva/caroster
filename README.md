@@ -26,7 +26,18 @@ git clone https://github.com/octree-gva/caroster.git
 cd caroster
 ```
 
-#### Frontend
+### Run with Docker
+
+```shell
+docker build -t caroster .
+cp backend/.env.example backend/.env
+nano .env # Edit with your own configuration
+docker run -d -p 80:80 --env-file backend/.env caroster
+```
+
+## Development
+
+### Frontend
 
 These steps will prepare the frontend to run in development mode.
 
@@ -38,7 +49,7 @@ yarn dev
 
 The frontend is now accessible on http://localhost:3000
 
-#### Backend
+### Backend
 
 These steps will prepare and configure the backend to run in development mode.
 
