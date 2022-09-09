@@ -6,13 +6,7 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import useAuthStore from '../stores/useAuthStore';
 
-const {STRAPI_URL = ''} = process.env;
-
-// https://github.com/vercel/next.js/tree/canary/examples/with-apollo
-// https://github.com/vercel/next.js/tree/canary/examples/layout-component
-// https://www.apollographql.com/docs/react/networking/authentication/
-// https://www.apollographql.com/docs/react/data/error-handling/
-// https://www.apollographql.com/docs/react/caching/cache-field-behavior/#the-merge-function
+const {STRAPI_URL = 'http://localhost:1337'} = process?.env;
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient;

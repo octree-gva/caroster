@@ -1,4 +1,4 @@
-import {createMuiTheme} from '@material-ui/core/styles';
+import {createTheme} from '@material-ui/core/styles';
 
 export const caroster = {
   palette: {
@@ -10,7 +10,7 @@ export const caroster = {
     },
     error: {
       light: '#efbcc4',
-      main: '#d4485e'
+      main: '#d4485e',
     },
     background: {
       default: '#F4F4FF',
@@ -37,10 +37,7 @@ export const caroster = {
     },
   },
   typography: {
-    fontFamily:  [
-      'Inter',
-      'sans-serif'
-    ]
+    fontFamily: ['Inter', 'sans-serif'],
   },
   breakpoints: {
     values: {
@@ -53,4 +50,4 @@ export const caroster = {
   },
 };
 
-export default createMuiTheme(caroster);
+export default createTheme(caroster);

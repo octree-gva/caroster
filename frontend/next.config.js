@@ -1,7 +1,22 @@
-const withPWA = require('next-pwa');
-const {STRAPI_URL = 'http://localhost:1337', NODE_ENV} = process.env;
+const {NODE_ENV, STRAPI_URL = 'http://localhost:1337'} = process.env;
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: NODE_ENV !== 'production',
+});
 
 module.exports = withPWA({
+  swcMinify: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  env: {
+    STRAPI_URL: process.env.STRAPI_URL,
+  },
+
   async rewrites() {
     return [
       {
@@ -29,16 +44,5 @@ module.exports = withPWA({
         destination: `${STRAPI_URL}/email-designer/:slug*`,
       },
     ];
-  },
-
-  pwa: {
-    dest: 'public',
-    disable: NODE_ENV !== 'production',
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
   },
 });

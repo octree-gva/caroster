@@ -100,7 +100,7 @@ const EventBar = ({event, onAdd}) => {
               alt="Logo"
             />
           </Link>
-          <Tooltip title={event.name}>
+          <Tooltip title={event.name || ''}>
             <Typography
               variant="h6"
               noWrap
