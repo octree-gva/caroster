@@ -121,6 +121,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             className={classes.field}
             label={t('travel.creation.phone')}
             fullWidth
+            inputProps={{type: 'tel'}}
             helperText=" "
             value={phone}
             onChange={e => setPhone(e.target.value)}
