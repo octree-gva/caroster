@@ -61,7 +61,7 @@
   "menu": {
     "about": "À propos de Caroster",
     "tour": "Découverte de Caroster",
-    "dashboard": "Tableau de bord",
+    "dashboard": "Mes Caroster",
     "language": "Langue",
     "login": "Se connecter",
     "logout": "Se déconnecter",
@@ -196,7 +196,7 @@
   "dashboard": {
     "title": "$t(menu.dashboard)",
     "actions": {
-      "see_event": "Voir plus",
+      "see_event": "Accéder",
       "add_event": "Créer un caroster"
     },
     "sections": {
@@ -283,12 +283,6 @@
     "login": "$t(menu.login)",
     "errors": {
       "email_taken": "Cet email est déjà associé à un compte"
-    },
-    "success": {
-      "title": "Bienvenue !",
-      "text_html": "Lorem Ipsum dolor sit amet, consectetur <strong>adipiscing elit</strong>",
-      "dashboard": "Aller sur son tableau de bord",
-      "create_event": "Créer un évènement"
     }
   },
   "confirm": {

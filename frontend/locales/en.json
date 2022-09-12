@@ -61,7 +61,7 @@
   "menu": {
     "about": "About Caroster",
     "tour": "Caroster tour",
-    "dashboard": "Dashboard",
+    "dashboard": "My Caroster",
     "language": "Language",
     "login": "Login",
     "logout": "Logout",
@@ -283,12 +283,6 @@
     "login": "$t(menu.login)",
     "errors": {
       "email_taken": "This email is already associated with an account"
-    },
-    "success": {
-      "title": "Welcome!",
-      "text_html": "Lorem Ipsum dolor sit amet, consectetur <strong> adipiscing elit </strong>",
-      "dashboard": "Go to your dashboard",
-      "create_event": "Create an event"
     }
   },
   "confirm": {
