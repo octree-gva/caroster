@@ -1,16 +1,19 @@
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
-import useProfile from '../hooks/useProfile';
 import Layout from '../layouts/Centered';
 import CreateEvent from '../containers/CreateEvent';
 import LanguagesIcon from '../containers/Languages/Icon';
 import Paper from '../components/Paper';
 import Logo from '../components/Logo';
+import {useSession} from 'next-auth/react';
+import pageUtils from '../lib/pageUtils';
 
 const Home = () => {
   const {t} = useTranslation();
   const router = useRouter();
-  const {isReady, profile} = useProfile();
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
+  const isReady = session.status !== 'loading';
 
   const noUserMenuActions = [
     {
@@ -38,7 +41,7 @@ const Home = () => {
     },
   ];
 
-  const menuActions = !!profile ? loggedMenuActions : noUserMenuActions;
+  const menuActions = isAuthenticated ? loggedMenuActions : noUserMenuActions;
 
   if (!isReady) return null;
 
@@ -46,15 +49,17 @@ const Home = () => {
     <Layout
       menuTitle={t('event.creation.title')}
       menuActions={menuActions}
-      displayMenu={!!profile}
+      displayMenu={isAuthenticated}
     >
       <Paper>
         <Logo />
         <CreateEvent />
       </Paper>
-      {!profile && <LanguagesIcon displayMenu={!!profile} />}
+      {!isAuthenticated && <LanguagesIcon displayMenu={false} />}
     </Layout>
   );
 };
+
+export const getServerSideProps = pageUtils.getServerSideProps();
 
 export default Home;

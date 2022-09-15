@@ -1,8 +1,6 @@
-import useAuthStore from '../stores/useAuthStore';
-
 const useLoginWithProvider = () => {
-  const setToken = useAuthStore(s => s.setToken);
-  const setUser = useAuthStore(s => s.setUser);
+  const setToken = () => {}; // DEV
+  const setUser = () => {}; // DEV
 
   const loginWithProvider = async (provider: string, search: string) => {
     const resultRaw = await fetch(`/api/auth/${provider}/callback${search}`);

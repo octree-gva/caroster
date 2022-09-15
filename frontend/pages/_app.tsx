@@ -4,6 +4,7 @@ import {ApolloProvider} from '@apollo/client';
 import {ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import {SessionProvider} from 'next-auth/react';
 import moment from 'moment';
 import MomentUtils from '@date-io/moment';
 import {useApollo} from '../lib/apolloClient';
@@ -50,4 +51,10 @@ const App = function (props: AppProps) {
   );
 };
 
-export default App;
+const AppWrapper = (props: AppProps) => (
+  <SessionProvider session={props?.pageProps.session} basePath="/api/nauth">
+    <App {...props} />
+  </SessionProvider>
+);
+
+export default AppWrapper;

@@ -19,9 +19,9 @@ const Passenger = (props: Props) => {
   const {passenger, button, isVehicle} = props;
   const {t} = useTranslation();
   const classes = useStyles();
-  const {user} = useProfile();
+  const {userId} = useProfile();
 
-  const isUser = user && `${user.id}` === passenger?.attributes.user?.data?.id;
+  const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
   const showLocation = isVehicle ? false : passenger.attributes.location;
 
   if (passenger) {

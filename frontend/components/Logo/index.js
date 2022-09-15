@@ -4,9 +4,9 @@ import useSettings from '../../hooks/useSettings';
 
 const Logo = () => {
   const classes = useStyles();
-  const {user} = useProfile();
+  const {connected} = useProfile();
   const settings = useSettings();
-  const appLink = user ? '/dashboard' : settings?.['about_link'] || '';
+  const appLink = connected ? '/dashboard' : settings?.['about_link'] || '';
   return (
     <div className={classes.layout}>
       <a href={appLink} className={classes.link}>

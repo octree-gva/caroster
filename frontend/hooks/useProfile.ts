@@ -1,16 +1,16 @@
 import {useEffect, useState} from 'react';
-import useAuthStore from '../stores/useAuthStore';
 import {ProfileDocument, UsersPermissionsUser} from '../generated/graphql';
 import {initializeApollo} from '../lib/apolloClient';
+import {useSession} from 'next-auth/react';
 
 const useProfile = () => {
-  const token = useAuthStore(s => s.token);
-  const user = useAuthStore(s => s.user);
+  const session = useSession();
   const [isReady, setIsReady] = useState(false);
   const [profile, setProfile] = useState<UsersPermissionsUser | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const fetchProfile = async () => {
-    const apolloClient = initializeApollo({});
+    const apolloClient = initializeApollo('', session);
 
     try {
       const {data} = await apolloClient.query({
@@ -18,6 +18,7 @@ const useProfile = () => {
       });
       const fetchedProfile = data?.me?.profile;
       setProfile(fetchedProfile);
+      setUserId(data?.me?.id);
     } catch (error) {
       console.error(error);
     } finally {
@@ -26,15 +27,14 @@ const useProfile = () => {
   };
 
   useEffect(() => {
-    if (profile) setIsReady(true);
-    else if (token) fetchProfile();
-    else setIsReady(true);
-  }, [token, profile]);
+    if (session.status === 'authenticated') fetchProfile();
+    else if (session.status === 'unauthenticated') setIsReady(true);
+  }, [session]);
 
   return {
     profile,
-    connected: !!token,
-    user,
+    userId,
+    connected: session.status === 'authenticated',
     isReady,
   };
 };

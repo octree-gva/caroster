@@ -1,4 +1,4 @@
-import {useState, useReducer, PropsWithChildren, useMemo} from 'react';
+import {useState, useReducer, PropsWithChildren} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
@@ -7,14 +7,12 @@ import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
 import {
   EventByUuidDocument,
-  useFindUserVehiclesLazyQuery,
+  FindUserVehiclesDocument,
+  useFindUserVehiclesQuery,
 } from '../../../generated/graphql';
-import useProfile from '../../../hooks/useProfile';
 import Fab from '../../../containers/Fab';
-import {
-  initializeApollo,
-  APOLLO_STATE_PROP_NAME,
-} from '../../../lib/apolloClient';
+import pageUtils from '../../../lib/pageUtils';
+import {getSession, useSession} from 'next-auth/react';
 
 interface Props {
   eventUUID: string;
@@ -27,18 +25,17 @@ const Page = (props: PropsWithChildren<Props>) => {
 const TravelsTab: TabComponent = (props: {event}) => {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {user} = useProfile();
-  const [findUserVehicle, {data}] = useFindUserVehiclesLazyQuery();
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
+  const {data} = useFindUserVehiclesQuery({
+    skip: !isAuthenticated,
+  });
   const vehicles = data?.me?.profile?.vehicles?.data || [];
   const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
 
-  useMemo(() => {
-    if (user) findUserVehicle();
-  }, [user]);
-
   const addTravelClickHandler =
-    user && vehicles?.length != 0
+    isAuthenticated && vehicles?.length != 0
       ? toggleVehicleChoice
       : () => toggleNewTravel({opened: true});
 
@@ -79,32 +76,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export async function getServerSideProps(ctx) {
-  const {uuid} = ctx.query;
-  const {host = ''} = ctx.req.headers;
+export const getServerSideProps = pageUtils.getServerSideProps(
+  async (context, apolloClient) => {
+    const {uuid} = context.query;
+    const {host = ''} = context.req.headers;
+    const session = await getSession(context);
 
-  const apolloClient = initializeApollo();
-  const {data: {eventByUUID: {data: event = null} = {}} = {}} =
-    await apolloClient.query({
+    // Fetch event
+    const {data} = await apolloClient.query({
       query: EventByUuidDocument,
       variables: {uuid},
     });
+    const event = data?.eventByUUID?.data;
 
-  try {
+    // Fetch user vehicles
+    if (session)
+      await apolloClient.query({
+        query: FindUserVehiclesDocument,
+      });
+
     return {
-      props: {
-        [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
-        eventUUID: uuid,
-        metas: {
-          title: event?.name || '',
-          url: `https://${host}${ctx.resolvedUrl}`,
-        },
+      eventUUID: uuid,
+      metas: {
+        title: event?.attributes?.name || '',
+        url: `https://${host}${context.resolvedUrl}`,
       },
     };
-  } catch (error) {
-    console.error(error);
-    return {props: {}};
   }
-}
+);
 
 export default Page;

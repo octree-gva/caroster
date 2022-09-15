@@ -19,12 +19,10 @@ interface Props {
 const VehicleItem = ({vehicle, select}: Props) => {
   const {t} = useTranslation();
   const classes = useStyles();
-  const {user} = useProfile();
+  const {userId} = useProfile();
   const [deleteVehicleMutation] = useDeleteVehicleMutation({
     variables: {id: vehicle.id},
-    refetchQueries: [
-      {query: FindUserVehiclesDocument, variables: {userId: user.id}},
-    ],
+    refetchQueries: [{query: FindUserVehiclesDocument, variables: {userId}}],
   });
 
   return (

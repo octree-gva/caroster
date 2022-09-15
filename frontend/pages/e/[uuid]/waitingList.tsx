@@ -4,7 +4,7 @@ import {EventByUuidDocument} from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
 import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
-import {initializeApollo} from '../../../lib/apolloClient';
+import pageUtils from '../../../lib/pageUtils';
 
 interface NewPassengerDialogContext {
   addSelf: boolean;
@@ -19,22 +19,22 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const WaitingListTab: TabComponent = ({event}) => {
-  const {user} = useProfile();
+  const {userId} = useProfile();
   const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
     useState<NewPassengerDialogContext | null>(null);
 
   const canAddSelf = useMemo(() => {
-    if (!user) return false;
+    if (!userId) return false;
     const isInWaitingList = event?.waitingPassengers?.data?.some(
-      passenger => passenger.attributes.user?.data?.id === `${user.id}`
+      passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
     const isInTravel = event?.travels?.data?.some(travel =>
       travel.attributes.passengers?.data?.some(
-        passenger => passenger.attributes.user?.data?.id === `${user.id}`
+        passenger => passenger.attributes.user?.data?.id === `${userId}`
       )
     );
     return !(isInWaitingList || isInTravel);
-  }, [event, user]);
+  }, [event, userId]);
 
   return (
     <>
@@ -54,26 +54,26 @@ const WaitingListTab: TabComponent = ({event}) => {
   );
 };
 
-export async function getServerSideProps(ctx) {
-  const {uuid} = ctx.query;
-  const apolloClient = initializeApollo();
-  const {data = {}} = await apolloClient.query({
-    query: EventByUuidDocument,
-    variables: {uuid},
-  });
-  const {eventByUUID: event} = data;
-  const {host = ''} = ctx.req.headers;
+export const getServerSideProps = pageUtils.getServerSideProps(
+  async (context, apolloClient) => {
+    const {uuid} = context.query;
+    const {host = ''} = context.req.headers;
 
-  return {
-    props: {
-      event,
+    // Fetch event
+    const {data} = await apolloClient.query({
+      query: EventByUuidDocument,
+      variables: {uuid},
+    });
+    const event = data?.eventByUUID?.data;
+
+    return {
       eventUUID: uuid,
       metas: {
-        title: event?.name || '',
-        url: `https://${host}${ctx.resolvedUrl}`,
+        title: event?.attributes?.name || '',
+        url: `https://${host}${context.resolvedUrl}`,
       },
-    },
-  };
-}
+    };
+  }
+);
 
 export default Page;

@@ -27,7 +27,7 @@ const TravelColumns = (props: Props) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
-  const {user} = useProfile();
+  const {profile, userId, connected} = useProfile();
   const classes = useStyles();
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
@@ -36,24 +36,24 @@ const TravelColumns = (props: Props) => {
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const canAddSelf = useMemo(() => {
-    if (!user) return false;
+    if (!connected) return false;
     const isInWaitingList = event?.waitingPassengers?.data.some(
-      passenger => passenger.attributes.user?.data?.id === `${user.id}`
+      passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
     const isInTravel = event?.travels?.data.some(travel =>
       travel.attributes.passengers?.data.some(
-        passenger => passenger.attributes.user?.data?.id === `${user.id}`
+        passenger => passenger.attributes.user?.data?.id === `${userId}`
       )
     );
     return !(isInWaitingList || isInTravel);
-  }, [event, user]);
+  }, [event, userId]);
 
   const addSelfToTravel = async (travel: TravelType) => {
     try {
       await addPassenger({
-        user: user?.id,
-        email: user.email,
-        name: user.username,
+        user: userId,
+        email: profile.email,
+        name: profile.username,
         travel: travel.id,
       });
       addToEvent(event.id);

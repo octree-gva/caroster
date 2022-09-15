@@ -4,76 +4,51 @@ import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
-import useAuthStore from '../stores/useAuthStore';
-
-const {STRAPI_URL = 'http://localhost:1337'} = process?.env;
+import {useSession} from 'next-auth/react';
+import {Session} from 'next-auth';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
-let apolloClient;
+let apolloClient: ApolloClient<any>;
 
-const authLink = setContext((_, {headers}) => {
-  // get the authentication token from local storage if it exists
-  const {token} = useAuthStore.getState();
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
+const authLink = (session: Session | null) =>
+  setContext(async (_, {headers}) => {
+    const token = session?.token?.jwt;
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
+  });
+
+const errorLink = onError(({graphQLErrors = [], operation}) => {
+  console.error({graphQLErrors, operation});
+  const message = graphQLErrors?.[0]?.message;
+
+  if (message === 'Forbidden') window.location.href = '/auth/login';
 });
 
-const errorLink = onError(error => {
-  const {networkError, graphQLErrors} = error;
-  console.error({networkError, graphQLErrors});
-  const isUnauthorized = networkError?.response?.status === 401;
-
-  if (isUnauthorized) {
-    console.error('Unauthorized response received from GraphQL. Logout user.');
-    useAuthStore.getState().setToken();
-    useAuthStore.getState().setUser();
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  }
-});
-
-const httpLink = uri =>
+const httpLink = (uri: string) =>
   new HttpLink({
-    uri,
+    uri, // Server URL (must be absolute)
     credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
   });
 
-const createApolloClient = () => {
+const createApolloClient = (uri: string, session: Session | null) => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: from([authLink, errorLink, httpLink(`${STRAPI_URL}/graphql`)]),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Event: {
-          fields: {
-            waitingList: {
-              merge(_, incoming) {
-                return incoming;
-              },
-            },
-          },
-        },
-        Car: {
-          fields: {
-            passengers: {
-              merge(_, incoming) {
-                return incoming;
-              },
-            },
-          },
-        },
-      },
-    }),
+    link: from([authLink(session), errorLink, httpLink(uri)]),
+    cache: new InMemoryCache(),
   });
 };
 
-export const initializeApollo = (initialState = null) => {
-  const _apolloClient = apolloClient ?? createApolloClient();
+export const initializeApollo = (
+  uri: string,
+  session: Session | null,
+  initialState = null
+) => {
+  const _apolloClient = apolloClient ?? createApolloClient(uri, session);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here
   if (initialState) {
@@ -99,15 +74,15 @@ export const initializeApollo = (initialState = null) => {
   return _apolloClient;
 };
 
-export const addApolloState = (client, pageProps) => {
+export const addApolloState = (client: ApolloClient<any>, pageProps: any) => {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
   }
   return pageProps;
 };
 
-export const useApollo = pageProps => {
+export const useApollo = (pageProps: any) => {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
-
-  return useMemo(() => initializeApollo(state), [state]);
+  const {data: session} = useSession();
+  return useMemo(() => initializeApollo('', session, state), [state, session]);
 };

@@ -38,7 +38,7 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
   const emailValidated = validateEmail(email);
   const [location, setlocation] = useState('');
   const canAddPassenger = !!name && !!email;
-  const {user} = useProfile();
+  const {profile, userId} = useProfile();
   const {addPassenger} = usePassengersActions();
 
   const onAddPassenger = async (e: FormEvent) => {
@@ -48,11 +48,11 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
       name,
       location,
     };
-    if (addSelf && user)
+    if (addSelf && profile)
       passenger = {
-        user: user.id,
-        email: user.email,
-        name: user.username,
+        user: userId,
+        email: profile.email,
+        name: profile.username,
         location,
       };
 

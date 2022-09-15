@@ -7,14 +7,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useTranslation} from 'react-i18next';
 import useDebounce from '../../hooks/useDebounce';
-import useProfile from '../../hooks/useProfile';
 import {CardActions} from '@material-ui/core';
 import {isValidEmail} from '../../lib/formValidation';
+import {useSession} from 'next-auth/react';
 
 const Step1 = ({nextStep, event, addToEvent}) => {
   const {t} = useTranslation();
-  const {connected, user} = useProfile();
-  const classes = useStyles({connected});
+  const session = useSession();
+  const user = session?.data?.user;
+  const isAuthenticated = session.status === 'authenticated';
+  const classes = useStyles({connected: isAuthenticated});
 
   // States
   const [name, setName] = useState(event.name ?? '');
@@ -30,15 +32,15 @@ const Step1 = ({nextStep, event, addToEvent}) => {
   const canSubmit = useMemo(() => {
     const n = name.length > 0;
     const e = email.length > 0 && emailIsValid;
-    return connected ? n : n && e;
-  }, [name, email, emailIsValid, connected]);
+    return isAuthenticated ? n : n && e;
+  }, [name, email, emailIsValid, isAuthenticated]);
 
   const onNext = submitEvent => {
     if (submitEvent.preventDefault) submitEvent.preventDefault();
     addToEvent({
       name,
-      email: connected ? user.email : email,
-      newsletter: connected ? true : newsletter,
+      email: isAuthenticated ? user.email : email,
+      newsletter: isAuthenticated ? true : newsletter,
     });
     nextStep();
     return false;
@@ -56,7 +58,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
         id="NewEventName"
         name="name"
       />
-      {!connected && (
+      {!isAuthenticated && (
         <>
           <TextField
             label={t('event.creation.creator_email')}
@@ -94,7 +96,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
         {t('event.creation.next')}
       </Button>
 
-      {!connected && (
+      {!isAuthenticated && (
         <div className={classes.addFromAccountSection}>
           <Typography variant="body1">
             {t('event.creation.addFromAccount.title')}

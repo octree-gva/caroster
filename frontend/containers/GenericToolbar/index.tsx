@@ -23,10 +23,10 @@ const GenericToolbar = ({
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
-  const {user} = useProfile();
+  const {profile} = useProfile();
 
-  const userInfos = user
-    ? [{label: user.username, id: 'Email'}, {divider: true}]
+  const userInfos = profile
+    ? [{label: profile.username, id: 'Email'}, {divider: true}]
     : [];
 
   useEffect(() => {
@@ -67,9 +67,9 @@ const GenericToolbar = ({
               id="MenuMoreInfo"
               onClick={e => setAnchorEl(e.currentTarget)}
             >
-              {user ? (
+              {profile ? (
                 <Avatar className={classes.avatar}>
-                  {`${user.username[0]}`.toUpperCase()}
+                  {`${profile.username[0]}`.toUpperCase()}
                 </Avatar>
               ) : (
                 <Icon>more_vert</Icon>

@@ -18,7 +18,7 @@ const LostPassword = () => {
   const {t} = useTranslation();
   const classes = useStyles();
   const addToast = useToastStore(s => s.addToast);
-  const {user} = useProfile();
+  const {profile} = useProfile();
   const [sendForgotPassword, {loading}] = useForgotPasswordMutation();
   const [isSent, setIsSent] = useState(false);
   const [error, setError] = useState('');
@@ -26,9 +26,9 @@ const LostPassword = () => {
   const canSubmit = email.length > 4;
 
   useEffect(() => {
-    if (user?.confirmed) router.replace('/confirm');
-    else if (user) router.replace('/dashboard');
-  }, [user]);
+    if (profile?.confirmed) router.replace('/confirm');
+    else if (profile) router.replace('/dashboard');
+  }, [profile]);
 
   const onSubmit = useCallback(
     async e => {

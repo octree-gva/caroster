@@ -1,10 +1,9 @@
 import Menu from '@material-ui/core/Menu';
 import {useTranslation} from 'react-i18next';
-import useAuthStore from '../../stores/useAuthStore';
-import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
 import Languages from '../Languages/MenuItem';
 import Action, {ActionType} from './Action';
+import {signOut, useSession} from 'next-auth/react';
 
 interface Props {
   anchorEl: Element;
@@ -16,15 +15,16 @@ const GenericMenu = (props: Props) => {
   const {anchorEl, setAnchorEl, actions = []} = props;
   const {t} = useTranslation();
   const settings = useSettings();
-  const logout = useAuthStore(s => s.logout);
-  const {user} = useProfile();
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
 
-  const logoutMenuItem = user && {
+  const logoutMenuItem = isAuthenticated && {
     label: t('menu.logout'),
     onClick: () => {
-      logout();
-      window.location.href = settings['about_link'];
       setAnchorEl(null);
+      signOut({
+        callbackUrl: settings?.['about_link'] || '/',
+      });
     },
     id: 'LogoutTabs',
   };

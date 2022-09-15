@@ -8,7 +8,7 @@ import {
   useCreateTravelMutation,
   TravelInput,
   FindUserVehiclesDocument,
-  Event
+  Event,
 } from '../../generated/graphql';
 
 interface Props {
@@ -21,7 +21,7 @@ const useActions = (props: Props) => {
   const addToast = useToastsStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const [createTravelMutation] = useCreateTravelMutation();
-  const {user} = useProfile();
+  const {connected} = useProfile();
 
   const createTravel = async (
     travelInput: TravelInput,
@@ -35,7 +35,7 @@ const useActions = (props: Props) => {
         },
       },
     ];
-    if (user) {
+    if (connected) {
       refetchQueries.push({
         query: FindUserVehiclesDocument,
       });

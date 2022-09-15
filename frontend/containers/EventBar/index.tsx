@@ -10,7 +10,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useState} from 'react';
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
-import useAuthStore from '../../stores/useAuthStore';
 import useProfile from '../../hooks/useProfile';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
@@ -20,8 +19,7 @@ const EventBar = ({event, onAdd}) => {
   const router = useRouter();
   const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
-  const token = useAuthStore(s => s.token);
-  const {user} = useProfile();
+  const {profile, connected} = useProfile();
   const classes = useStyles();
 
   const signUp = () =>
@@ -69,16 +67,15 @@ const EventBar = ({event, onAdd}) => {
     {divider: true},
   ];
 
-  const menuActions = token ? loggedMenuActions : noUserMenuActions;
-  const userInfos = user
-    ? [{label: user.username, id: 'Email'}, {divider: true}]
+  const menuActions = connected ? loggedMenuActions : noUserMenuActions;
+  const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
+  const userInfos = profile
+    ? [{label: profile.username, id: 'Email'}, {divider: true}]
     : [];
 
-  const appLink = user ? '/dashboard' : `/e/${event.uuid}` || '';
-
-  const UserIcon = user ? (
+  const UserIcon = profile ? (
     <Avatar className={classes.avatar}>
-      {`${user.username[0]}`.toUpperCase()}
+      {`${profile.username[0]}`.toUpperCase()}
     </Avatar>
   ) : (
     <Icon>more_vert</Icon>

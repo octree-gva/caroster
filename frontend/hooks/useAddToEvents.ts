@@ -1,8 +1,8 @@
 import {useCallback} from 'react';
 import {useUpdateMeMutation} from '../generated/graphql';
-import useAuthStore from '../stores/useAuthStore';
 import create from 'zustand';
 import {persist} from 'zustand/middleware';
+import {useSession} from 'next-auth/react';
 
 type Store = {
   eventsToBeAdded: string[];
@@ -26,7 +26,8 @@ const store = create<Store>(
 
 const useAddToEvents = () => {
   const [updateProfile] = useUpdateMeMutation();
-  const isAuth = useAuthStore(s => !!s.token);
+  const session = useSession();
+  const isAuth = session.status === 'authenticated';
   const eventsToBeAdded = store(s => s.eventsToBeAdded);
   const addEvent = store(s => s.addEvent);
   const clearStore = store(s => s.clear);

@@ -24,6 +24,10 @@ module.exports = withPWA({
         destination: `${STRAPI_URL}/graphql`,
       },
       {
+        source: '/api/nauth/:slug*',
+        destination: `/api/nauth/:slug*`,
+      },
+      {
         source: '/api/:slug*',
         destination: `${STRAPI_URL}/api/:slug*`,
       },

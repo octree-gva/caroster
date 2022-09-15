@@ -27,7 +27,7 @@ export const getNavigatorLang = (): AvailableLang => {
   if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined')
     if (navigator.language === 'fr' || navigator.language.includes('fr-'))
       return 'fr';
-  return 'en';
+  return 'fr';
 };
 
 i18n

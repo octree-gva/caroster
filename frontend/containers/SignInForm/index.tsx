@@ -7,13 +7,12 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActions from '@material-ui/core/CardActions';
 import {useTranslation} from 'react-i18next';
+import {signIn} from 'next-auth/react';
 import useToastsStore from '../../stores/useToastStore';
 import useLoginWithProvider from '../../hooks/useLoginWithProvider';
-import useLoginForm from '../../hooks/useLoginForm';
 import useAddToEvents from '../../hooks/useAddToEvents';
 
 const SignIn = () => {
@@ -24,7 +23,6 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const addToast = useToastsStore(s => s.addToast);
-  const {login, loading} = useLoginForm(email, password);
   const {saveStoredEvents} = useAddToEvents();
   const classes = useStyles();
 
@@ -36,7 +34,11 @@ const SignIn = () => {
   const onSubmit = async e => {
     e.preventDefault?.();
     try {
-      await login();
+      await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/',
+      });
       saveStoredEvents();
       router.push('/');
     } catch (error) {
@@ -119,9 +121,6 @@ const SignIn = () => {
           disabled={!canSubmit}
           aria-disabled={!canSubmit}
           id="SignInSubmit"
-          endIcon={
-            loading && <CircularProgress className={classes.loader} size={20} />
-          }
         >
           {t('signin.login')}
         </Button>
@@ -136,10 +135,6 @@ const useStyles = makeStyles(theme => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  loader: {
-    marginLeft: '14px',
-    color: theme.palette.background.paper,
   },
   actions: {
     justifyContent: 'center',

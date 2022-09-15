@@ -1,25 +1,20 @@
-import {useMemo, useEffect} from 'react';
+import {useMemo} from 'react';
 import {useRouter} from 'next/router';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-import useAuthStore from '../stores/useAuthStore';
 import useProfile from '../hooks/useProfile';
 import LayoutDefault from '../layouts/Default';
 import DashboardEvents from '../containers/DashboardEvents';
 import DashboardEmpty from '../containers/DashboardEmpty';
 import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
+import pageUtils from '../lib/pageUtils';
 
 const Dashboard = () => {
   const {t} = useTranslation();
   const router = useRouter();
-  const isAuth = useAuthStore(s => !!s.token);
   const {profile, isReady} = useProfile();
   const events = profile?.events?.data || [];
-
-  useEffect(() => {
-    if (!isAuth) router.push('/');
-  }, [isAuth]);
 
   const pastEvents = useMemo(
     () =>
@@ -57,7 +52,7 @@ const Dashboard = () => {
     },
   ];
 
-  if (!events || !isAuth || !isReady)
+  if (!events || !isReady)
     return (
       <LayoutDefault menuTitle={t('dashboard.title')}>
         <Loading />
@@ -83,5 +78,7 @@ const Dashboard = () => {
 };
 
 const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+
+export const getServerSideProps = pageUtils.getServerSideProps();
 
 export default Dashboard;
