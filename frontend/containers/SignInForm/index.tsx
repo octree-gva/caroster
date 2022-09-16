@@ -1,5 +1,4 @@
-import {useState, useMemo, useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useState, useMemo} from 'react';
 import RouterLink from 'next/link';
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -12,19 +11,18 @@ import CardActions from '@material-ui/core/CardActions';
 import {useTranslation} from 'react-i18next';
 import {signIn} from 'next-auth/react';
 import useToastsStore from '../../stores/useToastStore';
-import useLoginWithProvider from '../../hooks/useLoginWithProvider';
 import useAddToEvents from '../../hooks/useAddToEvents';
+import useRedirectUrlStore from '../../stores/useRedirectUrl';
 
 const SignIn = () => {
   const {t} = useTranslation();
-  const router = useRouter();
-  const {loginWithProvider} = useLoginWithProvider();
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const addToast = useToastsStore(s => s.addToast);
   const {saveStoredEvents} = useAddToEvents();
   const classes = useStyles();
+  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
 
   const canSubmit = useMemo(
     () => [email, password].filter(s => s.length < 4).length === 0,
@@ -34,32 +32,19 @@ const SignIn = () => {
   const onSubmit = async e => {
     e.preventDefault?.();
     try {
+      const callbackUrl = getRedirectUrl() || '/';
       await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/',
+        callbackUrl,
       });
-      saveStoredEvents();
-      router.push('/');
+      saveStoredEvents(); // TODO Check it's correctly executed after sign-in
     } catch (error) {
       handleAuthError(error);
     }
 
     return false;
   };
-
-  useEffect(() => {
-    const authWithGoogle = async search => {
-      try {
-        await loginWithProvider('google', search);
-      } catch (error) {
-        handleAuthError(error);
-      }
-    };
-
-    const search = getURLSearch(router);
-    if (search) authWithGoogle(search);
-  }, [router.route]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleAuthError = error => {
     const strapiError = error.message;
@@ -128,8 +113,6 @@ const SignIn = () => {
     </form>
   );
 };
-
-const getURLSearch = router => router.asPath.replace(router.route, '');
 
 const useStyles = makeStyles(theme => ({
   content: {

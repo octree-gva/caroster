@@ -4,82 +4,25 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import {makeStyles} from '@material-ui/core/styles';
 import {useState} from 'react';
-import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
 import useProfile from '../../hooks/useProfile';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
+import useActions from './useActions';
+import UserIcon from './UserIcon';
 
 const EventBar = ({event, onAdd}) => {
-  const {t} = useTranslation();
-  const router = useRouter();
   const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
   const {profile, connected} = useProfile();
   const classes = useStyles();
-
-  const signUp = () =>
-    router.push({
-      pathname: '/auth/register',
-      state: {event: event?.id},
-    });
-  const signIn = () => router.push('/auth/login');
-  const goToDashboard = () => router.push('/dashboard');
-  const goProfile = () => router.push('/profile');
-
-  const noUserMenuActions = [
-    {
-      label: t('event.actions.add_to_my_events'),
-      onClick: () => {
-        onAdd(true);
-      },
-      id: 'AddToMyEventsTab',
-    },
-    {divider: true},
-    {
-      label: t('menu.login'),
-      onClick: signIn,
-      id: 'SignInTab',
-    },
-    {
-      label: t('menu.register'),
-      onClick: signUp,
-      id: 'SignUpTab',
-    },
-    {divider: true},
-  ];
-
-  const loggedMenuActions = [
-    {
-      label: t('menu.dashboard'),
-      onClick: goToDashboard,
-      id: 'GoToDashboardTab',
-    },
-    {
-      label: t('menu.profile'),
-      onClick: goProfile,
-      id: 'ProfileTab',
-    },
-    {divider: true},
-  ];
-
-  const menuActions = connected ? loggedMenuActions : noUserMenuActions;
+  const menuActions = useActions({onAdd, eventId: event?.id});
   const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
   const userInfos = profile
     ? [{label: profile.username, id: 'Email'}, {divider: true}]
     : [];
-
-  const UserIcon = profile ? (
-    <Avatar className={classes.avatar}>
-      {`${profile.username[0]}`.toUpperCase()}
-    </Avatar>
-  ) : (
-    <Icon>more_vert</Icon>
-  );
 
   return (
     <AppBar
@@ -136,7 +79,7 @@ const EventBar = ({event, onAdd}) => {
             id="MenuMoreInfo"
             onClick={e => setAnchorEl(e.currentTarget)}
           >
-            {UserIcon}
+            <UserIcon />
           </IconButton>
         </>
       </Toolbar>
@@ -167,11 +110,6 @@ const useStyles = makeStyles(theme => ({
   },
   iconButtons: {
     margin: theme.spacing(0),
-  },
-  avatar: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    fontSize: 16,
   },
   shareIcon: {
     marginRight: 0,

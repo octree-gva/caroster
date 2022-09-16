@@ -7,6 +7,8 @@ import Paper from '../components/Paper';
 import Logo from '../components/Logo';
 import {useSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
+import {useEffect} from 'react';
+import useRedirectUrlStore from '../stores/useRedirectUrl';
 
 const Home = () => {
   const {t} = useTranslation();
@@ -14,6 +16,12 @@ const Home = () => {
   const session = useSession();
   const isAuthenticated = session.status === 'authenticated';
   const isReady = session.status !== 'loading';
+  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
+
+  useEffect(() => {
+    const redirectUrl = getRedirectUrl();
+    if (redirectUrl) router.push(redirectUrl);
+  }, []);
 
   const noUserMenuActions = [
     {
