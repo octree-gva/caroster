@@ -24,7 +24,12 @@ const EventCard = ({event}: Props) => {
       }
     >
       <CardContent>
-        <Typography gutterBottom variant="h6" component="h3">
+        <Typography
+          gutterBottom
+          variant="h6"
+          component="h3"
+          className={classes.name}
+        >
           {event.attributes.name}
         </Typography>
         <Typography variant="overline">{t('event.fields.date')}</Typography>
@@ -46,6 +51,11 @@ const EventCard = ({event}: Props) => {
 const useStyles = makeStyles({
   clickable: {
     cursor: 'pointer',
+  },
+  name: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
 });
 export default EventCard;
