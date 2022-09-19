@@ -12,17 +12,17 @@ import Chip from '@material-ui/core/Chip';
 interface Props {
   passenger?: PassengerEntity;
   button?: ReactNode;
-  isVehicle?: boolean;
+  isTravel?: boolean;
 }
 
 const Passenger = (props: Props) => {
-  const {passenger, button, isVehicle} = props;
+  const {passenger, button, isTravel} = props;
   const {t} = useTranslation();
   const classes = useStyles();
   const {userId} = useProfile();
 
   const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
-  const showLocation = isVehicle ? false : passenger.attributes.location;
+  const showLocation = isTravel ? false : passenger.attributes.location;
 
   if (passenger) {
     return (

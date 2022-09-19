@@ -14,7 +14,6 @@ interface Props {
     disabled?: boolean;
   }) => JSX.Element;
   disabled?: boolean;
-  isVehicle?: boolean;
   isTravel?: boolean;
   places?: number;
   onPress?: (passengerId: string) => void;
@@ -22,7 +21,7 @@ interface Props {
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, places, Button, onClick, onPress, disabled, isVehicle} =
+  const {passengers, places, Button, onClick, onPress, disabled, isTravel} =
     props;
   const classes = useStyles();
   let list = passengers;
@@ -49,7 +48,7 @@ const PassengersList = (props: Props) => {
               <Passenger
                 key={index}
                 passenger={passenger}
-                isVehicle={isVehicle}
+                isTravel={isTravel}
                 button={
                   <Button
                     onClick={() => onClick && onClick(passenger.id)}

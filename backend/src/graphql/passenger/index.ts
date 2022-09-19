@@ -1,3 +1,5 @@
+import createPassenger from "./createPassenger";
+
 export default [
   ({ nexus, strapi }) => ({
     resolvers: {
@@ -47,6 +49,9 @@ export default [
             });
           },
         },
+      },
+      Mutation: {
+        createPassenger
       },
     },
   }),

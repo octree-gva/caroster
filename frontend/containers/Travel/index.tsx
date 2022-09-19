@@ -1,4 +1,4 @@
-import {useReducer} from 'react';
+import {useMemo, useReducer} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
@@ -9,11 +9,11 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import useActions from './useActions';
+import useProfile from '../../hooks/useProfile';
 
 interface Props {
   travel: TravelType & {id: string};
   getAddPassengerFunction: (addSelf: boolean) => () => void;
-  canAddSelf: boolean;
 }
 
 const Travel = (props: Props) => {
@@ -21,9 +21,19 @@ const Travel = (props: Props) => {
   const classes = useStyles();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const actions = useActions({travel});
+  const {userId, connected} = useProfile();
 
   if (!travel) return null;
   const disableNewPassengers = travel.passengers.data?.length >= travel.seats;
+
+  const canAddSelf = useMemo(() => {
+    if (!connected) return false;
+    const isInTravel = travel.passengers?.data.some(
+      passenger => passenger.attributes.user?.data?.id === `${userId}`
+    );
+
+    return !isInTravel;
+  }, [travel, userId]);
 
   return (
     <Paper className={classes.root}>
@@ -35,7 +45,7 @@ const Travel = (props: Props) => {
       <Divider />
       <AddPassengerButtons
         getOnClickFunction={props.getAddPassengerFunction}
-        canAddSelf={props.canAddSelf}
+        canAddSelf={canAddSelf}
         variant="travel"
         disabled={disableNewPassengers}
       />
@@ -45,11 +55,10 @@ const Travel = (props: Props) => {
           passengers={travel.passengers.data}
           places={travel?.seats}
           onClick={actions.sendPassengerToWaitingList}
-          isVehicle
+          isTravel
           Button={({onClick}: {onClick: () => void}) => (
             <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
           )}
-          isTravel
         />
       )}
     </Paper>

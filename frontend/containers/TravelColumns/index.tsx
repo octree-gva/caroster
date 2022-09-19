@@ -1,4 +1,4 @@
-import {useMemo, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Slider from 'react-slick';
@@ -27,26 +27,13 @@ const TravelColumns = (props: Props) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
-  const {profile, userId, connected} = useProfile();
+  const {profile, userId} = useProfile();
   const classes = useStyles();
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
   } | null>(null);
   const {addPassenger} = usePassengersActions();
   const sortedTravels = travels?.slice().sort(sortTravels);
-
-  const canAddSelf = useMemo(() => {
-    if (!connected) return false;
-    const isInWaitingList = event?.waitingPassengers?.data.some(
-      passenger => passenger.attributes.user?.data?.id === `${userId}`
-    );
-    const isInTravel = event?.travels?.data.some(travel =>
-      travel.attributes.passengers?.data.some(
-        passenger => passenger.attributes.user?.data?.id === `${userId}`
-      )
-    );
-    return !(isInWaitingList || isInTravel);
-  }, [event, userId]);
 
   const addSelfToTravel = async (travel: TravelType) => {
     try {
@@ -85,7 +72,6 @@ const TravelColumns = (props: Props) => {
                 <Travel
                   travel={travel}
                   {...props}
-                  canAddSelf={canAddSelf}
                   getAddPassengerFunction={(addSelf: boolean) => () =>
                     addSelf
                       ? addSelfToTravel(travel)
