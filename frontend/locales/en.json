@@ -156,7 +156,7 @@
     },
     "actions": {
       "remove_alert": "Are you sure you want to remove this car and add the subscribers to the waiting list?",
-      "removed": "The car has been removed"
+      "removed": "The car has been removed and its passengers moved to the waiting list of the event."
     },
     "vehicle": {
       "add": "Add a new vehicle",
@@ -192,7 +192,8 @@
       "cant_add_passenger": "Unable to add a passenger",
       "cant_remove_passenger": "Unable to remove passenger",
       "add_someone": "Add someone"
-    }
+    },
+    "moved_to_waiting_list": "Passenger was moved to the waiting list of the event."
   },
   "dashboard": {
     "title": "$t(menu.dashboard)",
@@ -271,7 +272,8 @@
       "email": "Your email",
       "email_helper": "Optional - Get notified if cars are added",
       "email_helper_car": "Optional"
-    }
+    },
+    "deleted": "The passenger has been deleted from the event."
   },
   "signup": {
     "title": "Sign up",

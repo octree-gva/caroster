@@ -156,7 +156,7 @@
     },
     "actions": {
       "remove_alert": "Voulez-vous vraiment supprimer cette voiture et ajouter les inscrits à la liste d'attente ?",
-      "removed": "La voiture a été supprimée"
+      "removed": "La voiture a été supprimée et ses passagers déplacés dans la liste d'attente de l'événement."
     },
     "vehicle": {
       "add": "Ajouter un nouveau véhicule",
@@ -191,7 +191,8 @@
       "cant_remove": "Impossible de supprimer la voiture",
       "cant_add_passenger": "Impossible d'ajouter un passager",
       "cant_remove_passenger": "Impossible de supprimer le passager"
-    }
+    },
+    "moved_to_waiting_list": "Le passager a été déplacé dans la liste d'attente de l'événement."
   },
   "dashboard": {
     "title": "$t(menu.dashboard)",
@@ -271,7 +272,8 @@
       "email": "Votre email",
       "email_helper": "Optionnel - Soyez notifié si des voitures sont ajoutées",
       "email_helper_car": "Optionnel"
-    }
+    },
+    "deleted": "Le passager a été supprimé de l'événement."
   },
   "signup": {
     "title": "Inscription",

@@ -101,6 +101,7 @@ const WaitingList = ({
   const onRemove = async () => {
     try {
       await removePassengerCallback(removingPassenger.id);
+      addToast(t('passenger.deleted'));
     } catch (error) {
       console.error(error);
       addToast(t('passenger.errors.cant_remove_passenger'));

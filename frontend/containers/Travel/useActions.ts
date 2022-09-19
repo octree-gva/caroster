@@ -35,6 +35,7 @@ const useActions = (props: Props) => {
         },
         refetchQueries: ['eventByUUID'],
       });
+      addToast(t('travel.moved_to_waiting_list'));
     } catch (error) {
       console.error(error);
       addToast(t('travel.errors.cant_remove_passenger'));
