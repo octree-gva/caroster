@@ -9,6 +9,7 @@ import DashboardEmpty from '../containers/DashboardEmpty';
 import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
 import pageUtils from '../lib/pageUtils';
+import {getSession} from 'next-auth/react';
 
 const Dashboard = () => {
   const {t} = useTranslation();
@@ -79,6 +80,17 @@ const Dashboard = () => {
 
 const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
 
-export const getServerSideProps = pageUtils.getServerSideProps();
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context);
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  else return pageUtils.getServerSideProps()(context);
+};
 
 export default Dashboard;

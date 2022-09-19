@@ -3,21 +3,15 @@ import {useTranslation} from 'react-i18next';
 import Loading from '../containers/Loading';
 import Profile from '../containers/Profile';
 import Layout from '../layouts/Centered';
-import {useSession, signOut} from 'next-auth/react';
+import {useSession, signOut, getSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
 import useProfile from '../hooks/useProfile';
-import {useEffect} from 'react';
 
 const ProfilePage = () => {
   const router = useRouter();
   const {t} = useTranslation();
   const session = useSession();
-  const isAuthenticated = session.status === 'authenticated';
   const {profile} = useProfile();
-
-  useEffect(() => {
-    if (!isAuthenticated) router.push('/');
-  }, [isAuthenticated]);
 
   const menuActions = [
     {
@@ -33,7 +27,6 @@ const ProfilePage = () => {
   ];
 
   if (session.status === 'loading') return <Loading />;
-  else if (!isAuthenticated) return null;
 
   return (
     <Layout menuTitle={t('profile.title')} menuActions={menuActions} goBack>
@@ -42,6 +35,17 @@ const ProfilePage = () => {
   );
 };
 
-export const getServerSideProps = pageUtils.getServerSideProps();
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context);
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  else return pageUtils.getServerSideProps()(context);
+};
 
 export default ProfilePage;
