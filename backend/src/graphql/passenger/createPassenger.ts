@@ -1,75 +1,31 @@
+import pMap from "p-map";
+
 const createPassenger = {
   description: "Create a passenger",
   async resolve(_root, args) {
     const { data: passengerInput } = args;
-
-    const { user: userId, travel: travelId } = passengerInput;
+    const { user: userId, event: eventId } = passengerInput;
 
     try {
-      //Avoid duplicity when the connected users add themself to a new car
-      if (userId && travelId) {
-        const travel = await strapi.entityService.findOne(
-          "api::travel.travel",
-          travelId,
-          { populate: ["event"] }
-        );
-
-        const userPassengersIds = (
+      //Avoid duplicity when the connected users add themself
+      if (userId) {
+        const userPassengersInEvent: { id: string }[] =
           await strapi.entityService.findMany("api::passenger.passenger", {
             filters: {
-              user: userId,
+              event: eventId,
             },
-          })
-        ).map((userPassenger) => userPassenger.id);
-
-        const travelsIdsBelongingToUserInEvent = (
-          await strapi.entityService.findMany("api::travel.travel", {
-            filters: {
-              event: travel.event.id,
-              passengers: { id: { $containsi: userPassengersIds } },
-            },
-          })
-        ).map((travel) => travel.id);
-
-        const userDuplicatesinEvent = await strapi.entityService.findMany(
-          "api::passenger.passenger",
-          {
-            filters: {
-              $or: [
-                {
-                  event: travel.event.id,
-                  user: userId,
-                },
-                {
-                  travel: { id: { $in: travelsIdsBelongingToUserInEvent } },
-                  user: userId,
-                },
-              ],
-            },
-          }
-        );
-
-        if (userDuplicatesinEvent.length > 0) {
-          const [existingPassenger, ...duplicated] = userDuplicatesinEvent;
-
-          await Promise.all(
-            duplicated?.map(async (passenger) => {
-              await strapi.entityService.delete(
-                "api::passenger.passenger",
-                passenger.id
-              );
-            })
-          );
-
-          return makeResponse({
-            operation: strapi.entityService.update(
-              "api::passenger.passenger",
-              existingPassenger.id,
-              { data: { ...passengerInput, event: null } }
-            ),
-            args,
           });
-        }
+
+        // Delete existing passenger linked to the user in targeted event
+        await pMap(
+          userPassengersInEvent,
+          async (passenger) =>
+            strapi.entityService.delete(
+              "api::passenger.passenger",
+              passenger.id
+            ),
+          { concurrency: 5 }
+        );
       }
 
       return makeResponse({

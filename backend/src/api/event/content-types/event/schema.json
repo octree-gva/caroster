@@ -55,7 +55,7 @@
       "target": "api::travel.travel",
       "mappedBy": "event"
     },
-    "waitingPassengers": {
+    "passengers": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::passenger.passenger",

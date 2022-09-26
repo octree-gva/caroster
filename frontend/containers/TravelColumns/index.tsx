@@ -42,6 +42,7 @@ const TravelColumns = (props: Props) => {
         email: profile.email,
         name: profile.username,
         travel: travel.id,
+        event: event.id,
       });
       addToEvent(event.id);
       addToast(t('passenger.success.added_self_to_car'));

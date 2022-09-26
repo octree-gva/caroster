@@ -168,6 +168,7 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   name: Scalars['String'];
+  passengers?: Maybe<PassengerRelationResponseCollection>;
   position?: Maybe<Scalars['JSON']>;
   travels?: Maybe<TravelRelationResponseCollection>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -176,15 +177,15 @@ export type Event = {
 };
 
 
-export type EventTravelsArgs = {
-  filters?: InputMaybe<TravelFiltersInput>;
+export type EventPassengersArgs = {
+  filters?: InputMaybe<PassengerFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
-export type EventWaitingPassengersArgs = {
-  filters?: InputMaybe<PassengerFiltersInput>;
+export type EventTravelsArgs = {
+  filters?: InputMaybe<TravelFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -212,12 +213,12 @@ export type EventFiltersInput = {
   newsletter?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<EventFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<EventFiltersInput>>>;
+  passengers?: InputMaybe<PassengerFiltersInput>;
   position?: InputMaybe<JsonFilterInput>;
   travels?: InputMaybe<TravelFiltersInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   users?: InputMaybe<UsersPermissionsUserFiltersInput>;
   uuid?: InputMaybe<StringFilterInput>;
-  waitingPassengers?: InputMaybe<PassengerFiltersInput>;
 };
 
 export type EventInput = {
@@ -227,11 +228,11 @@ export type EventInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   newsletter?: InputMaybe<Scalars['Boolean']>;
+  passengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   position?: InputMaybe<Scalars['JSON']>;
   travels?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   users?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   uuid?: InputMaybe<Scalars['String']>;
-  waitingPassengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 export type EventRelationResponseCollection = {
@@ -386,6 +387,7 @@ export type Mutation = {
   createEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   createEvent?: Maybe<EventEntityResponse>;
   createPage?: Maybe<PageEntityResponse>;
+  /** Create a passenger */
   createPassenger?: Maybe<PassengerEntityResponse>;
   createSettingLocalization?: Maybe<SettingEntityResponse>;
   createTravel?: Maybe<TravelEntityResponse>;
@@ -1686,16 +1688,6 @@ export const RegisterDocument = gql`
   }
 }
     ${MeFieldsFragmentDoc}`;
-export const LoginDocument = gql`
-    mutation login($identifier: String!, $password: String!) {
-  login(input: {identifier: $identifier, password: $password}) {
-    jwt
-    user {
-      ...MeFields
-    }
-  }
-}
-    ${MeFieldsFragmentDoc}`;
 export const ForgotPasswordDocument = gql`
     mutation forgotPassword($email: String!) {
   forgotPassword(email: $email) {
@@ -1877,9 +1869,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     register(variables: RegisterMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<RegisterMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegisterMutation>(RegisterDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'register', 'mutation');
     },
-    login(variables: LoginMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<LoginMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'login', 'mutation');
-    },
     forgotPassword(variables: ForgotPasswordMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ForgotPasswordMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<ForgotPasswordMutation>(ForgotPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'forgotPassword', 'mutation');
     },
@@ -1939,14 +1928,6 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } };
-
-export type LoginMutationVariables = Exact<{
-  identifier: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } };
 
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];

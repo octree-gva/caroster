@@ -8,6 +8,19 @@ const { STRAPI_URL = "" } = process.env;
 export default factories.createCoreService(
   "api::event.event",
   ({ strapi }) => ({
+    getWaitingPassengers: async (event) => {
+      return strapi.entityService.findMany("api::passenger.passenger", {
+        filters: {
+          event: { id: event.id },
+          travel: {
+            id: {
+              $null: true,
+            },
+          },
+        },
+        populate: ["passengers", "passengers.travel"],
+      });
+    },
     sendDailyRecap: async (event) => {
       const referenceDate = DateTime.now().minus({ day: 1 });
       const hasBeenModified =
@@ -33,6 +46,10 @@ export default factories.createCoreService(
             return null;
           }
 
+          const waitingPassengers = await strapi
+            .service("api::event.event")
+            .getWaitingPassengers(event);
+
           await strapi
             .service("plugin::email-designer.email")
             .sendTemplatedEmail(
@@ -45,7 +62,7 @@ export default factories.createCoreService(
               {
                 event,
                 eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-                waitingListCount: event.waitingPassengers?.length || 0,
+                waitingListCount: waitingPassengers?.length || 0,
                 travelsCount: event.travels?.length || 0,
                 newTravelsCount: newTravels?.length || 0,
               }

@@ -1,6 +1,14 @@
 const updateEventExtension = ({ nexus, strapi }) => ({
   types: [
     nexus.extendType({
+      type: "Event",
+      definition(t) {
+        t.field("waitingPassengers", {
+          type: "PassengerRelationResponseCollection",
+        });
+      },
+    }),
+    nexus.extendType({
       type: "Query",
       definition(t) {
         t.field("eventByUUID", {
@@ -25,6 +33,20 @@ const updateEventExtension = ({ nexus, strapi }) => ({
     }),
   ],
   resolvers: {
+    Event: {
+      waitingPassengers: async (root, args) => {
+        const waitingPassengers = await strapi
+          .service("api::event.event")
+          .getWaitingPassengers(root);
+        const { toEntityResponseCollection } = strapi
+          .plugin("graphql")
+          .service("format").returnTypes;
+        return toEntityResponseCollection(waitingPassengers, {
+          args,
+          resourceUID: "api::passenger.passenger",
+        });
+      },
+    },
     Query: {
       eventByUUID: {
         description: "Retrieve an event using its UUID",

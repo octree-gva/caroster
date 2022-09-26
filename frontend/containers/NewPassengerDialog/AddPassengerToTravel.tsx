@@ -43,7 +43,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
     };
 
     try {
-      await addPassenger({...passenger, travel: travel.id});
+      await addPassenger({...passenger, travel: travel.id, event: event.id});
       addToEvent(event.id);
       addToast(t('passenger.success.added_to_car', {name}));
       toggle();

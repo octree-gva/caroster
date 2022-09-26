@@ -54,9 +54,10 @@ export default {
 const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
   const event = await strapi.db.query("api::event.event").findOne({
     where: { id: eventId },
-    populate: ["waitingPassengers"],
   });
-  const eventWaitingPassengers = event?.waitingPassengers || [];
+  const eventWaitingPassengers = await strapi
+    .service("api::event.event")
+    .getWaitingPassengers(event);
   const userEmails = eventWaitingPassengers
     .map((user) => user.email)
     .filter(Boolean);

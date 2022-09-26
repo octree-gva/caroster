@@ -25,12 +25,6 @@
     "location": {
       "type": "string"
     },
-    "event": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::event.event",
-      "inversedBy": "waitingPassengers"
-    },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
@@ -41,6 +35,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::travel.travel",
+      "inversedBy": "passengers"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
       "inversedBy": "passengers"
     }
   }
