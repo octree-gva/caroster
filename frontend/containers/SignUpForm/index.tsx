@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
 import {useRegisterMutation} from '../../generated/graphql';
+import Link from 'next/link';
 
 const SignUp = () => {
   const {t, i18n} = useTranslation();
@@ -112,9 +113,11 @@ const SignUp = () => {
         />
       </CardContent>
       <CardActions className={classes.actions}>
-        <Button id="SignUpLogin" href="/auth/login" variant="text">
-          {t('signup.login')}
-        </Button>
+        <Link href="/auth/login" passHref>
+          <Button id="SignUpLogin" variant="text">
+            {t('signup.login')}
+          </Button>
+        </Link>
         <Button
           color="primary"
           variant="contained"

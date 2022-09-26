@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {makeStyles} from '@material-ui/core/styles';
 import useProfile from '../../hooks/useProfile';
 import useSettings from '../../hooks/useSettings';
@@ -9,13 +10,13 @@ const Logo = () => {
   const appLink = connected ? '/dashboard' : settings?.['about_link'] || '';
   return (
     <div className={classes.layout}>
-      <a href={appLink} className={classes.link}>
+      <Link href={appLink} className={classes.link}>
         <img
           src={'/assets/Caroster_beta.png'}
           alt="Caroster"
           className={classes.logo}
         />
-      </a>
+      </Link>
     </div>
   );
 };

@@ -100,8 +100,8 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": ["FR", "EN"],
-      "default": "FR"
+      "enum": ["fr", "en", "FR", "EN"],
+      "default": "fr"
     }
   }
 }

@@ -5,11 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import NextLink from 'next/link'
 import {useTranslation} from 'react-i18next';
-import useDebounce from '../../hooks/useDebounce';
 import {CardActions} from '@material-ui/core';
-import {isValidEmail} from '../../lib/formValidation';
 import {useSession} from 'next-auth/react';
+import useDebounce from '../../hooks/useDebounce';
+import {isValidEmail} from '../../lib/formValidation';
 
 const Step1 = ({nextStep, event, addToEvent}) => {
   const {t} = useTranslation();
@@ -105,12 +106,16 @@ const Step1 = ({nextStep, event, addToEvent}) => {
             {t('event.creation.addFromAccount.subtitle')}
           </Typography>
           <CardActions className={classes.actions}>
-            <Button variant="text" href="/auth/register">
-              {t('event.creation.addFromAccount.actions.register')}
-            </Button>
-            <Button color="primary" href="/auth/login">
-              {t('event.creation.addFromAccount.actions.login')}
-            </Button>
+            <NextLink href="/auth/register" passHref>
+              <Button variant="text">
+                {t('event.creation.addFromAccount.actions.register')}
+              </Button>
+            </NextLink>
+            <NextLink href="/auth/login" passHref>
+              <Button color="primary">
+                {t('event.creation.addFromAccount.actions.login')}
+              </Button>
+            </NextLink>
           </CardActions>
         </div>
       )}

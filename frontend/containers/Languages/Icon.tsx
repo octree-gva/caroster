@@ -5,7 +5,7 @@ import Icon from '@material-ui/core/Icon';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useTranslation} from 'react-i18next';
-import {Enum_Userspermissionsuser_Lang as Lang} from '../../generated/graphql';
+import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
@@ -22,7 +22,7 @@ const IconLanguageSelection = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const onConfirm = (lang: Lang) => {
+  const onConfirm = (lang: SupportedLocales) => {
     setAnchorEl(null);
     onChangeLang(lang);
   };
@@ -52,12 +52,12 @@ const IconLanguageSelection = ({
         onClose={() => setAnchorEl(null)}
       >
         <MenuItem
-          disabled={language === Lang.Fr}
-          onClick={() => onConfirm(Lang.Fr)}
+          disabled={language === SupportedLocales['fr']}
+          onClick={() => onConfirm(SupportedLocales['fr'])}
         >{t`languages.fr`}</MenuItem>
         <MenuItem
-          disabled={language === Lang.En}
-          onClick={() => onConfirm(Lang.En)}
+          disabled={language === SupportedLocales['en']}
+          onClick={() => onConfirm(SupportedLocales['en'])}
         >{t`languages.en`}</MenuItem>
       </Menu>
     </>

@@ -8,12 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
+import Link from 'next/link';
 
 const Confirm = () => {
   const {t} = useTranslation();
 
   return (
-    <Layout  displayMenu={false}>
+    <Layout displayMenu={false}>
       <Card>
         <CardMedia component={Logo} />
         <CardContent>
@@ -26,14 +27,15 @@ const Confirm = () => {
         </CardContent>
         <CardActionArea>
           <CardActions>
-            <Button
-              color="primary"
-              variant="contained"
-              href={'/auth/login'}
-              id="SignUpSuccessLogin"
-            >
-              {t('confirm.login')}
-            </Button>
+            <Link href="/auth/login" passHref>
+              <Button
+                color="primary"
+                variant="contained"
+                id="SignUpSuccessLogin"
+              >
+                {t('confirm.login')}
+              </Button>
+            </Link>
           </CardActions>
         </CardActionArea>
       </Card>

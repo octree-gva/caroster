@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import {makeStyles} from '@material-ui/core/styles';
+import Link from 'next/link';
 
 const Success = ({email}) => {
   const {t} = useTranslation();
@@ -24,14 +25,11 @@ const Success = ({email}) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
-        <Button
-          id="LostPasswordRegister"
-          href="/auth/login"
-          color="primary"
-          variant="contained"
-        >
-          {t('lost_password.actions.login')}
-        </Button>
+        <Link href="/auth/login" passHref>
+          <Button id="LostPasswordRegister" color="primary" variant="contained">
+            {t('lost_password.actions.login')}
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

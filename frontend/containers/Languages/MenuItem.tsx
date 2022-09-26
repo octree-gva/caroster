@@ -3,7 +3,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
-import {Enum_Userspermissionsuser_Lang as Lang} from '../../generated/graphql';
+import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
@@ -20,7 +20,7 @@ const Languages = ({
     setSelecting(!isSelecting);
   };
 
-  const onConfirm = (lang: Lang) => {
+  const onConfirm = (lang: SupportedLocales) => {
     setSelecting(false);
     onChangeLang(lang);
   };
@@ -30,12 +30,12 @@ const Languages = ({
       <MenuItem onClick={handleClick}>{t('menu.language')}</MenuItem>
       <MenuList className={languagesList} dense>
         <MenuItem
-          disabled={language === Lang.Fr}
-          onClick={() => onConfirm(Lang.Fr)}
+          disabled={language === SupportedLocales['fr']}
+          onClick={() => onConfirm(SupportedLocales['fr'])}
         >{t`languages.fr`}</MenuItem>
         <MenuItem
-          disabled={language === Lang.En}
-          onClick={() => onConfirm(Lang.En)}
+          disabled={language === SupportedLocales['en']}
+          onClick={() => onConfirm(SupportedLocales['en'])}
         >{t`languages.en`}</MenuItem>
       </MenuList>
     </>

@@ -1,5 +1,5 @@
 import {useState, useMemo} from 'react';
-import RouterLink from 'next/link';
+import NextLink from 'next/link';
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -87,18 +87,21 @@ const SignIn = () => {
           type="password"
           error={!!error}
         />
-        <RouterLink href="/auth/lost-password">
+        <NextLink href="/auth/lost-password" passHref>
           <Link>
             <Typography align="center" variant="body2">
               {t('lost_password.message')}
             </Typography>
           </Link>
-        </RouterLink>
+        </NextLink>
       </CardContent>
       <CardActions className={classes.actions} align="center">
-        <Button size="small" id="SignInRegister" href="/auth/register">
-          {t('signin.register')}
-        </Button>
+        <NextLink href="/auth/register" passHref>
+          <Button size="small" id="SignInRegister">
+            {t('signin.register')}
+          </Button>
+        </NextLink>
+
         <Button
           color="primary"
           variant="contained"

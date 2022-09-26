@@ -4,7 +4,7 @@ import {
   Enum_Userspermissionsuser_Lang as Lang,
 } from '../../generated/graphql';
 import {useTranslation} from 'react-i18next';
-import {changeLang} from '../../lib/i18n';
+import useLocale from '../../hooks/useLocale';
 
 export interface LanguageSelectionComponentProps {
   language: Lang;
@@ -21,13 +21,13 @@ const withLanguagesSelection =
   props => {
     const {connected} = useProfile();
     const [updateProfile] = useUpdateMeMutation();
+    const {changeLocale} = useLocale();
     const {i18n} = useTranslation();
-    const language = i18n.language.toUpperCase();
+    const language = i18n.language;
 
-    const onChangeLang = (lang: Lang) => {
-      changeLang(lang);
+    const onChangeLang = async (lang: Lang) => {
       if (connected) {
-        updateProfile({
+        await updateProfile({
           variables: {
             userUpdate: {
               lang,
@@ -35,6 +35,7 @@ const withLanguagesSelection =
           },
         });
       }
+      changeLocale(lang);
     };
 
     return (

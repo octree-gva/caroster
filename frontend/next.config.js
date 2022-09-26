@@ -1,3 +1,4 @@
+const {i18n} = require('./react-i18next.config');
 const {NODE_ENV, STRAPI_URL = 'http://localhost:1337'} = process.env;
 
 const withPWA = require('next-pwa')({
@@ -16,6 +17,7 @@ module.exports = withPWA({
   env: {
     STRAPI_URL: process.env.STRAPI_URL,
   },
+  i18n,
 
   async rewrites() {
     return [
