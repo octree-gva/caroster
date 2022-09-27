@@ -1,4 +1,6 @@
-documents: "../frontend/graphql/*.gql"
+documents:
+  - "../frontend/graphql/*.gql"
+  - "./graphql/*.gql"
 schema: "http://localhost:1337/graphql"
 generates:
   graphql.ts:
@@ -6,3 +8,6 @@ generates:
       - typescript
       - typescript-graphql-request
       - typescript-operations
+    config:
+      namingConvention:
+        enumValues: keep

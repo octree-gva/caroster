@@ -93,12 +93,14 @@ export type DateTimeFilterInput = {
 };
 
 export enum Enum_Page_Type {
-  Tos = 'tos'
+  tos = 'tos'
 }
 
 export enum Enum_Userspermissionsuser_Lang {
-  En = 'EN',
-  Fr = 'FR'
+  EN = 'EN',
+  FR = 'FR',
+  en = 'en',
+  fr = 'fr'
 }
 
 export type EmailDesignerEmailTemplate = {
@@ -1678,6 +1680,19 @@ export const VehicleFieldsFragmentDoc = gql`
   }
 }
     `;
+export const LoginDocument = gql`
+    mutation login($identifier: String!, $password: String!) {
+  login(input: {identifier: $identifier, password: $password}) {
+    jwt
+    user {
+      id
+      username
+      email
+      confirmed
+    }
+  }
+}
+    `;
 export const RegisterDocument = gql`
     mutation register($user: UsersPermissionsRegisterInput!) {
   register(input: $user) {
@@ -1866,6 +1881,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    login(variables: LoginMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<LoginMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'login', 'mutation');
+    },
     register(variables: RegisterMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<RegisterMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegisterMutation>(RegisterDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'register', 'mutation');
     },
@@ -1920,6 +1938,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;
+export type LoginMutationVariables = Exact<{
+  identifier: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } };
+
 export type MeFieldsFragment = { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null };
 
 export type RegisterMutationVariables = Exact<{

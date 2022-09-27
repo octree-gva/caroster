@@ -114,7 +114,7 @@ test("createPassenger add a new passenger to travel's passengers list", async ()
     location: "Church place",
   };
   const createPassengerRequest = sdk.createPassenger({
-    passenger: { ...passenger, travel: TRAVEL_ID },
+    passenger: { ...passenger, travel: TRAVEL_ID, event: EVENT_ID },
   });
 
   await expect(createPassengerRequest).resolves.toMatchObject({
@@ -165,17 +165,16 @@ test("updatePassenger returns updated passenger", async () => {
     name: "Updated name",
   };
   const request = sdk.updatePassenger({
-    id: "1",
+    id: "2",
     passengerUpdate,
   });
 
   await expect(request).resolves.toMatchObject({
     updatePassenger: {
       data: {
-        id: "1",
+        id: "2",
         attributes: {
           name: passengerUpdate.name,
-          email: "okidoki@octree.ch",
         },
       },
     },
@@ -184,13 +183,13 @@ test("updatePassenger returns updated passenger", async () => {
 
 test("deletePassenger returns ID of deleted passenger", async () => {
   const request = sdk.deletePassenger({
-    id: "2",
+    id: "3",
   });
 
   await expect(request).resolves.toMatchObject({
     deletePassenger: {
       data: {
-        id: "2",
+        id: "3",
       },
     },
   });
