@@ -6,7 +6,7 @@ import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Link from '@material-ui/core/Link';
 import {Travel} from '../../generated/graphql';
-import getMapsLink from '../../utils/getMapsLink';
+import getMapsLink from '../../lib/getMapsLink';
 
 interface Props {
   travel: Travel;

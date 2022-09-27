@@ -1,6 +1,7 @@
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import {useRouter} from 'next/router';
 import moment from 'moment';
+import {setCookie} from '../lib/cookies';
 
 const useLocale = (): {
   locale: SupportedLocales;
@@ -10,9 +11,7 @@ const useLocale = (): {
 
   const changeLocale = (newLocale: SupportedLocales) => {
     moment.locale(newLocale);
-    if (typeof document !== 'undefined') {
-      document.cookie = `NEXT_LOCALE=${newLocale}; max-age=31536000; path=/`;
-    }
+    setCookie('NEXT_LOCALE', newLocale);
     push({pathname, query}, asPath, {locale: newLocale});
   };
 

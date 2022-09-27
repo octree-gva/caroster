@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import 'moment/locale/fr-ch';
 import moment from 'moment';
-import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
+import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import translationFr from '../locales/fr.json';
 import translationEn from '../locales/en.json';
 
@@ -26,8 +26,7 @@ export const initI18Next = (locale: SupportedLocales) => {
         escapeValue: false, // react already safes from xss
       },
     });
-    moment.locale(i18n.language);
+  moment.locale(i18n.language);
 };
-
 
 export default i18n;

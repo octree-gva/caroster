@@ -14,7 +14,7 @@ import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {forwardRef} from 'react';
-import getMapsLink from '../../utils/getMapsLink';
+import getMapsLink from '../../lib/getMapsLink';
 import ShareEvent from '../ShareEvent';
 import {Passenger, TravelEntity, Travel} from '../../generated/graphql';
 
