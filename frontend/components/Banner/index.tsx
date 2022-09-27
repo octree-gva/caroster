@@ -1,28 +1,36 @@
 import {Icon} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
+import {useState} from 'react';
+import {setCookie} from '../../lib/cookies';
 import Markdown from '../Markdown';
 
+const ANNOUNCEMENT_COOKIE = 'lastAnnouncementSeen';
+
 interface Props {
-  message: string;
-  open: boolean;
-  onClear?: () => void;
+  announcement?: string;
 }
 
 const Banner = (props: Props) => {
-  const {message, open, onClear} = props;
+  const {announcement} = props;
   const classes = useStyles();
+  const [showBanner, setShowBanner] = useState(!!announcement);
 
-  if (!open) return null;
+  const onBannerClear = () => {
+    setCookie(ANNOUNCEMENT_COOKIE, `${announcement}`);
+    setShowBanner(false);
+  };
+
+  if (!showBanner) return null;
 
   return (
     <div className={classes.banner}>
-      <Markdown className={classes.htmlReset}>{message}</Markdown>
+      <Markdown className={classes.htmlReset}>{announcement}</Markdown>
       <Button
         className={classes.clear}
         onClick={e => {
           e.stopPropagation();
-          onClear();
+          onBannerClear();
         }}
       >
         <Icon>close</Icon>

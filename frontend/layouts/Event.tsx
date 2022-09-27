@@ -23,7 +23,7 @@ interface Props {
 }
 
 const EventLayout = (props: PropsWithChildren<Props>) => {
-  const {eventUUID, Tab} = props;
+  const {eventUUID, Tab, ...pageProps} = props;
   const {t} = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
@@ -49,6 +49,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
       Topbar={() => <EventBar event={event} onAdd={setIsAddToMyEvent} />}
+      {...pageProps}
     >
       <Box
         flex={1}

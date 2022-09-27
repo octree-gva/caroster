@@ -10,7 +10,11 @@ import pageUtils from '../lib/pageUtils';
 import {useEffect} from 'react';
 import useRedirectUrlStore from '../stores/useRedirectUrl';
 
-const Home = () => {
+interface PageProps {
+  announcement?: string;
+}
+
+const Home = (props: PageProps) => {
   const {t} = useTranslation();
   const router = useRouter();
   const session = useSession();
@@ -58,6 +62,7 @@ const Home = () => {
       menuTitle={t('event.creation.title')}
       menuActions={menuActions}
       displayMenu={isAuthenticated}
+      {...props}
     >
       <Paper>
         <Logo />

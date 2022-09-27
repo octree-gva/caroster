@@ -11,7 +11,11 @@ import Fab from '../containers/Fab';
 import pageUtils from '../lib/pageUtils';
 import {getSession} from 'next-auth/react';
 
-const Dashboard = () => {
+interface PageProps {
+  announcement?: string;
+}
+
+const Dashboard = (props: PageProps) => {
   const {t} = useTranslation();
   const router = useRouter();
   const {profile, isReady} = useProfile();
@@ -55,13 +59,17 @@ const Dashboard = () => {
 
   if (!events || !isReady)
     return (
-      <LayoutDefault menuTitle={t('dashboard.title')}>
+      <LayoutDefault menuTitle={t('dashboard.title')} {...props}>
         <Loading />
       </LayoutDefault>
     );
 
   return (
-    <LayoutDefault menuActions={menuActions} menuTitle={t('dashboard.title')}>
+    <LayoutDefault
+      menuActions={menuActions}
+      menuTitle={t('dashboard.title')}
+      {...props}
+    >
       {events.length === 0 ? (
         <DashboardEmpty />
       ) : (

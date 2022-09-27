@@ -16,6 +16,7 @@ import {getSession, useSession} from 'next-auth/react';
 
 interface Props {
   eventUUID: string;
+  announcement?: string;
 }
 
 const Page = (props: PropsWithChildren<Props>) => {

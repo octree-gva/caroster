@@ -6,7 +6,7 @@ const defaulData: SettingQuery = {};
 const useSettings = () => {
   const {locale} = useLocale();
   const {data = defaulData} = useSettingQuery({variables: {locale}});
-  return data?.setting?.data?.attributes;
+  return data?.setting?.data?.attributes || {};
 };
 
 export default useSettings;

@@ -7,7 +7,11 @@ import {useSession, signOut, getSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
 import useProfile from '../hooks/useProfile';
 
-const ProfilePage = () => {
+interface PageProps {
+  announcement?: string;
+}
+
+const ProfilePage = (props: PageProps) => {
   const router = useRouter();
   const {t} = useTranslation();
   const session = useSession();
@@ -29,7 +33,12 @@ const ProfilePage = () => {
   if (session.status === 'loading') return <Loading />;
 
   return (
-    <Layout menuTitle={t('profile.title')} menuActions={menuActions} goBack>
+    <Layout
+      menuTitle={t('profile.title')}
+      menuActions={menuActions}
+      goBack
+      {...props}
+    >
       {profile && <Profile profile={profile} logout={signOut} />}
     </Layout>
   );

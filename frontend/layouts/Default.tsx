@@ -1,14 +1,11 @@
-import {ReactNode, useState} from 'react';
+import {ReactNode} from 'react';
 import {Helmet} from 'react-helmet';
 import useGTM from '../hooks/useGTM';
 import GenericToolbar from '../containers/GenericToolbar';
 import {ActionType} from '../containers/GenericMenu/Action';
 import Box from '@material-ui/core/Box';
 import Banner from '../components/Banner';
-import useSettings from '../hooks/useSettings';
 import useMatomo from '../hooks/useMatomo';
-
-const ANNOUNCEMENT_STORAGE_KEY = 'lastAnnouncementSeen';
 
 interface Props {
   children: ReactNode;
@@ -19,6 +16,7 @@ interface Props {
   pageTitle?: string;
   displayMenu?: boolean;
   goBack?: () => void;
+  announcement?: string;
 }
 
 const DefaultLayout = (props: Props) => {
@@ -33,17 +31,8 @@ const DefaultLayout = (props: Props) => {
     menuTitle = 'Caroster',
     menuActions,
     goBack = null,
+    announcement,
   } = props;
-  const {announcement = ''} = useSettings() || {};
-  const [lastAnnouncementSeen, setLastAnnouncementSeen] = useState(
-    getStoredValue(ANNOUNCEMENT_STORAGE_KEY)
-  );
-  const showBanner = !!announcement && announcement !== lastAnnouncementSeen;
-
-  const onBannerClear = () => {
-    setStoredValue(ANNOUNCEMENT_STORAGE_KEY, `${announcement}`);
-    setLastAnnouncementSeen(announcement);
-  };
 
   return (
     <div className={className}>
@@ -52,11 +41,7 @@ const DefaultLayout = (props: Props) => {
       </Helmet>
       <Box display="flex" flexDirection="column" height="100vh" width="100%">
         <Box position="sticky" top={0} zIndex={1100}>
-          <Banner
-            message={announcement}
-            open={showBanner}
-            onClear={onBannerClear}
-          />
+          <Banner announcement={announcement} />
           {Topbar && <Topbar />}
         </Box>
         {displayMenu && (menuTitle || menuActions) && (
@@ -72,12 +57,5 @@ const DefaultLayout = (props: Props) => {
     </div>
   );
 };
-
-const getStoredValue = (storageKey: string) =>
-  typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : '';
-
-const setStoredValue = (storageKey: string, value: string) =>
-  typeof localStorage !== 'undefined' &&
-  localStorage.setItem(storageKey, value);
 
 export default DefaultLayout;

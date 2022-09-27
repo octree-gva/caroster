@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core/styles';
-import Typography, { TypographyProps } from '@material-ui/core/Typography';
+import {styled} from '@material-ui/core/styles';
+import Typography, {TypographyProps} from '@material-ui/core/Typography';
 import {marked} from 'marked';
 
 const Markdown = (props: TypographyProps) => {
@@ -7,10 +7,14 @@ const Markdown = (props: TypographyProps) => {
 
   if (!children) return null;
 
+  const htmlContent = marked(children).replace(/\<\/?p\>/g, '');
+
   return (
     <Text
       {...typographyProps}
-      dangerouslySetInnerHTML={{__html: marked(children)}}
+      dangerouslySetInnerHTML={{
+        __html: htmlContent,
+      }}
     />
   );
 };

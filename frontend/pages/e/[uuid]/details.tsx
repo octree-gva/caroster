@@ -24,6 +24,7 @@ import pageUtils from '../../../lib/pageUtils';
 
 interface Props {
   eventUUID: string;
+  announcement?: string;
 }
 
 const Page = (props: PropsWithChildren<Props>) => {

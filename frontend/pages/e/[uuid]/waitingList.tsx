@@ -12,6 +12,7 @@ interface NewPassengerDialogContext {
 
 interface Props {
   eventUUID: string;
+  announcement?: string;
 }
 
 const Page = (props: PropsWithChildren<Props>) => {
