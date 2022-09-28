@@ -1,3 +1,8 @@
+import sha1 from 'crypto-js/sha1';
+import EncBase64 from 'crypto-js/enc-base64';
+
+export const hashText = (text: string) => sha1(text).toString(EncBase64);
+
 export const getCookie = (cname: string, cookieHeader?: string) => {
   const cookieString =
     typeof document === 'undefined' ? cookieHeader : document.cookie;

@@ -2,7 +2,7 @@ import {Icon} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {useState} from 'react';
-import {setCookie} from '../../lib/cookies';
+import {hashText, setCookie} from '../../lib/cookies';
 import Markdown from '../Markdown';
 
 const ANNOUNCEMENT_COOKIE = 'lastAnnouncementSeen';
@@ -17,7 +17,8 @@ const Banner = (props: Props) => {
   const [showBanner, setShowBanner] = useState(!!announcement);
 
   const onBannerClear = () => {
-    setCookie(ANNOUNCEMENT_COOKIE, `${announcement}`);
+    const hashedMessage = hashText(announcement);
+    setCookie(ANNOUNCEMENT_COOKIE, hashedMessage);
     setShowBanner(false);
   };
 

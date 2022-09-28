@@ -2,7 +2,7 @@ import {ApolloClient} from '@apollo/client';
 import {getSession} from 'next-auth/react';
 import {ProfileDocument, SettingDocument} from '../generated/graphql';
 import {initializeApollo, APOLLO_STATE_PROP_NAME} from './apolloClient';
-import {getCookie} from './cookies';
+import {getCookie, hashText} from './cookies';
 
 type ServerSideExtension = (
   context: any,
@@ -29,13 +29,18 @@ const getServerSideProps =
         variables: {locale},
       });
       let announcement = setting?.data?.attributes?.announcement || '';
-      const lastAnnouncementSeen = getCookie(
-        'lastAnnouncementSeen',
-        context.req.headers.cookie
-      );
 
-      if (!announcement || announcement === lastAnnouncementSeen)
-        announcement = null;
+      if (!announcement) announcement = null;
+      else {
+        const lastAnnouncementSeen = getCookie(
+          'lastAnnouncementSeen',
+          context.req.headers.cookie
+        );
+        const hashedAnnouncement = hashText(announcement);
+        if (hashedAnnouncement === lastAnnouncementSeen) {
+          announcement = null;
+        }
+      }
 
       if (session)
         await apolloClient.query({
