@@ -12,7 +12,8 @@ const createPassenger = {
         const userPassengersInEvent: { id: string }[] =
           await strapi.entityService.findMany("api::passenger.passenger", {
             filters: {
-              event: eventId,
+              event: { id: eventId },
+              user: { id: userId },
             },
           });
 
