@@ -48,14 +48,15 @@ const useActions = (props: Props) => {
 
   const loggedMenuActions = [
     {
-      label: t('menu.dashboard'),
-      onClick: () => router.push('/dashboard'),
-      id: 'GoToDashboardTab',
-    },
-    {
       label: t('menu.profile'),
       onClick: () => router.push('/profile'),
       id: 'ProfileTab',
+    },
+    {divider: true},
+    {
+      label: t('menu.dashboard'),
+      onClick: () => router.push('/dashboard'),
+      id: 'GoToDashboardTab',
     },
     {divider: true},
   ];

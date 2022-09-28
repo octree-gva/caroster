@@ -42,14 +42,15 @@ const Home = (props: PageProps) => {
 
   const loggedMenuActions = [
     {
-      label: t('menu.dashboard'),
-      onClick: () => router.push('/dashboard'),
-      id: 'SeeDashboardTabs',
-    },
-    {
       label: t('menu.profile'),
       onClick: () => router.push('/profile'),
       id: 'ProfileTabs',
+    },
+    {divider: true},
+    {
+      label: t('menu.dashboard'),
+      onClick: () => router.push('/dashboard'),
+      id: 'SeeDashboardTabs',
     },
   ];
 

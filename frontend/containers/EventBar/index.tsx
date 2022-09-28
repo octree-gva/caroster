@@ -16,13 +16,10 @@ import UserIcon from './UserIcon';
 const EventBar = ({event, onAdd}) => {
   const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {profile, connected} = useProfile();
+  const {connected} = useProfile();
   const classes = useStyles();
   const menuActions = useActions({onAdd, eventId: event?.id});
   const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
-  const userInfos = profile
-    ? [{label: profile.username, id: 'Email'}, {divider: true}]
-    : [];
 
   return (
     <AppBar
@@ -70,7 +67,7 @@ const EventBar = ({event, onAdd}) => {
             <GenericMenu
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[...userInfos, ...menuActions]}
+              actions={menuActions}
             />
           }
           <IconButton

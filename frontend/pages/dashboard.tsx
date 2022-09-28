@@ -46,14 +46,15 @@ const Dashboard = (props: PageProps) => {
 
   const menuActions = [
     {
-      label: t('menu.new_event'),
-      onClick: () => router.push('/'),
-      id: 'AddEventTabs',
-    },
-    {
       label: t('menu.profile'),
       onClick: () => router.push('/profile'),
       id: 'ProfileTabs',
+    },
+    {divider: true},
+    {
+      label: t('menu.new_event'),
+      onClick: () => router.push('/'),
+      id: 'AddEventTabs',
     },
   ];
 

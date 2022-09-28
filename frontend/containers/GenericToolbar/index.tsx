@@ -25,10 +25,6 @@ const GenericToolbar = ({
   const classes = useStyles();
   const {profile} = useProfile();
 
-  const userInfos = profile
-    ? [{label: profile.username, id: 'Email'}, {divider: true}]
-    : [];
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -79,7 +75,7 @@ const GenericToolbar = ({
             <GenericMenu
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
-              actions={[...userInfos, ...actions, {divider: true}]}
+              actions={[...actions, {divider: true}]}
             />
           </>
         )}
