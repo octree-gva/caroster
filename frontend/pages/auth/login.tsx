@@ -10,14 +10,19 @@ import LanguagesIcon from '../../containers/Languages/Icon';
 import {getSession} from 'next-auth/react';
 import pageUtils from '../../lib/pageUtils';
 
-const Login = () => {
+interface PageProps {
+  error?: string;
+}
+
+const Login = (props: PageProps) => {
   const {t} = useTranslation();
 
   return (
     <Layout menuTitle={t('signin.title')} displayMenu={false}>
       <Card>
         <CardMedia component={Logo} />
-        <SignInForm />
+        <SignInForm error={props?.error} />
+        d'une autre branche
         <Divider />
         <LoginGoogle />
       </Card>
@@ -36,7 +41,11 @@ export const getServerSideProps = async (context: any) => {
         permanent: false,
       },
     };
-  else return pageUtils.getServerSideProps()(context);
+  else
+    return pageUtils.getServerSideProps(async ctx => {
+      const error = ctx.query?.error || null;
+      return {props: {error}};
+    })(context);
 };
 
 export default Login;

@@ -10,16 +10,18 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActions from '@material-ui/core/CardActions';
 import {useTranslation} from 'react-i18next';
 import {signIn} from 'next-auth/react';
-import useToastsStore from '../../stores/useToastStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import useRedirectUrlStore from '../../stores/useRedirectUrl';
 
-const SignIn = () => {
+interface Props {
+  error?: string;
+}
+
+const SignIn = (props: Props) => {
+  const {error} = props;
   const {t} = useTranslation();
-  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const addToast = useToastsStore(s => s.addToast);
   const {saveStoredEvents} = useAddToEvents();
   const classes = useStyles();
   const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
@@ -40,29 +42,21 @@ const SignIn = () => {
       });
       saveStoredEvents(); // TODO Check it's correctly executed after sign-in
     } catch (error) {
-      handleAuthError(error);
+      console.error(error);
     }
 
     return false;
-  };
-
-  const handleAuthError = error => {
-    const strapiError = error.message;
-    console.error({strapiError});
-    if (strapiError === 'Invalid identifier or password') {
-      setError(t('signin.errors'));
-      addToast(t('signin.errors'));
-    } else if (strapiError === 'Auth.form.error.confirmed') {
-      setError(t('signin.unconfirmed'));
-      addToast(t('signin.unconfirmed'));
-    }
   };
 
   return (
     <form onSubmit={onSubmit}>
       <CardContent className={classes.content}>
         <Typography variant="h6">{t('signin.title')}</Typography>
-        {error && <FormHelperText error={true}>{error}</FormHelperText>}
+        {error && (
+          <FormHelperText error={true}>
+            {t(`signin.errors.${error}`)}
+          </FormHelperText>
+        )}
         <TextField
           label={t('signin.email')}
           fullWidth

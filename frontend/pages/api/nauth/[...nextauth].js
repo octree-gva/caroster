@@ -13,22 +13,20 @@ export default NextAuth({
         password: {label: 'Password', type: 'password'},
       },
       async authorize(credentials, req) {
-        try {
-          const response = await fetch(`${STRAPI_URL}/api/auth/local`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              identifier: credentials.email,
-              password: credentials.password,
-            }),
-          });
-          const data = await response.json();
-          const {user, jwt} = data;
-          return {...user, jwt};
-        } catch (error) {
-          console.error({error});
-          return null;
-        }
+        const response = await fetch(`${STRAPI_URL}/api/auth/local`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            identifier: credentials.email,
+            password: credentials.password,
+          }),
+        });
+        const data = await response.json();
+        if (data?.error?.message === 'Your account email is not confirmed')
+          throw new Error('EmailNotConfirmed');
+        else if (!data?.jwt) return null;
+        const {user, jwt} = data;
+        return {...user, jwt};
       },
     }),
     GoogleProvider({
@@ -80,5 +78,6 @@ export default NextAuth({
   },
   pages: {
     signIn: '/auth/login',
+    error: '/auth/login',
   },
 });
