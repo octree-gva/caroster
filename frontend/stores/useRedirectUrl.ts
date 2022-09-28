@@ -16,11 +16,7 @@ const useRedirectUrlStore = create<State>(
       set({redirectUrl: null});
       return redirectUrl;
     },
-  })),
-  {
-    name: 'currentUrl',
-    getStorage: () => sessionStorage,
-  }
+  }))
 );
 
 export default useRedirectUrlStore;
