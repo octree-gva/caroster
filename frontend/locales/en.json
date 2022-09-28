@@ -215,6 +215,7 @@
   "signin.register": "$t(menu.register)",
   "signin.errors.CredentialsSignin": "Check your email and password",
   "signin.errors.EmailNotConfirmed": "Your account has not been confirmed. Please check your emails",
+  "signin.errors.OAuthCallback": "Impossible to use Google authentication currently",
   "signin.withGoogle": "Use a Google account",
   "lost_password.title": "Password recovery",
   "lost_password.reset_title": "Definition of a new password",

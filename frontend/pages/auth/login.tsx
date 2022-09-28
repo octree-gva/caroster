@@ -22,7 +22,6 @@ const Login = (props: PageProps) => {
       <Card>
         <CardMedia component={Logo} />
         <SignInForm error={props?.error} />
-        d'une autre branche
         <Divider />
         <LoginGoogle />
       </Card>
