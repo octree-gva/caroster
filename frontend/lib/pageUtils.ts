@@ -7,7 +7,12 @@ import {getCookie} from './cookies';
 type ServerSideExtension = (
   context: any,
   apolloClient: ApolloClient<any>
-) => Promise<Object | void>;
+) => Promise<ExtensionResult | void>;
+
+type ExtensionResult = {
+  props?: Object;
+  notFound?: boolean;
+};
 
 const getServerSideProps =
   (extension?: ServerSideExtension) => async (context: any) => {
@@ -38,8 +43,15 @@ const getServerSideProps =
         });
 
       let extensionProps = {};
-      if (extension)
-        extensionProps = (await extension(context, apolloClient)) || {};
+      if (extension) {
+        const extensionReturn = await extension(context, apolloClient);
+        extensionProps = extensionReturn?.props || {};
+        if (extensionReturn?.notFound) {
+          return {
+            notFound: true,
+          };
+        }
+      }
 
       return {
         props: {
