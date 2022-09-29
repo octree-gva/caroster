@@ -7,16 +7,21 @@ type State = {
   getRedirectUrl: () => string;
 };
 
-const useRedirectUrlStore = create<State>(
-  persist((set, get) => ({
-    redirectUrl: null,
-    setRedirectUrl: redirectUrl => set({redirectUrl}),
-    getRedirectUrl: () => {
-      const redirectUrl = get().redirectUrl;
-      set({redirectUrl: null});
-      return redirectUrl;
-    },
-  }))
+const useRedirectUrlStore = create<State>()(
+  persist(
+    (set, get) => ({
+      redirectUrl: null,
+      setRedirectUrl: redirectUrl => set({redirectUrl}),
+      getRedirectUrl: () => {
+        const redirectUrl = get().redirectUrl;
+        set({redirectUrl: null});
+        return redirectUrl;
+      },
+    }),
+    {
+      name: 'REDIRECT_URL_STORE',
+    }
+  )
 );
 
 export default useRedirectUrlStore;

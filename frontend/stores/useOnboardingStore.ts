@@ -9,7 +9,7 @@ type State = OnBoarding & {
   setOnboarding: (onboarding: Partial<OnBoarding>) => void;
 };
 
-const useOnboardingStore = create<State>(
+const useOnboardingStore = create<State>()(
   persist(
     set => ({
       onboardingUser: false,
