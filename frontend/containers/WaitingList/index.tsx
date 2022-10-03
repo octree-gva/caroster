@@ -59,7 +59,6 @@ const WaitingList = ({
     async travel => {
       try {
         await updatePassenger(addingPassenger.id, {
-          event: null,
           travel: travel.id,
         });
         setAddingPassenger(null);
