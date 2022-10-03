@@ -1,4 +1,5 @@
 import {useTranslation} from 'react-i18next';
+import Link from 'next/link';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {
@@ -7,8 +8,9 @@ import {
   EventByUuidDocument,
   Travel,
   useUpdatePassengerMutation,
-  TravelInput
+  TravelInput,
 } from '../../generated/graphql';
+import Button from '@material-ui/core/Button';
 
 interface Props {
   travel: Travel & {id: string};
@@ -19,6 +21,7 @@ const useActions = (props: Props) => {
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
+  const clearToast = useToastStore(s => s.clearToast);
   const [updateTravelMutation] = useUpdateTravelMutation();
   const [deleteTravelMutation] = useDeleteTravelMutation();
   const [updatePassenger] = useUpdatePassengerMutation();
@@ -35,7 +38,19 @@ const useActions = (props: Props) => {
         },
         refetchQueries: ['eventByUUID'],
       });
-      addToast(t('travel.moved_to_waiting_list'));
+      addToast(
+        t('travel.moved_to_waiting_list'),
+        <Link href={`/e/${event.uuid}/waitingList`} passHref>
+          <Button
+            size="small"
+            color="primary"
+            variant="contained"
+            onClick={() => clearToast()}
+          >
+            {t('generic.access')}
+          </Button>
+        </Link>
+      );
     } catch (error) {
       console.error(error);
       addToast(t('travel.errors.cant_remove_passenger'));

@@ -13,6 +13,7 @@
   "generic.save": "Enregistrer",
   "generic.confirm": "Confirmer",
   "generic.clear": "Effacer",
+  "generic.access": "Accéder",
   "generic.errors.date_min": "Sélectionnez une date à venir",
   "generic.errors.unknown": "Une erreur inconnue c'est produite",
   "generic.errors.rejected": "Quelque chose c'est mal passé",

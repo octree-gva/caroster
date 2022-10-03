@@ -13,6 +13,7 @@
   "generic.save": "Save",
   "generic.confirm": "Confirm",
   "generic.clear": "Clear",
+  "generic.access": "Access",
   "generic.errors.date_min": "Select an upcoming date",
   "generic.errors.unknown": "An unknown error occurred",
   "generic.errors.rejected": "Something went wrong",
