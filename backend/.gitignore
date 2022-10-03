@@ -114,3 +114,4 @@ build
 .strapi-updater.json
 restart.test
 dist/
+.strapi-updater.json

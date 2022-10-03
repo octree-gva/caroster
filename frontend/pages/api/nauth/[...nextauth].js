@@ -75,6 +75,13 @@ export default NextAuth({
       }
       return session;
     },
+    async redirect({url, baseUrl}) {
+      // Allows relative callback URLs
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same host
+      else if (new URL(url).host === new URL(baseUrl).host) return url;
+      return baseUrl;
+    },
   },
   pages: {
     signIn: '/auth/login',
