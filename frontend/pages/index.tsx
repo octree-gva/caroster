@@ -1,11 +1,12 @@
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
+import moment from 'moment';
 import Layout from '../layouts/Centered';
 import CreateEvent from '../containers/CreateEvent';
 import LanguagesIcon from '../containers/Languages/Icon';
 import Paper from '../components/Paper';
 import Logo from '../components/Logo';
-import {useSession} from 'next-auth/react';
+import {getSession, useSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
 import {useEffect} from 'react';
 import useRedirectUrlStore from '../stores/useRedirectUrl';
@@ -74,6 +75,21 @@ const Home = (props: PageProps) => {
   );
 };
 
-export const getServerSideProps = pageUtils.getServerSideProps();
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context);
+  const {provider, userCreatedAt} = session?.token || {};
+  const isFirstLogin = userCreatedAt
+    ? moment().subtract({seconds: 3}).isBefore(userCreatedAt)
+    : false;
+  if (provider === 'google' && isFirstLogin)
+    return {
+      redirect: {
+        destination: '/auth/confirm/google',
+        permanent: false,
+      },
+    };
+
+  return pageUtils.getServerSideProps()(context);
+};
 
 export default Home;

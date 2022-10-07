@@ -6,6 +6,7 @@ const registerExtension = ({ nexus, strapi }) => ({
         t.string("firstName");
         t.string("lastName");
         t.string("lang");
+        t.boolean("newsletterConsent");
       },
     }),
   ],

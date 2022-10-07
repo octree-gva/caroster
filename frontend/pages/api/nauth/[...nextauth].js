@@ -53,6 +53,8 @@ export default NextAuth({
         token.email = data.user.email;
         token.username = data.user.firstname;
         token.lang = data.user.lang?.toLowerCase();
+        token.provider = account.provider;
+        token.userCreatedAt = data.user.createdAt;
       }
 
       // Strapi Auth
@@ -62,6 +64,8 @@ export default NextAuth({
         token.email = user.email;
         token.username = user.firstname;
         token.lang = user.lang?.toLowerCase();
+        token.provider = account.provider;
+        token.userCreatedAt = user.createdAt;
       }
 
       return token;

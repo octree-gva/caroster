@@ -170,6 +170,7 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   name: Scalars['String'];
+  passengers?: Maybe<PassengerRelationResponseCollection>;
   position?: Maybe<Scalars['JSON']>;
   travels?: Maybe<TravelRelationResponseCollection>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -178,15 +179,15 @@ export type Event = {
 };
 
 
-export type EventTravelsArgs = {
-  filters?: InputMaybe<TravelFiltersInput>;
+export type EventPassengersArgs = {
+  filters?: InputMaybe<PassengerFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
-export type EventWaitingPassengersArgs = {
-  filters?: InputMaybe<PassengerFiltersInput>;
+export type EventTravelsArgs = {
+  filters?: InputMaybe<TravelFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -214,12 +215,12 @@ export type EventFiltersInput = {
   newsletter?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<EventFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<EventFiltersInput>>>;
+  passengers?: InputMaybe<PassengerFiltersInput>;
   position?: InputMaybe<JsonFilterInput>;
   travels?: InputMaybe<TravelFiltersInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   users?: InputMaybe<UsersPermissionsUserFiltersInput>;
   uuid?: InputMaybe<StringFilterInput>;
-  waitingPassengers?: InputMaybe<PassengerFiltersInput>;
 };
 
 export type EventInput = {
@@ -229,11 +230,11 @@ export type EventInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   newsletter?: InputMaybe<Scalars['Boolean']>;
+  passengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   position?: InputMaybe<Scalars['JSON']>;
   travels?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   users?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   uuid?: InputMaybe<Scalars['String']>;
-  waitingPassengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 export type EventRelationResponseCollection = {
@@ -1309,6 +1310,7 @@ export type UsersPermissionsRegisterInput = {
   firstName?: InputMaybe<Scalars['String']>;
   lang?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
+  newsletterConsent?: InputMaybe<Scalars['Boolean']>;
   password: Scalars['String'];
   username: Scalars['String'];
 };
@@ -1437,6 +1439,7 @@ export type UsersPermissionsUserFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   lang?: InputMaybe<StringFilterInput>;
   lastName?: InputMaybe<StringFilterInput>;
+  newsletterConsent?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<UsersPermissionsUserFiltersInput>;
   onboardingCreator?: InputMaybe<BooleanFilterInput>;
   onboardingUser?: InputMaybe<BooleanFilterInput>;
@@ -1460,6 +1463,7 @@ export type UsersPermissionsUserInput = {
   firstName?: InputMaybe<Scalars['String']>;
   lang?: InputMaybe<Enum_Userspermissionsuser_Lang>;
   lastName?: InputMaybe<Scalars['String']>;
+  newsletterConsent?: InputMaybe<Scalars['Boolean']>;
   oldPassword?: InputMaybe<Scalars['String']>;
   onboardingCreator?: InputMaybe<Scalars['Boolean']>;
   onboardingUser?: InputMaybe<Scalars['Boolean']>;

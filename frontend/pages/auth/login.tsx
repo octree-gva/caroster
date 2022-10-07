@@ -5,7 +5,6 @@ import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
 import SignInForm from '../../containers/SignInForm';
-import LoginGoogle from '../../containers/LoginGoogle';
 import LanguagesIcon from '../../containers/Languages/Icon';
 import {getSession} from 'next-auth/react';
 import pageUtils from '../../lib/pageUtils';
@@ -22,8 +21,6 @@ const Login = (props: PageProps) => {
       <Card>
         <CardMedia component={Logo} />
         <SignInForm error={props?.error} />
-        <Divider />
-        <LoginGoogle />
       </Card>
       <LanguagesIcon />
     </Layout>

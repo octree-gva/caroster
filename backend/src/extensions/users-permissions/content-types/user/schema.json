@@ -100,8 +100,17 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": ["fr", "en", "FR", "EN"],
+      "enum": [
+        "fr",
+        "en",
+        "FR",
+        "EN"
+      ],
       "default": "fr"
+    },
+    "newsletterConsent": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
