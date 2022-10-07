@@ -27,7 +27,6 @@ const SignIn = (props: Props) => {
   const [password, setPassword] = useState('');
   const {saveStoredEvents} = useAddToEvents();
   const classes = useStyles();
-  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
 
   const canSubmit = useMemo(
     () => [email, password].filter(s => s.length < 4).length === 0,
@@ -37,11 +36,10 @@ const SignIn = (props: Props) => {
   const onSubmit = async e => {
     e.preventDefault?.();
     try {
-      const callbackUrl = getRedirectUrl() || '/';
       await signIn('credentials', {
         email,
         password,
-        callbackUrl,
+        callbackUrl: '/',
       });
       saveStoredEvents(); // TODO Check it's correctly executed after sign-in
     } catch (error) {
