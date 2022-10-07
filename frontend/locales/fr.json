@@ -221,6 +221,7 @@
   "signin.password": "Mot de passe",
   "signin.login": "$t(menu.login)",
   "signin.register": "$t(menu.register)",
+  "signin.emailConfirmation": "Votre compte a bien été confirmé. Vous pouvez maintenant vous connecter.",
   "signin.errors.CredentialsSignin": "Vérifier votre email et mot de passe",
   "signin.errors.EmailNotConfirmed": "Votre compte n'a pas été confirmé. Merci de vérifier vos emails",
   "signin.errors.OAuthCallback": "Impossible d'utiliser la connexion avec un compte Google actuellement",
