@@ -12,7 +12,7 @@ query findUserVehicles {
     id
     username
     profile {
-      vehicles {
+      vehicles(pagination: {limit: 100}) {
         data {
           ...VehicleFields
         }

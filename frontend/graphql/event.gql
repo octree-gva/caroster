@@ -27,7 +27,7 @@ fragment EventFields on EventEntity {
         }
       }
     }
-    travels {
+    travels(pagination: {limit: 100}) {
       data {
         id
         attributes {

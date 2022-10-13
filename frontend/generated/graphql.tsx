@@ -1393,6 +1393,7 @@ export type UsersPermissionsUser = {
   firstName?: Maybe<Scalars['String']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   lastName?: Maybe<Scalars['String']>;
+  newsletterConsent?: Maybe<Scalars['Boolean']>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   onboardingUser?: Maybe<Scalars['Boolean']>;
   provider?: Maybe<Scalars['String']>;
@@ -1703,7 +1704,7 @@ export const EventFieldsFragmentDoc = gql`
         }
       }
     }
-    travels {
+    travels(pagination: {limit: 100}) {
       data {
         id
         attributes {
@@ -1798,7 +1799,7 @@ export const UserFieldsFragmentDoc = gql`
   onboardingUser
   onboardingCreator
   provider
-  events {
+  events(pagination: {limit: 100}) {
     data {
       id
       attributes {
@@ -2386,7 +2387,7 @@ export const FindUserVehiclesDocument = gql`
     id
     username
     profile {
-      vehicles {
+      vehicles(pagination: {limit: 100}) {
         data {
           ...VehicleFields
         }
