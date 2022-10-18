@@ -11,8 +11,17 @@ export default {
   register(context) {
     graphqlExtends(context);
 
-    // Disable /users find REST endpoint
-    context.strapi.controller("plugin::users-permissions.user").find = () => {};
+    // Disable REST endpoints
+    context.strapi.controller("api::event.event").find = (ctx) =>
+      ctx.unauthorized();
+    context.strapi.controller("api::passenger.passenger").find = (ctx) =>
+      ctx.unauthorized();
+    context.strapi.controller("api::travel.travel").find = (ctx) =>
+      ctx.unauthorized();
+    context.strapi.controller("api::vehicle.vehicle").find = (ctx) =>
+      ctx.unauthorized();
+    context.strapi.controller("plugin::users-permissions.user").find = (ctx) =>
+      ctx.unauthorized();
   },
 
   /**
