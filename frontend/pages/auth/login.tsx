@@ -1,5 +1,5 @@
-import CardMedia from '@material-ui/core/CardMedia';
-import Card from '@material-ui/core/Card';
+import CardMedia from '@mui/material/CardMedia';
+import Card from '@mui/material/Card';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
@@ -7,7 +7,8 @@ import SignInForm from '../../containers/SignInForm';
 import LanguagesIcon from '../../containers/Languages/Icon';
 import {getSession} from 'next-auth/react';
 import pageUtils from '../../lib/pageUtils';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
+import theme from '../../theme';
 
 interface PageProps {
   error?: string;
@@ -24,10 +25,9 @@ const Login = (props: PageProps) => {
         <CardMedia component={Logo} />
         {emailConfirmation && (
           <Typography
-            style={{marginBottom: '3rem'}}
+            sx={{marginBottom: theme.spacing(2)}}
             variant="body2"
             align="center"
-            color="textSecondary"
           >{t`signin.emailConfirmation`}</Typography>
         )}
         <SignInForm error={props?.error} />

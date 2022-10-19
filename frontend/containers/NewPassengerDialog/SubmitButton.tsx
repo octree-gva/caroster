@@ -1,6 +1,6 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Icon from '@mui/material/Icon';
 import {ReactNode} from 'react';
 import useStyles from './useStyles';
 

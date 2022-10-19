@@ -1,8 +1,29 @@
 import {isValidElement} from 'react';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import {makeStyles} from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+const PREFIX = 'Action';
+
+const classes = {
+  divider: `${PREFIX}-divider`,
+  textItem: `${PREFIX}-textItem`
+};
+
+const StyledTypography = styled(Typography)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.divider}`]: {
+    margin: theme.spacing(1, 0),
+  },
+
+  [`&.${classes.textItem}`]: {
+    margin: theme.spacing(1, 2),
+    '&:focus': {outline: 0},
+  }
+}));
 
 export type ActionType = {
   divider?: boolean;
@@ -18,7 +39,7 @@ interface Props {
 const Action = (props: Props): JSX.Element => {
   const {action} = props;
   const {divider, onClick, id, label, ...menuItemProps} = action;
-  const classes = useStyles();
+
 
   if (divider)
     return <Divider variant="fullWidth" className={classes.divider} />;
@@ -31,20 +52,10 @@ const Action = (props: Props): JSX.Element => {
     );
   else
     return (
-      <Typography variant="body1" id={id} className={classes.textItem}>
+      <StyledTypography variant="body1" id={id} className={classes.textItem}>
         {label}
-      </Typography>
+      </StyledTypography>
     );
 };
-
-const useStyles = makeStyles(theme => ({
-  divider: {
-    margin: theme.spacing(1, 0),
-  },
-  textItem: {
-    margin: theme.spacing(1, 2),
-    '&:focus': {outline: 0},
-  },
-}));
 
 export default Action;

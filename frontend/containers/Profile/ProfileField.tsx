@@ -1,5 +1,5 @@
-import Typography from '@material-ui/core/Typography';
-import TextField, {TextFieldProps} from '@material-ui/core/TextField';
+import Typography from '@mui/material/Typography';
+import TextField, {TextFieldProps} from '@mui/material/TextField';
 
 type Props = TextFieldProps & {
   isEditing: boolean;

@@ -1,6 +1,6 @@
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
 interface Props {
   onClick?: () => void;

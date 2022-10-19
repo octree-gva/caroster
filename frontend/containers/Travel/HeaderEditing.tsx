@@ -1,20 +1,22 @@
 import {useState, useReducer, useCallback, useEffect, useMemo} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Slider from '@material-ui/core/Slider';
-import {DatePicker, TimePicker} from '@material-ui/pickers';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Slider from '@mui/material/Slider';
 import moment, {Moment} from 'moment';
+import {useTheme} from '@mui/material/styles';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
+import Box from '@mui/material/Box';
 
 const HeaderEditing = ({travel, toggleEditing}) => {
-  const classes = useStyles();
   const {t} = useTranslation();
+  const theme = useTheme();
   const actions = useActions({travel});
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(
@@ -66,37 +68,45 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   };
 
   return (
-    <div className={classes.header}>
+    <Box sx={{padding: theme.spacing(2)}}>
       <form onSubmit={onSave}>
         <IconButton
           size="small"
           color="primary"
           type="submit"
-          className={classes.edit}
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            margin: theme.spacing(1),
+            zIndex: theme.zIndex.speedDial,
+          }}
         >
           <Icon>done</Icon>
         </IconButton>
         <DatePicker
+          renderInput={props => (
+            <TextField
+              {...props}
+              fullWidth
+              helperText=" "
+              sx={{marginTop: theme.spacing(3)}}
+            />
+          )}
           label={t('travel.creation.date')}
-          fullWidth
-          helperText=" "
           value={date}
           onChange={setDate}
-          format="DD/MM/YYYY"
-          cancelLabel={t('generic.cancel')}
           autoFocus
-          id="NewTravelDate"
         />
         <TimePicker
           label={t('travel.creation.time')}
-          fullWidth
-          helperText=" "
+          renderInput={props => (
+            <TextField {...props} fullWidth helperText=" " />
+          )}
           value={time}
           onChange={setTime}
-          cancelLabel={t('generic.cancel')}
           ampm={false}
           minutesStep={5}
-          id="NewTravelTime"
         />
         <TextField
           label={t('travel.creation.name')}
@@ -120,7 +130,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           label={t('travel.creation.meeting')}
           fullWidth
           multiline
-          rowsMax={4}
+          maxRows={4}
           inputProps={{maxLength: 250}}
           helperText={`${meeting.length}/250`}
           value={meeting}
@@ -132,7 +142,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           label={t('travel.creation.notes')}
           fullWidth
           multiline
-          rowsMax={4}
+          maxRows={4}
           inputProps={{maxLength: 250}}
           helperText={`${details.length}/250`}
           value={details}
@@ -140,7 +150,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           name="details"
           id="EditTravelDetails"
         />
-        <div className={classes.slider}>
+        <Box sx={{marginTop: theme.spacing(2)}}>
           <Typography variant="caption">
             {t('travel.creation.seats')}
           </Typography>
@@ -157,9 +167,19 @@ const HeaderEditing = ({travel, toggleEditing}) => {
             valueLabelDisplay="auto"
             id="EditTravelSeats"
           />
-        </div>
+        </Box>
       </form>
-      <div className={classes.actions}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: theme.spacing(2, 0),
+          '& > *:first-child': {
+            marginBottom: theme.spacing(2),
+          },
+        }}
+      >
         <Button
           variant="outlined"
           color="primary"
@@ -176,14 +196,14 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         >
           {t('generic.remove')}
         </Button>
-      </div>
+      </Box>
       <RemoveDialog
         text={t('travel.actions.remove_alert')}
         open={removing}
         onClose={toggleRemoving}
         onRemove={onRemove}
       />
-    </div>
+    </Box>
   );
 };
 
@@ -193,33 +213,5 @@ const formatDate = (date: Moment, time: Moment) => {
     'YYYY-MM-DD HH:mm'
   ).toISOString();
 };
-
-const useStyles = makeStyles(theme => ({
-  header: {
-    padding: theme.spacing(2),
-  },
-  edit: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: theme.spacing(1),
-    zIndex: theme.zIndex.speedDial,
-  },
-  section: {
-    marginTop: theme.spacing(2),
-  },
-  slider: {
-    marginTop: theme.spacing(2),
-  },
-  actions: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    margin: theme.spacing(2, 0),
-    '& > *:first-child': {
-      marginBottom: theme.spacing(2),
-    },
-  },
-}));
 
 export default HeaderEditing;

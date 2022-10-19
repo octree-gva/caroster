@@ -1,32 +1,42 @@
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import {makeStyles} from '@material-ui/core/styles';
+import Card from '@mui/material/Card';
+import { styled } from '@mui/material/styles';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 import Layout from './Centered';
 import Logo from '../components/Logo';
 
-const CommonConfirm = ({children}) => {
-  const {wrapper} = useStyles();
+const PREFIX = 'CommonConfirm';
 
-  return (
-    <Layout displayMenu={false}>
-      <Card>
-        <CardMedia component={Logo} />
-        <CardContent className={wrapper}>
-          {children}
-        </CardContent>
-      </Card>
-    </Layout>
-  );
+const classes = {
+  wrapper: `${PREFIX}-wrapper`
 };
 
-const useStyles = makeStyles(theme => ({
-  wrapper: {
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.wrapper}`]: {
     padding: theme.spacing(0, 8 ),
     '&:last-child': {
       paddingBottom: theme.spacing(12),
     },
-  },
+  }
 }));
+
+const CommonConfirm = ({children}) => {
+
+
+  return (
+    <StyledLayout displayMenu={false}>
+      <Card>
+        <CardMedia component={Logo} />
+        <CardContent className={classes.wrapper}>
+          {children}
+        </CardContent>
+      </Card>
+    </StyledLayout>
+  );
+};
 
 export default CommonConfirm;

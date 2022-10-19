@@ -1,7 +1,7 @@
 import {useMemo, useReducer} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Paper from '@material-ui/core/Paper';
+import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
 import {Travel as TravelType} from '../../generated/graphql';
 import ClearButton from '../ClearButton';
 import PassengersList from '../PassengersList';
@@ -11,6 +11,22 @@ import Header from './Header';
 import useActions from './useActions';
 import useProfile from '../../hooks/useProfile';
 
+const PREFIX = 'Travel';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledPaper = styled(Paper)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.root}`]: {
+    position: 'relative',
+  }
+}));
+
 interface Props {
   travel: TravelType & {id: string};
   getAddPassengerFunction: (addSelf: boolean) => () => void;
@@ -18,7 +34,7 @@ interface Props {
 
 const Travel = (props: Props) => {
   const {travel} = props;
-  const classes = useStyles();
+
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const actions = useActions({travel});
   const {userId, connected} = useProfile();
@@ -36,7 +52,7 @@ const Travel = (props: Props) => {
   }, [travel, userId]);
 
   return (
-    <Paper className={classes.root}>
+    <StyledPaper className={classes.root}>
       {isEditing ? (
         <HeaderEditing travel={travel} toggleEditing={toggleEditing} />
       ) : (
@@ -61,14 +77,8 @@ const Travel = (props: Props) => {
           )}
         />
       )}
-    </Paper>
+    </StyledPaper>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'relative',
-  },
-}));
 
 export default Travel;

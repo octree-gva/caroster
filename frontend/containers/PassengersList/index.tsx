@@ -1,8 +1,25 @@
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import {makeStyles} from '@material-ui/core/styles';
+import List from '@mui/material/List';
+import {styled, useTheme} from '@mui/material/styles';
+import ListItem from '@mui/material/ListItem';
 import Passenger from './Passenger';
 import {PassengerEntity} from '../../generated/graphql';
+
+const PREFIX = 'PassengersList';
+
+const classes = {
+  container: `${PREFIX}-container`,
+  passenger: `${PREFIX}-passenger`,
+};
+
+const Root = styled('div')(({theme}) => ({
+  [`&.${classes.container}`]: {
+    padding: theme.spacing(0, 0, 1, 0),
+  },
+
+  [`& .${classes.passenger}`]: {
+    paddingRight: theme.spacing(12),
+  },
+}));
 
 interface Props {
   passengers: PassengerEntity[];
@@ -23,7 +40,8 @@ interface Props {
 const PassengersList = (props: Props) => {
   const {passengers, places, Button, onClick, onPress, disabled, isTravel} =
     props;
-  const classes = useStyles();
+  const theme = useTheme();
+
   let list = passengers;
 
   if (places) {
@@ -34,12 +52,12 @@ const PassengersList = (props: Props) => {
   }
 
   return (
-    <div className={classes.container}>
+    <Root sx={{padding: theme.spacing(0, 0, 1, 0)}}>
       <List disablePadding>
         {!!list &&
           list.map((passenger, index) => (
             <ListItem
-              className={classes.passenger}
+              sx={{paddingRight: theme.spacing(12)}}
               key={index}
               disabled={disabled}
               button={!!onPress}
@@ -59,17 +77,8 @@ const PassengersList = (props: Props) => {
             </ListItem>
           ))}
       </List>
-    </div>
+    </Root>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    padding: theme.spacing(0, 0, 1, 0),
-  },
-  passenger: {
-    paddingRight: theme.spacing(12),
-  },
-}));
 
 export default PassengersList;

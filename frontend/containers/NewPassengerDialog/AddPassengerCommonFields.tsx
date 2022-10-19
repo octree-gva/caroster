@@ -1,9 +1,9 @@
 import {Fragment} from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import {useTranslation} from 'react-i18next';
-import Icon from '@material-ui/core/Icon';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Icon from '@mui/material/Icon';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import useStyles from './useStyles';
 
 interface Props {

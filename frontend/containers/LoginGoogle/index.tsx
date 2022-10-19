@@ -1,11 +1,11 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
-import Button from '@material-ui/core/Button';
-import {makeStyles} from '@material-ui/core';
-import theme from '../../theme';
 
 const LoginGoogle = () => {
   const {t} = useTranslation();
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <Button
@@ -14,8 +14,9 @@ const LoginGoogle = () => {
       fullWidth
       href="/api/connect/google"
     >
-      <img
-        className={classes.googleLogo}
+      <Box
+        component="img"
+        sx={{marginRight: theme.spacing(1)}}
         height="25px"
         src="/assets/google-icon.svg"
         alt="Google Login"
@@ -24,11 +25,5 @@ const LoginGoogle = () => {
     </Button>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  googleLogo: {
-    marginRight: theme.spacing(1)
-  }
-}));
 
 export default LoginGoogle;

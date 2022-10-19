@@ -1,10 +1,10 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Slide from '@material-ui/core/Slide';
-import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import Slide from '@mui/material/Slide';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 
 const Transition = React.forwardRef(function Transition(props, ref) {

@@ -212,6 +212,7 @@
   "signup.account_already": "Do you already have an account ?",
   "signup.login": "$t(menu.login)",
   "signup.errors.email_taken": "This email is already associated with an account",
+  "confirm.creating": "Creating the account",
   "confirm.title": "Confirm your email",
   "confirm.text": "You have received an email with a link. Please click on this link to confirm your account.",
   "confirm.login": "Return to the login screen",

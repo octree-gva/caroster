@@ -1,20 +1,36 @@
 import {useRouter} from 'next/router';
-import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
+
+const PREFIX = 'DashboardEmpty';
+
+const classes = {
+  container: `${PREFIX}-container`
+};
+
+const StyledContainer = styled(Container)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.container}`]: {
+    paddingTop: theme.spacing(8),
+  }
+}));
 
 const DashboardEmpty = () => {
   const {t} = useTranslation();
   const router = useRouter();
-  const classes = useStyles();
+
 
   return (
-    <Container maxWidth="sm" className={classes.container}>
+    <StyledContainer maxWidth="sm" className={classes.container}>
       <Card>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h1">
@@ -38,14 +54,8 @@ const DashboardEmpty = () => {
           </Button>
         </CardActions>
       </Card>
-    </Container>
+    </StyledContainer>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    paddingTop: theme.spacing(8),
-  },
-}));
 
 export default DashboardEmpty;

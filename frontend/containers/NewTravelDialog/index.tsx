@@ -1,22 +1,23 @@
 import {useState, forwardRef, useMemo, useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import Slide from '@material-ui/core/Slide';
-import TextField from '@material-ui/core/TextField';
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
-import {DatePicker, TimePicker} from '@material-ui/pickers';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
+import {Box, Divider} from '@mui/material';
+import {useTheme} from '@mui/material/styles';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import moment, {Moment} from 'moment';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
-import {Vehicle} from '../../generated/graphql';
-import {Box, Divider} from '@material-ui/core';
 import FAQLink from './FAQLink';
+import {Vehicle} from '../../generated/graphql';
 
 interface Props {
   context: {
@@ -28,7 +29,8 @@ interface Props {
 
 const NewTravelDialog = ({context, toggle}: Props) => {
   const {t} = useTranslation();
-  const classes = useStyles();
+  const theme = useTheme();
+
   const event = useEventStore(s => s.event);
   const {createTravel} = useActions({event});
 
@@ -84,6 +86,18 @@ const NewTravelDialog = ({context, toggle}: Props) => {
     clearState();
   };
 
+  const halfWidthFieldSx = {
+    margin: `0 ${theme.spacing(1.5)}`,
+    width: `calc(50% - ${theme.spacing(3)})`,
+
+    '& > .MuiFormLabel-root': {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      width: '100%',
+      overflow: 'hidden',
+    },
+  };
+
   return (
     <Dialog
       fullWidth
@@ -96,17 +110,19 @@ const NewTravelDialog = ({context, toggle}: Props) => {
       TransitionComponent={Transition}
     >
       <form onSubmit={onCreate}>
-        <DialogTitle className={classes.title}>
+        <DialogTitle sx={{paddingBottom: 0}}>
           {t('travel.creation.title')}
         </DialogTitle>
-        <DialogContent className={classes.content}>
-          <Typography className={classes.sectionTitle}>
+        <DialogContent sx={{padding: `${theme.spacing(2)} 0`}}>
+          <Typography
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1.5)}}
+          >
             {t('travel.creation.car.title')}
           </Typography>
           <TextField
             variant="outlined"
             size="small"
-            className={classes.field}
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
             label={t('travel.creation.name')}
             fullWidth
             helperText=" "
@@ -118,7 +134,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
           <TextField
             variant="outlined"
             size="small"
-            className={classes.field}
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
             label={t('travel.creation.phone')}
             fullWidth
             inputProps={{type: 'tel'}}
@@ -128,20 +144,23 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             name="phone"
             FormHelperTextProps={{
               component: () => (
-                <FAQLink
-                  className={classes.faqHelper}
-                  link={t('travel.creation.phoneHelper.faq')}
-                  text={t('travel.creation.phoneHelper.why')}
-                />
+                <Typography variant="caption">
+                  <FAQLink
+                    sx={{textDecoration: 'none'}}
+                    link={t('travel.creation.phoneHelper.faq')}
+                    text={t('travel.creation.phoneHelper.why')}
+                  />
+                </Typography>
               ),
             }}
             id="NewTravelPhone"
           />
-          <div className={classes.slider}>
+          <Box sx={addSpacing(theme, 1)}>
             <Typography variant="caption">
               {t('travel.creation.seats')}
             </Typography>
             <Slider
+              size="small"
               value={seats}
               onChange={(e, value) => setSeats(value)}
               step={1}
@@ -151,47 +170,58 @@ const NewTravelDialog = ({context, toggle}: Props) => {
               valueLabelDisplay="auto"
               id="NewTravelSeats"
             />
-          </div>
-          <Divider className={classes.divider} />
-          <Typography className={classes.sectionTitle}>
+          </Box>
+          <Divider
+            sx={{
+              margin: `${theme.spacing(2)} 0`,
+            }}
+          />
+          <Typography
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1.5)}}
+          >
             {t('travel.creation.travel.title')}
           </Typography>
-          <Box className={classes.halfWidthWrapper}>
+          <Box sx={addSpacing(theme, 0.5)}>
             <DatePicker
-              className={classes.halfWidthField}
-              inputVariant="outlined"
-              size="small"
+              renderInput={props => (
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  size="small"
+                  helperText=" "
+                  sx={halfWidthFieldSx}
+                />
+              )}
               label={t('travel.creation.date')}
-              helperText=" "
               value={date}
               onChange={setDate}
-              format="DD/MM/YYYY"
-              cancelLabel={t('generic.cancel')}
               autoFocus
-              id="NewTravelDateTime"
             />
             <TimePicker
-              className={classes.halfWidthField}
-              inputVariant="outlined"
-              size="small"
+              renderInput={props => (
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  size="small"
+                  helperText=" "
+                  sx={halfWidthFieldSx}
+                />
+              )}
               label={t('travel.creation.time')}
-              helperText=" "
               value={time}
               onChange={setTime}
-              cancelLabel={t('generic.cancel')}
               ampm={false}
               minutesStep={5}
-              id="NewTravelTime"
             />
           </Box>
           <TextField
             variant="outlined"
             size="small"
-            className={classes.field}
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
             label={t('travel.creation.meeting')}
             fullWidth
             multiline
-            rowsMax={4}
+            maxRows={4}
             inputProps={{maxLength: 250}}
             helperText={`${meeting.length}/250`}
             value={meeting}
@@ -202,11 +232,11 @@ const NewTravelDialog = ({context, toggle}: Props) => {
           <TextField
             variant="outlined"
             size="small"
-            className={classes.field}
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
             label={t('travel.creation.notes')}
             fullWidth
             multiline
-            rowsMax={4}
+            maxRows={4}
             inputProps={{maxLength: 250}}
             helperText={`${details.length}/250`}
             value={details}
@@ -215,7 +245,11 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             id="NewTravelDetails"
           />
         </DialogContent>
-        <DialogActions className={classes.actions}>
+        <DialogActions
+          sx={{
+            paddingTop: 0,
+          }}
+        >
           <Button
             color="primary"
             id="NewTravelCancel"
@@ -257,51 +291,8 @@ const MARKS = [1, 2, 3, 4, 5, 6, 7, 8].map(value => ({
 }));
 
 const addSpacing = (theme, ratio) => ({
-  margin: `0 ${theme.spacing(3 * ratio)}px`,
-  width: `calc(100% - ${theme.spacing(6 * ratio)}px)`,
+  margin: `0 ${theme.spacing(3 * ratio)}`,
+  width: `calc(100% - ${theme.spacing(6 * ratio)})`,
 });
-
-const useStyles = makeStyles(theme => ({
-  title: {
-    paddingBottom: 0,
-  },
-  sectionTitle: {
-    ...addSpacing(theme, 1),
-    paddingBottom: theme.spacing(1.5),
-  },
-  content: {
-    padding: `${theme.spacing(2)}px 0`,
-  },
-  faqHelper: {
-    fontSize: '12px',
-  },
-  field: {
-    ...addSpacing(theme, 1),
-    paddingBottom: theme.spacing(1),
-  },
-  halfWidthWrapper: {
-    ...addSpacing(theme, 0.5),
-  },
-  halfWidthField: {
-    margin: `0 ${theme.spacing(1.5)}px`,
-    width: `calc(50% - ${theme.spacing(3)}px)`,
-
-    '& > .MuiFormLabel-root': {
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      width: '100%',
-      overflow: 'hidden',
-    },
-  },
-  slider: {
-    ...addSpacing(theme, 1),
-  },
-  divider: {
-    margin: `${theme.spacing(2)}px 0`,
-  },
-  actions: {
-    paddingTop: 0,
-  },
-}));
 
 export default NewTravelDialog;

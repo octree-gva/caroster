@@ -1,22 +1,105 @@
 import moment from 'moment';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Slide from '@material-ui/core/Slide';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Slide from '@mui/material/Slide';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Box from '@mui/material/Box';
 import {useTranslation} from 'react-i18next';
 import {forwardRef} from 'react';
 import getMapsLink from '../../lib/getMapsLink';
 import ShareEvent from '../ShareEvent';
 import {Passenger, TravelEntity, Travel} from '../../generated/graphql';
+
+const PREFIX = 'TravelDialog';
+
+const classes = {
+  offset: `${PREFIX}-offset`,
+  rtlBox: `${PREFIX}-rtlBox`,
+  info: `${PREFIX}-info`,
+  listItem: `${PREFIX}-listItem`,
+  date: `${PREFIX}-date`,
+  button: `${PREFIX}-button`,
+  noTravel: `${PREFIX}-noTravel`,
+  noTravelImage: `${PREFIX}-noTravelImage`,
+  share: `${PREFIX}-share`
+};
+
+const StyledSlide = styled(Slide)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.offset}`]: {
+    paddingTop: theme.spacing(7),
+  },
+
+  [`& .${classes.rtlBox}`]: {
+    display: 'flex',
+    padding: 0,
+    margin: 0,
+    direction: 'rtl',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+      paddingBottom: theme.spacing(1),
+    },
+  },
+
+  [`& .${classes.info}`]: {
+    padding: theme.spacing(0, 4, 0, 0),
+    width: '350px',
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(0.5, 1),
+      width: '100%',
+      textAlign: 'left',
+    },
+  },
+
+  [`& .${classes.listItem}`]: {
+    display: 'flex',
+    justifyContent: 'left',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+      textAlign: 'center',
+    },
+  },
+
+  [`& .${classes.date}`]: {
+    textTransform: 'capitalize',
+    padding: theme.spacing(0, 0, 0.5, 0),
+  },
+
+  [`& .${classes.button}`]: {
+    padding: theme.spacing(1, 15),
+    margin: theme.spacing(1),
+  },
+
+  [`& .${classes.noTravel}`]: {
+    margin: '120px auto 0 auto',
+    width: '330px',
+    maxWidth: '100%',
+    textAlign: 'center',
+  },
+
+  [`& .${classes.noTravelImage}`]: {
+    width: 'calc(100% - 2px)',
+    [theme.breakpoints.down('md')]: {
+      width: 'calc(50% - 2px)',
+    },
+  },
+
+  [`& .${classes.share}`]: {
+    marginTop: theme.spacing(2),
+    backgroundColor: '#fff',
+  }
+}));
 
 interface Props {
   eventName: string;
@@ -35,7 +118,7 @@ const TravelDialog = ({
   onClose,
   onSelect,
 }: Props) => {
-  const classes = useStyles();
+
   const {t} = useTranslation();
 
   const availableTravels = travels?.filter(
@@ -53,7 +136,7 @@ const TravelDialog = ({
     >
       <AppBar>
         <Toolbar>
-          <IconButton onClick={onClose} color="inherit">
+          <IconButton onClick={onClose} color="inherit" size="large">
             <Icon>arrow_back_ios</Icon>
           </IconButton>
           <Typography variant="h5">
@@ -71,7 +154,6 @@ const TravelDialog = ({
             {t('passenger.creation.no_travel.desc', {name: passenger?.name})}
           </Typography>
           <ShareEvent
-            color="primary"
             className={classes.share}
             title={`Caroster ${eventName}`}
             url={`${typeof window !== 'undefined' ? window.location.href : ''}`}
@@ -127,64 +209,7 @@ const TravelDialog = ({
 };
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <StyledSlide direction="up" ref={ref} {...props} />;
 });
-
-const useStyles = makeStyles(theme => ({
-  offset: {
-    paddingTop: theme.spacing(7),
-  },
-  rtlBox: {
-    display: 'flex',
-    padding: 0,
-    margin: 0,
-    direction: 'rtl',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-      paddingBottom: theme.spacing(1),
-    },
-  },
-  info: {
-    padding: theme.spacing(0, 4, 0, 0),
-    width: '350px',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0.5, 1),
-      width: '100%',
-      textAlign: 'left',
-    },
-  },
-  listItem: {
-    display: 'flex',
-    justifyContent: 'left',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-      textAlign: 'center',
-    },
-  },
-  date: {
-    textTransform: 'capitalize',
-    padding: theme.spacing(0, 0, 0.5, 0),
-  },
-  button: {
-    padding: theme.spacing(1, 15),
-    margin: theme.spacing(1),
-  },
-  noTravel: {
-    margin: '120px auto 0 auto',
-    width: '330px',
-    maxWidth: '100%',
-    textAlign: 'center',
-  },
-  noTravelImage: {
-    width: 'calc(100% - 2px)',
-    [theme.breakpoints.down('sm')]: {
-      width: 'calc(50% - 2px)',
-    },
-  },
-  share: {
-    marginTop: theme.spacing(2),
-    backgroundColor: '#fff',
-  },
-}));
 
 export default TravelDialog;

@@ -1,19 +1,19 @@
 import {forwardRef, Fragment} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Container from '@material-ui/core/Container';
-import Divider from '@material-ui/core/Divider';
-import Slide from '@material-ui/core/Slide';
+import {styled, useTheme} from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Slide from '@mui/material/Slide';
 import {useTranslation} from 'react-i18next';
 import VehicleItem from './VehicleItem';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import {Vehicle, VehicleEntity} from '../../generated/graphql';
-import Icon from '@material-ui/core/Icon';
+import Icon from '@mui/material/Icon';
 
 interface Props {
   open: boolean;
@@ -34,8 +34,8 @@ const VehicleChoiceDialog = ({
   toggleNewTravel,
   vehicles,
 }: Props) => {
+  const theme = useTheme();
   const {t} = useTranslation();
-  const classes = useStyles();
 
   return (
     <Dialog
@@ -47,11 +47,23 @@ const VehicleChoiceDialog = ({
     >
       <DialogTitle>
         {t('travel.vehicle.title')}
-        <Icon className={classes.closeIcon} onClick={toggle} aria-label="close">
+        <Icon
+          sx={{
+            position: 'absolute',
+            top: theme.spacing(2),
+            right: theme.spacing(2),
+            cursor: 'pointer',
+            padding: theme.spacing(0.5),
+            width: theme.spacing(4),
+            height: theme.spacing(4),
+          }}
+          onClick={toggle}
+          aria-label="close"
+        >
           close
         </Icon>
       </DialogTitle>
-      <DialogContent dividers className={classes.content}>
+      <DialogContent dividers sx={{padding: 0}}>
         {(vehicles && vehicles.length != 0 && (
           <List>
             {vehicles.map(({id, attributes}, index, {length}) => (
@@ -71,14 +83,14 @@ const VehicleChoiceDialog = ({
             ))}
           </List>
         )) || (
-          <Container className={classes.empty}>
+          <Container sx={{padding: theme.spacing(2, 3)}}>
             <Typography>{t('travel.vehicle.empty')}</Typography>
           </Container>
         )}
       </DialogContent>
-      <DialogActions className={classes.actions}>
+      <DialogActions sx={{justifyContent: 'center'}}>
         <Button
-          className={classes.new}
+          sx={{maxWidth: '300px'}}
           color="primary"
           fullWidth
           variant="outlined"
@@ -97,29 +109,5 @@ const VehicleChoiceDialog = ({
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const useStyles = makeStyles(theme => ({
-  actions: {
-    justifyContent: 'center',
-  },
-  content: {
-    padding: 0,
-  },
-  new: {
-    maxWidth: '300px',
-  },
-  empty: {
-    padding: theme.spacing(2, 3),
-  },
-  closeIcon: {
-    position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2),
-    cursor: 'pointer',
-    padding: theme.spacing(0.5),
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-  },
-}));
 
 export default VehicleChoiceDialog;

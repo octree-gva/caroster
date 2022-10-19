@@ -1,8 +1,8 @@
 import {FormEvent, useState} from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Icon from '@material-ui/core/Icon';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';

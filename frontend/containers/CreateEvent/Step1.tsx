@@ -1,23 +1,24 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import NextLink from 'next/link'
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import NextLink from 'next/link';
+import CardActions from '@mui/material/CardActions';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
-import {CardActions} from '@material-ui/core';
 import {useSession} from 'next-auth/react';
 import useDebounce from '../../hooks/useDebounce';
 import {isValidEmail} from '../../lib/formValidation';
 
 const Step1 = ({nextStep, event, addToEvent}) => {
+  const theme = useTheme();
   const {t} = useTranslation();
   const session = useSession();
   const user = session?.data?.user;
   const isAuthenticated = session.status === 'authenticated';
-  const classes = useStyles({connected: isAuthenticated});
 
   // States
   const [name, setName] = useState(event.name ?? '');
@@ -48,12 +49,13 @@ const Step1 = ({nextStep, event, addToEvent}) => {
   };
 
   return (
-    <form onSubmit={onNext}>
+    <Box component="form" onSubmit={onNext}>
       <TextField
         label={t('event.creation.name')}
         fullWidth
         autoFocus
         margin="dense"
+        variant="standard"
         value={name}
         onChange={e => setName(e.target.value)}
         id="NewEventName"
@@ -64,6 +66,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
           <TextField
             label={t('event.creation.creator_email')}
             fullWidth
+            variant="standard"
             value={email}
             onChange={e => setEmail(e.target.value)}
             name="email"
@@ -71,7 +74,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
             id="NewEventEmail"
           />
           <FormControlLabel
-            className={classes.newsletter}
+            sx={{marginTop: theme.spacing(2)}}
             label={t('event.creation.newsletter')}
             control={
               <Checkbox
@@ -86,7 +89,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
         </>
       )}
       <Button
-        className={classes.button}
+        sx={{marginTop: theme.spacing(2)}}
         type="submit"
         variant="contained"
         color="secondary"
@@ -98,14 +101,20 @@ const Step1 = ({nextStep, event, addToEvent}) => {
       </Button>
 
       {!isAuthenticated && (
-        <div className={classes.addFromAccountSection}>
+        <Box sx={{marginTop: theme.spacing(8), textAlign: 'center'}}>
           <Typography variant="body1">
             {t('event.creation.addFromAccount.title')}
           </Typography>
           <Typography variant="body2">
             {t('event.creation.addFromAccount.subtitle')}
           </Typography>
-          <CardActions className={classes.actions}>
+          <CardActions
+            sx={{
+              marginTop: theme.spacing(1),
+              justifyContent: 'space-evenly',
+              textAlign: 'center',
+            }}
+          >
             <NextLink href="/auth/register" passHref>
               <Button variant="text">
                 {t('event.creation.addFromAccount.actions.register')}
@@ -117,28 +126,10 @@ const Step1 = ({nextStep, event, addToEvent}) => {
               </Button>
             </NextLink>
           </CardActions>
-        </div>
+        </Box>
       )}
-    </form>
+    </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginTop: theme.spacing(2),
-  },
-  newsletter: {
-    marginTop: theme.spacing(2),
-  },
-  addFromAccountSection: {
-    marginTop: theme.spacing(8),
-    textAlign: 'center',
-  },
-  actions: {
-    marginTop: theme.spacing(1),
-    justifyContent: 'space-evenly',
-    textAlign: 'center',
-  },
-}));
 
 export default Step1;

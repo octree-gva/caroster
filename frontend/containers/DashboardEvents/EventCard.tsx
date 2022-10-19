@@ -1,12 +1,30 @@
 import router from 'next/router';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import {EventEntity} from '../../generated/graphql';
+
+const PREFIX = 'EventCard';
+
+const classes = {
+  clickable: `${PREFIX}-clickable`,
+  name: `${PREFIX}-name`
+};
+
+const StyledCard = styled(Card)({
+  [`&.${classes.clickable}`]: {
+    cursor: 'pointer',
+  },
+  [`& .${classes.name}`]: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+});
 
 interface Props {
   event: EventEntity;
@@ -14,10 +32,10 @@ interface Props {
 
 const EventCard = ({event}: Props) => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
 
   return (
-    <Card
+    <StyledCard
       className={classes.clickable}
       onClick={() =>
         router.push(`/e/${event.attributes.uuid}`, undefined, {shallow: true})
@@ -44,18 +62,8 @@ const EventCard = ({event}: Props) => {
       <CardActions>
         <Button color="primary">{t('dashboard.actions.see_event')}</Button>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };
 
-const useStyles = makeStyles({
-  clickable: {
-    cursor: 'pointer',
-  },
-  name: {
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-});
 export default EventCard;

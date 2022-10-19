@@ -1,12 +1,13 @@
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import { useTheme } from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
-import Link from '@material-ui/core/Link';
-import {Travel} from '../../generated/graphql';
 import getMapsLink from '../../lib/getMapsLink';
+import {Travel} from '../../generated/graphql';
 
 interface Props {
   travel: Travel;
@@ -15,15 +16,19 @@ interface Props {
 
 const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
-  const classes = useStyles();
+  const theme = useTheme()
   const {t} = useTranslation();
 
   return (
-    <div className={classes.header}>
+    <Box sx={{padding: theme.spacing(2)}}>
       <IconButton
         size="small"
         color="primary"
-        className={classes.editBtn}
+        sx={{position: 'absolute',
+        top: 0,
+        right: 0,
+        margin: theme.spacing(1),
+        zIndex: theme.zIndex.speedDial}}
         onClick={toggleEditing}
         id="EditTravelBtn"
       >
@@ -38,17 +43,17 @@ const Header = (props: Props) => {
         {travel.vehicleName}
       </Typography>
       {!!travel.phone_number && (
-        <div className={classes.section}>
+        <Box sx={{marginTop: theme.spacing(2),}}>
           <Typography variant="subtitle2">
             {t('travel.fields.phone')}
           </Typography>
           <Typography variant="body2" id="TravelPhone">
             {travel.phone_number}
           </Typography>
-        </div>
+        </Box>
       )}
       {!!travel.meeting && (
-        <div className={classes.section}>
+        <Box sx={{marginTop: theme.spacing(2),}}>
           <Typography variant="subtitle2">
             {t('travel.fields.meeting_point')}
           </Typography>
@@ -62,36 +67,20 @@ const Header = (props: Props) => {
               {travel.meeting}
             </Link>
           </Typography>
-        </div>
+        </Box>
       )}
       {!!travel.details && (
-        <div className={classes.section}>
+        <Box sx={{marginTop: theme.spacing(2),}}>
           <Typography variant="subtitle2">
             {t('travel.fields.details')}
           </Typography>
           <Typography variant="body2" id="TravelDetails">
             {travel.details}
           </Typography>
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  header: {
-    padding: theme.spacing(2),
-  },
-  editBtn: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: theme.spacing(1),
-    zIndex: theme.zIndex.speedDial,
-  },
-  section: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 export default Header;

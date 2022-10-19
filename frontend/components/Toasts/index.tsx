@@ -1,16 +1,16 @@
-import {makeStyles} from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
+import {useTheme} from '@mui/material/styles';
+import Snackbar from '@mui/material/Snackbar';
 import useToastStore from '../../stores/useToastStore';
 
 const Toasts = () => {
+  const theme = useTheme();
   const toast = useToastStore(s => s.toast);
   const action = useToastStore(s => s.action);
   const clearToast = useToastStore(s => s.clearToast);
-  const classes = useStyles();
 
   return (
     <Snackbar
-      className={classes.withMobile}
+      sx={{bottom: theme.spacing(8)}}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
@@ -23,13 +23,5 @@ const Toasts = () => {
     />
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  withMobile: {
-    [theme.breakpoints.down('sm')]: {
-      bottom: theme.spacing(8),
-    },
-  }
-}));
 
 export default Toasts;

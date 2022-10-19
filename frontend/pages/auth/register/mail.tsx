@@ -1,5 +1,5 @@
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../../layouts/Centered';
 import MailSignUpForm from '../../../containers/MailSignUpForm';

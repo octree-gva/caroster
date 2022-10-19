@@ -4,12 +4,13 @@ import moment from 'moment';
 import Layout from '../layouts/Centered';
 import CreateEvent from '../containers/CreateEvent';
 import LanguagesIcon from '../containers/Languages/Icon';
-import Paper from '../components/Paper';
 import Logo from '../components/Logo';
 import {getSession, useSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
 import {useEffect} from 'react';
 import useRedirectUrlStore from '../stores/useRedirectUrl';
+import theme from '../theme';
+import Paper from '@mui/material/Paper';
 
 interface PageProps {
   announcement?: string;
@@ -66,7 +67,7 @@ const Home = (props: PageProps) => {
       displayMenu={isAuthenticated}
       {...props}
     >
-      <Paper>
+      <Paper sx={{padding: theme.spacing(2)}}>
         <Logo />
         <CreateEvent />
       </Paper>

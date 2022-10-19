@@ -1,29 +1,38 @@
 import Link from 'next/link';
-import Button from '@material-ui/core/Button';
-import CardActions from '@material-ui/core/CardActions';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
+const PREFIX = 'SignUpActions';
+
+const classes = {
+  actions: `${PREFIX}-actions`
+};
+
+const StyledCardActions = styled(CardActions)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.actions}`]: {
+    justifyContent: 'center',
+    marginBottom: theme.spacing(2),
+  }
+}));
 
 const SignUpActions = () => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
 
   return (
-    <CardActions className={classes.actions}>
+    <StyledCardActions className={classes.actions}>
       <Link href="/auth/login" passHref>
         <Button id="SignUpLogin" variant="text">
           {t('signup.login')}
         </Button>
       </Link>
-    </CardActions>
+    </StyledCardActions>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  actions: {
-    justifyContent: 'center',
-    marginBottom: theme.spacing(2),
-  },
-}));
 
 export default SignUpActions;

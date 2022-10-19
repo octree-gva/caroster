@@ -1,23 +1,23 @@
 import {useState, useMemo} from 'react';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
-import {makeStyles} from '@material-ui/core/styles';
 import useToastsStore from '../../stores/useToastStore';
-import {useRegisterMutation} from '../../generated/graphql';
 import SignUpActions from './SignupActions';
+import {useRegisterMutation} from '../../generated/graphql';
 
 const SignUp = () => {
   const {t, i18n} = useTranslation();
-  const classes = useStyles();
+  const theme = useTheme();
   const addToast = useToastsStore(s => s.addToast);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -67,24 +67,35 @@ const SignUp = () => {
     return false;
   };
 
+  const contentSx = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    padding: theme.spacing(0, 4),
+  };
+
   return (
     <form onSubmit={onSubmit}>
-      <CardContent className={classes.content}>
+      <CardContent sx={contentSx}>
         <Typography
-          variant="overline"
-          component="h5"
+          variant="h6"
           align="center"
-          className={classes.lineBreak}
+          sx={{
+            whiteSpace: 'pre-line',
+            paddingBottom: theme.spacing(4),
+          }}
         >
           {t('signup.createForm')}
         </Typography>
-        <Box className={classes.content}>
+        <Box sx={contentSx}>
           <TextField
             label={t('signup.firstName')}
             fullWidth
             autoFocus
             margin="dense"
             value={firstName}
+            InputLabelProps={{required: false}}
             required={true}
             onChange={({target: {value = ''}}) => setFirstName(value)}
             id="SignUpFirstName"
@@ -93,6 +104,7 @@ const SignUp = () => {
           <TextField
             label={t('signup.lastName')}
             fullWidth
+            InputLabelProps={{required: false}}
             required={true}
             margin="dense"
             value={lastName}
@@ -103,6 +115,7 @@ const SignUp = () => {
           <TextField
             label={t('signup.email')}
             fullWidth
+            InputLabelProps={{required: false}}
             required={true}
             error={!!error}
             helperText={error}
@@ -116,6 +129,7 @@ const SignUp = () => {
           <TextField
             label={t('signup.password')}
             fullWidth
+            InputLabelProps={{required: false}}
             required={true}
             margin="dense"
             value={password}
@@ -126,10 +140,11 @@ const SignUp = () => {
           />
         </Box>
         <FormControlLabel
-          className={classes.newsletter}
+          sx={{width: '100%', margin: theme.spacing(2, 0)}}
+          componentsProps={{typography: {align: 'center', variant: 'body2'}}}
           control={
             <Checkbox
-              className={classes.checkbox}
+              sx={{padding: 0, marginRight: theme.spacing(2)}}
               color="primary"
               value={newsletterConsent}
               onChange={({target: {checked = false}}) =>
@@ -140,20 +155,23 @@ const SignUp = () => {
           label={t('signup.newsletter.consent')}
         />
 
-        <Box className={classes.content}>
+        <Box sx={contentSx}>
           <Button
             color="primary"
             variant="contained"
             fullWidth
             type="submit"
             disabled={!canSubmit}
-            className={classes.button}
+            sx={{margin: theme.spacing(1)}}
             aria-disabled={!canSubmit}
             id="SignUpSubmit"
             endIcon={
               isLoading && (
                 <CircularProgress
-                  className={classes.loader}
+                  sx={{
+                    marginLeft: '14px',
+                    color: theme.palette.background.paper,
+                  }}
                   size={20}
                   color="secondary"
                 />
@@ -163,7 +181,9 @@ const SignUp = () => {
             {t('signup.submit')}
           </Button>
         </Box>
-        <Box className={classes.divider}>
+        <Box
+          sx={{width: '100%', textAlign: 'center', margin: theme.spacing(2, 0)}}
+        >
           <Divider />
         </Box>
         <Typography align="center" variant="body2">
@@ -174,40 +194,5 @@ const SignUp = () => {
     </form>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-    padding: theme.spacing(0, 4),
-  },
-  lineBreak: {
-    whiteSpace: 'pre-line',
-    lineHeight: 1.8,
-    paddingBottom: theme.spacing(4),
-  },
-  loader: {
-    marginLeft: '14px',
-    color: theme.palette.background.paper,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  divider: {
-    width: '100%',
-    textAlign: 'center',
-    margin: theme.spacing(2, 0),
-  },
-  newsletter: {
-    width: '100%',
-    margin: theme.spacing(2, 0),
-  },
-  checkbox: {
-    padding: 0,
-    marginRight: theme.spacing(2),
-  },
-}));
 
 export default SignUp;

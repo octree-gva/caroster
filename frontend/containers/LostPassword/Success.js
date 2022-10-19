@@ -1,19 +1,45 @@
 import {useTranslation} from 'react-i18next';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-import CardContent from '@material-ui/core/CardContent';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import CardActions from '@material-ui/core/CardActions';
-import {makeStyles} from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Icon from '@mui/material/Icon';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
 import Link from 'next/link';
+
+const PREFIX = 'Success';
+
+const classes = {
+  successCard: `${PREFIX}-successCard`,
+  successIcon: `${PREFIX}-successIcon`,
+  actions: `${PREFIX}-actions`
+};
+
+const StyledCard = styled(Card)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.successCard}`]: {
+    textAlign: 'center',
+  },
+
+  [`& .${classes.successIcon}`]: {
+    fontSize: theme.spacing(14),
+  },
+
+  [`& .${classes.actions}`]: {
+    justifyContent: 'center',
+  }
+}));
 
 const Success = ({email}) => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
 
   return (
-    <Card className={classes.successCard}>
+    <StyledCard className={classes.successCard}>
       <CardContent>
         <Icon size="large" color="primary" className={classes.successIcon}>
           done
@@ -31,19 +57,8 @@ const Success = ({email}) => {
           </Button>
         </Link>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };
 
-const useStyles = makeStyles(theme => ({
-  successCard: {
-    textAlign: 'center',
-  },
-  successIcon: {
-    fontSize: theme.spacing(14),
-  },
-  actions: {
-    justifyContent: 'center',
-  },
-}));
 export default Success;

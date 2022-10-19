@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import Section from './Section';
 import { EventEntity } from '../../generated/graphql';
 

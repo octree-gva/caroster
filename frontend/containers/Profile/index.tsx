@@ -1,19 +1,37 @@
 import {useState} from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import {makeStyles} from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
 import {useUpdateMeMutation} from '../../generated/graphql';
 
+const PREFIX = 'Profile';
+
+const classes = {
+  actions: `${PREFIX}-actions`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.actions}`]: {
+    marginTop: theme.spacing(2),
+    justifyContent: 'flex-end',
+  }
+}));
+
 const Profile = ({profile, logout}) => {
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
-  const classes = useStyles();
+
   const [updateProfile] = useUpdateMeMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -76,7 +94,7 @@ const Profile = ({profile, logout}) => {
     );
 
   return (
-    <>
+    (<Root>
       <Card>
         <CardContent>
           <ProfileField
@@ -150,15 +168,8 @@ const Profile = ({profile, logout}) => {
           )}
         </CardActions>
       </Card>
-    </>
+    </Root>)
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  actions: {
-    marginTop: theme.spacing(2),
-    justifyContent: 'flex-end',
-  },
-}));
 
 export default Profile;

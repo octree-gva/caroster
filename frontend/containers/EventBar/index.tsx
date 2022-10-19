@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Icon from '@mui/material/Icon';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material/styles';
 import {useState} from 'react';
 import useProfile from '../../hooks/useProfile';
 import useShare from '../../hooks/useShare';
@@ -15,42 +16,55 @@ import UserIcon from './UserIcon';
 
 const EventBar = ({event, onAdd}) => {
   const {share} = useShare();
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const {connected} = useProfile();
-  const classes = useStyles();
+
   const menuActions = useActions({onAdd, eventId: event?.id});
   const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
 
   return (
     <AppBar
-      className={classes.appbar}
+      sx={{
+        overflow: 'hidden',
+        minHeight: theme.mixins.toolbar.minHeight,
+        overflowY: 'hidden',
+        transition: 'height 0.3s ease',
+        backgroundColor: '#242424',
+        color: 'white',
+      }}
       color="primary"
       position="static"
       id="Menu"
     >
       <Toolbar>
-        <div className={classes.name}>
+        <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
           <Link href={appLink}>
-            <img
-              className={classes.logo}
-              src="/assets/Logo_in_beta.svg"
-              alt="Logo"
-            />
+            <Box
+              sx={{
+                marginRight: theme.spacing(2),
+                width: 64,
+                height: 32,
+                cursor: 'pointer',
+              }}
+            >
+              <img src="/assets/Logo_in_beta.svg" alt="Logo" />
+            </Box>
           </Link>
           <Tooltip title={event.name || ''}>
             <Typography
               variant="h6"
               noWrap
               id="MenuHeaderTitle"
-              className={classes.title}
+              sx={{maxWidth: `calc(100vw - ${theme.spacing(30)})`}}
             >
               {event.name}
             </Typography>
           </Tooltip>
-        </div>
+        </Box>
         <>
           <IconButton
-            className={classes.shareIcon}
+            sx={{marginRight: 0}}
             color="inherit"
             edge="end"
             id="ShareBtn"
@@ -60,21 +74,21 @@ const EventBar = ({event, onAdd}) => {
                 url: `${window.location.href}`,
               })
             }
+            size="large"
           >
             <Icon>share</Icon>
           </IconButton>
-          {
-            <GenericMenu
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
-              actions={menuActions}
-            />
-          }
+          <GenericMenu
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            actions={menuActions}
+          />
           <IconButton
             color="inherit"
             edge="end"
             id="MenuMoreInfo"
             onClick={e => setAnchorEl(e.currentTarget)}
+            size="large"
           >
             <UserIcon />
           </IconButton>
@@ -83,34 +97,5 @@ const EventBar = ({event, onAdd}) => {
     </AppBar>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  appbar: () => ({
-    overflow: 'hidden',
-    minHeight: theme.mixins.toolbar.minHeight,
-    overflowY: 'hidden',
-    transition: 'height 0.3s ease',
-  }),
-  logo: {
-    marginRight: theme.spacing(2),
-    width: 64,
-    height: 32,
-    cursor: 'pointer',
-  },
-  name: {
-    flexGrow: 1,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  title: {
-    maxWidth: `calc(100vw - ${theme.spacing(30)}px)`,
-  },
-  iconButtons: {
-    margin: theme.spacing(0),
-  },
-  shareIcon: {
-    marginRight: 0,
-  },
-}));
 
 export default EventBar;

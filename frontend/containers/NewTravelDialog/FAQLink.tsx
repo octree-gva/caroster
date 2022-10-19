@@ -1,16 +1,19 @@
-import Link from '@material-ui/core/Link';
+import Link, {LinkProps} from '@mui/material/Link';
 import useSettings from '../../hooks/useSettings';
 
 interface Props {
   text: string;
   link: string;
-  className: string;
 }
 
-const FAQLink = ({text, link, className}: Props) => {
+const FAQLink = ({text, link, sx}: Props & LinkProps) => {
   const settings = useSettings();
 
-  return <Link className={className} target="_blank" href={`${settings?.faq_link}${link}`}>{text}</Link>;
+  return (
+    <Link sx={sx} target="_blank" href={`${settings?.faq_link}${link}`}>
+      {text}
+    </Link>
+  );
 };
 
 export default FAQLink;

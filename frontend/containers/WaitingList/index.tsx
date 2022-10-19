@@ -1,10 +1,10 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import {makeStyles} from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
@@ -15,11 +15,52 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
 import TravelDialog from './TravelDialog';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import router from 'next/dist/client/router';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import {PassengerEntity} from '../../generated/graphql';
+
+const PREFIX = 'WaitingList';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  card: `${PREFIX}-card`,
+  header: `${PREFIX}-header`,
+  editBtn: `${PREFIX}-editBtn`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.root}`]: {
+    position: 'relative',
+    paddingLeft: '80px',
+
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: 0,
+    },
+  },
+
+  [`& .${classes.card}`]: {
+    marginTop: theme.spacing(6),
+  },
+
+  [`& .${classes.header}`]: {
+    position: 'relative',
+    padding: theme.spacing(2),
+  },
+
+  [`& .${classes.editBtn}`]: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    margin: theme.spacing(1),
+    zIndex: theme.zIndex.speedDial,
+  }
+}));
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
@@ -30,7 +71,7 @@ const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
 }: Props) => {
-  const classes = useStyles();
+
   const {t} = useTranslation();
   const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);
@@ -116,7 +157,7 @@ const WaitingList = ({
       );
 
   return (
-    <Box className={classes.root}>
+    <StyledBox className={classes.root}>
       <Container maxWidth="sm" className={classes.card}>
         <Paper>
           <div className={classes.header}>
@@ -170,7 +211,7 @@ const WaitingList = ({
         onClose={() => setAddingPassenger(null)}
         onSelect={selectTravel}
       />
-    </Box>
+    </StyledBox>
   );
 };
 
@@ -181,30 +222,5 @@ const sortTravels = (a, b) => {
     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   else return dateA - dateB;
 };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'relative',
-    paddingLeft: '80px',
-
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: 0,
-    },
-  },
-  card: {
-    marginTop: theme.spacing(6),
-  },
-  header: {
-    position: 'relative',
-    padding: theme.spacing(2),
-  },
-  editBtn: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: theme.spacing(1),
-    zIndex: theme.zIndex.speedDial,
-  },
-}));
 
 export default WaitingList;

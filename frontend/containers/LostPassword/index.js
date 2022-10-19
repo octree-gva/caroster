@@ -1,22 +1,44 @@
 import {useCallback, useState, useEffect} from 'react';
+import { styled } from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import router from 'next/router';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CardContent from '@material-ui/core/CardContent';
-import Card from '@material-ui/core/Card';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import CardActions from '@material-ui/core/CardActions';
-import Link from '@material-ui/core/Link';
-import {makeStyles} from '@material-ui/core/styles';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
+import CircularProgress from '@mui/material/CircularProgress';
+import CardActions from '@mui/material/CardActions';
+import Link from '@mui/material/Link';
 import LostPasswordSuccess from './Success';
 import useToastStore from '../../stores/useToastStore';
 import useProfile from '../../hooks/useProfile';
 import {useForgotPasswordMutation} from '../../generated/graphql';
 
+const PREFIX = 'LostPassword';
+
+const classes = {
+  loader: `${PREFIX}-loader`,
+  actions: `${PREFIX}-actions`
+};
+
+const Root = styled('form')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.loader}`]: {
+    marginLeft: theme.spacing(4),
+  },
+
+  [`& .${classes.actions}`]: {
+    marginTop: theme.spacing(2),
+    justifyContent: 'flex-end',
+  }
+}));
+
 const LostPassword = () => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
   const addToast = useToastStore(s => s.addToast);
   const {profile} = useProfile();
   const [sendForgotPassword, {loading}] = useForgotPasswordMutation();
@@ -53,7 +75,7 @@ const LostPassword = () => {
   if (!loading && isSent) return <LostPasswordSuccess email={email} />;
 
   return (
-    <form onSubmit={onSubmit}>
+    <Root onSubmit={onSubmit}>
       <Card>
         <CardContent>
           <TextField
@@ -103,17 +125,8 @@ const LostPassword = () => {
           </Button>
         </CardActions>
       </Card>
-    </form>
+    </Root>
   );
 };
 
-const useStyles = makeStyles(theme => ({
-  loader: {
-    marginLeft: theme.spacing(4),
-  },
-  actions: {
-    marginTop: theme.spacing(2),
-    justifyContent: 'flex-end',
-  },
-}));
 export default LostPassword;

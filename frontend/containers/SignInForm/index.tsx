@@ -1,20 +1,19 @@
 import {useState, useMemo} from 'react';
 import NextLink from 'next/link';
-import {makeStyles} from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import CardActions from '@material-ui/core/CardActions';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import FormHelperText from '@mui/material/FormHelperText';
+import CardActions from '@mui/material/CardActions';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import {signIn} from 'next-auth/react';
 import useAddToEvents from '../../hooks/useAddToEvents';
-import useRedirectUrlStore from '../../stores/useRedirectUrl';
 import LoginGoogle from '../LoginGoogle';
-import Divider from '@material-ui/core/Divider';
-import Box from '@material-ui/core/Box';
 
 interface Props {
   error?: string;
@@ -23,10 +22,10 @@ interface Props {
 const SignIn = (props: Props) => {
   const {error} = props;
   const {t} = useTranslation();
+  const theme = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {saveStoredEvents} = useAddToEvents();
-  const classes = useStyles();
 
   const canSubmit = useMemo(
     () => [email, password].filter(s => s.length < 4).length === 0,
@@ -49,9 +48,21 @@ const SignIn = (props: Props) => {
     return false;
   };
 
+  const spaceAround = {
+    width: '100%',
+    textAlign: 'center',
+    margin: theme.spacing(2, 0),
+  };
+
   return (
     <form onSubmit={onSubmit}>
-      <CardContent className={classes.content}>
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: theme.spacing(0, 6),
+        }}
+      >
         <Typography variant="h6" align="center">
           {t('signin.title')}
         </Typography>
@@ -60,11 +71,18 @@ const SignIn = (props: Props) => {
             {t(`signin.errors.${error}`)}
           </FormHelperText>
         )}
-        <Box className={classes.content}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            padding: {sm: theme.spacing(0, 6), xs: 0},
+          }}
+        >
           <TextField
             label={t('signin.email')}
             fullWidth
             required={true}
+            InputLabelProps={{required: false}}
             margin="dense"
             value={email}
             onChange={({target: {value = ''}}) => setEmail(value)}
@@ -76,6 +94,7 @@ const SignIn = (props: Props) => {
           <TextField
             label={t('signin.password')}
             fullWidth
+            InputLabelProps={{required: false}}
             required={true}
             margin="dense"
             value={password}
@@ -87,7 +106,7 @@ const SignIn = (props: Props) => {
           />
         </Box>
 
-        <Box className={classes.divider}>
+        <Box sx={spaceAround}>
           <NextLink href="/auth/lost-password" passHref>
             <Link>
               <Typography align="center" variant="body2">
@@ -96,28 +115,45 @@ const SignIn = (props: Props) => {
             </Link>
           </NextLink>
         </Box>
-        <Button
-          color="primary"
-          variant="contained"
-          type="submit"
-          disabled={!canSubmit}
-          aria-disabled={!canSubmit}
-          id="SignInSubmit"
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            padding: {md: theme.spacing(0, 16), sm: theme.spacing(0, 6)},
+          }}
         >
-          {t('signin.login')}
-        </Button>
-        <Box className={classes.divider}>
-          <Typography>{t('signin.or')}</Typography>
+          <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            type="submit"
+            disabled={!canSubmit}
+            aria-disabled={!canSubmit}
+            id="SignInSubmit"
+          >
+            {t('signin.login')}
+          </Button>
+          <Box sx={spaceAround}>
+            <Typography>{t('signin.or')}</Typography>
+          </Box>
+          <LoginGoogle />
         </Box>
-        <LoginGoogle />
-        <Box className={classes.divider}>
+        <Box sx={spaceAround}>
           <Divider />
         </Box>
         <Typography align="center" variant="body2">
           {t('signin.no_account')}
         </Typography>
       </CardContent>
-      <CardActions className={classes.actions} align="center">
+      <CardActions
+        sx={{
+          justifyContent: 'center',
+          marginBottom: theme.spacing(2),
+          textAlign: 'center',
+        }}
+      >
         <NextLink href="/auth/register" passHref>
           <Button size="small" id="SignInRegister">
             {t('signin.register')}
@@ -128,20 +164,4 @@ const SignIn = (props: Props) => {
   );
 };
 
-const useStyles = makeStyles(theme => ({
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(0, 6),
-  },
-  actions: {
-    justifyContent: 'center',
-    marginBottom: theme.spacing(2),
-  },
-  divider: {
-    width: '100%',
-    textAlign: 'center',
-    margin: theme.spacing(2, 0),
-  },
-}));
 export default SignIn;

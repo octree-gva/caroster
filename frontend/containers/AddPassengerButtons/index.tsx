@@ -1,7 +1,7 @@
-import Icon from '@material-ui/core/Icon';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import {makeStyles} from '@material-ui/core/styles';
+import Icon from '@mui/material/Icon';
+import {useTheme} from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 
 interface Props {
@@ -11,16 +11,39 @@ interface Props {
   disabled?: boolean;
 }
 
-const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant, disabled}: Props) => {
-  const classes = useStyles();
+const AddPassengerButtons = ({
+  getOnClickFunction,
+  canAddSelf,
+  variant,
+  disabled,
+}: Props) => {
+  const theme = useTheme();
   const {t} = useTranslation();
 
+  const containerSx = {padding: theme.spacing(1), textAlign: 'center'};
+  const textSx = {
+    padding: theme.spacing(1, 8),
+    [theme.breakpoints.down(440)]: {
+      padding: theme.spacing(1, 4),
+    },
+    '& > .material-icons': {
+      width: theme.spacing(3),
+      textAlign: 'center',
+      position: 'absolute',
+      left: theme.spacing(4),
+      marginRight: theme.spacing(1),
+      [theme.breakpoints.down(440)]: {
+        left: theme.spacing(1),
+      },
+    },
+  };
+
   return (
-    <Box className={classes.addButtonsContainer}>
+    <Box sx={containerSx}>
       {canAddSelf && (
-        <Box className={classes.addButtonsContainer}>
+        <Box sx={containerSx}>
           <Button
-            className={classes.textContainer}
+            sx={textSx}
             variant="contained"
             color="secondary"
             fullWidth
@@ -32,9 +55,9 @@ const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant, disabled}
           </Button>
         </Box>
       )}
-      <Box className={classes.addButtonsContainer}>
+      <Box sx={containerSx}>
         <Button
-          className={classes.textContainer}
+          sx={textSx}
           variant="outlined"
           color="primary"
           fullWidth
@@ -48,29 +71,5 @@ const AddPassengerButtons = ({getOnClickFunction, canAddSelf, variant, disabled}
     </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  addButtonsContainer: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-  },
-  textContainer: {
-    padding: theme.spacing(1, 8),
-    [theme.breakpoints.down(440)]: {
-      padding: theme.spacing(1, 4),
-    },
-    '& > .MuiButton-label': {
-      '& > .material-icons': {
-        width: theme.spacing(3),
-        textAlign: 'center',
-        position: 'absolute',
-        left: theme.spacing(4),
-        [theme.breakpoints.down(440)]: {
-          left: theme.spacing(1),
-        },
-      },
-    },
-  },
-}));
 
 export default AddPassengerButtons;

@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react';
+import {useTheme} from '@mui/material/styles';
 import {useRouter} from 'next/router';
-import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import Icon from '@material-ui/core/Icon';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import Icon from '@mui/material/Icon';
+import AppBar from '@mui/material/AppBar';
 import useProfile from '../../hooks/useProfile';
 import GenericMenu from '../GenericMenu';
 import {ActionType} from '../GenericMenu/Action';
@@ -21,8 +21,9 @@ const GenericToolbar = ({
   goBack: () => void | null;
 }) => {
   const router = useRouter();
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-  const classes = useStyles();
+
   const {profile} = useProfile();
 
   useEffect(() => {
@@ -33,24 +34,31 @@ const GenericToolbar = ({
     <AppBar
       position="static"
       color="primary"
-      className={classes.appbar}
+      sx={{
+        minHeight: theme.mixins.toolbar.minHeight,
+        transition: 'height 0.3s ease',
+        display: 'block',
+        backgroundColor: '#242424',
+        color: 'white',
+      }}
       id="Menu"
     >
-      <Toolbar>
+      <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
         {goBack && (
           <IconButton
             edge="start"
-            className={classes.goBack}
+            sx={{color: theme.palette.common.white}}
             onClick={() =>
               router.basePath.split('/').length > 2
                 ? router.back()
                 : router.push('/dashboard')
             }
+            size="large"
           >
             <Icon>arrow_back</Icon>
           </IconButton>
         )}
-        <div className={classes.name}>
+        <div sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
           <Typography variant="h6" noWrap id="MenuHeaderTitle">
             {title}
           </Typography>
@@ -62,9 +70,16 @@ const GenericToolbar = ({
               edge="end"
               id="MenuMoreInfo"
               onClick={e => setAnchorEl(e.currentTarget)}
+              size="large"
             >
               {profile ? (
-                <Avatar className={classes.avatar}>
+                <Avatar
+                  sx={{
+                    width: theme.spacing(3),
+                    height: theme.spacing(3),
+                    fontSize: 16,
+                  }}
+                >
                   {`${profile.username[0]}`.toUpperCase()}
                 </Avatar>
               ) : (
@@ -83,26 +98,5 @@ const GenericToolbar = ({
     </AppBar>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  appbar: () => ({
-    minHeight: theme.mixins.toolbar.minHeight,
-    transition: 'height 0.3s ease',
-    display: 'block',
-  }),
-  name: {
-    flexGrow: 1,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    fontSize: 16,
-  },
-  goBack: {
-    color: theme.palette.common.white,
-  },
-}));
 
 export default GenericToolbar;

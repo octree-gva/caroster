@@ -1,5 +1,5 @@
 import Joyride from 'react-joyride';
-import {useTheme} from '@material-ui/core/styles';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import useTour from '../../hooks/useTour';
 

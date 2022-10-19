@@ -1,23 +1,32 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Container from '@material-ui/core/Container';
-import {makeStyles} from '@material-ui/core/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+const PREFIX = 'Loading';
 
-const Loading = () => {
-  const classes = useStyles();
-  return (
-    <Container className={classes.container}>
-      <CircularProgress />
-    </Container>
-  );
+const classes = {
+  container: `${PREFIX}-container`
 };
 
-const useStyles = makeStyles(theme => ({
-  container: {
+const StyledContainer = styled(Container)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.container}`]: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-  },
+  }
 }));
+
+const Loading = () => {
+
+  return (
+    <StyledContainer className={classes.container}>
+      <CircularProgress />
+    </StyledContainer>
+  );
+};
 
 export default Loading;

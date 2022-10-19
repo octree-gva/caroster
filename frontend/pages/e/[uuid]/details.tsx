@@ -1,16 +1,17 @@
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
-import {DatePicker} from '@material-ui/pickers';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import {useTheme} from '@mui/material/styles';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {PropsWithChildren, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import pageUtils from '../../../lib/pageUtils';
 import ShareEvent from '../../../containers/ShareEvent';
 import useEventStore from '../../../stores/useEventStore';
 import useToastStore from '../../../stores/useToastStore';
@@ -20,7 +21,6 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
-import pageUtils from '../../../lib/pageUtils';
 
 interface Props {
   eventUUID: string;
@@ -33,6 +33,7 @@ const Page = (props: PropsWithChildren<Props>) => {
 
 const DetailsTab: TabComponent = ({}) => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const settings = useSettings();
   const [updateEvent] = useUpdateEventMutation();
   const addToast = useToastStore(s => s.addToast);
@@ -40,7 +41,6 @@ const DetailsTab: TabComponent = ({}) => {
   const event = useEventStore(s => s.event);
   const [isEditing, setIsEditing] = useState(false);
   const idPrefix = isEditing ? 'EditEvent' : 'Event';
-  const classes = useStyles();
 
   const onSave = async e => {
     try {
@@ -56,12 +56,18 @@ const DetailsTab: TabComponent = ({}) => {
       addToast(t('event.errors.cant_update'));
     }
   };
+  const sectionSx = {
+    marginBottom: theme.spacing(2),
+    width: '540px',
+    maxWidth: '100%',
+    paddingX: theme.spacing(2),
+  };
 
   const modifyButton = isEditing ? (
     <Button
       variant="contained"
       color="primary"
-      className={classes.modify}
+      sx={{position: 'absolute', right: theme.spacing(2)}}
       onClick={onSave}
     >
       {t('event.details.save')}
@@ -70,7 +76,7 @@ const DetailsTab: TabComponent = ({}) => {
     <Button
       variant="text"
       color="primary"
-      className={classes.modify}
+      sx={{position: 'absolute', right: theme.spacing(2)}}
       onClick={() => setIsEditing(true)}
     >
       {t('event.details.modify')}
@@ -80,11 +86,21 @@ const DetailsTab: TabComponent = ({}) => {
   if (!event) return null;
 
   return (
-    <Box className={classes.root}>
-      <Container maxWidth="sm" className={classes.card}>
-        <Paper className={classes.paper}>
+    <Box
+      sx={{
+        position: 'relative',
+        paddingLeft: '80px',
+
+        [theme.breakpoints.down('md')]: {
+          paddingLeft: 0,
+          paddingBottom: '80px',
+        },
+      }}
+    >
+      <Container maxWidth="sm" sx={{marginTop: theme.spacing(6)}}>
+        <Paper sx={{position: 'relative', padding: theme.spacing(2)}}>
           {modifyButton}
-          <div className={classes.section}>
+          <Box sx={sectionSx}>
             <Typography variant="h6">{t('event.fields.name')}</Typography>
             {isEditing ? (
               <TextField
@@ -99,24 +115,25 @@ const DetailsTab: TabComponent = ({}) => {
                 {event.name ?? t('event.fields.empty')}
               </Typography>
             )}
-          </div>
-          <div className={classes.section}>
+          </Box>
+          <Box sx={sectionSx}>
             <Typography variant="h6">{t('event.fields.date')}</Typography>
             {isEditing ? (
               <DatePicker
-                fullWidth
-                placeholder={t('event.fields.date_placeholder')}
+                renderInput={props => (
+                  <TextField
+                    {...props}
+                    id={`${idPrefix}Date`}
+                    fullWidth
+                    placeholder={t('event.fields.date_placeholder')}
+                  />
+                )}
                 value={event.date}
                 onChange={date =>
                   setEventUpdate({
                     date: !date ? null : moment(date).format('YYYY-MM-DD'),
                   })
                 }
-                format="DD/MM/YYYY"
-                cancelLabel={t('generic.cancel')}
-                clearable
-                clearLabel={t('generic.clear')}
-                id={`${idPrefix}Date`}
               />
             ) : (
               <Typography variant="body1" id={`${idPrefix}Date`}>
@@ -125,14 +142,14 @@ const DetailsTab: TabComponent = ({}) => {
                   : t('event.fields.empty')}
               </Typography>
             )}
-          </div>
-          <div className={classes.section}>
+          </Box>
+          <Box sx={sectionSx}>
             <Typography variant="h6">{t('event.fields.address')}</Typography>
             {isEditing ? (
               <TextField
                 fullWidth
                 multiline
-                rowsMax={4}
+                maxRows={4}
                 inputProps={{maxLength: 250}}
                 helperText={`${event.address?.length ?? 0}/250`}
                 defaultValue={event.address}
@@ -159,8 +176,8 @@ const DetailsTab: TabComponent = ({}) => {
                 )}
               </Typography>
             )}
-          </div>
-          <div className={classes.section}>
+          </Box>
+          <Box sx={sectionSx}>
             <Typography variant="h6">
               {t('event.fields.description')}
             </Typography>
@@ -168,7 +185,7 @@ const DetailsTab: TabComponent = ({}) => {
               <TextField
                 fullWidth
                 multiline
-                rowsMax={4}
+                maxRows={4}
                 inputProps={{maxLength: 250}}
                 helperText={`${event.description?.length || 0}/250`}
                 defaultValue={event.description}
@@ -182,7 +199,7 @@ const DetailsTab: TabComponent = ({}) => {
                 {event.description ?? t('event.fields.empty')}
               </Typography>
             )}
-          </div>
+          </Box>
           <Typography variant="h6">{t('event.fields.link')}</Typography>
           <Typography>{t('event.fields.link_desc')}</Typography>
           <Box py={4} justifyContent="center" display="flex">
@@ -202,41 +219,6 @@ const DetailsTab: TabComponent = ({}) => {
     </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'relative',
-    paddingLeft: '80px',
-
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: 0,
-      paddingBottom: '80px',
-    },
-  },
-  paper: {
-    position: 'relative',
-    padding: theme.spacing(2),
-  },
-  card: {
-    marginTop: theme.spacing(6),
-  },
-  modify: {
-    position: 'absolute',
-    right: theme.spacing(2),
-  },
-  section: {
-    marginBottom: theme.spacing(2),
-    width: '540px',
-    maxWidth: '100%',
-    paddingX: theme.spacing(2),
-  },
-  map: {
-    marginTop: theme.spacing(4),
-  },
-  seeOnGMapButton: {
-    marginLeft: theme.spacing(2),
-  },
-}));
 
 export const getServerSideProps = pageUtils.getServerSideProps(
   async (context, apolloClient) => {

@@ -1,9 +1,9 @@
-import Menu from '@material-ui/core/Menu';
+import Menu from '@mui/material/Menu';
 import {useTranslation} from 'react-i18next';
+import {signOut, useSession} from 'next-auth/react';
 import useSettings from '../../hooks/useSettings';
 import Languages from '../Languages/MenuItem';
 import Action, {ActionType} from './Action';
-import {signOut, useSession} from 'next-auth/react';
 
 interface Props {
   anchorEl: Element;

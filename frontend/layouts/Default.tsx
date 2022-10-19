@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import useGTM from '../hooks/useGTM';
 import GenericToolbar from '../containers/GenericToolbar';
 import {ActionType} from '../containers/GenericMenu/Action';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import Banner from '../components/Banner';
 import useMatomo from '../hooks/useMatomo';
 

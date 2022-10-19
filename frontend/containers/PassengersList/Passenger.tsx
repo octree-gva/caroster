@@ -1,13 +1,14 @@
 import {ReactNode} from 'react';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
-import {makeStyles} from '@material-ui/core/styles';
+import {useTheme} from '@mui/material/styles';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import {PassengerEntity} from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
-import Chip from '@material-ui/core/Chip';
+import Chip from '@mui/material/Chip';
+import Box from '@mui/material/Box';
 
 interface Props {
   passenger?: PassengerEntity;
@@ -17,8 +18,9 @@ interface Props {
 
 const Passenger = (props: Props) => {
   const {passenger, button, isTravel} = props;
+  const theme = useTheme();
   const {t} = useTranslation();
-  const classes = useStyles();
+
   const {userId} = useProfile();
 
   const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
@@ -26,14 +28,14 @@ const Passenger = (props: Props) => {
 
   if (passenger) {
     return (
-      <>
+      <Box>
         <ListItemText
           primary={
             <>
               {passenger.attributes.name}
               {isUser && (
                 <Chip
-                  className={classes.me}
+                  sx={{marginLeft: theme.spacing(2)}}
                   label={t('generic.me')}
                   variant="outlined"
                 />
@@ -43,7 +45,7 @@ const Passenger = (props: Props) => {
           secondary={showLocation}
         />
         {button}
-      </>
+      </Box>
     );
   } else
     return (
@@ -55,21 +57,10 @@ const Passenger = (props: Props) => {
         </ListItemAvatar>
         <ListItemText
           primary={t('travel.passengers.empty')}
-          classes={{
-            root: classes.empty,
-          }}
+          sx={{color: theme.palette.text.secondary}}
         />
       </>
     );
 };
-
-const useStyles = makeStyles(theme => ({
-  empty: {
-    color: theme.palette.text.secondary,
-  },
-  me: {
-    marginLeft: theme.spacing(2),
-  },
-}));
 
 export default Passenger;

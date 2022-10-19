@@ -1,18 +1,18 @@
-import {useRef, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Slider from 'react-slick';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
+import {useTheme} from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Masonry from '@mui/lab/Masonry';
+import Box from '@mui/material/Box';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import useProfile from '../../hooks/useProfile';
 import useAddToEvents from '../../hooks/useAddToEvents';
-import {AddPassengerToTravel} from '../NewPassengerDialog';
-import Travel from '../Travel';
-import sliderSettings from './_SliderSettings';
 import usePassengersActions from '../../hooks/usePassengersActions';
+import Travel from '../Travel';
 import NoCar from './NoCar';
+import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
+import {AddPassengerToTravel} from '../NewPassengerDialog';
 
 type TravelType = TravelData & {id: string};
 
@@ -21,14 +21,14 @@ interface Props {
 }
 
 const TravelColumns = (props: Props) => {
+  const theme = useTheme();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
-  const slider = useRef(null);
   const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const {profile, userId} = useProfile();
-  const classes = useStyles();
+
   const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
     travel: TravelType;
   } | null>(null);
@@ -52,8 +52,43 @@ const TravelColumns = (props: Props) => {
   };
 
   return (
-    <div className={classes.container}>
-      <div className={classes.dots} id="slider-dots" />
+    <Box
+      sx={{
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        [theme.breakpoints.down('md')]: {
+          paddingLeft: theme.spacing(),
+          paddingRight: theme.spacing(),
+        },
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Box
+        sx={{
+          height: '56px',
+          overflow: 'auto',
+          '& overflow': '-moz-scrollbars-none',
+          '-ms-overflow-style': 'none',
+          '&::-webkit-scrollbar': {
+            height: '0 !important',
+          },
+          '& .slick-dots': {
+            position: 'static',
+            '& li': {
+              display: 'block',
+              '& button:before': {
+                fontSize: '12px',
+              },
+            },
+          },
+          '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
+            {
+              color: theme.palette.primary.main,
+            },
+        }}
+        id="slider-dots"
+      />
       {(travels?.length === 0 && (
         <NoCar
           image
@@ -61,14 +96,25 @@ const TravelColumns = (props: Props) => {
           title={t('event.no_travel.title')}
         />
       )) || (
-        <Slider ref={slider} {...sliderSettings}>
+        <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={1}>
           {sortedTravels?.map(({id, attributes}) => {
             const travel = {id, ...attributes};
             return (
               <Container
                 key={travel.id}
                 maxWidth="sm"
-                className={classes.slide}
+                sx={{
+                  padding: theme.spacing(1),
+                  marginBottom: theme.spacing(10),
+                  outline: 'none',
+                  '& > *': {
+                    cursor: 'default',
+                  },
+
+                  [theme.breakpoints.down('md')]: {
+                    marginBottom: `calc(${theme.spacing(10)} + 56px)`,
+                  },
+                }}
               >
                 <Travel
                   travel={travel}
@@ -81,13 +127,27 @@ const TravelColumns = (props: Props) => {
               </Container>
             );
           })}
-          <Container maxWidth="sm" className={classes.slide}>
+          <Container
+            maxWidth="sm"
+            sx={{
+              padding: theme.spacing(1),
+              marginBottom: theme.spacing(10),
+              outline: 'none',
+              '& > *': {
+                cursor: 'default',
+              },
+
+              [theme.breakpoints.down('md')]: {
+                marginBottom: `calc(${theme.spacing(10)} + 56px)`,
+              },
+            }}
+          >
             <NoCar
               eventName={event?.name}
               title={t('event.no_other_travel.title')}
             />
           </Container>
-        </Slider>
+        </Masonry>
       )}
       {!!newPassengerTravelContext && (
         <AddPassengerToTravel
@@ -96,7 +156,7 @@ const TravelColumns = (props: Props) => {
           travel={newPassengerTravelContext.travel}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -111,52 +171,5 @@ const sortTravels = (
     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   else return dateA - dateB;
 };
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing(),
-      paddingRight: theme.spacing(),
-    },
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  dots: {
-    height: '56px',
-    overflow: 'auto',
-    '& overflow': '-moz-scrollbars-none',
-    '-ms-overflow-style': 'none',
-    '&::-webkit-scrollbar': {
-      height: '0 !important',
-    },
-    '& .slick-dots': {
-      position: 'static',
-      '& li': {
-        display: 'block',
-        '& button:before': {
-          fontSize: '12px',
-        },
-      },
-    },
-    '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
-      {
-        color: theme.palette.primary.main,
-      },
-  },
-  slide: {
-    padding: theme.spacing(1),
-    marginBottom: theme.spacing(10),
-    outline: 'none',
-    '& > *': {
-      cursor: 'default',
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: `${theme.spacing(10) + 56}px`,
-    },
-  },
-}));
 
 export default TravelColumns;

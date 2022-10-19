@@ -1,17 +1,17 @@
 import {useState} from 'react';
-import {useRouter} from 'next/router';
-import {makeStyles} from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import {CircularProgress} from '@material-ui/core';
-import {DatePicker} from '@material-ui/pickers';
 import moment from 'moment';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import {useTheme} from '@mui/material/styles';
+import {useRouter} from 'next/router';
+import {Box, CircularProgress} from '@mui/material';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 
 const Step2 = ({event, addToEvent, createEvent}) => {
-  const classes = useStyles();
   const {t} = useTranslation();
+  const theme = useTheme();
   const router = useRouter();
   const addToast = useToastStore(s => s.addToast);
 
@@ -39,23 +39,21 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   };
 
   return (
-    <form onSubmit={onCreate}>
+    <Box component="form" onSubmit={onCreate}>
       <DatePicker
-        fullWidth
+        renderInput={props => (
+          <TextField {...props} fullWidth variant="standard" />
+        )}
         label={t('event.creation.date')}
         value={date}
         onChange={setDate}
-        format="DD/MM/YYYY"
-        cancelLabel={t('generic.cancel')}
-        clearable
-        clearLabel={t('generic.clear')}
-        id="NewEventDate"
       />
       <TextField
         label={t('event.creation.address')}
         fullWidth
         multiline
-        rowsMax={4}
+        variant="standard"
+        maxRows={4}
         inputProps={{maxLength: 250}}
         helperText={`${address.length}/250`}
         value={address}
@@ -67,7 +65,8 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         label={t('event.creation.description')}
         fullWidth
         multiline
-        rowsMax={4}
+        variant="standard"
+        maxRows={4}
         inputProps={{maxLength: 250}}
         helperText={
           description.length === 0
@@ -81,7 +80,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
       />
       <Button
         disabled={loading}
-        className={classes.button}
+        sx={{marginTop: theme.spacing(2)}}
         variant="contained"
         color="secondary"
         fullWidth
@@ -94,14 +93,8 @@ const Step2 = ({event, addToEvent, createEvent}) => {
           t('generic.create')
         )}
       </Button>
-    </form>
+    </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 export default Step2;

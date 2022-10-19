@@ -1,4 +1,4 @@
-import {createTheme} from '@material-ui/core/styles';
+import {createTheme} from '@mui/material/styles';
 
 export const caroster = {
   palette: {
@@ -18,20 +18,21 @@ export const caroster = {
   },
   mixins: {
     toolbar: {
-      minHeight: 56,
+      minHeight: 64,
     },
   },
-  overrides: {
-    MuiAppBar: {
-      colorPrimary: {
-        backgroundColor: '#242424',
-        color: 'white',
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'standard',
       },
     },
     MuiInput: {
-      underline: {
-        '&&&&:hover:before': {
-          borderBottomColor: '#009688',
+      styleOverrides: {
+        underline: {
+          '&&&&:hover:before': {
+            borderBottomColor: '#009688',
+          },
         },
       },
     },

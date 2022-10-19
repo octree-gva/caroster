@@ -10,7 +10,7 @@ import {
   useUpdatePassengerMutation,
   TravelInput,
 } from '../../generated/graphql';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 
 interface Props {
   travel: Travel & {id: string};

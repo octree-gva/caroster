@@ -1,11 +1,27 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import {makeStyles} from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
+
+const PREFIX = 'EditPassword';
+
+const classes = {
+  actions: `${PREFIX}-actions`
+};
+
+const Root = styled('form')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.actions}`]: {
+    justifyContent: 'flex-end',
+  }
+}));
 
 const EditPassword = ({
   oldPassword,
@@ -17,9 +33,9 @@ const EditPassword = ({
   cancel,
 }) => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
   return (
-    <form
+    <Root
       onSubmit={evt => {
         evt?.preventDefault?.();
         save();
@@ -65,13 +81,8 @@ const EditPassword = ({
           </Button>
         </CardActions>
       </Card>
-    </form>
+    </Root>
   );
 };
 
-const useStyles = makeStyles(theme => ({
-  actions: {
-    justifyContent: 'flex-end',
-  },
-}));
 export default EditPassword;

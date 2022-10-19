@@ -1,5 +1,5 @@
-import {styled} from '@material-ui/core/styles';
-import Typography, {TypographyProps} from '@material-ui/core/Typography';
+import {styled} from '@mui/material/styles';
+import Typography, {TypographyProps} from '@mui/material/Typography';
 import {marked} from 'marked';
 
 const Markdown = (props: TypographyProps) => {

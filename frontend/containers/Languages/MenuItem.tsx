@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import {makeStyles} from '@material-ui/core/styles';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
@@ -12,9 +13,9 @@ const Languages = ({
   language,
   onChangeLang,
 }: LanguageSelectionComponentProps) => {
+  const theme = useTheme();
   const {t} = useTranslation();
   const [isSelecting, setSelecting] = useState(false);
-  const {languagesList} = useStyles({isSelecting});
 
   const handleClick = event => {
     setSelecting(!isSelecting);
@@ -26,9 +27,17 @@ const Languages = ({
   };
 
   return (
-    <>
+    <Box>
       <MenuItem onClick={handleClick}>{t('menu.language')}</MenuItem>
-      <MenuList className={languagesList} dense>
+      <MenuList
+        sx={{
+          visibility: isSelecting ? 'visible' : 'hidden',
+          maxHeight: isSelecting ? 'none' : 0,
+          padding: isSelecting ? `0 ${theme.spacing(0.5)}` : 0,
+          overflow: 'hidden',
+        }}
+        dense
+      >
         <MenuItem
           disabled={language === SupportedLocales['fr']}
           onClick={() => onConfirm(SupportedLocales['fr'])}
@@ -38,17 +47,8 @@ const Languages = ({
           onClick={() => onConfirm(SupportedLocales['en'])}
         >{t`languages.en`}</MenuItem>
       </MenuList>
-    </>
+    </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  languagesList: ({isSelecting}: {isSelecting: boolean}) => ({
-    visibility: isSelecting ? 'visible' : 'hidden',
-    maxHeight: isSelecting ? 'none' : 0,
-    padding: isSelecting ? `0 ${theme.spacing(0.5)}px` : 0,
-    overflow: 'hidden',
-  }),
-}));
 
 export default withLanguagesSelection(Languages);

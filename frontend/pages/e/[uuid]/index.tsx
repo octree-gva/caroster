@@ -1,18 +1,19 @@
 import {useState, useReducer, PropsWithChildren} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
-import EventLayout, {TabComponent} from '../../../layouts/Event';
+import {getSession, useSession} from 'next-auth/react';
 import TravelColumns from '../../../containers/TravelColumns';
 import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
+import Fab from '../../../containers/Fab';
+import pageUtils from '../../../lib/pageUtils';
+import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
   FindUserVehiclesDocument,
   useFindUserVehiclesQuery,
 } from '../../../generated/graphql';
-import Fab from '../../../containers/Fab';
-import pageUtils from '../../../lib/pageUtils';
-import {getSession, useSession} from 'next-auth/react';
 
 interface Props {
   eventUUID: string;
@@ -23,17 +24,18 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={TravelsTab} />;
 };
 
-const TravelsTab: TabComponent = (props: {event}) => {
-  const classes = useStyles();
+const TravelsTab: TabComponent = () => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const session = useSession();
+  const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
+  const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
+
   const isAuthenticated = session.status === 'authenticated';
   const {data} = useFindUserVehiclesQuery({
     skip: !isAuthenticated,
   });
   const vehicles = data?.me?.profile?.vehicles?.data || [];
-  const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
-  const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
 
   const addTravelClickHandler =
     isAuthenticated && vehicles?.length != 0
@@ -41,13 +43,21 @@ const TravelsTab: TabComponent = (props: {event}) => {
       : () => toggleNewTravel({opened: true});
 
   return (
-    <>
+    <Box>
       <TravelColumns toggle={addTravelClickHandler} />
       <Fab
         onClick={addTravelClickHandler}
         aria-label="add-car"
         color="primary"
-        className={classes.bottomRight}
+        sx={{
+          bottom: 0,
+          right: theme.spacing(6),
+
+          [theme.breakpoints.down('md')]: {
+            right: theme.spacing(1),
+            bottom: 56,
+          },
+        }}
       >
         {t('travel.creation.title')}
       </Fab>
@@ -61,21 +71,9 @@ const TravelsTab: TabComponent = (props: {event}) => {
         toggleNewTravel={toggleNewTravel}
         vehicles={vehicles}
       />
-    </>
+    </Box>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  bottomRight: {
-    bottom: 0,
-    right: theme.spacing(6),
-
-    [theme.breakpoints.down('sm')]: {
-      right: theme.spacing(1),
-      bottom: 56,
-    },
-  },
-}));
 
 export const getServerSideProps = pageUtils.getServerSideProps(
   async (context, apolloClient) => {

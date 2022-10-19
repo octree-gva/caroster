@@ -1,15 +1,35 @@
 import {PropsWithChildren, useEffect, useState} from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {styled} from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
 import Layout from '../layouts/Default';
 import EventBar from '../containers/EventBar';
-import {Event as EventType, useEventByUuidQuery} from '../generated/graphql';
 import DrawerMenu from '../containers/DrawerMenu';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
-import Box from '@material-ui/core/Box';
+import {Event as EventType, useEventByUuidQuery} from '../generated/graphql';
+
+const PREFIX = 'EventLayout';
+
+const classes = {
+  content: `${PREFIX}-content`,
+};
+
+const StyledLayout = styled(Layout)(({theme}) => ({
+  [`& .${classes.content}`]: {
+    flex: 1,
+    maxWidth: 'calc(100% - 85px)',
+    overflow: 'auto',
+    paddingBottom: theme.spacing(4),
+
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '100%',
+    },
+  },
+}));
 
 const POLL_INTERVAL = 10000;
 
@@ -26,8 +46,8 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   const {eventUUID, Tab, ...pageProps} = props;
   const {t} = useTranslation();
   const theme = useTheme();
-  const classes = useStyles();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const setEvent = useEventStore(s => s.setEvent);
   const [isAddToMyEvent, setIsAddToMyEvent] = useState(false);
   const {data: {eventByUUID: {data: {attributes, id} = {}} = {}} = {}} =
@@ -44,7 +64,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
 
   return (
-    <Layout
+    <StyledLayout
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
@@ -60,7 +80,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
         <DrawerMenu />
-        <Box className={classes.content}>
+        <Box className={classes.content} id="event-content">
           <Tab event={event} />
         </Box>
       </Box>
@@ -69,21 +89,8 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
       />
-    </Layout>
+    </StyledLayout>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  content: {
-    flex: 1,
-    maxWidth: 'calc(100% - 85px)',
-    overflow: 'auto',
-    paddingBottom: theme.spacing(4),
-
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '100%',
-    },
-  },
-}));
 
 export default EventLayout;

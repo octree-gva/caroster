@@ -1,10 +1,10 @@
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import Icon from '@mui/material/Icon';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import {useTranslation} from 'react-i18next';
 import {useState} from 'react';
 import pageUtils from '../../../lib/pageUtils';
@@ -13,9 +13,42 @@ import {useUpdateMeMutation} from '../../../generated/graphql';
 import useRedirectUrlStore from '../../../stores/useRedirectUrl';
 import router from 'next/router';
 
+const PREFIX = 'Confirm';
+
+const classes = {
+  margins: `${PREFIX}-margins`,
+  newsletter: `${PREFIX}-newsletter`,
+  checkbox: `${PREFIX}-checkbox`,
+  center: `${PREFIX}-center`
+};
+
+const StyledCommonConfirm = styled(CommonConfirm)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.margins}`]: {
+    margin: theme.spacing(5, 0),
+  },
+
+  [`& .${classes.newsletter}`]: {
+    width: '100%',
+    margin: theme.spacing(2, 0),
+  },
+
+  [`& .${classes.checkbox}`]: {
+    padding: 0,
+    marginRight: theme.spacing(2),
+  },
+
+  [`& .${classes.center}`]: {
+    textAlign: 'center',
+  }
+}));
+
 const Confirm = () => {
   const {t} = useTranslation();
-  const classes = useStyles();
+
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [updateMe] = useUpdateMeMutation();
   const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
@@ -26,7 +59,7 @@ const Confirm = () => {
   };
 
   return (
-    <CommonConfirm>
+    <StyledCommonConfirm>
       <Typography variant="overline" component="h5" align="center">
         {t('signup.create')}
       </Typography>
@@ -55,26 +88,9 @@ const Confirm = () => {
           {t('generic.confirm')}
         </Button>
       </Box>
-    </CommonConfirm>
+    </StyledCommonConfirm>
   );
 };
-
-const useStyles = makeStyles(theme => ({
-  margins: {
-    margin: theme.spacing(5, 0),
-  },
-  newsletter: {
-    width: '100%',
-    margin: theme.spacing(2, 0),
-  },
-  checkbox: {
-    padding: 0,
-    marginRight: theme.spacing(2),
-  },
-  center: {
-    textAlign: 'center',
-  },
-}));
 
 export default Confirm;
 

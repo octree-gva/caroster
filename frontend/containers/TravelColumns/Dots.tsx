@@ -1,5 +1,5 @@
 import {createPortal} from 'react-dom';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 
 const Dots = ({children}) => {
   const element = document.getElementById('slider-dots');
