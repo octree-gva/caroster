@@ -79,7 +79,6 @@ const HeaderEditing = ({travel, toggleEditing}) => {
             top: 0,
             right: 0,
             margin: theme.spacing(1),
-            zIndex: theme.zIndex.speedDial,
           }}
         >
           <Icon>done</Icon>

@@ -1,28 +1,16 @@
 import Typography from '@mui/material/Typography';
-import {styled, useTheme} from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import CommonConfirm from '../../../layouts/ConfirmLayout';
 import pageUtils from '../../../lib/pageUtils';
-
-const PREFIX = 'Confirm';
-
-const classes = {
-  margins: `${PREFIX}-margins`,
-};
-
-const StyledCommonConfirm = styled(CommonConfirm)(({theme}) => ({
-  [`& .${classes.margins}`]: {
-    margin: theme.spacing(5, 0),
-  },
-}));
 
 const Confirm = () => {
   const {t} = useTranslation();
   const theme = useTheme();
 
   return (
-    <StyledCommonConfirm>
+    <CommonConfirm>
       <Typography variant="subtitle1" align="center">
         {t('confirm.creating')}
       </Typography>
@@ -42,7 +30,7 @@ const Confirm = () => {
       >
         {t('confirm.text')}
       </Typography>
-    </StyledCommonConfirm>
+    </CommonConfirm>
   );
 };
 

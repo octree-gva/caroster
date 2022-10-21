@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import {Travel} from '../../generated/graphql';
@@ -16,7 +16,7 @@ interface Props {
 
 const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
-  const theme = useTheme()
+  const theme = useTheme();
   const {t} = useTranslation();
 
   return (
@@ -24,11 +24,7 @@ const Header = (props: Props) => {
       <IconButton
         size="small"
         color="primary"
-        sx={{position: 'absolute',
-        top: 0,
-        right: 0,
-        margin: theme.spacing(1),
-        zIndex: theme.zIndex.speedDial}}
+        sx={{position: 'absolute', top: 0, right: 0, margin: theme.spacing(1)}}
         onClick={toggleEditing}
         id="EditTravelBtn"
       >
@@ -43,7 +39,7 @@ const Header = (props: Props) => {
         {travel.vehicleName}
       </Typography>
       {!!travel.phone_number && (
-        <Box sx={{marginTop: theme.spacing(2),}}>
+        <Box sx={{marginTop: theme.spacing(2)}}>
           <Typography variant="subtitle2">
             {t('travel.fields.phone')}
           </Typography>
@@ -53,7 +49,7 @@ const Header = (props: Props) => {
         </Box>
       )}
       {!!travel.meeting && (
-        <Box sx={{marginTop: theme.spacing(2),}}>
+        <Box sx={{marginTop: theme.spacing(2)}}>
           <Typography variant="subtitle2">
             {t('travel.fields.meeting_point')}
           </Typography>
@@ -70,7 +66,7 @@ const Header = (props: Props) => {
         </Box>
       )}
       {!!travel.details && (
-        <Box sx={{marginTop: theme.spacing(2),}}>
+        <Box sx={{marginTop: theme.spacing(2)}}>
           <Typography variant="subtitle2">
             {t('travel.fields.details')}
           </Typography>

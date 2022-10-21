@@ -140,8 +140,8 @@ const SignUp = () => {
           />
         </Box>
         <FormControlLabel
-          sx={{width: '100%', margin: theme.spacing(2, 0)}}
-          componentsProps={{typography: {align: 'center', variant: 'body2'}}}
+          sx={{width: '100%', margin: theme.spacing(2, 0), padding: theme.spacing(0, 4)}}
+          componentsProps={{typography: {align: 'left', variant: 'body2'}}}
           control={
             <Checkbox
               sx={{padding: 0, marginRight: theme.spacing(2)}}

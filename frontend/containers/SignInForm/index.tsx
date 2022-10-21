@@ -38,7 +38,7 @@ const SignIn = (props: Props) => {
       await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/',
+        callbackUrl: '/dashboard',
       });
       saveStoredEvents(); // TODO Check it's correctly executed after sign-in
     } catch (error) {
@@ -67,7 +67,7 @@ const SignIn = (props: Props) => {
           {t('signin.title')}
         </Typography>
         {error && (
-          <FormHelperText error={true}>
+          <FormHelperText error={true} sx={{padding: theme.spacing(0, 6)}}>
             {t(`signin.errors.${error}`)}
           </FormHelperText>
         )}

@@ -1,5 +1,4 @@
 import {useMemo, useReducer} from 'react';
-import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import {Travel as TravelType} from '../../generated/graphql';
@@ -10,22 +9,6 @@ import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import useActions from './useActions';
 import useProfile from '../../hooks/useProfile';
-
-const PREFIX = 'Travel';
-
-const classes = {
-  root: `${PREFIX}-root`
-};
-
-const StyledPaper = styled(Paper)((
-  {
-    theme
-  }
-) => ({
-  [`&.${classes.root}`]: {
-    position: 'relative',
-  }
-}));
 
 interface Props {
   travel: TravelType & {id: string};
@@ -52,32 +35,34 @@ const Travel = (props: Props) => {
   }, [travel, userId]);
 
   return (
-    <StyledPaper className={classes.root}>
+    <Paper sx={{position: 'relative'}}>
       {isEditing ? (
         <HeaderEditing travel={travel} toggleEditing={toggleEditing} />
       ) : (
         <Header travel={travel} toggleEditing={toggleEditing} />
       )}
-      <Divider />
-      <AddPassengerButtons
-        getOnClickFunction={props.getAddPassengerFunction}
-        canAddSelf={canAddSelf}
-        variant="travel"
-        disabled={disableNewPassengers}
-      />
-      <Divider />
       {!isEditing && (
-        <PassengersList
-          passengers={travel.passengers.data}
-          places={travel?.seats}
-          onClick={actions.sendPassengerToWaitingList}
-          isTravel
-          Button={({onClick}: {onClick: () => void}) => (
-            <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
-          )}
-        />
+        <>
+          <Divider />
+          <AddPassengerButtons
+            getOnClickFunction={props.getAddPassengerFunction}
+            canAddSelf={canAddSelf}
+            variant="travel"
+            disabled={disableNewPassengers}
+          />
+          <Divider />
+          <PassengersList
+            passengers={travel.passengers.data}
+            places={travel?.seats}
+            onClick={actions.sendPassengerToWaitingList}
+            isTravel
+            Button={({onClick}: {onClick: () => void}) => (
+              <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+            )}
+          />
+        </>
       )}
-    </StyledPaper>
+    </Paper>
   );
 };
 

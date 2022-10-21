@@ -1,18 +1,18 @@
 import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import Link from 'next/link';
 import {useTheme} from '@mui/material/styles';
 import CardMedia from '@mui/material/CardMedia';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../../layouts/Centered';
 import Logo from '../../../components/Logo';
 import LanguagesIcon from '../../../containers/Languages/Icon';
-import CardContent from '@mui/material/CardContent';
 import SignUpActions from '../../../containers/MailSignUpForm/SignupActions';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
 import LoginGoogle from '../../../containers/LoginGoogle';
-import Link from 'next/link';
 import Markdown from '../../../components/Markdown';
 
 const MailSignup = () => {
@@ -32,7 +32,7 @@ const MailSignup = () => {
             padding: theme.spacing(0, 6),
           }}
         >
-          <Typography variant="overline" component="h5" align="center">
+          <Typography variant="h6" align="center">
             {t('signup.create')}
           </Typography>
           <Box
@@ -62,13 +62,14 @@ const MailSignup = () => {
             sx={{
               width: '100%',
               textAlign: 'center',
-              margin: theme.spacing(10, 0, 2, 0),
+              margin: theme.spacing(5, 0, 2, 0),
             }}
           >
             <Markdown
               sx={{
+                marginBottom: theme.spacing(5), 
                 '& a': {
-                  color: 'inherit',
+                  color: theme.palette.primary.main,
                 },
               }}
               variant="body1"

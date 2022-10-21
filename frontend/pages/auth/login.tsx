@@ -1,14 +1,14 @@
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import {getSession} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
 import SignInForm from '../../containers/SignInForm';
 import LanguagesIcon from '../../containers/Languages/Icon';
-import {getSession} from 'next-auth/react';
 import pageUtils from '../../lib/pageUtils';
-import Typography from '@mui/material/Typography';
-import theme from '../../theme';
 
 interface PageProps {
   error?: string;
@@ -17,6 +17,7 @@ interface PageProps {
 
 const Login = (props: PageProps) => {
   const {emailConfirmation} = props;
+  const theme = useTheme();
   const {t} = useTranslation();
 
   return (

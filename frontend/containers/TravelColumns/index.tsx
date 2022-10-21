@@ -54,8 +54,8 @@ const TravelColumns = (props: Props) => {
   return (
     <Box
       sx={{
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
         [theme.breakpoints.down('md')]: {
           paddingLeft: theme.spacing(),
           paddingRight: theme.spacing(),
@@ -96,7 +96,7 @@ const TravelColumns = (props: Props) => {
           title={t('event.no_travel.title')}
         />
       )) || (
-        <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={1}>
+        <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {sortedTravels?.map(({id, attributes}) => {
             const travel = {id, ...attributes};
             return (

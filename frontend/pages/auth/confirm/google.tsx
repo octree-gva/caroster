@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -13,40 +13,8 @@ import {useUpdateMeMutation} from '../../../generated/graphql';
 import useRedirectUrlStore from '../../../stores/useRedirectUrl';
 import router from 'next/router';
 
-const PREFIX = 'Confirm';
-
-const classes = {
-  margins: `${PREFIX}-margins`,
-  newsletter: `${PREFIX}-newsletter`,
-  checkbox: `${PREFIX}-checkbox`,
-  center: `${PREFIX}-center`
-};
-
-const StyledCommonConfirm = styled(CommonConfirm)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.margins}`]: {
-    margin: theme.spacing(5, 0),
-  },
-
-  [`& .${classes.newsletter}`]: {
-    width: '100%',
-    margin: theme.spacing(2, 0),
-  },
-
-  [`& .${classes.checkbox}`]: {
-    padding: 0,
-    marginRight: theme.spacing(2),
-  },
-
-  [`& .${classes.center}`]: {
-    textAlign: 'center',
-  }
-}));
-
 const Confirm = () => {
+  const theme = useTheme();
   const {t} = useTranslation();
 
   const [newsletterConsent, setNewsletterConsent] = useState(false);
@@ -59,21 +27,21 @@ const Confirm = () => {
   };
 
   return (
-    <StyledCommonConfirm>
-      <Typography variant="overline" component="h5" align="center">
+    <CommonConfirm>
+      <Typography variant="h6" align="center">
         {t('signup.create')}
       </Typography>
-      <Typography variant="h5" component="h2" align="center">
+      <Typography variant="h5" align="center">
         {t('confirm.google.title')}
       </Typography>
-      <Typography align="center" className={classes.margins} component="div">
+      <Typography align="center" sx={{margin: theme.spacing(5, 0)}}>
         <Icon fontSize="large">mail</Icon>
       </Typography>
       <FormControlLabel
-        className={classes.newsletter}
+        sx={{width: '100%', margin: theme.spacing(2, 0)}}
         control={
           <Checkbox
-            className={classes.checkbox}
+            sx={{padding: 0, marginRight: theme.spacing(2)}}
             color="primary"
             value={newsletterConsent}
             onChange={({target: {checked = false}}) =>
@@ -83,12 +51,12 @@ const Confirm = () => {
         }
         label={t('signup.newsletter.consent')}
       />
-      <Box className={classes.center}>
+      <Box sx={{textAlign: 'center'}}>
         <Button variant="contained" color="secondary" onClick={onSubmit}>
           {t('generic.confirm')}
         </Button>
       </Box>
-    </StyledCommonConfirm>
+    </CommonConfirm>
   );
 };
 
