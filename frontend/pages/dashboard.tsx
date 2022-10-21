@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useRouter} from 'next/router';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
@@ -10,6 +10,7 @@ import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
 import pageUtils from '../lib/pageUtils';
 import {getSession} from 'next-auth/react';
+import useRedirectUrlStore from '../stores/useRedirectUrl';
 
 interface PageProps {
   announcement?: string;
@@ -20,6 +21,12 @@ const Dashboard = (props: PageProps) => {
   const router = useRouter();
   const {profile, isReady} = useProfile();
   const events = profile?.events?.data || [];
+  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
+
+  useEffect(() => {
+    const redirectUrl = getRedirectUrl();
+    if (redirectUrl) router.push(redirectUrl);
+  }, []);
 
   const pastEvents = useMemo(
     () =>
