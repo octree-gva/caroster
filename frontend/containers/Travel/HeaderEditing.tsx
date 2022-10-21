@@ -20,7 +20,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   const actions = useActions({travel});
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(
-    () => (travel?.departure ? moment(travel.departure) : moment()),
+    () => (travel?.departure ? moment(travel.departure) : null),
     [travel?.departure]
   );
 
@@ -88,7 +88,6 @@ const HeaderEditing = ({travel, toggleEditing}) => {
             <TextField
               {...props}
               fullWidth
-              helperText=" "
               sx={{marginTop: theme.spacing(3)}}
             />
           )}
@@ -100,7 +99,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         <TimePicker
           label={t('travel.creation.time')}
           renderInput={props => (
-            <TextField {...props} fullWidth helperText=" " />
+            <TextField {...props} fullWidth />
           )}
           value={time}
           onChange={setTime}
@@ -110,7 +109,6 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         <TextField
           label={t('travel.creation.name')}
           fullWidth
-          helperText=" "
           value={name}
           onChange={e => setName(e.target.value)}
           name="name"
@@ -119,7 +117,6 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         <TextField
           label={t('travel.creation.phone')}
           fullWidth
-          helperText=" "
           value={phone}
           onChange={e => setPhone(e.target.value)}
           name="phone"

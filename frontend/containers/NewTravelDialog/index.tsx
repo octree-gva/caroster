@@ -34,10 +34,10 @@ const NewTravelDialog = ({context, toggle}: Props) => {
   const event = useEventStore(s => s.event);
   const {createTravel} = useActions({event});
 
-  const dateMoment = useMemo(() => {
-    if (!event?.date) return moment();
-    else return moment(event.date);
-  }, [event?.date]);
+  const dateMoment = useMemo(
+    () => (event?.date ? moment(event.date) : null),
+    [event?.date]
+  );
 
   // States
   const [name, setName] = useState('');
@@ -125,7 +125,6 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
             label={t('travel.creation.name')}
             fullWidth
-            helperText=" "
             value={name}
             onChange={e => setName(e.target.value)}
             name="name"
@@ -138,7 +137,6 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             label={t('travel.creation.phone')}
             fullWidth
             inputProps={{type: 'tel'}}
-            helperText=" "
             value={phone}
             onChange={e => setPhone(e.target.value)}
             name="phone"
