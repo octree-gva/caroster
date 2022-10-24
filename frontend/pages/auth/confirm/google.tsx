@@ -22,7 +22,7 @@ const Confirm = () => {
   const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
   const onSubmit = async () => {
     await updateMe({variables: {userUpdate: {newsletterConsent}}});
-    const callbackUrl = getRedirectUrl() || '/';
+    const callbackUrl = getRedirectUrl() || '/dashboard';
     router.push(callbackUrl);
   };
 

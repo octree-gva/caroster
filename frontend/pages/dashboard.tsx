@@ -106,7 +106,21 @@ export const getServerSideProps = async (context: any) => {
         permanent: false,
       },
     };
-  else return pageUtils.getServerSideProps()(context);
+
+  const {provider, userCreatedAt} = session?.token || {};
+  const isFirstLogin = userCreatedAt
+    ? moment().subtract({seconds: 3}).isBefore(userCreatedAt)
+    : false;
+
+  if (provider === 'google' && isFirstLogin)
+    return {
+      redirect: {
+        destination: '/auth/confirm/google',
+        permanent: false,
+      },
+    };
+
+  return pageUtils.getServerSideProps()(context);
 };
 
 export default Dashboard;

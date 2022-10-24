@@ -4,7 +4,7 @@ import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
-import {useSession} from 'next-auth/react';
+import {signOut, useSession} from 'next-auth/react';
 import {Session} from 'next-auth';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
@@ -22,11 +22,14 @@ const authLink = (session: Session | null) =>
     };
   });
 
-const errorLink = onError(({graphQLErrors = [], operation}) => {
-  console.error({graphQLErrors, operation});
-  const message = graphQLErrors?.[0]?.message;
+const errorLink = onError(({operation, networkError}) => {
+  console.error({networkError, operation});
+  const responseStatus = networkError?.response?.status;
 
-  if (message === 'Forbidden') window.location.href = '/auth/login';
+  if (responseStatus === 401)
+    signOut({
+      callbackUrl: '/auth/login',
+    });
 });
 
 const httpLink = (uri: string) =>

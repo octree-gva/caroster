@@ -24,7 +24,7 @@ const GenericToolbar = ({
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const {profile} = useProfile();
+  const {profile, connected} = useProfile();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,7 +72,7 @@ const GenericToolbar = ({
               onClick={e => setAnchorEl(e.currentTarget)}
               size="large"
             >
-              {profile ? (
+              {connected && profile ? (
                 <Avatar
                   sx={{
                     width: theme.spacing(3),

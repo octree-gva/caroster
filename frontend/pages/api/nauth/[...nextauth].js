@@ -83,7 +83,8 @@ export default NextAuth({
       // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
       // Allows callback URLs on the same host
-      else if (new URL(url).host === new URL(baseUrl).host) return url;
+      else if (new URL(url).host === new URL(baseUrl).host)
+        return `${url}/dashboard`;
       return baseUrl;
     },
   },
