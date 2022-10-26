@@ -200,8 +200,10 @@ const DetailsTab: TabComponent = ({}) => {
               </Typography>
             )}
           </Box>
-          <Typography variant="h6">{t('event.fields.link')}</Typography>
-          <Typography>{t('event.fields.link_desc')}</Typography>
+          <Box sx={sectionSx}>
+            <Typography variant="h6">{t('event.fields.link')}</Typography>
+            <Typography>{t('event.fields.link_desc')}</Typography>
+          </Box>
           <Box py={4} justifyContent="center" display="flex">
             <ShareEvent
               title={`Caroster ${event.name}`}

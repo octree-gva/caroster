@@ -1,5 +1,5 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
@@ -27,14 +27,10 @@ const classes = {
   root: `${PREFIX}-root`,
   card: `${PREFIX}-card`,
   header: `${PREFIX}-header`,
-  editBtn: `${PREFIX}-editBtn`
+  editBtn: `${PREFIX}-editBtn`,
 };
 
-const StyledBox = styled(Box)((
-  {
-    theme
-  }
-) => ({
+const StyledBox = styled(Box)(({theme}) => ({
   [`&.${classes.root}`]: {
     position: 'relative',
     paddingLeft: '80px',
@@ -59,7 +55,7 @@ const StyledBox = styled(Box)((
     right: 0,
     margin: theme.spacing(1),
     zIndex: theme.zIndex.speedDial,
-  }
+  },
 }));
 
 interface Props {
@@ -71,7 +67,6 @@ const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
 }: Props) => {
-
   const {t} = useTranslation();
   const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);
@@ -182,11 +177,13 @@ const WaitingList = ({
             variant="waitingList"
           />
           <Divider />
-          <PassengersList
-            passengers={event?.waitingPassengers?.data}
-            onPress={onPress}
-            Button={ListButton}
-          />
+          {event?.waitingPassengers?.data?.length > 0 && (
+            <PassengersList
+              passengers={event.waitingPassengers.data}
+              onPress={onPress}
+              Button={ListButton}
+            />
+          )}
         </Paper>
       </Container>
       <RemoveDialog
