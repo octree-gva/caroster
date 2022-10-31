@@ -91,6 +91,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
               sx={{marginTop: theme.spacing(3)}}
             />
           )}
+          inputFormat="DD/MM/yyyy"
           label={t('travel.creation.date')}
           value={date}
           onChange={setDate}

@@ -128,6 +128,7 @@ const DetailsTab: TabComponent = ({}) => {
                     placeholder={t('event.fields.date_placeholder')}
                   />
                 )}
+                inputFormat="DD/MM/yyyy"
                 value={event.date}
                 onChange={date =>
                   setEventUpdate({

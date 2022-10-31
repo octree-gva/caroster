@@ -44,6 +44,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         renderInput={props => (
           <TextField {...props} fullWidth variant="standard" />
         )}
+        inputFormat="DD/MM/yyyy"
         label={t('event.creation.date')}
         value={date}
         onChange={setDate}

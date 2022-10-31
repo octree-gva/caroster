@@ -190,6 +190,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
                   sx={halfWidthFieldSx}
                 />
               )}
+              inputFormat="DD/MM/yyyy"
               label={t('travel.creation.date')}
               value={date}
               onChange={setDate}

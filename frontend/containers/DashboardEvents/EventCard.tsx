@@ -38,7 +38,8 @@ const EventCard = ({event}: Props) => {
         </Typography>
         <Typography variant="overline">{t('event.fields.date')}</Typography>
         <Typography variant="body2" gutterBottom>
-          {event.attributes.date || t('event.fields.empty')}
+          {moment(event.attributes.date).format('DD/MM/YYYY') ||
+            t('event.fields.empty')}
         </Typography>
         <Typography variant="overline">{t('event.fields.address')}</Typography>
         <Typography variant="body2" gutterBottom>
