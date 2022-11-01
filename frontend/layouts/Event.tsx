@@ -1,5 +1,4 @@
 import {PropsWithChildren, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
@@ -11,25 +10,6 @@ import EventBar from '../containers/EventBar';
 import DrawerMenu from '../containers/DrawerMenu';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
 import {Event as EventType, useEventByUuidQuery} from '../generated/graphql';
-
-const PREFIX = 'EventLayout';
-
-const classes = {
-  content: `${PREFIX}-content`,
-};
-
-const StyledLayout = styled(Layout)(({theme}) => ({
-  [`& .${classes.content}`]: {
-    flex: 1,
-    maxWidth: 'calc(100% - 85px)',
-    overflow: 'auto',
-    paddingBottom: theme.spacing(4),
-
-    [theme.breakpoints.down('md')]: {
-      maxWidth: '100%',
-    },
-  },
-}));
 
 const POLL_INTERVAL = 10000;
 
@@ -64,7 +44,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
 
   return (
-    <StyledLayout
+    <Layout
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
@@ -80,7 +60,19 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
         <DrawerMenu />
-        <Box className={classes.content} id="event-content">
+        <Box
+          sx={{
+            flex: 1,
+            maxWidth: 'calc(100% - 85px)',
+            overflow: 'auto',
+            paddingBottom: theme.spacing(4),
+
+            [theme.breakpoints.down('md')]: {
+              maxWidth: '100%',
+            },
+          }}
+          id="event-content"
+        >
           <Tab event={event} />
         </Box>
       </Box>
@@ -89,7 +81,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
       />
-    </StyledLayout>
+    </Layout>
   );
 };
 

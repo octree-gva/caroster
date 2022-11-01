@@ -1,5 +1,4 @@
 import router from 'next/router';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -8,24 +7,6 @@ import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import {EventEntity} from '../../generated/graphql';
 
-const PREFIX = 'EventCard';
-
-const classes = {
-  clickable: `${PREFIX}-clickable`,
-  name: `${PREFIX}-name`
-};
-
-const StyledCard = styled(Card)({
-  [`&.${classes.clickable}`]: {
-    cursor: 'pointer',
-  },
-  [`& .${classes.name}`]: {
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-});
-
 interface Props {
   event: EventEntity;
 }
@@ -33,10 +14,11 @@ interface Props {
 const EventCard = ({event}: Props) => {
   const {t} = useTranslation();
 
-
   return (
-    <StyledCard
-      className={classes.clickable}
+    <Card
+      sx={{
+        cursor: 'pointer',
+      }}
       onClick={() =>
         router.push(`/e/${event.attributes.uuid}`, undefined, {shallow: true})
       }
@@ -46,7 +28,11 @@ const EventCard = ({event}: Props) => {
           gutterBottom
           variant="h6"
           component="h3"
-          className={classes.name}
+          sx={{
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+          }}
         >
           {event.attributes.name}
         </Typography>
@@ -60,9 +46,11 @@ const EventCard = ({event}: Props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button color="primary">{t('dashboard.actions.see_event')}</Button>
+        <Button sx={{p: 0}} color="primary">
+          {t('dashboard.actions.see_event')}
+        </Button>
       </CardActions>
-    </StyledCard>
+    </Card>
   );
 };
 

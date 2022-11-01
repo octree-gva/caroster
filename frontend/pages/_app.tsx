@@ -1,19 +1,19 @@
 import {useEffect} from 'react';
-import {AppProps} from 'next/app';
-import {ApolloProvider} from '@apollo/client';
-import {ThemeProvider, Theme, StyledEngineProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import {ThemeProvider, Theme} from '@mui/material/styles';
+import {AppProps} from 'next/app';
+import {I18nextProvider} from 'react-i18next';
+import {ApolloProvider} from '@apollo/client';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {SessionProvider} from 'next-auth/react';
 import moment from 'moment';
-import {useApollo} from '../lib/apolloClient';
 import Metas from '../containers/Metas';
 import Toasts from '../components/Toasts';
 import theme from '../theme';
 import useLocale from '../hooks/useLocale';
-import {I18nextProvider} from 'react-i18next';
 import i18n, {initI18Next} from '../lib/i18n';
+import {useApollo} from '../lib/apolloClient';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

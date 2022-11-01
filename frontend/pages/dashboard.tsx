@@ -1,15 +1,15 @@
 import {useEffect, useMemo} from 'react';
-import {useRouter} from 'next/router';
 import moment from 'moment';
+import {useRouter} from 'next/router';
+import {getSession} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
-import useProfile from '../hooks/useProfile';
 import LayoutDefault from '../layouts/Default';
 import DashboardEvents from '../containers/DashboardEvents';
 import DashboardEmpty from '../containers/DashboardEmpty';
 import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
 import pageUtils from '../lib/pageUtils';
-import {getSession} from 'next-auth/react';
+import useProfile from '../hooks/useProfile';
 import useRedirectUrlStore from '../stores/useRedirectUrl';
 
 interface PageProps {
@@ -31,7 +31,10 @@ const Dashboard = (props: PageProps) => {
   const pastEvents = useMemo(
     () =>
       events
-        ?.filter(({date}) => date && moment(date).isBefore(moment(), 'day'))
+        ?.filter(
+          ({attributes: {date}}) =>
+            date && moment(date).isBefore(moment(), 'day')
+        )
         .sort(sortDesc),
     [events]
   );
@@ -40,14 +43,15 @@ const Dashboard = (props: PageProps) => {
     () =>
       events
         ?.filter(
-          ({date}) => date && moment(date).isSameOrAfter(moment(), 'day')
+          ({attributes: {date}}) =>
+            date && moment(date).isSameOrAfter(moment(), 'day')
         )
         .sort(sortDesc),
     [events]
   );
 
   const noDateEvents = useMemo(
-    () => events?.filter(({date}) => !date),
+    () => events?.filter(({attributes: {date}}) => !date),
     [events]
   );
 
@@ -94,7 +98,8 @@ const Dashboard = (props: PageProps) => {
   );
 };
 
-const sortDesc = ({date: dateA}, {date: dateB}) => dateB.localeCompare(dateA);
+const sortDesc = ({attributes: {date: dateA}}, {attributes: {date: dateB}}) =>
+  dateB.localeCompare(dateA);
 
 export const getServerSideProps = async (context: any) => {
   const session = await getSession(context);

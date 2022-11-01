@@ -1,11 +1,11 @@
 import {ReactNode} from 'react';
+import Box from '@mui/material/Box';
 import {Helmet} from 'react-helmet';
 import useGTM from '../hooks/useGTM';
 import GenericToolbar from '../containers/GenericToolbar';
-import {ActionType} from '../containers/GenericMenu/Action';
-import Box from '@mui/material/Box';
 import Banner from '../components/Banner';
 import useMatomo from '../hooks/useMatomo';
+import {ActionType} from '../containers/GenericMenu/Action';
 
 interface Props {
   children: ReactNode;
