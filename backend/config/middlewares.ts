@@ -27,12 +27,11 @@ export default [
   "strapi::favicon",
   "strapi::public",
 
-  // Waiting for https://github.com/strapi/strapi/pull/14280 to be resolved
-  // {
-  //   resolve: "./src/middlewares/graphql-logger",
-  //   config: {
-  //     enabled: true,
-  //     conf: {},
-  //   },
-  // },
+  {
+    resolve: "./src/middlewares/graphql-logger",
+    config: {
+      enabled: true,
+      conf: {},
+    },
+  },
 ];
