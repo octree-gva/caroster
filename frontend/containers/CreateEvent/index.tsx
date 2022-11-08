@@ -1,5 +1,5 @@
 import {useState, useReducer} from 'react';
-import {useCreateEventMutation} from '../../generated/graphql';
+import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -16,7 +16,10 @@ const CreateEvent = () => {
   const createEvent = async eventData => {
     try {
       const variables = {...event, ...eventData};
-      const {data} = await sendEvent({variables});
+      const {data} = await sendEvent({
+        variables,
+        refetchQueries: [ProfileDocument],
+      });
       const {id, attributes} = data.createEvent.data;
       addToUserEvents(id);
       return {id, ...attributes};

@@ -1,11 +1,12 @@
 import Card from '@mui/material/Card';
-import {theme} from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Layout from './Centered';
 import Logo from '../components/Logo';
 
 const CommonConfirm = ({children}) => {
+  const theme = useTheme();
   return (
     <Layout displayMenu={false}>
       <Card>
