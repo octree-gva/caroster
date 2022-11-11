@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {useUpdateMeMutation} from '../generated/graphql';
+import {ProfileDocument, useUpdateMeMutation} from '../generated/graphql';
 import create from 'zustand';
 import {persist} from 'zustand/middleware';
 import {useSession} from 'next-auth/react';
@@ -40,6 +40,7 @@ const useAddToEvents = () => {
             events: eventsToBeAdded,
           },
         },
+        refetchQueries: [ProfileDocument],
       });
       clearStore();
     }
@@ -53,6 +54,7 @@ const useAddToEvents = () => {
             events: [eventId],
           },
         },
+        refetchQueries: [ProfileDocument],
       });
     } else addEvent(eventId);
   };

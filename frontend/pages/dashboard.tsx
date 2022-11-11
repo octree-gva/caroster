@@ -91,7 +91,10 @@ const Dashboard = (props: PageProps) => {
           noDateEvents={noDateEvents}
         />
       )}
-      <Fab onClick={() => router.push('/')} aria-label="add-event">
+      <Fab
+        onClick={() => router.push('/', undefined, {shallow: true})}
+        aria-label="add-event"
+      >
         {t('dashboard.actions.add_event')}
       </Fab>
     </LayoutDefault>
