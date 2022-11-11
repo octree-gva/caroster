@@ -55,7 +55,7 @@ const useActions = (props: Props) => {
     {divider: true},
     {
       label: t('menu.dashboard'),
-      onClick: () => router.push('/dashboard'),
+      onClick: () => (window.location.href = '/dashboard'),
       id: 'GoToDashboardTab',
     },
     {divider: true},
