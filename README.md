@@ -15,6 +15,8 @@ Caroster is composed of two parts:
 - A frontend app based on [NextJS](https://nextjs.org/)
 - A backend server using [Strapi](https://strapi.io/)
 
+> Caroster is currently in Beta. Big changes can happen, especially in terms of data architecture.
+
 ### Prerequisites
 
 To fully utilize your instance of Caroster, you will need an SMTP configuration to send emails.
