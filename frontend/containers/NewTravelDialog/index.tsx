@@ -140,17 +140,14 @@ const NewTravelDialog = ({context, toggle}: Props) => {
             value={phone}
             onChange={e => setPhone(e.target.value)}
             name="phone"
-            FormHelperTextProps={{
-              component: () => (
-                <Typography variant="caption">
-                  <FAQLink
-                    sx={{textDecoration: 'none'}}
-                    link={t('travel.creation.phoneHelper.faq')}
-                    text={t('travel.creation.phoneHelper.why')}
-                  />
-                </Typography>
-              ),
-            }}
+            helperText={
+              <Typography variant="caption">
+                <FAQLink
+                  link={t('travel.creation.phoneHelper.faq')}
+                  text={t('travel.creation.phoneHelper.why')}
+                />
+              </Typography>
+            }
             id="NewTravelPhone"
           />
           <Box sx={addSpacing(theme, 1)}>
