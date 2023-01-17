@@ -6,18 +6,18 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import {signOut, useSession} from 'next-auth/react';
 import {Session} from 'next-auth';
+import {JWT} from 'next-auth/jwt';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient: ApolloClient<any>;
 
-const authLink = (session: Session | null) =>
+const authLink = (jwt: string | null) =>
   setContext(async (_, {headers}) => {
-    const token = session?.token?.jwt;
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        authorization: jwt ? `Bearer ${jwt}` : '',
       },
     };
   });
@@ -38,20 +38,20 @@ const httpLink = (uri: string) =>
     credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
   });
 
-const createApolloClient = (uri: string, session: Session | null) => {
+const createApolloClient = (uri: string, jwt: string | null) => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: from([authLink(session), errorLink, httpLink(uri)]),
+    link: from([authLink(jwt), errorLink, httpLink(uri)]),
     cache: new InMemoryCache(),
   });
 };
 
 export const initializeApollo = (
   uri: string,
-  session: Session | null,
+  jwt: string | null,
   initialState = null
 ) => {
-  const _apolloClient = apolloClient ?? createApolloClient(uri, session);
+  const _apolloClient = apolloClient ?? createApolloClient(uri, jwt);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here
   if (initialState) {
@@ -87,5 +87,5 @@ export const addApolloState = (client: ApolloClient<any>, pageProps: any) => {
 export const useApollo = (pageProps: any) => {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const {data: session} = useSession();
-  return useMemo(() => initializeApollo('', session, state), [state, session]);
+  return useMemo(() => initializeApollo('', session?.token?.jwt, state), [state, session]);
 };

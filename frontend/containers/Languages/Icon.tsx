@@ -46,14 +46,12 @@ const IconLanguageSelection = ({
       open={Boolean(anchorEl)}
       onClose={() => setAnchorEl(null)}
     >
-      <MenuItem
-        disabled={language === SupportedLocales['fr']}
-        onClick={() => onConfirm(SupportedLocales['fr'])}
-      >{t`languages.fr`}</MenuItem>
-      <MenuItem
-        disabled={language === SupportedLocales['en']}
-        onClick={() => onConfirm(SupportedLocales['en'])}
-      >{t`languages.en`}</MenuItem>
+      {Object.keys(SupportedLocales).map(locale => (
+          <MenuItem
+            disabled={language === SupportedLocales[locale]}
+            onClick={() => onConfirm(SupportedLocales[locale])}
+          >{t(`languages.${locale}`)}</MenuItem>
+        ))}
     </Menu>
   </>;
 };

@@ -10,7 +10,8 @@ const useProfile = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
   const fetchProfile = async () => {
-    const apolloClient = initializeApollo('', session);
+    const jwt = session?.data?.token?.jwt;
+    const apolloClient = initializeApollo('', jwt);
 
     try {
       const {data} = await apolloClient.query({

@@ -208,7 +208,6 @@ const DetailsTab: TabComponent = ({}) => {
           <Box py={4} justifyContent="center" display="flex">
             <ShareEvent
               title={`Caroster ${event.name}`}
-              url={`${window.location.href}`}
             />{' '}
           </Box>
           <Divider variant="middle" />

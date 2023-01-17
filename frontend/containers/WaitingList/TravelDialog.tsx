@@ -156,7 +156,6 @@ const TravelDialog = ({
           <ShareEvent
             className={classes.share}
             title={`Caroster ${eventName}`}
-            url={`${typeof window !== 'undefined' ? window.location.href : ''}`}
           />
         </Box>
       )) || (

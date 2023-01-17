@@ -44,7 +44,6 @@ const NoCar = ({eventName, title, image}: Props) => {
         color="primary"
         sx={{marginTop: theme.spacing(6), backgroundColor: '#fff'}}
         title={`Caroster ${eventName}`}
-        url={`${url}`}
       />
     </Box>
   );

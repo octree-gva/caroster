@@ -97,8 +97,6 @@ export enum Enum_Page_Type {
 }
 
 export enum Enum_Userspermissionsuser_Lang {
-  EN = 'EN',
-  FR = 'FR',
   en = 'en',
   fr = 'fr'
 }

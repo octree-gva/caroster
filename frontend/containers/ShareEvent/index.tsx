@@ -5,10 +5,9 @@ import useShare from '../../hooks/useShare';
 
 interface Props {
   title: string;
-  url: string;
 }
 
-const ShareEvent = ({title, url, sx}: ButtonProps & Props) => {
+const ShareEvent = ({title, sx}: ButtonProps & Props) => {
   const {t} = useTranslation();
   const {share, navigatorHasShareCapability} = useShare();
 
@@ -21,7 +20,7 @@ const ShareEvent = ({title, url, sx}: ButtonProps & Props) => {
       variant="outlined"
       color="primary"
       startIcon={<Icon>share</Icon>}
-      onClick={() => share({title, url})}
+      onClick={() => share({title})}
       sx={sx}
     >
       {text}

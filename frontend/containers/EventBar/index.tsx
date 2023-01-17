@@ -71,7 +71,6 @@ const EventBar = ({event, onAdd}) => {
             onClick={() =>
               share({
                 title: `Caroster ${event.name}`,
-                url: `${window.location.href}`,
               })
             }
             size="large"

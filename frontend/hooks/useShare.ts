@@ -1,9 +1,11 @@
 import {useTranslation} from 'react-i18next';
+import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import useToastStore from '../stores/useToastStore';
 
-const navigatorHasShareCapability = typeof navigator !== 'undefined' && !!navigator.share;
-const navigatorHasClipboardCapability = typeof navigator !== 'undefined' && !!navigator.clipboard;
-
+const navigatorHasShareCapability =
+  typeof navigator !== 'undefined' && !!navigator.share;
+const navigatorHasClipboardCapability =
+  typeof navigator !== 'undefined' && !!navigator.clipboard;
 
 const useShare = () => {
   const {t} = useTranslation();
@@ -11,17 +13,25 @@ const useShare = () => {
 
   return {
     navigatorHasShareCapability,
-    share: async ({url, title}) => {
+    share: async ({title}) => {
+      const url = typeof window !== 'undefined' ? window.location.href : '';
       if (!url || !title) return null;
+      const splittedUrl = url.split('/');
+      const localeParamIndex = splittedUrl.findIndex(
+        member => SupportedLocales[member]
+      );
+      splittedUrl[localeParamIndex] = 'default';
+      const withDefaultLocaleURL = splittedUrl.join('/');
       // If navigator share capability
-      if (navigatorHasShareCapability)
+      if (navigatorHasShareCapability) {
         return await navigator.share({
           title,
-          url,
+          url: withDefaultLocaleURL,
         });
+      }
       // Else copy URL in clipboard
       else if (navigatorHasClipboardCapability) {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(withDefaultLocaleURL);
         addToast(t('event.actions.copied'));
         return true;
       }

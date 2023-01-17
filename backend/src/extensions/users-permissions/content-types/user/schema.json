@@ -102,9 +102,7 @@
       "type": "enumeration",
       "enum": [
         "fr",
-        "en",
-        "FR",
-        "EN"
+        "en"
       ],
       "default": "fr"
     },
