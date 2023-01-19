@@ -19,4 +19,8 @@ const MailSignup = () => {
   );
 };
 
+export async function getServerSideProps(props) {
+  return props
+}
+
 export default MailSignup;

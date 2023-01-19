@@ -26,4 +26,8 @@ const NotFoundPage = (props: Props) => {
   );
 };
 
+export async function getServerSideProps(props) {
+  return props
+}
+
 export default NotFoundPage;

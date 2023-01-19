@@ -12,4 +12,8 @@ const LostPassword = () => {
   );
 };
 
+export async function getServerSideProps(props) {
+  return props
+}
+
 export default LostPassword;
