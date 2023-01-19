@@ -4,7 +4,7 @@ import {
   ProfileDocument,
   Enum_Userspermissionsuser_Lang as SupportedLocales,
 } from './generated/graphql';
-import {initializeApollo} from './lib/apolloClient';
+import {print} from 'graphql/language/printer';
 import {getCookie} from './lib/cookies';
 
 const PUBLIC_FILE = /\.(.*)$/;
@@ -44,19 +44,20 @@ const getRegisteredUserLanguage = async req => {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (token?.jwt) {
-    const {STRAPI_URL = 'http://localhost:1337'} = process.env;
-    const apolloClient = initializeApollo(
-      `${STRAPI_URL}/graphql`,
-      token.jwt as string
-    );
-
-    const {data} = await apolloClient.query({
-      query: ProfileDocument,
-    });
-
-    return data?.me?.profile?.lang;
-  }
+  const {STRAPI_URL = 'http://localhost:1337'} = process.env;
+  return fetch(`${STRAPI_URL}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: token?.jwt ? `Bearer ${token.jwt}` : '',
+    },
+    body: JSON.stringify({query: print(ProfileDocument)}),
+  })
+    .then(async response => {
+      const {data} = await response.json();
+      return data?.me?.profile?.lang;
+    })
+    .catch(console.log);
 };
 
 const getBrowserPreferredSupportedLanguage = req => {

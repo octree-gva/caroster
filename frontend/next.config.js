@@ -20,6 +20,7 @@ module.exports = withPWA({
   },
   i18n,
 
+  trailingSlash: true,
   async rewrites() {
     return [
       {
