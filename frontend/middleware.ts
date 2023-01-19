@@ -8,6 +8,7 @@ import {initializeApollo} from './lib/apolloClient';
 import {getCookie} from './lib/cookies';
 
 const PUBLIC_FILE = /\.(.*)$/;
+const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
 
 export async function middleware(req: NextRequest) {
   if (
@@ -19,7 +20,7 @@ export async function middleware(req: NextRequest) {
     return;
   }
 
-  if (req.nextUrl.locale === 'share') {
+  if (req.nextUrl.locale === DEFAULT_LOCALE) {
     const registeredUserLanguage = await getRegisteredUserLanguage(req);
     const NEXT_LOCALE = getCookie('NEXT_LOCALE', req.headers.get('cookie'));
     const browserPreferredSupportedLanguage =

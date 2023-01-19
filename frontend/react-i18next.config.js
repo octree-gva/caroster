@@ -1,8 +1,10 @@
+const {DEFAULT_LOCALE = 'share'} = process.env;
+
 module.exports = {
   i18n: {
-    defaultLocale: 'share',
-    locales: ['share', 'en', 'fr'],
-    localeDetection: false
+    defaultLocale: DEFAULT_LOCALE,
+    locales: [DEFAULT_LOCALE, 'en', 'fr'],
+    localeDetection: false,
   },
   trailingSlash: true,
 
