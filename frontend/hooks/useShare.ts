@@ -2,6 +2,8 @@ import {useTranslation} from 'react-i18next';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import useToastStore from '../stores/useToastStore';
 
+const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
+
 const navigatorHasShareCapability =
   typeof navigator !== 'undefined' && !!navigator.share;
 const navigatorHasClipboardCapability =
@@ -20,7 +22,7 @@ const useShare = () => {
       const localeParamIndex = splittedUrl.findIndex(
         member => SupportedLocales[member]
       );
-      splittedUrl[localeParamIndex] = 'default';
+      splittedUrl[localeParamIndex] = DEFAULT_LOCALE;
       const withDefaultLocaleURL = splittedUrl.join('/');
       // If navigator share capability
       if (navigatorHasShareCapability) {

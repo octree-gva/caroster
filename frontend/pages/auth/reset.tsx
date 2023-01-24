@@ -47,4 +47,8 @@ const ResetPassword = () => {
   );
 };
 
+export async function getServerSideProps(props) {
+  return props
+}
+
 export default ResetPassword;
