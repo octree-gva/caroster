@@ -56,7 +56,7 @@
   "event.not_found": "Project not found",
   "event.no_travel.title": "There are currently no cars",
   "event.no_other_travel.title": "There are currently no other car",
-  "event.no_travel.desc": "Share the event and register to the waiting list to get notified when a car will be available!",
+  "event.no_travel.desc": "1. Subscribe to the waiting list\n2. Share the event\n3. You will be notified when a new travel is added",
   "event.details.modify": "Modify",
   "event.details.save": "Save",
   "event.details.aboutCaroster": "Learn more about Caroster",

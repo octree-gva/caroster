@@ -10,8 +10,6 @@ interface Props {
   image?: boolean;
 }
 
-const url = typeof window !== 'undefined' ? window.location.href : '';
-
 const NoCar = ({eventName, title, image}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
@@ -21,13 +19,14 @@ const NoCar = ({eventName, title, image}: Props) => {
       sx={{
         margin: `${theme.spacing(4)} auto`,
         marginTop: image ? 0 : theme.spacing(8),
-        width: '280px',
         maxWidth: '100%',
+        width: 340,
         paddingBottom: theme.spacing(16),
-        textAlign: 'center',
       }}
     >
-      <Typography variant="h5">{title}</Typography>
+      <Typography variant="h5" align="center" sx={{mx: 2}}>
+        {title}
+      </Typography>
       <Box
         component="img"
         sx={{
@@ -39,10 +38,15 @@ const NoCar = ({eventName, title, image}: Props) => {
         }}
         src="/assets/car.png"
       />
-      <Typography>{t('event.no_travel.desc')}</Typography>
+      <Typography sx={{whiteSpace: 'pre-line'}}>
+        {t('event.no_travel.desc')}
+      </Typography>
       <ShareEvent
         color="primary"
-        sx={{marginTop: theme.spacing(6), backgroundColor: '#fff'}}
+        sx={{
+          marginTop: theme.spacing(6),
+          backgroundColor: '#fff',
+        }}
         title={`Caroster ${eventName}`}
       />
     </Box>

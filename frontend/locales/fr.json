@@ -56,7 +56,7 @@
   "event.not_found": "Projet introuvable",
   "event.no_travel.title": "Pas de voitures pour le moment",
   "event.no_other_travel.title": "Pas d'autres voitures pour le moment",
-  "event.no_travel.desc": "Partagez l’événement et inscrivez-vous dans la liste d’attente pour être notifié lorsqu’une voiture sera ajoutée !",
+  "event.no_travel.desc": "1. Inscrivez-vous dans la liste d’attente \n2. Partagez l’événement \n3. Vous serez notifié lorsqu’un nouveau trajet sera ajouté",
   "event.details.modify": "Modifier",
   "event.details.save": "Enregistrer",
   "event.details.aboutCaroster": "En savoir plus sur Caroster",
