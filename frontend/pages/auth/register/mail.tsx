@@ -5,6 +5,7 @@ import Layout from '../../../layouts/Centered';
 import MailSignUpForm from '../../../containers/MailSignUpForm';
 import Logo from '../../../components/Logo';
 import LanguagesIcon from '../../../containers/Languages/Icon';
+import pageUtils from '../../../lib/pageUtils';
 
 const MailSignup = () => {
   const {t} = useTranslation();
@@ -19,8 +20,7 @@ const MailSignup = () => {
   );
 };
 
-export async function getServerSideProps(props) {
-  return props
-}
+
+export const getServerSideProps = pageUtils.getServerSideProps();
 
 export default MailSignup;

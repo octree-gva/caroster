@@ -5,6 +5,7 @@ import useToastStore from '../../stores/useToastStore';
 import Layout from '../../layouts/Centered';
 import ResetPasswordContainer from '../../containers/ResetPassword';
 import {useResetPasswordMutation} from '../../generated/graphql';
+import pageUtils from '../../lib/pageUtils';
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -47,8 +48,6 @@ const ResetPassword = () => {
   );
 };
 
-export async function getServerSideProps(props) {
-  return props
-}
+export const getServerSideProps = pageUtils.getServerSideProps();
 
 export default ResetPassword;

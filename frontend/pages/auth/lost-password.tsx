@@ -1,6 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import LostPasswordContainer from '../../containers/LostPassword';
+import pageUtils from '../../lib/pageUtils';
 
 const LostPassword = () => {
   const {t} = useTranslation();
@@ -12,8 +13,7 @@ const LostPassword = () => {
   );
 };
 
-export async function getServerSideProps(props) {
-  return props
-}
+
+export const getServerSideProps = pageUtils.getServerSideProps();
 
 export default LostPassword;

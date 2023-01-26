@@ -1,6 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import pageUtils from '../lib/pageUtils';
 
 interface Props {
   statusCode: number;
@@ -26,8 +27,6 @@ const NotFoundPage = (props: Props) => {
   );
 };
 
-export async function getServerSideProps(props) {
-  return props
-}
 
+export const getServerSideProps = pageUtils.getServerSideProps();
 export default NotFoundPage;
