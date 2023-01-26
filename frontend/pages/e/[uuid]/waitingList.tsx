@@ -5,6 +5,8 @@ import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
 import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
 import pageUtils from '../../../lib/pageUtils';
+import Box from '@mui/material/Box';
+import SupportCaroster from '../../../containers/SupportCaroster';
 
 interface NewPassengerDialogContext {
   addSelf: boolean;
@@ -44,6 +46,9 @@ const WaitingListTab: TabComponent = ({event}) => {
         getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
           toggleNewPassengerToWaitingList({addSelf})}
       />
+      <Box mt={4} display="flex" justifyContent="center">
+        <SupportCaroster />
+      </Box>
       {!!addPassengerToWaitingListContext && (
         <AddPassengerToWaitingList
           open={!!addPassengerToWaitingListContext}

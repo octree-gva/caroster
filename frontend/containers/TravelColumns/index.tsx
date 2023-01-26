@@ -91,7 +91,7 @@ const TravelColumns = (props: Props) => {
       />
       {(travels?.length === 0 && (
         <NoCar
-          image
+          showImage
           eventName={event?.name}
           title={t('event.no_travel.title')}
         />

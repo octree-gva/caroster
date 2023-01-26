@@ -1,4 +1,5 @@
 {
+  "supportCaroster": "Support Caroster",
   "drawer.information": "Information",
   "drawer.travels": "Travels",
   "drawer.waitingList": "Waiting list",
@@ -43,7 +44,8 @@
   "joyride.last": "Finish",
   "joyride.next": "Next",
   "joyride.skip": "Skip",
-  "menu.about": "About Caroster",
+  "menu.about": "Discover more about Caroster",
+  "menu.code": "Caroster is Open Source",
   "menu.tour": "Caroster tour",
   "menu.dashboard": "My Carosters",
   "menu.language": "Change language",
@@ -59,7 +61,6 @@
   "event.no_travel.desc": "1. Subscribe to the waiting list\n2. Share the event\n3. You will be notified when a new travel is added",
   "event.details.modify": "Modify",
   "event.details.save": "Save",
-  "event.details.aboutCaroster": "Learn more about Caroster",
   "event.fields.name": "Name of the event",
   "event.fields.date": "Event date",
   "event.fields.date_placeholder": "DD/MM/YYYY",

@@ -21,6 +21,7 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
+import SupportCaroster from '../../../containers/SupportCaroster';
 
 interface Props {
   eventUUID: string;
@@ -205,18 +206,13 @@ const DetailsTab: TabComponent = ({}) => {
             <Typography variant="h6">{t('event.fields.link')}</Typography>
             <Typography>{t('event.fields.link_desc')}</Typography>
           </Box>
-          <Box py={4} justifyContent="center" display="flex">
-            <ShareEvent
-              title={`Caroster ${event.name}`}
-            />{' '}
-          </Box>
-          <Divider variant="middle" />
-          <Box pt={2} justifyContent="center" display="flex">
-            <Link href={settings?.about_link} target="_blank" rel="noopener">
-              {t('event.details.aboutCaroster')}
-            </Link>
+          <Box pt={4} pb={2} justifyContent="center" display="flex">
+            <ShareEvent title={`Caroster ${event.name}`} />{' '}
           </Box>
         </Paper>
+        <Box mt={4} display="flex" justifyContent="center">
+          <SupportCaroster />
+        </Box>
       </Container>
     </Box>
   );

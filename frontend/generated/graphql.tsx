@@ -946,12 +946,14 @@ export type Setting = {
   __typename?: 'Setting';
   about_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  code_link?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   faq_link?: Maybe<Scalars['String']>;
   gtm_id?: Maybe<Scalars['String']>;
   locale?: Maybe<Scalars['String']>;
   localizations?: Maybe<SettingRelationResponseCollection>;
   matomo_script_url?: Maybe<Scalars['String']>;
+  opencollective_link?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -969,9 +971,11 @@ export type SettingEntityResponse = {
 export type SettingInput = {
   about_link?: InputMaybe<Scalars['String']>;
   announcement?: InputMaybe<Scalars['String']>;
+  code_link?: InputMaybe<Scalars['String']>;
   faq_link?: InputMaybe<Scalars['String']>;
   gtm_id?: InputMaybe<Scalars['String']>;
   matomo_script_url?: InputMaybe<Scalars['String']>;
+  opencollective_link?: InputMaybe<Scalars['String']>;
 };
 
 export type SettingRelationResponseCollection = {
@@ -1609,7 +1613,7 @@ export type SettingQueryVariables = Exact<{
 }>;
 
 
-export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null } | null } | null } | null };
+export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null } | null } | null } | null };
 
 export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null };
 
@@ -2163,6 +2167,8 @@ export const SettingDocument = gql`
         faq_link
         announcement
         matomo_script_url
+        opencollective_link
+        code_link
       }
     }
   }

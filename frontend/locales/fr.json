@@ -1,4 +1,5 @@
 {
+  "supportCaroster": "Soutenir Caroster",
   "drawer.information": "Information",
   "drawer.travels": "Trajets",
   "drawer.waitingList": "Liste d'attente",
@@ -43,7 +44,8 @@
   "joyride.last": "Terminer",
   "joyride.next": "Suivant",
   "joyride.skip": "Fermer",
-  "menu.about": "À propos de Caroster",
+  "menu.about": "En savoir plus sur Caroster",
+  "menu.code": "Caroster est Open Source",
   "menu.tour": "Découverte de Caroster",
   "menu.dashboard": "Mes Carosters",
   "menu.language": "Changer la langue",
@@ -59,7 +61,6 @@
   "event.no_travel.desc": "1. Inscrivez-vous dans la liste d’attente \n2. Partagez l’événement \n3. Vous serez notifié lorsqu’un nouveau trajet sera ajouté",
   "event.details.modify": "Modifier",
   "event.details.save": "Enregistrer",
-  "event.details.aboutCaroster": "En savoir plus sur Caroster",
   "event.fields.name": "Nom de l'événement",
   "event.fields.date": "Date de l'événement",
   "event.fields.date_placeholder": "DD/MM/YYYY",
