@@ -25,12 +25,12 @@
     "sqlite3": "^5.0.11"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "4.5.6",
-    "@strapi/plugin-i18n": "4.5.6",
-    "@strapi/plugin-sentry": "^4.5.6",
-    "@strapi/plugin-users-permissions": "4.5.6",
-    "@strapi/provider-email-nodemailer": "^4.5.6",
-    "@strapi/strapi": "4.5.6",
+    "@strapi/plugin-graphql": "4.6.0",
+    "@strapi/plugin-i18n": "4.6.0",
+    "@strapi/plugin-sentry": "^4.6.0",
+    "@strapi/plugin-users-permissions": "4.6.0",
+    "@strapi/provider-email-nodemailer": "^4.6.0",
+    "@strapi/strapi": "4.6.0",
     "pg": "8.6.0",
     "strapi-plugin-email-designer": "^2.1.1",
     "strapi-plugin-init-admin-user": "^0.1.3"
