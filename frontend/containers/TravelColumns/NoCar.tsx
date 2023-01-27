@@ -3,48 +3,58 @@ import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useTranslation} from 'react-i18next';
 import ShareEvent from '../ShareEvent';
+import SupportCaroster from '../SupportCaroster';
 
 interface Props {
   eventName: string;
   title: string;
-  image?: boolean;
+  showImage?: boolean;
 }
 
-const url = typeof window !== 'undefined' ? window.location.href : '';
-
-const NoCar = ({eventName, title, image}: Props) => {
+const NoCar = ({eventName, title, showImage}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
 
   return (
     <Box
-      sx={{
-        margin: `${theme.spacing(4)} auto`,
-        marginTop: image ? 0 : theme.spacing(8),
-        width: '280px',
-        maxWidth: '100%',
-        paddingBottom: theme.spacing(16),
-        textAlign: 'center',
-      }}
+      my={4}
+      mx="auto"
+      pb={16}
+      mt={showImage ? 0 : 8}
+      maxWidth="100%"
+      width={340}
     >
-      <Typography variant="h5">{title}</Typography>
-      <Box
-        component="img"
-        sx={{
-          width: image ? '100%' : 0,
-          height: image ? 'auto' : theme.spacing(6),
-          [theme.breakpoints.down('md')]: {
-            width: image ? '50%' : 0,
-          },
-        }}
-        src="/assets/car.png"
-      />
-      <Typography>{t('event.no_travel.desc')}</Typography>
+      <Typography variant="h6" align="center" color="textSecondary">
+        {title}
+      </Typography>
+      {showImage && (
+        <Box
+          component="img"
+          sx={{
+            width: '100%',
+            height: 'auto',
+
+            [theme.breakpoints.down('md')]: {
+              width: '50%',
+            },
+          }}
+          src="/assets/car.png"
+        />
+      )}
+      <Typography sx={{whiteSpace: 'pre-line', mt: 4}} color="textSecondary">
+        {t('event.no_travel.desc')}
+      </Typography>
       <ShareEvent
         color="primary"
-        sx={{marginTop: theme.spacing(6), backgroundColor: '#fff'}}
+        sx={{
+          mt: 4,
+          backgroundColor: '#fff',
+        }}
         title={`Caroster ${eventName}`}
       />
+      <Box mt={4} display="flex" justifyContent="center">
+        <SupportCaroster />
+      </Box>
     </Box>
   );
 };

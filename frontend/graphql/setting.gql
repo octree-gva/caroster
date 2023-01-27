@@ -8,6 +8,7 @@ query setting($locale: I18NLocaleCode!) {
         faq_link
         announcement
         matomo_script_url
+        opencollective_link
       }
     }
   }
