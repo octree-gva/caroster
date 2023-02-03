@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 import {ProfileDocument, useUpdateMeMutation} from '../generated/graphql';
-import create from 'zustand';
+import {create} from 'zustand';
 import {persist} from 'zustand/middleware';
 import {useSession} from 'next-auth/react';
 

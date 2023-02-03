@@ -27,33 +27,43 @@ const IconLanguageSelection = ({
     onChangeLang(lang);
   };
 
-  return <>
-    <Box
-      position="absolute"
-      top={displayMenu ? 56 : 0}
-      right={0}
-      zIndex={1050}
-      p={1}
-    >
-      <IconButton color="primary" aria-label="Languages" onClick={handleClick} size="large">
-        <Icon>language</Icon>
-      </IconButton>
-    </Box>
-    <Menu
-      id="LanguagesMenu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={() => setAnchorEl(null)}
-    >
-      {Object.keys(SupportedLocales).map(locale => (
+  return (
+    <>
+      <Box
+        position="absolute"
+        top={displayMenu ? 56 : 0}
+        right={0}
+        zIndex={1050}
+        p={1}
+      >
+        <IconButton
+          color="primary"
+          aria-label="Languages"
+          onClick={handleClick}
+          size="large"
+        >
+          <Icon>language</Icon>
+        </IconButton>
+      </Box>
+      <Menu
+        id="LanguagesMenu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
+        {Object.keys(SupportedLocales).map(locale => (
           <MenuItem
+            key={locale}
             disabled={language === SupportedLocales[locale]}
             onClick={() => onConfirm(SupportedLocales[locale])}
-          >{t(`languages.${locale}`)}</MenuItem>
+          >
+            {t(`languages.${locale}`)}
+          </MenuItem>
         ))}
-    </Menu>
-  </>;
+      </Menu>
+    </>
+  );
 };
 
 export default withLanguagesSelection(IconLanguageSelection);
