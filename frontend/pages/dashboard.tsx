@@ -92,7 +92,7 @@ const Dashboard = (props: PageProps) => {
         />
       )}
       <Fab
-        onClick={() => router.push('/', undefined, {shallow: true})}
+        onClick={() => router.push('/')}
         aria-label="add-event"
       >
         {t('dashboard.actions.add_event')}
