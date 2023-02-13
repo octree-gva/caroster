@@ -23,13 +23,13 @@ export default {
   /**
    * Send event recap when it has ended
    * Only to events with a provided 'date' field
-   * Everyday at 23:30
+   * Everyday at 08:30
    */
-  "30 23 * * *": async ({ strapi }) => {
+  "30 8 * * *": async ({ strapi }) => {
     const events = await strapi.entityService.findMany("api::event.event", {
       filters: {
         date: {
-          $eq: DateTime.now().toISODate(),
+          $eq: DateTime.now().minus({ day: 1 }).toISODate(),
         },
       },
       populate: ["travels", "passengers", "passengers.travel"],
