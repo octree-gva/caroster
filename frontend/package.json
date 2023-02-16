@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "prestart": "yarn && yarn build",
+    "i18n-format": "sync-i18n --files 'locales/*.json' --primary en --newKeysEmpty true",
     "start": "next start",
     "lint": "next lint",
     "gql": "graphql-codegen --config codegen.yml"
@@ -47,6 +48,7 @@
     "eslint": "^7.31.0",
     "eslint-config-next": "^11.1.2",
     "eslint-config-prettier": "^8.3.0",
+    "i18next-json-sync": "^3.1.2",
     "ts-node": "^10.9.1"
   }
 }
