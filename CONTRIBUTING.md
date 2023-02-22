@@ -14,6 +14,14 @@
 
 - Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
+#### **Do you want to translate Caroster?**
+
+- Go to [the weblate project](https://translate.codeberg.org/projects/caroster/web-app/).
+
+- Read and accept the contributor agreement.
+
+- Refer to [Weblate documentation](https://docs.weblate.org/en/latest/user/translating.html) to learn how to use Weblate.
+
 #### **Do you intend to add a new feature or change an existing one?**
 
 - Suggest your proposal by creating a [new issue](https://github.com/octree-gva/caroster/issues/new).
