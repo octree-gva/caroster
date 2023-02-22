@@ -11,5 +11,5 @@ jobs:
           fetch-depth: 0
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
-          target_repo_url: git@git.octree.ch:6118/o/caroster.git
+          target_repo_url: ${{ secrets.GITLAB_REPO_URL }}
           ssh_private_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
