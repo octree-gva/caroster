@@ -58,7 +58,7 @@ const IconLanguageSelection = ({
             disabled={language === SupportedLocales[locale]}
             onClick={() => onConfirm(SupportedLocales[locale])}
           >
-            {t(`languages.${locale}`)}
+            {t(`PROTECTED.languages.${locale}`)}
           </MenuItem>
         ))}
       </Menu>
