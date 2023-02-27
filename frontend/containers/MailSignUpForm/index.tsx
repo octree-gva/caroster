@@ -41,7 +41,7 @@ const SignUp = () => {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      const lang = i18n.language.toUpperCase();
+      const lang = i18n.language;
       await register({
         variables: {
           user: {
