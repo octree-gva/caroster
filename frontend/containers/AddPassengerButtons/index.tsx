@@ -19,6 +19,10 @@ const AddPassengerButtons = ({
 }: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
+  const addToLocale = {
+    'waitingList': 'travel.passengers.add_to_waitingList',
+    'travel': 'travel.passengers.add_to_travel'
+  }
 
   const containerSx = {padding: theme.spacing(1), textAlign: 'center'};
   const textSx = {
@@ -65,7 +69,7 @@ const AddPassengerButtons = ({
           disabled={disabled}
         >
           <Icon>person_add</Icon>
-          {t(`travel.passengers.add_to_${variant}`)}
+          {t(addToLocale[variant])}
         </Button>
       </Box>
     </Box>

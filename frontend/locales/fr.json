@@ -192,6 +192,8 @@
     "travel.passengers.add_me": "S'ajouter",
     "travel.passengers.add_someone": "Ajouter quelqu'un",
     "travel.passengers.add_to_car": "Ajouter à la voiture",
+    "travel.passengers.add_to_travel": "Ajouter au trajet",
+    "travel.passengers.add_to_waitingList": "Ajouter à la liste d'attente",
     "travel.passengers.email": "Email",
     "travel.passengers.email_helpertext": "Email non valide",
     "travel.passengers.email_placeholder": "Email",
