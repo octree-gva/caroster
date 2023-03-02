@@ -192,6 +192,8 @@
     "travel.passengers.add_me": "",
     "travel.passengers.add_someone": "",
     "travel.passengers.add_to_car": "",
+    "travel.passengers.add_to_travel": "",
+    "travel.passengers.add_to_waitingList": "",
     "travel.passengers.email": "",
     "travel.passengers.email_helpertext": "",
     "travel.passengers.email_placeholder": "",

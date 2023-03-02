@@ -11,6 +11,11 @@ interface Props {
   disabled?: boolean;
 }
 
+const ADD_TO_LOCALE = {
+  'waitingList': 'travel.passengers.add_to_waitingList',
+  'travel': 'travel.passengers.add_to_travel'
+}
+
 const AddPassengerButtons = ({
   getOnClickFunction,
   canAddSelf,
@@ -65,7 +70,7 @@ const AddPassengerButtons = ({
           disabled={disabled}
         >
           <Icon>person_add</Icon>
-          {t(`travel.passengers.add_to_${variant}`)}
+          {t(ADD_TO_LOCALE[variant])}
         </Button>
       </Box>
     </Box>
