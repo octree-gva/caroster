@@ -11,6 +11,11 @@ interface Props {
   disabled?: boolean;
 }
 
+const ADD_TO_LOCALE = {
+  'waitingList': 'travel.passengers.add_to_waitingList',
+  'travel': 'travel.passengers.add_to_travel'
+}
+
 const AddPassengerButtons = ({
   getOnClickFunction,
   canAddSelf,
@@ -19,10 +24,6 @@ const AddPassengerButtons = ({
 }: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
-  const addToLocale = {
-    'waitingList': 'travel.passengers.add_to_waitingList',
-    'travel': 'travel.passengers.add_to_travel'
-  }
 
   const containerSx = {padding: theme.spacing(1), textAlign: 'center'};
   const textSx = {
@@ -69,7 +70,7 @@ const AddPassengerButtons = ({
           disabled={disabled}
         >
           <Icon>person_add</Icon>
-          {t(addToLocale[variant])}
+          {t(ADD_TO_LOCALE[variant])}
         </Button>
       </Box>
     </Box>
