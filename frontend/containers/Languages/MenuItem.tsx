@@ -42,7 +42,7 @@ const Languages = ({
           <MenuItem
             disabled={language === SupportedLocales[locale]}
             onClick={() => onConfirm(SupportedLocales[locale])}
-          >{t(`languages.${locale}`)}</MenuItem>
+          >{t(`PROTECTED.languages.${locale}`)}</MenuItem>
         ))}
       </MenuList>
     </Box>
