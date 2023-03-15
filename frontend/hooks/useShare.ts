@@ -25,7 +25,7 @@ const useShare = () => {
       );
       splittedUrl[localeParamIndex] = DEFAULT_LOCALE;
       const withDefaultLocaleURL = splittedUrl.join('/');
-      console.log("share url: ", withDefaultLocaleURL))
+      console.log("share url: ", withDefaultLocaleURL)
       // If navigator share capability
       if (navigatorHasShareCapability) {
         console.log("share using navigator")
