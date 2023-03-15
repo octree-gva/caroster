@@ -17,6 +17,7 @@ const useShare = () => {
     navigatorHasShareCapability,
     share: async ({title}) => {
       const url = typeof window !== 'undefined' ? window.location.href : '';
+      console.log("sharing: ", {url, title})
       if (!url || !title) return null;
       const splittedUrl = url.split('/');
       const localeParamIndex = splittedUrl.findIndex(
@@ -24,8 +25,10 @@ const useShare = () => {
       );
       splittedUrl[localeParamIndex] = DEFAULT_LOCALE;
       const withDefaultLocaleURL = splittedUrl.join('/');
+      console.log("share url: ", withDefaultLocaleURL))
       // If navigator share capability
       if (navigatorHasShareCapability) {
+        console.log("share using navigator")
         return await navigator.share({
           title,
           url: withDefaultLocaleURL,
@@ -33,6 +36,7 @@ const useShare = () => {
       }
       // Else copy URL in clipboard
       else if (navigatorHasClipboardCapability) {
+        console.log("share using clipboard")
         await navigator.clipboard.writeText(withDefaultLocaleURL);
         addToast(t('event.actions.copied'));
         return true;
