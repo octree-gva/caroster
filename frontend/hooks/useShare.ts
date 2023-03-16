@@ -22,8 +22,9 @@ const useShare = () => {
       const localeParamIndex = splittedUrl.findIndex(
         member => SupportedLocales[member]
       );
-      splittedUrl[localeParamIndex] = DEFAULT_LOCALE;
-      const withDefaultLocaleURL = splittedUrl.join('/');
+      const urlCopy = [...splittedUrl]
+      urlCopy[localeParamIndex] = DEFAULT_LOCALE;
+      const withDefaultLocaleURL = urlCopy.join('/');
       // If navigator share capability
       if (navigatorHasShareCapability) {
         return await navigator.share({
