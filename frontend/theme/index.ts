@@ -1,4 +1,5 @@
 import {createTheme} from '@mui/material/styles';
+import * as typography from './typography';
 
 export const caroster = {
   palette: {
@@ -37,9 +38,7 @@ export const caroster = {
       },
     },
   },
-  typography: {
-    fontFamily: ['Inter', 'sans-serif'],
-  },
+  typography,
   breakpoints: {
     values: {
       xs: 0,
