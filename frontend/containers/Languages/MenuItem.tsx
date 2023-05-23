@@ -40,9 +40,12 @@ const Languages = ({
       >
         {Object.keys(SupportedLocales).map(locale => (
           <MenuItem
+            key={locale}
             disabled={language === SupportedLocales[locale]}
             onClick={() => onConfirm(SupportedLocales[locale])}
-          >{t(`PROTECTED.languages.${locale}`)}</MenuItem>
+          >
+            {t(`PROTECTED.languages.${locale}`)}
+          </MenuItem>
         ))}
       </MenuList>
     </Box>
