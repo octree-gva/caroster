@@ -32,12 +32,17 @@ cd caroster
 
 ### Run with Docker
 
+First, create containers with Docker-Compose:
+
 ```shell
-docker build -t caroster .
-cp backend/.env.example backend/.env
-nano .env # Edit with your own configuration
-docker run -d -p 80:80 --env-file backend/.env caroster
+docker-compose up
 ```
+
+Wait a few minutes while the application downloads needed packages,
+then go to http://localhost:8080.
+
+You can log on http://localhost:8080/admin with email `admin@example.org`
+and password `caroster`.
 
 ## Development
 

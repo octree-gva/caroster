@@ -1,0 +1,34 @@
+version: "3"
+services:
+  app:
+    image: octree/caroster
+    build:
+      context: .
+    ports:
+      - 8080:80
+    environment:
+      STRAPI_URL: http://localhost:8080
+      DATABASE_HOST: psql
+      DATABASE_NAME: caroster
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: 6Akfg28GAU
+      APP_KEYS: toBeModified1,toBeModified2
+      API_TOKEN_SALT: tobemodified
+      ADMIN_JWT_SECRET: tobemodified
+      JWT_SECRET: tobemodified
+      INIT_ADMIN_USERNAME: admin
+      INIT_ADMIN_PASSWORD: caroster
+      INIT_ADMIN_FIRSTNAME: Admin
+      INIT_ADMIN_LASTNAME: Caroster
+      INIT_ADMIN_EMAIL: admin@example.org
+
+  psql:
+    image: postgres
+    volumes:
+      - psql_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 6Akfg28GAU
+      POSTGRES_DB: caroster
+
+volumes:
+  psql_data:
