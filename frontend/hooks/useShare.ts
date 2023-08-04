@@ -25,8 +25,9 @@ const useShare = () => {
       const urlCopy = [...splittedUrl]
       urlCopy[localeParamIndex] = DEFAULT_LOCALE;
       const withDefaultLocaleURL = urlCopy.join('/');
-      // If navigator share capability
-      if (navigatorHasShareCapability) {
+      const isPhone = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      // If navigator share capability and a phone
+      if (navigatorHasShareCapability && isPhone) {
         return await navigator.share({
           title,
           url: withDefaultLocaleURL,
