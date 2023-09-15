@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -29,14 +29,10 @@ const classes = {
   button: `${PREFIX}-button`,
   noTravel: `${PREFIX}-noTravel`,
   noTravelImage: `${PREFIX}-noTravelImage`,
-  share: `${PREFIX}-share`
+  share: `${PREFIX}-share`,
 };
 
-const StyledSlide = styled(Slide)((
-  {
-    theme
-  }
-) => ({
+const StyledSlide = styled(Slide)(({theme}) => ({
   [`& .${classes.offset}`]: {
     paddingTop: theme.spacing(7),
   },
@@ -98,7 +94,7 @@ const StyledSlide = styled(Slide)((
   [`& .${classes.share}`]: {
     marginTop: theme.spacing(2),
     backgroundColor: '#fff',
-  }
+  },
 }));
 
 interface Props {
@@ -118,7 +114,6 @@ const TravelDialog = ({
   onClose,
   onSelect,
 }: Props) => {
-
   const {t} = useTranslation();
 
   const availableTravels = travels?.filter(
@@ -169,10 +164,15 @@ const TravelDialog = ({
                 <ListItem key={i} divider className={classes.listItem}>
                   <Box className={classes.rtlBox}>
                     <Box className={classes.info}>
-                      <Typography variant="subtitle1" className={classes.date}>
-                        {t('passenger.creation.departure')}
-                        {moment(travel.departure).format('LLLL')}
-                      </Typography>
+                      {travel.departure && (
+                        <Typography
+                          variant="subtitle1"
+                          className={classes.date}
+                        >
+                          {t('passenger.creation.departure')}
+                          {moment(travel.departure).format('LLLL')}
+                        </Typography>
+                      )}
                       <Link
                         target="_blank"
                         rel="noreferrer"
