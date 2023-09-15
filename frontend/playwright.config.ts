@@ -82,7 +82,7 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'cd ../backend && yarn start',
+      command: 'cd ../backend && NODE_ENV=test yarn start',
       url: 'http://localhost:1337',
       reuseExistingServer: true,
       timeout: 200000,
