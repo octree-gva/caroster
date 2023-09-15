@@ -8,6 +8,13 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    services:
+      strapi:
+        image: octree/caroster
+        ports:
+          - 1337:1337
+        env:
+          NODE_ENV: test
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -19,6 +26,10 @@ jobs:
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
       working-directory: frontend
+    - name: Wait for Strapi to be ready
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s'
     - name: Run Playwright tests
       run: yarn playwright test
       working-directory: frontend
