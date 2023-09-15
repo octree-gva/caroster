@@ -12042,10 +12042,10 @@ strapi-plugin-email-designer@^2.1.1:
     react-syntax-highlighter "^15.5.0"
     striptags "^3.2.0"
 
-strapi-plugin-init-admin-user@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/strapi-plugin-init-admin-user/-/strapi-plugin-init-admin-user-0.1.3.tgz#10e2b585468fc34551550476c3f8b044fbd2dbf1"
-  integrity sha512-5LRaSIHqz2lN6JB7+iYmiqdVMDoI4rRLVMqx/+KwUWVu0w59wfMmRi9wjfDP2gi79ePf55JW0bAR3g5ovbUjUA==
+strapi-plugin-init-admin-user@^0.2.1:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-init-admin-user/-/strapi-plugin-init-admin-user-0.2.2.tgz#5827a36e2af6954d3820b95a4f2542aa043a811b"
+  integrity sha512-fykINmnKulIm0/RxfEzSjcmspXhJ/1IcHlqx7JPvkSwmMdufc2ySwKVT85OYIXaf8dMC6POFPTSOaRFPFwDLRA==
 
 stream-browserify@^3.0.0:
   version "3.0.0"

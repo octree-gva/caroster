@@ -10,7 +10,8 @@
     "i18n-unused": "node i18n-unused",
     "start": "next start",
     "lint": "next lint",
-    "gql": "graphql-codegen --config codegen.yml"
+    "gql": "graphql-codegen --config codegen.yml",
+    "test": "playwright test"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -44,6 +45,7 @@
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
     "@graphql-codegen/typescript-react-apollo": "^3.3.3",
+    "@playwright/test": "^1.38.0",
     "@types/node": "^18.7.16",
     "@types/react": "^18.0.18",
     "eslint": "^7.31.0",
