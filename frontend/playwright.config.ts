@@ -81,11 +81,11 @@ export default defineConfig({
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
     },
-    {
-      command: 'cd ../backend && NODE_ENV=test yarn start',
-      url: 'http://localhost:1337',
-      reuseExistingServer: true,
-      timeout: 200000,
-    },
+    // {
+    //   command: 'cd ../backend && NODE_ENV=test yarn start',
+    //   url: 'http://localhost:1337',
+    //   reuseExistingServer: true,
+    //   timeout: 200000,
+    // },
   ],
 });
