@@ -21,6 +21,7 @@ import {
   useUpdateEventMutation,
 } from '../../../generated/graphql';
 import SupportCaroster from '../../../containers/SupportCaroster';
+import Map from '../../../containers/Map';
 
 interface Props {
   eventUUID: string;
@@ -98,6 +99,7 @@ const DetailsTab: TabComponent = ({}) => {
       }}
     >
       <Container maxWidth="sm" sx={{marginTop: theme.spacing(6)}}>
+        <Map />
         <Paper sx={{position: 'relative', padding: theme.spacing(2)}}>
           {modifyButton}
           <Box sx={sectionSx}>
