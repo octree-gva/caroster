@@ -7,6 +7,8 @@ fragment EventFields on EventEntity {
     email
     date
     address
+    latitude
+    longitude
     position
     waitingPassengers {
       data {
@@ -66,6 +68,8 @@ mutation createEvent(
   $email: String!
   $date: Date
   $address: String
+  $latitude: Number
+  $longitude: Number
   $description: String
   $newsletter: Boolean
 ) {
