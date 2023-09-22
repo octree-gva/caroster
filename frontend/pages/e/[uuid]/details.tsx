@@ -90,19 +90,13 @@ const DetailsTab: TabComponent = ({}) => {
     <Box
       sx={{
         position: 'relative',
-        paddingLeft: '80px',
-
-        [theme.breakpoints.down('md')]: {
-          paddingLeft: 0,
-          paddingBottom: '80px',
-        },
       }}
     >
-      <Container maxWidth="sm" sx={{marginTop: theme.spacing(6)}}>
+      <Container >
         <Map />
         <Paper sx={{position: 'relative', padding: theme.spacing(2)}}>
           {modifyButton}
-          <Box sx={sectionSx}>
+          <Box sx={sectionSx} maxWidth="sm">
             <Typography variant="h6">{t('event.fields.name')}</Typography>
             {isEditing ? (
               <TextField

@@ -1,7 +1,7 @@
 import {MapContainer, TileLayer, useMap} from 'react-leaflet';
 import MapWrapper from './MapWrapper';
 
-const position = [51.505, -0.09];
+const position = [35.612139, 140.113375];
 
 const Map = () => {
   return (

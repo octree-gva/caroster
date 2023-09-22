@@ -1,6 +1,5 @@
 import Drawer from '@mui/material/Drawer';
 import {useTheme} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
 import DrawerMenuItem from './DrawerMenuItem';
@@ -18,7 +17,7 @@ const DrawerMenu = () => {
     <Drawer
       variant="permanent"
       sx={{
-        width: '85px',
+        width: '240px',
 
         [theme.breakpoints.down('md')]: {
           width: '100%',
@@ -29,13 +28,12 @@ const DrawerMenu = () => {
 
         '& .MuiDrawer-paper': {
           zIndex: theme.zIndex.appBar - 1,
-          width: '84px',
+          width: '239px',
           display: 'flex',
           flexDirection: 'column',
           boxSizing: 'border-box',
           left: 0,
           top: 0,
-          backgroundColor: '#242424',
           color: 'white',
           overflowX: 'hidden',
           position: 'static',
@@ -56,7 +54,7 @@ const DrawerMenu = () => {
         onClick={() => {
           router.push(`/e/${uuid}`, null, {shallow: true});
         }}
-        Icon={<Icon>directions_car</Icon>}
+        icon="directions_car"
         active={router.pathname == `/e/[uuid]`}
       />
       <DrawerMenuItem
@@ -64,7 +62,7 @@ const DrawerMenu = () => {
         onClick={() => {
           router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
         }}
-        Icon={<Icon>group</Icon>}
+        icon="group"
         active={router.pathname == `/e/[uuid]/waitingList`}
       />
       <DrawerMenuItem
@@ -72,7 +70,7 @@ const DrawerMenu = () => {
         onClick={() => {
           router.push(`/e/${uuid}/details`, null, {shallow: true});
         }}
-        Icon={<Icon>info</Icon>}
+        icon="info"
         active={router.pathname == `/e/[uuid]/details`}
       />
     </Drawer>

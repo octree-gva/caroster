@@ -4,7 +4,9 @@ import * as typography from './typography';
 export const caroster = {
   palette: {
     primary: {
+      light: '#00cabb',
       main: '#009688',
+      dark: '#004122'
     },
     secondary: {
       main: '#FFEB3B',
