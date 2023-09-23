@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -6,51 +5,42 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import {useState} from 'react';
-import useProfile from '../../hooks/useProfile';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
 import UserIcon from './UserIcon';
+import {useTheme} from '@mui/styles';
 
 const EventBar = ({event, onAdd}) => {
   const {share} = useShare();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {connected} = useProfile();
 
   const menuActions = useActions({onAdd, eventId: event?.id});
-  const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
 
+  console.log(theme.palette.background);
   return (
     <AppBar
       sx={{
+        top: 0,
+        right: 0,
         overflow: 'hidden',
         minHeight: theme.mixins.toolbar.minHeight,
-        overflowY: 'hidden',
         transition: 'height 0.3s ease',
-        backgroundColor: '#242424',
-        color: 'white',
+        backgroundColor: 'transparent',
+        backgroundImage: `linear-gradient(${theme.palette.background.grey} 0%, rgba(0,0,0,0) 90%)`,
+
+        [theme.breakpoints.up('md')]: {
+          width: 'calc(100% - 240px)',
+        },
       }}
-      color="primary"
-      position="static"
+      position="absolute"
+      elevation={0}
       id="Menu"
     >
       <Toolbar>
         <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
-          <Link href={appLink}>
-            <Box
-              sx={{
-                marginRight: theme.spacing(2),
-                width: 64,
-                height: 32,
-                cursor: 'pointer',
-              }}
-            >
-              <img src="/assets/Logo_in_beta.svg" alt="Logo" />
-            </Box>
-          </Link>
           <Tooltip title={event.name || ''}>
             <Typography
               variant="h6"

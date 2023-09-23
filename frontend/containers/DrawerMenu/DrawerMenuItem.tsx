@@ -18,13 +18,12 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
     <Button
       sx={{
         display: 'flex',
-        padding: theme.spacing(0, 4, 0, 2),
+        padding: theme.spacing(2),
         position: 'relative',
         minWidth: 0,
         margin: 0,
         width: '100%',
         justifyContent: 'flex-start',
-        height: '84px',
         color: '#242424',
 
         [theme.breakpoints.down('md')]: {

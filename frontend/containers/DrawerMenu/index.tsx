@@ -1,12 +1,22 @@
+import Link from 'next/link';
 import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
+import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';
 
-const DrawerMenu = () => {
+interface Props {
+  eventUuid: string;
+}
+
+const DrawerMenu = ({eventUuid}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
+
+  const {connected} = useProfile();
+  const appLink = connected ? '/dashboard' : `/e/${eventUuid}` || '';
 
   const router = useRouter();
   const {
@@ -49,6 +59,18 @@ const DrawerMenu = () => {
         },
       }}
     >
+      <Link href={appLink}>
+        <Box
+          sx={{
+            margin: theme.spacing(3),
+            width: 64,
+            height: 32,
+            cursor: 'pointer',
+          }}
+        >
+          <img src="/assets/Logo_in_beta.svg" alt="Logo" />
+        </Box>
+      </Link>
       <DrawerMenuItem
         title={t('drawer.travels')}
         onClick={() => {

@@ -16,6 +16,7 @@ export const caroster = {
     },
     background: {
       default: '#F4F4FF',
+      grey: 'rgba(0, 0, 0, 0.67)'
     },
   },
   mixins: {
