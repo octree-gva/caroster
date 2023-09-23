@@ -17,7 +17,7 @@ const ShareEvent = ({title, sx}: ButtonProps & Props) => {
     : t('event.fields.copyLink');
 
   return (
-    <Box textAlign="center">
+    <Box textAlign="center" sx={{width: '100%'}}>
       <Button
         variant="outlined"
         color="primary"
