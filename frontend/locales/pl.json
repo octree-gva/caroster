@@ -43,6 +43,7 @@
     "event.creation.newsletter": "Informuj mnie o rozwoju Caroster przez e-mail",
     "event.creation.next": "Dalej",
     "event.creation.title": "Nowe wydarzenie",
+    "event.details": "",
     "event.details.modify": "Modyfikuj",
     "event.details.save": "Zapisz",
     "event.errors.cant_create": "",

@@ -110,9 +110,10 @@ export const headline5Neg = {...headline5, fontWeight: weightScale['Light']};
 //Headline-4
 export const headline4 = {
   fontFamily: body1.fontFamily,
-  fontWeight: weightScale['Regular'],
-  fontSize: '33px',
-  letterSpacing: '0.75%',
+  fontWeight: weightScale['Medium'],
+  fontSize: '17px',
+  lineHeight: '23px',
+  letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'undercase',
 };

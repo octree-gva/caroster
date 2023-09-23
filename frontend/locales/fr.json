@@ -40,6 +40,7 @@
     "event.creation.newsletter": "Me tenir informé des évolutions de Caroster par e-mail",
     "event.creation.next": "Suivant",
     "event.creation.title": "Nouvel évènement",
+    "event.details": "Informations",
     "event.details.modify": "Modifier",
     "event.details.save": "Enregistrer",
     "event.errors.cant_create": "Impossible de créer l'événement",

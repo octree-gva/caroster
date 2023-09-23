@@ -1,8 +1,7 @@
 import moment from 'moment';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -11,17 +10,14 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {PropsWithChildren, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import pageUtils from '../../../lib/pageUtils';
-import ShareEvent from '../../../containers/ShareEvent';
 import useEventStore from '../../../stores/useEventStore';
 import useToastStore from '../../../stores/useToastStore';
-import useSettings from '../../../hooks/useSettings';
+import Map from '../../../containers/Map';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
-import SupportCaroster from '../../../containers/SupportCaroster';
-import Map from '../../../containers/Map';
 
 interface Props {
   eventUUID: string;
@@ -35,13 +31,10 @@ const Page = (props: PropsWithChildren<Props>) => {
 const DetailsTab: TabComponent = ({}) => {
   const {t} = useTranslation();
   const theme = useTheme();
-  const settings = useSettings();
   const [updateEvent] = useUpdateEventMutation();
   const addToast = useToastStore(s => s.addToast);
   const setEventUpdate = useEventStore(s => s.setEventUpdate);
   const event = useEventStore(s => s.event);
-  const [isEditing, setIsEditing] = useState(false);
-  const idPrefix = isEditing ? 'EditEvent' : 'Event';
 
   const onSave = async e => {
     try {
@@ -51,38 +44,11 @@ const DetailsTab: TabComponent = ({}) => {
         variables: {uuid, eventUpdate: input},
         refetchQueries: ['eventByUUID'],
       });
-      setIsEditing(false);
     } catch (error) {
       console.error(error);
       addToast(t('event.errors.cant_update'));
     }
   };
-  const sectionSx = {
-    marginBottom: theme.spacing(2),
-    width: '540px',
-    maxWidth: '100%',
-    paddingX: theme.spacing(2),
-  };
-
-  const modifyButton = isEditing ? (
-    <Button
-      variant="contained"
-      color="primary"
-      sx={{position: 'absolute', right: theme.spacing(2)}}
-      onClick={onSave}
-    >
-      {t('event.details.save')}
-    </Button>
-  ) : (
-    <Button
-      variant="text"
-      color="primary"
-      sx={{position: 'absolute', right: theme.spacing(2)}}
-      onClick={() => setIsEditing(true)}
-    >
-      {t('event.details.modify')}
-    </Button>
-  );
 
   if (!event) return null;
 
@@ -92,13 +58,29 @@ const DetailsTab: TabComponent = ({}) => {
         position: 'relative',
       }}
     >
-      <Container >
-        <Map />
-        <Paper sx={{position: 'relative', padding: theme.spacing(2)}}>
-          {modifyButton}
-          <Box sx={sectionSx} maxWidth="sm">
-            <Typography variant="h6">{t('event.fields.name')}</Typography>
-            {isEditing ? (
+      <Map />
+      <Container sx={{pt: 4}}>
+        <Card
+          sx={{position: 'relative', maxWidth: '100%', width: '480px', p: 2}}
+        >
+          <Typography variant="h4" pb={2}>
+            {t('event.details')}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              position: 'absolute',
+              right: theme.spacing(2),
+              top: theme.spacing(2),
+            }}
+            onClick={onSave}
+          >
+            {t('event.details.save')}
+          </Button>
+          <Box>
+            <Typography variant="overline">{t('event.fields.name')}</Typography>
+            <Typography variant="body1">
               <TextField
                 fullWidth
                 value={event.name}
@@ -106,106 +88,66 @@ const DetailsTab: TabComponent = ({}) => {
                 name="name"
                 id="EditEventName"
               />
-            ) : (
-              <Typography variant="body1" id={`${idPrefix}Name`}>
-                {event.name ?? t('event.fields.empty')}
-              </Typography>
-            )}
+            </Typography>
           </Box>
-          <Box sx={sectionSx}>
-            <Typography variant="h6">{t('event.fields.date')}</Typography>
-            {isEditing ? (
-              <DatePicker
-                renderInput={props => (
+          <Box>
+            <Typography variant="overline">{t('event.fields.date')}</Typography>
+
+            <DatePicker
+              renderInput={props => (
+                <Typography variant="body1">
                   <TextField
                     {...props}
-                    id={`${idPrefix}Date`}
+                    id={`EditEventDate`}
                     fullWidth
                     placeholder={t('event.fields.date_placeholder')}
                   />
-                )}
-                inputFormat="DD/MM/yyyy"
-                value={event.date}
-                onChange={date =>
-                  setEventUpdate({
-                    date: !date ? null : moment(date).format('YYYY-MM-DD'),
-                  })
-                }
-              />
-            ) : (
-              <Typography variant="body1" id={`${idPrefix}Date`}>
-                {event.date
-                  ? moment(event.date).format('DD/MM/YYYY')
-                  : t('event.fields.empty')}
-              </Typography>
-            )}
+                </Typography>
+              )}
+              inputFormat="DD/MM/yyyy"
+              value={event.date}
+              onChange={date =>
+                setEventUpdate({
+                  date: !date ? null : moment(date).format('YYYY-MM-DD'),
+                })
+              }
+            />
           </Box>
-          <Box sx={sectionSx}>
-            <Typography variant="h6">{t('event.fields.address')}</Typography>
-            {isEditing ? (
+          <Box>
+            <Typography variant="overline">
+              {t('event.fields.address')}
+            </Typography>
+            <Typography variant="body1">
               <TextField
                 fullWidth
                 multiline
                 maxRows={4}
                 inputProps={{maxLength: 250}}
-                helperText={`${event.address?.length ?? 0}/250`}
                 value={event.address}
                 onChange={e => setEventUpdate({address: e.target.value})}
-                id={`${idPrefix}Address`}
+                id={`EditEventAddress`}
                 name="address"
               />
-            ) : (
-              <Typography variant="body1" id={`${idPrefix}Address`}>
-                {event.address ? (
-                  <Link
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      event.address
-                    )}`}
-                    onClick={e => e.preventDefault}
-                  >
-                    {event.address}
-                  </Link>
-                ) : (
-                  t('event.fields.empty')
-                )}
-              </Typography>
-            )}
+            </Typography>
           </Box>
-          <Box sx={sectionSx}>
-            <Typography variant="h6">
+          <Box>
+            <Typography variant="overline">
               {t('event.fields.description')}
             </Typography>
-            {isEditing ? (
+            <Typography variant="body1">
               <TextField
                 fullWidth
                 multiline
                 maxRows={4}
                 inputProps={{maxLength: 250}}
-                helperText={`${event.description?.length || 0}/250`}
                 value={event.description || ''}
                 onChange={e => setEventUpdate({description: e.target.value})}
-                id={`${idPrefix}Description`}
+                id={`EditEventDescription`}
                 name="description"
               />
-            ) : (
-              <Typography variant="body1" id={`${idPrefix}Description`}>
-                {event.description ?? t('event.fields.empty')}
-              </Typography>
-            )}
+            </Typography>
           </Box>
-          <Box sx={sectionSx}>
-            <Typography variant="h6">{t('event.fields.link')}</Typography>
-            <Typography>{t('event.fields.link_desc')}</Typography>
-          </Box>
-          <Box pt={4} pb={2} justifyContent="center" display="flex">
-            <ShareEvent title={`Caroster ${event.name}`} />{' '}
-          </Box>
-        </Paper>
-        <Box mt={4} display="flex" justifyContent="center">
-          <SupportCaroster />
-        </Box>
+        </Card>
       </Container>
     </Box>
   );
