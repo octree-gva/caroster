@@ -68,8 +68,8 @@ mutation createEvent(
   $email: String!
   $date: Date
   $address: String
-  $latitude: Number
-  $longitude: Number
+  $latitude: Float
+  $longitude: Float
   $description: String
   $newsletter: Boolean
 ) {
@@ -78,6 +78,8 @@ mutation createEvent(
       name: $name
       email: $email
       date: $date
+      latitude: $latitude
+      longitude: $longitude
       address: $address
       description: $description
       newsletter: $newsletter
