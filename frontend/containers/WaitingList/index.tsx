@@ -33,7 +33,6 @@ const classes = {
 const StyledBox = styled(Box)(({theme}) => ({
   [`&.${classes.root}`]: {
     position: 'relative',
-    paddingLeft: '80px',
     paddingTop: theme.spacing(4),
 
     [theme.breakpoints.down('md')]: {
@@ -42,7 +41,7 @@ const StyledBox = styled(Box)(({theme}) => ({
   },
 
   [`& .${classes.card}`]: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(7),
   },
 
   [`& .${classes.header}`]: {

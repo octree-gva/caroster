@@ -62,10 +62,14 @@ const DrawerMenu = ({eventUuid}: Props) => {
       <Link href={appLink}>
         <Box
           sx={{
-            margin: theme.spacing(3),
+            margin: 3,
             width: 64,
             height: 32,
             cursor: 'pointer',
+
+            [theme.breakpoints.down('md')]: {
+              margin: 1.5
+            }
           }}
         >
           <img src="/assets/Logo_in_beta.svg" alt="Logo" />
