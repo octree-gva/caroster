@@ -84,14 +84,12 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           <Icon>done</Icon>
         </IconButton>
         <DatePicker
-          renderInput={props => (
-            <TextField
-              {...props}
-              fullWidth
-              sx={{marginTop: theme.spacing(3)}}
-            />
-          )}
-          inputFormat="DD/MM/yyyy"
+          slotProps={{
+            textField: {
+              sx: {marginTop: theme.spacing(3), width: '100%'},
+            },
+          }}
+          format="DD/MM/YYYY"
           label={t('travel.creation.date')}
           value={date}
           onChange={setDate}
@@ -99,9 +97,11 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         />
         <TimePicker
           label={t('travel.creation.time')}
-          renderInput={props => (
-            <TextField {...props} fullWidth />
-          )}
+          slotProps={{
+            textField: {
+              sx: {width: '100%'},
+            },
+          }}
           value={time}
           onChange={setTime}
           ampm={false}
