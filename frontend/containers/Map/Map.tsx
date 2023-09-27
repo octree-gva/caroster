@@ -8,6 +8,8 @@ import {useTheme} from '@mui/material';
 import MapWrapper from './MapWrapper';
 import useMapStore from '../../stores/useMapStore';
 
+const DEV_TILES_URL = process.env.DEV_TILES_URL;
+
 const Map = () => {
   const theme = useTheme();
   const {center, markers} = useMapStore();
@@ -27,11 +29,7 @@ const Map = () => {
         style={{height: '100%', width: '100%'}}
         zoomControl={false}
       >
-        <TileLayer
-          key="tiles"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer key="tiles" url={DEV_TILES_URL} />
         <ZoomControl key="control_zoom" position="bottomright" />
         {markers.map((circleMarkerProps, index) => (
           <CircleMarker
