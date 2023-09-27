@@ -18,21 +18,18 @@ const EventBar = ({event, onAdd}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const menuActions = useActions({onAdd, eventId: event?.id});
-  
+
   return (
     <AppBar
       sx={{
         top: 0,
         right: 0,
+        width: '100%',
         overflow: 'hidden',
         minHeight: theme.mixins.toolbar.minHeight,
         transition: 'height 0.3s ease',
         backgroundColor: 'transparent',
         backgroundImage: `linear-gradient(${theme.palette.background.grey} 0%, rgba(0,0,0,0) 90%)`,
-
-        [theme.breakpoints.up('md')]: {
-          width: 'calc(100% - 240px)',
-        },
       }}
       position="absolute"
       elevation={0}

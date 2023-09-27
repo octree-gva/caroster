@@ -68,7 +68,6 @@ const TravelColumns = (props: Props) => {
   const showMap = latitude && longitude;
   const markers = [];
   travels.forEach(travel => {
-    console.log(travel);
     const {
       attributes: {meeting_latitude, meeting_longitude},
     } = travel;

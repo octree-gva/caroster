@@ -61,6 +61,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         <DrawerMenu eventUuid={event.uuid} />
         <Box
           sx={{
+            position: 'relative',
             flex: 1,
             maxWidth: 'calc(100% - 85px)',
             overflow: 'auto',
