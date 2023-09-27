@@ -18,8 +18,7 @@ const EventBar = ({event, onAdd}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const menuActions = useActions({onAdd, eventId: event?.id});
-
-  console.log(theme.palette.background);
+  
   return (
     <AppBar
       sx={{

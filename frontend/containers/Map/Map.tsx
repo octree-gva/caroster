@@ -4,13 +4,21 @@ import {
   TileLayer,
   ZoomControl,
 } from 'react-leaflet';
-import { useTheme } from '@mui/material';
+import {useTheme} from '@mui/material';
 import MapWrapper from './MapWrapper';
 import useMapStore from '../../stores/useMapStore';
 
 const Map = () => {
   const theme = useTheme();
   const {center, markers} = useMapStore();
+  const defaultMarkerStyle = {
+    radius: 9,
+    fillColor: theme.palette.primary.main,
+    fillOpacity: 1,
+    color: theme.palette.background.paper,
+    opacity: 1,
+    weight: 3,
+  };
   return (
     <MapWrapper>
       <MapContainer
@@ -20,20 +28,15 @@ const Map = () => {
         zoomControl={false}
       >
         <TileLayer
+          key="tiles"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ZoomControl position="bottomright" />
-        {markers.map(circleMarkerProps => (
+        <ZoomControl key="control_zoom" position="bottomright" />
+        {markers.map((circleMarkerProps, index) => (
           <CircleMarker
-            {...{
-              radius: 18,
-              fillColor: theme.palette.primary.main,
-              fillOpacity: 1,
-              color: theme.palette.background.paper,
-              opacity: 1,
-              weight: 3,
-            }}
+            key={index}
+            {...defaultMarkerStyle}
             {...circleMarkerProps}
           />
         ))}

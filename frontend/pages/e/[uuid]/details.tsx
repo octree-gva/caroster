@@ -112,7 +112,7 @@ const DetailsTab: TabComponent = ({}) => {
         position: 'relative',
       }}
     >
-      <Map />
+      {latitude && longitude ? <Map /> : <Box pt={6} />}
       <Container sx={{pt: 4}}>
         <Card
           sx={{

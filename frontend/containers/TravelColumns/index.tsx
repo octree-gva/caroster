@@ -6,9 +6,11 @@ import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
+import useMapStore from '../../stores/useMapStore';
 import useProfile from '../../hooks/useProfile';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import usePassengersActions from '../../hooks/usePassengersActions';
+import Map from '../Map';
 import Travel from '../Travel';
 import NoCar from './NoCar';
 import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
@@ -22,6 +24,8 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
+  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
+    useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -51,51 +55,45 @@ const TravelColumns = (props: Props) => {
     }
   };
 
-  return (
-    <Box
-      sx={{
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        [theme.breakpoints.down('md')]: {
-          paddingLeft: theme.spacing(),
-          paddingRight: theme.spacing(),
-        },
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Box
-        sx={{
-          height: '56px',
-          overflow: 'auto',
-          '& overflow': '-moz-scrollbars-none',
-          '-ms-overflow-style': 'none',
-          '&::-webkit-scrollbar': {
-            height: '0 !important',
-          },
-          '& .slick-dots': {
-            position: 'static',
-            '& li': {
-              display: 'block',
-              '& button:before': {
-                fontSize: '12px',
-              },
-            },
-          },
-          '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
-            {
-              color: theme.palette.primary.main,
-            },
-        }}
-        id="slider-dots"
+  if (!event || travels?.length === 0)
+    return (
+      <NoCar
+        showImage
+        eventName={event?.name}
+        title={t('event.no_travel.title')}
       />
-      {(travels?.length === 0 && (
-        <NoCar
-          showImage
-          eventName={event?.name}
-          title={t('event.no_travel.title')}
-        />
-      )) || (
+    );
+
+  const {latitude, longitude} = event;
+  const showMap = latitude && longitude;
+  const markers = [];
+  travels.forEach(travel => {
+    console.log(travel);
+    const {
+      attributes: {meeting_latitude, meeting_longitude},
+    } = travel;
+    if (meeting_latitude && meeting_longitude) {
+      markers.push({center: [meeting_latitude, meeting_longitude]});
+    }
+  });
+
+  const mapUpdateKey = `${event.uuid}.travels`;
+  if (preventUpdateKey !== mapUpdateKey) {
+    setPreventUpdateKey(mapUpdateKey);
+    setCenter([latitude, longitude]);
+    setMarkers([
+      {
+        center: [latitude, longitude],
+        fillColor: theme.palette.secondary.main,
+      },
+      ...markers,
+    ]);
+  }
+
+  return (
+    <>
+      {showMap && <Map />}
+      <Box pt={showMap ? 2 : 9}>
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {sortedTravels?.map(({id, attributes}) => {
             const travel = {id, ...attributes};
@@ -148,7 +146,7 @@ const TravelColumns = (props: Props) => {
             />
           </Container>
         </Masonry>
-      )}
+      </Box>
       {!!newPassengerTravelContext && (
         <AddPassengerToTravel
           open={!!newPassengerTravelContext}
@@ -156,7 +154,7 @@ const TravelColumns = (props: Props) => {
           travel={newPassengerTravelContext.travel}
         />
       )}
-    </Box>
+    </>
   );
 };
 

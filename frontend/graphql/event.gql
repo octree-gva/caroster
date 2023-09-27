@@ -34,6 +34,8 @@ fragment EventFields on EventEntity {
         id
         attributes {
           meeting
+          meeting_latitude
+          meeting_longitude 
           departure
           details
           vehicleName
