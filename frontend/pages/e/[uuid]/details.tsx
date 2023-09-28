@@ -148,26 +148,25 @@ const DetailsTab: TabComponent = ({}) => {
           <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.date')}</Typography>
             {isEditing ? (
-              <DatePicker
-                renderInput={props => (
-                  <Typography variant="body1">
-                    <TextField
-                      size="small"
-                      {...props}
-                      id={`EditEventDate`}
-                      fullWidth
-                      placeholder={t('event.fields.date_placeholder')}
-                    />
-                  </Typography>
-                )}
-                inputFormat="DD/MM/yyyy"
-                value={event.date}
-                onChange={date =>
-                  setEventUpdate({
-                    date: !date ? null : moment(date).format('YYYY-MM-DD'),
-                  })
-                }
-              />
+              <Typography variant="body1">
+                <DatePicker
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      id: `EditEventDate`,
+                      fullWidth: true,
+                      placeholder: t('event.fields.date_placeholder'),
+                    },
+                  }}
+                  format="DD/MM/YYYY"
+                  value={moment(event.date)}
+                  onChange={date =>
+                    setEventUpdate({
+                      date: !date ? null : moment(date).format('YYYY-MM-DD'),
+                    })
+                  }
+                />
+              </Typography>
             ) : (
               <Box position="relative">
                 <Typography variant="body1" id="EventDate">

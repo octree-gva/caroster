@@ -20,7 +20,7 @@ const NoCar = ({eventName, title, showImage}: Props) => {
       my={4}
       mx="auto"
       pb={16}
-      mt={showImage ? 0 : 8}
+      mt={9}
       maxWidth="100%"
       width={340}
     >
