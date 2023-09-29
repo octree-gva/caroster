@@ -21,7 +21,8 @@ const getServerSideProps =
 
     const jwt = session?.token?.jwt;
     const apolloClient = initializeApollo(`${STRAPI_URL}/graphql`, jwt);
-    const locale = session?.user?.lang || 'fr';
+
+    const locale = context.locale;
 
     try {
       const {
