@@ -14,8 +14,21 @@ const CreateEvent = () => {
   const Step = STEPS[step];
 
   const createEvent = async eventData => {
+    const coordinates =
+      eventData?.address &&
+      (await fetch(
+        '/api/mapbox/geocoding?' +
+          new URLSearchParams({
+            search: eventData.address,
+          })
+      ).then(res => res.json()));
     try {
-      const variables = {...event, ...eventData};
+      const variables = {
+        ...event,
+        ...eventData,
+        latitude: coordinates?.latitude,
+        longitude: coordinates?.longitude,
+      };
       const {data} = await sendEvent({
         variables,
         refetchQueries: [ProfileDocument],
