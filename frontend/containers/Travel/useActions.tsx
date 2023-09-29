@@ -26,6 +26,11 @@ const useActions = (props: Props) => {
   const [deleteTravelMutation] = useDeleteTravelMutation();
   const [updatePassenger] = useUpdatePassengerMutation();
 
+  const eventCoordinates =
+    event?.latitude &&
+    event?.longitude &&
+    `${event.longitude},${event.latitude}`;
+
   const sendPassengerToWaitingList = async (passengerId: string) => {
     try {
       await updatePassenger({
@@ -58,11 +63,25 @@ const useActions = (props: Props) => {
   };
 
   const updateTravel = async (travelUpdate: TravelInput) => {
+    const coordinates =
+      travelUpdate?.meeting &&
+      (await fetch(
+        '/api/mapbox/geocoding?' +
+          new URLSearchParams({
+            search: travelUpdate.meeting,
+            proximity: eventCoordinates,
+          })
+      ).then(res => res.json()));
+    console.log({coordinates});
     try {
       await updateTravelMutation({
         variables: {
           id: travel.id,
-          travelUpdate,
+          travelUpdate: {
+            ...travelUpdate,
+            meeting_latitude: coordinates?.latitude,
+            meeting_longitude: coordinates?.longitude,
+          },
         },
         refetchQueries: ['eventByUUID'],
       });

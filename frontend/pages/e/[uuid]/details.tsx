@@ -50,10 +50,26 @@ const DetailsTab: TabComponent = ({}) => {
 
   const onSave = async e => {
     try {
+      const coordinates =
+        event?.address &&
+        (await fetch(
+          '/api/mapbox/geocoding?' +
+            new URLSearchParams({
+              search: event.address,
+            })
+        ).then(res => res.json()));
+      console.log({coordinates});
       const {uuid, ...data} = event;
       const {id, travels, waitingPassengers, __typename, ...input} = data;
       await updateEvent({
-        variables: {uuid, eventUpdate: input},
+        variables: {
+          uuid,
+          eventUpdate: {
+            ...input,
+            latitude: coordinates?.latitude,
+            longitude: coordinates?.longitude,
+          },
+        },
         refetchQueries: ['eventByUUID'],
       });
       setIsEditing(false);

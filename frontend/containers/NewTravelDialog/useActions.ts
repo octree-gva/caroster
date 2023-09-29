@@ -54,7 +54,6 @@ const useActions = (props: Props) => {
               proximity: eventCoordinates,
             })
         ).then(res => res.json()));
-      console.log({coordinates});
 
       await createTravelMutation({
         variables: {
