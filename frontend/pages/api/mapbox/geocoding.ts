@@ -1,23 +1,26 @@
-import {type LatLngExpression} from 'leaflet';
 import type {NextApiRequest, NextApiResponse} from 'next';
 
 type ResponseData = {
-  coordonates: LatLngExpression;
+  latitude: Number;
+  longitude: Number;
 };
 
-const {MAPBOX_API_KEY, MAPBOX_URL} = process.env;
+const {MAPBOX_TOKEN, MAPBOX_URL} = process.env;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  if (!MAPBOX_API_KEY) return res.status(404);
+  const {search, proximity = 'ip'} = req.query;
+  console.log({search, proximity});
+  if (!MAPBOX_TOKEN || !search) return res.status(404);
 
-  const {search, proximity = 'ip'} = req.body;
-  const url = `${MAPBOX_URL}/geocoding/v5/mapbox.places/${search}?proximity=${proximity}&access_token=${MAPBOX_API_KEY}`;
+  const url = `${MAPBOX_URL}/geocoding/v5/mapbox.places/${search}?proximity=${proximity}&access_token=${MAPBOX_TOKEN}`;
 
-  const mapBoxResult = fetch(url);
-  console.log(mapBoxResult);
+  const mapBoxResult = await fetch(url)
+    .then(response => response.json())
+    .catch(err => console.log({err}));
+  console.log({mapBoxResult});
 
   res.status(200);
 }
