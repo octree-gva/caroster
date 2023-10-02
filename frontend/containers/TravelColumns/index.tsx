@@ -66,15 +66,15 @@ const TravelColumns = (props: Props) => {
 
   const {latitude, longitude} = event;
   const showMap = latitude && longitude;
-  const markers = [];
-  travels.forEach(travel => {
+  const markers = travels.reduce((markers, travel) => {
     const {
       attributes: {meeting_latitude, meeting_longitude},
     } = travel;
     if (meeting_latitude && meeting_longitude) {
-      markers.push({center: [meeting_latitude, meeting_longitude]});
+      return [...markers, {center: [meeting_latitude, meeting_longitude]}];
     }
-  });
+    return markers;
+  }, []);
 
   const mapUpdateKey = `${event.uuid}.travels`;
   if (preventUpdateKey !== mapUpdateKey) {
