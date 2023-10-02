@@ -21,14 +21,13 @@ const getServerSideProps =
 
     const jwt = session?.token?.jwt;
     const apolloClient = initializeApollo(`${STRAPI_URL}/graphql`, jwt);
-    const locale = session?.user?.lang || 'fr';
 
     try {
       const {
         data: {setting = {}},
       } = await apolloClient.query({
         query: SettingDocument,
-        variables: {locale},
+        variables: {locale: context.locale},
       });
       let announcement = setting?.data?.attributes?.announcement || '';
 

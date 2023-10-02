@@ -10,6 +10,7 @@ import {
   FindUserVehiclesDocument,
   Event,
 } from '../../generated/graphql';
+import {getAdressCoordinates} from '../../lib/geo';
 
 interface Props {
   event: Event & {id: string};
@@ -22,6 +23,10 @@ const useActions = (props: Props) => {
   const {addToEvent} = useAddToEvents();
   const [createTravelMutation] = useCreateTravelMutation();
   const {connected} = useProfile();
+  const eventCoordinates =
+    event?.latitude &&
+    event?.longitude &&
+    `${event.longitude},${event.latitude}`;
 
   const createTravel = async (
     travelInput: TravelInput,
@@ -41,8 +46,19 @@ const useActions = (props: Props) => {
       });
     }
     try {
+      const coordinates =
+        travelInput?.meeting &&
+        (await getAdressCoordinates(travelInput.meeting, eventCoordinates));
+
       await createTravelMutation({
-        variables: {travel: travelInput, createVehicle},
+        variables: {
+          travel: {
+            ...travelInput,
+            meeting_latitude: coordinates?.latitude,
+            meeting_longitude: coordinates?.longitude,
+          },
+          createVehicle,
+        },
         refetchQueries,
       });
       addToEvent(event.id);

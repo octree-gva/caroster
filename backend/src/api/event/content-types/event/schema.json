@@ -60,6 +60,12 @@
       "relation": "oneToMany",
       "target": "api::passenger.passenger",
       "mappedBy": "event"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
     }
   }
 }

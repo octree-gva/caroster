@@ -45,6 +45,12 @@
       "relation": "oneToMany",
       "target": "api::passenger.passenger",
       "mappedBy": "travel"
+    },
+    "meeting_latitude": {
+      "type": "float"
+    },
+    "meeting_longitude": {
+      "type": "float"
     }
   }
 }

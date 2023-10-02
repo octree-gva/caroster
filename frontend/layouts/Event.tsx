@@ -48,7 +48,6 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
-      Topbar={() => <EventBar event={event} onAdd={setIsAddToMyEvent} />}
       {...pageProps}
     >
       <Box
@@ -59,9 +58,10 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         overflow="hidden"
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
-        <DrawerMenu />
+        <DrawerMenu eventUuid={event.uuid} />
         <Box
           sx={{
+            position: 'relative',
             flex: 1,
             maxWidth: 'calc(100% - 85px)',
             overflow: 'auto',
@@ -73,6 +73,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
           }}
           id="event-content"
         >
+          <EventBar event={event} onAdd={setIsAddToMyEvent} />
           <Tab event={event} />
         </Box>
       </Box>

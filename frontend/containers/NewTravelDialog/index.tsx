@@ -178,31 +178,29 @@ const NewTravelDialog = ({context, toggle}: Props) => {
           </Typography>
           <Box sx={addSpacing(theme, 0.5)}>
             <DatePicker
-              renderInput={props => (
-                <TextField
-                  {...props}
-                  variant="outlined"
-                  size="small"
-                  helperText=" "
-                  sx={halfWidthFieldSx}
-                />
-              )}
-              inputFormat="DD/MM/yyyy"
+              slotProps={{
+                textField: {
+                  variant: 'outlined',
+                  size: 'small',
+                  helperText: ' ',
+                  sx: halfWidthFieldSx,
+                },
+              }}
+              format="DD/MM/YYYY"
               label={t('travel.creation.date')}
               value={date}
               onChange={setDate}
               autoFocus
             />
             <TimePicker
-              renderInput={props => (
-                <TextField
-                  {...props}
-                  variant="outlined"
-                  size="small"
-                  helperText=" "
-                  sx={halfWidthFieldSx}
-                />
-              )}
+              slotProps={{
+                textField: {
+                  variant: 'outlined',
+                  size: 'small',
+                  helperText: ' ',
+                  sx: halfWidthFieldSx,
+                },
+              }}
               label={t('travel.creation.time')}
               value={time}
               onChange={setTime}

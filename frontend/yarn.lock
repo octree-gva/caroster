@@ -1976,6 +1976,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.9.tgz#97a4e2decce1583983b4a0cded8bcb2be1b1cb31"
   integrity sha512-JAU/R5hM3l2zP1Q4KnioDRhq5V3vZ4mmjEZ+TwARDb2xFhg3p59McacQuzkSu0sUHJnH9aJos36+hU5sPQBcFQ==
 
+"@mui/icons-material@^5.14.11":
+  version "5.14.11"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.14.11.tgz#ce563d1b6c7abc76f8a8048c970135601e7b49b5"
+  integrity sha512-aHReLasBuS/+hhPzbZCgZ0eTcZ2QRnoC2WNK7XvdAf3l+LjC1flzjh6GWw1tZJ5NHnZ+bivdwtLFQ8XTR96JkA==
+  dependencies:
+    "@babel/runtime" "^7.22.15"
+
 "@mui/lab@^5.0.0-alpha.140":
   version "5.0.0-alpha.144"
   resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.144.tgz#88a04adfe6301acd6d38e6870511b7ea19372444"
@@ -2224,6 +2231,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@react-leaflet/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-2.1.0.tgz#383acd31259d7c9ae8fb1b02d5e18fe613c2a13d"
+  integrity sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==
+
 "@repeaterjs/repeater@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@repeaterjs/repeater/-/repeater-3.0.4.tgz#a04d63f4d1bf5540a41b01a921c9a7fddc3bd1ca"
@@ -2365,6 +2377,13 @@
   version "15.7.5"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
+
+"@types/react-leaflet@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-leaflet/-/react-leaflet-3.0.0.tgz#b27a50abb6e3ae734d3c15399a26c77c161cab1c"
+  integrity sha512-p8R9mVKbCDDqOdW+M6GyJJuFn6q+IgDFYavFiOIvaWHuOe5kIHZEtCy1pfM43JIA6JiB3D/aDoby7C51eO+XSg==
+  dependencies:
+    react-leaflet "*"
 
 "@types/react-transition-group@^4.4.6":
   version "4.4.6"
@@ -5009,6 +5028,11 @@ language-tags@=1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
+leaflet@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -5860,6 +5884,13 @@ react-joyride@^2.5.5:
     scroll "^3.0.1"
     scrollparent "^2.1.0"
     tree-changes "^0.9.2"
+
+react-leaflet@*, react-leaflet@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-4.2.1.tgz#c300e9eccaf15cb40757552e181200aa10b94780"
+  integrity sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==
+  dependencies:
+    "@react-leaflet/core" "^2.1.0"
 
 react-proptype-conditional-require@^1.0.4:
   version "1.0.4"

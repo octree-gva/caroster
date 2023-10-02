@@ -41,10 +41,8 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   return (
     <Box component="form" onSubmit={onCreate}>
       <DatePicker
-        renderInput={props => (
-          <TextField {...props} fullWidth variant="standard" />
-        )}
-        inputFormat="DD/MM/yyyy"
+        slotProps={{textField: {fullWidth: true, variant: 'standard'}}}
+        format="DD/MM/YYYY"
         label={t('event.creation.date')}
         value={date}
         onChange={setDate}

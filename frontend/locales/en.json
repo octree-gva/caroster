@@ -40,6 +40,7 @@
     "event.creation.newsletter": "Keep me informed of developments in Caroster by e-mail",
     "event.creation.next": "Next",
     "event.creation.title": "New event",
+    "event.details": "Information",
     "event.details.modify": "Modify",
     "event.details.save": "Save",
     "event.errors.cant_create": "Unable to create event",

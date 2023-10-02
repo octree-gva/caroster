@@ -1,5 +1,6 @@
-import {useTranslation} from 'react-i18next';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {
@@ -10,7 +11,7 @@ import {
   useUpdatePassengerMutation,
   TravelInput,
 } from '../../generated/graphql';
-import Button from '@mui/material/Button';
+import {getAdressCoordinates} from '../../lib/geo';
 
 interface Props {
   travel: Travel & {id: string};
@@ -25,6 +26,11 @@ const useActions = (props: Props) => {
   const [updateTravelMutation] = useUpdateTravelMutation();
   const [deleteTravelMutation] = useDeleteTravelMutation();
   const [updatePassenger] = useUpdatePassengerMutation();
+
+  const eventCoordinates =
+    event?.latitude &&
+    event?.longitude &&
+    `${event.longitude},${event.latitude}`;
 
   const sendPassengerToWaitingList = async (passengerId: string) => {
     try {
@@ -58,11 +64,18 @@ const useActions = (props: Props) => {
   };
 
   const updateTravel = async (travelUpdate: TravelInput) => {
+    const coordinates =
+      travelUpdate?.meeting &&
+      (await getAdressCoordinates(travelUpdate.meeting, eventCoordinates));
     try {
       await updateTravelMutation({
         variables: {
           id: travel.id,
-          travelUpdate,
+          travelUpdate: {
+            ...travelUpdate,
+            meeting_latitude: coordinates?.latitude,
+            meeting_longitude: coordinates?.longitude,
+          },
         },
         refetchQueries: ['eventByUUID'],
       });
