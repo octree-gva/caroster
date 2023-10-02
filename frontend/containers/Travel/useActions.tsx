@@ -1,5 +1,6 @@
-import {useTranslation} from 'react-i18next';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {
@@ -10,7 +11,7 @@ import {
   useUpdatePassengerMutation,
   TravelInput,
 } from '../../generated/graphql';
-import Button from '@mui/material/Button';
+import {getAdressCoordinates} from '../../lib/geo';
 
 interface Props {
   travel: Travel & {id: string};
@@ -65,14 +66,7 @@ const useActions = (props: Props) => {
   const updateTravel = async (travelUpdate: TravelInput) => {
     const coordinates =
       travelUpdate?.meeting &&
-      (await fetch(
-        '/api/mapbox/geocoding?' +
-          new URLSearchParams({
-            search: travelUpdate.meeting,
-            proximity: eventCoordinates,
-          })
-      ).then(res => res.json()));
-    console.log({coordinates});
+      (await getAdressCoordinates(travelUpdate.meeting, eventCoordinates));
     try {
       await updateTravelMutation({
         variables: {

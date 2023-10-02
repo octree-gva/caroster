@@ -10,6 +10,7 @@ import {
   FindUserVehiclesDocument,
   Event,
 } from '../../generated/graphql';
+import {getAdressCoordinates} from '../../lib/geo';
 
 interface Props {
   event: Event & {id: string};
@@ -47,13 +48,7 @@ const useActions = (props: Props) => {
     try {
       const coordinates =
         travelInput?.meeting &&
-        (await fetch(
-          '/api/mapbox/geocoding?' +
-            new URLSearchParams({
-              search: travelInput.meeting,
-              proximity: eventCoordinates,
-            })
-        ).then(res => res.json()));
+        (await getAdressCoordinates(travelInput.meeting, eventCoordinates));
 
       await createTravelMutation({
         variables: {

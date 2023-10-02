@@ -8,7 +8,9 @@ import {useTheme} from '@mui/material';
 import MapWrapper from './MapWrapper';
 import useMapStore from '../../stores/useMapStore';
 
-const DEV_TILES_URL = process.env.DEV_TILES_URL;
+const DEV_TILES_URL =
+  process.env.DEV_TILES_URL ||
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 const Map = () => {
   const theme = useTheme();

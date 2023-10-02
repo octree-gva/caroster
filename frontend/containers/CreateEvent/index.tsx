@@ -1,8 +1,9 @@
 import {useState, useReducer} from 'react';
-import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';
+import {getAdressCoordinates} from '../../lib/geo';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';
 
 const STEPS = [Step1, Step2];
 
@@ -15,13 +16,7 @@ const CreateEvent = () => {
 
   const createEvent = async eventData => {
     const coordinates =
-      eventData?.address &&
-      (await fetch(
-        '/api/mapbox/geocoding?' +
-          new URLSearchParams({
-            search: eventData.address,
-          })
-      ).then(res => res.json()));
+      eventData?.address && (await getAdressCoordinates(eventData.address));
     try {
       const variables = {
         ...event,

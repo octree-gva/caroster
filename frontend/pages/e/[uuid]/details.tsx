@@ -27,6 +27,7 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
+import {getAdressCoordinates} from '../../../lib/geo';
 
 interface Props {
   eventUUID: string;
@@ -51,14 +52,7 @@ const DetailsTab: TabComponent = ({}) => {
   const onSave = async e => {
     try {
       const coordinates =
-        event?.address &&
-        (await fetch(
-          '/api/mapbox/geocoding?' +
-            new URLSearchParams({
-              search: event.address,
-            })
-        ).then(res => res.json()));
-      console.log({coordinates});
+        event?.address && (await getAdressCoordinates(event.address));
       const {uuid, ...data} = event;
       const {id, travels, waitingPassengers, __typename, ...input} = data;
       await updateEvent({
