@@ -198,6 +198,7 @@
     "travel.passengers.email": "E-mailadres",
     "travel.passengers.email_helpertext": "Het e-mailadres is ongeldig",
     "travel.passengers.email_placeholder": "E-mailadres",
+    "travel.passengers.email_placeholder_optionnal": "Email (optioneel)",
     "travel.passengers.empty": "Beschikbare plaats",
     "travel.passengers.location": "Afspraaklocatie",
     "travel.passengers.location_helper": "Geef de gewenste vertreklocatie op",

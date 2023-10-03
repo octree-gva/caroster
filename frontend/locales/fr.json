@@ -198,6 +198,7 @@
     "travel.passengers.email": "Email",
     "travel.passengers.email_helpertext": "Email non valide",
     "travel.passengers.email_placeholder": "Email",
+    "travel.passengers.email_placeholder_optionnal": "Email (optionnel)",
     "travel.passengers.empty": "Place disponible",
     "travel.passengers.location": "Lieu de rencontre",
     "travel.passengers.location_helper": "Indiquez votre lieu de départ de préférence",
