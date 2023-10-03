@@ -33,13 +33,13 @@ const GenericToolbar = ({
   return (
     <AppBar
       position="static"
-      color="primary"
+      color="transparent"
       sx={{
         minHeight: theme.mixins.toolbar.minHeight,
         transition: 'height 0.3s ease',
         display: 'block',
-        backgroundColor: '#242424',
-        color: 'white',
+        color: 'text',
+        boxShadow: 'none'
       }}
       id="Menu"
     >

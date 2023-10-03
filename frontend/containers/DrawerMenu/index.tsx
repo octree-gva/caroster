@@ -52,9 +52,10 @@ const DrawerMenu = ({eventUuid}: Props) => {
             bottom: 0,
             top: 'auto',
             paddingTop: 0,
-            height: '56px',
+            height: '80px',
             width: '100%',
             flexDirection: 'row',
+            boxShadow: '0px -3px 8px 0px rgba(0, 0, 0, 0.08)',
           },
         },
       }}
@@ -68,11 +69,11 @@ const DrawerMenu = ({eventUuid}: Props) => {
             cursor: 'pointer',
 
             [theme.breakpoints.down('md')]: {
-              margin: 1.5
-            }
+              display: 'none',
+            },
           }}
         >
-          <img src="/assets/Logo_in_beta.svg" alt="Logo" />
+          <img src="/assets/logo.svg" alt="Logo" />
         </Box>
       </Link>
       <DrawerMenuItem

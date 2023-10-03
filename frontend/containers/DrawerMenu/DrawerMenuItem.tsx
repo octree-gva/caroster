@@ -28,8 +28,9 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
 
         [theme.breakpoints.down('md')]: {
           margin: '0 auto',
-          height: '56px',
           width: '100%',
+          heightt: '80px',
+          flexDirection: 'column',
         },
       }}
       onClick={onClick}
@@ -59,6 +60,8 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
           [theme.breakpoints.down('md')]: {
             whiteSpace: 'nowrap',
             lineHeight: '.5em',
+            ml: 0,
+            mt: 1.5
           },
         }}
       >
