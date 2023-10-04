@@ -12,17 +12,17 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const {search, proximity = 'ip'} = req.query;
-  console.log({search, proximity});
   if (!MAPBOX_TOKEN || !search) return res.status(404);
 
-  const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?proximity=${proximity}&access_token=${MAPBOX_TOKEN}`;
+  const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?${
+    proximity !== 'undefined' ? `proximity=${proximity}&` : ''
+  }access_token=${MAPBOX_TOKEN}`;
 
   const mapBoxResult = await fetch(url)
     .then(response => response.json())
     .catch(err => console.log({err}));
 
   if (mapBoxResult?.features) {
-    res.status(200);
     const features = mapBoxResult.features;
     const firstCompatibleFeature = features.find(feature => {
       return feature.geometry.type === 'Point';
@@ -31,8 +31,10 @@ export default async function handler(
       latitude: firstCompatibleFeature?.geometry?.coordinates[1],
       longitude: firstCompatibleFeature?.geometry?.coordinates[0],
     };
-    return res.send(coordinates);
+    res.send(coordinates);
+    return;
   }
 
-  return res.status(404);
+  res.status(404);
+  return;
 }
