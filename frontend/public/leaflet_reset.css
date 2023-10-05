@@ -1,0 +1,21 @@
+.leaflet-popup-tip-container {
+    background: transparent;
+    display: none; 
+}
+   
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
+    border: 0;
+} 
+
+.leaflet-popup-content {
+    margin: 0;
+}
+
+.leaflet-popup-tip-container {
+    display: none;
+}
+
+.leaflet-popup-close-button {
+    display: none;
+}
