@@ -7,10 +7,11 @@ import Link from '@mui/material/Link';
 import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
+import useMapStore from '../../stores/useMapStore';
 import {Travel} from '../../generated/graphql';
 
 interface Props {
-  travel: Travel;
+  travel: Travel & {id: string};
   toggleEditing: () => void;
 }
 
@@ -18,9 +19,13 @@ const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
   const theme = useTheme();
   const {t} = useTranslation();
+  const {setFocusOnTravel} = useMapStore();
 
   return (
-    <Box sx={{padding: theme.spacing(2)}}>
+    <Box
+      sx={{padding: theme.spacing(2)}}
+      onClick={() => setFocusOnTravel(travel)}
+    >
       <IconButton
         size="small"
         color="primary"
