@@ -3,7 +3,7 @@ import {
   CircleMarker,
   TileLayer,
   ZoomControl,
-  useMap,
+  Popup,
 } from 'react-leaflet';
 import {useTheme} from '@mui/material';
 import MapController from './mapController';
@@ -37,12 +37,14 @@ const Map = () => {
         <TileLayer key="tiles" url={DEV_TILES_URL} />
         <MapController />
         <ZoomControl key="control_zoom" position="bottomright" />
-        {markers.map((circleMarkerProps, index) => (
+        {markers.map(({popup, ...circleMarkerProps}, index) => (
           <CircleMarker
             key={index}
             {...defaultMarkerStyle}
             {...circleMarkerProps}
-          />
+          >
+            <Popup>{popup}</Popup>
+          </CircleMarker>
         ))}
       </MapContainer>
     </MapWrapper>

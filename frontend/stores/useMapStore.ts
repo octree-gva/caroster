@@ -1,3 +1,4 @@
+import {ReactNode} from 'react';
 import {type LatLngExpression} from 'leaflet';
 import {CircleMarkerProps} from 'react-leaflet';
 import {create} from 'zustand';
@@ -7,7 +8,7 @@ type State = {
   map?: any;
   preventUpdateKey: string;
   center: LatLngExpression;
-  markers: Array<CircleMarkerProps>;
+  markers: Array<CircleMarkerProps & {popup: ReactNode}>;
   focusedTravel?: string;
   setMap: (map: any) => void;
   setPreventUpdateKey: (preventUpdateKey: string) => void;
@@ -25,12 +26,12 @@ const useMapStore = create<State>((set, get) => ({
   setMap: map => set({map}),
   setPreventUpdateKey: preventUpdateKey => set({preventUpdateKey}),
   setCenter: center => set({center}),
-  setMarkers: markers => {
-    set({markers});
-  },
+  setMarkers: markers => set({markers}),
   setFocusOnTravel: travel => {
     set({focusedTravel: travel.id});
-    get().map?.flyTo([travel.meeting_latitude, travel.meeting_longitude]);
+    const lat = travel.meeting_latitude;
+    const long = travel.meeting_longitude;
+    if (lat && long) get().map?.flyTo([lat, long], 16);
   },
 }));
 

@@ -23,8 +23,12 @@ const Header = (props: Props) => {
 
   return (
     <Box
-      sx={{padding: theme.spacing(2)}}
-      onClick={() => setFocusOnTravel(travel)}
+      sx={{padding: 2}}
+      onClick={() => {
+        setFocusOnTravel(travel);
+        const mapElement = document?.getElementById('map');
+        mapElement.scrollIntoView({behavior: 'smooth'});
+      }}
     >
       <IconButton
         size="small"
@@ -40,11 +44,11 @@ const Header = (props: Props) => {
           {moment(travel.departure).format('LLLL')}
         </Typography>
       )}
-      <Typography variant="h5" id="TravelName">
+      <Typography variant="h5">
         {travel.vehicleName}
       </Typography>
       {!!travel.phone_number && (
-        <Box sx={{marginTop: theme.spacing(2)}}>
+        <Box sx={{marginTop: 2}}>
           <Typography variant="subtitle2">
             {t('travel.fields.phone')}
           </Typography>
@@ -54,11 +58,11 @@ const Header = (props: Props) => {
         </Box>
       )}
       {!!travel.meeting && (
-        <Box sx={{marginTop: theme.spacing(2)}}>
+        <Box sx={{marginTop: 2}}>
           <Typography variant="subtitle2">
             {t('travel.fields.meeting_point')}
           </Typography>
-          <Typography variant="body2" id="TravelMeeting">
+          <Typography variant="body2">
             <Link
               component="a"
               target="_blank"
@@ -71,7 +75,7 @@ const Header = (props: Props) => {
         </Box>
       )}
       {!!travel.details && (
-        <Box sx={{marginTop: theme.spacing(2)}}>
+        <Box sx={{marginTop: 2}}>
           <Typography variant="subtitle2">
             {t('travel.fields.details')}
           </Typography>

@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useTheme} from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
+import {useTranslation} from 'react-i18next';
+import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import useMapStore from '../../stores/useMapStore';
@@ -15,6 +15,7 @@ import Travel from '../Travel';
 import NoCar from './NoCar';
 import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
+import TravelPopup from './TravelPopup';
 
 type TravelType = TravelData & {id: string};
 
@@ -24,8 +25,12 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
-  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
-    useMapStore();
+  const {
+    preventUpdateKey,
+    setPreventUpdateKey,
+    setCenter,
+    setMarkers,
+  } = useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -71,7 +76,14 @@ const TravelColumns = (props: Props) => {
       attributes: {meeting_latitude, meeting_longitude},
     } = travel;
     if (meeting_latitude && meeting_longitude) {
-      return [...markers, {center: [meeting_latitude, meeting_longitude]}];
+      const travelObject = {id: travel.id, ...travel.attributes};
+      return [
+        ...markers,
+        {
+          center: [meeting_latitude, meeting_longitude],
+          popup: <TravelPopup travel={travelObject} />,
+        },
+      ];
     }
     return markers;
   }, []);

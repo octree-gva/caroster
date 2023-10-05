@@ -10,7 +10,9 @@ import useActions from './useActions';
 import PassengersList from '../PassengersList';
 import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
+import useMapStore from '../../stores/useMapStore';
 import {Travel as TravelType} from '../../generated/graphql';
+import { useTheme } from '@mui/styles';
 
 interface Props {
   travel: TravelType & {id: string};
@@ -21,9 +23,12 @@ const Travel = (props: Props) => {
   const {travel} = props;
 
   const {t} = useTranslation();
+  const theme = useTheme();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const actions = useActions({travel});
   const {userId, connected} = useProfile();
+  const {focusedTravel} = useMapStore();
+  const focused = focusedTravel === travel.id;
 
   if (!travel) return null;
   const disableNewPassengers = travel.passengers.data?.length >= travel.seats;
@@ -38,7 +43,13 @@ const Travel = (props: Props) => {
   }, [travel, userId]);
 
   return (
-    <Paper sx={{position: 'relative'}}>
+    <Paper
+      sx={{
+        position: 'relative',
+        boxShadow: focused ? `0px 0px 5px 2px ${theme.palette.primary.main}` : 'none',
+      }}
+      id={travel.id}
+    >
       {isEditing ? (
         <HeaderEditing travel={travel} toggleEditing={toggleEditing} />
       ) : (
