@@ -192,6 +192,7 @@
     "travel.passengers.add": "",
     "travel.passengers.add_me": "",
     "travel.passengers.add_someone": "",
+    "travel.passengers.remove": "",
     "travel.passengers.add_to_car": "",
     "travel.passengers.add_to_travel": "",
     "travel.passengers.add_to_waitingList": "",

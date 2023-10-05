@@ -1,14 +1,16 @@
 import {useMemo, useReducer} from 'react';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import {Travel as TravelType} from '../../generated/graphql';
-import ClearButton from '../ClearButton';
-import PassengersList from '../PassengersList';
-import AddPassengerButtons from '../AddPassengerButtons';
+import Button from '@mui/material/Button';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import {useTranslation} from 'react-i18next';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import useActions from './useActions';
+import PassengersList from '../PassengersList';
+import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
+import {Travel as TravelType} from '../../generated/graphql';
 
 interface Props {
   travel: TravelType & {id: string};
@@ -18,6 +20,7 @@ interface Props {
 const Travel = (props: Props) => {
   const {travel} = props;
 
+  const {t} = useTranslation();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const actions = useActions({travel});
   const {userId, connected} = useProfile();
@@ -57,7 +60,16 @@ const Travel = (props: Props) => {
             onClick={actions.sendPassengerToWaitingList}
             isTravel
             Button={({onClick}: {onClick: () => void}) => (
-              <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+              <ListItemSecondaryAction>
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={onClick}
+                  tabIndex={-1}
+                >
+                  {t`travel.passengers.remove`}
+                </Button>
+              </ListItemSecondaryAction>
             )}
           />
         </>

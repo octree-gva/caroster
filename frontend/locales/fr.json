@@ -192,6 +192,7 @@
     "travel.passengers.add": "Ajouter un passager",
     "travel.passengers.add_me": "S'ajouter",
     "travel.passengers.add_someone": "Ajouter quelqu'un",
+    "travel.passengers.remove": "Retirer",
     "travel.passengers.add_to_car": "Ajouter à la voiture",
     "travel.passengers.add_to_travel": "Ajouter au trajet",
     "travel.passengers.add_to_waitingList": "Ajouter à la liste d'attente",

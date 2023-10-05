@@ -192,6 +192,7 @@
     "travel.passengers.add": "Passagier toevoegen",
     "travel.passengers.add_me": "Mijzelf toevoegen",
     "travel.passengers.add_someone": "Iemand toevoegen",
+    "travel.passengers.remove": "verwijderen",
     "travel.passengers.add_to_car": "Toevoegen aan auto",
     "travel.passengers.add_to_travel": "Passagier toevoegen",
     "travel.passengers.add_to_waitingList": "Iemand toevoegen",

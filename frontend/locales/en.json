@@ -192,6 +192,7 @@
     "travel.passengers.add": "Add a passenger",
     "travel.passengers.add_me": "Add myself",
     "travel.passengers.add_someone": "Add someone",
+    "travel.passengers.remove": "Remove",
     "travel.passengers.add_to_car": "Add to car",
     "travel.passengers.add_to_travel": "Add to passenger",
     "travel.passengers.add_to_waitingList": "Add to waiting list",

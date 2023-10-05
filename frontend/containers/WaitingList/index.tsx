@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
@@ -15,7 +17,6 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
-import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
 import TravelDialog from './TravelDialog';
 import {PassengerEntity} from '../../generated/graphql';
@@ -107,7 +108,11 @@ const WaitingList = ({
 
   const ListButton = isEditing
     ? ({onClick}: {onClick: () => void}) => (
-        <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+        <ListItemSecondaryAction>
+          <IconButton size="small" color="primary" onClick={onClick}>
+            <CancelOutlinedIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
       )
     : ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => (
         <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled} />
