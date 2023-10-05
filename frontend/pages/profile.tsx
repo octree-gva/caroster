@@ -1,8 +1,9 @@
+import Box from '@mui/material/Box';
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
 import Loading from '../containers/Loading';
 import Profile from '../containers/Profile';
-import Layout from '../layouts/Centered';
+import LayoutDefault from '../layouts/Default';
 import {useSession, signOut, getSession} from 'next-auth/react';
 import pageUtils from '../lib/pageUtils';
 import useProfile from '../hooks/useProfile';
@@ -33,14 +34,14 @@ const ProfilePage = (props: PageProps) => {
   if (session.status === 'loading') return <Loading />;
 
   return (
-    <Layout
+    <LayoutDefault
       menuTitle={t('profile.title')}
       menuActions={menuActions}
       goBack
       {...props}
     >
-      {profile && <Profile profile={profile} logout={signOut} />}
-    </Layout>
+      {profile && <Profile profile={profile} logout={signOut} />} 
+    </LayoutDefault>
   );
 };
 

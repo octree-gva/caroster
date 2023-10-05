@@ -92,7 +92,7 @@ const TravelColumns = (props: Props) => {
   return (
     <>
       {showMap && <Map />}
-      <Box pt={showMap ? 2 : 9}>
+      <Box p={4} pt={showMap ? 4 : 9}>
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {sortedTravels?.map(({id, attributes}) => {
             const travel = {id, ...attributes};

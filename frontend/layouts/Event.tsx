@@ -54,7 +54,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         flex={1}
         display="flex"
         alignItems="stretch"
-        height="calc(100% - 56px)"
+        height="calc(100% - 80px)"
         overflow="hidden"
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
@@ -63,9 +63,8 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
           sx={{
             position: 'relative',
             flex: 1,
-            maxWidth: 'calc(100% - 85px)',
+            maxWidth: 'calc(100% - 109px)',
             overflow: 'auto',
-            paddingBottom: theme.spacing(4),
 
             [theme.breakpoints.down('md')]: {
               maxWidth: '100%',

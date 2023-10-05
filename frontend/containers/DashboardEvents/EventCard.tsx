@@ -27,7 +27,7 @@ const EventCard = ({event}: Props) => {
       <CardContent>
         <Typography
           gutterBottom
-          variant="h6"
+          variant="subtitle1"
           component="h3"
           sx={{
             whiteSpace: 'nowrap',
@@ -38,12 +38,12 @@ const EventCard = ({event}: Props) => {
           {event.attributes.name}
         </Typography>
         <Typography variant="overline">{t('event.fields.date')}</Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           {moment(event.attributes.date).format('DD/MM/YYYY') ||
             t('event.fields.empty')}
         </Typography>
         <Typography variant="overline">{t('event.fields.address')}</Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           {event.attributes.address || t('event.fields.empty')}
         </Typography>
       </CardContent>

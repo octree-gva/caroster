@@ -41,7 +41,6 @@ const EventBar = ({event, onAdd}) => {
             <Typography
               variant="h6"
               noWrap
-              id="MenuHeaderTitle"
               sx={{maxWidth: `calc(100vw - ${theme.spacing(30)})`}}
             >
               {event.name}

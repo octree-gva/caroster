@@ -15,7 +15,7 @@ const DashboardEvents = ({
   const {t} = useTranslation();
 
   return (
-    <Box p={4}>
+    <Box px={4}>
       {futureEvents.length > 0 && (
         <Section
           label={t('dashboard.sections.future', {

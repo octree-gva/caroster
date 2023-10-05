@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -9,24 +9,6 @@ import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
 import {useUpdateMeMutation} from '../../generated/graphql';
-
-const PREFIX = 'Profile';
-
-const classes = {
-  actions: `${PREFIX}-actions`
-};
-
-// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.actions}`]: {
-    marginTop: theme.spacing(2),
-    justifyContent: 'flex-end',
-  }
-}));
 
 const Profile = ({profile, logout}) => {
   const {t} = useTranslation();
@@ -94,7 +76,7 @@ const Profile = ({profile, logout}) => {
     );
 
   return (
-    (<Root>
+    <Container maxWidth="sm" sx={{margin: 0, ml: 4}}>
       <Card>
         <CardContent>
           <ProfileField
@@ -129,7 +111,7 @@ const Profile = ({profile, logout}) => {
             disabled={!isStrapiUser}
           />
         </CardContent>
-        <CardActions className={classes.actions}>
+        <CardActions>
           {!isEditing && (
             <>
               <Button type="button" onClick={() => logout()}>
@@ -168,7 +150,7 @@ const Profile = ({profile, logout}) => {
           )}
         </CardActions>
       </Card>
-    </Root>)
+    </Container>
   );
 };
 

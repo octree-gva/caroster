@@ -13,8 +13,8 @@ interface Props {
 const Section = (props: Props) => {
   const {label, events} = props;
   return (
-    <Box mb={8}>
-      <Typography gutterBottom variant="h6" component="h3">
+    <Box mb={6}>
+      <Typography gutterBottom variant="subtitle2" component="h3" color="GrayText">
         {label}
       </Typography>
       <Grid container spacing={4}>

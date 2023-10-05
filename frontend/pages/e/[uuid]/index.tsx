@@ -48,7 +48,6 @@ const TravelsTab: TabComponent = () => {
       <Fab
         onClick={addTravelClickHandler}
         aria-label="add-car"
-        color="primary"
         sx={{
           bottom: 0,
           right: theme.spacing(6),
