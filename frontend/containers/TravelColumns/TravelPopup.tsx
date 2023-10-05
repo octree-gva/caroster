@@ -18,24 +18,36 @@ const TravelPopup = ({travel}: Props) => {
   const {t} = useTranslation();
   const {setFocusOnTravel} = useMapStore();
   return (
-    <Card>
-      <Typography variant="h5">
-        <Button
-          onClick={() => {
-            setFocusOnTravel(travel);
-            const travelCard = document?.getElementById(travel.id);
-            travelCard.scrollIntoView({behavior: 'smooth'});
-          }}
+    <Card sx={{p: 2, width: '350px', maxWidth: '100%'}}>
+      {!!travel.departure && (
+        <Typography variant="overline" id="TravelDeparture">
+          {moment(travel.departure).format('LLLL')}
+        </Typography>
+      )}
+      <Box>
+        <Typography
+          variant="h5"
+          color="primary"
+          sx={{cursor: 'pointer', display: 'inline-block'}}
         >
-          {travel.vehicleName}
-        </Button>
-      </Typography>
+          <Link
+            color="inherit"
+            onClick={() => {
+              setFocusOnTravel(travel);
+              const travelCard = document?.getElementById(travel.id);
+              travelCard.scrollIntoView({behavior: 'smooth'});
+            }}
+          >
+            {travel.vehicleName}
+          </Link>
+        </Typography>
+      </Box>
       {!!travel.meeting && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="subtitle2">
             {t('travel.fields.meeting_point')}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" color="primary">
             <Link
               component="a"
               target="_blank"
@@ -47,11 +59,6 @@ const TravelPopup = ({travel}: Props) => {
             </Link>
           </Typography>
         </Box>
-      )}
-      {!!travel.departure && (
-        <Typography variant="overline" id="TravelDeparture">
-          {moment(travel.departure).format('LLLL')}
-        </Typography>
       )}
     </Card>
   );
