@@ -1,5 +1,8 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import {styled} from '@mui/material/styles';
+import router from 'next/dist/client/router';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
@@ -15,48 +18,7 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
 import TravelDialog from './TravelDialog';
-import Button from '@mui/material/Button';
-import router from 'next/dist/client/router';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import {PassengerEntity} from '../../generated/graphql';
-
-const PREFIX = 'WaitingList';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  card: `${PREFIX}-card`,
-  header: `${PREFIX}-header`,
-  editBtn: `${PREFIX}-editBtn`,
-};
-
-const StyledBox = styled(Box)(({theme}) => ({
-  [`&.${classes.root}`]: {
-    position: 'relative',
-    paddingTop: theme.spacing(4),
-
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: 0,
-    },
-  },
-
-  [`& .${classes.card}`]: {
-    marginTop: theme.spacing(7),
-  },
-
-  [`& .${classes.header}`]: {
-    position: 'relative',
-    padding: theme.spacing(2),
-  },
-
-  [`& .${classes.editBtn}`]: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: theme.spacing(1),
-    zIndex: theme.zIndex.speedDial,
-  },
-}));
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
@@ -152,40 +114,43 @@ const WaitingList = ({
       );
 
   return (
-    <StyledBox className={classes.root}>
-      <Container maxWidth="sm" className={classes.card}>
-        <Paper>
-          <div className={classes.header}>
-            <IconButton
-              size="small"
-              color="primary"
-              className={classes.editBtn}
-              disabled={!event?.waitingPassengers?.data?.length}
-              onClick={toggleEditing}
-            >
-              {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
-            </IconButton>
-            <Typography variant="h5">{t('passenger.title')}</Typography>
-            <Typography variant="overline">
-              {t('passenger.availability.seats', {count: availability})}
-            </Typography>
-          </div>
-          <Divider />
-          <AddPassengerButtons
-            getOnClickFunction={getToggleNewPassengerDialogFunction}
-            canAddSelf={canAddSelf}
-            variant="waitingList"
+    <Container maxWidth="sm" sx={{mt: 11, mx: 4}}>
+      <Paper sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
+        <Box p={2}>
+          <IconButton
+            size="small"
+            color="primary"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              margin: 1,
+            }}
+            disabled={!event?.waitingPassengers?.data?.length}
+            onClick={toggleEditing}
+          >
+            {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
+          </IconButton>
+          <Typography variant="h5">{t('passenger.title')}</Typography>
+          <Typography variant="overline">
+            {t('passenger.availability.seats', {count: availability})}
+          </Typography>
+        </Box>
+        <Divider />
+        <AddPassengerButtons
+          getOnClickFunction={getToggleNewPassengerDialogFunction}
+          canAddSelf={canAddSelf}
+          variant="waitingList"
+        />
+        <Divider />
+        {event?.waitingPassengers?.data?.length > 0 && (
+          <PassengersList
+            passengers={event.waitingPassengers.data}
+            onPress={onPress}
+            Button={ListButton}
           />
-          <Divider />
-          {event?.waitingPassengers?.data?.length > 0 && (
-            <PassengersList
-              passengers={event.waitingPassengers.data}
-              onPress={onPress}
-              Button={ListButton}
-            />
-          )}
-        </Paper>
-      </Container>
+        )}
+      </Paper>
       <RemoveDialog
         text={
           <Trans
@@ -208,7 +173,7 @@ const WaitingList = ({
         onClose={() => setAddingPassenger(null)}
         onSelect={selectTravel}
       />
-    </StyledBox>
+    </Container>
   );
 };
 

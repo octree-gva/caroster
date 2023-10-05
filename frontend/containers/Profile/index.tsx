@@ -77,7 +77,7 @@ const Profile = ({profile, logout}) => {
 
   return (
     <Container maxWidth="sm" sx={{margin: 0, ml: 4}}>
-      <Card>
+      <Card sx={{width: '480px', maxWidth: '100%'}}>
         <CardContent>
           <ProfileField
             name="firstName"

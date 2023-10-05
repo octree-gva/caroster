@@ -19,7 +19,7 @@ const Section = (props: Props) => {
       </Typography>
       <Grid container spacing={4}>
         {events.map(event => (
-          <Grid item xs={12} md={3} lg={4} key={event.id}>
+          <Grid item xs={12} sm={4} lg={3} key={event.id}>
             <EventCard event={event} />
           </Grid>
         ))}
