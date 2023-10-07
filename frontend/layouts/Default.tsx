@@ -15,7 +15,7 @@ interface Props {
   menuActions?: Array<ActionType>;
   pageTitle?: string;
   displayMenu?: boolean;
-  goBack?: () => void;
+  goBack?: boolean;
   announcement?: string;
 }
 
@@ -30,7 +30,7 @@ const DefaultLayout = (props: Props) => {
     displayMenu = true,
     menuTitle = 'Caroster',
     menuActions,
-    goBack = null,
+    goBack = false,
     announcement,
   } = props;
 

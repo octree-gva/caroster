@@ -15,11 +15,11 @@ import {ActionType} from '../GenericMenu/Action';
 const GenericToolbar = ({
   title,
   actions = [],
-  goBack = null,
+  goBack = false,
 }: {
   title: string;
   actions: Array<ActionType>;
-  goBack: () => void | null;
+  goBack?: boolean;
 }) => {
   const router = useRouter();
   const theme = useTheme();

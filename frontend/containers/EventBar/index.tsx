@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -5,14 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
-import {useState} from 'react';
+import {useTheme} from '@mui/styles';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
 import UserIcon from './UserIcon';
-import {useTheme} from '@mui/styles';
 
-const EventBar = ({event, onAdd}) => {
+const EventBar = ({event, onAdd, goBack}) => {
   const {share} = useShare();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,12 +36,30 @@ const EventBar = ({event, onAdd}) => {
       id="Menu"
     >
       <Toolbar>
-        <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'space-start',
+            pl: 0,
+            pr: 1,
+          }}
+        >
+          {goBack && (
+            <IconButton
+              sx={{color: 'inherit'}}
+              edge="start"
+              onClick={goBack}
+              size="large"
+            >
+              <Icon>chevron_left</Icon>
+            </IconButton>
+          )}
           <Tooltip title={event.name || ''}>
             <Typography
               variant="h6"
               noWrap
-              sx={{maxWidth: `calc(100vw - ${theme.spacing(30)})`}}
+              sx={{maxWidth: `calc(100vw - ${theme.spacing(30)})`, my: 2}}
             >
               {event.name}
             </Typography>

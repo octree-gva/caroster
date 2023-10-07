@@ -20,10 +20,11 @@ export type TabComponent = (props: {
 interface Props {
   eventUUID: string;
   Tab: TabComponent;
+  goBack?: () => void;
 }
 
 const EventLayout = (props: PropsWithChildren<Props>) => {
-  const {eventUUID, Tab, ...pageProps} = props;
+  const {eventUUID, Tab, goBack, ...pageProps} = props;
   const {t} = useTranslation();
   const theme = useTheme();
 
@@ -72,7 +73,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
           }}
           id="event-content"
         >
-          <EventBar event={event} onAdd={setIsAddToMyEvent} />
+          <EventBar goBack={goBack} event={event} onAdd={setIsAddToMyEvent} />
           <Tab event={event} />
         </Box>
       </Box>

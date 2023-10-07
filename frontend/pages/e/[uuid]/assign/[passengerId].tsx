@@ -1,4 +1,5 @@
 import {PropsWithChildren} from 'react';
+import {useRouter} from 'next/router';
 import pageUtils from '../../../../lib/pageUtils';
 import EventLayout from '../../../../layouts/Event';
 import {EventByUuidDocument} from '../../../../generated/graphql';
@@ -10,7 +11,14 @@ interface Props {
 }
 
 const Page = (props: PropsWithChildren<Props>) => {
-  return <EventLayout {...props} Tab={AssignPassenger} />;
+  const {push} = useRouter();
+  return (
+    <EventLayout
+      {...props}
+      Tab={AssignPassenger}
+      goBack={() => push(`/e/${props.eventUUID}/waitingList`)}
+    />
+  );
 };
 
 export const getServerSideProps = pageUtils.getServerSideProps(
