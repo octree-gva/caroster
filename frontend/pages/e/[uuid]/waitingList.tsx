@@ -1,12 +1,10 @@
 import {useState, useMemo, PropsWithChildren} from 'react';
-import EventLayout, {TabComponent} from '../../../layouts/Event';
-import {EventByUuidDocument} from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
-import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
 import pageUtils from '../../../lib/pageUtils';
-import Box from '@mui/material/Box';
-import SupportCaroster from '../../../containers/SupportCaroster';
+import EventLayout, {TabComponent} from '../../../layouts/Event';
+import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
+import {EventByUuidDocument} from '../../../generated/graphql';
 
 interface NewPassengerDialogContext {
   addSelf: boolean;

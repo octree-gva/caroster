@@ -1,7 +1,6 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
 import router from 'next/dist/client/router';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -18,8 +17,6 @@ import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import AssignButton from './AssignButton';
-import TravelDialog from './TravelDialog';
-import {PassengerEntity} from '../../generated/graphql';
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
@@ -31,17 +28,15 @@ const WaitingList = ({
   canAddSelf,
 }: Props) => {
   const {t} = useTranslation();
-  const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
-  const [addingPassenger, setAddingPassenger] = useState<PassengerEntity>(null);
   const travels =
     event?.travels?.data?.length > 0
       ? event?.travels?.data.slice().sort(sortTravels)
       : [];
-  const {updatePassenger, removePassenger} = usePassengersActions();
+  const {removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
@@ -54,44 +49,13 @@ const WaitingList = ({
 
   const removePassengerCallback = useCallback(removePassenger, [event]);
 
-  const selectTravel = useCallback(
-    async travel => {
-      try {
-        await updatePassenger(addingPassenger.id, {
-          travel: travel.id,
-        });
-        setAddingPassenger(null);
-        addToast(
-          t('passenger.success.added_to_car', {
-            name: addingPassenger.attributes.name,
-          }),
-          <Button
-            size="small"
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              router.push(`/e/${event.uuid}`);
-              clearToast();
-            }}
-          >
-            {t('passenger.success.goToTravels')}
-          </Button>
-        );
-      } catch (error) {
-        console.error(error);
-        addToast(t('passenger.errors.cant_select_travel'));
-      }
-    },
-    [event, addingPassenger] // eslint-disable-line
-  );
-
   const onPress = useCallback(
     (passengerId: string) => {
       const selectedPassenger = event?.waitingPassengers?.data.find(
         item => item.id === passengerId
       );
       if (isEditing) setRemovingPassenger(selectedPassenger);
-      else setAddingPassenger(selectedPassenger);
+      else router.push(`/e/${event.uuid}/assign/${selectedPassenger.id}`);
     },
     [isEditing, event]
   );
@@ -169,14 +133,6 @@ const WaitingList = ({
         open={!!removingPassenger}
         onClose={() => setRemovingPassenger(null)}
         onRemove={onRemove}
-      />
-      <TravelDialog
-        eventName={event?.name}
-        travels={travels}
-        passenger={addingPassenger}
-        open={!!addingPassenger}
-        onClose={() => setAddingPassenger(null)}
-        onSelect={selectTravel}
       />
     </Container>
   );

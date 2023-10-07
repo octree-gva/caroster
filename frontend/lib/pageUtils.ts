@@ -16,6 +16,7 @@ type ExtensionResult = {
 
 const getServerSideProps =
   (extension?: ServerSideExtension) => async (context: any) => {
+    console.log({query: context.query});
     const session = await getSession(context);
     const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 
