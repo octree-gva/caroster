@@ -1,3 +1,4 @@
+import {Fragment} from 'react';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -5,8 +6,10 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
+import LinearProgress from '@mui/material/LinearProgress';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
 import ShareEvent from '../ShareEvent';
@@ -73,11 +76,11 @@ const AssignPassenger = () => {
         {(availableTravels.length === 0 && (
           <Box>
             <Typography variant="h5">
-              {t('passenger.creation.no_travel.title')}
+              {t('passenger.assign.no_travel.title')}
             </Typography>
             <img src="/assets/car.png" />
             <Typography>
-              {t('passenger.creation.no_travel.desc', {
+              {t('passenger.assign.no_travel.desc', {
                 name: passenger?.attributes?.name,
               })}
             </Typography>
@@ -85,22 +88,59 @@ const AssignPassenger = () => {
           </Box>
         )) || (
           <div>
+            <Typography
+              sx={{p: 2}}
+              variant="h4"
+            >{t`passenger.assign.availableCars`}</Typography>
             <List disablePadding>
               {availableTravels.map(({id, attributes}, index) => {
                 const travel = {id, ...attributes};
                 const passengersCount = travel?.passengers?.data.length || 0;
-                const counter = `${passengersCount} / ${travel?.seats || 0}`;
+                const availableSeats = travel?.seats - passengersCount || 0;
                 return (
-                  <ListItem key={index}>
-                    <Box>
-                      <Box>
-                        {travel.departure && (
-                          <Typography variant="subtitle1">
-                            {t('passenger.creation.departure')}
-                            {moment(travel.departure).format('LLLL')}
+                  <Fragment key={index}>
+                    <Divider />
+                    <ListItem sx={{flexDirection: 'column', p: 2}}>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        sx={{width: 1}}
+                      >
+                        <Box>
+                          {travel.departure && (
+                            <Typography variant="overline">
+                              {t('passenger.assign.departure')}
+                              {moment(travel.departure).format('LLLL')}
+                            </Typography>
+                          )}
+                          <Typography variant="body1">
+                            {travel.vehicleName}
                           </Typography>
-                        )}
+                        </Box>
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          size="small"
+                          onClick={() => assign(travel)}
+                        >
+                          {t('passenger.assign.assign')}
+                        </Button>
+                      </Box>
+                      <LinearProgress
+                        sx={{width: 1, mt: 2}}
+                        value={(passengersCount / travel?.seats) * 100}
+                        variant="determinate"
+                      />
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        sx={{width: 1}}
+                      >
+                        <Typography variant="body1">
+                          {t('passenger.assign.seats', {seats: availableSeats})}
+                        </Typography>
                         <Link
+                          variant="overline"
                           target="_blank"
                           rel="noreferrer"
                           href={getMapsLink(travel.meeting)}
@@ -109,23 +149,8 @@ const AssignPassenger = () => {
                           {travel.meeting}
                         </Link>
                       </Box>
-                      <Box>
-                        <Typography variant="h6">
-                          {travel.vehicleName}
-                        </Typography>
-                        <Typography variant="body2">
-                          {t('passenger.creation.seats', {seats: counter})}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={() => assign(travel)}
-                    >
-                      {t('passenger.creation.assign')}
-                    </Button>
-                  </ListItem>
+                    </ListItem>
+                  </Fragment>
                 );
               })}
             </List>

@@ -11,6 +11,7 @@ export const body1 = {
   fontFamily: 'Inter',
   fontWeight: weightScale['Regular'],
   fontSize: '13px',
+  lineHeight: '19px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'undercase',
@@ -20,6 +21,7 @@ export const body1 = {
 export const body2 = {
   ...body1,
   fontSize: '11px',
+  lineHeight: '15px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'undercase',
@@ -30,6 +32,7 @@ export const button = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Medium'],
   fontSize: '13px',
+  lineHeight: '19px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'uppercase',
@@ -40,6 +43,7 @@ export const caption = {
   fontFamily: body1.fontFamily,
   fontWeight: 'Regular',
   fontSize: '12px',
+  lineHeight: '17px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'undercase',
@@ -50,6 +54,7 @@ export const overline = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Regular'],
   fontSize: '11px',
+  lineHeight: '15px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -59,6 +64,7 @@ export const subtitle2 = {
   fontFamily: body1.fontFamily,
   fontWeight: 'Medium',
   fontSize: '13px',
+  lineHeight: '18px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -68,6 +74,7 @@ export const subtitle1 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Regular'],
   fontSize: '15px',
+  lineHeight: '21px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -77,6 +84,7 @@ export const h6 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Medium'],
   fontSize: '13px',
+  lineHeight: '18px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -86,6 +94,7 @@ export const h5 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Regular'],
   fontSize: '15px',
+  lineHeight: '21px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'undercase',
@@ -96,7 +105,7 @@ export const h4 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Medium'],
   fontSize: '17px',
-  lineHeight: '23px',
+  lineHeight: '24px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -106,6 +115,7 @@ export const h3 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Semi Bold'],
   fontSize: '19px',
+  lineHeight: '27px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
 };
@@ -115,6 +125,7 @@ export const h2 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Semi Bold'],
   fontSize: '24px',
+  lineHeight: '33px',
   textDecoration: 'none',
 };
 
@@ -122,6 +133,8 @@ export const h2 = {
 export const h1 = {
   fontFamily: body1.fontFamily,
   fontWeight: weightScale['Semi Bold'],
-  fontSize: '30px',  letterSpacing: '0.02em',
+  fontSize: '30px',
+  lineHeight: '42px',
+  letterSpacing: '0.02em',
   textDecoration: 'none',
 };
