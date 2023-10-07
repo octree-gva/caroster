@@ -1,6 +1,7 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
 import router from 'next/dist/client/router';
 import Container from '@mui/material/Container';
+import TuneIcon from '@mui/icons-material/Tune';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -98,7 +99,7 @@ const WaitingList = ({
             disabled={!event?.waitingPassengers?.data?.length}
             onClick={toggleEditing}
           >
-            {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
+            {isEditing ? <Icon>check</Icon> : <TuneIcon />}
           </IconButton>
           <Typography variant="h5">{t('passenger.title')}</Typography>
           <Typography variant="overline">

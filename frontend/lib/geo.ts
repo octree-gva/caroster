@@ -15,7 +15,7 @@ export const getAdressCoordinates = async (
       })
   )
     .then(res => res.json())
-    .catch(console.log);
+    .catch(console.error);
 
   return coordinates;
 };

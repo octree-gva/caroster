@@ -13,7 +13,7 @@ type State = {
   setMap: (map: any) => void;
   setPreventUpdateKey: (preventUpdateKey: string) => void;
   setCenter: (center: LatLngExpression) => void;
-  setMarkers: (markers: Array<CircleMarkerProps>) => void;
+  setMarkers: (markers: Array<CircleMarkerProps & {popup: ReactNode}>) => void;
   setFocusOnTravel: (travel: Travel & {id: string}) => void;
 };
 

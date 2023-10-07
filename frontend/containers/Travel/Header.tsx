@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Icon from '@mui/material/Icon';
+import TuneIcon from '@mui/icons-material/Tune';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import {useTheme} from '@mui/material/styles';
@@ -34,19 +34,20 @@ const Header = (props: Props) => {
         size="small"
         color="primary"
         sx={{position: 'absolute', top: 0, right: 0, margin: theme.spacing(1)}}
-        onClick={toggleEditing}
+        onClick={e => {
+          e.stopPropagation();
+          toggleEditing();
+        }}
         id="EditTravelBtn"
       >
-        <Icon>edit</Icon>
+        <TuneIcon />
       </IconButton>
       {!!travel.departure && (
         <Typography variant="overline" id="TravelDeparture">
           {moment(travel.departure).format('LLLL')}
         </Typography>
       )}
-      <Typography variant="h5">
-        {travel.vehicleName}
-      </Typography>
+      <Typography variant="h5">{travel.vehicleName}</Typography>
       {!!travel.phone_number && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="subtitle2">

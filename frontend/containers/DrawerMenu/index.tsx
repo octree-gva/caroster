@@ -82,7 +82,7 @@ const DrawerMenu = ({eventUuid}: Props) => {
           router.push(`/e/${uuid}`, null, {shallow: true});
         }}
         icon="directions_car"
-        active={router.pathname == `/e/[uuid]`}
+        active={router.pathname === `/e/[uuid]`}
       />
       <DrawerMenuItem
         title={t('drawer.waitingList')}
@@ -90,7 +90,7 @@ const DrawerMenu = ({eventUuid}: Props) => {
           router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
         }}
         icon="group"
-        active={router.pathname == `/e/[uuid]/waitingList`}
+        active={router.pathname === `/e/[uuid]/waitingList` || router.pathname === `/e/[uuid]/assign/[passengerId]`}
       />
       <DrawerMenuItem
         title={t('drawer.information')}
@@ -98,7 +98,7 @@ const DrawerMenu = ({eventUuid}: Props) => {
           router.push(`/e/${uuid}/details`, null, {shallow: true});
         }}
         icon="info"
-        active={router.pathname == `/e/[uuid]/details`}
+        active={router.pathname === `/e/[uuid]/details`}
       />
     </Drawer>
   );

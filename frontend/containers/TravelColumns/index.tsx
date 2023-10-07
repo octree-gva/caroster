@@ -25,12 +25,8 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
-  const {
-    preventUpdateKey,
-    setPreventUpdateKey,
-    setCenter,
-    setMarkers,
-  } = useMapStore();
+  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
+    useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -81,7 +77,7 @@ const TravelColumns = (props: Props) => {
         ...markers,
         {
           center: [meeting_latitude, meeting_longitude],
-          popup: <TravelPopup travel={travelObject} />,
+          popup: <TravelPopup travel={travelObject} />
         },
       ];
     }

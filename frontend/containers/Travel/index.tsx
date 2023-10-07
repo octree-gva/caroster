@@ -3,6 +3,7 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import { useTheme } from '@mui/styles';
 import {useTranslation} from 'react-i18next';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
@@ -12,7 +13,6 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
 import useMapStore from '../../stores/useMapStore';
 import {Travel as TravelType} from '../../generated/graphql';
-import { useTheme } from '@mui/styles';
 
 interface Props {
   travel: TravelType & {id: string};
@@ -67,7 +67,6 @@ const Travel = (props: Props) => {
           <Divider />
           <PassengersList
             passengers={travel.passengers.data}
-            places={travel?.seats}
             onClick={actions.sendPassengerToWaitingList}
             isTravel
             Button={({onClick}: {onClick: () => void}) => (

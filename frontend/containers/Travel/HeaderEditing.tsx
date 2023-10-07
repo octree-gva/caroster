@@ -68,25 +68,12 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   };
 
   return (
-    <Box sx={{padding: theme.spacing(2)}}>
+    <Box sx={{padding: 2}}>
       <form onSubmit={onSave}>
-        <IconButton
-          size="small"
-          color="primary"
-          type="submit"
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            margin: theme.spacing(1),
-          }}
-        >
-          <Icon>done</Icon>
-        </IconButton>
         <DatePicker
           slotProps={{
             textField: {
-              sx: {marginTop: theme.spacing(3), width: '100%'},
+              sx: {width: '100%'},
             },
           }}
           format="DD/MM/YYYY"

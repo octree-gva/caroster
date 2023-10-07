@@ -20,7 +20,7 @@ export default async function handler(
 
   const mapBoxResult = await fetch(url)
     .then(response => response.json())
-    .catch(err => console.log({err}));
+    .catch(console.error);
 
   if (mapBoxResult?.features) {
     const features = mapBoxResult.features;
