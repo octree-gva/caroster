@@ -102,6 +102,7 @@
     "passenger.assign.departure": "Vetrek: ",
     "passenger.assign.no_travel.desc": "{{name}} ontvangt een e-mail zodra er nieuwe auto's beschikbaar zijn. In de tussentijd kunt u de afspraak gewoon delen.",
     "passenger.assign.no_travel.title": "Er zijn momenteel geen beschikbare plaatsen…",
+    "passenger.assign.seats_0": "",
     "passenger.assign.seats": "",
     "passenger.assign.availableCars": "Beschikbare auto's",
     "passenger.deleted": "De passagier is verwijderd.",

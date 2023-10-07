@@ -137,7 +137,7 @@ const AssignPassenger = () => {
                         sx={{width: 1}}
                       >
                         <Typography variant="body1">
-                          {t('passenger.assign.seats', {seats: availableSeats})}
+                          {t('passenger.assign.seats', {count: availableSeats})}
                         </Typography>
                         <Link
                           variant="overline"
