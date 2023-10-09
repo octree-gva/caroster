@@ -50,7 +50,7 @@ const AddPassengerButtons = ({
           <Button
             sx={textSx}
             variant="contained"
-            color="secondary"
+            color="primary"
             fullWidth
             onClick={getOnClickFunction(true)}
             disabled={disabled}

@@ -14,7 +14,7 @@ const Section = (props: Props) => {
   const {label, events} = props;
   return (
     <Box mb={6}>
-      <Typography gutterBottom variant="subtitle2" component="h3" color="GrayText">
+      <Typography gutterBottom variant="subtitle2" component="h3" color="GrayText" sx={{pb: 1}}>
         {label}
       </Typography>
       <Grid container spacing={4}>

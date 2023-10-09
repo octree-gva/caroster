@@ -81,7 +81,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         disabled={loading}
         sx={{marginTop: theme.spacing(2)}}
         variant="contained"
-        color="secondary"
+        color="primary"
         fullWidth
         type="submit"
         id="NewEventSubmit"

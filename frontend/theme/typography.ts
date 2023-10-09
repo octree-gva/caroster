@@ -36,6 +36,7 @@ export const button = {
   letterSpacing: '0.02em',
   textDecoration: 'none',
   textCase: 'uppercase',
+  textTransform: 'none',
 };
 
 //Caption
@@ -57,12 +58,13 @@ export const overline = {
   lineHeight: '15px',
   letterSpacing: '0.02em',
   textDecoration: 'none',
+  textTransform: 'capitalize',
 };
 
 //Subtitle-2
 export const subtitle2 = {
   fontFamily: body1.fontFamily,
-  fontWeight: 'Medium',
+  fontWeight: weightScale['Medium'],
   fontSize: '13px',
   lineHeight: '18px',
   letterSpacing: '0.02em',
@@ -72,7 +74,7 @@ export const subtitle2 = {
 //Subtitle-1
 export const subtitle1 = {
   fontFamily: body1.fontFamily,
-  fontWeight: weightScale['Regular'],
+  fontWeight: weightScale['Medium'],
   fontSize: '15px',
   lineHeight: '21px',
   letterSpacing: '0.02em',

@@ -9,7 +9,7 @@ const Logo = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: theme.spacing(4),
+        paddingTop: theme.spacing(1),
       }}
     >
       <Box

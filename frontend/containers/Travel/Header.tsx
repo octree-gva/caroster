@@ -24,7 +24,6 @@ const Header = (props: Props) => {
 
   const passengersCount = travel?.passengers?.data.length || 0;
   const availableSeats = travel?.seats - passengersCount || 0;
-  console.log({availableSeats, seat: travel?.seats, passengersCount});
 
   return (
     <Box

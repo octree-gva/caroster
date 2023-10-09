@@ -121,6 +121,7 @@ const AssignPassenger = () => {
                           color="primary"
                           variant="contained"
                           size="small"
+                          sx={{maxHeight: '24px'}}
                           onClick={() => assign(travel)}
                         >
                           {t('passenger.assign.assign')}
