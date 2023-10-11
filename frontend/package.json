@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prestart": "yarn && yarn build",
     "i18n-format": "sync-i18n --files 'locales/*.json' --primary en --newKeysEmpty true",
     "i18n-unused": "node i18n-unused",
     "start": "next start",

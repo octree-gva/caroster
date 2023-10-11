@@ -6,6 +6,8 @@
 
 Caroster is an easy and free app to organize group carpooling for an event, a party, a seminar, a sports event, a camp, a ski trip…
 
+> Are you on GitHub ? Please use the [reference repository on GitLab](https://git.octree.ch/p/caroster) for issues and pull requests.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -26,16 +28,16 @@ To fully utilize your instance of Caroster, you will need an SMTP configuration 
 Clone the repo locally:
 
 ```shell
-git clone https://github.com/octree-gva/caroster.git
+git clone https://git.octree.ch/p/caroster.git
 cd caroster
 ```
 
 ### Run with Docker
 
-First, create containers with Docker-Compose:
+First, create containers with Docker Compose:
 
 ```shell
-docker-compose up
+docker compose up
 ```
 
 Wait a few minutes while the application downloads needed packages,
