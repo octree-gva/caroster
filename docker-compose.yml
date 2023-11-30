@@ -22,6 +22,12 @@ services:
       INIT_ADMIN_LASTNAME: Caroster
       INIT_ADMIN_EMAIL: admin@example.org
 
+      ## Set your SMTP configuration
+      # SMTP_HOST:
+      # SMTP_PORT:
+      # SMTP_USERNAME:
+      # SMTP_PASSWORD:
+
   psql:
     image: postgres
     volumes:

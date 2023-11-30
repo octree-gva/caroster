@@ -34,7 +34,21 @@ cd caroster
 
 ### Run with Docker
 
-First, create containers with Docker Compose:
+First, edit `docker-compose.yml` to provide your SMTP configuration:
+
+```yaml
+version: "3"
+services:
+  app:
+    ...
+    SMTP_HOST: smtp.myserver.org
+    SMTP_PORT: 587
+    SMTP_USERNAME: user
+    SMTP_PASSWORD: password
+...
+```
+
+Then, create containers with Docker Compose:
 
 ```shell
 docker compose up
@@ -64,21 +78,23 @@ The frontend is now accessible on http://localhost:3000
 
 These steps will prepare and configure the backend to run in development mode.
 
+> You need a Postgres database running locally. Start one with `docker compose up psql -d`.
+
 ```shell
 cd backend
 yarn # or 'npm install'
 cp .env.example .env
-nano .env # Edit with your own configuration
+vi .env # Edit with your own configuration
 yarn develop
 ```
 
-The Strapi API is now ready and the admin is accessible on http://localhost:1337/admin.
+The Strapi server is now ready and the admin is accessible on http://localhost:1337/admin.
 
 ## Running the tests
 
 A few tests are available to check GraphQL endpoints behavior in the `e2e` directory.
 
-First, run Strapi un test mode:
+First, run Strapi in test mode:
 
 ```shell
 cd backend
