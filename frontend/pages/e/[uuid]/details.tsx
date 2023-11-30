@@ -129,7 +129,7 @@ const DetailsTab: TabComponent = ({}) => {
                   />
                 )}
                 inputFormat="DD/MM/yyyy"
-                value={event.date}
+                value={event.date ? moment(event.date) : null}
                 onChange={date =>
                   setEventUpdate({
                     date: !date ? null : moment(date).format('YYYY-MM-DD'),
