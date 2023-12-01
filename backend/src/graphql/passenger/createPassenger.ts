@@ -9,13 +9,15 @@ const createPassenger = {
     try {
       //Avoid duplicity when the connected users add themself
       if (userId) {
-        const userPassengersInEvent: { id: string }[] =
-          await strapi.entityService.findMany("api::passenger.passenger", {
+        const userPassengersInEvent = (await strapi.entityService.findMany(
+          "api::passenger.passenger",
+          {
             filters: {
               event: { id: eventId },
               user: { id: userId },
             },
-          });
+          }
+        )) as { id: string }[];
 
         // Delete existing passenger linked to the user in targeted event
         await pMap(

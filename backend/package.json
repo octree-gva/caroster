@@ -16,6 +16,8 @@
     "console": "PORT=1338 yarn strapi console"
   },
   "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "@types/uuid": "^9.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.47.0",
@@ -24,15 +26,19 @@
     "sqlite3": "^5.0.11"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "4.12.5",
-    "@strapi/plugin-i18n": "4.12.5",
-    "@strapi/plugin-sentry": "^4.6.0",
-    "@strapi/plugin-users-permissions": "4.12.5",
-    "@strapi/provider-email-nodemailer": "^4.6.0",
-    "@strapi/strapi": "4.12.5",
+    "@strapi/plugin-graphql": "4.15.4",
+    "@strapi/plugin-i18n": "4.15.4",
+    "@strapi/plugin-sentry": "^4.15.4",
+    "@strapi/plugin-users-permissions": "4.15.4",
+    "@strapi/provider-email-nodemailer": "^4.15.4",
+    "@strapi/strapi": "4.15.4",
     "pg": "8.11.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
     "strapi-plugin-email-designer": "^2.1.1",
-    "strapi-plugin-init-admin-user": "^0.2.1"
+    "strapi-plugin-init-admin-user": "^0.2.1",
+    "styled-components": "^5.2.1"
   },
   "author": {
     "name": "A Strapi developer"

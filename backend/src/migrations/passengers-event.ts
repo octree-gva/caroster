@@ -12,6 +12,7 @@ const main = async () => {
     }
   );
 
+  // @ts-expect-error
   const passengersWithoutEvent = passengers.filter(
     (passenger) => !passenger.event
   );
@@ -27,6 +28,7 @@ const main = async () => {
       passenger.id,
       {
         data: {
+          // @ts-expect-error
           event: eventId,
         },
       }

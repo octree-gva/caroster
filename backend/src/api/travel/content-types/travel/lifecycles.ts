@@ -105,6 +105,7 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
 const movePassengerToWaitingList = (eventId: string) => async (passenger) =>
   strapi.entityService.update("api::passenger.passenger", passenger.id, {
     data: {
+      // @ts-expect-error
       travel: null,
       event: eventId,
     },
