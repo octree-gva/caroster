@@ -16,6 +16,7 @@
     ".tmp/",
     "src/admin/",
     "**/*.test.ts",
-    "src/plugins/**"
+    "src/plugins/**",
+    "src/migrations/**"
   ]
 }
