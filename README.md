@@ -98,6 +98,8 @@ First, run Strapi in test mode:
 
 ```shell
 cd backend
+cp .env.example .env
+vi .env # Edit with your own configuration
 yarn start-test
 ```
 
