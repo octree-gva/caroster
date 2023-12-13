@@ -38,7 +38,6 @@ const Map = () => {
         <Bounds />
         <TileLayer key="tiles" url={DEV_TILES_URL} />
         <MapController />
-        <ZoomControl key="control_zoom" position="bottomright" />
         {markers.map(({popup, ...circleMarkerProps}, index) => (
           <CircleMarker
             key={index}

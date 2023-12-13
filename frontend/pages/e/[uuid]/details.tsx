@@ -19,14 +19,11 @@ import pageUtils from '../../../lib/pageUtils';
 import ShareEvent from '../../../containers/ShareEvent';
 import useEventStore from '../../../stores/useEventStore';
 import useToastStore from '../../../stores/useToastStore';
-import useMapStore from '../../../stores/useMapStore';
-import Map from '../../../containers/Map';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
-import EventPopup from '../../../containers/EventPopup';
 import AddressAutofill from '../../../containers/AddressAutofill';
 
 interface Props {
@@ -41,8 +38,6 @@ const Page = (props: PropsWithChildren<Props>) => {
 const DetailsTab: TabComponent = ({}) => {
   const {t} = useTranslation();
   const theme = useTheme();
-  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
-    useMapStore();
   const [updateEvent] = useUpdateEventMutation();
   const addToast = useToastStore(s => s.addToast);
   const setEventUpdate = useEventStore(s => s.setEventUpdate);
@@ -98,20 +93,6 @@ const DetailsTab: TabComponent = ({}) => {
   );
 
   if (!event) return null;
-  const {latitude, longitude} = event;
-
-  const mapUpdateKey = `${event.uuid}.details`;
-  if (preventUpdateKey !== mapUpdateKey) {
-    setPreventUpdateKey(mapUpdateKey);
-    setCenter([latitude, longitude]);
-    setMarkers([
-      {
-        double: true,
-        center: [latitude, longitude],
-        popup: <EventPopup event={event} />,
-      },
-    ]);
-  }
 
   return (
     <Box
@@ -119,10 +100,10 @@ const DetailsTab: TabComponent = ({}) => {
         position: 'relative',
       }}
     >
-      {latitude && longitude ? <Map /> : <Box pt={6} />}
       <Container
         sx={{
           p: 4,
+          mt: 6,
           mb: 11,
           mx: 0,
           [theme.breakpoints.down('md')]: {
