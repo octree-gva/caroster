@@ -25,7 +25,7 @@ const Action = (props: Props): JSX.Element => {
   const {action} = props;
   const {divider, onClick, id, label, ...menuItemProps} = action;
 
-  if (divider) return <Divider variant="fullWidth" sx={{my: 1}} />;
+  if (divider) return <Divider variant="fullWidth" sx={{mt: 0, mb: 0}} />;
   else if (isValidElement(label)) return label;
   else if (onClick)
     return (

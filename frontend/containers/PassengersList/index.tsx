@@ -32,24 +32,16 @@ interface Props {
   }) => JSX.Element;
   disabled?: boolean;
   isTravel?: boolean;
-  places?: number;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, places, Button, onClick, onPress, disabled, isTravel} =
+  const {passengers, Button, onClick, onPress, disabled, isTravel} =
     props;
   const theme = useTheme();
 
   let list = passengers;
-
-  if (places) {
-    const emptyList = [...Array(places)];
-    list = Array.isArray(passengers)
-      ? emptyList.map((u, index) => passengers[index])
-      : emptyList;
-  }
 
   return (
     <Root sx={{padding: theme.spacing(0, 0, 1, 0)}}>

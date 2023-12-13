@@ -1,16 +1,20 @@
 import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useTheme} from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
+import {useTranslation} from 'react-i18next';
+import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
+import useMapStore from '../../stores/useMapStore';
 import useProfile from '../../hooks/useProfile';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import usePassengersActions from '../../hooks/usePassengersActions';
+import Map from '../Map';
 import Travel from '../Travel';
 import NoCar from './NoCar';
+import TravelPopup from './TravelPopup';
+import EventPopup from '../EventPopup';
 import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
 
@@ -22,6 +26,8 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
+  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
+    useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -36,11 +42,13 @@ const TravelColumns = (props: Props) => {
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const addSelfToTravel = async (travel: TravelType) => {
+    const hasName = profile.firstName && profile.lastName;
+    const userName = profile.firstName + ' ' + profile.lastName;
     try {
       await addPassenger({
         user: userId,
         email: profile.email,
-        name: profile.username,
+        name: hasName ? userName : profile.username,
         travel: travel.id,
         event: event.id,
       });
@@ -51,51 +59,65 @@ const TravelColumns = (props: Props) => {
     }
   };
 
-  return (
-    <Box
-      sx={{
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        [theme.breakpoints.down('md')]: {
-          paddingLeft: theme.spacing(),
-          paddingRight: theme.spacing(),
-        },
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Box
-        sx={{
-          height: '56px',
-          overflow: 'auto',
-          '& overflow': '-moz-scrollbars-none',
-          '-ms-overflow-style': 'none',
-          '&::-webkit-scrollbar': {
-            height: '0 !important',
-          },
-          '& .slick-dots': {
-            position: 'static',
-            '& li': {
-              display: 'block',
-              '& button:before': {
-                fontSize: '12px',
-              },
-            },
-          },
-          '& .slick-dots li:first-child button:before, & .slick-dots li:last-child button:before':
-            {
-              color: theme.palette.primary.main,
-            },
-        }}
-        id="slider-dots"
+  if (!event || travels?.length === 0)
+    return (
+      <NoCar
+        showImage
+        eventName={event?.name}
+        title={t('event.no_travel.title')}
       />
-      {(travels?.length === 0 && (
-        <NoCar
-          showImage
-          eventName={event?.name}
-          title={t('event.no_travel.title')}
-        />
-      )) || (
+    );
+
+  const {latitude, longitude} = event;
+  const showMap = latitude && longitude;
+  const markers = travels.reduce((markers, travel) => {
+    const {
+      attributes: {meeting_latitude, meeting_longitude},
+    } = travel;
+    if (meeting_latitude && meeting_longitude) {
+      const travelObject = {id: travel.id, ...travel.attributes};
+      return [
+        ...markers,
+        {
+          center: [meeting_latitude, meeting_longitude],
+          popup: <TravelPopup travel={travelObject} />,
+        },
+      ];
+    }
+    return markers;
+  }, []);
+
+  const mapUpdateKey = `${event.uuid}.travels`;
+  if (preventUpdateKey !== mapUpdateKey) {
+    setPreventUpdateKey(mapUpdateKey);
+    setCenter([latitude, longitude]);
+    setMarkers([
+      {
+        double: true,
+        center: [latitude, longitude],
+        popup: <EventPopup event={event}/>
+      },
+      ...markers,
+    ]);
+  }
+
+  return (
+    <>
+      {showMap && <Map />}
+      <Box
+        p={0}
+        pt={showMap ? 4 : 9}
+        pb={11}
+        sx={{
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          maxHeight: showMap ? '50vh' : '100vh',
+          [theme.breakpoints.down('md')]: {
+            maxHeight: showMap ? '50vh' : '100vh',
+            px: 1,
+          },
+        }}
+      >
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {sortedTravels?.map(({id, attributes}) => {
             const travel = {id, ...attributes};
@@ -148,7 +170,7 @@ const TravelColumns = (props: Props) => {
             />
           </Container>
         </Masonry>
-      )}
+      </Box>
       {!!newPassengerTravelContext && (
         <AddPassengerToTravel
           open={!!newPassengerTravelContext}
@@ -156,7 +178,7 @@ const TravelColumns = (props: Props) => {
           travel={newPassengerTravelContext.travel}
         />
       )}
-    </Box>
+    </>
   );
 };
 

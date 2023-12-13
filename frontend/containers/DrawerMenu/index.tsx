@@ -1,13 +1,22 @@
+import Link from 'next/link';
 import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
+import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';
 
-const DrawerMenu = () => {
+interface Props {
+  eventUuid: string;
+}
+
+const DrawerMenu = ({eventUuid}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
+
+  const {connected} = useProfile();
+  const appLink = connected ? '/dashboard' : `/e/${eventUuid}` || '';
 
   const router = useRouter();
   const {
@@ -18,7 +27,7 @@ const DrawerMenu = () => {
     <Drawer
       variant="permanent"
       sx={{
-        width: '85px',
+        width: '240px',
 
         [theme.breakpoints.down('md')]: {
           width: '100%',
@@ -29,13 +38,12 @@ const DrawerMenu = () => {
 
         '& .MuiDrawer-paper': {
           zIndex: theme.zIndex.appBar - 1,
-          width: '84px',
+          width: '239px',
           display: 'flex',
           flexDirection: 'column',
           boxSizing: 'border-box',
           left: 0,
           top: 0,
-          backgroundColor: '#242424',
           color: 'white',
           overflowX: 'hidden',
           position: 'static',
@@ -44,36 +52,53 @@ const DrawerMenu = () => {
             bottom: 0,
             top: 'auto',
             paddingTop: 0,
-            height: '56px',
+            height: '80px',
             width: '100%',
             flexDirection: 'row',
+            boxShadow: '0px -3px 8px 0px rgba(0, 0, 0, 0.08)',
           },
         },
       }}
     >
+      <Link href={appLink}>
+        <Box
+          sx={{
+            margin: 3,
+            width: 64,
+            height: 32,
+            cursor: 'pointer',
+
+            [theme.breakpoints.down('md')]: {
+              display: 'none',
+            },
+          }}
+        >
+          <img src="/assets/logo.svg" alt="Logo" />
+        </Box>
+      </Link>
       <DrawerMenuItem
         title={t('drawer.travels')}
         onClick={() => {
           router.push(`/e/${uuid}`, null, {shallow: true});
         }}
-        Icon={<Icon>directions_car</Icon>}
-        active={router.pathname == `/e/[uuid]`}
+        icon="directions_car"
+        active={router.pathname === `/e/[uuid]`}
       />
       <DrawerMenuItem
         title={t('drawer.waitingList')}
         onClick={() => {
           router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
         }}
-        Icon={<Icon>group</Icon>}
-        active={router.pathname == `/e/[uuid]/waitingList`}
+        icon="group"
+        active={router.pathname === `/e/[uuid]/waitingList` || router.pathname === `/e/[uuid]/assign/[passengerId]`}
       />
       <DrawerMenuItem
         title={t('drawer.information')}
         onClick={() => {
           router.push(`/e/${uuid}/details`, null, {shallow: true});
         }}
-        Icon={<Icon>info</Icon>}
-        active={router.pathname == `/e/[uuid]/details`}
+        icon="info"
+        active={router.pathname === `/e/[uuid]/details`}
       />
     </Drawer>
   );

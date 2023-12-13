@@ -16,11 +16,16 @@ services:
       API_TOKEN_SALT: tobemodified
       ADMIN_JWT_SECRET: tobemodified
       JWT_SECRET: tobemodified
+      NEXTAUTH_SECRET: tobemodified
+      NEXTAUTH_URL: http://localhost:8080/api/nauth
+      NEXTAUTH_URL_INTERNAL: http://localhost:3000/api/nauth
       INIT_ADMIN_USERNAME: admin
       INIT_ADMIN_PASSWORD: caroster
       INIT_ADMIN_FIRSTNAME: Admin
       INIT_ADMIN_LASTNAME: Caroster
       INIT_ADMIN_EMAIL: admin@example.org
+      MAPBOX_URL: https://api.mapbox.com/
+      MAPBOX_TOKEN: # TO SET
 
       ## Set your SMTP configuration
       # SMTP_HOST:

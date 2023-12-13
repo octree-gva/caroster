@@ -1,7 +1,8 @@
 import {useTranslation} from 'react-i18next';
 import Box from '@mui/material/Box';
 import Section from './Section';
-import { EventEntity } from '../../generated/graphql';
+import {EventEntity} from '../../generated/graphql';
+import {useTheme} from '@mui/styles';
 
 const DashboardEvents = ({
   futureEvents = [],
@@ -13,9 +14,18 @@ const DashboardEvents = ({
   pastEvents: EventEntity[];
 }) => {
   const {t} = useTranslation();
+  const theme = useTheme();
 
   return (
-    <Box p={4}>
+    <Box
+      sx={{
+        px: 4,
+        pb: 4,
+        [theme.breakpoints.down('md')]: {
+          px: 2,
+        },
+      }}
+    >
       {futureEvents.length > 0 && (
         <Section
           label={t('dashboard.sections.future', {

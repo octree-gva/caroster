@@ -1,5 +1,5 @@
 const {i18n} = require('./react-i18next.config');
-const {NODE_ENV, STRAPI_URL = 'http://localhost:1337', DEFAULT_LOCALE = 'share'} = process.env;
+const {NODE_ENV, DEV_TILES_URL, STRAPI_URL = 'http://localhost:1337', DEFAULT_LOCALE = 'share'} = process.env;
 
 const withPWA = require('next-pwa')({
   dest: 'public',
@@ -15,7 +15,8 @@ module.exports = withPWA({
     ignoreBuildErrors: true,
   },
   env: {
-    STRAPI_URL: process.env.STRAPI_URL,
+    STRAPI_URL,
+    DEV_TILES_URL,
     DEFAULT_LOCALE
   },
   i18n,

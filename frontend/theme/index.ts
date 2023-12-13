@@ -4,6 +4,7 @@ import * as typography from './typography';
 export const caroster = {
   palette: {
     primary: {
+      light: '#0096881a',
       main: '#009688',
     },
     secondary: {
@@ -15,6 +16,7 @@ export const caroster = {
     },
     background: {
       default: '#F4F4FF',
+      grey: 'rgba(0, 0, 0, 0.67)'
     },
   },
   mixins: {

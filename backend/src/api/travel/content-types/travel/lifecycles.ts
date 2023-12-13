@@ -22,8 +22,8 @@ export default {
     const { passengers = [], seats, event } = result;
 
     // If count of seats is updated, move passengers excedent to event's waiting list
-    const overflowPassengers = passengers.slice(seats);
-    if (overflowPassengers.length > 0) {
+    const overflowPassengers = passengers.slice?.(seats);
+    if (overflowPassengers?.length > 0) {
       await Promise.all(
         overflowPassengers.map(movePassengerToWaitingList(event.id))
       );

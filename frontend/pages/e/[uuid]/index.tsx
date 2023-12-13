@@ -1,6 +1,5 @@
 import {useState, useReducer, PropsWithChildren} from 'react';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import {getSession, useSession} from 'next-auth/react';
 import TravelColumns from '../../../containers/TravelColumns';
@@ -26,7 +25,6 @@ const Page = (props: PropsWithChildren<Props>) => {
 
 const TravelsTab: TabComponent = () => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const session = useSession();
   const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
@@ -48,20 +46,11 @@ const TravelsTab: TabComponent = () => {
       <Fab
         onClick={addTravelClickHandler}
         aria-label="add-car"
-        color="primary"
-        sx={{
-          bottom: 0,
-          right: theme.spacing(6),
-
-          [theme.breakpoints.down('md')]: {
-            right: theme.spacing(1),
-            bottom: 56,
-          },
-        }}
       >
         {t('travel.creation.title')}
       </Fab>
       <NewTravelDialog
+        key={openNewTravelContext.vehicle?.id || 'noVehicle'}
         context={openNewTravelContext}
         toggle={() => toggleNewTravel({opened: false})}
       />

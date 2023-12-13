@@ -4,7 +4,11 @@ import Icon from '@mui/material/Icon';
 import FabMui, {FabProps} from '@mui/material/Fab';
 import useMinimizedFab from '../../hooks/useMinimizedFab';
 
-const Fab = ({children = null, ...props}: FabProps) => {
+const Fab = ({
+  children = null,
+  noDrawer = false,
+  ...props
+}: FabProps & {noDrawer?: boolean}) => {
   const theme = useTheme();
   const isFabMinimized = useMinimizedFab();
   const variant = !isFabMinimized && children ? 'extended' : 'circular';
@@ -22,7 +26,7 @@ const Fab = ({children = null, ...props}: FabProps) => {
 
         [theme.breakpoints.down('md')]: {
           right: theme.spacing(2),
-          bottom: theme.spacing(9),
+          bottom: noDrawer ? theme.spacing(1) : theme.spacing(12),
         },
       }}
     >

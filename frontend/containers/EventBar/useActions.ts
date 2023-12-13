@@ -25,6 +25,14 @@ const useActions = (props: Props) => {
     },
     {divider: true},
     {
+      label: t('event.actions.share'),
+      onClick: () => {
+        onAdd(true);
+      },
+      id: 'ShareEvent',
+    },
+    {divider: true},
+    {
       label: t('menu.login'),
       onClick: () => {
         setRedirectUrl(window.location.href);
@@ -52,11 +60,17 @@ const useActions = (props: Props) => {
       onClick: () => router.push('/profile'),
       id: 'ProfileTab',
     },
-    {divider: true},
     {
       label: t('menu.dashboard'),
       onClick: () => (window.location.href = '/dashboard'),
       id: 'GoToDashboardTab',
+    },
+    {
+      label: t('event.actions.share'),
+      onClick: () => {
+        onAdd(true);
+      },
+      id: 'ShareEvent',
     },
     {divider: true},
   ];

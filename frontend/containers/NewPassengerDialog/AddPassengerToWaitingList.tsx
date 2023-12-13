@@ -48,13 +48,16 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
       name,
       location,
     };
-    if (addSelf && profile)
+    if (addSelf && profile) {
+      const hasName = profile.firstName && profile.lastName;
+      const userName = profile.firstName + ' ' + profile.lastName;
       passenger = {
         user: userId,
         email: profile.email,
-        name: profile.username,
+        name: hasName ? userName : profile.username,
         location,
       };
+    }
 
     try {
       await addPassenger({...passenger, event: event.id});

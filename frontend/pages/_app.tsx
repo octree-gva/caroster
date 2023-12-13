@@ -1,4 +1,6 @@
 import {useEffect} from 'react';
+import 'leaflet/dist/leaflet.css';
+import '../public/leaflet_reset.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, Theme} from '@mui/material/styles';
 import {AppProps} from 'next/app';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -6,59 +6,62 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
-import {useState} from 'react';
-import useProfile from '../../hooks/useProfile';
+import {useTheme} from '@mui/styles';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
 import UserIcon from './UserIcon';
 
-const EventBar = ({event, onAdd}) => {
+const EventBar = ({event, onAdd, goBack, title}) => {
   const {share} = useShare();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {connected} = useProfile();
 
   const menuActions = useActions({onAdd, eventId: event?.id});
-  const appLink = connected ? '/dashboard' : `/e/${event.uuid}` || '';
 
   return (
     <AppBar
       sx={{
+        top: 0,
+        right: 0,
+        width: '100%',
         overflow: 'hidden',
         minHeight: theme.mixins.toolbar.minHeight,
-        overflowY: 'hidden',
         transition: 'height 0.3s ease',
-        backgroundColor: '#242424',
-        color: 'white',
+        backgroundColor: 'transparent',
+        backgroundImage: `linear-gradient(${theme.palette.background.grey} 0%, rgba(0,0,0,0) 90%)`,
       }}
-      color="primary"
-      position="static"
+      position="absolute"
+      elevation={0}
       id="Menu"
     >
       <Toolbar>
-        <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
-          <Link href={appLink}>
-            <Box
-              sx={{
-                marginRight: theme.spacing(2),
-                width: 64,
-                height: 32,
-                cursor: 'pointer',
-              }}
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'space-start',
+            pl: 0,
+            pr: 1,
+          }}
+        >
+          {goBack && (
+            <IconButton
+              sx={{color: 'inherit'}}
+              edge="start"
+              onClick={goBack}
+              size="large"
             >
-              <img src="/assets/Logo_in_beta.svg" alt="Logo" />
-            </Box>
-          </Link>
-          <Tooltip title={event.name || ''}>
+              <Icon>chevron_left</Icon>
+            </IconButton>
+          )}
+          <Tooltip title={title || event.name || ''}>
             <Typography
               variant="h6"
               noWrap
-              id="MenuHeaderTitle"
-              sx={{maxWidth: `calc(100vw - ${theme.spacing(30)})`}}
+              sx={{maxWidth: `calc(100vw - ${theme.spacing(18)})`, my: 2}}
             >
-              {event.name}
+              {title || event.name}
             </Typography>
           </Tooltip>
         </Box>

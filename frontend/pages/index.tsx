@@ -58,7 +58,7 @@ const Home = (props: PageProps) => {
       displayMenu={isAuthenticated}
       {...props}
     >
-      <Paper sx={{padding: theme.spacing(2)}}>
+      <Paper sx={{padding: theme.spacing(2), width: '480px', maxWidth: '100%', display: 'block', margin: '0 auto'}}>
         <Logo />
         <CreateEvent />
       </Paper>

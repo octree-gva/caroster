@@ -1,5 +1,6 @@
-import {useTranslation} from 'react-i18next';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {
@@ -10,7 +11,6 @@ import {
   useUpdatePassengerMutation,
   TravelInput,
 } from '../../generated/graphql';
-import Button from '@mui/material/Button';
 
 interface Props {
   travel: Travel & {id: string};
@@ -62,7 +62,9 @@ const useActions = (props: Props) => {
       await updateTravelMutation({
         variables: {
           id: travel.id,
-          travelUpdate,
+          travelUpdate: {
+            ...travelUpdate,
+          },
         },
         refetchQueries: ['eventByUUID'],
       });

@@ -41,8 +41,14 @@ const useActions = (props: Props) => {
       });
     }
     try {
+
       await createTravelMutation({
-        variables: {travel: travelInput, createVehicle},
+        variables: {
+          travel: {
+            ...travelInput,
+          },
+          createVehicle,
+        },
         refetchQueries,
       });
       addToEvent(event.id);

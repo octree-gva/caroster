@@ -92,7 +92,7 @@ const Step1 = ({nextStep, event, addToEvent}) => {
         sx={{marginTop: theme.spacing(2)}}
         type="submit"
         variant="contained"
-        color="secondary"
+        color="primary"
         fullWidth
         disabled={!canSubmit}
         aria-disabled={!canSubmit}

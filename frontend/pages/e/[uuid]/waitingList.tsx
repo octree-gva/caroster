@@ -1,12 +1,10 @@
 import {useState, useMemo, PropsWithChildren} from 'react';
-import EventLayout, {TabComponent} from '../../../layouts/Event';
-import {EventByUuidDocument} from '../../../generated/graphql';
 import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
-import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
 import pageUtils from '../../../lib/pageUtils';
-import Box from '@mui/material/Box';
-import SupportCaroster from '../../../containers/SupportCaroster';
+import EventLayout, {TabComponent} from '../../../layouts/Event';
+import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
+import {EventByUuidDocument} from '../../../generated/graphql';
 
 interface NewPassengerDialogContext {
   addSelf: boolean;
@@ -26,29 +24,22 @@ const WaitingListTab: TabComponent = ({event}) => {
   const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
     useState<NewPassengerDialogContext | null>(null);
 
-  const canAddSelf = useMemo(() => {
+  const registered = useMemo(() => {
     if (!userId) return false;
     const isInWaitingList = event?.waitingPassengers?.data?.some(
       passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
-    const isInTravel = event?.travels?.data?.some(travel =>
-      travel.attributes.passengers?.data?.some(
-        passenger => passenger.attributes.user?.data?.id === `${userId}`
-      )
-    );
-    return !(isInWaitingList || isInTravel);
+    return isInWaitingList;
   }, [event, userId]);
 
   return (
     <>
       <WaitingList
-        canAddSelf={canAddSelf}
+        registered={registered}
+        canAddSelf={!!userId}
         getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
           toggleNewPassengerToWaitingList({addSelf})}
       />
-      <Box mt={4} display="flex" justifyContent="center">
-        <SupportCaroster />
-      </Box>
       {!!addPassengerToWaitingListContext && (
         <AddPassengerToWaitingList
           open={!!addPassengerToWaitingListContext}

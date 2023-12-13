@@ -18,17 +18,16 @@ const EventCard = ({event}: Props) => {
   return (
     <Card
       sx={{
-        cursor: 'pointer',
+        cursor: 'pointer'
       }}
       onClick={() =>
         router.push(`/e/${event.attributes.uuid}`, undefined, {shallow: true})
       }
     >
-      <CardContent>
+      <CardContent sx={{pb: 0}}>
         <Typography
           gutterBottom
-          variant="h6"
-          component="h3"
+          variant="subtitle1"
           sx={{
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
@@ -37,17 +36,35 @@ const EventCard = ({event}: Props) => {
         >
           {event.attributes.name}
         </Typography>
-        <Typography variant="overline">{t('event.fields.date')}</Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography
+          variant="overline"
+          sx={{color: 'GrayText', display: 'block', mt: 2}}
+        >
+          {t('event.fields.date')}
+        </Typography>
+        <Typography variant="body1" sx={{mb: 1}}>
           {moment(event.attributes.date).format('DD/MM/YYYY') ||
             t('event.fields.empty')}
         </Typography>
-        <Typography variant="overline">{t('event.fields.address')}</Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography
+          variant="overline"
+          sx={{color: 'GrayText', display: 'block', mt: 2}}
+        >
+          {t('event.fields.address')}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            mb: 1,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
           {event.attributes.address || t('event.fields.empty')}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{px: 2,}}>
         <Button sx={{p: 0}} color="primary">
           {t('dashboard.actions.see_event')}
         </Button>

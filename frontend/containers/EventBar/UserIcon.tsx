@@ -1,5 +1,5 @@
 import Avatar from '@mui/material/Avatar';
-import Icon from '@mui/material/Icon';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useTheme} from '@mui/material/styles';
 import useProfile from '../../hooks/useProfile';
 
@@ -15,7 +15,7 @@ const UserIcon = () => {
         {`${profile.username[0]}`.toUpperCase()}
       </Avatar>
     );
-  else return <Icon>more_vert</Icon>;
+  else return <AccountCircleOutlinedIcon />;
 };
 
 export default UserIcon;

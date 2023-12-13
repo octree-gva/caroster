@@ -9,16 +9,16 @@ const Logo = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: theme.spacing(4),
+        paddingTop: theme.spacing(1),
       }}
     >
       <Box
         component="img"
-        src={'/assets/Caroster_beta.png'}
+        src={'/assets/logo.svg'}
         alt="Caroster"
         sx={{
           display: 'block',
-          width: '55%',
+          width: '68px',
           height: 'auto',
           margin: '0 auto',
         }}

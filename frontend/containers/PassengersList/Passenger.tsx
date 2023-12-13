@@ -1,14 +1,15 @@
 import {ReactNode} from 'react';
-import {useTheme} from '@mui/material/styles';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Icon from '@mui/material/Icon';
-import {useTranslation} from 'react-i18next';
-import {PassengerEntity} from '../../generated/graphql';
-import useProfile from '../../hooks/useProfile';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Icon from '@mui/material/Icon';
+import {useTheme} from '@mui/material/styles';
+import {useTranslation} from 'react-i18next';
+import useProfile from '../../hooks/useProfile';
+import {PassengerEntity} from '../../generated/graphql';
 
 interface Props {
   passenger?: PassengerEntity;
@@ -24,25 +25,55 @@ const Passenger = (props: Props) => {
   const {userId} = useProfile();
 
   const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
-  const showLocation = isTravel ? false : passenger.attributes.location;
+  const showLocation = isTravel ? null : (
+    <Typography
+      sx={{pl: 1, color: 'GrayText'}}
+      component="span"
+      variant="caption"
+    >
+      {passenger.attributes.location}
+    </Typography>
+  );
 
   if (passenger) {
     return (
-      <Box>
+      <Box sx={{width: 1}}>
         <ListItemText
           primary={
-            <>
-              {passenger.attributes.name}
+            <Box
+              sx={{
+                width: 1,
+                maxWidth: 1,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <Icon fontSize="inherit" sx={{verticalAlign: 'middle', mr: 0.5}}>
+                person_outlined
+              </Icon>
+              <Typography
+                component="span"
+                variant="body1"
+                sx={{
+                  overflow: 'hidden',
+                  maxWidth: 'calc(100% - 88px)',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {passenger.attributes.name}
+              </Typography>
               {isUser && (
                 <Chip
-                  sx={{marginLeft: theme.spacing(2)}}
+                  sx={{marginLeft: 1}}
                   label={t('generic.me')}
                   variant="outlined"
                 />
               )}
-            </>
+              {showLocation}
+            </Box>
           }
-          secondary={showLocation}
         />
         {button}
       </Box>

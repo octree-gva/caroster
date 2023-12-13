@@ -26,7 +26,9 @@ const AddPassengerCommonFields = ({
   const {t} = useTranslation();
   const classes = useStyles();
   const emailPlaceholder = t(
-    `travel.passengers.email_placeholder${optionalEmail ? '_optional' : ''}`
+    optionalEmail
+      ? 'travel.passengers.email_placeholder_optionnal'
+      : 'travel.passengers.email_placeholder'
   );
 
   return (

@@ -1,7 +1,5 @@
 import {useState, useReducer, useCallback, useEffect, useMemo} from 'react';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Icon from '@mui/material/Icon';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
@@ -13,6 +11,7 @@ import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
 import Box from '@mui/material/Box';
+import AddressAutofill from '../AddressAutofill';
 
 const HeaderEditing = ({travel, toggleEditing}) => {
   const {t} = useTranslation();
@@ -28,6 +27,8 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   const [name, setName] = useState(travel?.vehicleName ?? '');
   const [seats, setSeats] = useState(travel?.seats ?? 4);
   const [meeting, setMeeting] = useState(travel?.meeting ?? '');
+  const [meeting_latitude, setMeetingLatitude] = useState(null);
+  const [meeting_longitude, setMeetingLongitude] = useState(null);
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
   const [phone, setPhone] = useState(travel?.phone_number ?? '');
@@ -52,6 +53,8 @@ const HeaderEditing = ({travel, toggleEditing}) => {
     if (event.preventDefault) event.preventDefault();
     const travelUpdate = {
       meeting,
+      meeting_latitude,
+      meeting_longitude,
       details,
       seats,
       phone_number: phone,
@@ -68,30 +71,15 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   };
 
   return (
-    <Box sx={{padding: theme.spacing(2)}}>
+    <Box sx={{padding: 2}}>
       <form onSubmit={onSave}>
-        <IconButton
-          size="small"
-          color="primary"
-          type="submit"
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            margin: theme.spacing(1),
-          }}
-        >
-          <Icon>done</Icon>
-        </IconButton>
         <DatePicker
-          renderInput={props => (
-            <TextField
-              {...props}
-              fullWidth
-              sx={{marginTop: theme.spacing(3)}}
-            />
-          )}
-          inputFormat="DD/MM/yyyy"
+          slotProps={{
+            textField: {
+              sx: {width: '100%', pb: 2},
+            },
+          }}
+          format="DD/MM/YYYY"
           label={t('travel.creation.date')}
           value={date}
           onChange={setDate}
@@ -99,9 +87,11 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         />
         <TimePicker
           label={t('travel.creation.time')}
-          renderInput={props => (
-            <TextField {...props} fullWidth />
-          )}
+          slotProps={{
+            textField: {
+              sx: {width: '100%', pb: 2},
+            },
+          }}
           value={time}
           onChange={setTime}
           ampm={false}
@@ -110,6 +100,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         <TextField
           label={t('travel.creation.name')}
           fullWidth
+          sx={{pb: 2}}
           value={name}
           onChange={e => setName(e.target.value)}
           name="name"
@@ -118,26 +109,26 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         <TextField
           label={t('travel.creation.phone')}
           fullWidth
+          sx={{pb: 2}}
           value={phone}
           onChange={e => setPhone(e.target.value)}
           name="phone"
           id="EditTravelPhone"
         />
-        <TextField
-          label={t('travel.creation.meeting')}
-          fullWidth
-          multiline
-          maxRows={4}
-          inputProps={{maxLength: 250}}
-          helperText={`${meeting.length}/250`}
-          value={meeting}
-          onChange={e => setMeeting(e.target.value)}
-          name="meeting"
-          id="EditTravelMeeting"
-        />
+        <AddressAutofill
+            label={t('travel.creation.meeting')}
+            textFieldProps={{sx: {pb: 2}}}
+            address={meeting}
+            onSelect={({location, address}) => {
+              setMeeting(address);
+              setMeetingLatitude(location[1]);
+              setMeetingLongitude(location[0]);
+            }}
+          />
         <TextField
           label={t('travel.creation.notes')}
           fullWidth
+          sx={{pb: 2}}
           multiline
           maxRows={4}
           inputProps={{maxLength: 250}}
@@ -178,7 +169,7 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         }}
       >
         <Button
-          variant="outlined"
+          variant="contained"
           color="primary"
           onClick={onSave}
           id="TravelSave"

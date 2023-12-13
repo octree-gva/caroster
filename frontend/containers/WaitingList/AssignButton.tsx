@@ -18,23 +18,17 @@ const AssignButton = (props: Props) => {
 
   return (
     <ListItemSecondaryAction
-      sx={{
-        top: theme.spacing(3),
-      }}
       onClick={onClick}
       tabIndex={tabIndex}
     >
       <IconButton
         sx={{
-          margin: theme.spacing(1, 0, 0, 0),
           borderRadius: 1,
-          fontSize: theme.typography.subtitle1,
+          fontSize: theme.typography.button,
           padding: 0,
-          lineHeight: 1.5,
           color: props.disabled ? 'black' : theme.palette.primary.main,
         }}
         disabled={props.disabled}
-        size="large"
       >
         {t('passenger.actions.place')}
         <Icon>chevron_right</Icon>

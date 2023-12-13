@@ -20,10 +20,12 @@ export type TabComponent = (props: {
 interface Props {
   eventUUID: string;
   Tab: TabComponent;
+  goBack?: () => void;
+  titleKey?: string;
 }
 
 const EventLayout = (props: PropsWithChildren<Props>) => {
-  const {eventUUID, Tab, ...pageProps} = props;
+  const {eventUUID, Tab, goBack, titleKey, ...pageProps} = props;
   const {t} = useTranslation();
   const theme = useTheme();
 
@@ -48,24 +50,23 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
       pageTitle={t('event.title', {title: event.name})}
       menuTitle={t('event.title', {title: event.name})}
       displayMenu={false}
-      Topbar={() => <EventBar event={event} onAdd={setIsAddToMyEvent} />}
       {...pageProps}
     >
       <Box
         flex={1}
         display="flex"
         alignItems="stretch"
-        height="calc(100% - 56px)"
+        height="calc(100% - 80px)"
         overflow="hidden"
         flexDirection={isMobile ? 'column-reverse' : 'row'}
       >
-        <DrawerMenu />
+        <DrawerMenu eventUuid={event.uuid} />
         <Box
           sx={{
+            position: 'relative',
             flex: 1,
-            maxWidth: 'calc(100% - 85px)',
+            maxWidth: 'calc(100% - 109px)',
             overflow: 'auto',
-            paddingBottom: theme.spacing(4),
 
             [theme.breakpoints.down('md')]: {
               maxWidth: '100%',
@@ -73,6 +74,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
           }}
           id="event-content"
         >
+          <EventBar title={t(titleKey)} goBack={goBack} event={event} onAdd={setIsAddToMyEvent} />
           <Tab event={event} />
         </Box>
       </Box>

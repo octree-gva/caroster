@@ -1,10 +1,15 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
-import {styled} from '@mui/material/styles';
+import router from 'next/dist/client/router';
+import Container from '@mui/material/Container';
+import TuneIcon from '@mui/icons-material/Tune';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
@@ -12,73 +17,33 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
-import ClearButton from '../ClearButton';
 import AssignButton from './AssignButton';
-import TravelDialog from './TravelDialog';
-import Button from '@mui/material/Button';
-import router from 'next/dist/client/router';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import {PassengerEntity} from '../../generated/graphql';
-
-const PREFIX = 'WaitingList';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  card: `${PREFIX}-card`,
-  header: `${PREFIX}-header`,
-  editBtn: `${PREFIX}-editBtn`,
-};
-
-const StyledBox = styled(Box)(({theme}) => ({
-  [`&.${classes.root}`]: {
-    position: 'relative',
-    paddingLeft: '80px',
-
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: 0,
-    },
-  },
-
-  [`& .${classes.card}`]: {
-    marginTop: theme.spacing(6),
-  },
-
-  [`& .${classes.header}`]: {
-    position: 'relative',
-    padding: theme.spacing(2),
-  },
-
-  [`& .${classes.editBtn}`]: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: theme.spacing(1),
-    zIndex: theme.zIndex.speedDial,
-  },
-}));
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Props {
   getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
+  registered: boolean;
 }
 
 const WaitingList = ({
   getToggleNewPassengerDialogFunction,
   canAddSelf,
+  registered
 }: Props) => {
   const {t} = useTranslation();
-  const clearToast = useToastStore(s => s.clearToast);
   const event = useEventStore(s => s.event);
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down('md'));
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
-  const [addingPassenger, setAddingPassenger] = useState<PassengerEntity>(null);
   const travels =
     event?.travels?.data?.length > 0
       ? event?.travels?.data.slice().sort(sortTravels)
       : [];
-  const {updatePassenger, removePassenger} = usePassengersActions();
+  const {removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
     if (!travels) return;
@@ -91,44 +56,13 @@ const WaitingList = ({
 
   const removePassengerCallback = useCallback(removePassenger, [event]);
 
-  const selectTravel = useCallback(
-    async travel => {
-      try {
-        await updatePassenger(addingPassenger.id, {
-          travel: travel.id,
-        });
-        setAddingPassenger(null);
-        addToast(
-          t('passenger.success.added_to_car', {
-            name: addingPassenger.attributes.name,
-          }),
-          <Button
-            size="small"
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              router.push(`/e/${event.uuid}`);
-              clearToast();
-            }}
-          >
-            {t('passenger.success.goToTravels')}
-          </Button>
-        );
-      } catch (error) {
-        console.error(error);
-        addToast(t('passenger.errors.cant_select_travel'));
-      }
-    },
-    [event, addingPassenger] // eslint-disable-line
-  );
-
   const onPress = useCallback(
     (passengerId: string) => {
       const selectedPassenger = event?.waitingPassengers?.data.find(
         item => item.id === passengerId
       );
       if (isEditing) setRemovingPassenger(selectedPassenger);
-      else setAddingPassenger(selectedPassenger);
+      else router.push(`/e/${event.uuid}/assign/${selectedPassenger.id}`);
     },
     [isEditing, event]
   );
@@ -145,47 +79,55 @@ const WaitingList = ({
 
   const ListButton = isEditing
     ? ({onClick}: {onClick: () => void}) => (
-        <ClearButton icon="close" onClick={onClick} tabIndex={-1} />
+        <ListItemSecondaryAction>
+          <IconButton size="small" color="primary" onClick={onClick}>
+            <CancelOutlinedIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
       )
     : ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => (
         <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled} />
       );
 
   return (
-    <StyledBox className={classes.root}>
-      <Container maxWidth="sm" className={classes.card}>
-        <Paper>
-          <div className={classes.header}>
-            <IconButton
-              size="small"
-              color="primary"
-              className={classes.editBtn}
-              disabled={!event?.waitingPassengers?.data?.length}
-              onClick={toggleEditing}
-            >
-              {isEditing ? <Icon>check</Icon> : <Icon>edit</Icon>}
-            </IconButton>
-            <Typography variant="h5">{t('passenger.title')}</Typography>
-            <Typography variant="overline">
-              {t('passenger.availability.seats', {count: availability})}
-            </Typography>
-          </div>
-          <Divider />
-          <AddPassengerButtons
-            getOnClickFunction={getToggleNewPassengerDialogFunction}
-            canAddSelf={canAddSelf}
-            variant="waitingList"
+    <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: mobile ? 2 : 4}}>
+      <Paper sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
+        <Box p={2}>
+          <IconButton
+            size="small"
+            color="primary"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              margin: 1,
+            }}
+            disabled={!event?.waitingPassengers?.data?.length}
+            onClick={toggleEditing}
+          >
+            {isEditing ? <Icon>check</Icon> : <TuneIcon />}
+          </IconButton>
+          <Typography variant="h5">{t('passenger.title')}</Typography>
+          <Typography variant="overline">
+            {t('passenger.availability.seats', {count: availability})}
+          </Typography>
+        </Box>
+        <Divider />
+        <AddPassengerButtons
+          getOnClickFunction={getToggleNewPassengerDialogFunction}
+          canAddSelf={canAddSelf}
+          registered={registered}
+          variant="waitingList"
+        />
+        <Divider />
+        {event?.waitingPassengers?.data?.length > 0 && (
+          <PassengersList
+            passengers={event.waitingPassengers.data}
+            onPress={onPress}
+            Button={ListButton}
           />
-          <Divider />
-          {event?.waitingPassengers?.data?.length > 0 && (
-            <PassengersList
-              passengers={event.waitingPassengers.data}
-              onPress={onPress}
-              Button={ListButton}
-            />
-          )}
-        </Paper>
-      </Container>
+        )}
+      </Paper>
       <RemoveDialog
         text={
           <Trans
@@ -200,15 +142,7 @@ const WaitingList = ({
         onClose={() => setRemovingPassenger(null)}
         onRemove={onRemove}
       />
-      <TravelDialog
-        eventName={event?.name}
-        travels={travels}
-        passenger={addingPassenger}
-        open={!!addingPassenger}
-        onClose={() => setAddingPassenger(null)}
-        onSelect={selectTravel}
-      />
-    </StyledBox>
+    </Container>
   );
 };
 

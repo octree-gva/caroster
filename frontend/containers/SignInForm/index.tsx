@@ -60,14 +60,14 @@ const SignIn = (props: Props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          padding: theme.spacing(0, 6),
+          px: 2,
         }}
       >
         <Typography variant="h6" align="center">
           {t('signin.title')}
         </Typography>
         {error && (
-          <FormHelperText error={true} sx={{padding: theme.spacing(0, 6)}}>
+          <FormHelperText error={true}>
             {t(`signin.errors.${error}`)}
           </FormHelperText>
         )}
@@ -75,7 +75,6 @@ const SignIn = (props: Props) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            padding: {sm: theme.spacing(0, 6), xs: 0},
           }}
         >
           <TextField
@@ -121,7 +120,7 @@ const SignIn = (props: Props) => {
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
-            padding: {md: theme.spacing(0, 16), sm: theme.spacing(0, 6)},
+            pb: 1
           }}
         >
           <Button
@@ -140,20 +139,20 @@ const SignIn = (props: Props) => {
           </Box>
           <LoginGoogle />
         </Box>
-        <Box sx={spaceAround}>
-          <Divider />
-        </Box>
-        <Typography align="center" variant="body2">
-          {t('signin.no_account')}
-        </Typography>
       </CardContent>
+      <Divider />
       <CardActions
         sx={{
+          flexDirection: 'column',
           justifyContent: 'center',
           marginBottom: theme.spacing(2),
           textAlign: 'center',
+          px: 2,
         }}
       >
+        <Typography align="center" variant="body2" sx={{pt: 2}}>
+          {t('signin.no_account')}
+        </Typography>
         <NextLink href="/auth/register" passHref>
           <Button size="small" id="SignInRegister">
             {t('signin.register')}

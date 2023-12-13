@@ -1,35 +1,19 @@
 import {useState} from 'react';
-import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
 import {useUpdateMeMutation} from '../../generated/graphql';
 
-const PREFIX = 'Profile';
-
-const classes = {
-  actions: `${PREFIX}-actions`
-};
-
-// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.actions}`]: {
-    marginTop: theme.spacing(2),
-    justifyContent: 'flex-end',
-  }
-}));
-
 const Profile = ({profile, logout}) => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const addToast = useToastStore(s => s.addToast);
 
   const [updateProfile] = useUpdateMeMutation();
@@ -94,8 +78,17 @@ const Profile = ({profile, logout}) => {
     );
 
   return (
-    (<Root>
-      <Card>
+    <Container
+      maxWidth="sm"
+      sx={{
+        margin: 0,
+        ml: 4,
+        [theme.breakpoints.down('sm')]: {
+          ml: 0,
+        },
+      }}
+    >
+      <Card sx={{width: '480px', maxWidth: '100%'}}>
         <CardContent>
           <ProfileField
             name="firstName"
@@ -129,7 +122,7 @@ const Profile = ({profile, logout}) => {
             disabled={!isStrapiUser}
           />
         </CardContent>
-        <CardActions className={classes.actions}>
+        <CardActions sx={{justifyContent: 'flex-end'}}>
           {!isEditing && (
             <>
               <Button type="button" onClick={() => logout()}>
@@ -168,7 +161,7 @@ const Profile = ({profile, logout}) => {
           )}
         </CardActions>
       </Card>
-    </Root>)
+    </Container>
   );
 };
 

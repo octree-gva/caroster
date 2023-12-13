@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Icon from '@mui/material/Icon';
 import AppBar from '@mui/material/AppBar';
@@ -14,11 +15,11 @@ import {ActionType} from '../GenericMenu/Action';
 const GenericToolbar = ({
   title,
   actions = [],
-  goBack = null,
+  goBack = false,
 }: {
   title: string;
   actions: Array<ActionType>;
-  goBack: () => void | null;
+  goBack?: boolean;
 }) => {
   const router = useRouter();
   const theme = useTheme();
@@ -33,36 +34,45 @@ const GenericToolbar = ({
   return (
     <AppBar
       position="static"
-      color="primary"
+      color="transparent"
       sx={{
         minHeight: theme.mixins.toolbar.minHeight,
         transition: 'height 0.3s ease',
         display: 'block',
-        backgroundColor: '#242424',
-        color: 'white',
+        color: 'text',
+        boxShadow: 'none',
+        p: theme.spacing(4, 0),
       }}
       id="Menu"
     >
-      <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-        {goBack && (
-          <IconButton
-            edge="start"
-            sx={{color: theme.palette.common.white}}
-            onClick={() =>
-              router.basePath.split('/').length > 2
-                ? router.back()
-                : router.push('/dashboard')
-            }
-            size="large"
-          >
-            <Icon>arrow_back</Icon>
-          </IconButton>
-        )}
-        <div sx={{flexGrow: 1, display: 'flex', alignItems: 'center'}}>
-          <Typography variant="h6" noWrap id="MenuHeaderTitle">
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          px: 2,
+          [theme.breakpoints.down('md')]: {
+            pl: 2,
+            pr: 2,
+          },
+        }}
+      >
+        <Box
+          sx={{display: 'flex', justifyContent: 'space-start', pl: 0, pr: 1}}
+        >
+          {goBack && (
+            <IconButton
+              edge="start"
+              sx={{color: theme.palette.common.black, my: 2}}
+              onClick={() => router.back()}
+              size="large"
+            >
+              <Icon>chevron_left</Icon>
+            </IconButton>
+          )}
+          <Typography variant="h2" noWrap sx={{pt: 3}}>
             {title}
           </Typography>
-        </div>
+        </Box>
         {actions.length > 0 && (
           <>
             <IconButton
