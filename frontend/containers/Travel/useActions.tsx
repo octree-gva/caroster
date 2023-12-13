@@ -66,7 +66,14 @@ const useActions = (props: Props) => {
             ...travelUpdate,
           },
         },
-        refetchQueries: ['eventByUUID'],
+        refetchQueries: [
+          {
+            query: EventByUuidDocument,
+            variables: {
+              uuid: event.uuid,
+            },
+          },
+        ],
       });
     } catch (error) {
       console.error(error);

@@ -49,6 +49,7 @@ const Travel = (props: Props) => {
         boxShadow: focused
           ? `0px 0px 5px 2px ${theme.palette.primary.main}`
           : 'none',
+          scrollMarginTop: theme.spacing(2)
       }}
       id={travel.id}
     >
