@@ -24,7 +24,7 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
-import AddressAutofill from '../../../containers/AddressAutofill';
+import PlaceInput from '../../../containers/PlaceInput';
 
 interface Props {
   eventUUID: string;
@@ -187,12 +187,11 @@ const DetailsTab: TabComponent = ({}) => {
               {t('event.fields.address')}
             </Typography>
             {isEditing ? (
-              <AddressAutofill
-                label={t('event.creation.address')}
-                address={event.address}
-                onSelect={({location, address}) => {
+              <PlaceInput
+                place={event.address}
+                onSelect={({location, place}) => {
                   setEventUpdate({
-                    address,
+                    address: place,
                     latitude: location[1],
                     longitude: location[0],
                   });

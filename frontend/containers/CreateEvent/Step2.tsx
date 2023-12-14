@@ -9,7 +9,7 @@ import {useRouter} from 'next/router';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
-import AddressAutofill from '../AddressAutofill';
+import PlaceInput from '../PlaceInput';
 
 const Step2 = ({event, addToEvent, createEvent}) => {
   const {t} = useTranslation();
@@ -53,12 +53,12 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         value={date}
         onChange={setDate}
       />
-      <AddressAutofill
+      <PlaceInput
         label={t('event.creation.address')}
         textFieldProps={{sx: {mt: 2}}}
-        address={address}
-        onSelect={({location, address}) => {
-          setAddress(address);
+        place={address}
+        onSelect={({location, place}) => {
+          setAddress(place);
           setLatitude(location[1]);
           setLongitude(location[0]);
         }}

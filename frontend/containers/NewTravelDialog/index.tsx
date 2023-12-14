@@ -18,7 +18,7 @@ import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
 import FAQLink from './FAQLink';
 import {Vehicle} from '../../generated/graphql';
-import AddressAutofill from '../AddressAutofill';
+import PlaceInput from '../PlaceInput';
 
 interface Props {
   context: {
@@ -206,16 +206,16 @@ const NewTravelDialog = ({context, toggle}: Props) => {
               minutesStep={5}
             />
           </Box>
-          <AddressAutofill
+          <PlaceInput
             label={t('travel.creation.meeting')}
             textFieldProps={{
               variant: 'outlined',
               size: 'small',
               sx: {...addSpacing(theme, 1), paddingBottom: theme.spacing(1)},
             }}
-            address={meeting}
-            onSelect={({location, address}) => {
-              setMeeting(address);
+            place={meeting}
+            onSelect={({location, place}) => {
+              setMeeting(place);
               setMeetingLatitude(location[1]);
               setMeetingLongitude(location[0]);
             }}

@@ -4,68 +4,46 @@ import InputAdornment from '@mui/material/InputAdornment';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
 import {debounce} from '@mui/material/utils';
-import {SessionToken, AddressAutofillSuggestion} from '@mapbox/search-js-core';
 import {useTranslation} from 'react-i18next';
 import useLocale from '../../hooks/useLocale';
+import getPlacesSuggestions from '../../lib/getPlacesSuggestion';
 
 interface Props {
-  address: string;
+  place: string;
   onSelect: ({
     location,
-    address,
+    place,
   }: {
     location: [number, number];
-    address: string;
+    place: string;
   }) => void;
-  label: string;
+  label?: string;
   textFieldProps?: TextFieldProps;
 }
 
-const AddressAutofill = ({
-  address = '',
+const PlaceInput = ({
+  place = '',
   onSelect,
   label,
   textFieldProps,
 }: Props) => {
   const {t} = useTranslation();
   const {locale} = useLocale();
-  const [value, setValue] = useState(address);
-  const sessionToken = new SessionToken();
 
-  const [options, setOptions] = useState(
-    [] as Array<AddressAutofillSuggestion>
-  );
+  const [options, setOptions] = useState([] as Array<any>);
 
   const onChange = async (e, selectedOption) => {
-    const body = await fetch(
-      '/api/mapbox/autofill/retrieve?' +
-        new URLSearchParams({
-          sessionToken,
-          locale,
-        }),
-      {body: JSON.stringify(selectedOption), method: 'POST'}
-    ).then(response => response.json());
-    setValue(selectedOption);
     onSelect({
-      address: selectedOption.full_address,
-      location: body.features[0]?.geometry?.coordinates,
+      place: selectedOption.place_name,
+      location: selectedOption.center,
     });
   };
 
   const updateOptions = debounce(async (e, search: string) => {
     if (search !== '') {
-      await fetch(
-        '/api/mapbox/autofill/suggest?' +
-          new URLSearchParams({
-            search,
-            sessionToken,
-            locale,
-          })
-      )
-        .then(response => response.json())
-        .then(body => {
-          setOptions(body.suggestions);
-        });
+      getPlacesSuggestions({search, proximity: 'ip', locale}).then(suggestions => {
+        setOptions(suggestions);
+      });
     }
   }, 400);
 
@@ -73,12 +51,10 @@ const AddressAutofill = ({
     <Autocomplete
       freeSolo
       disableClearable
-      getOptionLabel={option =>
-        option.full_address || option.place_name || address
-      }
+      getOptionLabel={option => option.place_name}
       options={options}
       autoComplete
-      value={value}
+      defaultValue={{place_name: place}}
       filterOptions={x => x}
       noOptionsText={t('autocomplete.noMatch')}
       onChange={onChange}
@@ -89,7 +65,6 @@ const AddressAutofill = ({
           multiline
           maxRows={4}
           InputProps={{
-            type: 'search',
             endAdornment: (
               <InputAdornment position="end" sx={{mr: -0.5}}>
                 <PlaceOutlinedIcon />
@@ -101,10 +76,10 @@ const AddressAutofill = ({
         />
       )}
       renderOption={(props, option) => {
-        return <li {...props}>{option.full_address || option.place_name}</li>;
+        return <li {...props}>{option.place_name}</li>;
       }}
     />
   );
 };
 
-export default AddressAutofill;
+export default PlaceInput;

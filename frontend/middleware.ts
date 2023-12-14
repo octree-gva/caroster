@@ -57,7 +57,7 @@ const getRegisteredUserLanguage = async req => {
       const {data} = await response.json();
       return data?.me?.profile?.lang;
     })
-    .catch(console.log);
+    .catch(console.error);
 };
 
 const getBrowserPreferredSupportedLanguage = req => {

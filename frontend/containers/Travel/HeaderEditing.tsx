@@ -11,7 +11,7 @@ import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
 import Box from '@mui/material/Box';
-import AddressAutofill from '../AddressAutofill';
+import PlaceInput from '../PlaceInput';
 
 const HeaderEditing = ({travel, toggleEditing}) => {
   const {t} = useTranslation();
@@ -115,12 +115,12 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           name="phone"
           id="EditTravelPhone"
         />
-        <AddressAutofill
+        <PlaceInput
             label={t('travel.creation.meeting')}
             textFieldProps={{sx: {pb: 2}}}
-            address={meeting}
-            onSelect={({location, address}) => {
-              setMeeting(address);
+            place={meeting}
+            onSelect={({location, place}) => {
+              setMeeting(place);
               setMeetingLatitude(location[1]);
               setMeetingLongitude(location[0]);
             }}

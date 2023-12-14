@@ -70,7 +70,7 @@ const TravelColumns = (props: Props) => {
 
   const {latitude, longitude} = event;
   const showMap = latitude && longitude;
-  let coordsString = '';
+  let coordsString = `${latitude}${longitude}`;
   const markers = travels.reduce((markers, travel) => {
     const {
       attributes: {meeting_latitude, meeting_longitude},
