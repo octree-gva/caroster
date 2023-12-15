@@ -214,10 +214,12 @@ const NewTravelDialog = ({context, toggle}: Props) => {
               sx: {...addSpacing(theme, 1), paddingBottom: theme.spacing(1)},
             }}
             place={meeting}
-            onSelect={({location, place}) => {
+            latitude={meeting_latitude}
+            longitude={meeting_longitude}
+            onSelect={({place, latitude, longitude}) => {
               setMeeting(place);
-              setMeetingLatitude(location[1]);
-              setMeetingLongitude(location[0]);
+              setMeetingLatitude(latitude);
+              setMeetingLongitude(longitude);
             }}
           />
           <TextField

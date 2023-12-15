@@ -116,15 +116,17 @@ const HeaderEditing = ({travel, toggleEditing}) => {
           id="EditTravelPhone"
         />
         <PlaceInput
-            label={t('travel.creation.meeting')}
-            textFieldProps={{sx: {pb: 2}}}
-            place={meeting}
-            onSelect={({location, place}) => {
-              setMeeting(place);
-              setMeetingLatitude(location[1]);
-              setMeetingLongitude(location[0]);
-            }}
-          />
+          label={t('travel.creation.meeting')}
+          textFieldProps={{sx: {pb: 2}}}
+          place={meeting}
+          latitude={meeting_latitude}
+          longitude={meeting_longitude}
+          onSelect={({place, latitude, longitude}) => {
+            setMeeting(place);
+            setMeetingLatitude(latitude);
+            setMeetingLongitude(longitude);
+          }}
+        />
         <TextField
           label={t('travel.creation.notes')}
           fullWidth

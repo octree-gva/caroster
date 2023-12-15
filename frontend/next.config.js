@@ -1,5 +1,12 @@
 const {i18n} = require('./react-i18next.config');
-const {NODE_ENV, DEV_TILES_URL, STRAPI_URL = 'http://localhost:1337', DEFAULT_LOCALE = 'share'} = process.env;
+const {
+  NODE_ENV,
+  DEV_TILES_URL,
+  STRAPI_URL = 'http://localhost:1337',
+  DEFAULT_LOCALE = 'share',
+  MAPBOX_TOKEN,
+  MAPBOX_URL,
+} = process.env;
 
 const withPWA = require('next-pwa')({
   dest: 'public',
@@ -17,7 +24,8 @@ module.exports = withPWA({
   env: {
     STRAPI_URL,
     DEV_TILES_URL,
-    DEFAULT_LOCALE
+    DEFAULT_LOCALE,
+    MAPBOX_CONFIGURED: !!MAPBOX_TOKEN && !!MAPBOX_URL,
   },
   i18n,
 

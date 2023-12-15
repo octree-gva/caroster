@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -43,6 +44,8 @@ const DetailsTab: TabComponent = ({}) => {
   const setEventUpdate = useEventStore(s => s.setEventUpdate);
   const event = useEventStore(s => s.event);
   const [isEditing, setIsEditing] = useState(false);
+
+  if (!event) return null;
 
   const onSave = async e => {
     try {
@@ -91,8 +94,6 @@ const DetailsTab: TabComponent = ({}) => {
       </IconButton>
     </Tooltip>
   );
-
-  if (!event) return null;
 
   return (
     <Box
@@ -189,13 +190,15 @@ const DetailsTab: TabComponent = ({}) => {
             {isEditing ? (
               <PlaceInput
                 place={event.address}
-                onSelect={({location, place}) => {
+                latitude={event.latitude}
+                longitude={event.longitude}
+                onSelect={({place, latitude, longitude}) =>
                   setEventUpdate({
                     address: place,
-                    latitude: location[1],
-                    longitude: location[0],
-                  });
-                }}
+                    latitude,
+                    longitude,
+                  })
+                }
               />
             ) : (
               <Box position="relative">

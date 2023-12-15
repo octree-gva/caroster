@@ -57,10 +57,12 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         label={t('event.creation.address')}
         textFieldProps={{sx: {mt: 2}}}
         place={address}
-        onSelect={({location, place}) => {
-          setAddress(place);
-          setLatitude(location[1]);
-          setLongitude(location[0]);
+        latitude={event.latitude}
+        longitude={event.longitude}
+        onSelect={({place, latitude, longitude}) => {
+            setAddress(place);
+            setLatitude(latitude);
+            setLongitude(longitude);
         }}
       />
       <TextField

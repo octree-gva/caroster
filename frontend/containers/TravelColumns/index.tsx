@@ -69,7 +69,12 @@ const TravelColumns = (props: Props) => {
     );
 
   const {latitude, longitude} = event;
-  const showMap = latitude && longitude;
+  const showMap =
+    (latitude && longitude) ||
+    travels.some(
+      ({attributes: {meeting_latitude, meeting_longitude}}) =>
+        meeting_latitude && meeting_longitude
+    );
   let coordsString = `${latitude}${longitude}`;
   const markers = travels.reduce((markers, travel) => {
     const {
@@ -93,15 +98,15 @@ const TravelColumns = (props: Props) => {
   const mapUpdateKey = `${event.uuid}.travels+${coordsString}`;
   if (preventUpdateKey !== mapUpdateKey) {
     setPreventUpdateKey(mapUpdateKey);
-    setCenter([latitude, longitude]);
-    setMarkers([
-      {
+    if (latitude && longitude) {
+      setCenter([latitude, longitude]);
+      markers.push({
         double: true,
         center: [latitude, longitude],
         popup: <EventPopup event={event} />,
-      },
-      ...markers,
-    ]);
+      });
+    }
+    setMarkers(markers);
   }
 
   return (

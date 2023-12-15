@@ -116,6 +116,8 @@
   "passenger.success.added_to_waitlist": "{{name}} is toegevoegd aan de wachtlijst",
   "passenger.success.goToTravels": "Ga naar reizen",
   "passenger.title": "Wachtlijst",
+  "placeInput.mapboxUnavailable": "",
+  "placeInput.noCoordinates": "",
   "profile.actions.cancel": "Annuleren",
   "profile.actions.change_password": "Wachtwoord wijzigen",
   "profile.actions.edit": "Bewerken",

@@ -116,6 +116,8 @@
   "passenger.success.added_to_waitlist": "{{name}} has been added to the waitlist",
   "passenger.success.goToTravels": "Go to travels",
   "passenger.title": "Waiting list",
+  "placeInput.mapboxUnavailable": "We are not able to suggest geolocated places at the moment",
+  "placeInput.noCoordinates": "This place is not geo-located and won't appear on the map",
   "profile.actions.cancel": "Cancel",
   "profile.actions.change_password": "Change your password",
   "profile.actions.edit": "Edit",

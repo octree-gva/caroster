@@ -10,42 +10,107 @@ import getPlacesSuggestions from '../../lib/getPlacesSuggestion';
 
 interface Props {
   place: string;
+  latitude?: number;
+  longitude?: number;
   onSelect: ({
-    location,
+    latitude,
+    longitude,
     place,
   }: {
-    location: [number, number];
+    latitude?: number;
+    longitude?: number;
     place: string;
   }) => void;
   label?: string;
   textFieldProps?: TextFieldProps;
 }
 
+const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
+
 const PlaceInput = ({
   place = '',
+  latitude,
+  longitude,
   onSelect,
   label,
   textFieldProps,
 }: Props) => {
   const {t} = useTranslation();
   const {locale} = useLocale();
+  const [mapboxAvailable, setMapboxAvailable] = useState(MAPBOX_CONFIGURED);
+  const [noCoordinates, setNoCoordinates] = useState(!latitude || !longitude);
+  const previousOption = place ? {place_name: place, previous: true} : null;
 
   const [options, setOptions] = useState([] as Array<any>);
-
   const onChange = async (e, selectedOption) => {
-    onSelect({
-      place: selectedOption.place_name,
-      location: selectedOption.center,
-    });
+    if (selectedOption.previous) {
+      setNoCoordinates(!latitude || !longitude);
+      onSelect({
+        place,
+        latitude,
+        longitude,
+      });
+    } else if (selectedOption.center) {
+      const [optionLongitude, optionLatitude] = selectedOption.center;
+      setNoCoordinates(false);
+      onSelect({
+        place: selectedOption.place_name,
+        latitude: optionLatitude,
+        longitude: optionLongitude,
+      });
+    } else {
+      setNoCoordinates(true);
+      onSelect({
+        place: selectedOption.place_name,
+        latitude: null,
+        longitude: null,
+      });
+    }
   };
 
   const updateOptions = debounce(async (e, search: string) => {
     if (search !== '') {
-      getPlacesSuggestions({search, proximity: 'ip', locale}).then(suggestions => {
-        setOptions(suggestions);
-      });
+      getPlacesSuggestions({search, proximity: 'ip', locale}).then(
+        suggestions => {
+          let defaultOptions = [];
+          if (previousOption) {
+            defaultOptions = [previousOption];
+          }
+          if (search && search !== previousOption?.place_name) {
+            defaultOptions = [...defaultOptions, {place_name: search}];
+          }
+          if (suggestions?.length >= 1) {
+            setMapboxAvailable(true);
+            const [firstSuggestion, ...otherSuggestions] = suggestions;
+            let uniqueOptions = [...defaultOptions, ...otherSuggestions];
+            if (
+              firstSuggestion.place_name !== search ||
+              firstSuggestion.place_name !== previousOption?.place_name
+            )
+              uniqueOptions = [
+                ...defaultOptions,
+                firstSuggestion,
+                ...otherSuggestions,
+              ];
+            setOptions(uniqueOptions);
+          } else {
+            setMapboxAvailable(false);
+            setOptions(defaultOptions);
+          }
+        }
+      );
     }
   }, 400);
+
+  const getHelperText = () => {
+    if (!mapboxAvailable) {
+      return t`placeInput.mapboxUnavailable`;
+    }
+    if (noCoordinates) {
+      return t`placeInput.noCoordinates`;
+    }
+    return null;
+  };
 
   return (
     <Autocomplete
@@ -54,7 +119,7 @@ const PlaceInput = ({
       getOptionLabel={option => option.place_name}
       options={options}
       autoComplete
-      defaultValue={{place_name: place}}
+      defaultValue={previousOption}
       filterOptions={x => x}
       noOptionsText={t('autocomplete.noMatch')}
       onChange={onChange}
@@ -64,6 +129,8 @@ const PlaceInput = ({
           label={label}
           multiline
           maxRows={4}
+          helperText={MAPBOX_CONFIGURED && getHelperText()}
+          FormHelperTextProps={{sx: {color: 'warning.main'}}}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" sx={{mr: -0.5}}>

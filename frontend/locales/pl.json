@@ -120,6 +120,8 @@
   "passenger.success.added_to_waitlist": "Dodano {{name}} do listy oczekujących",
   "passenger.success.goToTravels": "",
   "passenger.title": "",
+  "placeInput.mapboxUnavailable": "",
+  "placeInput.noCoordinates": "",
   "profile.actions.cancel": "",
   "profile.actions.change_password": "",
   "profile.actions.edit": "",

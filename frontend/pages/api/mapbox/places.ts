@@ -9,22 +9,25 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const {search, proximity = 'ip', locale} = req.query;
-  if (!search) return res.status(400);
-  if (!MAPBOX_TOKEN) return res.status(500);
+  if (!search) return res.status(400).send(null);
+  else if (!MAPBOX_TOKEN) return res.status(500).send(null);
 
   const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?proximity=${proximity}&access_token=${MAPBOX_TOKEN}&language=${locale}`;
 
   const mapBoxResult = await fetch(url)
-    .then(response => response.json())
+    .then(response => {
+      if (response.status === 429) {
+        throw 'MAPBOX_RATE_LIMIT_EXCEEDED';
+      }
+      return response.json();
+    })
     .catch(error => {
       console.error(error);
-      res.send(500);
     });
 
   if (mapBoxResult?.features) {
-    res.send(mapBoxResult.features);
-    res.status(200);
+    res.status(200).send(mapBoxResult.features);
+    return;
   }
-
-  return;
+  res.status(500).send(null);
 }

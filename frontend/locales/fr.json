@@ -116,6 +116,8 @@
   "passenger.success.added_to_waitlist": "{{name}} ajouté à la liste d'attente",
   "passenger.success.goToTravels": "Aller aux trajets",
   "passenger.title": "Liste d'attente",
+  "placeInput.mapboxUnavailable": "Nous ne pouvons pas suggérer de lieux géolocalisés pour le moment",
+  "placeInput.noCoordinates": "Le lieu ne peut être géo-localisé actuellement et ne sera pas affiché sur la carte.",
   "profile.actions.cancel": "Annuler",
   "profile.actions.change_password": "Changer son mot de passe",
   "profile.actions.edit": "Editer",
