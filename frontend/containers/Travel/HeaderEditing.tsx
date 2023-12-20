@@ -27,8 +27,12 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   const [name, setName] = useState(travel?.vehicleName ?? '');
   const [seats, setSeats] = useState(travel?.seats ?? 4);
   const [meeting, setMeeting] = useState(travel?.meeting ?? '');
-  const [meeting_latitude, setMeetingLatitude] = useState(null);
-  const [meeting_longitude, setMeetingLongitude] = useState(null);
+  const [meeting_latitude, setMeetingLatitude] = useState(
+    travel?.meeting_latitude
+  );
+  const [meeting_longitude, setMeetingLongitude] = useState(
+    travel?.meeting_longitude
+  );
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
   const [phone, setPhone] = useState(travel?.phone_number ?? '');
