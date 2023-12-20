@@ -5,15 +5,17 @@ import useMapStore from '../../stores/useMapStore';
 
 const Bounds = () => {
   const map = useMap();
-  const {markers} = useMapStore();
-  const debouncedMarkers = useDebounce(markers, 750);
+  const {bounds: storedBounds} = useMapStore();
+  const debouncedBounds = useDebounce(storedBounds, 750);
   const bounds = useMemo(
-    () => debouncedMarkers.map(marker => marker.center),
-    [debouncedMarkers]
+    () => debouncedBounds.map(bound => bound),
+    [debouncedBounds]
   );
 
   useEffect(() => {
-    map.fitBounds(bounds, {padding: [30, 30]});
+    if (bounds.length >= 1) {
+      map.fitBounds(bounds, {padding: [30, 30]});
+    }
   }, [bounds]);
 
   return null;

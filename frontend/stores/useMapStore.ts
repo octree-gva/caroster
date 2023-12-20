@@ -1,31 +1,29 @@
 import {ReactNode} from 'react';
-import {type LatLngExpression} from 'leaflet';
-import {CircleMarkerProps} from 'react-leaflet';
+import {type LatLngExpression, LatLngBoundsExpression} from 'leaflet';
 import {create} from 'zustand';
 import {Travel} from '../generated/graphql';
 
 type State = {
   map?: any;
   preventUpdateKey: string;
-  center: LatLngExpression;
-  markers: Array<CircleMarkerProps & {popup: ReactNode, double: boolean}>;
+  markers: Array<ReactNode>;
   focusedTravel?: string;
+  bounds: Array<LatLngExpression>;
   setMap: (map: any) => void;
   setPreventUpdateKey: (preventUpdateKey: string) => void;
-  setCenter: (center: LatLngExpression) => void;
-  setMarkers: (markers: Array<CircleMarkerProps & {popup: ReactNode}>) => void;
+  setMarkers: (markers: Array<ReactNode>) => void;
   setFocusOnTravel: (travel?: Travel & {id: string}) => void;
+  setBounds: (bounds: Array<LatLngExpression>) => void;
 };
 
 const useMapStore = create<State>((set, get) => ({
   map: undefined,
   preventUpdateKey: '',
-  center: [0, 0],
   markers: [],
   focusedTravel: undefined,
+  bounds: [],
   setMap: map => set({map}),
   setPreventUpdateKey: preventUpdateKey => set({preventUpdateKey}),
-  setCenter: center => set({center}),
   setMarkers: markers => set({markers}),
   setFocusOnTravel: travel => {
     if (!travel) {
@@ -36,6 +34,9 @@ const useMapStore = create<State>((set, get) => ({
       const long = travel.meeting_longitude;
       if (lat && long) get().map?.panTo([lat, long]);
     }
+  },
+  setBounds: bounds => {
+    set({bounds});
   },
 }));
 

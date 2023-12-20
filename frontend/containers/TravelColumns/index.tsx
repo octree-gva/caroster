@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import dynamic from 'next/dynamic';
 import Container from '@mui/material/Container';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
@@ -13,10 +14,11 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import Map from '../Map';
 import Travel from '../Travel';
 import NoCar from './NoCar';
-import TravelPopup from './TravelPopup';
-import EventPopup from '../EventPopup';
 import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
+
+const EventMarker = dynamic(() => import('../EventMarker'), {ssr: false});
+const TravelMarker = dynamic(() => import('../TravelMarker'), {ssr: false});
 
 type TravelType = TravelData & {id: string};
 
@@ -26,8 +28,13 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
-  const {preventUpdateKey, setPreventUpdateKey, setCenter, setMarkers} =
-    useMapStore();
+  const {
+    focusedTravel,
+    preventUpdateKey,
+    setPreventUpdateKey,
+    setMarkers,
+    setBounds,
+  } = useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -76,35 +83,41 @@ const TravelColumns = (props: Props) => {
         meeting_latitude && meeting_longitude
     );
   let coordsString = `${latitude}${longitude}`;
-  const markers = travels.reduce((markers, travel) => {
-    const {
-      attributes: {meeting_latitude, meeting_longitude},
-    } = travel;
-    if (meeting_latitude && meeting_longitude) {
-      const travelObject = {id: travel.id, ...travel.attributes};
-      coordsString =
-        coordsString + String(meeting_latitude) + String(meeting_longitude);
-      return [
-        ...markers,
-        {
-          center: [meeting_latitude, meeting_longitude],
-          popup: <TravelPopup travel={travelObject} />,
-        },
-      ];
-    }
-    return markers;
-  }, []);
 
-  const mapUpdateKey = `${event.uuid}.travels+${coordsString}`;
+  const {markers, bounds} = travels.reduce(
+    ({markers, bounds}, travel) => {
+      const {
+        attributes: {meeting_latitude, meeting_longitude},
+      } = travel;
+      if (meeting_latitude && meeting_longitude) {
+        const travelObject = {id: travel.id, ...travel.attributes};
+        coordsString =
+          coordsString + String(meeting_latitude) + String(meeting_longitude);
+        return {
+          markers: [
+            ...markers,
+            <TravelMarker
+              travel={travelObject}
+              focused={focusedTravel === travel.id}
+            />,
+          ],
+          bounds: [...bounds, [meeting_latitude, meeting_longitude]],
+        };
+      }
+      return {markers, bounds};
+    },
+    {markers: [], bounds: []}
+  );
+
+  const mapUpdateKey = `${event.uuid}.travels+${coordsString}.${latitude}.${longitude}.${focusedTravel}`;
   if (preventUpdateKey !== mapUpdateKey) {
     setPreventUpdateKey(mapUpdateKey);
     if (latitude && longitude) {
-      setCenter([latitude, longitude]);
-      markers.push({
-        double: true,
-        center: [latitude, longitude],
-        popup: <EventPopup event={event} />,
-      });
+      bounds.push([latitude, longitude]);
+      markers.push(<EventMarker event={event} />);
+    }
+    if (!focusedTravel) {
+      setBounds(bounds);
     }
     setMarkers(markers);
   }
