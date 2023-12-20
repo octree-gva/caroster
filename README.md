@@ -23,6 +23,14 @@ Caroster is composed of two parts:
 
 To fully utilize your instance of Caroster, you will need an SMTP configuration to send emails.
 
+#### (Optional) Mapbox token 
+
+In order to activate geocoding and map features, you will need a Mapbox token.
+
+[Create a mapbox account](https://account.mapbox.com/auth/signup/) if you don't have any and [generate your token for free](https://docs.mapbox.com/help/getting-started/access-tokens/#:~:text=You%20can%20find%20your%20access,using%20the%20Mapbox%20Tokens%20API.). 
+
+There is no need to setup a payment method as long as you don't exceed [the temporary geocoding api free rate ](https://www.mapbox.com/pricing#temporary-geocoding-api), but if you do so, the app will still work and geocoding will simply disable till the end of the ongoing month.
+
 ### Installing
 
 Clone the repo locally:
@@ -34,13 +42,15 @@ cd caroster
 
 ### Run with Docker
 
-First, edit `docker-compose.yml` to provide your SMTP configuration:
+First, edit `docker-compose.yml` to provide your SMTP configuration and optional Mapbox token:
 
 ```yaml
 version: "3"
 services:
   app:
     ...
+    MAPBOX_TOKEN: pk.mapbox.token
+
     SMTP_HOST: smtp.myserver.org
     SMTP_PORT: 587
     SMTP_USERNAME: user
@@ -73,6 +83,10 @@ yarn dev
 ```
 
 The frontend is now accessible on http://localhost:3000
+
+#### Geocoding in development (optional)
+
+Copy your Mapbox token in your .env file under MAPBOX_TOKEN variable and run the app again.
 
 ### Backend
 
