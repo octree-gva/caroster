@@ -81,17 +81,15 @@ const PlaceInput = ({
           }
           if (suggestions?.length >= 1) {
             setMapboxAvailable(true);
-            const [firstSuggestion, ...otherSuggestions] = suggestions;
-            let uniqueOptions = [...defaultOptions, ...otherSuggestions];
-            if (
-              firstSuggestion.place_name !== search ||
-              firstSuggestion.place_name !== previousOption?.place_name
-            )
-              uniqueOptions = [
-                ...defaultOptions,
-                firstSuggestion,
-                ...otherSuggestions,
-              ];
+            const suggestionsWithoutCopies = suggestions.filter(
+              ({place_name}) =>
+                place_name !== search &&
+                place_name !== previousOption?.place_name
+            );
+            const uniqueOptions = [
+              ...defaultOptions,
+              ...suggestionsWithoutCopies,
+            ];
             setOptions(uniqueOptions);
           } else {
             setMapboxAvailable(false);
