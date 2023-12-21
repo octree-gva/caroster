@@ -64,12 +64,19 @@ const AvailableTravel = ({travel, select}: Props) => {
           variant={travel.seats ? 'determinate' : 'indeterminate'}
         />
         <Box display="flex" justifyContent="space-between" width={1}>
-          <Typography variant="body1">
+          <Typography variant="body1" color="GrayText" minWidth="150px">
             {t('passenger.assign.seats', {
               count: availableSeats || 0,
             })}
           </Typography>
           <Link
+            sx={{
+              maxWidth: 'calc(100% - 150px)',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              paddingLeft: 2
+            }}
             variant="overline"
             target="_blank"
             rel="noreferrer"
