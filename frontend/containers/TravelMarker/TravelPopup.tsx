@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import {Travel} from '../../generated/graphql';
 import {Popup} from 'react-leaflet';
 import {useTranslation} from 'react-i18next';
-import useMapStore from '../../stores/useMapStore';
 import getMapsLink from '../../lib/getMapsLink';
 
 interface Props {
@@ -15,16 +14,10 @@ interface Props {
 
 const TravelPopup = ({travel}: Props) => {
   const {t} = useTranslation();
-  const {setFocusOnTravel} = useMapStore();
   return (
     <Popup>
       <Card
         sx={{p: 2, width: '350px', maxWidth: '100%', cursor: 'pointer'}}
-        onClick={() => {
-          setFocusOnTravel(travel);
-          const travelCard = document?.getElementById(travel.id);
-          travelCard?.scrollIntoView({behavior: 'smooth'});
-        }}
       >
         {!!travel.departure && (
           <Typography variant="overline" color="Graytext" id="TravelDeparture">
