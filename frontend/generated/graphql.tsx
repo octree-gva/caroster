@@ -1722,7 +1722,7 @@ export const EventFieldsFragmentDoc = gql`
         }
       }
     }
-    travels(pagination: {limit: 100}) {
+    travels(pagination: {limit: 500}) {
       data {
         id
         attributes {
@@ -1821,7 +1821,7 @@ export const UserFieldsFragmentDoc = gql`
   onboardingUser
   onboardingCreator
   provider
-  events(pagination: {limit: 100}) {
+  events(pagination: {limit: 500}) {
     data {
       id
       attributes {
@@ -2412,7 +2412,7 @@ export const FindUserVehiclesDocument = gql`
     id
     username
     profile {
-      vehicles(pagination: {limit: 100}) {
+      vehicles(pagination: {limit: 500}) {
         data {
           ...VehicleFields
         }

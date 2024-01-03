@@ -8,7 +8,7 @@ fragment UserFields on UsersPermissionsUser {
   onboardingUser
   onboardingCreator
   provider
-  events(pagination: {limit: 100}) {
+  events(pagination: {limit: 500}) {
     data {
       id
       attributes {
