@@ -2,6 +2,8 @@ import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
 import useProfile from '../../hooks/useProfile';
 import useRedirectUrlStore from '../../stores/useRedirectUrl';
+import useShare from '../../hooks/useShare';
+import useEventStore from '../../stores/useEventStore';
 
 interface Props {
   onAdd: (isAddToMyEvent: boolean) => void;
@@ -14,6 +16,8 @@ const useActions = (props: Props) => {
   const router = useRouter();
   const {connected} = useProfile();
   const setRedirectUrl = useRedirectUrlStore(s => s.setRedirectUrl);
+  const {share} = useShare();
+  const {event} = useEventStore();
 
   const noUserMenuActions = [
     {
@@ -26,9 +30,10 @@ const useActions = (props: Props) => {
     {divider: true},
     {
       label: t('event.actions.share'),
-      onClick: () => {
-        onAdd(true);
-      },
+      onClick: () =>
+        share({
+          title: `Caroster ${event.name}`,
+        }),
       id: 'ShareEvent',
     },
     {divider: true},
@@ -67,9 +72,10 @@ const useActions = (props: Props) => {
     },
     {
       label: t('event.actions.share'),
-      onClick: () => {
-        onAdd(true);
-      },
+      onClick: () =>
+        share({
+          title: `Caroster ${event.name}`,
+        }),
       id: 'ShareEvent',
     },
     {divider: true},
