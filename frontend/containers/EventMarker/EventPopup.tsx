@@ -39,7 +39,7 @@ const EventPopup = ({event}: Props) => {
               {t('event.fields.date')}
             </Typography>
             <Typography variant="body1">
-              {moment(event.date).format('LLLL')}
+              {moment(event.date).format('LL')}
             </Typography>
           </Box>
         )}

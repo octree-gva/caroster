@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import 'moment/locale/fr-ch';
+import 'moment/locale/fr';
 import moment from 'moment';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import translationFr from '../locales/fr.json';
