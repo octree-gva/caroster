@@ -3,9 +3,9 @@ import {NextRequest, NextResponse} from 'next/server';
 import {
   ProfileDocument,
   Enum_Userspermissionsuser_Lang as SupportedLocales,
-} from './generated/graphql';
+} from '../generated/graphql';
 import {print} from 'graphql/language/printer';
-import {getCookie} from './lib/cookies';
+import {getCookie} from '../lib/cookies';
 
 const PUBLIC_FILE = /\.(.*)$/;
 const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
@@ -31,6 +31,7 @@ export async function middleware(req: NextRequest) {
       NEXT_LOCALE ||
       browserPreferredSupportedLanguage ||
       'fr';
+
 
     return NextResponse.redirect(
       new URL(`/${locale}${req.nextUrl.pathname}`, req.url)

@@ -16,7 +16,7 @@ const Banner = (props: Props) => {
   const {announcement} = props;
   const theme = useTheme();
 
-  const [showBanner, setShowBanner] = useState(!!announcement);
+  const [showBanner, setShowBanner] = useState(!!announcement && announcement !== '');
 
   const onBannerClear = () => {
     const hashedMessage = hashText(announcement);
