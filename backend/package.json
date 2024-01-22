@@ -1,19 +1,46 @@
 {
   "name": "backend-v-4",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "description": "A Strapi application",
+  "license": "MIT",
+  "author": {
+    "name": "A Strapi developer"
+  },
   "scripts": {
+    "build": "strapi build",
+    "console": "PORT=1338 yarn strapi console",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
-    "strapi": "strapi",
     "start-test": "NODE_ENV=test DATABASE_FILENAME=../e2e/strapi/test.db strapi develop",
+    "strapi": "strapi",
     "test": "jest --forceExit --detectOpenHandles",
-    "test:watch": "jest --watch --forceExit --detectOpenHandles",
-    "test:cov": "jest --coverage --forceExit --detectOpenHandles",
     "test:ci": "jest --ci --bail --forceExit --detectOpenHandles",
-    "console": "PORT=1338 yarn strapi console"
+    "test:cov": "jest --coverage --forceExit --detectOpenHandles",
+    "test:watch": "jest --watch --forceExit --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ]
+  },
+  "dependencies": {
+    "@strapi/plugin-graphql": "4.17.1",
+    "@strapi/plugin-i18n": "4.17.1",
+    "@strapi/plugin-sentry": "^4.17.1",
+    "@strapi/plugin-users-permissions": "4.17.1",
+    "@strapi/provider-email-nodemailer": "^4.17.1",
+    "@strapi/strapi": "4.17.1",
+    "pg": "8.11.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "strapi-plugin-email-designer": "^2.1.1",
+    "strapi-plugin-init-admin-user": "^0.2.1",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@types/react": "^18",
@@ -25,36 +52,9 @@
     "jest": "^29.6.2",
     "sqlite3": "^5.0.11"
   },
-  "dependencies": {
-    "@strapi/plugin-graphql": "4.15.4",
-    "@strapi/plugin-i18n": "4.15.4",
-    "@strapi/plugin-sentry": "^4.15.4",
-    "@strapi/plugin-users-permissions": "4.15.4",
-    "@strapi/provider-email-nodemailer": "^4.15.4",
-    "@strapi/strapi": "4.15.4",
-    "pg": "8.11.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^5.2.0",
-    "strapi-plugin-email-designer": "^2.1.1",
-    "strapi-plugin-init-admin-user": "^0.2.1",
-    "styled-components": "^5.2.1"
-  },
-  "author": {
-    "name": "A Strapi developer"
-  },
-  "strapi": {},
   "engines": {
     "node": ">=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT",
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      ".tmp",
-      ".cache"
-    ],
-    "testEnvironment": "node"
-  }
+  "strapi": {}
 }
