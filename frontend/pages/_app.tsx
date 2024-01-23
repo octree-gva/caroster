@@ -18,7 +18,6 @@ import i18n, {initI18Next} from '../lib/i18n';
 import {useApollo} from '../lib/apolloClient';
 
 declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
 

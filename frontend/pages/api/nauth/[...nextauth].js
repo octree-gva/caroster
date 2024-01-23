@@ -4,7 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 
-export default NextAuth({
+const authHandler = NextAuth({
   providers: [
     CredentialsProvider({
       name: 'Strapi',
@@ -25,8 +25,10 @@ export default NextAuth({
         if (data?.error?.message === 'Your account email is not confirmed')
           throw new Error('EmailNotConfirmed');
         else if (!data?.jwt) return null;
-        const {user, jwt} = data;
-        return {...user, jwt};
+        else {
+          const {user, jwt} = data;
+          return {...user, jwt};
+        }
       },
     }),
     GoogleProvider({
@@ -43,18 +45,22 @@ export default NextAuth({
 
       // Google Auth
       if (account?.provider === 'google') {
-        const strapiUrl = process.env.STRAPI_URL || 'http://localhost:1337';
-        const response = await fetch(
-          `${strapiUrl}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-        );
-        const data = await response.json();
-        token.id = data.user.id;
-        token.jwt = data.jwt;
-        token.email = data.user.email;
-        token.username = data.user.firstname;
-        token.lang = data.user.lang?.toLowerCase();
-        token.provider = account.provider;
-        token.userCreatedAt = data.user.createdAt;
+        try {
+          const strapiUrl = process.env.STRAPI_URL || 'http://localhost:1337';
+          const response = await fetch(
+            `${strapiUrl}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
+          );
+          const data = await response.json();
+          token.id = data.user.id;
+          token.jwt = data.jwt;
+          token.email = data.user.email;
+          token.username = data.user.firstname;
+          token.lang = data.user.lang?.toLowerCase();
+          token.provider = account.provider;
+          token.userCreatedAt = data.user.createdAt;
+        } catch (error) {
+          console.error("Can't authenticate with Google to Strapi: ", error);
+        }
       }
 
       // Strapi Auth
@@ -79,15 +85,13 @@ export default NextAuth({
       }
       return session;
     },
-    async redirect({url, baseUrl}) {
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      else if (new URL(url).host === new URL(baseUrl).host)
-        return `${baseUrl}/dashboard`;
-      else return baseUrl;
-    },
   },
   pages: {
     signIn: '/auth/login',
     error: '/auth/login',
   },
 });
+
+export default async function handler(...params) {
+  await authHandler(...params);
+}

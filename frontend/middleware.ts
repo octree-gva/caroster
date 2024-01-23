@@ -11,16 +11,13 @@ const PUBLIC_FILE = /\.(.*)$/;
 const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
 
 export async function middleware(req: NextRequest) {
-  if (
+  const isIgnoredPath =
     req.nextUrl.pathname.startsWith('/_next') ||
     req.nextUrl.pathname.includes('/api/') ||
     req.nextUrl.pathname === '/graphql' ||
-    PUBLIC_FILE.test(req.nextUrl.pathname)
-  ) {
-    return;
-  }
+    PUBLIC_FILE.test(req.nextUrl.pathname);
 
-  if (req.nextUrl.locale === DEFAULT_LOCALE) {
+  if (!isIgnoredPath && req.nextUrl.locale === DEFAULT_LOCALE) {
     const registeredUserLanguage = await getRegisteredUserLanguage(req);
     const NEXT_LOCALE = getCookie('NEXT_LOCALE', req.headers.get('cookie'));
     const browserPreferredSupportedLanguage =
@@ -32,9 +29,11 @@ export async function middleware(req: NextRequest) {
       browserPreferredSupportedLanguage ||
       'fr';
 
-
     return NextResponse.redirect(
-      new URL(`/${locale}${req.nextUrl.pathname}`, req.url)
+      new URL(
+        `/${locale}${req.nextUrl.pathname}${req.nextUrl.search || ''}`,
+        req.url
+      )
     );
   }
 }

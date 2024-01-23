@@ -2,7 +2,6 @@ import {useState, useMemo} from 'react';
 import NextLink from 'next/link';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -18,6 +17,11 @@ import LoginGoogle from '../LoginGoogle';
 interface Props {
   error?: string;
 }
+
+const errorsMap = {
+  CredentialsSignin: 'signin.errors.CredentialsSignin',
+  EmailNotConfirmed: 'signin.errors.EmailNotConfirmed',
+};
 
 const SignIn = (props: Props) => {
   const {error} = props;
@@ -40,7 +44,7 @@ const SignIn = (props: Props) => {
         password,
         callbackUrl: '/dashboard',
       });
-      saveStoredEvents(); // TODO Check it's correctly executed after sign-in
+      saveStoredEvents();
     } catch (error) {
       console.error(error);
     }
@@ -67,8 +71,8 @@ const SignIn = (props: Props) => {
           {t('signin.title')}
         </Typography>
         {error && (
-          <FormHelperText error={true}>
-            {t(`signin.errors.${error}`)}
+          <FormHelperText error sx={{textAlign: 'center'}}>
+            {t(errorsMap[error])}
           </FormHelperText>
         )}
         <Box
@@ -85,7 +89,6 @@ const SignIn = (props: Props) => {
             margin="dense"
             value={email}
             onChange={({target: {value = ''}}) => setEmail(value)}
-            id="SignInEmail"
             name="email"
             type="email"
             error={!!error}
@@ -107,11 +110,17 @@ const SignIn = (props: Props) => {
 
         <Box sx={spaceAround}>
           <NextLink href="/auth/lost-password" passHref>
-            <Link>
-              <Typography align="center" variant="body2">
-                {t('lost_password.message')}
-              </Typography>
-            </Link>
+            <Typography
+              align="center"
+              variant="body2"
+              color="primary"
+              sx={{
+                textDecoration: 'underline',
+                textDecorationColor: 'primary',
+              }}
+            >
+              {t('lost_password.message')}
+            </Typography>
           </NextLink>
         </Box>
         <Box
@@ -120,7 +129,7 @@ const SignIn = (props: Props) => {
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
-            pb: 1
+            pb: 1,
           }}
         >
           <Button
@@ -130,7 +139,6 @@ const SignIn = (props: Props) => {
             type="submit"
             disabled={!canSubmit}
             aria-disabled={!canSubmit}
-            id="SignInSubmit"
           >
             {t('signin.login')}
           </Button>
@@ -154,9 +162,7 @@ const SignIn = (props: Props) => {
           {t('signin.no_account')}
         </Typography>
         <NextLink href="/auth/register" passHref>
-          <Button size="small" id="SignInRegister">
-            {t('signin.register')}
-          </Button>
+          <Button size="small">{t('signin.register')}</Button>
         </NextLink>
       </CardActions>
     </form>

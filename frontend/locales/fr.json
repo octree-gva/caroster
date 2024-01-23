@@ -133,6 +133,8 @@
   "profile.not_defined": "Non précisé",
   "profile.password_changed": "Mot de passe mis à jour",
   "profile.title": "Profil",
+  "signin.errors.CredentialsSignin": "Vérifiez votre email et mot de passe. Si votre compte est lié à Google, merci d'utiliser l'authentification Google.",
+  "signin.errors.EmailNotConfirmed": "Votre compte n'a pas été confirmé. Merci de vérifier vos emails",
   "signin.email": "Email",
   "signin.emailConfirmation": "Votre compte a bien été confirmé. Vous pouvez maintenant vous connecter.",
   "signin.login": "$t(menu.login)",

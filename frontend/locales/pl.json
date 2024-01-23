@@ -137,6 +137,8 @@
   "profile.not_defined": "",
   "profile.password_changed": "",
   "profile.title": "",
+  "signin.errors.CredentialsSignin": "",
+  "signin.errors.EmailNotConfirmed": "",
   "signin.email": "E-mail",
   "signin.emailConfirmation": "Twoje konto zostało potwierdzone. Teraz można się zalogować.",
   "signin.login": "$t(menu.login)",

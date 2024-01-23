@@ -133,6 +133,8 @@
   "profile.not_defined": "Niet opgegeven",
   "profile.password_changed": "Het wachtwoord is bijgewerkt",
   "profile.title": "Profiel",
+  "signin.errors.CredentialsSignin": "",
+  "signin.errors.EmailNotConfirmed": "",
   "signin.email": "E-mailadres",
   "signin.emailConfirmation": "Uw account is bevestigd - u kunt nu inloggen.",
   "signin.login": "$t(menu.login)",

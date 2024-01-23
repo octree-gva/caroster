@@ -133,6 +133,8 @@
   "profile.not_defined": "Not specified",
   "profile.password_changed": "Password updated",
   "profile.title": "Profile",
+  "signin.errors.CredentialsSignin": "Check your email and password. If your account is linked to Google, please use login with Google.",
+  "signin.errors.EmailNotConfirmed": "Your account has not been confirmed. Please check your emails",
   "signin.email": "Email",
   "signin.emailConfirmation": "Your account has been confirmed. You can now login.",
   "signin.login": "$t(menu.login)",

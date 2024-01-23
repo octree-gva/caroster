@@ -133,6 +133,8 @@
   "profile.not_defined": "",
   "profile.password_changed": "",
   "profile.title": "",
+  "signin.errors.CredentialsSignin": "",
+  "signin.errors.EmailNotConfirmed": "",
   "signin.email": "",
   "signin.emailConfirmation": "",
   "signin.login": "",
