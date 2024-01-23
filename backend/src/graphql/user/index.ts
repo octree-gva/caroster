@@ -87,5 +87,12 @@ export default [
         },
       },
     },
+    resolversConfig: {
+      "UsersPermissionsUser.notifications": {
+        auth: {
+          scope: ["plugin::users-permissions.user.me"],
+        },
+      },
+    },
   }),
 ];

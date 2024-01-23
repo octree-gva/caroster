@@ -4,6 +4,7 @@ import userExtensions from "./user";
 import travelExtensions from "./travel";
 import vehicleExtensions from "./vehicle";
 import passengerExtensions from "./passenger";
+import notificationExtensions from "./notification";
 
 export default ({ strapi }) => {
   const extService = strapi.plugin("graphql").service("extension");
@@ -13,6 +14,7 @@ export default ({ strapi }) => {
   travelExtensions.forEach(extService.use);
   vehicleExtensions.forEach(extService.use);
   passengerExtensions.forEach(extService.use);
+  notificationExtensions.forEach(extService.use);
 
   // Disable shadow CRUD
   /// Fields

@@ -773,6 +773,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     onboardingCreator: Attribute.Boolean & Attribute.DefaultTo<false>;
     lang: Attribute.Enumeration<['fr', 'en']> & Attribute.DefaultTo<'fr'>;
     newsletterConsent: Attribute.Boolean & Attribute.DefaultTo<true>;
+    notifications: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::notification.notification'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -892,6 +897,47 @@ export interface ApiEventEvent extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::event.event',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNotificationNotification extends Schema.CollectionType {
+  collectionName: 'notifications';
+  info: {
+    singularName: 'notification';
+    pluralName: 'notifications';
+    displayName: 'Notification';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    type: Attribute.Enumeration<['NewPassengerInYourTrip', 'NewTrip']> &
+      Attribute.Required;
+    user: Attribute.Relation<
+      'api::notification.notification',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    event: Attribute.Relation<
+      'api::notification.notification',
+      'oneToOne',
+      'api::event.event'
+    >;
+    read: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::notification.notification',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::notification.notification',
       'oneToOne',
       'admin::user'
     > &
@@ -1174,6 +1220,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate;
       'api::event.event': ApiEventEvent;
+      'api::notification.notification': ApiNotificationNotification;
       'api::page.page': ApiPagePage;
       'api::passenger.passenger': ApiPassengerPassenger;
       'api::setting.setting': ApiSettingSetting;

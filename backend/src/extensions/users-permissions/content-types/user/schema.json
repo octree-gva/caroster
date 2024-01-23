@@ -109,6 +109,12 @@
     "newsletterConsent": {
       "type": "boolean",
       "default": true
+    },
+    "notifications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::notification.notification",
+      "mappedBy": "user"
     }
   }
 }

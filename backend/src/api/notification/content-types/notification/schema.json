@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "singularName": "notification",
+    "pluralName": "notifications",
+    "displayName": "Notification"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "NewPassengerInYourTrip",
+        "NewTrip"
+      ],
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "notifications"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event.event"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    }
+  }
+}
