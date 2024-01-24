@@ -4,3 +4,4 @@ ENV NEXTAUTH_URL_INTERNAL: http://localhost:3000/api/nauth
 
 COPY ./frontend /srv/app/frontend
 COPY ./backend /srv/app/backend
+COPY ./_nginx/* /srv/nginx/
