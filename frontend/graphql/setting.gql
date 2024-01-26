@@ -9,6 +9,7 @@ query setting($locale: I18NLocaleCode!) {
         announcement
         matomo_script_url
         opencollective_link
+        code_link
       }
     }
   }
