@@ -23,7 +23,11 @@ const publicPerms = [
   "api::vehicle.vehicle.find",
 ];
 
-const authenticated = [...publicPerms, "plugin::users-permissions.user.me"];
+const authenticated = [
+  ...publicPerms,
+  "api::module.module.find",
+  "plugin::users-permissions.user.me",
+];
 
 export default {
   roles: {
