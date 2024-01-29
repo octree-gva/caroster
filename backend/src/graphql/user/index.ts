@@ -92,6 +92,11 @@ export default [
       },
     },
     resolversConfig: {
+      "Query.me": {
+        auth: {
+          scope: ["plugin::users-permissions.user.me"],
+        },
+      },
       "UsersPermissionsUser.notifications": {
         auth: {
           scope: ["plugin::users-permissions.user.me"],

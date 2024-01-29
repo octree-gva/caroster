@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
-const {STRAPI_URL = 'http://localhost:1337'} = process.env;
+const STRAPI_URL = 'http://localhost:1337';
 
 const authHandler = NextAuth({
   providers: [
@@ -45,22 +45,18 @@ const authHandler = NextAuth({
 
       // Google Auth
       if (account?.provider === 'google') {
-        try {
-          const strapiUrl = process.env.STRAPI_URL || 'http://localhost:1337';
-          const response = await fetch(
-            `${strapiUrl}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-          );
-          const data = await response.json();
-          token.id = data.user.id;
-          token.jwt = data.jwt;
-          token.email = data.user.email;
-          token.username = data.user.firstname;
-          token.lang = data.user.lang?.toLowerCase();
-          token.provider = account.provider;
-          token.userCreatedAt = data.user.createdAt;
-        } catch (error) {
-          console.error("Can't authenticate with Google to Strapi: ", error);
-        }
+        const strapiUrl = 'http://localhost:1337';
+        const response = await fetch(
+          `${STRAPI_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
+        );
+        const data = await response.json();
+        token.id = data.user.id;
+        token.jwt = data.jwt;
+        token.email = data.user.email;
+        token.username = data.user.firstname;
+        token.lang = data.user.lang?.toLowerCase();
+        token.provider = account.provider;
+        token.userCreatedAt = data.user.createdAt;
       }
 
       // Strapi Auth
