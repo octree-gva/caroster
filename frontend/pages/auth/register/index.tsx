@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Cookies from 'cookies';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -68,7 +69,7 @@ const MailSignup = () => {
           >
             <Markdown
               sx={{
-                marginBottom: theme.spacing(5), 
+                marginBottom: theme.spacing(5),
                 '& a': {
                   color: theme.palette.primary.main,
                 },
@@ -92,7 +93,14 @@ const MailSignup = () => {
   );
 };
 
-
-export const getServerSideProps = pageUtils.getServerSideProps();
+export const getServerSideProps = async (context: any) => {
+  return pageUtils.getServerSideProps(async ctx => {
+    const redirectPath = ctx.query?.redirectPath;
+    if (redirectPath) {
+      const cookies = new Cookies(ctx.req, ctx.res);
+      cookies.set('redirectPath', redirectPath);
+    }
+  })(context);
+};
 
 export default MailSignup;

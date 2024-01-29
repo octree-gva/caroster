@@ -1,7 +1,6 @@
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
 import useProfile from '../../hooks/useProfile';
-import useRedirectUrlStore from '../../stores/useRedirectUrl';
 import useShare from '../../hooks/useShare';
 import useEventStore from '../../stores/useEventStore';
 
@@ -15,7 +14,6 @@ const useActions = (props: Props) => {
   const {t} = useTranslation();
   const router = useRouter();
   const {connected} = useProfile();
-  const setRedirectUrl = useRedirectUrlStore(s => s.setRedirectUrl);
   const {share} = useShare();
   const {event} = useEventStore();
 
@@ -40,17 +38,16 @@ const useActions = (props: Props) => {
     {
       label: t('menu.login'),
       onClick: () => {
-        setRedirectUrl(window.location.href);
-        router.push('/auth/login');
+        router.push(`/auth/login?redirectPath=${router.asPath}`);
       },
       id: 'SignInTab',
     },
     {
       label: t('menu.register'),
       onClick: () => {
-        setRedirectUrl(window.location.href);
         router.push({
-          pathname: '/auth/register',
+          pathname: `/auth/register`,
+          query: {redirectPath: router.asPath},
           state: {event: eventId},
         });
       },

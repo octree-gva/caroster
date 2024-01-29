@@ -10,7 +10,6 @@ import {useState} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import CommonConfirm from '../../../layouts/ConfirmLayout';
 import {useUpdateMeMutation} from '../../../generated/graphql';
-import useRedirectUrlStore from '../../../stores/useRedirectUrl';
 import router from 'next/router';
 
 const Confirm = () => {
@@ -19,11 +18,10 @@ const Confirm = () => {
 
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [updateMe] = useUpdateMeMutation();
-  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
+
   const onSubmit = async () => {
     await updateMe({variables: {userUpdate: {newsletterConsent}}});
-    const callbackUrl = getRedirectUrl() || '/dashboard';
-    router.push(callbackUrl);
+    router.push('/dashboard');
   };
 
   return (

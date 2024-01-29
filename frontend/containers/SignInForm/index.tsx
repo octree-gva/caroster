@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 import {signIn} from 'next-auth/react';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import LoginGoogle from '../LoginGoogle';
+import {useRouter} from 'next/router';
 
 interface Props {
   error?: string;
@@ -26,6 +27,8 @@ const errorsMap = {
 const SignIn = (props: Props) => {
   const {error} = props;
   const {t} = useTranslation();
+  const router = useRouter();
+
   const theme = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,7 +45,7 @@ const SignIn = (props: Props) => {
       await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/dashboard',
+        callbackUrl: (router.query?.redirectPath as string) || '/dashboard',
       });
       saveStoredEvents();
     } catch (error) {

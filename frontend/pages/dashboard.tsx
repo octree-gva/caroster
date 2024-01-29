@@ -1,5 +1,6 @@
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 import moment from 'moment';
+import Cookies from 'cookies';
 import {useRouter} from 'next/router';
 import {getSession} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
@@ -10,7 +11,6 @@ import Loading from '../containers/Loading';
 import Fab from '../containers/Fab';
 import pageUtils from '../lib/pageUtils';
 import useProfile from '../hooks/useProfile';
-import useRedirectUrlStore from '../stores/useRedirectUrl';
 
 interface PageProps {
   announcement?: string;
@@ -21,12 +21,6 @@ const Dashboard = (props: PageProps) => {
   const router = useRouter();
   const {profile, isReady} = useProfile();
   const events = profile?.events?.data || [];
-  const getRedirectUrl = useRedirectUrlStore(s => s.getRedirectUrl);
-
-  useEffect(() => {
-    const redirectUrl = getRedirectUrl();
-    if (redirectUrl) router.push(redirectUrl);
-  }, []);
 
   const pastEvents = useMemo(
     () =>
@@ -128,6 +122,18 @@ export const getServerSideProps = async (context: any) => {
         permanent: false,
       },
     };
+
+  const cookies = new Cookies(context.req, context.res);
+  const redirectPath = cookies.get('redirectPath');
+  if (redirectPath) {
+    cookies.set('redirectPath'); // Delete cookie
+    return {
+      redirect: {
+        destination: redirectPath,
+        permanent: false,
+      },
+    };
+  }
 
   return pageUtils.getServerSideProps()(context);
 };
