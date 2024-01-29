@@ -5,8 +5,6 @@ import {onError} from '@apollo/client/link/error';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import {signOut, useSession} from 'next-auth/react';
-import {Session} from 'next-auth';
-import {JWT} from 'next-auth/jwt';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient: ApolloClient<any>;
@@ -87,5 +85,8 @@ export const addApolloState = (client: ApolloClient<any>, pageProps: any) => {
 export const useApollo = (pageProps: any) => {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const {data: session} = useSession();
-  return useMemo(() => initializeApollo('', session?.token?.jwt, state), [state, session]);
+  return useMemo(
+    () => initializeApollo('/graphql/', session?.token?.jwt, state),
+    [state, session]
+  );
 };

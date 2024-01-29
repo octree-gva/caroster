@@ -20,7 +20,7 @@ const getServerSideProps =
     const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 
     const jwt = session?.token?.jwt;
-    const apolloClient = initializeApollo(`${STRAPI_URL}/graphql`, jwt);
+    const apolloClient = initializeApollo(`${STRAPI_URL}/graphql/`, jwt);
 
     try {
       const {

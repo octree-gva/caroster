@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
   const isIgnoredPath =
     req.nextUrl.pathname.startsWith('/_next') ||
     req.nextUrl.pathname.includes('/api/') ||
-    req.nextUrl.pathname === '/graphql' ||
+    req.nextUrl.pathname.startsWith('/graphql') ||
     PUBLIC_FILE.test(req.nextUrl.pathname);
 
   if (!isIgnoredPath && req.nextUrl.locale === DEFAULT_LOCALE) {
@@ -45,7 +45,7 @@ const getRegisteredUserLanguage = async req => {
   });
 
   const {STRAPI_URL = 'http://localhost:1337'} = process.env;
-  return fetch(`${STRAPI_URL}/graphql`, {
+  return fetch(`${STRAPI_URL}/graphql/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
