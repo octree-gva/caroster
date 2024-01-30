@@ -62,7 +62,7 @@ export default [
 
             const currentEvents = user.events || [];
             const currentEventIds = currentEvents.map((event) => `${event.id}`);
-            const userUpdateEvents = userUpdate.events.filter(
+            const userUpdateEvents = userUpdate.events?.filter(
               (eventId) => !currentEventIds.includes(eventId)
             );
             const updatedEvents = userUpdate.events
