@@ -9,8 +9,6 @@
     "displayName": "Event"
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": false
   },
   "attributes": {
@@ -66,6 +64,13 @@
     },
     "longitude": {
       "type": "float"
+    },
+    "enabled_modules": {
+      "type": "customField",
+      "options": [
+        "caroster-plus"
+      ],
+      "customField": "plugin::multi-select.multi-select"
     }
   }
 }

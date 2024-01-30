@@ -854,8 +854,6 @@ export interface ApiEventEvent extends Schema.CollectionType {
     displayName: 'Event';
   };
   options: {
-    increments: true;
-    timestamps: true;
     draftAndPublish: false;
   };
   attributes: {
@@ -887,6 +885,11 @@ export interface ApiEventEvent extends Schema.CollectionType {
     >;
     latitude: Attribute.Float;
     longitude: Attribute.Float;
+    enabled_modules: Attribute.JSON &
+      Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        ['caroster-plus']
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -947,6 +950,21 @@ export interface ApiModuleModule extends Schema.SingleType {
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
+        };
+      }>;
+    caroster_plus_payment_link_id: Attribute.String &
+      Attribute.Required &
+      Attribute.Private &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    caroster_plus_payment_link: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
         };
       }>;
     createdAt: Attribute.DateTime;

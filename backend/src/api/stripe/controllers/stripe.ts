@@ -1,0 +1,40 @@
+import Stripe from "stripe";
+
+const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
+const ENDPOINT_SECRET = process.env.STRIPE_ENDPOINT_SECRET;
+
+let stripe: Stripe;
+
+if (STRIPE_SECRET) stripe = new Stripe(STRIPE_SECRET);
+
+export default {
+  handleWebhook: async (ctx, next) => {
+    if (!stripe) {
+      strapi.log.warn(
+        "Stripe is not enabled for this instance. Please provide STRIPE_SECRET_KEY variable to enable it."
+      );
+      return;
+    }
+
+    try {
+      const payload = ctx.request.body[Symbol.for("unparsedBody")];
+      const sig = ctx.request.headers["stripe-signature"];
+      const event = stripe.webhooks.constructEvent(
+        payload,
+        sig,
+        ENDPOINT_SECRET
+      );
+      if (event.type === "checkout.session.completed") {
+        strapi.service("api::stripe.stripe").enableModule(event);
+      } else
+        strapi.log.warn(
+          `[Stripe] Received webhook of type ${event.type} (ignored)`
+        );
+      ctx.body = "ok";
+    } catch (err) {
+      strapi.log.error(`Webhook ${err}`);
+      ctx.status = 400;
+      ctx.body = err;
+    }
+  },
+};

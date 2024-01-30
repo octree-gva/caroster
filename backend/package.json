@@ -40,6 +40,8 @@
     "react-router-dom": "^5.2.0",
     "strapi-plugin-email-designer": "^2.1.1",
     "strapi-plugin-init-admin-user": "^0.2.1",
+    "strapi-plugin-multi-select": "^1.2.3",
+    "stripe": "^14.14.0",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {

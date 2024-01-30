@@ -14,6 +14,7 @@ const publicPerms = [
   "api::page.page.find",
   "api::page.page.findOne",
   "api::setting.setting.find",
+  "api::stripe.stripe.handleWebhook",
 
   // // GraphQL disabled at load
   "api::travel.travel.find",
