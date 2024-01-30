@@ -25,7 +25,10 @@ export default [
             const createdTravel = await strapi.entityService.create(
               "api::travel.travel",
               {
-                data: args.data,
+                data: {
+                  ...args.data,
+                  user: user?.id,
+                },
               }
             );
 

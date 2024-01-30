@@ -9,8 +9,6 @@
     "displayName": "Travel"
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": false
   },
   "attributes": {
@@ -51,6 +49,11 @@
     },
     "meeting_longitude": {
       "type": "float"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

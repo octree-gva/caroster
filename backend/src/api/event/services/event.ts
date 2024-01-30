@@ -19,7 +19,7 @@ export default factories.createCoreService(
             },
           },
         },
-        populate: ["passengers", "passengers.travel"],
+        populate: ["travel", "user"],
       });
     },
     sendDailyRecap: async (event) => {

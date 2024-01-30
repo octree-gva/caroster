@@ -1198,8 +1198,6 @@ export interface ApiTravelTravel extends Schema.CollectionType {
     displayName: 'Travel';
   };
   options: {
-    increments: true;
-    timestamps: true;
     draftAndPublish: false;
   };
   attributes: {
@@ -1225,6 +1223,11 @@ export interface ApiTravelTravel extends Schema.CollectionType {
     >;
     meeting_latitude: Attribute.Float;
     meeting_longitude: Attribute.Float;
+    user: Attribute.Relation<
+      'api::travel.travel',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

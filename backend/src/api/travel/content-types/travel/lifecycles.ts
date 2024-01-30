@@ -1,4 +1,5 @@
 import _uniq from "lodash/uniq";
+import pMap from "p-map";
 
 const { STRAPI_URL = "" } = process.env;
 
@@ -58,6 +59,32 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
   const eventWaitingPassengers = await strapi
     .service("api::event.event")
     .getWaitingPassengers(event);
+
+  // Create notification entities for people linked to a registered user
+  try {
+    const registeredUsers = eventWaitingPassengers
+      .map((passenger) => passenger.user)
+      .filter(Boolean);
+    await pMap(
+      registeredUsers,
+      async (user: { id: string }) =>
+        strapi.entityService.create("api::notification.notification", {
+          data: {
+            type: "NewTrip",
+            event: eventId,
+            user: user.id,
+          },
+        }),
+      { concurrency: 5 }
+    );
+  } catch (error) {
+    strapi.log.error(
+      "Error while creating notifications for registered users:"
+    );
+    console.error(error);
+  }
+
+  // Send email notifications to all waiting passengers
   const userEmails = eventWaitingPassengers
     .map((user) => user.email)
     .filter(Boolean);
