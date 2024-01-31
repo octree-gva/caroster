@@ -11,6 +11,8 @@ import AppBar from '@mui/material/AppBar';
 import useProfile from '../../hooks/useProfile';
 import GenericMenu from '../GenericMenu';
 import {ActionType} from '../GenericMenu/Action';
+import {useSession} from 'next-auth/react';
+import DrawerNotification from '../DrawerNotification';
 
 const GenericToolbar = ({
   title,
@@ -26,6 +28,9 @@ const GenericToolbar = ({
   const [anchorEl, setAnchorEl] = useState(null);
 
   const {profile, connected} = useProfile();
+
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -73,37 +78,40 @@ const GenericToolbar = ({
             {title}
           </Typography>
         </Box>
-        {actions.length > 0 && (
-          <>
-            <IconButton
-              color="inherit"
-              edge="end"
-              id="MenuMoreInfo"
-              onClick={e => setAnchorEl(e.currentTarget)}
-              size="large"
-            >
-              {connected && profile ? (
-                <Avatar
-                  sx={{
-                    width: theme.spacing(3),
-                    height: theme.spacing(3),
-                    fontSize: 16,
-                  }}
-                >
-                  {`${profile.username[0]}`.toUpperCase()}
-                </Avatar>
-              ) : (
-                <Icon>more_vert</Icon>
-              )}
-            </IconButton>
+        <Box>
+          {isAuthenticated && <DrawerNotification />}
+          {actions.length > 0 && (
+            <>
+              <IconButton
+                color="inherit"
+                edge="end"
+                id="MenuMoreInfo"
+                onClick={e => setAnchorEl(e.currentTarget)}
+                size="large"
+              >
+                {connected && profile ? (
+                  <Avatar
+                    sx={{
+                      width: theme.spacing(3),
+                      height: theme.spacing(3),
+                      fontSize: 16,
+                    }}
+                  >
+                    {`${profile.username[0]}`.toUpperCase()}
+                  </Avatar>
+                ) : (
+                  <Icon>more_vert</Icon>
+                )}
+              </IconButton>
 
-            <GenericMenu
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
-              actions={[...actions, {divider: true}]}
-            />
-          </>
-        )}
+              <GenericMenu
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                actions={[...actions, {divider: true}]}
+              />
+            </>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

@@ -11,10 +11,14 @@ import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
 import UserIcon from './UserIcon';
+import {useSession} from 'next-auth/react';
+import DrawerNotification from '../DrawerNotification';
 
 const EventBar = ({event, onAdd, goBack, title}) => {
-  const {share} = useShare();
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
   const theme = useTheme();
+  const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const menuActions = useActions({onAdd, eventId: event?.id});
@@ -80,11 +84,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
           >
             <Icon>share</Icon>
           </IconButton>
-          <GenericMenu
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            actions={menuActions}
-          />
+          {isAuthenticated && <DrawerNotification />}
           <IconButton
             color="inherit"
             edge="end"
@@ -94,6 +94,11 @@ const EventBar = ({event, onAdd, goBack, title}) => {
           >
             <UserIcon />
           </IconButton>
+          <GenericMenu
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            actions={menuActions}
+          />
         </>
       </Toolbar>
     </AppBar>

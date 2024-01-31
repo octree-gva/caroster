@@ -1,0 +1,38 @@
+query UserNotifications($maxItems: Int = 20) {
+  me {
+    profile {
+      notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
+        data {
+          id
+          attributes {
+            type
+            read
+            createdAt
+            event {
+              data {
+                id
+                attributes {
+                  name
+                  uuid
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation readNotifications($id: ID) {
+  readNotifications(id: $id) {
+    data {
+      id
+      attributes {
+        type
+        read
+      }
+    }
+  }
+}
+
