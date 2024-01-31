@@ -5,7 +5,9 @@ import { wait } from "./wait";
 
 export const restartStrapi = async () => {
   await fs.promises.writeFile("../backend/restart.test", "Restart Strapi");
-  await wait(4000);
+  console.log(`Wait for Strapi to restart`);
+  await wait(6000);
+  await waitForStrapi();
 };
 
 export const getJwtToken = async () => {
@@ -14,4 +16,18 @@ export const getJwtToken = async () => {
     password: USER_PASSWORD,
   });
   return login?.jwt;
+};
+
+const waitForStrapi = async () => {
+  let isAvailable = false;
+  while (!isAvailable) {
+    await wait(1000);
+    try {
+      await fetch("http://localhost:1337/graphql");
+      isAvailable = true;
+    } catch (error) {
+      console.log("Strapi is not ready");
+    }
+  }
+  console.log("STRAPI IS STARTED");
 };

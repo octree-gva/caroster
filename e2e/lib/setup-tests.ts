@@ -12,7 +12,6 @@ export default async () => {
   try {
     await fs.promises.copyFile(DATABASE_TEMPLATE_PATH, DATABASE_PATH);
     console.log(`Database ${DATABASE_PATH} has been reinitialized`);
-    console.log(`Wait for Strapi to restart`);
     await restartStrapi();
   } catch (error) {
     console.error(error);

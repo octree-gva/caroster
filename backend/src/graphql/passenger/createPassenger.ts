@@ -41,7 +41,7 @@ const createPassenger = {
         args,
       });
     } catch (error) {
-      console.log(error);
+      console.log({ error });
       throw new Error("Couldn't create the passenger");
     }
   },

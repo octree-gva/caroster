@@ -7,7 +7,7 @@ test("register creates a new user", async () => {
     username: `testregister-${userRandomId}`,
     firstName: `firstname-${userRandomId}`,
     lastName: `lastname-${userRandomId}`,
-    lang: "FR",
+    lang: "fr",
     password: "TestPassword34",
   };
   const request = sdk.register({

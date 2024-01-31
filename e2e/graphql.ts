@@ -34,6 +34,7 @@ export type BooleanFilterInput = {
   lt?: InputMaybe<Scalars['Boolean']>;
   lte?: InputMaybe<Scalars['Boolean']>;
   ne?: InputMaybe<Scalars['Boolean']>;
+  nei?: InputMaybe<Scalars['Boolean']>;
   not?: InputMaybe<BooleanFilterInput>;
   notContains?: InputMaybe<Scalars['Boolean']>;
   notContainsi?: InputMaybe<Scalars['Boolean']>;
@@ -42,6 +43,107 @@ export type BooleanFilterInput = {
   null?: InputMaybe<Scalars['Boolean']>;
   or?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
   startsWith?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ContentReleasesRelease = {
+  __typename?: 'ContentReleasesRelease';
+  actions?: Maybe<ContentReleasesReleaseActionRelationResponseCollection>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  releasedAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type ContentReleasesReleaseActionsArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ContentReleasesReleaseAction = {
+  __typename?: 'ContentReleasesReleaseAction';
+  contentType: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  entry?: Maybe<GenericMorph>;
+  release?: Maybe<ContentReleasesReleaseEntityResponse>;
+  type: Enum_Contentreleasesreleaseaction_Type;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ContentReleasesReleaseActionEntity = {
+  __typename?: 'ContentReleasesReleaseActionEntity';
+  attributes?: Maybe<ContentReleasesReleaseAction>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type ContentReleasesReleaseActionEntityResponse = {
+  __typename?: 'ContentReleasesReleaseActionEntityResponse';
+  data?: Maybe<ContentReleasesReleaseActionEntity>;
+};
+
+export type ContentReleasesReleaseActionEntityResponseCollection = {
+  __typename?: 'ContentReleasesReleaseActionEntityResponseCollection';
+  data: Array<ContentReleasesReleaseActionEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ContentReleasesReleaseActionFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseActionFiltersInput>>>;
+  contentType?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseActionFiltersInput>>>;
+  release?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  type?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ContentReleasesReleaseActionInput = {
+  contentType?: InputMaybe<Scalars['String']>;
+  release?: InputMaybe<Scalars['ID']>;
+  type?: InputMaybe<Enum_Contentreleasesreleaseaction_Type>;
+};
+
+export type ContentReleasesReleaseActionRelationResponseCollection = {
+  __typename?: 'ContentReleasesReleaseActionRelationResponseCollection';
+  data: Array<ContentReleasesReleaseActionEntity>;
+};
+
+export type ContentReleasesReleaseEntity = {
+  __typename?: 'ContentReleasesReleaseEntity';
+  attributes?: Maybe<ContentReleasesRelease>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type ContentReleasesReleaseEntityResponse = {
+  __typename?: 'ContentReleasesReleaseEntityResponse';
+  data?: Maybe<ContentReleasesReleaseEntity>;
+};
+
+export type ContentReleasesReleaseEntityResponseCollection = {
+  __typename?: 'ContentReleasesReleaseEntityResponseCollection';
+  data: Array<ContentReleasesReleaseEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ContentReleasesReleaseFiltersInput = {
+  actions?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  and?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseFiltersInput>>>;
+  releasedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ContentReleasesReleaseInput = {
+  actions?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  releasedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type DateFilterInput = {
@@ -58,6 +160,7 @@ export type DateFilterInput = {
   lt?: InputMaybe<Scalars['Date']>;
   lte?: InputMaybe<Scalars['Date']>;
   ne?: InputMaybe<Scalars['Date']>;
+  nei?: InputMaybe<Scalars['Date']>;
   not?: InputMaybe<DateFilterInput>;
   notContains?: InputMaybe<Scalars['Date']>;
   notContainsi?: InputMaybe<Scalars['Date']>;
@@ -82,6 +185,7 @@ export type DateTimeFilterInput = {
   lt?: InputMaybe<Scalars['DateTime']>;
   lte?: InputMaybe<Scalars['DateTime']>;
   ne?: InputMaybe<Scalars['DateTime']>;
+  nei?: InputMaybe<Scalars['DateTime']>;
   not?: InputMaybe<DateTimeFilterInput>;
   notContains?: InputMaybe<Scalars['DateTime']>;
   notContainsi?: InputMaybe<Scalars['DateTime']>;
@@ -92,13 +196,21 @@ export type DateTimeFilterInput = {
   startsWith?: InputMaybe<Scalars['DateTime']>;
 };
 
+export enum Enum_Contentreleasesreleaseaction_Type {
+  publish = 'publish',
+  unpublish = 'unpublish'
+}
+
+export enum Enum_Notification_Type {
+  NewPassengerInYourTrip = 'NewPassengerInYourTrip',
+  NewTrip = 'NewTrip'
+}
+
 export enum Enum_Page_Type {
   tos = 'tos'
 }
 
 export enum Enum_Userspermissionsuser_Lang {
-  EN = 'EN',
-  FR = 'FR',
   en = 'en',
   fr = 'fr'
 }
@@ -169,6 +281,9 @@ export type Event = {
   date?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  enabled_modules?: Maybe<Scalars['JSON']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
   passengers?: Maybe<PassengerRelationResponseCollection>;
   position?: Maybe<Scalars['JSON']>;
@@ -210,7 +325,10 @@ export type EventFiltersInput = {
   date?: InputMaybe<DateFilterInput>;
   description?: InputMaybe<StringFilterInput>;
   email?: InputMaybe<StringFilterInput>;
+  enabled_modules?: InputMaybe<JsonFilterInput>;
   id?: InputMaybe<IdFilterInput>;
+  latitude?: InputMaybe<FloatFilterInput>;
+  longitude?: InputMaybe<FloatFilterInput>;
   name?: InputMaybe<StringFilterInput>;
   newsletter?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<EventFiltersInput>;
@@ -228,6 +346,9 @@ export type EventInput = {
   date?: InputMaybe<Scalars['Date']>;
   description?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  enabled_modules?: InputMaybe<Scalars['JSON']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
   newsletter?: InputMaybe<Scalars['Boolean']>;
   passengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -262,6 +383,7 @@ export type FloatFilterInput = {
   lt?: InputMaybe<Scalars['Float']>;
   lte?: InputMaybe<Scalars['Float']>;
   ne?: InputMaybe<Scalars['Float']>;
+  nei?: InputMaybe<Scalars['Float']>;
   not?: InputMaybe<FloatFilterInput>;
   notContains?: InputMaybe<Scalars['Float']>;
   notContainsi?: InputMaybe<Scalars['Float']>;
@@ -272,7 +394,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = EmailDesignerEmailTemplate | Event | I18NLocale | Page | Passenger | Setting | Travel | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vehicle;
+export type GenericMorph = ContentReleasesRelease | ContentReleasesReleaseAction | EmailDesignerEmailTemplate | Event | I18NLocale | Module | Notification | Page | Passenger | Setting | Travel | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vehicle;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -324,6 +446,7 @@ export type IdFilterInput = {
   lt?: InputMaybe<Scalars['ID']>;
   lte?: InputMaybe<Scalars['ID']>;
   ne?: InputMaybe<Scalars['ID']>;
+  nei?: InputMaybe<Scalars['ID']>;
   not?: InputMaybe<IdFilterInput>;
   notContains?: InputMaybe<Scalars['ID']>;
   notContainsi?: InputMaybe<Scalars['ID']>;
@@ -348,6 +471,7 @@ export type IntFilterInput = {
   lt?: InputMaybe<Scalars['Int']>;
   lte?: InputMaybe<Scalars['Int']>;
   ne?: InputMaybe<Scalars['Int']>;
+  nei?: InputMaybe<Scalars['Int']>;
   not?: InputMaybe<IntFilterInput>;
   notContains?: InputMaybe<Scalars['Int']>;
   notContainsi?: InputMaybe<Scalars['Int']>;
@@ -372,6 +496,7 @@ export type JsonFilterInput = {
   lt?: InputMaybe<Scalars['JSON']>;
   lte?: InputMaybe<Scalars['JSON']>;
   ne?: InputMaybe<Scalars['JSON']>;
+  nei?: InputMaybe<Scalars['JSON']>;
   not?: InputMaybe<JsonFilterInput>;
   notContains?: InputMaybe<Scalars['JSON']>;
   notContainsi?: InputMaybe<Scalars['JSON']>;
@@ -382,12 +507,54 @@ export type JsonFilterInput = {
   startsWith?: InputMaybe<Scalars['JSON']>;
 };
 
+export type Module = {
+  __typename?: 'Module';
+  caroster_plus_description: Scalars['String'];
+  caroster_plus_enabled?: Maybe<Scalars['Boolean']>;
+  caroster_plus_name: Scalars['String'];
+  caroster_plus_payment_link: Scalars['String'];
+  caroster_plus_price?: Maybe<Scalars['Float']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<ModuleRelationResponseCollection>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ModuleEntity = {
+  __typename?: 'ModuleEntity';
+  attributes?: Maybe<Module>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type ModuleEntityResponse = {
+  __typename?: 'ModuleEntityResponse';
+  data?: Maybe<ModuleEntity>;
+};
+
+export type ModuleInput = {
+  caroster_plus_description?: InputMaybe<Scalars['String']>;
+  caroster_plus_enabled?: InputMaybe<Scalars['Boolean']>;
+  caroster_plus_name?: InputMaybe<Scalars['String']>;
+  caroster_plus_payment_link?: InputMaybe<Scalars['String']>;
+  caroster_plus_payment_link_id?: InputMaybe<Scalars['String']>;
+  caroster_plus_price?: InputMaybe<Scalars['Float']>;
+};
+
+export type ModuleRelationResponseCollection = {
+  __typename?: 'ModuleRelationResponseCollection';
+  data: Array<ModuleEntity>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
+  createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   createEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   createEvent?: Maybe<EventEntityResponse>;
+  createModuleLocalization?: Maybe<ModuleEntityResponse>;
+  createNotification?: Maybe<NotificationEntityResponse>;
   createPage?: Maybe<PageEntityResponse>;
   /** Create a passenger */
   createPassenger?: Maybe<PassengerEntityResponse>;
@@ -400,8 +567,12 @@ export type Mutation = {
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   createVehicle?: Maybe<VehicleEntityResponse>;
+  deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   deleteEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   deleteEvent?: Maybe<EventEntityResponse>;
+  deleteModule?: Maybe<ModuleEntityResponse>;
+  deleteNotification?: Maybe<NotificationEntityResponse>;
   deletePage?: Maybe<PageEntityResponse>;
   deletePassenger?: Maybe<PassengerEntityResponse>;
   deleteSetting?: Maybe<SettingEntityResponse>;
@@ -419,17 +590,22 @@ export type Mutation = {
   forgotPassword?: Maybe<UsersPermissionsPasswordPayload>;
   login: UsersPermissionsLoginPayload;
   multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
+  readNotifications?: Maybe<NotificationEntityResponseCollection>;
   /** Register a user */
   register: UsersPermissionsLoginPayload;
   removeFile?: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  updateContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   updateEvent?: Maybe<EventEntityResponse>;
   /** Update an event using its UUID */
   updateEventByUUID?: Maybe<EventEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateMe: UsersPermissionsUserEntityResponse;
+  updateModule?: Maybe<ModuleEntityResponse>;
+  updateNotification?: Maybe<NotificationEntityResponse>;
   updatePage?: Maybe<PageEntityResponse>;
   updatePassenger?: Maybe<PassengerEntityResponse>;
   updateSetting?: Maybe<SettingEntityResponse>;
@@ -452,6 +628,16 @@ export type MutationChangePasswordArgs = {
 };
 
 
+export type MutationCreateContentReleasesReleaseArgs = {
+  data: ContentReleasesReleaseInput;
+};
+
+
+export type MutationCreateContentReleasesReleaseActionArgs = {
+  data: ContentReleasesReleaseActionInput;
+};
+
+
 export type MutationCreateEmailDesignerEmailTemplateArgs = {
   data: EmailDesignerEmailTemplateInput;
 };
@@ -459,6 +645,18 @@ export type MutationCreateEmailDesignerEmailTemplateArgs = {
 
 export type MutationCreateEventArgs = {
   data: EventInput;
+};
+
+
+export type MutationCreateModuleLocalizationArgs = {
+  data?: InputMaybe<ModuleInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationCreateNotificationArgs = {
+  data: NotificationInput;
 };
 
 
@@ -510,12 +708,32 @@ export type MutationCreateVehicleArgs = {
 };
 
 
+export type MutationDeleteContentReleasesReleaseArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteContentReleasesReleaseActionArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationDeleteEmailDesignerEmailTemplateArgs = {
   id: Scalars['ID'];
 };
 
 
 export type MutationDeleteEventArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteModuleArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationDeleteNotificationArgs = {
   id: Scalars['ID'];
 };
 
@@ -588,6 +806,11 @@ export type MutationMultipleUploadArgs = {
 };
 
 
+export type MutationReadNotificationsArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
 };
@@ -602,6 +825,18 @@ export type MutationResetPasswordArgs = {
   code: Scalars['String'];
   password: Scalars['String'];
   passwordConfirmation: Scalars['String'];
+};
+
+
+export type MutationUpdateContentReleasesReleaseArgs = {
+  data: ContentReleasesReleaseInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateContentReleasesReleaseActionArgs = {
+  data: ContentReleasesReleaseActionInput;
+  id: Scalars['ID'];
 };
 
 
@@ -631,6 +866,18 @@ export type MutationUpdateFileInfoArgs = {
 
 export type MutationUpdateMeArgs = {
   data: UsersPermissionsUserInput;
+};
+
+
+export type MutationUpdateModuleArgs = {
+  data: ModuleInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationUpdateNotificationArgs = {
+  data: NotificationInput;
+  id: Scalars['ID'];
 };
 
 
@@ -694,6 +941,58 @@ export type MutationUploadArgs = {
   info?: InputMaybe<FileInfoInput>;
   ref?: InputMaybe<Scalars['String']>;
   refId?: InputMaybe<Scalars['ID']>;
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  event?: Maybe<EventEntityResponse>;
+  read?: Maybe<Scalars['Boolean']>;
+  type: Enum_Notification_Type;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user?: Maybe<UsersPermissionsUserEntityResponse>;
+};
+
+export type NotificationEntity = {
+  __typename?: 'NotificationEntity';
+  attributes?: Maybe<Notification>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type NotificationEntityResponse = {
+  __typename?: 'NotificationEntityResponse';
+  data?: Maybe<NotificationEntity>;
+};
+
+export type NotificationEntityResponseCollection = {
+  __typename?: 'NotificationEntityResponseCollection';
+  data: Array<NotificationEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type NotificationFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<NotificationFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  event?: InputMaybe<EventFiltersInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<NotificationFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<NotificationFiltersInput>>>;
+  read?: InputMaybe<BooleanFilterInput>;
+  type?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  user?: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type NotificationInput = {
+  event?: InputMaybe<Scalars['ID']>;
+  read?: InputMaybe<Scalars['Boolean']>;
+  type?: InputMaybe<Enum_Notification_Type>;
+  user?: InputMaybe<Scalars['ID']>;
+};
+
+export type NotificationRelationResponseCollection = {
+  __typename?: 'NotificationRelationResponseCollection';
+  data: Array<NotificationEntity>;
 };
 
 export type Page = {
@@ -809,6 +1108,10 @@ export type PassengerRelationResponseCollection = {
 
 export type Query = {
   __typename?: 'Query';
+  contentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  contentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  contentReleasesReleaseActions?: Maybe<ContentReleasesReleaseActionEntityResponseCollection>;
+  contentReleasesReleases?: Maybe<ContentReleasesReleaseEntityResponseCollection>;
   emailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   emailDesignerEmailTemplates?: Maybe<EmailDesignerEmailTemplateEntityResponseCollection>;
   event?: Maybe<EventEntityResponse>;
@@ -817,6 +1120,9 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  module?: Maybe<ModuleEntityResponse>;
+  notification?: Maybe<NotificationEntityResponse>;
+  notifications?: Maybe<NotificationEntityResponseCollection>;
   page?: Maybe<PageEntityResponse>;
   pages?: Maybe<PageEntityResponseCollection>;
   passenger?: Maybe<PassengerEntityResponse>;
@@ -830,6 +1136,30 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   vehicle?: Maybe<VehicleEntityResponse>;
+};
+
+
+export type QueryContentReleasesReleaseArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryContentReleasesReleaseActionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryContentReleasesReleaseActionsArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryContentReleasesReleasesArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -862,6 +1192,23 @@ export type QueryI18NLocaleArgs = {
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryModuleArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type QueryNotificationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryNotificationsArgs = {
+  filters?: InputMaybe<NotificationFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -948,12 +1295,14 @@ export type Setting = {
   __typename?: 'Setting';
   about_link?: Maybe<Scalars['String']>;
   announcement?: Maybe<Scalars['String']>;
+  code_link?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   faq_link?: Maybe<Scalars['String']>;
   gtm_id?: Maybe<Scalars['String']>;
   locale?: Maybe<Scalars['String']>;
   localizations?: Maybe<SettingRelationResponseCollection>;
   matomo_script_url?: Maybe<Scalars['String']>;
+  opencollective_link?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -971,9 +1320,11 @@ export type SettingEntityResponse = {
 export type SettingInput = {
   about_link?: InputMaybe<Scalars['String']>;
   announcement?: InputMaybe<Scalars['String']>;
+  code_link?: InputMaybe<Scalars['String']>;
   faq_link?: InputMaybe<Scalars['String']>;
   gtm_id?: InputMaybe<Scalars['String']>;
   matomo_script_url?: InputMaybe<Scalars['String']>;
+  opencollective_link?: InputMaybe<Scalars['String']>;
 };
 
 export type SettingRelationResponseCollection = {
@@ -995,6 +1346,7 @@ export type StringFilterInput = {
   lt?: InputMaybe<Scalars['String']>;
   lte?: InputMaybe<Scalars['String']>;
   ne?: InputMaybe<Scalars['String']>;
+  nei?: InputMaybe<Scalars['String']>;
   not?: InputMaybe<StringFilterInput>;
   notContains?: InputMaybe<Scalars['String']>;
   notContainsi?: InputMaybe<Scalars['String']>;
@@ -1012,10 +1364,13 @@ export type Travel = {
   details?: Maybe<Scalars['String']>;
   event?: Maybe<EventEntityResponse>;
   meeting?: Maybe<Scalars['String']>;
+  meeting_latitude?: Maybe<Scalars['Float']>;
+  meeting_longitude?: Maybe<Scalars['Float']>;
   passengers?: Maybe<PassengerRelationResponseCollection>;
   phone_number?: Maybe<Scalars['String']>;
   seats?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  user?: Maybe<UsersPermissionsUserEntityResponse>;
   vehicleName?: Maybe<Scalars['String']>;
 };
 
@@ -1045,12 +1400,15 @@ export type TravelFiltersInput = {
   event?: InputMaybe<EventFiltersInput>;
   id?: InputMaybe<IdFilterInput>;
   meeting?: InputMaybe<StringFilterInput>;
+  meeting_latitude?: InputMaybe<FloatFilterInput>;
+  meeting_longitude?: InputMaybe<FloatFilterInput>;
   not?: InputMaybe<TravelFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<TravelFiltersInput>>>;
   passengers?: InputMaybe<PassengerFiltersInput>;
   phone_number?: InputMaybe<StringFilterInput>;
   seats?: InputMaybe<IntFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
+  user?: InputMaybe<UsersPermissionsUserFiltersInput>;
   vehicleName?: InputMaybe<StringFilterInput>;
 };
 
@@ -1059,9 +1417,12 @@ export type TravelInput = {
   details?: InputMaybe<Scalars['String']>;
   event?: InputMaybe<Scalars['ID']>;
   meeting?: InputMaybe<Scalars['String']>;
+  meeting_latitude?: InputMaybe<Scalars['Float']>;
+  meeting_longitude?: InputMaybe<Scalars['Float']>;
   passengers?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   phone_number?: InputMaybe<Scalars['String']>;
   seats?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<Scalars['ID']>;
   vehicleName?: InputMaybe<Scalars['String']>;
 };
 
@@ -1310,6 +1671,7 @@ export type UsersPermissionsRegisterInput = {
   firstName?: InputMaybe<Scalars['String']>;
   lang?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
+  newsletterConsent?: InputMaybe<Scalars['Boolean']>;
   password: Scalars['String'];
   username: Scalars['String'];
 };
@@ -1392,6 +1754,8 @@ export type UsersPermissionsUser = {
   firstName?: Maybe<Scalars['String']>;
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   lastName?: Maybe<Scalars['String']>;
+  newsletterConsent?: Maybe<Scalars['Boolean']>;
+  notifications?: Maybe<NotificationRelationResponseCollection>;
   onboardingCreator?: Maybe<Scalars['Boolean']>;
   onboardingUser?: Maybe<Scalars['Boolean']>;
   provider?: Maybe<Scalars['String']>;
@@ -1404,6 +1768,13 @@ export type UsersPermissionsUser = {
 
 export type UsersPermissionsUserEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type UsersPermissionsUserNotificationsArgs = {
+  filters?: InputMaybe<NotificationFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -1438,7 +1809,9 @@ export type UsersPermissionsUserFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   lang?: InputMaybe<StringFilterInput>;
   lastName?: InputMaybe<StringFilterInput>;
+  newsletterConsent?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  notifications?: InputMaybe<NotificationFiltersInput>;
   onboardingCreator?: InputMaybe<BooleanFilterInput>;
   onboardingUser?: InputMaybe<BooleanFilterInput>;
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
@@ -1461,6 +1834,8 @@ export type UsersPermissionsUserInput = {
   firstName?: InputMaybe<Scalars['String']>;
   lang?: InputMaybe<Enum_Userspermissionsuser_Lang>;
   lastName?: InputMaybe<Scalars['String']>;
+  newsletterConsent?: InputMaybe<Scalars['Boolean']>;
+  notifications?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   oldPassword?: InputMaybe<Scalars['String']>;
   onboardingCreator?: InputMaybe<Scalars['Boolean']>;
   onboardingUser?: InputMaybe<Scalars['Boolean']>;
@@ -1542,6 +1917,8 @@ export const EventFieldsFragmentDoc = gql`
     email
     date
     address
+    latitude
+    longitude
     position
     waitingPassengers {
       data {
@@ -1562,11 +1939,13 @@ export const EventFieldsFragmentDoc = gql`
         }
       }
     }
-    travels {
+    travels(pagination: {limit: 500}) {
       data {
         id
         attributes {
           meeting
+          meeting_latitude
+          meeting_longitude
           departure
           details
           vehicleName
@@ -1620,6 +1999,8 @@ export const TravelFieldsFragmentDoc = gql`
   id
   attributes {
     meeting
+    meeting_latitude
+    meeting_longitude
     departure
     details
     vehicleName
@@ -1657,7 +2038,7 @@ export const UserFieldsFragmentDoc = gql`
   onboardingUser
   onboardingCreator
   provider
-  events {
+  events(pagination: {limit: 500}) {
     data {
       id
       attributes {
@@ -1725,9 +2106,9 @@ export const ResetPasswordDocument = gql`
 }
     ${MeFieldsFragmentDoc}`;
 export const CreateEventDocument = gql`
-    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String, $description: String, $newsletter: Boolean) {
+    mutation createEvent($name: String!, $email: String!, $date: Date, $address: String, $latitude: Float, $longitude: Float, $description: String, $newsletter: Boolean) {
   createEvent(
-    data: {name: $name, email: $email, date: $date, address: $address, description: $description, newsletter: $newsletter}
+    data: {name: $name, email: $email, date: $date, latitude: $latitude, longitude: $longitude, address: $address, description: $description, newsletter: $newsletter}
   ) {
     data {
       ...EventFields
@@ -1791,6 +2172,8 @@ export const SettingDocument = gql`
         faq_link
         announcement
         matomo_script_url
+        opencollective_link
+        code_link
       }
     }
   }
@@ -1852,7 +2235,7 @@ export const FindUserVehiclesDocument = gql`
     id
     username
     profile {
-      vehicles {
+      vehicles(pagination: {limit: 500}) {
         data {
           ...VehicleFields
         }
@@ -1971,19 +2354,21 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } | null };
 
-export type EventFieldsFragment = { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null };
+export type EventFieldsFragment = { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null };
 
 export type CreateEventMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
   date?: InputMaybe<Scalars['Date']>;
   address?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
   description?: InputMaybe<Scalars['String']>;
   newsletter?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type CreateEventMutation = { __typename?: 'Mutation', createEvent?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type UpdateEventMutationVariables = Exact<{
   uuid: Scalars['String'];
@@ -1991,14 +2376,14 @@ export type UpdateEventMutationVariables = Exact<{
 }>;
 
 
-export type UpdateEventMutation = { __typename?: 'Mutation', updateEventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
+export type UpdateEventMutation = { __typename?: 'Mutation', updateEventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type EventByUuidQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
 
 
-export type EventByUuidQuery = { __typename?: 'Query', eventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
+export type EventByUuidQuery = { __typename?: 'Query', eventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, email: string, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type PassengerFieldsFragment = { __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null };
 
@@ -2029,9 +2414,9 @@ export type SettingQueryVariables = Exact<{
 }>;
 
 
-export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null } | null } | null } | null };
+export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null } | null } | null } | null };
 
-export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null };
+export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null };
 
 export type CreateTravelMutationVariables = Exact<{
   travel: TravelInput;
@@ -2039,7 +2424,7 @@ export type CreateTravelMutationVariables = Exact<{
 }>;
 
 
-export type CreateTravelMutation = { __typename?: 'Mutation', createTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
+export type CreateTravelMutation = { __typename?: 'Mutation', createTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
 
 export type UpdateTravelMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -2047,7 +2432,7 @@ export type UpdateTravelMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTravelMutation = { __typename?: 'Mutation', updateTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
+export type UpdateTravelMutation = { __typename?: 'Mutation', updateTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
 
 export type DeleteTravelMutationVariables = Exact<{
   id: Scalars['ID'];
