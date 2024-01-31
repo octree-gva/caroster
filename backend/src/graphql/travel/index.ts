@@ -53,5 +53,10 @@ export default [
         },
       },
     },
+    resolversConfig: {
+      "Travel.passengers": {
+        auth: false,
+      },
+    },
   }),
 ];

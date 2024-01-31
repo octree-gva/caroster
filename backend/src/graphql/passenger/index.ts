@@ -51,7 +51,12 @@ export default [
         },
       },
       Mutation: {
-        createPassenger
+        createPassenger,
+      },
+    },
+    resolversConfig: {
+      "Passenger.user": {
+        auth: false,
       },
     },
   }),

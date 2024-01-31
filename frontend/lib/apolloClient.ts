@@ -20,8 +20,9 @@ const authLink = (jwt: string | null) =>
     };
   });
 
-const errorLink = onError(({operation, networkError}) => {
+const errorLink = onError(({operation, networkError, response}) => {
   console.error({networkError, operation});
+  if (response) console.error(JSON.stringify(response, null, 4));
   const responseStatus = networkError?.response?.status;
 
   if (responseStatus === 401)

@@ -15,13 +15,6 @@ const publicPerms = [
   "api::page.page.findOne",
   "api::setting.setting.find",
   "api::stripe.stripe.handleWebhook",
-
-  // // GraphQL disabled at load
-  "api::travel.travel.find",
-  "api::passenger.passenger.find",
-  "api::event.event.find",
-  "plugin::users-permissions.user.find",
-  "api::vehicle.vehicle.find",
 ];
 
 const authenticated = [

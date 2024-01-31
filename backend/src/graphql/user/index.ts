@@ -97,6 +97,12 @@ export default [
           scope: ["plugin::users-permissions.user.me"],
         },
       },
+      "UsersPermissionsUser.events": {
+        auth: true,
+      },
+      "UsersPermissionsUser.vehicles": {
+        auth: true,
+      },
       "UsersPermissionsUser.notifications": {
         auth: {
           scope: ["plugin::users-permissions.user.me"],

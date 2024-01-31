@@ -121,6 +121,15 @@ const updateEventExtension = ({ nexus, strapi }) => ({
         scope: ["api::event.event.update"],
       },
     },
+    "Event.passengers": {
+      auth: false,
+    },
+    "Event.waitingPassengers": {
+      auth: false,
+    },
+    "Event.travels": {
+      auth: false,
+    },
   },
 });
 

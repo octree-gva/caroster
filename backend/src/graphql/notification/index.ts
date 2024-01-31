@@ -58,6 +58,9 @@ export default [
       "Mutation.readNotifications": {
         auth: true,
       },
+      "Notification.event": {
+        auth: true,
+      },
     },
   }),
 ];
