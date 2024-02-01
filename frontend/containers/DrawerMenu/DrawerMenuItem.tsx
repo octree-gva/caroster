@@ -46,7 +46,7 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
         }}
         label={
           <Icon
-            color="action"
+            color={active ? "primary" : "action"}
             className={active ? 'material-icons' : 'material-icons-outlined'}
           >
             {icon}

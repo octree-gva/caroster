@@ -13,13 +13,13 @@ const publicPerms = [
   "api::passenger.passenger.update",
   "api::page.page.find",
   "api::page.page.findOne",
+  "api::module.module.find",
   "api::setting.setting.find",
   "api::stripe.stripe.handleWebhook",
 ];
 
 const authenticated = [
   ...publicPerms,
-  "api::module.module.find",
   "plugin::users-permissions.user.me",
 ];
 

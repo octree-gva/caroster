@@ -945,13 +945,6 @@ export interface ApiModuleModule extends Schema.SingleType {
           localized: true;
         };
       }>;
-    caroster_plus_description: Attribute.Text &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     caroster_plus_payment_link_id: Attribute.String &
       Attribute.Required &
       Attribute.Private &
@@ -965,6 +958,12 @@ export interface ApiModuleModule extends Schema.SingleType {
       Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
+        };
+      }>;
+    caroster_plus_description: Attribute.RichText &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
         };
       }>;
     createdAt: Attribute.DateTime;

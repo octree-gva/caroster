@@ -1,5 +1,4 @@
 fragment UserFields on UsersPermissionsUser {
-  id
   username
   email
   confirmed

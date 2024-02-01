@@ -4,6 +4,7 @@ fragment EventFields on EventEntity {
     uuid
     name
     description
+    enabled_modules
     email
     date
     address
