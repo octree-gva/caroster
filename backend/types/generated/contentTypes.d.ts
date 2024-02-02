@@ -1244,6 +1244,53 @@ export interface ApiTravelTravel extends Schema.CollectionType {
   };
 }
 
+export interface ApiTripAlertTripAlert extends Schema.CollectionType {
+  collectionName: 'trip_alerts';
+  info: {
+    singularName: 'trip-alert';
+    pluralName: 'trip-alerts';
+    displayName: 'TripAlert';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    event: Attribute.Relation<
+      'api::trip-alert.trip-alert',
+      'oneToOne',
+      'api::event.event'
+    >;
+    user: Attribute.Relation<
+      'api::trip-alert.trip-alert',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    latitude: Attribute.Float;
+    longitude: Attribute.Float;
+    enabled: Attribute.Boolean & Attribute.DefaultTo<true>;
+    address: Attribute.String;
+    radius: Attribute.Float &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::trip-alert.trip-alert',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::trip-alert.trip-alert',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiVehicleVehicle extends Schema.CollectionType {
   collectionName: 'vehicles';
   info: {
@@ -1314,6 +1361,7 @@ declare module '@strapi/types' {
       'api::passenger.passenger': ApiPassengerPassenger;
       'api::setting.setting': ApiSettingSetting;
       'api::travel.travel': ApiTravelTravel;
+      'api::trip-alert.trip-alert': ApiTripAlertTripAlert;
       'api::vehicle.vehicle': ApiVehicleVehicle;
     }
   }

@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trip_alerts",
+  "info": {
+    "singularName": "trip-alert",
+    "pluralName": "trip-alerts",
+    "displayName": "TripAlert",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "event": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event.event"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "address": {
+      "type": "string"
+    },
+    "radius": {
+      "type": "float",
+      "min": 0
+    }
+  }
+}

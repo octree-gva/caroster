@@ -6,7 +6,22 @@ const { STRAPI_URL = "" } = process.env;
 export default {
   async afterCreate({ result, params }) {
     const eventId = params?.data?.event;
-    if (eventId) sendEmailsToWaitingPassengers(result, eventId);
+
+    const event = await strapi.entityService.findOne(
+      "api::event.event",
+      eventId
+    );
+    if (!event)
+      throw new Error("Try to create a travel not linked to an existing event");
+
+    const enabledModules = event.enabled_modules as String[];
+    const isEventCarosterPlus = enabledModules?.includes("caroster-plus");
+
+    if (isEventCarosterPlus)
+      strapi
+        .service("api::trip-alert.trip-alert")
+        .sendTripAlerts(eventId, result);
+    else sendEmailsToWaitingPassengers(result, eventId);
   },
 
   async beforeUpdate(event) {

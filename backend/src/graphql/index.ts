@@ -5,6 +5,7 @@ import travelExtensions from "./travel";
 import vehicleExtensions from "./vehicle";
 import passengerExtensions from "./passenger";
 import notificationExtensions from "./notification";
+import tripAlert from "./trip-alert";
 
 export default ({ strapi }) => {
   const extService = strapi.plugin("graphql").service("extension");
@@ -15,17 +16,9 @@ export default ({ strapi }) => {
   vehicleExtensions.forEach(extService.use);
   passengerExtensions.forEach(extService.use);
   notificationExtensions.forEach(extService.use);
+  tripAlert.forEach(extService.use);
 
   // Disable shadow CRUD
   /// Fields
   extService.shadowCRUD("api::event.event").field("users").disableOutput();
-
-  /// Methods
-  extService.shadowCRUD("api::event.event").disableActions(["find"]);
-  extService.shadowCRUD("api::travel.travel").disableActions(["find"]);
-  extService.shadowCRUD("api::passenger.passenger").disableActions(["find"]);
-  extService.shadowCRUD("api::vehicle.vehicle").disableActions(["find"]);
-  extService
-    .shadowCRUD("plugin::users-permissions.user")
-    .disableActions(["find"]);
 };
