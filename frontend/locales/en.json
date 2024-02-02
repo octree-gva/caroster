@@ -111,6 +111,7 @@
   "notifications.content": "No notification",
   "notification.type.NewPassengerInYourTrip.content": "A passenger has been added to your trip.",
   "notification.type.NewTrip.content": "A departure close to you is available.",
+  "notification.type.AddedAsAdmin.content": "You have been added as admin to an event.",
   "passenger.actions.place": "Assign",
   "passenger.actions.remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",
   "passenger.availability.seats": "{{count}} seat available",

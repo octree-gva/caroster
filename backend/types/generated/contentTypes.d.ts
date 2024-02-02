@@ -890,6 +890,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
         'plugin::multi-select.multi-select',
         ['caroster-plus']
       >;
+    administrators: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -995,12 +996,15 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
     singularName: 'notification';
     pluralName: 'notifications';
     displayName: 'Notification';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    type: Attribute.Enumeration<['NewPassengerInYourTrip', 'NewTrip']> &
+    type: Attribute.Enumeration<
+      ['NewPassengerInYourTrip', 'NewTrip', 'AddedAsAdmin']
+    > &
       Attribute.Required;
     user: Attribute.Relation<
       'api::notification.notification',

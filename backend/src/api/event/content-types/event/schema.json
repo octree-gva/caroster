@@ -71,6 +71,9 @@
         "caroster-plus"
       ],
       "customField": "plugin::multi-select.multi-select"
+    },
+    "administrators": {
+      "type": "string"
     }
   }
 }

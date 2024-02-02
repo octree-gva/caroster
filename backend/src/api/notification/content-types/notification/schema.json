@@ -4,7 +4,8 @@
   "info": {
     "singularName": "notification",
     "pluralName": "notifications",
-    "displayName": "Notification"
+    "displayName": "Notification",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -15,7 +16,8 @@
       "type": "enumeration",
       "enum": [
         "NewPassengerInYourTrip",
-        "NewTrip"
+        "NewTrip",
+        "AddedAsAdmin"
       ],
       "required": true
     },
