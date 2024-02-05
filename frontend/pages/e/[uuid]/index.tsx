@@ -7,6 +7,7 @@ import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
 import Fab from '../../../containers/Fab';
 import pageUtils from '../../../lib/pageUtils';
+import usePermissions from '../../../hooks/usePermissions';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
@@ -26,6 +27,7 @@ const Page = (props: PropsWithChildren<Props>) => {
 const TravelsTab: TabComponent = () => {
   const {t} = useTranslation();
   const session = useSession();
+  const {userPermissions: {canAddTravel}} = usePermissions()
   const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
 
@@ -46,6 +48,7 @@ const TravelsTab: TabComponent = () => {
       <Fab
         onClick={addTravelClickHandler}
         aria-label="add-car"
+        disabled={!canAddTravel}
       >
         {t('travel.creation.title')}
       </Fab>

@@ -11,11 +11,10 @@ import ListItemText from '@mui/material/ListItemText';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useTranslation} from 'react-i18next';
-import CarosterPlusSettings from '../CarosterPlusSettings';
-import useLocale from '../../hooks/useLocale';
-import useProfile from '../../hooks/useProfile';
-import {Event as EventType, Module} from '../../generated/graphql';
 import Markdown from '../../components/Markdown';
+import useLocale from '../../hooks/useLocale';
+import usePermissions from '../../hooks/usePermissions';
+import {Event as EventType, Module} from '../../generated/graphql';
 
 interface Props {
   event: EventType;
@@ -24,10 +23,10 @@ interface Props {
 
 const CarosterPlusOption = ({event, modulesSettings}: Props) => {
   const {t} = useTranslation();
-  const {profile} = useProfile();
+  const {
+    userPermissions: {canEditEventOptions},
+  } = usePermissions();
   const {locale} = useLocale();
-
-  const userIsCreator = profile?.email === event.email;
 
   const {
     caroster_plus_name,
@@ -57,7 +56,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
         <Box pt={1}>
           <Tooltip
             title={t(
-              userIsCreator
+              canEditEventOptions
                 ? 'options.plus.activationOK'
                 : 'options.plus.activationForbiden'
             )}
@@ -65,7 +64,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
             <Box>
               <Button
                 href={`${caroster_plus_payment_link}?client_reference_id=${event.uuid}&locale=${locale}`}
-                disabled={!userIsCreator}
+                disabled={!canEditEventOptions}
                 sx={{
                   backgroundColor: 'primary.light',
                   color: 'primary.main',

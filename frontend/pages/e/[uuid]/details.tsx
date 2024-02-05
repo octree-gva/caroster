@@ -18,6 +18,8 @@ import {PropsWithChildren, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import pageUtils from '../../../lib/pageUtils';
 import ShareEvent from '../../../containers/ShareEvent';
+import PlaceInput from '../../../containers/PlaceInput';
+import usePermissions from '../../../hooks/usePermissions';
 import useEventStore from '../../../stores/useEventStore';
 import useToastStore from '../../../stores/useToastStore';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
@@ -25,7 +27,6 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
-import PlaceInput from '../../../containers/PlaceInput';
 
 interface Props {
   eventUUID: string;
@@ -38,6 +39,9 @@ const Page = (props: PropsWithChildren<Props>) => {
 
 const DetailsTab: TabComponent = ({}) => {
   const {t} = useTranslation();
+  const {
+    userPermissions: {canEditEventDetails},
+  } = usePermissions();
   const theme = useTheme();
   const [updateEvent] = useUpdateEventMutation();
   const addToast = useToastStore(s => s.addToast);
@@ -123,7 +127,7 @@ const DetailsTab: TabComponent = ({}) => {
           <Typography variant="h4" pb={2}>
             {t('event.details')}
           </Typography>
-          {modifyButton}
+          {canEditEventDetails && modifyButton}
           <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.name')}</Typography>
             <Typography variant="body1">

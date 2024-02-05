@@ -11,6 +11,7 @@ import useActions from './useActions';
 import PassengersList from '../PassengersList';
 import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
+import usePermissions from '../../hooks/usePermissions';
 import useMapStore from '../../stores/useMapStore';
 import {Travel as TravelType} from '../../generated/graphql';
 
@@ -21,7 +22,9 @@ interface Props {
 
 const Travel = (props: Props) => {
   const {travel} = props;
-
+  const {
+    userPermissions: {editableTravels, canJoinTravels, canAddToTravel},
+  } = usePermissions();
   const {t} = useTranslation();
   const theme = useTheme();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
@@ -49,7 +52,7 @@ const Travel = (props: Props) => {
         boxShadow: focused
           ? `0px 0px 5px 2px ${theme.palette.primary.main}`
           : 'none',
-          scrollMarginTop: theme.spacing(2)
+        scrollMarginTop: theme.spacing(2),
       }}
       id={travel.id}
     >
@@ -60,30 +63,31 @@ const Travel = (props: Props) => {
       )}
       {!isEditing && (
         <>
-          <Divider />
-          <AddPassengerButtons
-            getOnClickFunction={props.getAddPassengerFunction}
-            canAddSelf={connected}
-            registered={registered}
-            variant="travel"
-            disabled={disableNewPassengers}
-          />
+          {(canJoinTravels || canAddToTravel) && (
+            <>
+              <Divider />
+              <AddPassengerButtons
+                getOnClickFunction={props.getAddPassengerFunction}
+                registered={registered}
+                variant="travel"
+                disabled={disableNewPassengers}
+              />
+            </>
+          )}
           {travel.passengers.data.length > 0 && <Divider />}
           <PassengersList
             passengers={travel.passengers.data}
             onClick={actions.sendPassengerToWaitingList}
             isTravel
-            Button={({onClick}: {onClick: () => void}) => (
-              <ListItemSecondaryAction>
-                <Button
-                  color="primary"
-                  onClick={onClick}
-                  tabIndex={-1}
-                >
-                  {t`travel.passengers.remove`}
-                </Button>
-              </ListItemSecondaryAction>
-            )}
+            Button={({onClick}: {onClick: () => void}) =>
+              editableTravels.includes(travel.id) && (
+                <ListItemSecondaryAction>
+                  <Button color="primary" onClick={onClick} tabIndex={-1}>
+                    {t`travel.passengers.remove`}
+                  </Button>
+                </ListItemSecondaryAction>
+              )
+            }
           />
         </>
       )}

@@ -2,10 +2,10 @@ import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
+import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   getOnClickFunction: (addSelf: boolean) => () => void;
-  canAddSelf: boolean;
   registered: boolean;
   variant: 'waitingList' | 'travel';
   disabled?: boolean;
@@ -18,13 +18,15 @@ const ADD_TO_LOCALE = {
 
 const AddPassengerButtons = ({
   getOnClickFunction,
-  canAddSelf,
   registered,
   variant,
   disabled,
 }: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
+  const {
+    userPermissions: {canJoinTravels, canAddToTravel},
+  } = usePermissions();
 
   const containerSx = {padding: theme.spacing(1), textAlign: 'center'};
   const textSx = {
@@ -36,7 +38,7 @@ const AddPassengerButtons = ({
 
   return (
     <Box sx={containerSx}>
-      {canAddSelf && (
+      {canJoinTravels && (
         <Box sx={containerSx}>
           <Button
             sx={textSx}
@@ -44,7 +46,7 @@ const AddPassengerButtons = ({
             color="primary"
             fullWidth
             onClick={getOnClickFunction(true)}
-            disabled={registered}
+            disabled={disabled || registered}
           >
             {t(
               registered
@@ -54,18 +56,20 @@ const AddPassengerButtons = ({
           </Button>
         </Box>
       )}
-      <Box sx={containerSx}>
-        <Button
-          sx={textSx}
-          variant="outlined"
-          color="primary"
-          fullWidth
-          onClick={getOnClickFunction(false)}
-          disabled={disabled}
-        >
-          {t(ADD_TO_LOCALE[variant])}
-        </Button>
-      </Box>
+      {canAddToTravel && (
+        <Box sx={containerSx}>
+          <Button
+            sx={textSx}
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={getOnClickFunction(false)}
+            disabled={disabled}
+          >
+            {t(ADD_TO_LOCALE[variant])}
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

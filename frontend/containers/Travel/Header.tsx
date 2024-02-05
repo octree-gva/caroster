@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
 import {Travel} from '../../generated/graphql';
+import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   travel: Travel & {id: string};
@@ -20,6 +21,9 @@ const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
   const theme = useTheme();
   const {t} = useTranslation();
+  const {
+    userPermissions: {editableTravels},
+  } = usePermissions();
   const {setFocusOnTravel, focusedTravel} = useMapStore();
 
   const passengersCount = travel?.passengers?.data.length || 0;
@@ -34,18 +38,25 @@ const Header = (props: Props) => {
         mapElement?.scrollIntoView({behavior: 'smooth'});
       }}
     >
-      <IconButton
-        size="small"
-        color="primary"
-        sx={{position: 'absolute', top: 0, right: 0, margin: theme.spacing(1)}}
-        onClick={e => {
-          e.stopPropagation();
-          toggleEditing();
-        }}
-        id="EditTravelBtn"
-      >
-        <TuneIcon />
-      </IconButton>
+      {editableTravels.includes(travel.id) && (
+        <IconButton
+          size="small"
+          color="primary"
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            margin: theme.spacing(1),
+          }}
+          onClick={e => {
+            e.stopPropagation();
+            toggleEditing();
+          }}
+          id="EditTravelBtn"
+        >
+          <TuneIcon />
+        </IconButton>
+      )}
       {!!travel.departure && (
         <Typography
           variant="overline"

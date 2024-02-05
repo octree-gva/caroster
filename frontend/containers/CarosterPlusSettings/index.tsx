@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Typography from '@mui/material/Typography';
 import {useTranslation} from 'react-i18next';
+import usePermissions from '../../hooks/usePermissions';
 import {Event as EventType} from '../../generated/graphql';
 
 interface Props {
@@ -19,6 +20,9 @@ interface Props {
 
 const CarosterPlusSettings = ({event}: Props) => {
   const {t} = useTranslation();
+  const {
+    userPermissions: {canEditEventOptions},
+  } = usePermissions();
 
   return (
     <Card
@@ -45,7 +49,11 @@ const CarosterPlusSettings = ({event}: Props) => {
         <Typography pt={1} variant="body2" color="GrayText">
           {t('options.plus.admins')}
         </Typography>
-        <Button variant="text" endIcon={<AddIcon />}>
+        <Button
+          variant="text"
+          disabled={!canEditEventOptions}
+          endIcon={<AddIcon />}
+        >
           {t('generic.add')}
         </Button>
       </Box>

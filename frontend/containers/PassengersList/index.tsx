@@ -30,14 +30,13 @@ interface Props {
     onClick: () => void;
     disabled?: boolean;
   }) => JSX.Element;
-  disabled?: boolean;
   isTravel?: boolean;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, Button, onClick, onPress, disabled, isTravel} =
+  const {passengers, Button, onClick, onPress, isTravel} =
     props;
   const theme = useTheme();
 
@@ -51,7 +50,6 @@ const PassengersList = (props: Props) => {
             <ListItem
               sx={{paddingRight: theme.spacing(12)}}
               key={index}
-              disabled={disabled}
               button={!!onPress}
               onClick={() => !!onPress && onPress(passenger.id)}
             >
@@ -62,7 +60,6 @@ const PassengersList = (props: Props) => {
                 button={
                   <Button
                     onClick={() => onClick && onClick(passenger.id)}
-                    disabled={disabled}
                   />
                 }
               />
