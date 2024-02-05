@@ -29,6 +29,7 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
 
   const userIsAnonymous = !connected;
   const userIsEventCreator = event && profile?.email === event.email;
+  const userIsEventAdmin = event?.administrators?.includes(profile?.email);
 
   const travels = event?.travels?.data || [];
 
@@ -44,12 +45,12 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
 
   if (carosterPlus) {
     if (userIsAnonymous) return {userPermissions: noPermissions};
-    if (userIsEventCreator)
+    if (userIsEventCreator || userIsEventAdmin)
       return {userPermissions: {...allPermissions, canAddToTravel: false}};
 
     const editableTravelsCollection = travels.filter(({attributes}) => {
-      const isDriver = attributes.user?.data?.id === userId;
-      return !isDriver;
+      const userIsDriver = attributes.user?.data?.id === userId;
+      return !userIsDriver;
     });
 
     const carosterPlusPermissions: UserPermissions = {

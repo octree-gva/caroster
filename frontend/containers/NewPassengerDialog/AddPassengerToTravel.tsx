@@ -13,7 +13,7 @@ import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
 import useToastStore from '../../stores/useToastStore';
 import usePassengersActions from '../../hooks/usePassengersActions';
-import {validateEmail} from './validation';
+import {validateEmail} from '../../lib/validation';
 
 interface Props {
   travel: TravelType & {id: string};

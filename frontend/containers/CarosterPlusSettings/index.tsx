@@ -1,3 +1,4 @@
+import {useReducer, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -8,14 +9,24 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material//ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AddIcon from '@mui/icons-material/Add';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {useTranslation} from 'react-i18next';
 import usePermissions from '../../hooks/usePermissions';
-import {Event as EventType} from '../../generated/graphql';
+import useToastStore from '../../stores/useToastStore';
+import FormDialog from '../FormDialog';
+import {validateEmail} from '../../lib/validation';
+import {
+  Event as EventType,
+  useAddEventAdminMutation,
+  useDeleteEventAdminMutation,
+} from '../../generated/graphql';
 
 interface Props {
-  event: EventType;
+  event: EventType & {id: string};
 }
 
 const CarosterPlusSettings = ({event}: Props) => {
@@ -23,6 +34,47 @@ const CarosterPlusSettings = ({event}: Props) => {
   const {
     userPermissions: {canEditEventOptions},
   } = usePermissions();
+  const {addToast} = useToastStore();
+
+  const [addAdminMutation] = useAddEventAdminMutation();
+  const [deleteAdminMutation] = useDeleteEventAdminMutation();
+  const [addAdminDialogOpen, toggleAddAdminDialog] = useReducer(i => !i, false);
+  const [adminEmail, setAdminEmail] = useState('');
+  const isEmailValid = validateEmail(adminEmail);
+  const emailError = adminEmail !== '' && !isEmailValid;
+
+  const addAdmin = async () => {
+    try {
+      await addAdminMutation({
+        variables: {
+          eventId: event.id,
+          email: adminEmail,
+        },
+      });
+      addToast(t('options.plus.adminAdded'));
+      toggleAddAdminDialog();
+      setAdminEmail('');
+    } catch (e) {
+      console.error(e);
+      addToast(t('options.plus.addAdminError'));
+    }
+  };
+
+  const deleteAdmin = async ({email}) => {
+    try {
+      await deleteAdminMutation({
+        variables: {
+          eventId: event.id,
+          email,
+        },
+      });
+      addToast(t('options.plus.adminDeleted'));
+      toggleAddAdminDialog();
+    } catch (e) {
+      console.error(e);
+      addToast(t('options.plus.deleteAdminError'));
+    }
+  };
 
   return (
     <Card
@@ -53,6 +105,7 @@ const CarosterPlusSettings = ({event}: Props) => {
           variant="text"
           disabled={!canEditEventOptions}
           endIcon={<AddIcon />}
+          onClick={toggleAddAdminDialog}
         >
           {t('generic.add')}
         </Button>
@@ -68,7 +121,40 @@ const CarosterPlusSettings = ({event}: Props) => {
           </ListItemIcon>
           <ListItemText primary={event.email} />
         </ListItem>
+        {event.administrators?.map(email => (
+          <ListItem
+            secondaryAction={
+              canEditEventOptions && (
+                <IconButton size="medium" onClick={() => deleteAdmin({email})}>
+                  <DeleteOutlineIcon />
+                </IconButton>
+              )
+            }
+          >
+            <ListItemIcon>
+              <AccountCircleOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={email} />
+          </ListItem>
+        ))}
       </List>
+      <FormDialog
+        title={t("options.plus.addAdmin")}
+        open={addAdminDialogOpen}
+        cancel={toggleAddAdminDialog}
+        onSubmit={addAdmin}
+        disabled={!isEmailValid}
+      >
+        <TextField
+          fullWidth
+          error={emailError}
+          label={t('options.plus.addAdmin.email')}
+          value={adminEmail}
+          onChange={e => setAdminEmail(e.target.value)}
+          helperText={emailError && t('options.plus.addAdmin.emailHelper')}
+          variant="standard"
+        />
+      </FormDialog>
     </Card>
   );
 };

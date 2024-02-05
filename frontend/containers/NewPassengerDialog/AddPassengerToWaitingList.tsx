@@ -16,7 +16,7 @@ import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
 import useStyles from './useStyles';
-import {validateEmail} from './validation';
+import {validateEmail} from '../../lib/validation';
 import {PassengerInput} from '../../generated/graphql';
 
 interface Props {

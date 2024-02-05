@@ -6,6 +6,7 @@ fragment EventFields on EventEntity {
     description
     enabled_modules
     email
+    administrators
     date
     address
     latitude
@@ -98,6 +99,28 @@ mutation updateEvent($uuid: String!, $eventUpdate: EventInput!) {
   updateEventByUUID(uuid: $uuid, data: $eventUpdate) {
     data {
       ...EventFields
+    }
+  }
+}
+
+mutation addEventAdmin($eventId: ID!, $email: String!){
+  addEventAdmin(eventId: $eventId, email: $email) {
+    data {
+      id
+      attributes {
+        administrators
+      }
+    }
+  }
+}
+
+mutation deleteEventAdmin($eventId: ID!, $email: String!){
+  deleteEventAdmin(eventId: $eventId, email: $email) {
+    data {
+      id
+      attributes {
+        administrators
+      }
     }
   }
 }
