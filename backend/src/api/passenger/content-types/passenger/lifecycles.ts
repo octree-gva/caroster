@@ -11,7 +11,7 @@ export default {
       if (travel)
         strapi.entityService.create("api::notification.notification", {
           data: {
-            type: "NewTrip",
+            type: "NewPassengerInYourTrip",
             event: params.data.event,
             user: travel.user?.id,
           },

@@ -1,52 +1,18 @@
 import Typography from '@mui/material/Typography';
-import {styled} from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import {
-  Vehicle,
   FindUserVehiclesDocument,
   useDeleteVehicleMutation,
+  VehicleEntity,
 } from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 import useTheme from '@mui/styles/useTheme';
 
-const PREFIX = 'VehicleItem';
-
-const classes = {
-  item: `${PREFIX}-item`,
-  section: `${PREFIX}-section`,
-  label: `${PREFIX}-label`,
-  select: `${PREFIX}-select`,
-};
-
-const StyledListItem = styled(ListItem)(({theme}) => ({
-  [`&.${classes.item}`]: {
-    display: 'block',
-    padding: theme.spacing(2, 3),
-  },
-
-  [`& .${classes.section}`]: {
-    maxWidth: '75%',
-    marginBottom: theme.spacing(1),
-  },
-
-  [`& .${classes.label}`]: {
-    fontWeight: 'bold',
-    opacity: 0.6,
-    marginRight: theme.spacing(2),
-  },
-
-  [`& .${classes.select}`]: {
-    display: 'block',
-    maxWidth: '300px',
-    margin: `0 auto ${theme.spacing(1.5)} auto`,
-  },
-}));
-
 interface Props {
-  vehicle: Vehicle & {id: string};
+  vehicle: VehicleEntity;
   select: () => void;
 }
 
@@ -61,7 +27,9 @@ const VehicleItem = ({vehicle, select}: Props) => {
   });
 
   return (
-    <StyledListItem sx={{display: 'block', padding: theme.spacing(2, 3)}}>
+    <ListItem
+      sx={{py: 2, px: 3, flexDirection: 'column', alignItems: 'flex-start'}}
+    >
       <Box>
         <Typography
           variant="overline"
@@ -82,7 +50,7 @@ const VehicleItem = ({vehicle, select}: Props) => {
         variant="body1"
         sx={{maxWidth: '75%', marginBottom: theme.spacing(1)}}
       >
-        {vehicle.name}
+        {vehicle.attributes.name}
       </Typography>
       <Typography
         variant="overline"
@@ -94,7 +62,7 @@ const VehicleItem = ({vehicle, select}: Props) => {
         variant="body1"
         sx={{maxWidth: '75%', marginBottom: theme.spacing(1)}}
       >
-        {vehicle.seats}
+        {vehicle.attributes.seats}
       </Typography>
       <Button
         sx={{
@@ -109,7 +77,7 @@ const VehicleItem = ({vehicle, select}: Props) => {
       >
         {t('generic.select')}
       </Button>
-    </StyledListItem>
+    </ListItem>
   );
 };
 

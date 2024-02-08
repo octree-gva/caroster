@@ -12,6 +12,7 @@ import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
   FindUserVehiclesDocument,
+  VehicleEntity,
   useFindUserVehiclesQuery,
 } from '../../../generated/graphql';
 
@@ -27,9 +28,12 @@ const Page = (props: PropsWithChildren<Props>) => {
 const TravelsTab: TabComponent = () => {
   const {t} = useTranslation();
   const session = useSession();
-  const {userPermissions: {canAddTravel}} = usePermissions()
-  const [openNewTravelContext, toggleNewTravel] = useState({opened: false});
+  const {
+    userPermissions: {canAddTravel},
+  } = usePermissions();
+  const [openNewTravelDialog, setNewTravelDialog] = useState(false);
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
+  const [selectedVehicle, setSelectedVehicle] = useState<VehicleEntity>();
 
   const isAuthenticated = session.status === 'authenticated';
   const {data} = useFindUserVehiclesQuery({
@@ -40,27 +44,27 @@ const TravelsTab: TabComponent = () => {
   const addTravelClickHandler =
     isAuthenticated && vehicles?.length != 0
       ? toggleVehicleChoice
-      : () => toggleNewTravel({opened: true});
+      : () => setNewTravelDialog(true);
 
   return (
     <Box>
       <TravelColumns toggle={addTravelClickHandler} />
-      <Fab
-        onClick={addTravelClickHandler}
-        aria-label="add-car"
-        disabled={!canAddTravel}
-      >
-        {t('travel.creation.title')}
-      </Fab>
+      {canAddTravel && (
+        <Fab onClick={addTravelClickHandler} aria-label="add-car">
+          {t('travel.creation.title')}
+        </Fab>
+      )}
       <NewTravelDialog
-        key={openNewTravelContext.vehicle?.id || 'noVehicle'}
-        context={openNewTravelContext}
-        toggle={() => toggleNewTravel({opened: false})}
+        key={selectedVehicle?.id || 'noVehicle'}
+        opened={openNewTravelDialog}
+        toggle={() => setNewTravelDialog(false)}
+        selectedVehicle={selectedVehicle}
       />
       <VehicleChoiceDialog
         open={openVehicleChoice}
         toggle={toggleVehicleChoice}
-        toggleNewTravel={toggleNewTravel}
+        setNewTravelDialog={setNewTravelDialog}
+        setSelectedVehicle={setSelectedVehicle}
         vehicles={vehicles}
       />
     </Box>

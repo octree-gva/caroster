@@ -1,5 +1,5 @@
 import {forwardRef, Fragment} from 'react';
-import {styled, useTheme} from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,26 +12,22 @@ import Slide from '@mui/material/Slide';
 import {useTranslation} from 'react-i18next';
 import VehicleItem from './VehicleItem';
 import Typography from '@mui/material/Typography';
-import {Vehicle, VehicleEntity} from '../../generated/graphql';
+import {VehicleEntity} from '../../generated/graphql';
 import Icon from '@mui/material/Icon';
 
 interface Props {
   open: boolean;
+  setSelectedVehicle: (vehicle: VehicleEntity) => void;
+  setNewTravelDialog: (open: boolean) => void;
   toggle: () => void;
-  toggleNewTravel: ({
-    opened,
-    vehicle,
-  }: {
-    opened: boolean;
-    vehicle?: Vehicle & {id: string};
-  }) => void;
   vehicles: Array<VehicleEntity>;
 }
 
 const VehicleChoiceDialog = ({
   open,
+  setSelectedVehicle,
+  setNewTravelDialog,
   toggle,
-  toggleNewTravel,
   vehicles,
 }: Props) => {
   const theme = useTheme();
@@ -66,15 +62,13 @@ const VehicleChoiceDialog = ({
       <DialogContent dividers sx={{padding: 0}}>
         {(vehicles && vehicles.length != 0 && (
           <List>
-            {vehicles.map(({id, attributes}, index, {length}) => (
+            {vehicles.map((vehicle, index, {length}) => (
               <Fragment key={index}>
                 <VehicleItem
-                  vehicle={{id, ...attributes}}
+                  vehicle={vehicle}
                   select={() => {
-                    toggleNewTravel({
-                      vehicle: {id, ...attributes},
-                      opened: true,
-                    });
+                    setNewTravelDialog(true);
+                    setSelectedVehicle(vehicle);
                     toggle();
                   }}
                 />
@@ -95,7 +89,7 @@ const VehicleChoiceDialog = ({
           fullWidth
           variant="outlined"
           onClick={() => {
-            toggleNewTravel({opened: true});
+            setNewTravelDialog(true);
             toggle();
           }}
         >

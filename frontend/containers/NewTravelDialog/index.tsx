@@ -17,18 +17,16 @@ import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
 import FAQLink from './FAQLink';
-import {Vehicle} from '../../generated/graphql';
+import {VehicleEntity} from '../../generated/graphql';
 import PlaceInput from '../PlaceInput';
 
 interface Props {
-  context: {
-    vehicle: Vehicle;
-    opened: boolean;
-  };
-  toggle: ({opened: boolean}) => void;
+  selectedVehicle: VehicleEntity;
+  opened: boolean;
+  toggle: (opts: {opened: boolean}) => void;
 }
 
-const NewTravelDialog = ({context, toggle}: Props) => {
+const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const event = useEventStore(s => s.event);
@@ -40,14 +38,16 @@ const NewTravelDialog = ({context, toggle}: Props) => {
   );
 
   // States
-  const [name, setName] = useState(context.vehicle?.name || '');
-  const [seats, setSeats] = useState(context.vehicle?.seats || 4);
+  const [name, setName] = useState(selectedVehicle?.attributes.name || '');
+  const [seats, setSeats] = useState(selectedVehicle?.attributes.seats || 4);
   const [meeting, setMeeting] = useState('');
   const [meeting_latitude, setMeetingLatitude] = useState(null);
   const [meeting_longitude, setMeetingLongitude] = useState(null);
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
-  const [phone, setPhone] = useState(context.vehicle?.phone_number || '');
+  const [phone, setPhone] = useState(
+    selectedVehicle?.attributes.phone_number || ''
+  );
   const [details, setDetails] = useState('');
   const canCreate = !!name && !!seats;
 
@@ -76,7 +76,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
       departure: formatDate(date, time),
       event: event.id,
     };
-    const createVehicle = !context.vehicle;
+    const createVehicle = !selectedVehicle;
 
     await createTravel(travel, createVehicle);
     toggle({opened: false});
@@ -100,7 +100,7 @@ const NewTravelDialog = ({context, toggle}: Props) => {
     <Dialog
       fullWidth
       maxWidth="xs"
-      open={context?.opened}
+      open={opened}
       onClose={() => {
         toggle({opened: false});
         clearState();
