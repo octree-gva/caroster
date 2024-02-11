@@ -1,0 +1,20 @@
+{
+  "template": {
+    "header": "<img src='https://app.caroster.io/uploads/Caroster_logo1_cddd3057fc.png?updated_at=2022-09-12T08:11:11.735Z' width='100%' alt='Caroster'/>",
+    "footer": "---\n💝 You also think Caroster is awesome? Keep it free and support us with a donation!\n\n👉 [Open collective](https://opencollective.com/caroster)\n\n<center><a href='https://caroster.io'>https://caroster.io</a></center>"
+  },
+  "notifications": {
+    "NewTrip": {
+      "title": "A departure close to you is available.",
+      "content": "A departure close to you is available on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "NewPassengerInYourTrip": {
+      "title": "A passenger has been added to your trip",
+      "content": "A passenger has been added to your trip. on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"
+    },
+    "AddedAsAdmin": {
+      "title": "You have been added as admin to an event",
+      "content": "You have been added as admin to Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    }
+  }
+}
