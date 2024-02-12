@@ -1,8 +1,5 @@
 import axios from "axios";
-import { DateTime } from "luxon";
 import { v4 as uuid } from "uuid";
-
-const { STRAPI_URL = "" } = process.env;
 
 export default {
   async beforeCreate(event) {
@@ -11,8 +8,13 @@ export default {
     // If user provides an address, get its lat/lng position using OSM API
     if (data.address) data.position = getPosition(data.address);
   },
-  async afterCreate(event) {
-    sendEmailToCreator(event.result);
+  async afterCreate({ result }) {
+    await strapi
+      .service("api::email.email")
+      // TODO Set dynamic lang (but how ?)
+      .sendEmailNotif(result.email, "EventCreated", "en", {
+        event: result,
+      });
   },
 
   async beforeUpdate(event) {
@@ -36,49 +38,5 @@ const getPosition = async (address) => {
     } else strapi.log.info(`No location from Nominatim API for ${address}`);
   } catch (error) {
     strapi.log.error(error);
-  }
-};
-
-const sendEmailToCreator = async (event) => {
-  try {
-    const templateName = "creator_notif";
-    const template = await strapi
-      .plugin("email-designer")
-      .services.template.findOne({
-        name: templateName,
-      });
-
-    if (!template) {
-      strapi.log.error(`No email template with name ${templateName}`);
-      return null;
-    }
-
-    await strapi.plugin("email-designer").services.email.sendTemplatedEmail(
-      {
-        to: event.email,
-      },
-      {
-        templateReferenceId: template.templateReferenceId,
-      },
-      {
-        event,
-        eventTime: event.date
-          ? DateTime.fromISO(event.date).toLocaleString(
-              DateTime.DATE_MED_WITH_WEEKDAY
-            )
-          : null,
-        eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-      }
-    );
-    strapi.log.info(
-      `Email with template '${templateName}' sent to ${event.email}`
-    );
-  } catch (error) {
-    console.error(error);
-    strapi.log.error(
-      `Impossible to send email notification to ${event.email} for event#${
-        event.id
-      }. Error: ${JSON.stringify(error)}`
-    );
   }
 };

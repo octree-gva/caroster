@@ -5,16 +5,28 @@
   },
   "notifications": {
     "NewTrip": {
-      "title": "A departure close to you is available.",
-      "content": "A departure close to you is available on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - A new car is available",
+      "content": "## New car available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
     },
     "NewPassengerInYourTrip": {
-      "title": "A passenger has been added to your trip",
+      "title": "<%= event.name %> - A passenger has been added to your trip",
       "content": "A passenger has been added to your trip. on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"
     },
     "AddedAsAdmin": {
       "title": "You have been added as admin to an event",
       "content": "You have been added as admin to Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "EventCreated": {
+      "title": "<%= event.name %> - Your Caroster is ready !",
+      "content": "## Hurrah, your Caroster \"<%= event.name %>\" is ready !\n\nStart organizing:\n🚗 Add cars\n💬 Invite your participants to carpool by sharing your Caroster link.\n\nShare link:\n<%= host %>/e/<%= event.uuid %>"
+    },
+    "EventEnded": {
+      "title": "<%= event.name %> - Your event is over !",
+      "content": "## \"<%= event.name %>\" is over !\n\n👏 Count of passengers : <%= event.passengers.length %>\n🚗 Count of cars used : <%= event.travels.length %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are the creator of this event."
+    },
+    "EventRecap": {
+      "title": "<%= event.name %> - Something new in your event",
+      "content": "## There is something new in your event \"<%= event.name %>\"\n\n⏳ Count of passengers looking for a seat : <%= waitingListCount %>\n🚗 Count of cars : <%= travelsCount %>\n🆕 Count of new cars: <%= newTravelsCount %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are the creator of this event."
     }
   }
 }

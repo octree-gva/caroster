@@ -1,8 +1,6 @@
 import _uniq from "lodash/uniq";
 import pMap from "p-map";
 
-const { STRAPI_URL = "" } = process.env;
-
 export default {
   async afterCreate({ result, params }) {
     const eventId = params?.data?.event;
@@ -88,6 +86,7 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
             type: "NewTrip",
             event: eventId,
             user: user.id,
+            payload: { travel },
           },
         }),
       { concurrency: 5 }
@@ -99,49 +98,22 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
     console.error(error);
   }
 
-  // Send email notifications to all waiting passengers
-  const userEmails = eventWaitingPassengers
+  // Send email notification to anonymous passengers
+  const anonymEmails: string[] = eventWaitingPassengers
+    .filter((passenger) => !passenger.user)
     .map((user) => user.email)
     .filter(Boolean);
-
-  const templateName = "waitinglist_notif";
-  const template = await strapi
-    .plugin("email-designer")
-    .services.template.findOne({
-      name: templateName,
-    });
-
-  if (!template) {
-    strapi.log.error(`No email template with name ${templateName}`);
-    return null;
-  }
-
-  if (userEmails?.length > 0)
-    try {
-      await strapi.plugin("email-designer").services.email.sendTemplatedEmail(
-        {
-          to: _uniq(userEmails),
-        },
-        {
-          templateReferenceId: template.templateReferenceId,
-        },
-        {
+  await pMap(
+    anonymEmails,
+    async (email) =>
+      strapi
+        .service("api::email.email")
+        .sendEmailNotif(email, "NewTrip", "en", {
           event,
           travel,
-          eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-        }
-      );
-      strapi.log.info(
-        `Email with template '${templateName}' sent to ${userEmails.length} addresses`
-      );
-    } catch (error) {
-      console.error(error);
-      strapi.log.error(
-        `Impossible to send email waiting list notification for event #${
-          event.id
-        }. Error: ${JSON.stringify(error)}`
-      );
-    }
+        }),
+    { concurrency: 5 }
+  );
 };
 
 const movePassengerToWaitingList = (eventId: string) => async (passenger) =>

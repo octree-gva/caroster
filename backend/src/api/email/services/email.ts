@@ -37,15 +37,15 @@ export default () => ({
     lang: string,
     variables?: object
   ) {
-    const emailTemplate = await this.getEmailTemplate(
-      notifType,
-      lang,
-      variables
-    );
-    if (!emailTemplate)
-      throw new Error(`No locale found for ${notifType} in ${lang}`);
-
     try {
+      const emailTemplate = await this.getEmailTemplate(
+        notifType,
+        lang,
+        variables
+      );
+      if (!emailTemplate)
+        throw new Error(`No locale found for ${notifType} in ${lang}`);
+
       await strapi.plugins["email"].services.email.send({
         to,
         ...emailTemplate,
@@ -68,6 +68,10 @@ export default () => ({
     }
 
     try {
+      const subject = _.template(notif.title)({
+        ...variables,
+        host: strapi.config.server.url,
+      });
       const mdContent = _.template(notif.content)({
         ...variables,
         host: strapi.config.server.url,
@@ -77,12 +81,12 @@ export default () => ({
       const htmlContent = await marked.parse(mdContent, { breaks: true });
       const htmlHeader = await marked.parse(mdHeader, { breaks: true });
       const htmlFooter = await marked.parse(mdFooter, { breaks: true });
-      const emailContent = `${getHTMLMeta()}<main>${htmlHeader}${htmlContent}${htmlFooter}</main>`;
+      const html = `${getHTMLMeta()}<main>${htmlHeader}${htmlContent}${htmlFooter}</main>`;
 
       return {
-        subject: notif.title,
+        subject,
+        html,
         text: notif.content,
-        html: emailContent,
       };
     } catch (error) {
       strapi.log.error(

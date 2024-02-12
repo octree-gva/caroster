@@ -1,10 +1,5 @@
-// @ts-nocheck
 import { DateTime } from "luxon";
 import { factories } from "@strapi/strapi";
-
-const TEMPLATE_NAME_RECAP = "event_recap";
-const TEMPLATE_NAME_END_EVENT = "event_end";
-const { STRAPI_URL = "" } = process.env;
 
 export default factories.createCoreService(
   "api::event.event",
@@ -33,100 +28,35 @@ export default factories.createCoreService(
         const newTravels = event.travels?.filter(
           (travel) => referenceDate <= DateTime.fromISO(travel.createdAt)
         );
-        try {
-          const template = await strapi
-            .plugin("email-designer")
-            .services.template.findOne({
-              name: TEMPLATE_NAME_RECAP,
-            });
+        const waitingPassengers = await strapi
+          .service("api::event.event")
+          .getWaitingPassengers(event);
 
-          if (!template) {
-            strapi.log.error(
-              `No email template with name ${TEMPLATE_NAME_RECAP}`
-            );
-            return null;
-          }
-
-          const waitingPassengers = await strapi
-            .service("api::event.event")
-            .getWaitingPassengers(event);
-
-          await strapi
-            .service("plugin::email-designer.email")
-            .sendTemplatedEmail(
-              {
-                to: event.email,
-              },
-              {
-                templateReferenceId: template.templateReferenceId,
-              },
-              {
-                event,
-                eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-                waitingListCount: waitingPassengers?.length || 0,
-                travelsCount: event.travels?.length || 0,
-                newTravelsCount: newTravels?.length || 0,
-              }
-            );
-          strapi.log.info(
-            `Email with template '${TEMPLATE_NAME_RECAP}' sent to ${event.email}`
-          );
-        } catch (error) {
-          console.error(error);
-          strapi.log.error(
-            `Impossible to send recap notification to ${
-              event.email
-            } for event #${event.id}. Error: ${JSON.stringify(error)}`
-          );
-        }
+        await strapi
+          .service("api::email.email")
+          // TODO Set dynamic lang (but how ?)
+          .sendEmailNotif(event.email, "EventRecap", "en", {
+            event,
+            waitingListCount: waitingPassengers?.length || 0,
+            travelsCount: event.travels?.length || 0,
+            newTravelsCount: newTravels?.length || 0,
+          });
       }
     },
 
     sendEndRecap: async (event) => {
-      try {
-        const template = await strapi
-          .plugin("email-designer")
-          .services.template.findOne({
-            name: TEMPLATE_NAME_END_EVENT,
-          });
-
-        if (!template) {
-          strapi.log.error(
-            `No email template with name ${TEMPLATE_NAME_END_EVENT}`
-          );
-          return null;
-        }
-
-        const travelsCount = event.travels?.length || 0;
-        const passengersCount = event.passengers?.filter(
-          (passenger) => passenger.travel
-        ).length;
-
-        await strapi.service("plugin::email-designer.email").sendTemplatedEmail(
-          {
-            to: event.email,
-          },
-          {
-            templateReferenceId: template.templateReferenceId,
-          },
-          {
-            event,
-            travelsCount,
-            passengersCount,
-            eventLink: `${STRAPI_URL}/e/${event.uuid}`,
-          }
-        );
-        strapi.log.info(
-          `Email with template '${TEMPLATE_NAME_END_EVENT}' sent to ${event.email}`
-        );
-      } catch (error) {
-        console.error(error);
-        strapi.log.error(
-          `Impossible to send end event notification to ${
-            event.email
-          } for event #${event.id}. Error: ${JSON.stringify(error)}`
-        );
-      }
+      const travelsCount = event.travels?.length || 0;
+      const passengersCount = event.passengers?.filter(
+        (passenger) => passenger.travel
+      ).length;
+      await strapi
+        .service("api::email.email")
+        // TODO Set dynamic lang (but how ?)
+        .sendEmailNotif(event.email, "EventEnded", "en", {
+          event,
+          travelsCount,
+          passengersCount,
+        });
     },
   })
 );

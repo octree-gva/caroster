@@ -7,15 +7,24 @@ export default {
         "api::notification.notification",
         result.id,
         {
-          populate: ["user", "event"],
+          populate: {
+            user: true,
+            event: {
+              populate: {
+                travels: true,
+                passengers: true,
+              },
+            },
+          },
         }
       );
-      const { user, event } = notification;
+      const { user, event, payload = {} } = notification;
       await strapi
         .service("api::email.email")
         .sendEmailNotif(user.email, notification.type, user.lang, {
           user,
           event,
+          ...(payload as object),
         });
     }
   },

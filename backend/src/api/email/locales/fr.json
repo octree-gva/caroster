@@ -5,16 +5,28 @@
   },
   "notifications": {
     "NewTrip": {
-      "title": "Un départ proche de vous est disponible",
-      "content": "Un départ proche de vous est disponible dans le Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Une nouvelle voiture est disponible",
+      "content": "## Nouvelle voiture pour \"<%= event.name %>\"\n\n**Voiture: <%= travel.vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail, car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."
     },
     "NewPassengerInYourTrip": {
-      "title": "Un passager a été ajouté à votre trajet",
+      "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
       "content": "Hey <%= user.firstname %>\n\nUn passager a été ajouté à votre trajet dans le Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "AddedAsAdmin": {
       "title": "Vous avez été ajouté en tant qu'admin à un événement",
       "content": "Vous avez été ajouté en tant qu'admin sur le Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "EventCreated": {
+      "title": "<%= event.name %> - Votre Caroster est prêt !",
+      "content": "## Hurrah, votre Caroster \"<%= event.name %>\" est prêt !\n\nCommencez à vous organiser:\n🚗 Ajoutez des voitures\n💬 Invitez vos participants à covoiturer en partageant le lien de votre Caroster.\n\nLien de partage:\n<%= host %>/e/<%= event.uuid %>"
+    },
+    "EventEnded": {
+      "title": "<%= event.name %> - Votre événement est terminé !",
+      "content": "## \"<%= event.name %>\", c'est terminé !\n\n👏 Nombre de personnes transportées : <%= passengersCount %>\n🚗 Nombre de voitures utilisées : <%= travelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
+    },
+    "EventRecap": {
+      "title": "<%= event.name %> - Du nouveau dans votre événement",
+      "content": "## Il y a du nouveau dans votre événement \"<%= event.name %>\"\n\n⏳ Nombre de passagers en recherche d'une place : <%= waitingListCount %>\n🚗 Nombre de voitures : <%= travelsCount %>\n🆕 Nombre de nouvelles voitures : <%= newTravelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
     }
   }
 }
