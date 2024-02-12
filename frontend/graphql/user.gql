@@ -7,6 +7,8 @@ fragment UserFields on UsersPermissionsUser {
   lang
   onboardingUser
   onboardingCreator
+  newsletterConsent
+  notificationEnabled
   provider
   events(pagination: {limit: 500}) {
     data {

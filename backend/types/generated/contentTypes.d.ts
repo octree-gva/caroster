@@ -772,7 +772,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     onboardingUser: Attribute.Boolean & Attribute.DefaultTo<false>;
     onboardingCreator: Attribute.Boolean & Attribute.DefaultTo<false>;
     lang: Attribute.Enumeration<['fr', 'en']> & Attribute.DefaultTo<'fr'>;
-    newsletterConsent: Attribute.Boolean & Attribute.DefaultTo<true>;
+    newsletterConsent: Attribute.Boolean & Attribute.DefaultTo<false>;
+    notificationEnabled: Attribute.Boolean & Attribute.DefaultTo<true>;
     notifications: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',

@@ -100,13 +100,14 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": [
-        "fr",
-        "en"
-      ],
+      "enum": ["fr", "en"],
       "default": "fr"
     },
     "newsletterConsent": {
+      "type": "boolean",
+      "default": false
+    },
+    "notificationEnabled": {
       "type": "boolean",
       "default": true
     },

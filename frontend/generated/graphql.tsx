@@ -1854,6 +1854,7 @@ export type UsersPermissionsUser = {
   lang?: Maybe<Enum_Userspermissionsuser_Lang>;
   lastName?: Maybe<Scalars['String']['output']>;
   newsletterConsent?: Maybe<Scalars['Boolean']['output']>;
+  notificationEnabled?: Maybe<Scalars['Boolean']['output']>;
   notifications?: Maybe<NotificationRelationResponseCollection>;
   onboardingCreator?: Maybe<Scalars['Boolean']['output']>;
   onboardingUser?: Maybe<Scalars['Boolean']['output']>;
@@ -1916,6 +1917,7 @@ export type UsersPermissionsUserFiltersInput = {
   lastName?: InputMaybe<StringFilterInput>;
   newsletterConsent?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  notificationEnabled?: InputMaybe<BooleanFilterInput>;
   notifications?: InputMaybe<NotificationFiltersInput>;
   onboardingCreator?: InputMaybe<BooleanFilterInput>;
   onboardingUser?: InputMaybe<BooleanFilterInput>;
@@ -1940,6 +1942,7 @@ export type UsersPermissionsUserInput = {
   lang?: InputMaybe<Enum_Userspermissionsuser_Lang>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   newsletterConsent?: InputMaybe<Scalars['Boolean']['input']>;
+  notificationEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   notifications?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   oldPassword?: InputMaybe<Scalars['String']['input']>;
   onboardingCreator?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2159,19 +2162,19 @@ export type DeleteTravelMutationVariables = Exact<{
 
 export type DeleteTravelMutation = { __typename?: 'Mutation', deleteTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null } | null } | null };
 
-export type UserFieldsFragment = { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null };
+export type UserFieldsFragment = { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null };
 
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', id: string, username: string, profile?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null } | null } | null };
+export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', id: string, username: string, profile?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null } | null } | null };
 
 export type UpdateMeMutationVariables = Exact<{
   userUpdate: UsersPermissionsUserInput;
 }>;
 
 
-export type UpdateMeMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null } | null } | null } };
+export type UpdateMeMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null } | null }> } | null } | null } | null } };
 
 export type VehicleFieldsFragment = { __typename?: 'VehicleEntity', id?: string | null, attributes?: { __typename?: 'Vehicle', name: string, seats?: number | null, phone_number?: string | null } | null };
 
@@ -2332,6 +2335,8 @@ export const UserFieldsFragmentDoc = gql`
   lang
   onboardingUser
   onboardingCreator
+  newsletterConsent
+  notificationEnabled
   provider
   events(pagination: {limit: 500}) {
     data {

@@ -46,6 +46,9 @@ export default () => ({
       if (!emailTemplate)
         throw new Error(`No locale found for ${notifType} in ${lang}`);
 
+      strapi.log.debug(
+        `Send email notification of type ${notifType} to ${to} (lang: ${lang})`
+      );
       await strapi.plugins["email"].services.email.send({
         to,
         ...emailTemplate,

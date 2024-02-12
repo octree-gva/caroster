@@ -1,17 +1,26 @@
-import {useState} from 'react';
+import {useReducer, useState} from 'react';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';
-import {useUpdateMeMutation} from '../../generated/graphql';
+import {
+  UsersPermissionsUser,
+  useUpdateMeMutation,
+} from '../../generated/graphql';
+import ManagingNotificationsField from './ManagingNotificationsField';
 
-const Profile = ({profile, logout}) => {
+interface Props {
+  profile: UsersPermissionsUser;
+  logout: () => void;
+}
+
+const Profile = ({profile, logout}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const addToast = useToastStore(s => s.addToast);
@@ -22,6 +31,15 @@ const Profile = ({profile, logout}) => {
   const [firstName, setFirstName] = useState(profile.firstName);
   const [lastName, setLastName] = useState(profile.lastName);
   const [email, setEmail] = useState(profile.email);
+  const [newsletterConsent, toggleNewsletter] = useReducer(
+    i => !i,
+    profile.newsletterConsent
+  );
+  const [notificationEnabled, toggleNotification] = useReducer(
+    i => !i,
+    profile.notificationEnabled
+  );
+
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
@@ -55,7 +73,13 @@ const Profile = ({profile, logout}) => {
     try {
       await updateProfile({
         variables: {
-          userUpdate: {firstName, lastName, email},
+          userUpdate: {
+            firstName,
+            lastName,
+            email,
+            newsletterConsent,
+            notificationEnabled,
+          },
         },
       });
       setIsEditing(false);
@@ -122,10 +146,18 @@ const Profile = ({profile, logout}) => {
             disabled={!isStrapiUser}
           />
         </CardContent>
+        <ManagingNotificationsField
+          isEditing={isEditing}
+          notificationChecked={notificationEnabled}
+          newsletterChecked={newsletterConsent}
+          toggleNotification={toggleNotification}
+          toggleNewsletter={toggleNewsletter}
+        />
+
         <CardActions sx={{justifyContent: 'flex-end'}}>
           {!isEditing && (
             <>
-              <Button type="button" onClick={() => logout()}>
+              <Button type="button" onClick={logout}>
                 {t('profile.actions.logout')}
               </Button>
               <Button
