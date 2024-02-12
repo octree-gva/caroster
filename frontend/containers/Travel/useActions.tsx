@@ -7,13 +7,13 @@ import {
   useUpdateTravelMutation,
   useDeleteTravelMutation,
   EventByUuidDocument,
-  Travel,
   useUpdatePassengerMutation,
   TravelInput,
+  TravelEntity,
 } from '../../generated/graphql';
 
 interface Props {
-  travel: Travel & {id: string};
+  travel: TravelEntity;
 }
 
 const useActions = (props: Props) => {

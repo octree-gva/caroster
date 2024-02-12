@@ -1,4 +1,3 @@
-import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
@@ -24,26 +23,17 @@ const AddPassengerButtons = ({
   variant,
   disabled,
 }: Props) => {
-  const theme = useTheme();
   const {t} = useTranslation();
   const {
     userPermissions: {canJoinTravels, canAddToTravel},
   } = usePermissions();
 
-  const containerSx = {padding: theme.spacing(1), textAlign: 'center'};
-  const textSx = {
-    padding: theme.spacing(1, 8),
-    [theme.breakpoints.down(440)]: {
-      padding: theme.spacing(1, 4),
-    },
-  };
-
   return (
-    <Box sx={containerSx}>
+    <Box textAlign="center">
       {canJoinTravels && (
-        <Box sx={containerSx}>
+        <Box p={1} pt={2}>
           <Button
-            sx={textSx}
+            sx={buttonStyle}
             variant="contained"
             color="primary"
             fullWidth
@@ -59,9 +49,9 @@ const AddPassengerButtons = ({
         </Box>
       )}
       {canAddToTravel && (
-        <Box sx={containerSx}>
+        <Box p={1} pt={2}>
           <Button
-            sx={textSx}
+            sx={buttonStyle}
             variant="outlined"
             color="primary"
             fullWidth
@@ -74,6 +64,14 @@ const AddPassengerButtons = ({
       )}
     </Box>
   );
+};
+
+const buttonStyle = {
+  py: 1,
+  px: 8,
+  md: {
+    px: 4,
+  },
 };
 
 export default AddPassengerButtons;

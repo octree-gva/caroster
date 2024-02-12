@@ -9,11 +9,11 @@ import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
-import {Travel} from '../../generated/graphql';
+import {TravelEntity} from '../../generated/graphql';
 import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
-  travel: Travel & {id: string};
+  travel: TravelEntity;
   toggleEditing: () => void;
 }
 
@@ -26,8 +26,8 @@ const Header = (props: Props) => {
   } = usePermissions();
   const {setFocusOnTravel, focusedTravel} = useMapStore();
 
-  const passengersCount = travel?.passengers?.data.length || 0;
-  const availableSeats = travel?.seats - passengersCount || 0;
+  const passengersCount = travel?.attributes.passengers?.data.length || 0;
+  const availableSeats = travel?.attributes.seats - passengersCount || 0;
 
   return (
     <Box
@@ -57,27 +57,29 @@ const Header = (props: Props) => {
           <TuneIcon />
         </IconButton>
       )}
-      {!!travel.departure && (
+      {!!travel.attributes.departure && (
         <Typography
           variant="overline"
           sx={{color: 'GrayText', textTransform: 'capitalize'}}
           id="TravelDeparture"
         >
-          {moment(travel.departure).format('LLLL')}
+          {moment(travel.attributes.departure).format('LLLL')}
         </Typography>
       )}
-      <Typography variant="subtitle1">{travel.vehicleName}</Typography>
-      {!!travel.phone_number && (
+      <Typography variant="subtitle1">
+        {travel.attributes.vehicleName}
+      </Typography>
+      {!!travel.attributes.phone_number && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.phone')}
           </Typography>
           <Typography variant="body1" id="TravelPhone">
-            {travel.phone_number}
+            {travel.attributes.phone_number}
           </Typography>
         </Box>
       )}
-      {!!travel.meeting && (
+      {!!travel.attributes.meeting && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.meeting_point')}
@@ -87,19 +89,19 @@ const Header = (props: Props) => {
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href={getMapsLink(travel.meeting)}
+              href={getMapsLink(travel.attributes.meeting)}
             >
-              {travel.meeting}
+              {travel.attributes.meeting}
             </Link>
           </Typography>
         </Box>
       )}
-      {!!travel.details && (
+      {!!travel.attributes.details && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.details')}
           </Typography>
-          <Typography variant="body1">{travel.details}</Typography>
+          <Typography variant="body1">{travel.attributes.details}</Typography>
         </Box>
       )}
       <LinearProgress
@@ -112,7 +114,7 @@ const Header = (props: Props) => {
             backgroundColor: 'Gray',
           },
         }}
-        value={(passengersCount / travel?.seats) * 100}
+        value={(passengersCount / travel?.attributes.seats) * 100}
         variant="determinate"
       />
       <Box display="flex" justifyContent="space-between" sx={{width: 1}}>

@@ -6,7 +6,7 @@ import Icon from '@mui/material/Icon';
 import {useTranslation} from 'react-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import useEventStore from '../../stores/useEventStore';
-import {Travel as TravelType} from '../../generated/graphql';
+import {TravelEntity} from '../../generated/graphql';
 import SubmitButton from './SubmitButton';
 import Transition from './Transition';
 import AddPassengerCommonFields from './AddPassengerCommonFields';
@@ -16,7 +16,7 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import {validateEmail} from '../../lib/validation';
 
 interface Props {
-  travel: TravelType & {id: string};
+  travel: TravelEntity;
   toggle: () => void;
   open: boolean;
 }
@@ -64,7 +64,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
     >
       <form onSubmit={onSubmit}>
         <DialogTitle className={classes.title}>
-          {travel.vehicleName}
+          {travel.attributes.vehicleName}
           <Icon
             className={classes.closeIcon}
             onClick={toggle}

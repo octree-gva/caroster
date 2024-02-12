@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
-import {type LatLngExpression, LatLngBoundsExpression} from 'leaflet';
+import type {LatLngExpression} from 'leaflet';
 import {create} from 'zustand';
-import {Travel} from '../generated/graphql';
+import {TravelEntity} from '../generated/graphql';
 
 type State = {
   map?: any;
@@ -12,7 +12,7 @@ type State = {
   setMap: (map: any) => void;
   setPreventUpdateKey: (preventUpdateKey: string) => void;
   setMarkers: (markers: Array<ReactNode>) => void;
-  setFocusOnTravel: (travel?: Travel & {id: string}) => void;
+  setFocusOnTravel: (travel?: TravelEntity) => void;
   setBounds: (bounds: Array<LatLngExpression>) => void;
 };
 
@@ -30,8 +30,8 @@ const useMapStore = create<State>((set, get) => ({
       set({focusedTravel: undefined});
     } else {
       set({focusedTravel: travel.id});
-      const lat = travel.meeting_latitude;
-      const long = travel.meeting_longitude;
+      const lat = travel.attributes.meeting_latitude;
+      const long = travel.attributes.meeting_longitude;
       if (lat && long) get().map?.panTo([lat, long]);
     }
   },

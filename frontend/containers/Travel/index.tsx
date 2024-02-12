@@ -13,11 +13,12 @@ import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
 import usePermissions from '../../hooks/usePermissions';
 import useMapStore from '../../stores/useMapStore';
-import {Travel as TravelType} from '../../generated/graphql';
+import {TravelEntity} from '../../generated/graphql';
 
 interface Props {
-  travel: TravelType & {id: string};
-  getAddPassengerFunction: (addSelf: boolean) => () => void;
+  travel: TravelEntity;
+  onAddSelf: () => void;
+  onAddOther: () => void;
 }
 
 const Travel = (props: Props) => {
@@ -32,15 +33,18 @@ const Travel = (props: Props) => {
   const {userId, connected} = useProfile();
   const {focusedTravel} = useMapStore();
   const focused = focusedTravel === travel.id;
-  const disableNewPassengers = travel?.passengers.data?.length >= travel.seats;
+  const disableNewPassengers =
+    travel.attributes.passengers?.data?.length >= travel.attributes.seats;
 
   const registered = useMemo(() => {
     if (!connected) return false;
-    const isInTravel = travel.passengers?.data.some(
+    const isInTravel = travel.attributes.passengers?.data.some(
       passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
     return isInTravel;
   }, [travel, userId]);
+
+  if (!travel) return null;
 
   return (
     <Paper
@@ -63,16 +67,17 @@ const Travel = (props: Props) => {
             <>
               <Divider />
               <AddPassengerButtons
-                getOnClickFunction={props.getAddPassengerFunction}
                 registered={registered}
                 variant="travel"
                 disabled={disableNewPassengers}
+                onAddOther={props.onAddOther}
+                onAddSelf={props.onAddSelf}
               />
             </>
           )}
-          {travel.passengers.data.length > 0 && <Divider />}
+          {travel.attributes.passengers.data.length > 0 && <Divider />}
           <PassengersList
-            passengers={travel.passengers.data}
+            passengers={travel.attributes.passengers.data}
             onClick={actions.sendPassengerToWaitingList}
             isTravel
             Button={({onClick}: {onClick: () => void}) =>

@@ -14,13 +14,11 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import Map from '../Map';
 import Travel from '../Travel';
 import NoCar from './NoCar';
-import {Travel as TravelData, TravelEntity} from '../../generated/graphql';
+import {TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
 
 const EventMarker = dynamic(() => import('../EventMarker'), {ssr: false});
 const TravelMarker = dynamic(() => import('../TravelMarker'), {ssr: false});
-
-type TravelType = TravelData & {id: string};
 
 interface Props {
   toggle: () => void;
@@ -42,13 +40,11 @@ const TravelColumns = (props: Props) => {
   const {addToEvent} = useAddToEvents();
   const {profile, userId} = useProfile();
 
-  const [newPassengerTravelContext, toggleNewPassengerToTravel] = useState<{
-    travel: TravelType;
-  } | null>(null);
+  const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
   const {addPassenger} = usePassengersActions();
   const sortedTravels = travels?.slice().sort(sortTravels);
 
-  const addSelfToTravel = async (travel: TravelType) => {
+  const addSelfToTravel = async (travel: TravelEntity) => {
     const hasName = profile.firstName && profile.lastName;
     const userName = profile.firstName + ' ' + profile.lastName;
     try {
@@ -140,15 +136,14 @@ const TravelColumns = (props: Props) => {
         }}
       >
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
-          {sortedTravels?.map(({id, attributes}) => {
-            const travel = {id, ...attributes};
+          {sortedTravels?.map(travel => {
             return (
               <Container
                 key={travel.id}
                 maxWidth="sm"
                 sx={{
-                  padding: theme.spacing(1),
-                  marginBottom: theme.spacing(10),
+                  p: 1,
+                  mb: 10,
                   outline: 'none',
                   '& > *': {
                     cursor: 'default',
@@ -161,11 +156,9 @@ const TravelColumns = (props: Props) => {
               >
                 <Travel
                   travel={travel}
+                  onAddSelf={() => addSelfToTravel(travel)}
+                  onAddOther={() => setSelectedTravel(travel)}
                   {...props}
-                  getAddPassengerFunction={(addSelf: boolean) => () =>
-                    addSelf
-                      ? addSelfToTravel(travel)
-                      : toggleNewPassengerToTravel({travel})}
                 />
               </Container>
             );
@@ -192,11 +185,11 @@ const TravelColumns = (props: Props) => {
           </Container>
         </Masonry>
       </Box>
-      {!!newPassengerTravelContext && (
+      {!!selectedTravel && (
         <AddPassengerToTravel
-          open={!!newPassengerTravelContext}
-          toggle={() => toggleNewPassengerToTravel(null)}
-          travel={newPassengerTravelContext.travel}
+          open={!!selectedTravel}
+          toggle={() => setSelectedTravel(null)}
+          travel={selectedTravel}
         />
       )}
     </>
