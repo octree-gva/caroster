@@ -1129,6 +1129,12 @@ export interface ApiSettingSetting extends Schema.SingleType {
           localized: false;
         };
       }>;
+    stripe_dashboard_link: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

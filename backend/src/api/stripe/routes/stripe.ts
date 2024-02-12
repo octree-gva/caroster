@@ -2,7 +2,7 @@ export default {
   routes: [
     {
       method: "POST",
-      path: "/stripe",
+      path: "/webhooks",
       handler: "stripe.handleWebhook",
       config: {
         policies: [],

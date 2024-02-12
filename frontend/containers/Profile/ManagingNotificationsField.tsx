@@ -21,8 +21,13 @@ const ManagingNotificationsField = ({
   const {t} = useTranslation();
 
   return (
-    <Box padding={2}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+    <Box px={2}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={1}
+      >
         <Typography variant="h6">{t('profile.notification.label')}</Typography>
         <ContentSwitch
           isEditing={isEditing}
@@ -33,7 +38,12 @@ const ManagingNotificationsField = ({
           t={t}
         />
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={1}
+      >
         <Typography variant="h6">{t('profile.newsletter.label')}</Typography>
         <ContentSwitch
           isEditing={isEditing}

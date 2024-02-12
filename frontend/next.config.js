@@ -41,10 +41,6 @@ module.exports = withPWA({
         destination: `/api/nauth/:slug*`,
       },
       {
-        source: '/api/stripe',
-        destination: `${STRAPI_URL}/api/stripe`,
-      },
-      {
         source: '/admin/:slug*',
         destination: `${STRAPI_URL}/admin/:slug*`,
       },

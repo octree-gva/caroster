@@ -14,6 +14,7 @@ import {
   useUpdateMeMutation,
 } from '../../generated/graphql';
 import ManagingNotificationsField from './ManagingNotificationsField';
+import StripeDashboardLink from './StripeDashboardLink';
 
 interface Props {
   profile: UsersPermissionsUser;
@@ -153,7 +154,7 @@ const Profile = ({profile, logout}: Props) => {
           toggleNotification={toggleNotification}
           toggleNewsletter={toggleNewsletter}
         />
-
+        <StripeDashboardLink />
         <CardActions sx={{justifyContent: 'flex-end'}}>
           {!isEditing && (
             <>

@@ -170,6 +170,8 @@
   "profile.not_defined": "Not specified",
   "profile.password_changed": "Password updated",
   "profile.title": "Profile",
+  "profile.stripe_link.title": "Billing",
+  "profile.stripe_link.button": "My Stripe account",
   "signin.errors.CredentialsSignin": "Check your email and password. If your account is linked to Google, please use login with Google.",
   "signin.errors.EmailNotConfirmed": "Your account has not been confirmed. Please check your emails",
   "signin.email": "Email",

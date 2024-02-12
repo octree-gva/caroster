@@ -159,6 +159,8 @@
   "profile.not_defined": "",
   "profile.password_changed": "",
   "profile.title": "",
+  "profile.stripe_link.title": "",
+  "profile.stripe_link.button": "",
   "signin.errors.CredentialsSignin": "",
   "signin.errors.EmailNotConfirmed": "",
   "signin.email": "E-mail",

@@ -72,6 +72,14 @@
         }
       },
       "type": "string"
+    },
+    "stripe_dashboard_link": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string"
     }
   }
 }

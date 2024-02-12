@@ -155,6 +155,8 @@
   "profile.not_defined": "Niet opgegeven",
   "profile.password_changed": "Het wachtwoord is bijgewerkt",
   "profile.title": "Profiel",
+  "profile.stripe_link.title": "",
+  "profile.stripe_link.button": "",
   "signin.errors.CredentialsSignin": "",
   "signin.errors.EmailNotConfirmed": "",
   "signin.email": "E-mailadres",
