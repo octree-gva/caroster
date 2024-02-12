@@ -5,7 +5,8 @@ import {useTranslation} from 'react-i18next';
 import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
-  getOnClickFunction: (addSelf: boolean) => () => void;
+  onAddSelf: () => void;
+  onAddOther: () => void;
   registered: boolean;
   variant: 'waitingList' | 'travel';
   disabled?: boolean;
@@ -17,7 +18,8 @@ const ADD_TO_LOCALE = {
 };
 
 const AddPassengerButtons = ({
-  getOnClickFunction,
+  onAddSelf,
+  onAddOther,
   registered,
   variant,
   disabled,
@@ -45,7 +47,7 @@ const AddPassengerButtons = ({
             variant="contained"
             color="primary"
             fullWidth
-            onClick={getOnClickFunction(true)}
+            onClick={onAddSelf}
             disabled={disabled || registered}
           >
             {t(
@@ -63,7 +65,7 @@ const AddPassengerButtons = ({
             variant="outlined"
             color="primary"
             fullWidth
-            onClick={getOnClickFunction(false)}
+            onClick={onAddOther}
             disabled={disabled}
           >
             {t(ADD_TO_LOCALE[variant])}

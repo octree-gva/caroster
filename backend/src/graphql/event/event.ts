@@ -112,14 +112,11 @@ export default ({ nexus, strapi }) => ({
   },
   resolversConfig: {
     "Query.eventByUUID": {
-      auth: {
-        scope: ["api::event.event.findOne"],
-      },
+      auth: false,
     },
     "Mutation.updateEventByUUID": {
-      auth: {
-        scope: ["api::event.event.update"],
-      },
+      auth: false,
+      policies: ["api::event.check-caroster-plus"],
     },
     "Event.passengers": {
       auth: false,

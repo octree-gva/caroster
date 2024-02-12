@@ -8,21 +8,17 @@ import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
-import {Travel} from '../../generated/graphql';
-
-type TravelObject = Travel & {id: string};
-
-export type SelectTravel = (travel: TravelObject) => Promise<void>;
+import {Travel, TravelEntity} from '../../generated/graphql';
 
 interface Props {
-  travel: TravelObject;
-  select: SelectTravel;
+  travel: TravelEntity;
+  assign: (travel: TravelEntity) => void;
 }
 
-const AvailableTravel = ({travel, select}: Props) => {
+const AvailableTravel = ({travel, assign}: Props) => {
   const {t} = useTranslation();
-  const passengersCount = travel.passengers?.data.length || 0;
-  const availableSeats = travel.seats - passengersCount || 0;
+  const passengersCount = travel.attributes.passengers?.data.length || 0;
+  const availableSeats = travel.attributes.seats - passengersCount;
 
   return (
     <>
@@ -30,14 +26,14 @@ const AvailableTravel = ({travel, select}: Props) => {
       <ListItem sx={{flexDirection: 'column', p: 2}}>
         <Box display="flex" justifyContent="space-between" width={1}>
           <Box>
-            {travel.departure && (
+            {travel.attributes.departure && (
               <Typography variant="overline" color="GrayText">
                 {t('passenger.assign.departure')}
-                {moment(travel.departure).format('LLLL')}
+                {moment(travel.attributes.departure).format('LLLL')}
               </Typography>
             )}
             <Typography variant="body1" sx={{pt: 1}}>
-              {travel.vehicleName}
+              {travel.attributes.vehicleName}
             </Typography>
           </Box>
           <Button
@@ -45,7 +41,7 @@ const AvailableTravel = ({travel, select}: Props) => {
             variant="contained"
             size="small"
             sx={{maxHeight: '24px'}}
-            onClick={() => select(travel)}
+            onClick={() => assign(travel)}
           >
             {t('passenger.assign.assign')}
           </Button>
@@ -60,8 +56,8 @@ const AvailableTravel = ({travel, select}: Props) => {
               backgroundColor: 'Gray',
             },
           }}
-          value={(passengersCount / travel.seats || 0) * 100}
-          variant={travel.seats ? 'determinate' : 'indeterminate'}
+          value={(passengersCount / travel.attributes.seats || 0) * 100}
+          variant={travel.attributes.seats ? 'determinate' : 'indeterminate'}
         />
         <Box display="flex" justifyContent="space-between" width={1}>
           <Typography variant="body1" color="GrayText" minWidth="150px">
@@ -75,15 +71,15 @@ const AvailableTravel = ({travel, select}: Props) => {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              paddingLeft: 2
+              paddingLeft: 2,
             }}
             variant="overline"
             target="_blank"
             rel="noreferrer"
-            href={getMapsLink(travel.meeting)}
+            href={getMapsLink(travel.attributes.meeting)}
             onClick={e => e.preventDefault}
           >
-            {travel.meeting}
+            {travel.attributes.meeting}
           </Link>
         </Box>
       </ListItem>

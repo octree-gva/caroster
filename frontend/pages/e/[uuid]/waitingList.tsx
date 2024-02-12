@@ -1,14 +1,10 @@
-import {useState, useMemo, PropsWithChildren} from 'react';
+import {useState, useMemo, PropsWithChildren, useReducer} from 'react';
 import useProfile from '../../../hooks/useProfile';
 import WaitingList from '../../../containers/WaitingList';
 import pageUtils from '../../../lib/pageUtils';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {AddPassengerToWaitingList} from '../../../containers/NewPassengerDialog';
 import {EventByUuidDocument} from '../../../generated/graphql';
-
-interface NewPassengerDialogContext {
-  addSelf: boolean;
-}
 
 interface Props {
   eventUUID: string;
@@ -21,8 +17,8 @@ const Page = (props: PropsWithChildren<Props>) => {
 
 const WaitingListTab: TabComponent = ({event}) => {
   const {userId} = useProfile();
-  const [addPassengerToWaitingListContext, toggleNewPassengerToWaitingList] =
-    useState<NewPassengerDialogContext | null>(null);
+  const [dialogOpen, toggleDialog] = useReducer(i => !i, false);
+  const [isSelfAdd, setIsSelfAdd] = useState(false);
 
   const registered = useMemo(() => {
     if (!userId) return false;
@@ -37,16 +33,20 @@ const WaitingListTab: TabComponent = ({event}) => {
       <WaitingList
         registered={registered}
         canAddSelf={!!userId}
-        getToggleNewPassengerDialogFunction={(addSelf: boolean) => () =>
-          toggleNewPassengerToWaitingList({addSelf})}
+        onAddSelf={() => {
+          setIsSelfAdd(true);
+          toggleDialog();
+        }}
+        onAddOther={() => {
+          setIsSelfAdd(false);
+          toggleDialog();
+        }}
       />
-      {!!addPassengerToWaitingListContext && (
-        <AddPassengerToWaitingList
-          open={!!addPassengerToWaitingListContext}
-          toggle={() => toggleNewPassengerToWaitingList(null)}
-          addSelf={addPassengerToWaitingListContext.addSelf}
-        />
-      )}
+      <AddPassengerToWaitingList
+        open={dialogOpen}
+        toggle={toggleDialog}
+        addSelf={isSelfAdd}
+      />
     </>
   );
 };

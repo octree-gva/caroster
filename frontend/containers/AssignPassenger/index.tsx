@@ -10,7 +10,8 @@ import ShareEvent from '../ShareEvent';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import usePassengersActions from '../../hooks/usePassengersActions';
-import AvailableTravel, {SelectTravel} from './AvailableTravel';
+import AvailableTravel from './AvailableTravel';
+import {TravelEntity} from '../../generated/graphql';
 
 const AssignPassenger = () => {
   const {t} = useTranslation();
@@ -26,9 +27,8 @@ const AssignPassenger = () => {
   } = router;
   const {updatePassenger} = usePassengersActions();
 
-  if (!event) {
-    return null;
-  }
+  if (!event) return null;
+
   const {travels, name, waitingPassengers, uuid} = event;
 
   const availableTravels = travels?.data?.filter(
@@ -40,9 +40,9 @@ const AssignPassenger = () => {
     waitingPassenger => waitingPassenger.id === passengerId
   );
 
-  const assign: SelectTravel = async travel => {
+  const assign = async (travel: TravelEntity) => {
     try {
-      await updatePassenger(passengerId, {
+      await updatePassenger(passengerId as string, {
         travel: travel.id,
       });
       addToast(
@@ -76,7 +76,7 @@ const AssignPassenger = () => {
               <Typography variant="h4">
                 {t('passenger.assign.no_travel.title')}
               </Typography>
-              <Typography variant="body1" sx={{py: 2}}>
+              <Typography sx={{py: 2}}>
                 {t('passenger.assign.no_travel.desc', {
                   name: passenger?.attributes?.name,
                 })}
@@ -91,12 +91,12 @@ const AssignPassenger = () => {
                 variant="h4"
               >{t`passenger.assign.availableCars`}</Typography>
               <List disablePadding>
-                {availableTravels.map(({id, attributes}, index) => {
+                {availableTravels.map((travel, index) => {
                   return (
                     <AvailableTravel
                       key={index}
-                      travel={{id, ...attributes}}
-                      select={assign}
+                      travel={travel}
+                      assign={assign}
                     />
                   );
                 })}

@@ -18,20 +18,18 @@ import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import AssignButton from './AssignButton';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Props {
-  getToggleNewPassengerDialogFunction: (addSelf: boolean) => () => void;
   canAddSelf: boolean;
   registered: boolean;
+  onAddSelf: () => void;
+  onAddOther: () => void;
 }
 
-const WaitingList = ({
-  getToggleNewPassengerDialogFunction,
-  canAddSelf,
-  registered
-}: Props) => {
+const WaitingList = (props: Props) => {
+  const {canAddSelf, registered} = props;
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const theme = useTheme();
@@ -114,7 +112,8 @@ const WaitingList = ({
         </Box>
         <Divider />
         <AddPassengerButtons
-          getOnClickFunction={getToggleNewPassengerDialogFunction}
+          onAddOther={props.onAddOther}
+          onAddSelf={props.onAddSelf}
           canAddSelf={canAddSelf}
           registered={registered}
           variant="waitingList"

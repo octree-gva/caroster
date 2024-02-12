@@ -90,6 +90,30 @@ export default [
           },
         },
       },
+      // Filter user fields if not for profile fetching
+      UsersPermissionsUser: {
+        vehicles: {
+          async resolve(queriedUser, args, _context, query) {
+            if (query.path.prev.key !== "profile") return null;
+
+            const user = await strapi.entityService.findOne(
+              "plugin::users-permissions.user",
+              queriedUser.id,
+              { populate: ["vehicles"] }
+            );
+            if (!user?.vehicles) return null;
+
+            const { toEntityResponseCollection } = strapi
+              .plugin("graphql")
+              .service("format").returnTypes;
+
+            return toEntityResponseCollection(user.vehicles, {
+              args,
+              resourceUID: "api::vehicle.vehicle",
+            });
+          },
+        },
+      },
     },
     resolversConfig: {
       "Query.me": {
@@ -97,17 +121,38 @@ export default [
           scope: ["plugin::users-permissions.user.me"],
         },
       },
-      "UsersPermissionsUser.events": {
-        auth: true,
-      },
       "UsersPermissionsUser.vehicles": {
         auth: true,
       },
+      "UsersPermissionsUser.events": {
+        policies: [checkAuthUser],
+      },
       "UsersPermissionsUser.notifications": {
-        auth: {
-          scope: ["plugin::users-permissions.user.me"],
-        },
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.confirmed": {
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.provider": {
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.newsletterConsent": {
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.createdAt": {
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.onboardingCreator": {
+        policies: [checkAuthUser],
+      },
+      "UsersPermissionsUser.onboardingUser": {
+        policies: [checkAuthUser],
       },
     },
   }),
 ];
+
+const checkAuthUser = (context) => {
+  const authUser = context.state.user;
+  return context.parent.id === authUser.id;
+};

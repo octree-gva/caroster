@@ -28,5 +28,15 @@ export default [
         },
       },
     },
+    resolversConfig: {
+      "Mutation.createVehicle": {
+        auth: true,
+        policies: ["api::vehicle.check-creation"],
+      },
+      "Mutation.deleteVehicle": {
+        auth: true,
+        policies: ["api::vehicle.check-deletion"],
+      },
+    },
   }),
 ];

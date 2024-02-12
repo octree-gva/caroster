@@ -131,6 +131,7 @@
   "passenger.deleted": "Le passager a été supprimé de l'événement.",
   "passenger.errors.cant_add_passenger": "Impossible d'ajouter un passager",
   "passenger.errors.cant_remove_passenger": "Impossible de retirer le passager",
+  "passenger.errors.cant_select_travel": "Impossible de placer le passager",
   "passenger.success.added_self_to_car": "Vous avez été ajouté à la voiture",
   "passenger.success.added_self_to_waitlist": "Vous avez été ajouté à la liste d’attente. Vous serez notifié à l’ajout de nouvelles voitures",
   "passenger.success.added_to_car": "{{name}} a été ajouté à la voiture",

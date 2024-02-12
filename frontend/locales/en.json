@@ -131,6 +131,7 @@
   "passenger.deleted": "The passenger has been deleted from the event.",
   "passenger.errors.cant_add_passenger": "Unable to add a passenger",
   "passenger.errors.cant_remove_passenger": "Unable to remove the passenger",
+  "passenger.errors.cant_select_travel": "Can't move the passenger",
   "passenger.success.added_self_to_car": "You have been added to this car",
   "passenger.success.added_self_to_waitlist": "You have been added to the waitlist. You'll be notified when new cars will be added.",
   "passenger.success.added_to_car": "{{name}} has been added to this car",

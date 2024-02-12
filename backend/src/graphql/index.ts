@@ -19,6 +19,5 @@ export default ({ strapi }) => {
   tripAlert.forEach(extService.use);
 
   // Disable shadow CRUD
-  /// Fields
   extService.shadowCRUD("api::event.event").field("users").disableOutput();
 };
