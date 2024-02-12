@@ -31,7 +31,7 @@ const Header = (props: Props) => {
 
   return (
     <Box
-      sx={{padding: 2}}
+      p={2}
       onClick={() => {
         setFocusOnTravel(focusedTravel === travel.id ? undefined : travel);
         const mapElement = document?.getElementById('map');

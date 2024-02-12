@@ -26,11 +26,9 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
   const {profile, connected, userId} = useProfile();
 
   const carosterPlus = event?.enabled_modules?.includes('caroster-plus');
-
   const userIsAnonymous = !connected;
   const userIsEventCreator = event && profile?.email === event.email;
   const userIsEventAdmin = event?.administrators?.includes(profile?.email);
-
   const travels = event?.travels?.data || [];
 
   const allPermissions: UserPermissions = {
@@ -47,20 +45,18 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     if (userIsAnonymous) return {userPermissions: noPermissions};
     else if (userIsEventCreator || userIsEventAdmin)
       return {userPermissions: {...allPermissions, canAddToTravel: false}};
-
-    const editableTravelsCollection = travels.filter(({attributes}) => {
-      const userIsDriver = attributes.user?.data?.id === userId;
-      return !userIsDriver;
-    });
-
-    const carosterPlusPermissions: UserPermissions = {
-      ...noPermissions,
-      editableTravels: editableTravelsCollection.map(({id}) => id),
-      canJoinTravels: true,
-      canAddTravel: true,
-    };
-
-    return {userPermissions: carosterPlusPermissions};
+    else {
+      const editableTravelsCollection = travels.filter(
+        travel => travel.attributes.user?.data?.id !== userId
+      );
+      const carosterPlusPermissions: UserPermissions = {
+        ...noPermissions,
+        editableTravels: editableTravelsCollection.map(({id}) => id),
+        canJoinTravels: true,
+        canAddTravel: true,
+      };
+      return {userPermissions: carosterPlusPermissions};
+    }
   }
   // Caroster Vanilla permissions
   else

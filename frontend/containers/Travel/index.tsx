@@ -32,16 +32,13 @@ const Travel = (props: Props) => {
   const {userId, connected} = useProfile();
   const {focusedTravel} = useMapStore();
   const focused = focusedTravel === travel.id;
-
-  if (!travel) return null;
-  const disableNewPassengers = travel.passengers.data?.length >= travel.seats;
+  const disableNewPassengers = travel?.passengers.data?.length >= travel.seats;
 
   const registered = useMemo(() => {
     if (!connected) return false;
     const isInTravel = travel.passengers?.data.some(
       passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
-
     return isInTravel;
   }, [travel, userId]);
 
@@ -56,13 +53,12 @@ const Travel = (props: Props) => {
       }}
       id={travel.id}
     >
-      {isEditing ? (
+      {isEditing && (
         <HeaderEditing travel={travel} toggleEditing={toggleEditing} />
-      ) : (
-        <Header travel={travel} toggleEditing={toggleEditing} />
       )}
       {!isEditing && (
         <>
+          <Header travel={travel} toggleEditing={toggleEditing} />
           {(canJoinTravels || canAddToTravel) && (
             <>
               <Divider />

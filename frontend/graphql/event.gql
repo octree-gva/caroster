@@ -37,12 +37,17 @@ fragment EventFields on EventEntity {
         attributes {
           meeting
           meeting_latitude
-          meeting_longitude 
+          meeting_longitude
           departure
           details
           vehicleName
           phone_number
           seats
+          user {
+            data {
+              id
+            }
+          }
           passengers {
             data {
               id
@@ -103,7 +108,7 @@ mutation updateEvent($uuid: String!, $eventUpdate: EventInput!) {
   }
 }
 
-mutation addEventAdmin($eventId: ID!, $email: String!){
+mutation addEventAdmin($eventId: ID!, $email: String!) {
   addEventAdmin(eventId: $eventId, email: $email) {
     data {
       id
@@ -114,7 +119,7 @@ mutation addEventAdmin($eventId: ID!, $email: String!){
   }
 }
 
-mutation deleteEventAdmin($eventId: ID!, $email: String!){
+mutation deleteEventAdmin($eventId: ID!, $email: String!) {
   deleteEventAdmin(eventId: $eventId, email: $email) {
     data {
       id
