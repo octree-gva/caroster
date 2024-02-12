@@ -47,13 +47,47 @@ export default {
     }
   },
 
-  async beforeDelete({ params }) {
-    const travel = await strapi.db
-      .query("api::travel.travel")
-      .findOne({ ...params, populate: { event: true, passengers: true } });
+  async beforeDelete({ params, ...others }) {
+    const travel = await strapi.entityService.findOne(
+      "api::travel.travel",
+      params.where?.id,
+      {
+        populate: {
+          event: true,
+          passengers: {
+            populate: ["user"],
+          },
+        },
+      }
+    );
+    if (!travel) return;
 
+    const hasPassengers = travel?.passengers?.length > 0;
+    const enabledModules = travel.event?.enabled_modules as String[];
+    const isEventCarosterPlus = enabledModules?.includes("caroster-plus");
+
+    // If Caroster Plus, send notification to passengers
+    if (isEventCarosterPlus && hasPassengers) {
+      const users = travel.passengers
+        .map((passenger) => passenger.user)
+        .filter(Boolean);
+      await pMap(
+        users,
+        async (user) =>
+          strapi.entityService.create("api::notification.notification", {
+            data: {
+              type: "DeletedTrip",
+              event: travel.event.id,
+              user: user.id,
+              // @ts-expect-error
+              payload: { travel },
+            },
+          }),
+        { concurrency: 5 }
+      );
+    }
     // Move travel's passengers to event's waiting list
-    if (travel?.passengers?.length > 0) {
+    else if (hasPassengers) {
       const { passengers = [] } = travel;
       await Promise.all(
         passengers.map(movePassengerToWaitingList(travel.event.id))
@@ -116,10 +150,11 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
   );
 };
 
-const movePassengerToWaitingList = (eventId: string) => async (passenger) =>
-  strapi.entityService.update("api::passenger.passenger", passenger.id, {
-    data: {
-      travel: null,
-      event: eventId,
-    },
-  });
+const movePassengerToWaitingList =
+  (eventId: string | number) => async (passenger) =>
+    strapi.entityService.update("api::passenger.passenger", passenger.id, {
+      data: {
+        travel: null,
+        event: eventId,
+      },
+    });

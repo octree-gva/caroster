@@ -17,6 +17,7 @@
       "enum": [
         "NewPassengerInYourTrip",
         "NewTrip",
+        "DeletedTrip",
         "AddedAsAdmin",
         "EventCreated",
         "EventEnded",

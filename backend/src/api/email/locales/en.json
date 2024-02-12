@@ -8,6 +8,10 @@
       "title": "<%= event.name %> - A new car is available",
       "content": "## New car available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
     },
+    "DeletedTrip": {
+      "title": "<%= event.name %> - Car removed",
+      "content": "Car <%= travel.vehicleName %> in which you've subscribed to as been removed. Go to the [Caroster](<%= host %>/e/<%= event.uuid %>) page to find another car."
+    },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - A passenger has been added to your trip",
       "content": "A passenger has been added to your trip. on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"

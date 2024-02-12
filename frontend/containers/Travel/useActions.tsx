@@ -81,7 +81,7 @@ const useActions = (props: Props) => {
     }
   };
 
-  const removeTravel = async () => {
+  const removeTravel = async (successText?: string) => {
     try {
       await deleteTravelMutation({
         variables: {
@@ -91,7 +91,7 @@ const useActions = (props: Props) => {
           {query: EventByUuidDocument, variables: {uuid: event.uuid}},
         ],
       });
-      addToast(t('travel.actions.removed'));
+      addToast(successText || t('travel.actions.removed'));
     } catch (error) {
       console.error(error);
       addToast(t('travel.errors.cant_remove'));

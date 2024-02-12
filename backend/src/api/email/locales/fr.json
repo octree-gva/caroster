@@ -8,6 +8,10 @@
       "title": "<%= event.name %> - Une nouvelle voiture est disponible",
       "content": "## Nouvelle voiture pour \"<%= event.name %>\"\n\n**Voiture: <%= travel.vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail, car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."
     },
+    "DeletedTrip": {
+      "title": "<%= event.name %> - Voiture supprimée",
+      "content": "La voiture <%= travel.vehicleName %> pour laquelle vous vous êtes inscrit.e.s a été supprimée. Rendez-vous sur la page du [Caroster](<%= host %>/e/<%= event.uuid %>) pour trouver une autre voiture."
+    },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
       "content": "Hey <%= user.firstname %>\n\nUn passager a été ajouté à votre trajet dans le Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."

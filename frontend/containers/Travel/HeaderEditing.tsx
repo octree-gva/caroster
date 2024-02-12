@@ -12,11 +12,15 @@ import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
 import Box from '@mui/material/Box';
 import PlaceInput from '../PlaceInput';
+import useEventStore from '../../stores/useEventStore';
 
 const HeaderEditing = ({travel, toggleEditing}) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const actions = useActions({travel});
+  const isCarosterPlus = useEventStore(s =>
+    s.event.enabled_modules?.includes('caroster-plus')
+  );
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(
     () => (travel?.departure ? moment(travel.departure) : null),
@@ -70,7 +74,11 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   };
 
   const onRemove = async () => {
-    await actions.removeTravel();
+    await actions.removeTravel(
+      isCarosterPlus
+        ? t`travel.actions.removed.caroster_plus`
+        : t`travel.actions.removed`
+    );
     toggleEditing();
   };
 
@@ -192,7 +200,11 @@ const HeaderEditing = ({travel, toggleEditing}) => {
         </Button>
       </Box>
       <RemoveDialog
-        text={t('travel.actions.remove_alert')}
+        text={
+          isCarosterPlus
+            ? t`travel.actions.remove_alert.caroster_plus`
+            : t`travel.actions.remove_alert`
+        }
         open={removing}
         onClose={toggleRemoving}
         onRemove={onRemove}
