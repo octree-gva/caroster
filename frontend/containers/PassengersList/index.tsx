@@ -21,23 +21,25 @@ const Root = styled('div')(({theme}) => ({
   },
 }));
 
+export type PassengerButton = ({
+  onClick,
+  disabled,
+}: {
+  onClick: () => void;
+  passenger?: PassengerEntity;
+  disabled?: boolean;
+}) => JSX.Element;
+
 interface Props {
   passengers: PassengerEntity[];
-  Button: ({
-    onClick,
-    disabled,
-  }: {
-    onClick: () => void;
-    disabled?: boolean;
-  }) => JSX.Element;
+  Button: PassengerButton;
   isTravel?: boolean;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, Button, onClick, onPress, isTravel} =
-    props;
+  const {passengers, Button, onClick, onPress, isTravel} = props;
   const theme = useTheme();
 
   let list = passengers;
@@ -59,6 +61,7 @@ const PassengersList = (props: Props) => {
                 isTravel={isTravel}
                 button={
                   <Button
+                    passenger={passenger}
                     onClick={() => onClick && onClick(passenger.id)}
                   />
                 }

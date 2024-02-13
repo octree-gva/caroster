@@ -56,7 +56,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
         <Box pt={1}>
           <Tooltip
             title={t(
-              canEditEventOptions
+              canEditEventOptions()
                 ? 'options.plus.activationOK'
                 : 'options.plus.activationForbiden'
             )}
@@ -64,7 +64,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
             <Box>
               <Button
                 href={`${caroster_plus_payment_link}?client_reference_id=${event.uuid}&locale=${locale}`}
-                disabled={!canEditEventOptions}
+                disabled={!canEditEventOptions()}
                 sx={{
                   backgroundColor: 'primary.light',
                   color: 'primary.main',

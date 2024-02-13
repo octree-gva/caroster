@@ -1,5 +1,6 @@
 import {useReducer, useState, useMemo, useCallback} from 'react';
 import router from 'next/dist/client/router';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Container from '@mui/material/Container';
 import TuneIcon from '@mui/icons-material/Tune';
 import Box from '@mui/material/Box';
@@ -10,16 +11,15 @@ import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import {useTheme} from '@mui/material/styles';
 import {Trans, useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import usePassengersActions from '../../hooks/usePassengersActions';
-import PassengersList from '../PassengersList';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import AssignButton from './AssignButton';
-import {useTheme} from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import PassengersList, { PassengerButton } from '../PassengersList';
 
 interface Props {
   canAddSelf: boolean;
@@ -75,15 +75,15 @@ const WaitingList = (props: Props) => {
     }
   };
 
-  const ListButton = isEditing
-    ? ({onClick}: {onClick: () => void}) => (
+  const ListButton: PassengerButton = isEditing
+    ? ({onClick}) => (
         <ListItemSecondaryAction>
           <IconButton size="small" color="primary" onClick={onClick}>
             <CancelOutlinedIcon />
           </IconButton>
         </ListItemSecondaryAction>
       )
-    : ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => (
+    : ({onClick, disabled}) => (
         <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled} />
       );
 

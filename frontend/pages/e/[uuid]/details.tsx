@@ -127,7 +127,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
           <Typography variant="h4" pb={2}>
             {t('event.details')}
           </Typography>
-          {canEditEventDetails && modifyButton}
+          {canEditEventDetails() && modifyButton}
           <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.name')}</Typography>
             <Typography variant="body1">

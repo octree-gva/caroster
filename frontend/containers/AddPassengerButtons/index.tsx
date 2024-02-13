@@ -30,7 +30,7 @@ const AddPassengerButtons = ({
 
   return (
     <Box textAlign="center">
-      {canJoinTravels && (
+      {canJoinTravels() && (
         <Box p={1} pt={2}>
           <Button
             sx={buttonStyle}
@@ -48,7 +48,7 @@ const AddPassengerButtons = ({
           </Button>
         </Box>
       )}
-      {canAddToTravel && (
+      {canAddToTravel() && (
         <Box p={1} pt={2}>
           <Button
             sx={buttonStyle}

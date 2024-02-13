@@ -24,7 +24,7 @@ interface Props {
 const Travel = (props: Props) => {
   const {travel} = props;
   const {
-    userPermissions: {editableTravels, canJoinTravels, canAddToTravel},
+    userPermissions: {canDeletePassenger, canJoinTravels, canAddToTravel},
   } = usePermissions();
   const {t} = useTranslation();
   const theme = useTheme();
@@ -63,7 +63,7 @@ const Travel = (props: Props) => {
       {!isEditing && (
         <>
           <Header travel={travel} toggleEditing={toggleEditing} />
-          {(canJoinTravels || canAddToTravel) && (
+          {(canJoinTravels() || canAddToTravel()) && (
             <>
               <Divider />
               <AddPassengerButtons
@@ -80,8 +80,8 @@ const Travel = (props: Props) => {
             passengers={travel.attributes.passengers.data}
             onClick={actions.sendPassengerToWaitingList}
             isTravel
-            Button={({onClick}: {onClick: () => void}) =>
-              editableTravels.includes(travel.id) && (
+            Button={({onClick, passenger}) =>
+            canDeletePassenger({id: passenger.id, attributes: {...passenger.attributes, travel: {data: travel}}}) && (
                 <ListItemSecondaryAction>
                   <Button color="primary" onClick={onClick} tabIndex={-1}>
                     {t`travel.passengers.remove`}

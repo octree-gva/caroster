@@ -103,7 +103,7 @@ const CarosterPlusSettings = ({event}: Props) => {
         </Typography>
         <Button
           variant="text"
-          disabled={!canEditEventOptions}
+          disabled={!canEditEventOptions()}
           endIcon={<AddIcon />}
           onClick={toggleAddAdminDialog}
         >
@@ -124,7 +124,7 @@ const CarosterPlusSettings = ({event}: Props) => {
         {event.administrators?.map(email => (
           <ListItem
             secondaryAction={
-              canEditEventOptions && (
+              canEditEventOptions() && (
                 <IconButton size="medium" onClick={() => deleteAdmin({email})}>
                   <DeleteOutlineIcon />
                 </IconButton>

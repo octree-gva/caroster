@@ -22,7 +22,7 @@ const Header = (props: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
   const {
-    userPermissions: {editableTravels},
+    userPermissions: {canEditTravel},
   } = usePermissions();
   const {setFocusOnTravel, focusedTravel} = useMapStore();
 
@@ -38,7 +38,7 @@ const Header = (props: Props) => {
         mapElement?.scrollIntoView({behavior: 'smooth'});
       }}
     >
-      {editableTravels.includes(travel.id) && (
+      {canEditTravel(travel) && (
         <IconButton
           size="small"
           color="primary"

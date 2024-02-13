@@ -49,7 +49,7 @@ const TravelsTab: TabComponent<Props> = () => {
   return (
     <Box>
       <TravelColumns toggle={addTravelClickHandler} />
-      {canAddTravel && (
+      {canAddTravel() && (
         <Fab onClick={addTravelClickHandler} aria-label="add-car">
           {t('travel.creation.title')}
         </Fab>
