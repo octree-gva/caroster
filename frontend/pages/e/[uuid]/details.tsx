@@ -37,7 +37,7 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={DetailsTab} />;
 };
 
-const DetailsTab: TabComponent = ({}) => {
+const DetailsTab: TabComponent<Props> = ({}) => {
   const {t} = useTranslation();
   const {
     userPermissions: {canEditEventDetails},

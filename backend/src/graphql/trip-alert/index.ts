@@ -16,7 +16,7 @@ export default [
           enabled: "Boolean",
           latitude: "Float",
           longitude: "Float",
-          distance: "Float",
+          radius: "Float",
           address: "String",
         },
       }),

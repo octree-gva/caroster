@@ -1,0 +1,41 @@
+query TripAlert($eventId: ID!) {
+  eventTripAlert(event: $eventId) {
+    data {
+      id
+      attributes {
+        address
+        enabled
+        radius
+        longitude
+        latitude
+      }
+    }
+  }
+}
+mutation SetTripAlert(
+  $eventId: ID!
+  $enabled: Boolean
+  $latitude: Float
+  $longitude: Float
+  $address: String
+  $radius: Float
+) {
+  setTripAlert(
+    event: $eventId
+    latitude: $latitude
+    longitude: $longitude
+    address: $address
+    radius: $radius
+    enabled: $enabled
+  ) {
+    data {
+      id
+      attributes {
+        latitude
+        longitude
+        address
+        enabled
+      }
+    }
+  }
+}

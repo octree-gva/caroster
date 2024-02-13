@@ -9,25 +9,40 @@ import Layout from '../layouts/Default';
 import EventBar from '../containers/EventBar';
 import DrawerMenu from '../containers/DrawerMenu';
 import AddToMyEventDialog from '../containers/AddToMyEventDialog';
-import {Event as EventType, useEventByUuidQuery, Module} from '../generated/graphql';
+import {
+  Event as EventType,
+  useEventByUuidQuery,
+  Module,
+} from '../generated/graphql';
 
 const POLL_INTERVAL = 10000;
 
-export type TabComponent = (props: {
-  event: EventType & {id: string};
-  modulesSettings: Module;
-}) => JSX.Element;
+export type TabComponent<TabProps> = (
+  props: {
+    event: EventType & {id: string};
+    modulesSettings: Module;
+  } & TabProps
+) => JSX.Element;
 
 interface Props {
   modulesSettings?: Module;
   eventUUID: string;
-  Tab: TabComponent;
+  Tab: TabComponent<{}>;
   goBack?: () => void;
   titleKey?: string;
+  tabProps?: any;
 }
 
 const EventLayout = (props: PropsWithChildren<Props>) => {
-  const {eventUUID, modulesSettings, Tab, goBack, titleKey, ...pageProps} = props;
+  const {
+    eventUUID,
+    modulesSettings,
+    Tab,
+    goBack,
+    titleKey,
+    tabProps = {},
+    ...pageProps
+  } = props;
   const {t} = useTranslation();
   const theme = useTheme();
 
@@ -76,8 +91,13 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
           }}
           id="event-content"
         >
-          <EventBar title={t(titleKey)} goBack={goBack} event={event} onAdd={setIsAddToMyEvent} />
-          <Tab event={event} modulesSettings={modulesSettings}/>
+          <EventBar
+            title={t(titleKey)}
+            goBack={goBack}
+            event={event}
+            onAdd={setIsAddToMyEvent}
+          />
+          <Tab event={event} modulesSettings={modulesSettings} {...tabProps} />
         </Box>
       </Box>
       <AddToMyEventDialog

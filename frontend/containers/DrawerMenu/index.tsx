@@ -6,6 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
 import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';
+import useEventStore from '../../stores/useEventStore';
 
 interface Props {
   eventUuid: string;
@@ -15,6 +16,7 @@ const DrawerMenu = ({eventUuid}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
 
+  const event = useEventStore(s => s.event);
   const {connected} = useProfile();
   const appLink = connected ? '/dashboard' : `/e/${eventUuid}` || '';
 
@@ -22,6 +24,10 @@ const DrawerMenu = ({eventUuid}: Props) => {
   const {
     query: {uuid},
   } = router;
+
+  const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
+
+  const {connected: isAuthenticated} = useProfile();
 
   return (
     <Drawer
@@ -84,14 +90,31 @@ const DrawerMenu = ({eventUuid}: Props) => {
         icon="directions_car"
         active={router.pathname === `/e/[uuid]`}
       />
-      <DrawerMenuItem
-        title={t('drawer.waitingList')}
-        onClick={() => {
-          router.push(`/e/${uuid}/waitingList`, null, {shallow: true});
-        }}
-        icon="group"
-        active={router.pathname === `/e/[uuid]/waitingList` || router.pathname === `/e/[uuid]/assign/[passengerId]`}
-      />
+      {isCarosterPlusEvent && isAuthenticated && (
+        <DrawerMenuItem
+          title={t('drawer.alerts')}
+          onClick={() =>
+            router.push(`/e/${uuid}/alerts`, null, {shallow: true})
+          }
+          icon="track_changes"
+          active={router.pathname === `/e/[uuid]/alerts`}
+        />
+      )}
+
+      {!isCarosterPlusEvent && (
+        <DrawerMenuItem
+          title={t('drawer.waitingList')}
+          onClick={() =>
+            router.push(`/e/${uuid}/waitingList`, null, {shallow: true})
+          }
+          icon="group"
+          active={
+            router.pathname === `/e/[uuid]/waitingList` ||
+            router.pathname === `/e/[uuid]/assign/[passengerId]`
+          }
+        />
+      )}
+
       <DrawerMenuItem
         title={t('drawer.information')}
         onClick={() => {

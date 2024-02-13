@@ -25,7 +25,7 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={TravelsTab} />;
 };
 
-const TravelsTab: TabComponent = () => {
+const TravelsTab: TabComponent<Props> = () => {
   const {t} = useTranslation();
   const session = useSession();
   const {

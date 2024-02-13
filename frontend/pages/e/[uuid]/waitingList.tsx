@@ -15,7 +15,7 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={WaitingListTab} />;
 };
 
-const WaitingListTab: TabComponent = ({event}) => {
+const WaitingListTab: TabComponent<Props> = ({event}) => {
   const {userId} = useProfile();
   const [dialogOpen, toggleDialog] = useReducer(i => !i, false);
   const [isSelfAdd, setIsSelfAdd] = useState(false);

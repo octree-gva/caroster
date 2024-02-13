@@ -24,7 +24,7 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={OptionsTab} />;
 };
 
-const OptionsTab: TabComponent = ({modulesSettings}) => {
+const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
   const theme = useTheme();
   const event = useEventStore(s => s.event);
 

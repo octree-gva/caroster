@@ -23,6 +23,7 @@ interface Props {
   }) => void;
   label?: string;
   textFieldProps?: TextFieldProps;
+  disabled?: boolean;
 }
 
 const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
@@ -34,6 +35,7 @@ const PlaceInput = ({
   onSelect,
   label,
   textFieldProps,
+  disabled,
 }: Props) => {
   const {t} = useTranslation();
   const {locale} = useLocale();
@@ -101,13 +103,16 @@ const PlaceInput = ({
   }, 400);
 
   const getHelperText = () => {
-    if (!mapboxAvailable) {
-      return t`placeInput.mapboxUnavailable`;
-    }
-    if (noCoordinates) {
-      return t`placeInput.noCoordinates`;
-    }
-    return null;
+    if (!mapboxAvailable) return t`placeInput.mapboxUnavailable`;
+    else if (noCoordinates) return t`placeInput.noCoordinates`;
+  };
+
+  const handleBlur = e => {
+    onSelect({
+      place: e.target.value,
+      latitude,
+      longitude,
+    });
   };
 
   return (
@@ -122,6 +127,7 @@ const PlaceInput = ({
       noOptionsText={t('autocomplete.noMatch')}
       onChange={onChange}
       onInputChange={updateOptions}
+      disabled={disabled}
       renderInput={params => (
         <TextField
           label={label}
@@ -138,6 +144,7 @@ const PlaceInput = ({
           }}
           {...params}
           {...textFieldProps}
+          onBlur={handleBlur}
         />
       )}
       renderOption={(props, option) => {
