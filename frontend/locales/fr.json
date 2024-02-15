@@ -65,6 +65,7 @@
   "event.fields.link": "Lien de partage",
   "event.fields.link_desc": "Partager l'évènement à d'autres personnes",
   "event.fields.name": "Nom de l'événement",
+  "event.fields.lang": "Langue",
   "event.fields.share": "Partager",
   "event.no_other_travel.title": "Pas d'autres voitures pour le moment",
   "event.no_travel.desc": "1. Inscrivez-vous dans la liste d’attente \n2. Partagez l’événement \n3. Vous serez notifié lorsqu’un nouveau trajet sera ajouté",

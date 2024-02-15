@@ -6,6 +6,7 @@ fragment EventFields on EventEntity {
     description
     enabled_modules
     email
+    lang
     administrators
     date
     address
@@ -73,28 +74,8 @@ fragment EventFields on EventEntity {
   }
 }
 
-mutation createEvent(
-  $name: String!
-  $email: String!
-  $date: Date
-  $address: String
-  $latitude: Float
-  $longitude: Float
-  $description: String
-  $newsletter: Boolean
-) {
-  createEvent(
-    data: {
-      name: $name
-      email: $email
-      date: $date
-      latitude: $latitude
-      longitude: $longitude
-      address: $address
-      description: $description
-      newsletter: $newsletter
-    }
-  ) {
+mutation createEvent($eventData: EventInput!) {
+  createEvent(data: $eventData) {
     data {
       ...EventFields
     }

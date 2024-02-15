@@ -10,8 +10,15 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {useTranslation} from 'react-i18next';
 import useToastStore from '../../stores/useToastStore';
 import PlaceInput from '../PlaceInput';
+import {EventEntity, EventInput} from '../../generated/graphql';
 
-const Step2 = ({event, addToEvent, createEvent}) => {
+interface Props {
+  event: EventInput;
+  addToEvent: (eventData: EventInput) => void;
+  createEvent: (eventData: EventInput) => Promise<EventEntity>;
+}
+
+const Step2 = ({event, addToEvent, createEvent}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const router = useRouter();
@@ -26,11 +33,11 @@ const Step2 = ({event, addToEvent, createEvent}) => {
   const [loading, setLoading] = useState(false);
 
   const onCreate = async evt => {
-    if (evt.preventDefault) evt.preventDefault();
+    evt.preventDefault?.();
     if (loading) return;
     setLoading(true);
     const eventData = {
-      date: !date ? null : moment(date).format('YYYY-MM-DD'),
+      date: date ? moment(date).format('YYYY-MM-DD') : null,
       address,
       longitude,
       latitude,
@@ -39,7 +46,7 @@ const Step2 = ({event, addToEvent, createEvent}) => {
     addToEvent(eventData);
     const result = await createEvent(eventData);
     if (!result) addToast(t('event.errors.cant_create'));
-    else router.push(`/e/${result.uuid}`);
+    else router.push(`/e/${result.attributes.uuid}`);
     setLoading(false);
     return;
   };
@@ -60,9 +67,9 @@ const Step2 = ({event, addToEvent, createEvent}) => {
         latitude={event.latitude}
         longitude={event.longitude}
         onSelect={({place, latitude, longitude}) => {
-            setAddress(place);
-            setLatitude(latitude);
-            setLongitude(longitude);
+          setAddress(place);
+          setLatitude(latitude);
+          setLongitude(longitude);
         }}
       />
       <TextField

@@ -56,6 +56,7 @@
   "event.fields.link": "",
   "event.fields.link_desc": "",
   "event.fields.name": "",
+  "event.fields.lang": "",
   "event.fields.share": "",
   "event.no_other_travel.title": "",
   "event.no_travel.desc": "",

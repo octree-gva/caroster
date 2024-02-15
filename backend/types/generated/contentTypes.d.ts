@@ -811,6 +811,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     email: Attribute.String & Attribute.Required;
+    lang: Attribute.Enumeration<['fr', 'en']> & Attribute.DefaultTo<'en'>;
     date: Attribute.Date;
     address: Attribute.Text;
     position: Attribute.JSON;

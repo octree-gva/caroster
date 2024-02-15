@@ -11,8 +11,7 @@ export default {
   async afterCreate({ result }) {
     await strapi
       .service("api::email.email")
-      // TODO Set dynamic lang (but how ?)
-      .sendEmailNotif(result.email, "EventCreated", "en", {
+      .sendEmailNotif(result.email, "EventCreated", result.lang, {
         event: result,
       });
   },

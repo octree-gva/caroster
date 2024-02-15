@@ -59,6 +59,7 @@
   "event.fields.link": "Udostępnij link",
   "event.fields.link_desc": "Udostępnij ten link innym osobom",
   "event.fields.name": "Nazwa wydarzenia",
+  "event.fields.lang": "",
   "event.fields.share": "Udostępnij",
   "event.no_other_travel.title": "Obecnie nie ma żadnych innych samochodów",
   "event.no_travel.desc": "1. Zasubskrybuj listę oczekujących\n2. Udostępnij wydarzenie\n3. Dostaniesz powiadomienie kiedy zostanie dodana nowa podróż",

@@ -34,8 +34,7 @@ export default factories.createCoreService(
 
         await strapi
           .service("api::email.email")
-          // TODO Set dynamic lang (but how ?)
-          .sendEmailNotif(event.email, "EventRecap", "en", {
+          .sendEmailNotif(event.email, "EventRecap", event.lang, {
             event,
             waitingListCount: waitingPassengers?.length || 0,
             travelsCount: event.travels?.length || 0,
@@ -51,8 +50,7 @@ export default factories.createCoreService(
       ).length;
       await strapi
         .service("api::email.email")
-        // TODO Set dynamic lang (but how ?)
-        .sendEmailNotif(event.email, "EventEnded", "en", {
+        .sendEmailNotif(event.email, "EventEnded", event.lang, {
           event,
           travelsCount,
           passengersCount,

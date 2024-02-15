@@ -20,6 +20,11 @@
       "type": "string",
       "required": true
     },
+    "lang": {
+      "type": "enumeration",
+      "enum": ["fr", "en"],
+      "default": "en"
+    },
     "date": {
       "type": "date"
     },
@@ -67,9 +72,7 @@
     },
     "enabled_modules": {
       "type": "customField",
-      "options": [
-        "caroster-plus"
-      ],
+      "options": ["caroster-plus"],
       "customField": "plugin::multi-select.multi-select"
     },
     "administrators": {

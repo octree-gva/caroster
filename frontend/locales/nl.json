@@ -56,6 +56,7 @@
   "event.fields.link": "Link delen",
   "event.fields.link_desc": "Deel deze link met anderen",
   "event.fields.name": "Afspraaknaam",
+  "event.fields.lang": "",
   "event.fields.share": "Delen",
   "event.no_other_travel.title": "Er is momenteel geen andere auto",
   "event.no_travel.desc": "1. Zet uzelf op de wachtlijst;\n2. Deel de afspraak;\n3. Ontvang een melding zodra er een reis beschikbaar is.",

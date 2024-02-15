@@ -1,7 +1,6 @@
 import moment from 'moment';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -19,6 +18,7 @@ import {useTranslation} from 'react-i18next';
 import pageUtils from '../../../lib/pageUtils';
 import ShareEvent from '../../../containers/ShareEvent';
 import PlaceInput from '../../../containers/PlaceInput';
+import LangSelector from '../../../components/LangSelector';
 import usePermissions from '../../../hooks/usePermissions';
 import useEventStore from '../../../stores/useEventStore';
 import useToastStore from '../../../stores/useToastStore';
@@ -54,7 +54,15 @@ const DetailsTab: TabComponent<Props> = ({}) => {
   const onSave = async e => {
     try {
       const {uuid, ...data} = event;
-      const {id, travels, waitingPassengers, __typename, ...input} = data;
+      const {
+        id,
+        travels,
+        waitingPassengers,
+        __typename,
+        administrators,
+        passengers,
+        ...input
+      } = data;
       await updateEvent({
         variables: {
           uuid,
@@ -130,7 +138,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
           {canEditEventDetails() && modifyButton}
           <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.name')}</Typography>
-            <Typography variant="body1">
+            <Typography>
               {isEditing ? (
                 <TextField
                   size="small"
@@ -141,7 +149,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                   id="EditEventName"
                 />
               ) : (
-                <Typography variant="body1" id="EventName">
+                <Typography id="EventName">
                   {event.name ?? t('event.fields.empty')}
                 </Typography>
               )}
@@ -150,7 +158,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
           <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.date')}</Typography>
             {isEditing ? (
-              <Typography variant="body1">
+              <Typography>
                 <DatePicker
                   slotProps={{
                     textField: {
@@ -171,7 +179,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
               </Typography>
             ) : (
               <Box position="relative">
-                <Typography variant="body1" id="EventDate">
+                <Typography id="EventDate">
                   {event.date
                     ? moment(event.date).format('DD/MM/YYYY')
                     : t('event.fields.empty')}
@@ -206,7 +214,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
               />
             ) : (
               <Box position="relative">
-                <Typography variant="body1" id="EventAddress" sx={{pr: 3}}>
+                <Typography id="EventAddress" sx={{pr: 3}}>
                   {event.address ? (
                     <Link
                       target="_blank"
@@ -238,7 +246,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
               {t('event.fields.description')}
             </Typography>
             {isEditing ? (
-              <Typography variant="body1">
+              <Typography>
                 <TextField
                   fullWidth
                   multiline
@@ -251,8 +259,23 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                 />
               </Typography>
             ) : (
-              <Typography variant="body1" id="EventDescription" sx={{pr: 3}}>
+              <Typography id="EventDescription" sx={{pr: 3}}>
                 {event.description ?? t('event.fields.empty')}
+              </Typography>
+            )}
+          </Box>
+          <Box pt={2} pr={1.5}>
+            <Typography variant="overline">{t('event.fields.lang')}</Typography>
+            {isEditing ? (
+              <LangSelector
+                value={event.lang}
+                onChange={lang => setEventUpdate({lang})}
+              />
+            ) : (
+              <Typography id="EventLang" sx={{pr: 3}}>
+                {event.lang
+                  ? t(`PROTECTED.languages.${event.lang}`)
+                  : t('event.fields.empty')}
               </Typography>
             )}
           </Box>
