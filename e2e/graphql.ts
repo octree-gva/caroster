@@ -203,7 +203,9 @@ export enum Enum_Contentreleasesreleaseaction_Type {
 
 export enum Enum_Notification_Type {
   NewPassengerInYourTrip = 'NewPassengerInYourTrip',
-  NewTrip = 'NewTrip'
+  NewTrip = 'NewTrip',
+  AddedAsAdmin = 'AddedAsAdmin',
+  PassengerJoinTrip = 'PassengerJoinTrip'
 }
 
 export enum Enum_Page_Type {
@@ -2257,7 +2259,7 @@ export const DeleteVehicleDocument = gql`
 }
     `;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?: Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
@@ -2265,58 +2267,58 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     login(variables: LoginMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<LoginMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'login', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'login', 'mutation');
     },
     register(variables: RegisterMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<RegisterMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RegisterMutation>(RegisterDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'register', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<RegisterMutation>(RegisterDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'register', 'mutation');
     },
     forgotPassword(variables: ForgotPasswordMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ForgotPasswordMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ForgotPasswordMutation>(ForgotPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'forgotPassword', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<ForgotPasswordMutation>(ForgotPasswordDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'forgotPassword', 'mutation');
     },
     resetPassword(variables: ResetPasswordMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ResetPasswordMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ResetPasswordMutation>(ResetPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'resetPassword', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<ResetPasswordMutation>(ResetPasswordDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'resetPassword', 'mutation');
     },
     createEvent(variables: CreateEventMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateEventMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateEventMutation>(CreateEventDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createEvent', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateEventMutation>(CreateEventDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'createEvent', 'mutation');
     },
     updateEvent(variables: UpdateEventMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateEventMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateEventMutation>(UpdateEventDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateEvent', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateEventMutation>(UpdateEventDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'updateEvent', 'mutation');
     },
     eventByUUID(variables: EventByUuidQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<EventByUuidQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<EventByUuidQuery>(EventByUuidDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'eventByUUID', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<EventByUuidQuery>(EventByUuidDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'eventByUUID', 'query');
     },
     createPassenger(variables: CreatePassengerMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreatePassengerMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreatePassengerMutation>(CreatePassengerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createPassenger', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<CreatePassengerMutation>(CreatePassengerDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'createPassenger', 'mutation');
     },
     updatePassenger(variables: UpdatePassengerMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdatePassengerMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdatePassengerMutation>(UpdatePassengerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updatePassenger', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdatePassengerMutation>(UpdatePassengerDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'updatePassenger', 'mutation');
     },
     deletePassenger(variables: DeletePassengerMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeletePassengerMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DeletePassengerMutation>(DeletePassengerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deletePassenger', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<DeletePassengerMutation>(DeletePassengerDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'deletePassenger', 'mutation');
     },
     setting(variables: SettingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SettingQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SettingQuery>(SettingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setting', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<SettingQuery>(SettingDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'setting', 'query');
     },
     createTravel(variables: CreateTravelMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateTravelMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateTravelMutation>(CreateTravelDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createTravel', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateTravelMutation>(CreateTravelDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'createTravel', 'mutation');
     },
     updateTravel(variables: UpdateTravelMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateTravelMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateTravelMutation>(UpdateTravelDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateTravel', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateTravelMutation>(UpdateTravelDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'updateTravel', 'mutation');
     },
     deleteTravel(variables: DeleteTravelMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteTravelMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DeleteTravelMutation>(DeleteTravelDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteTravel', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteTravelMutation>(DeleteTravelDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'deleteTravel', 'mutation');
     },
     profile(variables?: ProfileQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ProfileQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ProfileQuery>(ProfileDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'profile', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<ProfileQuery>(ProfileDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'profile', 'query');
     },
     updateMe(variables: UpdateMeMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateMeMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateMeMutation>(UpdateMeDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateMe', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateMeMutation>(UpdateMeDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'updateMe', 'mutation');
     },
     findUserVehicles(variables?: FindUserVehiclesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<FindUserVehiclesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<FindUserVehiclesQuery>(FindUserVehiclesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'findUserVehicles', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<FindUserVehiclesQuery>(FindUserVehiclesDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'findUserVehicles', 'query');
     },
     deleteVehicle(variables: DeleteVehicleMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteVehicleMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DeleteVehicleMutation>(DeleteVehicleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteVehicle', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteVehicleMutation>(DeleteVehicleDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'deleteVehicle', 'mutation');
     }
   };
 }

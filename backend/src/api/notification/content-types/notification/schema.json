@@ -21,7 +21,8 @@
         "AddedAsAdmin",
         "EventCreated",
         "EventEnded",
-        "EventRecap"
+        "EventRecap",
+        "PassengerJoinTrip"
       ],
       "required": true
     },

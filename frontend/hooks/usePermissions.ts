@@ -11,6 +11,7 @@ interface UserPermissions {
   canJoinTravels: () => boolean;
   canAddToTravel: () => boolean;
   canDeletePassenger: (passenger: PassengerEntity) => boolean;
+  canSeePassengerDetails: (passenger: PassengerEntity) => boolean;
 }
 
 const noPermissions = {
@@ -22,6 +23,7 @@ const noPermissions = {
   canJoinTravels: () => false,
   canAddToTravel: () => false,
   canDeletePassenger: () => false,
+  canSeePassengerDetails: () => false,
 };
 
 const usePermissions = (): {userPermissions: UserPermissions} => {
@@ -42,25 +44,40 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     canJoinTravels: () => true,
     canAddToTravel: () => true,
     canDeletePassenger: () => true,
+    canSeePassengerDetails: () => true,
   };
 
   if (carosterPlus) {
     if (userIsAnonymous) return {userPermissions: noPermissions};
     else if (userIsEventCreator || userIsEventAdmin)
-      return {userPermissions: {...allPermissions, canAddToTravel: () => false}};
+      return {
+        userPermissions: {...allPermissions, canAddToTravel: () => false},
+      };
     else {
       const carosterPlusPermissions: UserPermissions = {
         ...noPermissions,
         canEditTravel: travel => {
-          const travelCreatorId = travel.attributes.user?.data?.id || travel.attributes.user;
+          const travelCreatorId =
+            travel.attributes.user?.data?.id || travel.attributes.user;
           return travelCreatorId === userId;
         },
         canJoinTravels: () => true,
         canAddTravel: () => true,
-        canDeletePassenger: (passenger) => {
-          const travel = event?.travels?.data?.find(travel => travel.id === passenger.attributes.travel.data.id);
-          const travelCreatorId = travel?.attributes.user?.data?.id || travel?.attributes.user;
-          return travelCreatorId === userId;
+        canDeletePassenger: passenger => {
+          const travel = event?.travels?.data?.find(
+            travel => travel?.id === passenger.attributes.travel.data?.id
+          );
+          const isTravelCreator = travel?.attributes.user?.data?.id === userId;
+          const isCurrentPassenger =
+            passenger.attributes.user?.data?.id === userId;
+          return isTravelCreator || isCurrentPassenger;
+        },
+        canSeePassengerDetails: passenger => {
+          const travel = event?.travels?.data?.find(
+            travel => travel?.id === passenger.attributes.travel.data?.id
+          );
+          const isTravelCreator = travel?.attributes.user?.data?.id === userId;
+          return isTravelCreator;
         },
       };
       return {userPermissions: carosterPlusPermissions};

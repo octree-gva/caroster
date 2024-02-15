@@ -21,6 +21,7 @@ fragment TravelFields on TravelEntity {
               attributes {
                 firstName
                 lastName
+                email
               }
             }
           }

@@ -962,7 +962,8 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
         'AddedAsAdmin',
         'EventCreated',
         'EventEnded',
-        'EventRecap'
+        'EventRecap',
+        'PassengerJoinTrip'
       ]
     > &
       Attribute.Required;

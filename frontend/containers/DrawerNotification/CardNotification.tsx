@@ -1,11 +1,8 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import {Box, Typography, Stack, Badge} from '@mui/material/';
 import {
   NotificationEntity,
   useReadNotificationsMutation,
 } from '../../generated/graphql';
-import Stack from '@mui/material/Stack';
-import Badge from '@mui/material/Badge';
 import {useRouter} from 'next/navigation';
 import {useTranslation} from 'react-i18next';
 import {formatDate} from './formatDate';
@@ -15,10 +12,7 @@ interface NotificationProps {
   onClose: () => void;
 }
 
-const CardNotification: React.FC<NotificationProps> = ({
-  notification,
-  onClose,
-}: NotificationProps) => {
+const CardNotification = ({notification, onClose}: NotificationProps) => {
   const router = useRouter();
   const {t} = useTranslation();
   const [readNotifications] = useReadNotificationsMutation();
@@ -26,11 +20,12 @@ const CardNotification: React.FC<NotificationProps> = ({
   const eventName = notification.attributes.event.data?.attributes?.name;
 
   const handleClick = () => {
-    router.push(`/e/${notification.attributes.event.data.attributes.uuid}`);
     readNotifications({
       refetchQueries: ['UserNotifications'],
       variables: {id: notification.id},
     });
+
+    router.push(`/e/${notification.attributes.event.data.attributes.uuid}`);
     onClose();
   };
 

@@ -10,6 +10,7 @@ fragment PassengerFields on PassengerEntity {
         attributes {
           firstName
           lastName
+          email
         }
       }
     }

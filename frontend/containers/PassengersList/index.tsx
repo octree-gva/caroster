@@ -1,8 +1,7 @@
-import List from '@mui/material/List';
-import {styled, useTheme} from '@mui/material/styles';
-import ListItem from '@mui/material/ListItem';
+import {useState} from 'react';
+import {ListItem, List, styled, useTheme} from '@mui/material';
 import Passenger from './Passenger';
-import {PassengerEntity} from '../../generated/graphql';
+import {PassengerEntity, TravelEntity} from '../../generated/graphql';
 
 const PREFIX = 'PassengersList';
 
@@ -33,13 +32,14 @@ export type PassengerButton = ({
 interface Props {
   passengers: PassengerEntity[];
   Button: PassengerButton;
-  isTravel?: boolean;
+  travel?: TravelEntity;
   onPress?: (passengerId: string) => void;
   onClick?: (passengerId: string) => void;
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, Button, onClick, onPress, isTravel} = props;
+  const {passengers, Button, onClick, onPress, travel} = props;
+
   const theme = useTheme();
 
   let list = passengers;
@@ -57,8 +57,11 @@ const PassengersList = (props: Props) => {
             >
               <Passenger
                 key={index}
-                passenger={passenger}
-                isTravel={isTravel}
+                passenger={{
+                  id: passenger.id,
+                  attributes: {...passenger.attributes, travel: {data: travel}},
+                }}
+                isTravel={!!travel}
                 button={
                   <Button
                     passenger={passenger}

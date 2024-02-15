@@ -1,37 +1,32 @@
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
+import {Drawer, Box, Icon, Typography} from '@mui/material/';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   useUserNotificationsQuery,
   useReadNotificationsMutation,
+  NotificationEntity,
 } from '../../generated/graphql';
 import CardNotification from './CardNotification';
 import DrawerHeader from './DrawerHeader';
-import Icon from '@mui/material/Icon';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTranslation} from 'react-i18next';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  notification: NotificationEntity;
 }
 
-const DrawerContent: React.FC<Props> = ({isOpen, onClose}) => {
+const DrawerContent = ({isOpen, onClose}: Props) => {
   const {data} = useUserNotificationsQuery();
   const [readNotifications] = useReadNotificationsMutation();
   const {t} = useTranslation();
-
   const notifications = data?.me?.profile?.notifications?.data || [];
-
   const hasNotifications = notifications.length > 0;
-
   const markAllRead = () => {
     readNotifications({refetchQueries: ['UserNotifications']});
   };
   const isAllRead = notifications.every(
     notification => notification.attributes.read
   );
-
   const isMobile = useMediaQuery('(max-width:400px)');
 
   return (
@@ -58,7 +53,6 @@ const DrawerContent: React.FC<Props> = ({isOpen, onClose}) => {
           markAllRead={markAllRead}
           disabled={isAllRead}
         />
-
         <Box>
           {hasNotifications ? (
             notifications.map((notification, index) => (

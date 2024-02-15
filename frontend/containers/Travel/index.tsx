@@ -79,9 +79,12 @@ const Travel = (props: Props) => {
           <PassengersList
             passengers={travel.attributes.passengers.data}
             onClick={actions.sendPassengerToWaitingList}
-            isTravel
+            travel={travel}
             Button={({onClick, passenger}) =>
-            canDeletePassenger({id: passenger.id, attributes: {...passenger.attributes, travel: {data: travel}}}) && (
+              canDeletePassenger({
+                id: passenger.id,
+                attributes: {...passenger.attributes, travel: {data: travel}},
+              }) && (
                 <ListItemSecondaryAction>
                   <Button color="primary" onClick={onClick} tabIndex={-1}>
                     {t`travel.passengers.remove`}

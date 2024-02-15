@@ -54,6 +54,7 @@ fragment EventFields on EventEntity {
               attributes {
                 name
                 location
+                email
                 user {
                   data {
                     id
