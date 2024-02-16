@@ -5,22 +5,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import {useTranslation} from 'react-i18next';
+import {useTranslation, Trans} from 'react-i18next';
 import {useState} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import CommonConfirm from '../../../layouts/ConfirmLayout';
 import {useUpdateMeMutation} from '../../../generated/graphql';
 import router from 'next/router';
+import useSettings from '../../../hooks/useSettings';
+import moment from 'moment';
 
 const Confirm = () => {
   const theme = useTheme();
   const {t} = useTranslation();
-
-  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const settings = useSettings();
   const [updateMe] = useUpdateMeMutation();
 
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [tosConsent, setTosConsent] = useState(false);
+
   const onSubmit = async () => {
-    await updateMe({variables: {userUpdate: {newsletterConsent}}});
+    const tosAcceptationDate = tosConsent ? moment().toISOString() : null;
+    await updateMe({
+      variables: {userUpdate: {newsletterConsent, tosAcceptationDate}},
+    });
     router.push('/dashboard');
   };
 
@@ -36,10 +43,10 @@ const Confirm = () => {
         <Icon fontSize="large">mail</Icon>
       </Typography>
       <FormControlLabel
-        sx={{width: '100%', margin: theme.spacing(2, 0)}}
+        sx={{width: '100%', my: 2, mx: 0}}
         control={
           <Checkbox
-            sx={{padding: 0, marginRight: theme.spacing(2)}}
+            sx={{p: 0, mr: 2}}
             color="primary"
             value={newsletterConsent}
             onChange={({target: {checked = false}}) =>
@@ -49,8 +56,34 @@ const Confirm = () => {
         }
         label={t('signup.newsletter.consent')}
       />
-      <Box sx={{textAlign: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={onSubmit}>
+      <FormControlLabel
+        sx={{width: '100%', my: 2, mx: 0}}
+        label={
+          <Trans
+            i18nKey="signup.tos.consent"
+            components={{
+              'tos-link': <a href={settings.tos_link} target="_blank" />,
+              'data-privacy-link': (
+                <a href={settings.tos_link} target="_blank" />
+              ),
+            }}
+          />
+        }
+        control={
+          <Checkbox
+            sx={{p: 0, mr: 2}}
+            value={tosConsent}
+            onChange={e => setTosConsent(e.target.checked)}
+          />
+        }
+      />
+      <Box sx={{textAlign: 'center'}} mt={2}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={onSubmit}
+          disabled={!tosConsent}
+        >
           {t('generic.confirm')}
         </Button>
       </Box>

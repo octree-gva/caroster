@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -100,7 +99,10 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": ["fr", "en"],
+      "enum": [
+        "fr",
+        "en"
+      ],
       "default": "fr"
     },
     "newsletterConsent": {
@@ -116,6 +118,9 @@
       "relation": "oneToMany",
       "target": "api::notification.notification",
       "mappedBy": "user"
+    },
+    "tosAcceptationDate": {
+      "type": "datetime"
     }
   }
 }

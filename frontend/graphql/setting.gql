@@ -11,6 +11,8 @@ query setting($locale: I18NLocaleCode!) {
         opencollective_link
         code_link
         stripe_dashboard_link
+        tos_link
+        data_policy_link
       }
     }
   }

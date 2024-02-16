@@ -1344,6 +1344,7 @@ export type Setting = {
   announcement?: Maybe<Scalars['String']['output']>;
   code_link?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  data_policy_link?: Maybe<Scalars['String']['output']>;
   faq_link?: Maybe<Scalars['String']['output']>;
   gtm_id?: Maybe<Scalars['String']['output']>;
   locale?: Maybe<Scalars['String']['output']>;
@@ -1351,6 +1352,7 @@ export type Setting = {
   matomo_script_url?: Maybe<Scalars['String']['output']>;
   opencollective_link?: Maybe<Scalars['String']['output']>;
   stripe_dashboard_link?: Maybe<Scalars['String']['output']>;
+  tos_link?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -1369,11 +1371,13 @@ export type SettingInput = {
   about_link?: InputMaybe<Scalars['String']['input']>;
   announcement?: InputMaybe<Scalars['String']['input']>;
   code_link?: InputMaybe<Scalars['String']['input']>;
+  data_policy_link?: InputMaybe<Scalars['String']['input']>;
   faq_link?: InputMaybe<Scalars['String']['input']>;
   gtm_id?: InputMaybe<Scalars['String']['input']>;
   matomo_script_url?: InputMaybe<Scalars['String']['input']>;
   opencollective_link?: InputMaybe<Scalars['String']['input']>;
   stripe_dashboard_link?: InputMaybe<Scalars['String']['input']>;
+  tos_link?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingRelationResponseCollection = {
@@ -1784,6 +1788,7 @@ export type UsersPermissionsRegisterInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   newsletterConsent?: InputMaybe<Scalars['Boolean']['input']>;
   password: Scalars['String']['input'];
+  tosAcceptationDate?: InputMaybe<Scalars['DateTime']['input']>;
   username: Scalars['String']['input'];
 };
 
@@ -1872,6 +1877,7 @@ export type UsersPermissionsUser = {
   onboardingUser?: Maybe<Scalars['Boolean']['output']>;
   provider?: Maybe<Scalars['String']['output']>;
   role?: Maybe<UsersPermissionsRoleEntityResponse>;
+  tosAcceptationDate?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   username: Scalars['String']['output'];
   vehicles?: Maybe<VehicleRelationResponseCollection>;
@@ -1939,6 +1945,7 @@ export type UsersPermissionsUserFiltersInput = {
   provider?: InputMaybe<StringFilterInput>;
   resetPasswordToken?: InputMaybe<StringFilterInput>;
   role?: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  tosAcceptationDate?: InputMaybe<DateTimeFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   username?: InputMaybe<StringFilterInput>;
   vehicles?: InputMaybe<VehicleFiltersInput>;
@@ -1964,6 +1971,7 @@ export type UsersPermissionsUserInput = {
   provider?: InputMaybe<Scalars['String']['input']>;
   resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['ID']['input']>;
+  tosAcceptationDate?: InputMaybe<Scalars['DateTime']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
   vehicles?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
@@ -2159,7 +2167,7 @@ export type SettingQueryVariables = Exact<{
 }>;
 
 
-export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null, stripe_dashboard_link?: string | null } | null } | null } | null };
+export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null, stripe_dashboard_link?: string | null, tos_link?: string | null, data_policy_link?: string | null } | null } | null } | null };
 
 export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null };
 
@@ -3044,6 +3052,8 @@ export const SettingDocument = gql`
         opencollective_link
         code_link
         stripe_dashboard_link
+        tos_link
+        data_policy_link
       }
     }
   }

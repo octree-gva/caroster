@@ -14,7 +14,6 @@ import Logo from '../../../components/Logo';
 import LanguagesIcon from '../../../containers/Languages/Icon';
 import SignUpActions from '../../../containers/MailSignUpForm/SignupActions';
 import LoginGoogle from '../../../containers/LoginGoogle';
-import Markdown from '../../../components/Markdown';
 import pageUtils from '../../../lib/pageUtils';
 
 const MailSignup = () => {
@@ -42,18 +41,18 @@ const MailSignup = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               width: '100%',
-              padding: {sm: theme.spacing(0, 6), xs: 0},
+              maxWidth: '15rem',
+              mt: 4,
             }}
           >
-            <Link href="/auth/register/mail" passHref>
+            <Link href="/auth/register/mail" passHref style={{width: '100%'}}>
               <Button
                 color="primary"
                 variant="contained"
                 fullWidth
-                sx={{
-                  margin: theme.spacing(8, 1, 4, 1),
-                }}
+                sx={{mb: 2}}
               >
                 {t('signup.with_mail')}
               </Button>
@@ -67,19 +66,6 @@ const MailSignup = () => {
               margin: theme.spacing(5, 0, 2, 0),
             }}
           >
-            <Markdown
-              sx={{
-                marginBottom: theme.spacing(5),
-                '& a': {
-                  color: theme.palette.primary.main,
-                },
-              }}
-              variant="body1"
-              align="center"
-            >
-              {t('signup.conditions')}
-            </Markdown>
-
             <Divider />
           </Box>
           <Typography align="center" variant="body2">

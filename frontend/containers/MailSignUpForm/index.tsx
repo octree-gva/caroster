@@ -9,11 +9,13 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import {useRouter} from 'next/router';
 import useToastsStore from '../../stores/useToastStore';
 import SignUpActions from './SignupActions';
 import {useRegisterMutation} from '../../generated/graphql';
+import useSettings from '../../hooks/useSettings';
+import moment from 'moment';
 
 const SignUp = () => {
   const {t, i18n} = useTranslation();
@@ -27,19 +29,22 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [tosConsent, setTosConsent] = useState(false);
   const [register] = useRegisterMutation();
+  const settings = useSettings();
 
   const canSubmit = useMemo(
     () =>
       [firstName, lastName, email, password].filter(s => s.length < 2)
-        .length === 0,
-    [firstName, lastName, email, password]
+        .length === 0 && tosConsent,
+    [firstName, lastName, email, password, tosConsent]
   );
 
   const onSubmit = async e => {
     e.preventDefault?.();
     if (isLoading) return;
     setIsLoading(true);
+    const tosAcceptationDate = tosConsent ? moment().toISOString() : null;
     try {
       const lang = i18n.language;
       await register({
@@ -51,6 +56,7 @@ const SignUp = () => {
             firstName,
             lastName,
             newsletterConsent,
+            tosAcceptationDate,
             lang,
           },
         },
@@ -140,11 +146,15 @@ const SignUp = () => {
           />
         </Box>
         <FormControlLabel
-          sx={{width: '100%', margin: theme.spacing(2, 0), padding: theme.spacing(0, 4)}}
+          sx={{
+            width: '100%',
+            mt: 2,
+            px: 5.5,
+          }}
           componentsProps={{typography: {align: 'left', variant: 'body2'}}}
           control={
             <Checkbox
-              sx={{padding: 0, marginRight: theme.spacing(2)}}
+              sx={{p: 0, mr: 2}}
               color="primary"
               value={newsletterConsent}
               onChange={({target: {checked = false}}) =>
@@ -154,8 +164,30 @@ const SignUp = () => {
           }
           label={t('signup.newsletter.consent')}
         />
+        <FormControlLabel
+          sx={{width: '100%', mt: 2, px: 5.5}}
+          componentsProps={{typography: {align: 'left', variant: 'body2'}}}
+          label={
+            <Trans
+              i18nKey="signup.tos.consent"
+              components={{
+                'tos-link': <a href={settings.tos_link} target="_blank" />,
+                'data-privacy-link': (
+                  <a href={settings.data_policy_link} target="_blank" />
+                ),
+              }}
+            />
+          }
+          control={
+            <Checkbox
+              sx={{p: 0, mr: 2}}
+              value={tosConsent}
+              onChange={e => setTosConsent(e.target.checked)}
+            />
+          }
+        />
 
-        <Box sx={contentSx}>
+        <Box sx={contentSx} mt={2}>
           <Button
             color="primary"
             variant="contained"
