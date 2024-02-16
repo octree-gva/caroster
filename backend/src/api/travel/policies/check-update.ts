@@ -15,7 +15,7 @@ export default async (policyContext, _config, { strapi }) => {
   const event = travel.event;
 
   const eventId = policyContext.args?.data?.event;
-  if (eventId !== event.id)
+  if (!!eventId && eventId !== event.id)
     throw new errors.UnauthorizedError("Can't change travel linked event");
 
   if (event.enabled_modules?.includes("caroster-plus")) {

@@ -1,18 +1,21 @@
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import React, {useState} from 'react';
-import {useUserNotificationsQuery} from '../../generated/graphql';
+import {
+  NotificationEntity,
+  useUserNotificationsQuery,
+} from '../../generated/graphql';
 import Badge from '@mui/material/Badge';
 import DrawerContent from './DrawerContent';
 
+const POLL_INTERVAL = 30000;
+
 const DrawerNotification = () => {
-  const POLL_INTERVAL = 30000;
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const {data} = useUserNotificationsQuery({
     pollInterval: POLL_INTERVAL,
   });
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const notifications = data?.me?.profile?.notifications?.data || [];
+  const notifications = data?.notifications?.data || [];
 
   const hasUnreadNotifications = notifications.some(
     notification => !notification.attributes.read
@@ -40,6 +43,7 @@ const DrawerNotification = () => {
       <DrawerContent
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
+        notifications={notifications as NotificationEntity[]}
       />
     </>
   );

@@ -125,27 +125,35 @@ export default [
         auth: true,
       },
       "UsersPermissionsUser.events": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.notifications": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.confirmed": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.provider": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.newsletterConsent": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.createdAt": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.onboardingCreator": {
+        auth: true,
         policies: [checkAuthUser],
       },
       "UsersPermissionsUser.onboardingUser": {
+        auth: true,
         policies: [checkAuthUser],
       },
     },

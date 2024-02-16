@@ -1,7 +1,6 @@
 import {Drawer, Box, Icon, Typography} from '@mui/material/';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  useUserNotificationsQuery,
   useReadNotificationsMutation,
   NotificationEntity,
 } from '../../generated/graphql';
@@ -12,22 +11,20 @@ import {useTranslation} from 'react-i18next';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  notification: NotificationEntity;
+  notifications: NotificationEntity[];
 }
 
-const DrawerContent = ({isOpen, onClose}: Props) => {
-  const {data} = useUserNotificationsQuery();
-  const [readNotifications] = useReadNotificationsMutation();
+const DrawerContent = ({isOpen, onClose, notifications}: Props) => {
+  const isMobile = useMediaQuery('(max-width:400px)');
   const {t} = useTranslation();
-  const notifications = data?.me?.profile?.notifications?.data || [];
   const hasNotifications = notifications.length > 0;
-  const markAllRead = () => {
-    readNotifications({refetchQueries: ['UserNotifications']});
-  };
+  const [readNotifications] = useReadNotificationsMutation();
   const isAllRead = notifications.every(
     notification => notification.attributes.read
   );
-  const isMobile = useMediaQuery('(max-width:400px)');
+
+  const markAllRead = () =>
+    readNotifications({refetchQueries: ['UserNotifications']});
 
   return (
     <Drawer
@@ -55,12 +52,11 @@ const DrawerContent = ({isOpen, onClose}: Props) => {
         />
         <Box>
           {hasNotifications ? (
-            notifications.map((notification, index) => (
+            notifications.map(notification => (
               <CardNotification
                 key={notification.id}
                 onClose={onClose}
                 notification={notification}
-                isRead={readNotifications[index]}
               />
             ))
           ) : (

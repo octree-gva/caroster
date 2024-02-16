@@ -2121,7 +2121,7 @@ export type UserNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type UserNotificationsQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', profile?: { __typename?: 'UsersPermissionsUser', notifications?: { __typename?: 'NotificationRelationResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null, createdAt?: any | null, event?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', name: string, uuid?: string | null } | null } | null } | null } | null }> } | null } | null } | null };
+export type UserNotificationsQuery = { __typename?: 'Query', notifications?: { __typename?: 'NotificationEntityResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null, createdAt?: any | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', email: string } | null } | null } | null, event?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', name: string, uuid?: string | null } | null } | null } | null } | null }> } | null };
 
 export type ReadNotificationsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -2828,23 +2828,27 @@ export type ModuleLazyQueryHookResult = ReturnType<typeof useModuleLazyQuery>;
 export type ModuleQueryResult = Apollo.QueryResult<ModuleQuery, ModuleQueryVariables>;
 export const UserNotificationsDocument = gql`
     query UserNotifications($maxItems: Int = 20) {
-  me {
-    profile {
-      notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
-        data {
-          id
-          attributes {
-            type
-            read
-            createdAt
-            event {
-              data {
-                id
-                attributes {
-                  name
-                  uuid
-                }
-              }
+  notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
+    data {
+      id
+      attributes {
+        type
+        read
+        createdAt
+        user {
+          data {
+            id
+            attributes {
+              email
+            }
+          }
+        }
+        event {
+          data {
+            id
+            attributes {
+              name
+              uuid
             }
           }
         }

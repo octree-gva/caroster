@@ -29,10 +29,6 @@ const CardNotification = ({notification, onClose}: NotificationProps) => {
     onClose();
   };
 
-  const showBadge = !notification.attributes.read;
-  const notificationContentKey = `notification.type.${notification.attributes.type}.content`;
-  const notificationContent = t(notificationContentKey);
-
   return (
     <Box
       padding={2}
@@ -51,7 +47,7 @@ const CardNotification = ({notification, onClose}: NotificationProps) => {
           spacing={2}
         >
           <Box display="flex" alignItems="center" sx={{width: '168px'}}>
-            {showBadge && (
+            {!notification.attributes.read && (
               <Badge
                 sx={{pr: 2}}
                 color="error"
@@ -71,7 +67,9 @@ const CardNotification = ({notification, onClose}: NotificationProps) => {
             {formatDate(notification.attributes.createdAt)}
           </Typography>
         </Stack>
-        <Typography>{notificationContent}</Typography>
+        <Typography>
+          {t(`notification.type.${notification.attributes.type}.content`)}
+        </Typography>
       </Box>
     </Box>
   );

@@ -55,6 +55,10 @@ export default [
       },
     },
     resolversConfig: {
+      "Query.notifications": {
+        auth: true,
+        policies: ["api::notification.check-find"],
+      },
       "Mutation.readNotifications": {
         auth: true,
       },
