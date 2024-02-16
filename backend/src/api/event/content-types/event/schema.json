@@ -22,7 +22,10 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": ["fr", "en"],
+      "enum": [
+        "fr",
+        "en"
+      ],
       "default": "en"
     },
     "date": {
@@ -72,11 +75,18 @@
     },
     "enabled_modules": {
       "type": "customField",
-      "options": ["caroster-plus"],
+      "options": [
+        "caroster-plus"
+      ],
       "customField": "plugin::multi-select.multi-select"
     },
     "administrators": {
       "type": "string"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

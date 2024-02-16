@@ -1,33 +1,25 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<T extends {[key: string]: unknown}, K extends keyof T> = {
-  [_ in K]?: never;
-};
-export type Incremental<T> =
-  | T
-  | {[P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: {input: string; output: string};
-  String: {input: string; output: string};
-  Boolean: {input: boolean; output: boolean};
-  Int: {input: number; output: number};
-  Float: {input: number; output: number};
-  Date: {input: any; output: any};
-  DateTime: {input: any; output: any};
-  I18NLocaleCode: {input: any; output: any};
-  JSON: {input: any; output: any};
-  Upload: {input: any; output: any};
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
+  DateTime: { input: any; output: any; }
+  I18NLocaleCode: { input: any; output: any; }
+  JSON: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type BooleanFilterInput = {
@@ -63,6 +55,7 @@ export type ContentReleasesRelease = {
   releasedAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
+
 
 export type ContentReleasesReleaseActionsArgs = {
   filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
@@ -207,32 +200,34 @@ export type DateTimeFilterInput = {
 
 export enum Enum_Contentreleasesreleaseaction_Type {
   publish = 'publish',
-  unpublish = 'unpublish',
+  unpublish = 'unpublish'
 }
 
 export enum Enum_Event_Lang {
   en = 'en',
-  fr = 'fr',
+  fr = 'fr'
 }
 
 export enum Enum_Notification_Type {
   AddedAsAdmin = 'AddedAsAdmin',
+  ContactTripCreator = 'ContactTripCreator',
   DeletedTrip = 'DeletedTrip',
+  EnabledCarosterPlus = 'EnabledCarosterPlus',
   EventCreated = 'EventCreated',
   EventEnded = 'EventEnded',
   EventRecap = 'EventRecap',
   NewPassengerInYourTrip = 'NewPassengerInYourTrip',
   NewTrip = 'NewTrip',
-  PassengerJoinTrip = 'PassengerJoinTrip',
+  PassengerJoinTrip = 'PassengerJoinTrip'
 }
 
 export enum Enum_Page_Type {
-  tos = 'tos',
+  tos = 'tos'
 }
 
 export enum Enum_Userspermissionsuser_Lang {
   en = 'en',
-  fr = 'fr',
+  fr = 'fr'
 }
 
 export type Event = {
@@ -240,6 +235,7 @@ export type Event = {
   address?: Maybe<Scalars['String']['output']>;
   administrators?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  creator?: Maybe<UsersPermissionsUserEntityResponse>;
   date?: Maybe<Scalars['Date']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
@@ -256,11 +252,13 @@ export type Event = {
   waitingPassengers?: Maybe<PassengerRelationResponseCollection>;
 };
 
+
 export type EventPassengersArgs = {
   filters?: InputMaybe<PassengerFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
+
 
 export type EventTravelsArgs = {
   filters?: InputMaybe<TravelFiltersInput>;
@@ -290,6 +288,7 @@ export type EventFiltersInput = {
   administrators?: InputMaybe<StringFilterInput>;
   and?: InputMaybe<Array<InputMaybe<EventFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
+  creator?: InputMaybe<UsersPermissionsUserFiltersInput>;
   date?: InputMaybe<DateFilterInput>;
   description?: InputMaybe<StringFilterInput>;
   email?: InputMaybe<StringFilterInput>;
@@ -313,6 +312,7 @@ export type EventFiltersInput = {
 export type EventInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   administrators?: InputMaybe<Scalars['String']['input']>;
+  creator?: InputMaybe<Scalars['ID']['input']>;
   date?: InputMaybe<Scalars['Date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -365,24 +365,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph =
-  | ContentReleasesRelease
-  | ContentReleasesReleaseAction
-  | Event
-  | I18NLocale
-  | Module
-  | Notification
-  | Page
-  | Passenger
-  | Setting
-  | Travel
-  | TripAlert
-  | UploadFile
-  | UploadFolder
-  | UsersPermissionsPermission
-  | UsersPermissionsRole
-  | UsersPermissionsUser
-  | Vehicle;
+export type GenericMorph = ContentReleasesRelease | ContentReleasesReleaseAction | Event | I18NLocale | Module | Notification | Page | Passenger | Setting | Travel | TripAlert | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vehicle;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -612,10 +595,12 @@ export type Mutation = {
   upload: UploadFileEntityResponse;
 };
 
+
 export type MutationAddEventAdminArgs = {
   email: Scalars['String']['input'];
   eventId: Scalars['ID']['input'];
 };
+
 
 export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
@@ -623,17 +608,21 @@ export type MutationChangePasswordArgs = {
   passwordConfirmation: Scalars['String']['input'];
 };
 
+
 export type MutationCreateContentReleasesReleaseArgs = {
   data: ContentReleasesReleaseInput;
 };
+
 
 export type MutationCreateContentReleasesReleaseActionArgs = {
   data: ContentReleasesReleaseActionInput;
 };
 
+
 export type MutationCreateEventArgs = {
   data: EventInput;
 };
+
 
 export type MutationCreateModuleLocalizationArgs = {
   data?: InputMaybe<ModuleInput>;
@@ -641,17 +630,21 @@ export type MutationCreateModuleLocalizationArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type MutationCreateNotificationArgs = {
   data: NotificationInput;
 };
+
 
 export type MutationCreatePageArgs = {
   data: PageInput;
 };
 
+
 export type MutationCreatePassengerArgs = {
   data: PassengerInput;
 };
+
 
 export type MutationCreateSettingLocalizationArgs = {
   data?: InputMaybe<SettingInput>;
@@ -659,111 +652,138 @@ export type MutationCreateSettingLocalizationArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type MutationCreateTravelArgs = {
   createVehicle?: InputMaybe<Scalars['Boolean']['input']>;
   data: TravelInput;
 };
 
+
 export type MutationCreateTripAlertArgs = {
   data: TripAlertInput;
 };
+
 
 export type MutationCreateUploadFileArgs = {
   data: UploadFileInput;
 };
 
+
 export type MutationCreateUploadFolderArgs = {
   data: UploadFolderInput;
 };
+
 
 export type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
 };
 
+
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
 };
+
 
 export type MutationCreateVehicleArgs = {
   data: VehicleInput;
 };
 
+
 export type MutationDeleteContentReleasesReleaseArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeleteContentReleasesReleaseActionArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteEventArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeleteEventAdminArgs = {
   email: Scalars['String']['input'];
   eventId: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteModuleArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
+
 
 export type MutationDeleteNotificationArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeletePageArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeletePassengerArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteSettingArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
+
 
 export type MutationDeleteTravelArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteTripAlertArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeleteUploadFileArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteUploadFolderArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeleteUsersPermissionsRoleArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationDeleteVehicleArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationEmailConfirmationArgs = {
   confirmation: Scalars['String']['input'];
 };
+
 
 export type MutationForgotPasswordArgs = {
   email: Scalars['String']['input'];
 };
 
+
 export type MutationLoginArgs = {
   input: UsersPermissionsLoginInput;
 };
+
 
 export type MutationMultipleUploadArgs = {
   field?: InputMaybe<Scalars['String']['input']>;
@@ -772,23 +792,28 @@ export type MutationMultipleUploadArgs = {
   refId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+
 export type MutationReadNotificationsArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
 };
 
+
 export type MutationRemoveFileArgs = {
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationResetPasswordArgs = {
   code: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
 };
+
 
 export type MutationSetTripAlertArgs = {
   address?: InputMaybe<Scalars['String']['input']>;
@@ -799,94 +824,113 @@ export type MutationSetTripAlertArgs = {
   radius?: InputMaybe<Scalars['Float']['input']>;
 };
 
+
 export type MutationUpdateContentReleasesReleaseArgs = {
   data: ContentReleasesReleaseInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateContentReleasesReleaseActionArgs = {
   data: ContentReleasesReleaseActionInput;
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationUpdateEventArgs = {
   data: EventInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateEventByUuidArgs = {
   data: EventInput;
   uuid: Scalars['String']['input'];
 };
 
+
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
 };
 
+
 export type MutationUpdateMeArgs = {
   data: UsersPermissionsUserInput;
 };
+
 
 export type MutationUpdateModuleArgs = {
   data: ModuleInput;
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type MutationUpdateNotificationArgs = {
   data: NotificationInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdatePageArgs = {
   data: PageInput;
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationUpdatePassengerArgs = {
   data: PassengerInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateSettingArgs = {
   data: SettingInput;
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type MutationUpdateTravelArgs = {
   data: TravelInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateTripAlertArgs = {
   data: TripAlertInput;
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateUploadFolderArgs = {
   data: UploadFolderInput;
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationUpdateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationUpdateVehicleArgs = {
   data: VehicleInput;
   id: Scalars['ID']['input'];
 };
+
 
 export type MutationUploadArgs = {
   field?: InputMaybe<Scalars['String']['input']>;
@@ -1109,13 +1153,16 @@ export type Query = {
   vehicles?: Maybe<VehicleEntityResponseCollection>;
 };
 
+
 export type QueryContentReleasesReleaseArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+
 export type QueryContentReleasesReleaseActionArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryContentReleasesReleaseActionsArgs = {
   filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
@@ -1123,23 +1170,28 @@ export type QueryContentReleasesReleaseActionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryContentReleasesReleasesArgs = {
   filters?: InputMaybe<ContentReleasesReleaseFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryEventArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryEventByUuidArgs = {
   uuid: Scalars['String']['input'];
 };
 
+
 export type QueryEventTripAlertArgs = {
   event: Scalars['ID']['input'];
 };
+
 
 export type QueryEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>;
@@ -1147,9 +1199,11 @@ export type QueryEventsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryI18NLocaleArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
@@ -1157,13 +1211,16 @@ export type QueryI18NLocalesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryModuleArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type QueryNotificationArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryNotificationsArgs = {
   filters?: InputMaybe<NotificationFiltersInput>;
@@ -1171,9 +1228,11 @@ export type QueryNotificationsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryPageArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryPagesArgs = {
   filters?: InputMaybe<PageFiltersInput>;
@@ -1181,9 +1240,11 @@ export type QueryPagesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryPassengerArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryPassengersArgs = {
   filters?: InputMaybe<PassengerFiltersInput>;
@@ -1191,13 +1252,16 @@ export type QueryPassengersArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QuerySettingArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
+
 export type QueryTravelArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryTravelsArgs = {
   filters?: InputMaybe<TravelFiltersInput>;
@@ -1205,9 +1269,11 @@ export type QueryTravelsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryTripAlertArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryTripAlertsArgs = {
   filters?: InputMaybe<TripAlertFiltersInput>;
@@ -1215,9 +1281,11 @@ export type QueryTripAlertsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryUploadFileArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryUploadFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
@@ -1225,9 +1293,11 @@ export type QueryUploadFilesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryUploadFolderArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryUploadFoldersArgs = {
   filters?: InputMaybe<UploadFolderFiltersInput>;
@@ -1235,9 +1305,11 @@ export type QueryUploadFoldersArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryUsersPermissionsRoleArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryUsersPermissionsRolesArgs = {
   filters?: InputMaybe<UsersPermissionsRoleFiltersInput>;
@@ -1245,9 +1317,11 @@ export type QueryUsersPermissionsRolesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryUsersPermissionsUserArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
@@ -1255,9 +1329,11 @@ export type QueryUsersPermissionsUsersArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type QueryVehicleArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
+
 
 export type QueryVehiclesArgs = {
   filters?: InputMaybe<VehicleFiltersInput>;
@@ -1358,6 +1434,7 @@ export type Travel = {
   user?: Maybe<UsersPermissionsUserEntityResponse>;
   vehicleName?: Maybe<Scalars['String']['output']>;
 };
+
 
 export type TravelPassengersArgs = {
   filters?: InputMaybe<PassengerFiltersInput>;
@@ -1576,11 +1653,13 @@ export type UploadFolder = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
 export type UploadFolderChildrenArgs = {
   filters?: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
+
 
 export type UploadFolderFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
@@ -1732,11 +1811,13 @@ export type UsersPermissionsRole = {
   users?: Maybe<UsersPermissionsUserRelationResponseCollection>;
 };
 
+
 export type UsersPermissionsRolePermissionsArgs = {
   filters?: InputMaybe<UsersPermissionsPermissionFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
+
 
 export type UsersPermissionsRoleUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
@@ -1810,17 +1891,20 @@ export type UsersPermissionsUser = {
   vehicles?: Maybe<VehicleRelationResponseCollection>;
 };
 
+
 export type UsersPermissionsUserEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
 export type UsersPermissionsUserNotificationsArgs = {
   filters?: InputMaybe<NotificationFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
+
 
 export type UsersPermissionsUserVehiclesArgs = {
   filters?: InputMaybe<VehicleFiltersInput>;
@@ -1961,24 +2045,8 @@ export type TripAlertQueryVariables = Exact<{
   eventId: Scalars['ID']['input'];
 }>;
 
-export type TripAlertQuery = {
-  __typename?: 'Query';
-  eventTripAlert?: {
-    __typename?: 'TripAlertEntityResponse';
-    data?: {
-      __typename?: 'TripAlertEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'TripAlert';
-        address?: string | null;
-        enabled?: boolean | null;
-        radius?: number | null;
-        longitude?: number | null;
-        latitude?: number | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type TripAlertQuery = { __typename?: 'Query', eventTripAlert?: { __typename?: 'TripAlertEntityResponse', data?: { __typename?: 'TripAlertEntity', id?: string | null, attributes?: { __typename?: 'TripAlert', address?: string | null, enabled?: boolean | null, radius?: number | null, longitude?: number | null, latitude?: number | null } | null } | null } | null };
 
 export type SetTripAlertMutationVariables = Exact<{
   eventId: Scalars['ID']['input'];
@@ -1989,62 +2057,24 @@ export type SetTripAlertMutationVariables = Exact<{
   radius?: InputMaybe<Scalars['Float']['input']>;
 }>;
 
-export type SetTripAlertMutation = {
-  __typename?: 'Mutation';
-  setTripAlert?: {
-    __typename?: 'TripAlertEntityResponse';
-    data?: {
-      __typename?: 'TripAlertEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'TripAlert';
-        latitude?: number | null;
-        longitude?: number | null;
-        address?: string | null;
-        enabled?: boolean | null;
-      } | null;
-    } | null;
-  } | null;
-};
 
-export type MeFieldsFragment = {
-  __typename?: 'UsersPermissionsMe';
-  id: string;
-  username: string;
-  email?: string | null;
-  confirmed?: boolean | null;
-};
+export type SetTripAlertMutation = { __typename?: 'Mutation', setTripAlert?: { __typename?: 'TripAlertEntityResponse', data?: { __typename?: 'TripAlertEntity', id?: string | null, attributes?: { __typename?: 'TripAlert', latitude?: number | null, longitude?: number | null, address?: string | null, enabled?: boolean | null } | null } | null } | null };
+
+export type MeFieldsFragment = { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null };
 
 export type RegisterMutationVariables = Exact<{
   user: UsersPermissionsRegisterInput;
 }>;
 
-export type RegisterMutation = {
-  __typename?: 'Mutation';
-  register: {
-    __typename?: 'UsersPermissionsLoginPayload';
-    jwt?: string | null;
-    user: {
-      __typename?: 'UsersPermissionsMe';
-      id: string;
-      username: string;
-      email?: string | null;
-      confirmed?: boolean | null;
-    };
-  };
-};
+
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } };
 
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
-export type ForgotPasswordMutation = {
-  __typename?: 'Mutation';
-  forgotPassword?: {
-    __typename?: 'UsersPermissionsPasswordPayload';
-    ok: boolean;
-  } | null;
-};
+
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword?: { __typename?: 'UsersPermissionsPasswordPayload', ok: boolean } | null };
 
 export type ResetPasswordMutationVariables = Exact<{
   password: Scalars['String']['input'];
@@ -2052,1083 +2082,228 @@ export type ResetPasswordMutationVariables = Exact<{
   code: Scalars['String']['input'];
 }>;
 
-export type ResetPasswordMutation = {
-  __typename?: 'Mutation';
-  resetPassword?: {
-    __typename?: 'UsersPermissionsLoginPayload';
-    jwt?: string | null;
-    user: {
-      __typename?: 'UsersPermissionsMe';
-      id: string;
-      username: string;
-      email?: string | null;
-      confirmed?: boolean | null;
-    };
-  } | null;
-};
 
-export type EventFieldsFragment = {
-  __typename?: 'EventEntity';
-  id?: string | null;
-  attributes?: {
-    __typename?: 'Event';
-    uuid?: string | null;
-    name: string;
-    description?: string | null;
-    enabled_modules?: any | null;
-    email: string;
-    administrators?: Array<string | null> | null;
-    date?: any | null;
-    address?: string | null;
-    latitude?: number | null;
-    longitude?: number | null;
-    position?: any | null;
-    waitingPassengers?: {
-      __typename?: 'PassengerRelationResponseCollection';
-      data: Array<{
-        __typename?: 'PassengerEntity';
-        id?: string | null;
-        attributes?: {
-          __typename?: 'Passenger';
-          name: string;
-          email?: string | null;
-          location?: string | null;
-          user?: {
-            __typename?: 'UsersPermissionsUserEntityResponse';
-            data?: {
-              __typename?: 'UsersPermissionsUserEntity';
-              id?: string | null;
-              attributes?: {
-                __typename?: 'UsersPermissionsUser';
-                firstName?: string | null;
-                lastName?: string | null;
-              } | null;
-            } | null;
-          } | null;
-        } | null;
-      }>;
-    } | null;
-    travels?: {
-      __typename?: 'TravelRelationResponseCollection';
-      data: Array<{
-        __typename?: 'TravelEntity';
-        id?: string | null;
-        attributes?: {
-          __typename?: 'Travel';
-          meeting?: string | null;
-          meeting_latitude?: number | null;
-          meeting_longitude?: number | null;
-          departure?: any | null;
-          details?: string | null;
-          vehicleName?: string | null;
-          phone_number?: string | null;
-          seats?: number | null;
-          user?: {
-            __typename?: 'UsersPermissionsUserEntityResponse';
-            data?: {
-              __typename?: 'UsersPermissionsUserEntity';
-              id?: string | null;
-            } | null;
-          } | null;
-          passengers?: {
-            __typename?: 'PassengerRelationResponseCollection';
-            data: Array<{
-              __typename?: 'PassengerEntity';
-              id?: string | null;
-              attributes?: {
-                __typename?: 'Passenger';
-                name: string;
-                location?: string | null;
-                phone?: string | null;
-                user?: {
-                  __typename?: 'UsersPermissionsUserEntityResponse';
-                  data?: {
-                    __typename?: 'UsersPermissionsUserEntity';
-                    id?: string | null;
-                    attributes?: {
-                      __typename?: 'UsersPermissionsUser';
-                      firstName?: string | null;
-                      lastName?: string | null;
-                    } | null;
-                  } | null;
-                } | null;
-              } | null;
-            }>;
-          } | null;
-        } | null;
-      }>;
-    } | null;
-  } | null;
-};
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null } } | null };
+
+export type EventFieldsFragment = { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, enabled_modules?: any | null, email: string, lang?: Enum_Event_Lang | null, administrators?: Array<string | null> | null, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null };
 
 export type CreateEventMutationVariables = Exact<{
   eventData: EventInput;
 }>;
 
-export type CreateEventMutation = {
-  __typename?: 'Mutation';
-  createEvent?: {
-    __typename?: 'EventEntityResponse';
-    data?: {
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        uuid?: string | null;
-        name: string;
-        description?: string | null;
-        enabled_modules?: any | null;
-        email: string;
-        administrators?: Array<string | null> | null;
-        date?: any | null;
-        address?: string | null;
-        latitude?: number | null;
-        longitude?: number | null;
-        position?: any | null;
-        waitingPassengers?: {
-          __typename?: 'PassengerRelationResponseCollection';
-          data: Array<{
-            __typename?: 'PassengerEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Passenger';
-              name: string;
-              email?: string | null;
-              location?: string | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'UsersPermissionsUser';
-                    firstName?: string | null;
-                    lastName?: string | null;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-        travels?: {
-          __typename?: 'TravelRelationResponseCollection';
-          data: Array<{
-            __typename?: 'TravelEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Travel';
-              meeting?: string | null;
-              meeting_latitude?: number | null;
-              meeting_longitude?: number | null;
-              departure?: any | null;
-              details?: string | null;
-              vehicleName?: string | null;
-              phone_number?: string | null;
-              seats?: number | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                } | null;
-              } | null;
-              passengers?: {
-                __typename?: 'PassengerRelationResponseCollection';
-                data: Array<{
-                  __typename?: 'PassengerEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'Passenger';
-                    name: string;
-                    location?: string | null;
-                    phone?: string | null;
-                    user?: {
-                      __typename?: 'UsersPermissionsUserEntityResponse';
-                      data?: {
-                        __typename?: 'UsersPermissionsUserEntity';
-                        id?: string | null;
-                        attributes?: {
-                          __typename?: 'UsersPermissionsUser';
-                          firstName?: string | null;
-                          lastName?: string | null;
-                        } | null;
-                      } | null;
-                    } | null;
-                  } | null;
-                }>;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, enabled_modules?: any | null, email: string, lang?: Enum_Event_Lang | null, administrators?: Array<string | null> | null, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type UpdateEventMutationVariables = Exact<{
   uuid: Scalars['String']['input'];
   eventUpdate: EventInput;
 }>;
 
-export type UpdateEventMutation = {
-  __typename?: 'Mutation';
-  updateEventByUUID?: {
-    __typename?: 'EventEntityResponse';
-    data?: {
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        uuid?: string | null;
-        name: string;
-        description?: string | null;
-        enabled_modules?: any | null;
-        email: string;
-        administrators?: Array<string | null> | null;
-        date?: any | null;
-        address?: string | null;
-        latitude?: number | null;
-        longitude?: number | null;
-        position?: any | null;
-        waitingPassengers?: {
-          __typename?: 'PassengerRelationResponseCollection';
-          data: Array<{
-            __typename?: 'PassengerEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Passenger';
-              name: string;
-              email?: string | null;
-              location?: string | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'UsersPermissionsUser';
-                    firstName?: string | null;
-                    lastName?: string | null;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-        travels?: {
-          __typename?: 'TravelRelationResponseCollection';
-          data: Array<{
-            __typename?: 'TravelEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Travel';
-              meeting?: string | null;
-              meeting_latitude?: number | null;
-              meeting_longitude?: number | null;
-              departure?: any | null;
-              details?: string | null;
-              vehicleName?: string | null;
-              phone_number?: string | null;
-              seats?: number | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                } | null;
-              } | null;
-              passengers?: {
-                __typename?: 'PassengerRelationResponseCollection';
-                data: Array<{
-                  __typename?: 'PassengerEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'Passenger';
-                    name: string;
-                    location?: string | null;
-                    phone?: string | null;
-                    user?: {
-                      __typename?: 'UsersPermissionsUserEntityResponse';
-                      data?: {
-                        __typename?: 'UsersPermissionsUserEntity';
-                        id?: string | null;
-                        attributes?: {
-                          __typename?: 'UsersPermissionsUser';
-                          firstName?: string | null;
-                          lastName?: string | null;
-                        } | null;
-                      } | null;
-                    } | null;
-                  } | null;
-                }>;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type UpdateEventMutation = { __typename?: 'Mutation', updateEventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, enabled_modules?: any | null, email: string, lang?: Enum_Event_Lang | null, administrators?: Array<string | null> | null, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type AddEventAdminMutationVariables = Exact<{
   eventId: Scalars['ID']['input'];
   email: Scalars['String']['input'];
 }>;
 
-export type AddEventAdminMutation = {
-  __typename?: 'Mutation';
-  addEventAdmin?: {
-    __typename?: 'EventEntityResponse';
-    data?: {
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        administrators?: Array<string | null> | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type AddEventAdminMutation = { __typename?: 'Mutation', addEventAdmin?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', administrators?: Array<string | null> | null } | null } | null } | null };
 
 export type DeleteEventAdminMutationVariables = Exact<{
   eventId: Scalars['ID']['input'];
   email: Scalars['String']['input'];
 }>;
 
-export type DeleteEventAdminMutation = {
-  __typename?: 'Mutation';
-  deleteEventAdmin?: {
-    __typename?: 'EventEntityResponse';
-    data?: {
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        administrators?: Array<string | null> | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type DeleteEventAdminMutation = { __typename?: 'Mutation', deleteEventAdmin?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', administrators?: Array<string | null> | null } | null } | null } | null };
 
 export type EventByUuidQueryVariables = Exact<{
   uuid: Scalars['String']['input'];
 }>;
 
-export type EventByUuidQuery = {
-  __typename?: 'Query';
-  eventByUUID?: {
-    __typename?: 'EventEntityResponse';
-    data?: {
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        uuid?: string | null;
-        name: string;
-        description?: string | null;
-        enabled_modules?: any | null;
-        email: string;
-        administrators?: Array<string | null> | null;
-        date?: any | null;
-        address?: string | null;
-        latitude?: number | null;
-        longitude?: number | null;
-        position?: any | null;
-        waitingPassengers?: {
-          __typename?: 'PassengerRelationResponseCollection';
-          data: Array<{
-            __typename?: 'PassengerEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Passenger';
-              name: string;
-              email?: string | null;
-              location?: string | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'UsersPermissionsUser';
-                    firstName?: string | null;
-                    lastName?: string | null;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-        travels?: {
-          __typename?: 'TravelRelationResponseCollection';
-          data: Array<{
-            __typename?: 'TravelEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Travel';
-              meeting?: string | null;
-              meeting_latitude?: number | null;
-              meeting_longitude?: number | null;
-              departure?: any | null;
-              details?: string | null;
-              vehicleName?: string | null;
-              phone_number?: string | null;
-              seats?: number | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                } | null;
-              } | null;
-              passengers?: {
-                __typename?: 'PassengerRelationResponseCollection';
-                data: Array<{
-                  __typename?: 'PassengerEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'Passenger';
-                    name: string;
-                    location?: string | null;
-                    phone?: string | null;
-                    user?: {
-                      __typename?: 'UsersPermissionsUserEntityResponse';
-                      data?: {
-                        __typename?: 'UsersPermissionsUserEntity';
-                        id?: string | null;
-                        attributes?: {
-                          __typename?: 'UsersPermissionsUser';
-                          firstName?: string | null;
-                          lastName?: string | null;
-                        } | null;
-                      } | null;
-                    } | null;
-                  } | null;
-                }>;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type EventByUuidQuery = { __typename?: 'Query', eventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, enabled_modules?: any | null, email: string, lang?: Enum_Event_Lang | null, administrators?: Array<string | null> | null, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, position?: any | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
 export type ModuleQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
 }>;
 
-export type ModuleQuery = {
-  __typename?: 'Query';
-  module?: {
-    __typename?: 'ModuleEntityResponse';
-    data?: {
-      __typename?: 'ModuleEntity';
-      attributes?: {
-        __typename?: 'Module';
-        caroster_plus_name: string;
-        caroster_plus_price?: number | null;
-        caroster_plus_enabled?: boolean | null;
-        caroster_plus_description?: string | null;
-        caroster_plus_payment_link: string;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type ModuleQuery = { __typename?: 'Query', module?: { __typename?: 'ModuleEntityResponse', data?: { __typename?: 'ModuleEntity', attributes?: { __typename?: 'Module', caroster_plus_name: string, caroster_plus_price?: number | null, caroster_plus_enabled?: boolean | null, caroster_plus_description?: string | null, caroster_plus_payment_link: string } | null } | null } | null };
 
 export type UserNotificationsQueryVariables = Exact<{
   maxItems?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
-export type UserNotificationsQuery = {
-  __typename?: 'Query';
-  notifications?: {
-    __typename?: 'NotificationEntityResponseCollection';
-    data: Array<{
-      __typename?: 'NotificationEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Notification';
-        type: Enum_Notification_Type;
-        read?: boolean | null;
-        createdAt?: any | null;
-        user?: {
-          __typename?: 'UsersPermissionsUserEntityResponse';
-          data?: {
-            __typename?: 'UsersPermissionsUserEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'UsersPermissionsUser';
-              email: string;
-            } | null;
-          } | null;
-        } | null;
-        event?: {
-          __typename?: 'EventEntityResponse';
-          data?: {
-            __typename?: 'EventEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Event';
-              name: string;
-              uuid?: string | null;
-            } | null;
-          } | null;
-        } | null;
-      } | null;
-    }>;
-  } | null;
-};
+
+export type UserNotificationsQuery = { __typename?: 'Query', notifications?: { __typename?: 'NotificationEntityResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null, createdAt?: any | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', email: string } | null } | null } | null, event?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', name: string, uuid?: string | null } | null } | null } | null } | null }> } | null };
 
 export type ReadNotificationsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
-export type ReadNotificationsMutation = {
-  __typename?: 'Mutation';
-  readNotifications?: {
-    __typename?: 'NotificationEntityResponseCollection';
-    data: Array<{
-      __typename?: 'NotificationEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Notification';
-        type: Enum_Notification_Type;
-        read?: boolean | null;
-      } | null;
-    }>;
-  } | null;
-};
 
-export type PassengerFieldsFragment = {
-  __typename?: 'PassengerEntity';
-  id?: string | null;
-  attributes?: {
-    __typename?: 'Passenger';
-    name: string;
-    location?: string | null;
-    phone?: string | null;
-    email?: string | null;
-    user?: {
-      __typename?: 'UsersPermissionsUserEntityResponse';
-      data?: {
-        __typename?: 'UsersPermissionsUserEntity';
-        id?: string | null;
-        attributes?: {
-          __typename?: 'UsersPermissionsUser';
-          firstName?: string | null;
-          lastName?: string | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+export type ReadNotificationsMutation = { __typename?: 'Mutation', readNotifications?: { __typename?: 'NotificationEntityResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null } | null }> } | null };
+
+export type PassengerFieldsFragment = { __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, email?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null };
 
 export type CreatePassengerMutationVariables = Exact<{
   passenger: PassengerInput;
 }>;
 
-export type CreatePassengerMutation = {
-  __typename?: 'Mutation';
-  createPassenger?: {
-    __typename?: 'PassengerEntityResponse';
-    data?: {
-      __typename?: 'PassengerEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Passenger';
-        name: string;
-        location?: string | null;
-        phone?: string | null;
-        email?: string | null;
-        user?: {
-          __typename?: 'UsersPermissionsUserEntityResponse';
-          data?: {
-            __typename?: 'UsersPermissionsUserEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'UsersPermissionsUser';
-              firstName?: string | null;
-              lastName?: string | null;
-            } | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type CreatePassengerMutation = { __typename?: 'Mutation', createPassenger?: { __typename?: 'PassengerEntityResponse', data?: { __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, email?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null } | null } | null };
 
 export type UpdatePassengerMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   passengerUpdate: PassengerInput;
 }>;
 
-export type UpdatePassengerMutation = {
-  __typename?: 'Mutation';
-  updatePassenger?: {
-    __typename?: 'PassengerEntityResponse';
-    data?: {
-      __typename?: 'PassengerEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Passenger';
-        name: string;
-        location?: string | null;
-        phone?: string | null;
-        email?: string | null;
-        user?: {
-          __typename?: 'UsersPermissionsUserEntityResponse';
-          data?: {
-            __typename?: 'UsersPermissionsUserEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'UsersPermissionsUser';
-              firstName?: string | null;
-              lastName?: string | null;
-            } | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type UpdatePassengerMutation = { __typename?: 'Mutation', updatePassenger?: { __typename?: 'PassengerEntityResponse', data?: { __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, email?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null } | null } | null };
 
 export type DeletePassengerMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
-export type DeletePassengerMutation = {
-  __typename?: 'Mutation';
-  deletePassenger?: {
-    __typename?: 'PassengerEntityResponse';
-    data?: {__typename?: 'PassengerEntity'; id?: string | null} | null;
-  } | null;
-};
+
+export type DeletePassengerMutation = { __typename?: 'Mutation', deletePassenger?: { __typename?: 'PassengerEntityResponse', data?: { __typename?: 'PassengerEntity', id?: string | null } | null } | null };
 
 export type SettingQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
 }>;
 
-export type SettingQuery = {
-  __typename?: 'Query';
-  setting?: {
-    __typename?: 'SettingEntityResponse';
-    data?: {
-      __typename?: 'SettingEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Setting';
-        gtm_id?: string | null;
-        about_link?: string | null;
-        faq_link?: string | null;
-        announcement?: string | null;
-        matomo_script_url?: string | null;
-        opencollective_link?: string | null;
-        code_link?: string | null;
-        stripe_dashboard_link?: string | null;
-        tos_link?: string | null;
-        data_policy_link?: string | null;
-      } | null;
-    } | null;
-  } | null;
-};
 
-export type TravelFieldsFragment = {
-  __typename?: 'TravelEntity';
-  id?: string | null;
-  attributes?: {
-    __typename?: 'Travel';
-    meeting?: string | null;
-    meeting_latitude?: number | null;
-    meeting_longitude?: number | null;
-    departure?: any | null;
-    details?: string | null;
-    vehicleName?: string | null;
-    phone_number?: string | null;
-    seats?: number | null;
-    passengers?: {
-      __typename?: 'PassengerRelationResponseCollection';
-      data: Array<{
-        __typename?: 'PassengerEntity';
-        id?: string | null;
-        attributes?: {
-          __typename?: 'Passenger';
-          name: string;
-          location?: string | null;
-          phone?: string | null;
-          user?: {
-            __typename?: 'UsersPermissionsUserEntityResponse';
-            data?: {
-              __typename?: 'UsersPermissionsUserEntity';
-              id?: string | null;
-              attributes?: {
-                __typename?: 'UsersPermissionsUser';
-                firstName?: string | null;
-                lastName?: string | null;
-              } | null;
-            } | null;
-          } | null;
-        } | null;
-      }>;
-    } | null;
-  } | null;
-};
+export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null, stripe_dashboard_link?: string | null, tos_link?: string | null, data_policy_link?: string | null } | null } | null } | null };
+
+export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null };
 
 export type CreateTravelMutationVariables = Exact<{
   travel: TravelInput;
   createVehicle?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
-export type CreateTravelMutation = {
-  __typename?: 'Mutation';
-  createTravel?: {
-    __typename?: 'TravelEntityResponse';
-    data?: {
-      __typename?: 'TravelEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Travel';
-        meeting?: string | null;
-        meeting_latitude?: number | null;
-        meeting_longitude?: number | null;
-        departure?: any | null;
-        details?: string | null;
-        vehicleName?: string | null;
-        phone_number?: string | null;
-        seats?: number | null;
-        passengers?: {
-          __typename?: 'PassengerRelationResponseCollection';
-          data: Array<{
-            __typename?: 'PassengerEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Passenger';
-              name: string;
-              location?: string | null;
-              phone?: string | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'UsersPermissionsUser';
-                    firstName?: string | null;
-                    lastName?: string | null;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type CreateTravelMutation = { __typename?: 'Mutation', createTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null } | null } | null };
 
 export type UpdateTravelMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   travelUpdate: TravelInput;
 }>;
 
-export type UpdateTravelMutation = {
-  __typename?: 'Mutation';
-  updateTravel?: {
-    __typename?: 'TravelEntityResponse';
-    data?: {
-      __typename?: 'TravelEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Travel';
-        meeting?: string | null;
-        meeting_latitude?: number | null;
-        meeting_longitude?: number | null;
-        departure?: any | null;
-        details?: string | null;
-        vehicleName?: string | null;
-        phone_number?: string | null;
-        seats?: number | null;
-        passengers?: {
-          __typename?: 'PassengerRelationResponseCollection';
-          data: Array<{
-            __typename?: 'PassengerEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Passenger';
-              name: string;
-              location?: string | null;
-              phone?: string | null;
-              user?: {
-                __typename?: 'UsersPermissionsUserEntityResponse';
-                data?: {
-                  __typename?: 'UsersPermissionsUserEntity';
-                  id?: string | null;
-                  attributes?: {
-                    __typename?: 'UsersPermissionsUser';
-                    firstName?: string | null;
-                    lastName?: string | null;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
+
+export type UpdateTravelMutation = { __typename?: 'Mutation', updateTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null } | null } | null };
 
 export type DeleteTravelMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
-export type DeleteTravelMutation = {
-  __typename?: 'Mutation';
-  deleteTravel?: {
-    __typename?: 'TravelEntityResponse';
-    data?: {__typename?: 'TravelEntity'; id?: string | null} | null;
-  } | null;
-};
 
-export type UserFieldsFragment = {
-  __typename?: 'UsersPermissionsUser';
-  username: string;
-  email: string;
-  confirmed?: boolean | null;
-  lastName?: string | null;
-  firstName?: string | null;
-  lang?: Enum_Userspermissionsuser_Lang | null;
-  onboardingUser?: boolean | null;
-  onboardingCreator?: boolean | null;
-  newsletterConsent?: boolean | null;
-  notificationEnabled?: boolean | null;
-  provider?: string | null;
-  events?: {
-    __typename?: 'EventRelationResponseCollection';
-    data: Array<{
-      __typename?: 'EventEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'Event';
-        uuid?: string | null;
-        name: string;
-        date?: any | null;
-        address?: string | null;
-      } | null;
-    }>;
-  } | null;
-};
+export type DeleteTravelMutation = { __typename?: 'Mutation', deleteTravel?: { __typename?: 'TravelEntityResponse', data?: { __typename?: 'TravelEntity', id?: string | null } | null } | null };
 
-export type ProfileQueryVariables = Exact<{[key: string]: never}>;
+export type UserFieldsFragment = { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null, enabled_modules?: any | null } | null }> } | null };
 
-export type ProfileQuery = {
-  __typename?: 'Query';
-  me?: {
-    __typename?: 'UsersPermissionsMe';
-    id: string;
-    username: string;
-    profile?: {
-      __typename?: 'UsersPermissionsUser';
-      username: string;
-      email: string;
-      confirmed?: boolean | null;
-      lastName?: string | null;
-      firstName?: string | null;
-      lang?: Enum_Userspermissionsuser_Lang | null;
-      onboardingUser?: boolean | null;
-      onboardingCreator?: boolean | null;
-      newsletterConsent?: boolean | null;
-      notificationEnabled?: boolean | null;
-      provider?: string | null;
-      events?: {
-        __typename?: 'EventRelationResponseCollection';
-        data: Array<{
-          __typename?: 'EventEntity';
-          id?: string | null;
-          attributes?: {
-            __typename?: 'Event';
-            uuid?: string | null;
-            name: string;
-            date?: any | null;
-            address?: string | null;
-          } | null;
-        }>;
-      } | null;
-    } | null;
-  } | null;
-};
+export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', id: string, username: string, profile?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null, enabled_modules?: any | null } | null }> } | null } | null } | null };
 
 export type UpdateMeMutationVariables = Exact<{
   userUpdate: UsersPermissionsUserInput;
 }>;
 
-export type UpdateMeMutation = {
-  __typename?: 'Mutation';
-  updateMe: {
-    __typename?: 'UsersPermissionsUserEntityResponse';
-    data?: {
-      __typename?: 'UsersPermissionsUserEntity';
-      id?: string | null;
-      attributes?: {
-        __typename?: 'UsersPermissionsUser';
-        username: string;
-        email: string;
-        confirmed?: boolean | null;
-        lastName?: string | null;
-        firstName?: string | null;
-        lang?: Enum_Userspermissionsuser_Lang | null;
-        onboardingUser?: boolean | null;
-        onboardingCreator?: boolean | null;
-        newsletterConsent?: boolean | null;
-        notificationEnabled?: boolean | null;
-        provider?: string | null;
-        events?: {
-          __typename?: 'EventRelationResponseCollection';
-          data: Array<{
-            __typename?: 'EventEntity';
-            id?: string | null;
-            attributes?: {
-              __typename?: 'Event';
-              uuid?: string | null;
-              name: string;
-              date?: any | null;
-              address?: string | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type VehicleFieldsFragment = {
-  __typename?: 'VehicleEntity';
-  id?: string | null;
-  attributes?: {
-    __typename?: 'Vehicle';
-    name: string;
-    seats?: number | null;
-    phone_number?: string | null;
-  } | null;
-};
+export type UpdateMeMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, confirmed?: boolean | null, lastName?: string | null, firstName?: string | null, lang?: Enum_Userspermissionsuser_Lang | null, onboardingUser?: boolean | null, onboardingCreator?: boolean | null, newsletterConsent?: boolean | null, notificationEnabled?: boolean | null, provider?: string | null, events?: { __typename?: 'EventRelationResponseCollection', data: Array<{ __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, date?: any | null, address?: string | null, enabled_modules?: any | null } | null }> } | null } | null } | null } };
 
-export type FindUserVehiclesQueryVariables = Exact<{[key: string]: never}>;
+export type VehicleFieldsFragment = { __typename?: 'VehicleEntity', id?: string | null, attributes?: { __typename?: 'Vehicle', name: string, seats?: number | null, phone_number?: string | null } | null };
 
-export type FindUserVehiclesQuery = {
-  __typename?: 'Query';
-  me?: {
-    __typename?: 'UsersPermissionsMe';
-    id: string;
-    username: string;
-    profile?: {
-      __typename?: 'UsersPermissionsUser';
-      vehicles?: {
-        __typename?: 'VehicleRelationResponseCollection';
-        data: Array<{
-          __typename?: 'VehicleEntity';
-          id?: string | null;
-          attributes?: {
-            __typename?: 'Vehicle';
-            name: string;
-            seats?: number | null;
-            phone_number?: string | null;
-          } | null;
-        }>;
-      } | null;
-    } | null;
-  } | null;
-};
+export type FindUserVehiclesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindUserVehiclesQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', id: string, username: string, profile?: { __typename?: 'UsersPermissionsUser', vehicles?: { __typename?: 'VehicleRelationResponseCollection', data: Array<{ __typename?: 'VehicleEntity', id?: string | null, attributes?: { __typename?: 'Vehicle', name: string, seats?: number | null, phone_number?: string | null } | null }> } | null } | null } | null };
 
 export type DeleteVehicleMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
-export type DeleteVehicleMutation = {
-  __typename?: 'Mutation';
-  deleteVehicle?: {
-    __typename?: 'VehicleEntityResponse';
-    data?: {
-      __typename?: 'VehicleEntity';
-      id?: string | null;
-      attributes?: {__typename?: 'Vehicle'; name: string} | null;
-    } | null;
-  } | null;
-};
+
+export type DeleteVehicleMutation = { __typename?: 'Mutation', deleteVehicle?: { __typename?: 'VehicleEntityResponse', data?: { __typename?: 'VehicleEntity', id?: string | null, attributes?: { __typename?: 'Vehicle', name: string } | null } | null } | null };
 
 export const MeFieldsFragmentDoc = gql`
-  fragment MeFields on UsersPermissionsMe {
-    id
-    username
-    email
-    confirmed
-  }
-`;
+    fragment MeFields on UsersPermissionsMe {
+  id
+  username
+  email
+  confirmed
+}
+    `;
 export const EventFieldsFragmentDoc = gql`
-  fragment EventFields on EventEntity {
-    id
-    attributes {
-      uuid
-      name
-      description
-      enabled_modules
-      email
-      lang
-      administrators
-      date
-      address
-      latitude
-      longitude
-      position
-      waitingPassengers {
-        data {
-          id
-          attributes {
-            name
-            email
-            location
-            user {
-              data {
-                id
-                attributes {
-                  firstName
-                  lastName
-                }
+    fragment EventFields on EventEntity {
+  id
+  attributes {
+    uuid
+    name
+    description
+    enabled_modules
+    email
+    lang
+    administrators
+    date
+    address
+    latitude
+    longitude
+    position
+    waitingPassengers {
+      data {
+        id
+        attributes {
+          name
+          email
+          location
+          user {
+            data {
+              id
+              attributes {
+                firstName
+                lastName
               }
             }
           }
         }
       }
-      travels(pagination: {limit: 500}) {
-        data {
-          id
-          attributes {
-            meeting
-            meeting_latitude
-            meeting_longitude
-            departure
-            details
-            vehicleName
-            phone_number
-            seats
-            user {
-              data {
-                id
-              }
+    }
+    travels(pagination: {limit: 500}) {
+      data {
+        id
+        attributes {
+          meeting
+          meeting_latitude
+          meeting_longitude
+          departure
+          details
+          vehicleName
+          phone_number
+          seats
+          user {
+            data {
+              id
             }
-            passengers {
-              data {
-                id
-                attributes {
-                  name
-                  location
-                  phone
-                  user {
-                    data {
-                      id
-                      attributes {
-                        firstName
-                        lastName
-                      }
+          }
+          passengers {
+            data {
+              id
+              attributes {
+                name
+                location
+                email
+                phone
+                user {
+                  data {
+                    id
+                    attributes {
+                      firstName
+                      lastName
                     }
                   }
                 }
@@ -3139,55 +2314,55 @@ export const EventFieldsFragmentDoc = gql`
       }
     }
   }
-`;
+}
+    `;
 export const PassengerFieldsFragmentDoc = gql`
-  fragment PassengerFields on PassengerEntity {
-    id
-    attributes {
-      name
-      location
-      phone
-      email
-      user {
-        data {
-          id
-          attributes {
-            firstName
-            lastName
-            email
-          }
+    fragment PassengerFields on PassengerEntity {
+  id
+  attributes {
+    name
+    location
+    phone
+    email
+    user {
+      data {
+        id
+        attributes {
+          firstName
+          lastName
+          email
         }
       }
     }
   }
-`;
+}
+    `;
 export const TravelFieldsFragmentDoc = gql`
-  fragment TravelFields on TravelEntity {
-    id
-    attributes {
-      meeting
-      meeting_latitude
-      meeting_longitude
-      departure
-      details
-      vehicleName
-      phone_number
-      seats
-      passengers {
-        data {
-          id
-          attributes {
-            name
-            location
-            phone
-            user {
-              data {
-                id
-                attributes {
-                  firstName
-                  lastName
-                  email
-                }
+    fragment TravelFields on TravelEntity {
+  id
+  attributes {
+    meeting
+    meeting_latitude
+    meeting_longitude
+    departure
+    details
+    vehicleName
+    phone_number
+    seats
+    passengers {
+      data {
+        id
+        attributes {
+          name
+          location
+          phone
+          user {
+            data {
+              id
+              attributes {
+                firstName
+                lastName
+                email
               }
             }
           }
@@ -3195,59 +2370,61 @@ export const TravelFieldsFragmentDoc = gql`
       }
     }
   }
-`;
+}
+    `;
 export const UserFieldsFragmentDoc = gql`
-  fragment UserFields on UsersPermissionsUser {
-    username
-    email
-    confirmed
-    lastName
-    firstName
-    lang
-    onboardingUser
-    onboardingCreator
-    newsletterConsent
-    notificationEnabled
-    provider
-    events(pagination: {limit: 500}) {
-      data {
-        id
-        attributes {
-          uuid
-          name
-          date
-          address
-        }
+    fragment UserFields on UsersPermissionsUser {
+  username
+  email
+  confirmed
+  lastName
+  firstName
+  lang
+  onboardingUser
+  onboardingCreator
+  newsletterConsent
+  notificationEnabled
+  provider
+  events(pagination: {limit: 500}) {
+    data {
+      id
+      attributes {
+        uuid
+        name
+        date
+        address
+        enabled_modules
       }
     }
   }
-`;
+}
+    `;
 export const VehicleFieldsFragmentDoc = gql`
-  fragment VehicleFields on VehicleEntity {
-    id
-    attributes {
-      name
-      seats
-      phone_number
-    }
+    fragment VehicleFields on VehicleEntity {
+  id
+  attributes {
+    name
+    seats
+    phone_number
   }
-`;
+}
+    `;
 export const TripAlertDocument = gql`
-  query TripAlert($eventId: ID!) {
-    eventTripAlert(event: $eventId) {
-      data {
-        id
-        attributes {
-          address
-          enabled
-          radius
-          longitude
-          latitude
-        }
+    query TripAlert($eventId: ID!) {
+  eventTripAlert(event: $eventId) {
+    data {
+      id
+      attributes {
+        address
+        enabled
+        radius
+        longitude
+        latitude
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useTripAlertQuery__
@@ -3265,68 +2442,40 @@ export const TripAlertDocument = gql`
  *   },
  * });
  */
-export function useTripAlertQuery(
-  baseOptions: Apollo.QueryHookOptions<TripAlertQuery, TripAlertQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<TripAlertQuery, TripAlertQueryVariables>(
-    TripAlertDocument,
-    options
-  );
-}
-export function useTripAlertLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    TripAlertQuery,
-    TripAlertQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<TripAlertQuery, TripAlertQueryVariables>(
-    TripAlertDocument,
-    options
-  );
-}
-export type TripAlertQueryHookResult = ReturnType<typeof useTripAlertQuery>;
-export type TripAlertLazyQueryHookResult = ReturnType<
-  typeof useTripAlertLazyQuery
->;
-export type TripAlertQueryResult = Apollo.QueryResult<
-  TripAlertQuery,
-  TripAlertQueryVariables
->;
-export const SetTripAlertDocument = gql`
-  mutation SetTripAlert(
-    $eventId: ID!
-    $enabled: Boolean
-    $latitude: Float
-    $longitude: Float
-    $address: String
-    $radius: Float
-  ) {
-    setTripAlert(
-      event: $eventId
-      latitude: $latitude
-      longitude: $longitude
-      address: $address
-      radius: $radius
-      enabled: $enabled
-    ) {
-      data {
-        id
-        attributes {
-          latitude
-          longitude
-          address
-          enabled
+export function useTripAlertQuery(baseOptions: Apollo.QueryHookOptions<TripAlertQuery, TripAlertQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TripAlertQuery, TripAlertQueryVariables>(TripAlertDocument, options);
+      }
+export function useTripAlertLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TripAlertQuery, TripAlertQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TripAlertQuery, TripAlertQueryVariables>(TripAlertDocument, options);
         }
+export type TripAlertQueryHookResult = ReturnType<typeof useTripAlertQuery>;
+export type TripAlertLazyQueryHookResult = ReturnType<typeof useTripAlertLazyQuery>;
+export type TripAlertQueryResult = Apollo.QueryResult<TripAlertQuery, TripAlertQueryVariables>;
+export const SetTripAlertDocument = gql`
+    mutation SetTripAlert($eventId: ID!, $enabled: Boolean, $latitude: Float, $longitude: Float, $address: String, $radius: Float) {
+  setTripAlert(
+    event: $eventId
+    latitude: $latitude
+    longitude: $longitude
+    address: $address
+    radius: $radius
+    enabled: $enabled
+  ) {
+    data {
+      id
+      attributes {
+        latitude
+        longitude
+        address
+        enabled
       }
     }
   }
-`;
-export type SetTripAlertMutationFn = Apollo.MutationFunction<
-  SetTripAlertMutation,
-  SetTripAlertMutationVariables
->;
+}
+    `;
+export type SetTripAlertMutationFn = Apollo.MutationFunction<SetTripAlertMutation, SetTripAlertMutationVariables>;
 
 /**
  * __useSetTripAlertMutation__
@@ -3350,42 +2499,24 @@ export type SetTripAlertMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useSetTripAlertMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SetTripAlertMutation,
-    SetTripAlertMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    SetTripAlertMutation,
-    SetTripAlertMutationVariables
-  >(SetTripAlertDocument, options);
-}
-export type SetTripAlertMutationHookResult = ReturnType<
-  typeof useSetTripAlertMutation
->;
-export type SetTripAlertMutationResult =
-  Apollo.MutationResult<SetTripAlertMutation>;
-export type SetTripAlertMutationOptions = Apollo.BaseMutationOptions<
-  SetTripAlertMutation,
-  SetTripAlertMutationVariables
->;
-export const RegisterDocument = gql`
-  mutation register($user: UsersPermissionsRegisterInput!) {
-    register(input: $user) {
-      jwt
-      user {
-        ...MeFields
+export function useSetTripAlertMutation(baseOptions?: Apollo.MutationHookOptions<SetTripAlertMutation, SetTripAlertMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetTripAlertMutation, SetTripAlertMutationVariables>(SetTripAlertDocument, options);
       }
+export type SetTripAlertMutationHookResult = ReturnType<typeof useSetTripAlertMutation>;
+export type SetTripAlertMutationResult = Apollo.MutationResult<SetTripAlertMutation>;
+export type SetTripAlertMutationOptions = Apollo.BaseMutationOptions<SetTripAlertMutation, SetTripAlertMutationVariables>;
+export const RegisterDocument = gql`
+    mutation register($user: UsersPermissionsRegisterInput!) {
+  register(input: $user) {
+    jwt
+    user {
+      ...MeFields
     }
   }
-  ${MeFieldsFragmentDoc}
-`;
-export type RegisterMutationFn = Apollo.MutationFunction<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+}
+    ${MeFieldsFragmentDoc}`;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
  * __useRegisterMutation__
@@ -3404,35 +2535,21 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRegisterMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RegisterMutation,
-    RegisterMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
-    options
-  );
-}
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const ForgotPasswordDocument = gql`
-  mutation forgotPassword($email: String!) {
-    forgotPassword(email: $email) {
-      ok
-    }
+    mutation forgotPassword($email: String!) {
+  forgotPassword(email: $email) {
+    ok
   }
-`;
-export type ForgotPasswordMutationFn = Apollo.MutationFunction<
-  ForgotPasswordMutation,
-  ForgotPasswordMutationVariables
->;
+}
+    `;
+export type ForgotPasswordMutationFn = Apollo.MutationFunction<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
 
 /**
  * __useForgotPasswordMutation__
@@ -3451,50 +2568,28 @@ export type ForgotPasswordMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useForgotPasswordMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ForgotPasswordMutation,
-    ForgotPasswordMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    ForgotPasswordMutation,
-    ForgotPasswordMutationVariables
-  >(ForgotPasswordDocument, options);
-}
-export type ForgotPasswordMutationHookResult = ReturnType<
-  typeof useForgotPasswordMutation
->;
-export type ForgotPasswordMutationResult =
-  Apollo.MutationResult<ForgotPasswordMutation>;
-export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<
-  ForgotPasswordMutation,
-  ForgotPasswordMutationVariables
->;
-export const ResetPasswordDocument = gql`
-  mutation resetPassword(
-    $password: String!
-    $passwordConfirmation: String!
-    $code: String!
-  ) {
-    resetPassword(
-      password: $password
-      passwordConfirmation: $passwordConfirmation
-      code: $code
-    ) {
-      jwt
-      user {
-        ...MeFields
+export function useForgotPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument, options);
       }
+export type ForgotPasswordMutationHookResult = ReturnType<typeof useForgotPasswordMutation>;
+export type ForgotPasswordMutationResult = Apollo.MutationResult<ForgotPasswordMutation>;
+export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
+export const ResetPasswordDocument = gql`
+    mutation resetPassword($password: String!, $passwordConfirmation: String!, $code: String!) {
+  resetPassword(
+    password: $password
+    passwordConfirmation: $passwordConfirmation
+    code: $code
+  ) {
+    jwt
+    user {
+      ...MeFields
     }
   }
-  ${MeFieldsFragmentDoc}
-`;
-export type ResetPasswordMutationFn = Apollo.MutationFunction<
-  ResetPasswordMutation,
-  ResetPasswordMutationVariables
->;
+}
+    ${MeFieldsFragmentDoc}`;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
 
 /**
  * __useResetPasswordMutation__
@@ -3515,41 +2610,23 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useResetPasswordMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ResetPasswordMutation,
-    ResetPasswordMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    ResetPasswordMutation,
-    ResetPasswordMutationVariables
-  >(ResetPasswordDocument, options);
-}
-export type ResetPasswordMutationHookResult = ReturnType<
-  typeof useResetPasswordMutation
->;
-export type ResetPasswordMutationResult =
-  Apollo.MutationResult<ResetPasswordMutation>;
-export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<
-  ResetPasswordMutation,
-  ResetPasswordMutationVariables
->;
-export const CreateEventDocument = gql`
-  mutation createEvent($eventData: EventInput!) {
-    createEvent(data: $eventData) {
-      data {
-        ...EventFields
+export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
       }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
+export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const CreateEventDocument = gql`
+    mutation createEvent($eventData: EventInput!) {
+  createEvent(data: $eventData) {
+    data {
+      ...EventFields
     }
   }
-  ${EventFieldsFragmentDoc}
-`;
-export type CreateEventMutationFn = Apollo.MutationFunction<
-  CreateEventMutation,
-  CreateEventMutationVariables
->;
+}
+    ${EventFieldsFragmentDoc}`;
+export type CreateEventMutationFn = Apollo.MutationFunction<CreateEventMutation, CreateEventMutationVariables>;
 
 /**
  * __useCreateEventMutation__
@@ -3568,41 +2645,23 @@ export type CreateEventMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateEventMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateEventMutation,
-    CreateEventMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<CreateEventMutation, CreateEventMutationVariables>(
-    CreateEventDocument,
-    options
-  );
-}
-export type CreateEventMutationHookResult = ReturnType<
-  typeof useCreateEventMutation
->;
-export type CreateEventMutationResult =
-  Apollo.MutationResult<CreateEventMutation>;
-export type CreateEventMutationOptions = Apollo.BaseMutationOptions<
-  CreateEventMutation,
-  CreateEventMutationVariables
->;
-export const UpdateEventDocument = gql`
-  mutation updateEvent($uuid: String!, $eventUpdate: EventInput!) {
-    updateEventByUUID(uuid: $uuid, data: $eventUpdate) {
-      data {
-        ...EventFields
+export function useCreateEventMutation(baseOptions?: Apollo.MutationHookOptions<CreateEventMutation, CreateEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument, options);
       }
+export type CreateEventMutationHookResult = ReturnType<typeof useCreateEventMutation>;
+export type CreateEventMutationResult = Apollo.MutationResult<CreateEventMutation>;
+export type CreateEventMutationOptions = Apollo.BaseMutationOptions<CreateEventMutation, CreateEventMutationVariables>;
+export const UpdateEventDocument = gql`
+    mutation updateEvent($uuid: String!, $eventUpdate: EventInput!) {
+  updateEventByUUID(uuid: $uuid, data: $eventUpdate) {
+    data {
+      ...EventFields
     }
   }
-  ${EventFieldsFragmentDoc}
-`;
-export type UpdateEventMutationFn = Apollo.MutationFunction<
-  UpdateEventMutation,
-  UpdateEventMutationVariables
->;
+}
+    ${EventFieldsFragmentDoc}`;
+export type UpdateEventMutationFn = Apollo.MutationFunction<UpdateEventMutation, UpdateEventMutationVariables>;
 
 /**
  * __useUpdateEventMutation__
@@ -3622,43 +2681,26 @@ export type UpdateEventMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useUpdateEventMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateEventMutation,
-    UpdateEventMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(
-    UpdateEventDocument,
-    options
-  );
-}
-export type UpdateEventMutationHookResult = ReturnType<
-  typeof useUpdateEventMutation
->;
-export type UpdateEventMutationResult =
-  Apollo.MutationResult<UpdateEventMutation>;
-export type UpdateEventMutationOptions = Apollo.BaseMutationOptions<
-  UpdateEventMutation,
-  UpdateEventMutationVariables
->;
+export function useUpdateEventMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEventMutation, UpdateEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument, options);
+      }
+export type UpdateEventMutationHookResult = ReturnType<typeof useUpdateEventMutation>;
+export type UpdateEventMutationResult = Apollo.MutationResult<UpdateEventMutation>;
+export type UpdateEventMutationOptions = Apollo.BaseMutationOptions<UpdateEventMutation, UpdateEventMutationVariables>;
 export const AddEventAdminDocument = gql`
-  mutation addEventAdmin($eventId: ID!, $email: String!) {
-    addEventAdmin(eventId: $eventId, email: $email) {
-      data {
-        id
-        attributes {
-          administrators
-        }
+    mutation addEventAdmin($eventId: ID!, $email: String!) {
+  addEventAdmin(eventId: $eventId, email: $email) {
+    data {
+      id
+      attributes {
+        administrators
       }
     }
   }
-`;
-export type AddEventAdminMutationFn = Apollo.MutationFunction<
-  AddEventAdminMutation,
-  AddEventAdminMutationVariables
->;
+}
+    `;
+export type AddEventAdminMutationFn = Apollo.MutationFunction<AddEventAdminMutation, AddEventAdminMutationVariables>;
 
 /**
  * __useAddEventAdminMutation__
@@ -3678,43 +2720,26 @@ export type AddEventAdminMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddEventAdminMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddEventAdminMutation,
-    AddEventAdminMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    AddEventAdminMutation,
-    AddEventAdminMutationVariables
-  >(AddEventAdminDocument, options);
-}
-export type AddEventAdminMutationHookResult = ReturnType<
-  typeof useAddEventAdminMutation
->;
-export type AddEventAdminMutationResult =
-  Apollo.MutationResult<AddEventAdminMutation>;
-export type AddEventAdminMutationOptions = Apollo.BaseMutationOptions<
-  AddEventAdminMutation,
-  AddEventAdminMutationVariables
->;
+export function useAddEventAdminMutation(baseOptions?: Apollo.MutationHookOptions<AddEventAdminMutation, AddEventAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddEventAdminMutation, AddEventAdminMutationVariables>(AddEventAdminDocument, options);
+      }
+export type AddEventAdminMutationHookResult = ReturnType<typeof useAddEventAdminMutation>;
+export type AddEventAdminMutationResult = Apollo.MutationResult<AddEventAdminMutation>;
+export type AddEventAdminMutationOptions = Apollo.BaseMutationOptions<AddEventAdminMutation, AddEventAdminMutationVariables>;
 export const DeleteEventAdminDocument = gql`
-  mutation deleteEventAdmin($eventId: ID!, $email: String!) {
-    deleteEventAdmin(eventId: $eventId, email: $email) {
-      data {
-        id
-        attributes {
-          administrators
-        }
+    mutation deleteEventAdmin($eventId: ID!, $email: String!) {
+  deleteEventAdmin(eventId: $eventId, email: $email) {
+    data {
+      id
+      attributes {
+        administrators
       }
     }
   }
-`;
-export type DeleteEventAdminMutationFn = Apollo.MutationFunction<
-  DeleteEventAdminMutation,
-  DeleteEventAdminMutationVariables
->;
+}
+    `;
+export type DeleteEventAdminMutationFn = Apollo.MutationFunction<DeleteEventAdminMutation, DeleteEventAdminMutationVariables>;
 
 /**
  * __useDeleteEventAdminMutation__
@@ -3734,37 +2759,22 @@ export type DeleteEventAdminMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteEventAdminMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteEventAdminMutation,
-    DeleteEventAdminMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    DeleteEventAdminMutation,
-    DeleteEventAdminMutationVariables
-  >(DeleteEventAdminDocument, options);
-}
-export type DeleteEventAdminMutationHookResult = ReturnType<
-  typeof useDeleteEventAdminMutation
->;
-export type DeleteEventAdminMutationResult =
-  Apollo.MutationResult<DeleteEventAdminMutation>;
-export type DeleteEventAdminMutationOptions = Apollo.BaseMutationOptions<
-  DeleteEventAdminMutation,
-  DeleteEventAdminMutationVariables
->;
-export const EventByUuidDocument = gql`
-  query eventByUUID($uuid: String!) {
-    eventByUUID(uuid: $uuid) {
-      data {
-        ...EventFields
+export function useDeleteEventAdminMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEventAdminMutation, DeleteEventAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEventAdminMutation, DeleteEventAdminMutationVariables>(DeleteEventAdminDocument, options);
       }
+export type DeleteEventAdminMutationHookResult = ReturnType<typeof useDeleteEventAdminMutation>;
+export type DeleteEventAdminMutationResult = Apollo.MutationResult<DeleteEventAdminMutation>;
+export type DeleteEventAdminMutationOptions = Apollo.BaseMutationOptions<DeleteEventAdminMutation, DeleteEventAdminMutationVariables>;
+export const EventByUuidDocument = gql`
+    query eventByUUID($uuid: String!) {
+  eventByUUID(uuid: $uuid) {
+    data {
+      ...EventFields
     }
   }
-  ${EventFieldsFragmentDoc}
-`;
+}
+    ${EventFieldsFragmentDoc}`;
 
 /**
  * __useEventByUuidQuery__
@@ -3782,53 +2792,32 @@ export const EventByUuidDocument = gql`
  *   },
  * });
  */
-export function useEventByUuidQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    EventByUuidQuery,
-    EventByUuidQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<EventByUuidQuery, EventByUuidQueryVariables>(
-    EventByUuidDocument,
-    options
-  );
-}
-export function useEventByUuidLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    EventByUuidQuery,
-    EventByUuidQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<EventByUuidQuery, EventByUuidQueryVariables>(
-    EventByUuidDocument,
-    options
-  );
-}
-export type EventByUuidQueryHookResult = ReturnType<typeof useEventByUuidQuery>;
-export type EventByUuidLazyQueryHookResult = ReturnType<
-  typeof useEventByUuidLazyQuery
->;
-export type EventByUuidQueryResult = Apollo.QueryResult<
-  EventByUuidQuery,
-  EventByUuidQueryVariables
->;
-export const ModuleDocument = gql`
-  query module($locale: I18NLocaleCode!) {
-    module(locale: $locale) {
-      data {
-        attributes {
-          caroster_plus_name
-          caroster_plus_price
-          caroster_plus_enabled
-          caroster_plus_description
-          caroster_plus_payment_link
+export function useEventByUuidQuery(baseOptions: Apollo.QueryHookOptions<EventByUuidQuery, EventByUuidQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EventByUuidQuery, EventByUuidQueryVariables>(EventByUuidDocument, options);
+      }
+export function useEventByUuidLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventByUuidQuery, EventByUuidQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EventByUuidQuery, EventByUuidQueryVariables>(EventByUuidDocument, options);
         }
+export type EventByUuidQueryHookResult = ReturnType<typeof useEventByUuidQuery>;
+export type EventByUuidLazyQueryHookResult = ReturnType<typeof useEventByUuidLazyQuery>;
+export type EventByUuidQueryResult = Apollo.QueryResult<EventByUuidQuery, EventByUuidQueryVariables>;
+export const ModuleDocument = gql`
+    query module($locale: I18NLocaleCode!) {
+  module(locale: $locale) {
+    data {
+      attributes {
+        caroster_plus_name
+        caroster_plus_price
+        caroster_plus_enabled
+        caroster_plus_description
+        caroster_plus_payment_link
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useModuleQuery__
@@ -3846,61 +2835,48 @@ export const ModuleDocument = gql`
  *   },
  * });
  */
-export function useModuleQuery(
-  baseOptions: Apollo.QueryHookOptions<ModuleQuery, ModuleQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<ModuleQuery, ModuleQueryVariables>(
-    ModuleDocument,
-    options
-  );
-}
-export function useModuleLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ModuleQuery, ModuleQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<ModuleQuery, ModuleQueryVariables>(
-    ModuleDocument,
-    options
-  );
-}
+export function useModuleQuery(baseOptions: Apollo.QueryHookOptions<ModuleQuery, ModuleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ModuleQuery, ModuleQueryVariables>(ModuleDocument, options);
+      }
+export function useModuleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ModuleQuery, ModuleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ModuleQuery, ModuleQueryVariables>(ModuleDocument, options);
+        }
 export type ModuleQueryHookResult = ReturnType<typeof useModuleQuery>;
 export type ModuleLazyQueryHookResult = ReturnType<typeof useModuleLazyQuery>;
-export type ModuleQueryResult = Apollo.QueryResult<
-  ModuleQuery,
-  ModuleQueryVariables
->;
+export type ModuleQueryResult = Apollo.QueryResult<ModuleQuery, ModuleQueryVariables>;
 export const UserNotificationsDocument = gql`
-  query UserNotifications($maxItems: Int = 20) {
-    notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
-      data {
-        id
-        attributes {
-          type
-          read
-          createdAt
-          user {
-            data {
-              id
-              attributes {
-                email
-              }
+    query UserNotifications($maxItems: Int = 20) {
+  notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
+    data {
+      id
+      attributes {
+        type
+        read
+        createdAt
+        user {
+          data {
+            id
+            attributes {
+              email
             }
           }
-          event {
-            data {
-              id
-              attributes {
-                name
-                uuid
-              }
+        }
+        event {
+          data {
+            id
+            attributes {
+              name
+              uuid
             }
           }
         }
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useUserNotificationsQuery__
@@ -3918,57 +2894,31 @@ export const UserNotificationsDocument = gql`
  *   },
  * });
  */
-export function useUserNotificationsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    UserNotificationsQuery,
-    UserNotificationsQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<
-    UserNotificationsQuery,
-    UserNotificationsQueryVariables
-  >(UserNotificationsDocument, options);
-}
-export function useUserNotificationsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    UserNotificationsQuery,
-    UserNotificationsQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<
-    UserNotificationsQuery,
-    UserNotificationsQueryVariables
-  >(UserNotificationsDocument, options);
-}
-export type UserNotificationsQueryHookResult = ReturnType<
-  typeof useUserNotificationsQuery
->;
-export type UserNotificationsLazyQueryHookResult = ReturnType<
-  typeof useUserNotificationsLazyQuery
->;
-export type UserNotificationsQueryResult = Apollo.QueryResult<
-  UserNotificationsQuery,
-  UserNotificationsQueryVariables
->;
-export const ReadNotificationsDocument = gql`
-  mutation readNotifications($id: ID) {
-    readNotifications(id: $id) {
-      data {
-        id
-        attributes {
-          type
-          read
+export function useUserNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<UserNotificationsQuery, UserNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserNotificationsQuery, UserNotificationsQueryVariables>(UserNotificationsDocument, options);
+      }
+export function useUserNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserNotificationsQuery, UserNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserNotificationsQuery, UserNotificationsQueryVariables>(UserNotificationsDocument, options);
         }
+export type UserNotificationsQueryHookResult = ReturnType<typeof useUserNotificationsQuery>;
+export type UserNotificationsLazyQueryHookResult = ReturnType<typeof useUserNotificationsLazyQuery>;
+export type UserNotificationsQueryResult = Apollo.QueryResult<UserNotificationsQuery, UserNotificationsQueryVariables>;
+export const ReadNotificationsDocument = gql`
+    mutation readNotifications($id: ID) {
+  readNotifications(id: $id) {
+    data {
+      id
+      attributes {
+        type
+        read
       }
     }
   }
-`;
-export type ReadNotificationsMutationFn = Apollo.MutationFunction<
-  ReadNotificationsMutation,
-  ReadNotificationsMutationVariables
->;
+}
+    `;
+export type ReadNotificationsMutationFn = Apollo.MutationFunction<ReadNotificationsMutation, ReadNotificationsMutationVariables>;
 
 /**
  * __useReadNotificationsMutation__
@@ -3987,41 +2937,23 @@ export type ReadNotificationsMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useReadNotificationsMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ReadNotificationsMutation,
-    ReadNotificationsMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    ReadNotificationsMutation,
-    ReadNotificationsMutationVariables
-  >(ReadNotificationsDocument, options);
-}
-export type ReadNotificationsMutationHookResult = ReturnType<
-  typeof useReadNotificationsMutation
->;
-export type ReadNotificationsMutationResult =
-  Apollo.MutationResult<ReadNotificationsMutation>;
-export type ReadNotificationsMutationOptions = Apollo.BaseMutationOptions<
-  ReadNotificationsMutation,
-  ReadNotificationsMutationVariables
->;
-export const CreatePassengerDocument = gql`
-  mutation createPassenger($passenger: PassengerInput!) {
-    createPassenger(data: $passenger) {
-      data {
-        ...PassengerFields
+export function useReadNotificationsMutation(baseOptions?: Apollo.MutationHookOptions<ReadNotificationsMutation, ReadNotificationsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReadNotificationsMutation, ReadNotificationsMutationVariables>(ReadNotificationsDocument, options);
       }
+export type ReadNotificationsMutationHookResult = ReturnType<typeof useReadNotificationsMutation>;
+export type ReadNotificationsMutationResult = Apollo.MutationResult<ReadNotificationsMutation>;
+export type ReadNotificationsMutationOptions = Apollo.BaseMutationOptions<ReadNotificationsMutation, ReadNotificationsMutationVariables>;
+export const CreatePassengerDocument = gql`
+    mutation createPassenger($passenger: PassengerInput!) {
+  createPassenger(data: $passenger) {
+    data {
+      ...PassengerFields
     }
   }
-  ${PassengerFieldsFragmentDoc}
-`;
-export type CreatePassengerMutationFn = Apollo.MutationFunction<
-  CreatePassengerMutation,
-  CreatePassengerMutationVariables
->;
+}
+    ${PassengerFieldsFragmentDoc}`;
+export type CreatePassengerMutationFn = Apollo.MutationFunction<CreatePassengerMutation, CreatePassengerMutationVariables>;
 
 /**
  * __useCreatePassengerMutation__
@@ -4040,41 +2972,23 @@ export type CreatePassengerMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreatePassengerMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreatePassengerMutation,
-    CreatePassengerMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    CreatePassengerMutation,
-    CreatePassengerMutationVariables
-  >(CreatePassengerDocument, options);
-}
-export type CreatePassengerMutationHookResult = ReturnType<
-  typeof useCreatePassengerMutation
->;
-export type CreatePassengerMutationResult =
-  Apollo.MutationResult<CreatePassengerMutation>;
-export type CreatePassengerMutationOptions = Apollo.BaseMutationOptions<
-  CreatePassengerMutation,
-  CreatePassengerMutationVariables
->;
-export const UpdatePassengerDocument = gql`
-  mutation updatePassenger($id: ID!, $passengerUpdate: PassengerInput!) {
-    updatePassenger(id: $id, data: $passengerUpdate) {
-      data {
-        ...PassengerFields
+export function useCreatePassengerMutation(baseOptions?: Apollo.MutationHookOptions<CreatePassengerMutation, CreatePassengerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePassengerMutation, CreatePassengerMutationVariables>(CreatePassengerDocument, options);
       }
+export type CreatePassengerMutationHookResult = ReturnType<typeof useCreatePassengerMutation>;
+export type CreatePassengerMutationResult = Apollo.MutationResult<CreatePassengerMutation>;
+export type CreatePassengerMutationOptions = Apollo.BaseMutationOptions<CreatePassengerMutation, CreatePassengerMutationVariables>;
+export const UpdatePassengerDocument = gql`
+    mutation updatePassenger($id: ID!, $passengerUpdate: PassengerInput!) {
+  updatePassenger(id: $id, data: $passengerUpdate) {
+    data {
+      ...PassengerFields
     }
   }
-  ${PassengerFieldsFragmentDoc}
-`;
-export type UpdatePassengerMutationFn = Apollo.MutationFunction<
-  UpdatePassengerMutation,
-  UpdatePassengerMutationVariables
->;
+}
+    ${PassengerFieldsFragmentDoc}`;
+export type UpdatePassengerMutationFn = Apollo.MutationFunction<UpdatePassengerMutation, UpdatePassengerMutationVariables>;
 
 /**
  * __useUpdatePassengerMutation__
@@ -4094,40 +3008,23 @@ export type UpdatePassengerMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useUpdatePassengerMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdatePassengerMutation,
-    UpdatePassengerMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    UpdatePassengerMutation,
-    UpdatePassengerMutationVariables
-  >(UpdatePassengerDocument, options);
-}
-export type UpdatePassengerMutationHookResult = ReturnType<
-  typeof useUpdatePassengerMutation
->;
-export type UpdatePassengerMutationResult =
-  Apollo.MutationResult<UpdatePassengerMutation>;
-export type UpdatePassengerMutationOptions = Apollo.BaseMutationOptions<
-  UpdatePassengerMutation,
-  UpdatePassengerMutationVariables
->;
-export const DeletePassengerDocument = gql`
-  mutation deletePassenger($id: ID!) {
-    deletePassenger(id: $id) {
-      data {
-        id
+export function useUpdatePassengerMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePassengerMutation, UpdatePassengerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePassengerMutation, UpdatePassengerMutationVariables>(UpdatePassengerDocument, options);
       }
+export type UpdatePassengerMutationHookResult = ReturnType<typeof useUpdatePassengerMutation>;
+export type UpdatePassengerMutationResult = Apollo.MutationResult<UpdatePassengerMutation>;
+export type UpdatePassengerMutationOptions = Apollo.BaseMutationOptions<UpdatePassengerMutation, UpdatePassengerMutationVariables>;
+export const DeletePassengerDocument = gql`
+    mutation deletePassenger($id: ID!) {
+  deletePassenger(id: $id) {
+    data {
+      id
     }
   }
-`;
-export type DeletePassengerMutationFn = Apollo.MutationFunction<
-  DeletePassengerMutation,
-  DeletePassengerMutationVariables
->;
+}
+    `;
+export type DeletePassengerMutationFn = Apollo.MutationFunction<DeletePassengerMutation, DeletePassengerMutationVariables>;
 
 /**
  * __useDeletePassengerMutation__
@@ -4146,48 +3043,34 @@ export type DeletePassengerMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeletePassengerMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeletePassengerMutation,
-    DeletePassengerMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    DeletePassengerMutation,
-    DeletePassengerMutationVariables
-  >(DeletePassengerDocument, options);
-}
-export type DeletePassengerMutationHookResult = ReturnType<
-  typeof useDeletePassengerMutation
->;
-export type DeletePassengerMutationResult =
-  Apollo.MutationResult<DeletePassengerMutation>;
-export type DeletePassengerMutationOptions = Apollo.BaseMutationOptions<
-  DeletePassengerMutation,
-  DeletePassengerMutationVariables
->;
+export function useDeletePassengerMutation(baseOptions?: Apollo.MutationHookOptions<DeletePassengerMutation, DeletePassengerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePassengerMutation, DeletePassengerMutationVariables>(DeletePassengerDocument, options);
+      }
+export type DeletePassengerMutationHookResult = ReturnType<typeof useDeletePassengerMutation>;
+export type DeletePassengerMutationResult = Apollo.MutationResult<DeletePassengerMutation>;
+export type DeletePassengerMutationOptions = Apollo.BaseMutationOptions<DeletePassengerMutation, DeletePassengerMutationVariables>;
 export const SettingDocument = gql`
-  query setting($locale: I18NLocaleCode!) {
-    setting(locale: $locale) {
-      data {
-        id
-        attributes {
-          gtm_id
-          about_link
-          faq_link
-          announcement
-          matomo_script_url
-          opencollective_link
-          code_link
-          stripe_dashboard_link
-          tos_link
-          data_policy_link
-        }
+    query setting($locale: I18NLocaleCode!) {
+  setting(locale: $locale) {
+    data {
+      id
+      attributes {
+        gtm_id
+        about_link
+        faq_link
+        announcement
+        matomo_script_url
+        opencollective_link
+        code_link
+        stripe_dashboard_link
+        tos_link
+        data_policy_link
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useSettingQuery__
@@ -4205,44 +3088,27 @@ export const SettingDocument = gql`
  *   },
  * });
  */
-export function useSettingQuery(
-  baseOptions: Apollo.QueryHookOptions<SettingQuery, SettingQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<SettingQuery, SettingQueryVariables>(
-    SettingDocument,
-    options
-  );
-}
-export function useSettingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<SettingQuery, SettingQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<SettingQuery, SettingQueryVariables>(
-    SettingDocument,
-    options
-  );
-}
+export function useSettingQuery(baseOptions: Apollo.QueryHookOptions<SettingQuery, SettingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
+      }
+export function useSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SettingQuery, SettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
+        }
 export type SettingQueryHookResult = ReturnType<typeof useSettingQuery>;
 export type SettingLazyQueryHookResult = ReturnType<typeof useSettingLazyQuery>;
-export type SettingQueryResult = Apollo.QueryResult<
-  SettingQuery,
-  SettingQueryVariables
->;
+export type SettingQueryResult = Apollo.QueryResult<SettingQuery, SettingQueryVariables>;
 export const CreateTravelDocument = gql`
-  mutation createTravel($travel: TravelInput!, $createVehicle: Boolean) {
-    createTravel(data: $travel, createVehicle: $createVehicle) {
-      data {
-        ...TravelFields
-      }
+    mutation createTravel($travel: TravelInput!, $createVehicle: Boolean) {
+  createTravel(data: $travel, createVehicle: $createVehicle) {
+    data {
+      ...TravelFields
     }
   }
-  ${TravelFieldsFragmentDoc}
-`;
-export type CreateTravelMutationFn = Apollo.MutationFunction<
-  CreateTravelMutation,
-  CreateTravelMutationVariables
->;
+}
+    ${TravelFieldsFragmentDoc}`;
+export type CreateTravelMutationFn = Apollo.MutationFunction<CreateTravelMutation, CreateTravelMutationVariables>;
 
 /**
  * __useCreateTravelMutation__
@@ -4262,41 +3128,23 @@ export type CreateTravelMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateTravelMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateTravelMutation,
-    CreateTravelMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    CreateTravelMutation,
-    CreateTravelMutationVariables
-  >(CreateTravelDocument, options);
-}
-export type CreateTravelMutationHookResult = ReturnType<
-  typeof useCreateTravelMutation
->;
-export type CreateTravelMutationResult =
-  Apollo.MutationResult<CreateTravelMutation>;
-export type CreateTravelMutationOptions = Apollo.BaseMutationOptions<
-  CreateTravelMutation,
-  CreateTravelMutationVariables
->;
-export const UpdateTravelDocument = gql`
-  mutation updateTravel($id: ID!, $travelUpdate: TravelInput!) {
-    updateTravel(id: $id, data: $travelUpdate) {
-      data {
-        ...TravelFields
+export function useCreateTravelMutation(baseOptions?: Apollo.MutationHookOptions<CreateTravelMutation, CreateTravelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTravelMutation, CreateTravelMutationVariables>(CreateTravelDocument, options);
       }
+export type CreateTravelMutationHookResult = ReturnType<typeof useCreateTravelMutation>;
+export type CreateTravelMutationResult = Apollo.MutationResult<CreateTravelMutation>;
+export type CreateTravelMutationOptions = Apollo.BaseMutationOptions<CreateTravelMutation, CreateTravelMutationVariables>;
+export const UpdateTravelDocument = gql`
+    mutation updateTravel($id: ID!, $travelUpdate: TravelInput!) {
+  updateTravel(id: $id, data: $travelUpdate) {
+    data {
+      ...TravelFields
     }
   }
-  ${TravelFieldsFragmentDoc}
-`;
-export type UpdateTravelMutationFn = Apollo.MutationFunction<
-  UpdateTravelMutation,
-  UpdateTravelMutationVariables
->;
+}
+    ${TravelFieldsFragmentDoc}`;
+export type UpdateTravelMutationFn = Apollo.MutationFunction<UpdateTravelMutation, UpdateTravelMutationVariables>;
 
 /**
  * __useUpdateTravelMutation__
@@ -4316,40 +3164,23 @@ export type UpdateTravelMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useUpdateTravelMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateTravelMutation,
-    UpdateTravelMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    UpdateTravelMutation,
-    UpdateTravelMutationVariables
-  >(UpdateTravelDocument, options);
-}
-export type UpdateTravelMutationHookResult = ReturnType<
-  typeof useUpdateTravelMutation
->;
-export type UpdateTravelMutationResult =
-  Apollo.MutationResult<UpdateTravelMutation>;
-export type UpdateTravelMutationOptions = Apollo.BaseMutationOptions<
-  UpdateTravelMutation,
-  UpdateTravelMutationVariables
->;
-export const DeleteTravelDocument = gql`
-  mutation deleteTravel($id: ID!) {
-    deleteTravel(id: $id) {
-      data {
-        id
+export function useUpdateTravelMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTravelMutation, UpdateTravelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTravelMutation, UpdateTravelMutationVariables>(UpdateTravelDocument, options);
       }
+export type UpdateTravelMutationHookResult = ReturnType<typeof useUpdateTravelMutation>;
+export type UpdateTravelMutationResult = Apollo.MutationResult<UpdateTravelMutation>;
+export type UpdateTravelMutationOptions = Apollo.BaseMutationOptions<UpdateTravelMutation, UpdateTravelMutationVariables>;
+export const DeleteTravelDocument = gql`
+    mutation deleteTravel($id: ID!) {
+  deleteTravel(id: $id) {
+    data {
+      id
     }
   }
-`;
-export type DeleteTravelMutationFn = Apollo.MutationFunction<
-  DeleteTravelMutation,
-  DeleteTravelMutationVariables
->;
+}
+    `;
+export type DeleteTravelMutationFn = Apollo.MutationFunction<DeleteTravelMutation, DeleteTravelMutationVariables>;
 
 /**
  * __useDeleteTravelMutation__
@@ -4368,39 +3199,24 @@ export type DeleteTravelMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteTravelMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteTravelMutation,
-    DeleteTravelMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    DeleteTravelMutation,
-    DeleteTravelMutationVariables
-  >(DeleteTravelDocument, options);
-}
-export type DeleteTravelMutationHookResult = ReturnType<
-  typeof useDeleteTravelMutation
->;
-export type DeleteTravelMutationResult =
-  Apollo.MutationResult<DeleteTravelMutation>;
-export type DeleteTravelMutationOptions = Apollo.BaseMutationOptions<
-  DeleteTravelMutation,
-  DeleteTravelMutationVariables
->;
-export const ProfileDocument = gql`
-  query profile {
-    me {
-      id
-      username
-      profile {
-        ...UserFields
+export function useDeleteTravelMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTravelMutation, DeleteTravelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTravelMutation, DeleteTravelMutationVariables>(DeleteTravelDocument, options);
       }
+export type DeleteTravelMutationHookResult = ReturnType<typeof useDeleteTravelMutation>;
+export type DeleteTravelMutationResult = Apollo.MutationResult<DeleteTravelMutation>;
+export type DeleteTravelMutationOptions = Apollo.BaseMutationOptions<DeleteTravelMutation, DeleteTravelMutationVariables>;
+export const ProfileDocument = gql`
+    query profile {
+  me {
+    id
+    username
+    profile {
+      ...UserFields
     }
   }
-  ${UserFieldsFragmentDoc}
-`;
+}
+    ${UserFieldsFragmentDoc}`;
 
 /**
  * __useProfileQuery__
@@ -4417,47 +3233,30 @@ export const ProfileDocument = gql`
  *   },
  * });
  */
-export function useProfileQuery(
-  baseOptions?: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
-}
-export function useProfileLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
-}
+export function useProfileQuery(baseOptions?: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+      }
+export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+        }
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
-export type ProfileQueryResult = Apollo.QueryResult<
-  ProfileQuery,
-  ProfileQueryVariables
->;
+export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const UpdateMeDocument = gql`
-  mutation updateMe($userUpdate: UsersPermissionsUserInput!) {
-    updateMe(data: $userUpdate) {
-      data {
-        id
-        attributes {
-          ...UserFields
-        }
+    mutation updateMe($userUpdate: UsersPermissionsUserInput!) {
+  updateMe(data: $userUpdate) {
+    data {
+      id
+      attributes {
+        ...UserFields
       }
     }
   }
-  ${UserFieldsFragmentDoc}
-`;
-export type UpdateMeMutationFn = Apollo.MutationFunction<
-  UpdateMeMutation,
-  UpdateMeMutationVariables
->;
+}
+    ${UserFieldsFragmentDoc}`;
+export type UpdateMeMutationFn = Apollo.MutationFunction<UpdateMeMutation, UpdateMeMutationVariables>;
 
 /**
  * __useUpdateMeMutation__
@@ -4476,40 +3275,28 @@ export type UpdateMeMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useUpdateMeMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateMeMutation,
-    UpdateMeMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<UpdateMeMutation, UpdateMeMutationVariables>(
-    UpdateMeDocument,
-    options
-  );
-}
+export function useUpdateMeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMeMutation, UpdateMeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMeMutation, UpdateMeMutationVariables>(UpdateMeDocument, options);
+      }
 export type UpdateMeMutationHookResult = ReturnType<typeof useUpdateMeMutation>;
 export type UpdateMeMutationResult = Apollo.MutationResult<UpdateMeMutation>;
-export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<
-  UpdateMeMutation,
-  UpdateMeMutationVariables
->;
+export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<UpdateMeMutation, UpdateMeMutationVariables>;
 export const FindUserVehiclesDocument = gql`
-  query findUserVehicles {
-    me {
-      id
-      username
-      profile {
-        vehicles(pagination: {limit: 500}) {
-          data {
-            ...VehicleFields
-          }
+    query findUserVehicles {
+  me {
+    id
+    username
+    profile {
+      vehicles(pagination: {limit: 500}) {
+        data {
+          ...VehicleFields
         }
       }
     }
   }
-  ${VehicleFieldsFragmentDoc}
-`;
+}
+    ${VehicleFieldsFragmentDoc}`;
 
 /**
  * __useFindUserVehiclesQuery__
@@ -4526,56 +3313,30 @@ export const FindUserVehiclesDocument = gql`
  *   },
  * });
  */
-export function useFindUserVehiclesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    FindUserVehiclesQuery,
-    FindUserVehiclesQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(
-    FindUserVehiclesDocument,
-    options
-  );
-}
-export function useFindUserVehiclesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    FindUserVehiclesQuery,
-    FindUserVehiclesQueryVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<
-    FindUserVehiclesQuery,
-    FindUserVehiclesQueryVariables
-  >(FindUserVehiclesDocument, options);
-}
-export type FindUserVehiclesQueryHookResult = ReturnType<
-  typeof useFindUserVehiclesQuery
->;
-export type FindUserVehiclesLazyQueryHookResult = ReturnType<
-  typeof useFindUserVehiclesLazyQuery
->;
-export type FindUserVehiclesQueryResult = Apollo.QueryResult<
-  FindUserVehiclesQuery,
-  FindUserVehiclesQueryVariables
->;
-export const DeleteVehicleDocument = gql`
-  mutation deleteVehicle($id: ID!) {
-    deleteVehicle(id: $id) {
-      data {
-        id
-        attributes {
-          name
+export function useFindUserVehiclesQuery(baseOptions?: Apollo.QueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, options);
+      }
+export function useFindUserVehiclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, options);
         }
+export type FindUserVehiclesQueryHookResult = ReturnType<typeof useFindUserVehiclesQuery>;
+export type FindUserVehiclesLazyQueryHookResult = ReturnType<typeof useFindUserVehiclesLazyQuery>;
+export type FindUserVehiclesQueryResult = Apollo.QueryResult<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>;
+export const DeleteVehicleDocument = gql`
+    mutation deleteVehicle($id: ID!) {
+  deleteVehicle(id: $id) {
+    data {
+      id
+      attributes {
+        name
       }
     }
   }
-`;
-export type DeleteVehicleMutationFn = Apollo.MutationFunction<
-  DeleteVehicleMutation,
-  DeleteVehicleMutationVariables
->;
+}
+    `;
+export type DeleteVehicleMutationFn = Apollo.MutationFunction<DeleteVehicleMutation, DeleteVehicleMutationVariables>;
 
 /**
  * __useDeleteVehicleMutation__
@@ -4594,24 +3355,10 @@ export type DeleteVehicleMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteVehicleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteVehicleMutation,
-    DeleteVehicleMutationVariables
-  >
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<
-    DeleteVehicleMutation,
-    DeleteVehicleMutationVariables
-  >(DeleteVehicleDocument, options);
-}
-export type DeleteVehicleMutationHookResult = ReturnType<
-  typeof useDeleteVehicleMutation
->;
-export type DeleteVehicleMutationResult =
-  Apollo.MutationResult<DeleteVehicleMutation>;
-export type DeleteVehicleMutationOptions = Apollo.BaseMutationOptions<
-  DeleteVehicleMutation,
-  DeleteVehicleMutationVariables
->;
+export function useDeleteVehicleMutation(baseOptions?: Apollo.MutationHookOptions<DeleteVehicleMutation, DeleteVehicleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteVehicleMutation, DeleteVehicleMutationVariables>(DeleteVehicleDocument, options);
+      }
+export type DeleteVehicleMutationHookResult = ReturnType<typeof useDeleteVehicleMutation>;
+export type DeleteVehicleMutationResult = Apollo.MutationResult<DeleteVehicleMutation>;
+export type DeleteVehicleMutationOptions = Apollo.BaseMutationOptions<DeleteVehicleMutation, DeleteVehicleMutationVariables>;

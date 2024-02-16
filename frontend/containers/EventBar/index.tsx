@@ -11,17 +11,17 @@ import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
 import UserIcon from './UserIcon';
-import {useSession} from 'next-auth/react';
 import DrawerNotification from '../DrawerNotification';
+import useProfile from '../../hooks/useProfile';
+import {Chip} from '@mui/material';
 
 const EventBar = ({event, onAdd, goBack, title}) => {
-  const session = useSession();
-  const isAuthenticated = session.status === 'authenticated';
+  const {connected} = useProfile();
   const theme = useTheme();
   const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
-
   const menuActions = useActions({onAdd, eventId: event?.id});
+  const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
 
   return (
     <AppBar
@@ -41,13 +41,11 @@ const EventBar = ({event, onAdd, goBack, title}) => {
     >
       <Toolbar>
         <Box
-          sx={{
-            flexGrow: 1,
-            display: 'flex',
-            justifyContent: 'space-start',
-            pl: 0,
-            pr: 1,
-          }}
+          flexGrow={1}
+          display="flex"
+          justifyContent="space-start"
+          pr={1}
+          gap={1}
         >
           {goBack && (
             <IconButton
@@ -63,11 +61,19 @@ const EventBar = ({event, onAdd, goBack, title}) => {
             <Typography
               variant="h6"
               noWrap
-              sx={{maxWidth: `calc(100vw - ${theme.spacing(18)})`, my: 2}}
+              sx={{maxWidth: `calc(100vw - ${theme.spacing(18)})`}}
             >
               {title || event.name}
             </Typography>
           </Tooltip>
+          {isCarosterPlusEvent && (
+            <Chip
+              label="Plus"
+              size="small"
+              variant="outlined"
+              sx={{color: 'white', borderColor: 'white'}}
+            />
+          )}
         </Box>
         <>
           <IconButton
@@ -84,7 +90,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
           >
             <Icon>share</Icon>
           </IconButton>
-          {isAuthenticated && <DrawerNotification />}
+          {connected && <DrawerNotification />}
           <IconButton
             color="inherit"
             edge="end"

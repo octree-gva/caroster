@@ -28,6 +28,7 @@ export default () => ({
 
     const event = await strapi.db.query("api::event.event").findOne({
       where: { uuid: eventUuid },
+      populate: ["creator"],
     });
     if (!event) {
       strapi.log.error(
@@ -38,18 +39,27 @@ export default () => ({
 
     try {
       const enabledModules = event.enabled_modules
-        ? [...event.enabled_modules, moduleProduct]
-        : [moduleProduct];
+        ? [...event.enabled_modules, moduleProduct.name]
+        : [moduleProduct.name];
       await strapi.db.query("api::event.event").update({
         where: { uuid: eventUuid },
         data: { enabled_modules: enabledModules },
       });
       strapi.log.info(
-        `Module '${moduleProduct}' enabled for event ${eventUuid}`
+        `Module '${moduleProduct.name}' enabled for event ${eventUuid}`
       );
+
+      if (event.creator)
+        strapi.entityService.create("api::notification.notification", {
+          data: {
+            type: moduleProduct.notificationType,
+            event,
+            user: event.creator,
+          },
+        });
     } catch (error) {
       strapi.log.error(
-        `Can't enable module ${moduleProduct} for event ${eventUuid}: ${error}`
+        `Can't enable module ${moduleProduct.name} for event ${eventUuid}: ${error}`
       );
     }
   },
@@ -64,7 +74,7 @@ const getModuleProduct = async (paymentLink: string) => {
   if (modulesConfig.caroster_plus_enabled) {
     modules.push([
       modulesConfig.caroster_plus_payment_link_id,
-      "caroster-plus",
+      { name: "caroster-plus", notificationType: "EnabledCarosterPlus" },
     ]);
   }
   return Object.fromEntries(modules)[paymentLink];

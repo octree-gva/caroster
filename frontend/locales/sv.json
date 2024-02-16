@@ -118,6 +118,7 @@
   "notification.type.DeletedTrip.content": "",
   "notification.type.AddedAsAdmin.content": "",
   "notification.type.ContactTripCreator.content": "",
+  "notification.type.EnabledCarosterPlus.content": "",
   "passenger.assign.title": "",
   "passenger.actions.place": "",
   "passenger.actions.remove_alert": "",

@@ -23,7 +23,8 @@
         "EventEnded",
         "EventRecap",
         "PassengerJoinTrip",
-        "ContactTripCreator"
+        "ContactTripCreator",
+        "EnabledCarosterPlus"
       ],
       "required": true
     },

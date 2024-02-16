@@ -844,6 +844,11 @@ export interface ApiEventEvent extends Schema.CollectionType {
         ['caroster-plus']
       >;
     administrators: Attribute.String;
+    creator: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -965,7 +970,8 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
         'EventEnded',
         'EventRecap',
         'PassengerJoinTrip',
-        'ContactTripCreator'
+        'ContactTripCreator',
+        'EnabledCarosterPlus'
       ]
     > &
       Attribute.Required;

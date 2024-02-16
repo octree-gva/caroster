@@ -94,7 +94,8 @@ export default ({ nexus, strapi }) => ({
           } = context;
 
           let eventData = args.data;
-          if (user) eventData = { ...eventData, users: [user.id] };
+          if (user)
+            eventData = { ...eventData, users: [user.id], creator: user.id };
 
           koaContext.request.body = eventData;
 

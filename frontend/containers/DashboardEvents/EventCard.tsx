@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import {EventEntity} from '../../generated/graphql';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 
 interface Props {
   event: EventEntity;
@@ -14,28 +16,39 @@ interface Props {
 
 const EventCard = ({event}: Props) => {
   const {t} = useTranslation();
+  const isCarosterPlusEvent =
+    event?.attributes.enabled_modules?.includes('caroster-plus');
 
   return (
     <Card
       sx={{
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       onClick={() =>
         router.push(`/e/${event.attributes.uuid}`, undefined, {shallow: true})
       }
     >
       <CardContent sx={{pb: 0}}>
-        <Typography
-          gutterBottom
-          variant="subtitle1"
-          sx={{
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}
+        <Box
+          display="flex"
+          alignItems="baseline"
+          justifyContent="space-between"
         >
-          {event.attributes.name}
-        </Typography>
+          <Typography
+            gutterBottom
+            variant="subtitle1"
+            sx={{
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+            }}
+          >
+            {event.attributes.name}
+          </Typography>
+          {isCarosterPlusEvent && (
+            <Chip label="Plus" size="small" variant="outlined" />
+          )}
+        </Box>
         <Typography
           variant="overline"
           sx={{color: 'GrayText', display: 'block', mt: 2}}
@@ -64,7 +77,7 @@ const EventCard = ({event}: Props) => {
           {event.attributes.address || t('event.fields.empty')}
         </Typography>
       </CardContent>
-      <CardActions sx={{px: 2,}}>
+      <CardActions sx={{px: 2}}>
         <Button sx={{p: 0}} color="primary">
           {t('dashboard.actions.see_event')}
         </Button>

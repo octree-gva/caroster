@@ -19,15 +19,12 @@ const DrawerMenu = ({eventUuid}: Props) => {
   const event = useEventStore(s => s.event);
   const {connected} = useProfile();
   const appLink = connected ? '/dashboard' : `/e/${eventUuid}` || '';
+  const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
 
   const router = useRouter();
   const {
     query: {uuid},
   } = router;
-
-  const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
-
-  const {connected: isAuthenticated} = useProfile();
 
   return (
     <Drawer
@@ -90,7 +87,7 @@ const DrawerMenu = ({eventUuid}: Props) => {
         icon="directions_car"
         active={router.pathname === `/e/[uuid]`}
       />
-      {isCarosterPlusEvent && isAuthenticated && (
+      {isCarosterPlusEvent && connected && (
         <DrawerMenuItem
           title={t('drawer.alerts')}
           onClick={() =>

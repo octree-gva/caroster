@@ -128,6 +128,7 @@
   "notification.type.AddedAsAdmin.content": "Vous avez été ajouté en tant qu'admin à un événement.",
   "notification.type.PassengerJoinTrip.content": "Un passager souhaite prendre contact.",
   "notification.type.ContactTripCreator.content": "Contactez la conductrice ou le conducteur pour votre trajet.",
+  "notification.type.EnabledCarosterPlus.content": "Caroster Plus a été activé pour votre événement",
   "passenger.actions.place": "Placer",
   "passenger.actions.remove_alert": "Voulez-vous vraiment supprimer <italic><bold>{{name}}</bold></italic> de la liste d'attente ?",
   "passenger.availability.seats": "{{count}} place disponible",

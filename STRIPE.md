@@ -31,7 +31,7 @@ To simulate webhook in a local dev environment, you can use [Strip CLI](https://
 **Handle webhooks from your local env:**
 
 ```bash
-stripe listen --forward-to localhost:1337/api/stripe
+stripe listen --forward-to localhost:1337/api/webhooks
 ```
 
 **Simulate a payment for an event:**

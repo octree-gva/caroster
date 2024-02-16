@@ -35,6 +35,10 @@
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contacter la conductrice ou le conducteur du trajet",
       "content": "Afin d'organiser votre voyage pour <%= event.name %>, merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Voiture: <%= travel.vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nContact: <%= travel.phone_mumber %>"
+    },
+    "EnabledCarosterPlus": {
+      "title": "<%= event.name %> - Caroster Plus a été activé pour votre événement",
+      "content": "Le module 'Caroster Plus' a été activé pour votre événement. Des nouveautés sont maintenant disponibles sur [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     }
   }
 }

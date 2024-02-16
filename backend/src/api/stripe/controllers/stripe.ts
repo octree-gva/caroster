@@ -8,7 +8,7 @@ let stripe: Stripe;
 if (STRIPE_SECRET) stripe = new Stripe(STRIPE_SECRET);
 
 export default {
-  handleWebhook: async (ctx, next) => {
+  handleWebhook: async (ctx) => {
     if (!stripe) {
       strapi.log.warn(
         "Stripe is not enabled for this instance. Please provide STRIPE_SECRET_KEY variable to enable it."

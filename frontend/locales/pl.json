@@ -121,6 +121,7 @@
   "notification.type.DeletedTrip.content": "",
   "notification.type.AddedAsAdmin.content": "",
   "notification.type.ContactTripCreator.content": "",
+  "notification.type.EnabledCarosterPlus.content": "",
   "passenger.assign.title": "",
   "passenger.actions.place": "Przypisz",
   "passenger.actions.remove_alert": "Czy na pewno chcesz usunąć <italic> <bold> {{name}} </bold> </italic> z listy oczekujących?",

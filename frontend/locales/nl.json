@@ -118,6 +118,7 @@
   "notification.type.DeletedTrip.content": "",
   "notification.type.AddedAsAdmin.content": "",
   "notification.type.ContactTripCreator.content": "",
+  "notification.type.EnabledCarosterPlus.content": "",
   "passenger.actions.place": "Toewijzen",
   "passenger.actions.remove_alert": "Weet u zeker dat u <italic><bold>{{name}}</bold></italic> van de wachtlijst wilt halen?",
   "passenger.availability.seats": "Er is {{count}} plaats beschikbaar",

@@ -18,6 +18,7 @@ fragment UserFields on UsersPermissionsUser {
         name
         date
         address
+        enabled_modules
       }
     }
   }
