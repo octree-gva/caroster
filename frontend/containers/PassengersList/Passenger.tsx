@@ -99,6 +99,7 @@ const Passenger = (props: Props) => {
             firstName={passenger?.attributes.user?.data?.attributes.firstName}
             lastName={passenger?.attributes.user?.data?.attributes.lastName}
             email={passenger?.attributes.email}
+            phone={passenger?.attributes.phone}
           />
         )}
       </Box>

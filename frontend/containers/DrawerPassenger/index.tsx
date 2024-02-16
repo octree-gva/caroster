@@ -15,6 +15,7 @@ interface Props {
   firstName: string;
   lastName: string;
   email: string;
+  phone?: string;
 }
 
 const DrawerPassenger = ({
@@ -23,6 +24,7 @@ const DrawerPassenger = ({
   lastName,
   firstName,
   email,
+  phone,
 }: Props) => {
   const {t} = useTranslation();
   const isMobile = useMediaQuery('(max-width:400px)');
@@ -66,6 +68,18 @@ const DrawerPassenger = ({
               {lastName}
             </Typography>
           </Box>
+          {phone && (
+            <Box display="flex" flexDirection="column">
+              <Typography variant="h6">
+                {t('passenger.informations.phone.label')}
+              </Typography>
+              <Link href={`tel:${phone}`}>
+                <Typography variant="body1" gutterBottom>
+                  {phone}
+                </Typography>
+              </Link>
+            </Box>
+          )}
           <Box display="flex" flexDirection="column">
             <Typography variant="h6">
               {t('passenger.informations.email.label')}

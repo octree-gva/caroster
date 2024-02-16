@@ -3,6 +3,7 @@ fragment PassengerFields on PassengerEntity {
   attributes {
     name
     location
+    phone
     email
     user {
       data {

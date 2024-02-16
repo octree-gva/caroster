@@ -964,7 +964,8 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
         'EventCreated',
         'EventEnded',
         'EventRecap',
-        'PassengerJoinTrip'
+        'PassengerJoinTrip',
+        'ContactTripCreator'
       ]
     > &
       Attribute.Required;
@@ -1032,8 +1033,6 @@ export interface ApiPassengerPassenger extends Schema.CollectionType {
     displayName: 'Passenger';
   };
   options: {
-    increments: true;
-    timestamps: true;
     draftAndPublish: false;
   };
   attributes: {
@@ -1055,6 +1054,7 @@ export interface ApiPassengerPassenger extends Schema.CollectionType {
       'manyToOne',
       'api::event.event'
     >;
+    phone: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import {PropsWithChildren} from 'react';
 import {useTranslation} from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,9 +11,9 @@ interface Props {
   open: boolean;
   cancel: () => void;
   onSubmit: () => Promise<void>;
-  disabled: boolean;
+  disabled?: boolean;
   title: string;
-  children: ReactElement<any, any>;
+  action?: string;
 }
 
 const FormDialog = ({
@@ -22,8 +22,9 @@ const FormDialog = ({
   onSubmit,
   disabled,
   title,
+  action,
   children,
-}: Props) => {
+}: PropsWithChildren<Props>) => {
   const {t} = useTranslation();
 
   return (
@@ -47,7 +48,7 @@ const FormDialog = ({
             {t('generic.cancel')}
           </Button>
           <Button type="submit" variant="contained" disabled={disabled}>
-            {t('generic.add')}
+            {action || t('generic.add')}
           </Button>
         </DialogActions>
       </form>

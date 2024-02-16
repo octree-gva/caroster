@@ -9,8 +9,6 @@
     "displayName": "Passenger"
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": false
   },
   "attributes": {
@@ -42,6 +40,9 @@
       "relation": "manyToOne",
       "target": "api::event.event",
       "inversedBy": "passengers"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

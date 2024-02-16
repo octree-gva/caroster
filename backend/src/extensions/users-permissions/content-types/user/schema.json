@@ -74,8 +74,8 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::passenger.passenger",
-      "mappedBy": "user",
-      "private": true
+      "private": true,
+      "mappedBy": "user"
     },
     "vehicles": {
       "type": "relation",

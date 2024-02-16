@@ -22,7 +22,8 @@
         "EventCreated",
         "EventEnded",
         "EventRecap",
-        "PassengerJoinTrip"
+        "PassengerJoinTrip",
+        "ContactTripCreator"
       ],
       "required": true
     },

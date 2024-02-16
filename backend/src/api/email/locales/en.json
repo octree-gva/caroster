@@ -31,6 +31,10 @@
     "EventRecap": {
       "title": "<%= event.name %> - Something new in your event",
       "content": "## There is something new in your event \"<%= event.name %>\"\n\n⏳ Count of passengers looking for a seat : <%= waitingListCount %>\n🚗 Count of cars : <%= travelsCount %>\n🆕 Count of new cars: <%= newTravelsCount %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are the creator of this event."
+    },
+    "ContactTripCreator": {
+      "title": "<%= event.name %> - Contact trip driver",
+      "content": "To organize your journey to <%= event.name %>, please contact the driver of the trip you've registered.\n\n**Car: <%= travel.vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nContact: <%= travel.phone_mumber %>"
     }
   }
 }

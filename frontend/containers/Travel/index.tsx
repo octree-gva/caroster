@@ -7,14 +7,15 @@ import {useTheme} from '@mui/styles';
 import {useTranslation} from 'react-i18next';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
+import RequestTripModal from './RequestTripModal';
 import useActions from './useActions';
 import PassengersList from '../PassengersList';
 import AddPassengerButtons from '../AddPassengerButtons';
 import useProfile from '../../hooks/useProfile';
 import usePermissions from '../../hooks/usePermissions';
 import useMapStore from '../../stores/useMapStore';
+import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
-
 interface Props {
   travel: TravelEntity;
   onAddSelf: () => void;
@@ -23,12 +24,17 @@ interface Props {
 
 const Travel = (props: Props) => {
   const {travel} = props;
+  const isCarosterPlus = useEventStore(s => s.event.enabled_modules.includes('caroster-plus'));
   const {
     userPermissions: {canDeletePassenger, canJoinTravels, canAddToTravel},
   } = usePermissions();
   const {t} = useTranslation();
   const theme = useTheme();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
+  const [requestTripModalOpen, toggleRequestTripModal] = useReducer(
+    i => !i,
+    false
+  );
   const actions = useActions({travel});
   const {userId, connected} = useProfile();
   const {focusedTravel} = useMapStore();
@@ -57,6 +63,11 @@ const Travel = (props: Props) => {
       }}
       id={travel.id}
     >
+      <RequestTripModal
+        open={requestTripModalOpen}
+        toggle={toggleRequestTripModal}
+        travel={travel}
+      />
       {isEditing && (
         <HeaderEditing travel={travel} toggleEditing={toggleEditing} />
       )}
@@ -71,7 +82,9 @@ const Travel = (props: Props) => {
                 variant="travel"
                 disabled={disableNewPassengers}
                 onAddOther={props.onAddOther}
-                onAddSelf={props.onAddSelf}
+                onAddSelf={
+                  isCarosterPlus ? toggleRequestTripModal : props.onAddSelf
+                }
               />
             </>
           )}

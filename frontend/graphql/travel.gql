@@ -15,6 +15,7 @@ fragment TravelFields on TravelEntity {
         attributes {
           name
           location
+          phone
           user {
             data {
               id
