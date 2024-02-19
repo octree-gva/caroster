@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box';
 import moment, {Moment} from 'moment';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
@@ -10,11 +11,16 @@ import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
-import Box from '@mui/material/Box';
 import PlaceInput from '../PlaceInput';
 import useEventStore from '../../stores/useEventStore';
+import {TravelEntity} from '../../generated/graphql';
 
-const HeaderEditing = ({travel, toggleEditing}) => {
+interface Props {
+  travel: TravelEntity;
+  toggleEditing: () => void;
+}
+
+const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const actions = useActions({travel});
@@ -23,24 +29,24 @@ const HeaderEditing = ({travel, toggleEditing}) => {
   );
   const [removing, toggleRemoving] = useReducer(i => !i, false);
   const dateMoment = useMemo(
-    () => (travel?.departure ? moment(travel.departure) : null),
-    [travel?.departure]
+    () => (travel?.attributes.departure ? moment(travel.attributes.departure) : null),
+    [travel?.attributes.departure]
   );
 
   // States
-  const [name, setName] = useState(travel?.vehicleName ?? '');
-  const [seats, setSeats] = useState(travel?.seats ?? 4);
-  const [meeting, setMeeting] = useState(travel?.meeting ?? '');
+  const [name, setName] = useState(travel?.attributes.vehicleName ?? '');
+  const [seats, setSeats] = useState(travel?.attributes.seats ?? 4);
+  const [meeting, setMeeting] = useState(travel?.attributes.meeting ?? '');
   const [meeting_latitude, setMeetingLatitude] = useState(
-    travel?.meeting_latitude
+    travel?.attributes.meeting_latitude
   );
   const [meeting_longitude, setMeetingLongitude] = useState(
-    travel?.meeting_longitude
+    travel?.attributes.meeting_longitude
   );
   const [date, setDate] = useState(dateMoment);
   const [time, setTime] = useState(dateMoment);
-  const [phone, setPhone] = useState(travel?.phone_number ?? '');
-  const [details, setDetails] = useState(travel?.details ?? '');
+  const [phone, setPhone] = useState(travel?.attributes.phone_number ?? '');
+  const [details, setDetails] = useState(travel?.attributes.details ?? '');
 
   // Click on ESQ closes the form
   const escFunction = useCallback(
