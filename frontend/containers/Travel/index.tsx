@@ -24,7 +24,9 @@ interface Props {
 
 const Travel = (props: Props) => {
   const {travel} = props;
-  const isCarosterPlus = useEventStore(s => s.event.enabled_modules.includes('caroster-plus'));
+  const isCarosterPlus = useEventStore(s =>
+    s.event.enabled_modules?.includes('caroster-plus')
+  );
   const {
     userPermissions: {canDeletePassenger, canJoinTravels, canAddToTravel},
   } = usePermissions();
