@@ -9,17 +9,6 @@ export default factories.createCoreService(
   "api::trip-alert.trip-alert",
   ({ strapi }) => ({
     async sendTripAlerts(eventId: string, travel) {
-      if (!travel.meeting_latitude || !travel.meeting_longitude) {
-        strapi.log.warn(
-          `Can't send trip alert for travel ${travel.id}. No coordinates found.`
-        );
-        return;
-      }
-
-      const travelCoordinates: Coordinates = [
-        travel.meeting_latitude,
-        travel.meeting_longitude,
-      ];
       const eventTripAlerts = await strapi.entityService.findMany(
         "api::trip-alert.trip-alert",
         {
@@ -34,11 +23,18 @@ export default factories.createCoreService(
         // If alert has no geographical info, send alert on each new trip
         if (!tripAlert.latitude || !tripAlert.longitude || !tripAlert.radius)
           return true;
+        // If travel has no geographical info, send alert to all
+        else if (!travel.meeting_latitude || !travel.meeting_longitude)
+          return true;
 
         // Else, check if new travel is in alert area
         const alertCoordinates: Coordinates = [
           tripAlert.latitude,
           tripAlert.longitude,
+        ];
+        const travelCoordinates: Coordinates = [
+          travel.meeting_latitude,
+          travel.meeting_longitude,
         ];
         const distance = calculateHaversineDistance(
           travelCoordinates,
@@ -56,6 +52,7 @@ export default factories.createCoreService(
             type: "NewTrip",
             event: eventId,
             user: tripAlert.user.id,
+            payload: { travel },
           },
         });
       });
