@@ -59,5 +59,6 @@
     "node": ">=16.x.x",
     "npm": ">=6.0.0"
   },
-  "strapi": {}
+  "strapi": {},
+  "packageManager": "yarn@4.1.0"
 }
