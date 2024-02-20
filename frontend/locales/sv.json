@@ -116,6 +116,7 @@
   "notification.type.NewPassengerInYourTrip.content": "",
   "notification.type.NewTrip.content": "",
   "notification.type.DeletedTrip.content": "",
+  "notification.type.DeletedYourTrip.content": "",
   "notification.type.AddedAsAdmin.content": "",
   "notification.type.ContactTripCreator.content": "",
   "notification.type.EnabledCarosterPlus.content": "",

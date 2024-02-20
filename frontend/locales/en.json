@@ -125,6 +125,7 @@
   "notification.type.NewPassengerInYourTrip.content": "A passenger has been added to your trip.",
   "notification.type.NewTrip.content": "A departure close to you is available.",
   "notification.type.DeletedTrip.content": "A car has been removed.",
+  "notification.type.DeletedYourTrip.content": "Your car has been removed by an event admin",
   "notification.type.AddedAsAdmin.content": "You have been added as admin to an event.",
   "notification.type.PassengerJoinTrip.content": "A passenger wishes to contact.",
   "notification.type.ContactTripCreator.content": "Contact the driver for your trip.",

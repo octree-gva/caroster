@@ -22,7 +22,14 @@ export default async (policyContext, config, { strapi }) => {
     const isAdmin = [...admins, event.email].includes(user.email);
 
     if (isAdmin) {
-      // TODO Create notification to travel's linked user
+      await strapi.entityService.create("api::notification.notification", {
+        data: {
+          type: "DeletedYourTrip",
+          event,
+          user: travel.user,
+          payload: { travel },
+        },
+      });
       return true;
     } else if (travel.user?.email === user.email) return true;
     else return false;

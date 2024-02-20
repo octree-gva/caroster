@@ -12,6 +12,10 @@
       "title": "<%= event.name %> - Car removed",
       "content": "Car <%= travel.vehicleName %> in which you've subscribed to as been removed. Go to the [Caroster](<%= host %>/e/<%= event.uuid %>) page to find another car."
     },
+    "DeletedYourTrip": {
+      "title": "<%= event.name %> - Your car has been removed",
+      "content": "Your car <%= travel.vehicleName %> has been removed by an admin from [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - A passenger has been added to your trip",
       "content": "A passenger has been added to your trip. on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"
