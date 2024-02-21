@@ -84,6 +84,7 @@
   "options.plus.addAdminError": "An error has occurred",
   "options.plus.adminDeleted": "The administrator has been deleted",
   "options.plus.deleteAdminError": "An error has occurred",
+  "options.plus.notRightForAddAdmin": "You are not authorized to add an administrator",
   "generic.access": "Access",
   "generic.add": "Add",
   "generic.cancel": "Cancel",

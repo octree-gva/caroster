@@ -24,6 +24,7 @@ import {
   useAddEventAdminMutation,
   useDeleteEventAdminMutation,
 } from '../../generated/graphql';
+import Tooltip from '@mui/material/Tooltip';
 
 interface Props {
   event: EventType & {id: string};
@@ -34,6 +35,7 @@ const CarosterPlusSettings = ({event}: Props) => {
   const {
     userPermissions: {canEditEventOptions},
   } = usePermissions();
+
   const {addToast} = useToastStore();
 
   const [addAdminMutation] = useAddEventAdminMutation();
@@ -76,12 +78,14 @@ const CarosterPlusSettings = ({event}: Props) => {
     }
   };
 
+  const canEdit = canEditEventOptions();
+
   return (
     <Card
       sx={{
         position: 'relative',
         maxWidth: '100%',
-        width: '350px',
+        width: '480px',
         pb: 3,
       }}
     >
@@ -101,14 +105,23 @@ const CarosterPlusSettings = ({event}: Props) => {
         <Typography pt={1} variant="body2" color="GrayText">
           {t('options.plus.admins')}
         </Typography>
-        <Button
-          variant="text"
-          disabled={!canEditEventOptions()}
-          endIcon={<AddIcon />}
-          onClick={toggleAddAdminDialog}
-        >
-          {t('generic.add')}
-        </Button>
+        {canEdit ? (
+          <Button
+            variant="text"
+            endIcon={<AddIcon />}
+            onClick={toggleAddAdminDialog}
+          >
+            {t('generic.add')}
+          </Button>
+        ) : (
+          <Tooltip title={t('options.plus.notRightForAddAdmin')}>
+            <div>
+              <Button variant="text" disabled endIcon={<AddIcon />}>
+                {t('generic.add')}
+              </Button>
+            </div>
+          </Tooltip>
+        )}
       </Box>
       <List disablePadding>
         <ListItem
@@ -139,7 +152,7 @@ const CarosterPlusSettings = ({event}: Props) => {
         ))}
       </List>
       <FormDialog
-        title={t("options.plus.addAdmin")}
+        title={t('options.plus.addAdmin')}
         open={addAdminDialogOpen}
         cancel={toggleAddAdminDialog}
         onSubmit={addAdmin}

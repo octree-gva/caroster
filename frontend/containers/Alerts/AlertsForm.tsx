@@ -1,15 +1,17 @@
-import {Button, FormControl, TextField} from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
-import Stack from '@mui/material/Stack';
 import React, {useState} from 'react';
-import PlaceInput from '../PlaceInput';
-import {t} from 'i18next';
 import {
-  EventEntity,
-  TripAlertEntity,
-  useSetTripAlertMutation,
-} from '../../generated/graphql';
-import useToastStore from '../../stores/useToastStore';
+  Button,
+  FormControl,
+  TextField,
+  InputAdornment,
+  Stack,
+} from '@mui/material';
+import {t} from 'i18next';
+
+import {EventEntity, TripAlertEntity} from '../../generated/graphql';
+
+import PlaceInput from '../PlaceInput';
+import useCreateTripAlert from './useCreateTripAlert';
 
 interface Props {
   event: EventEntity;
@@ -28,26 +30,27 @@ const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
     tripAlertEntity?.attributes.latitude || 0
   );
   const [radius, setRadius] = useState(tripAlertEntity?.attributes.radius || 0);
-  const handleRadiusChange = e => setRadius(Number(e.target.value));
-  const addToast = useToastStore(s => s.addToast);
-  const [setTripAlertMutation] = useSetTripAlertMutation();
+  const [formModified, setFormModified] = useState(false);
 
-  const handleCreateTripAlert = async () => {
-    try {
-      await setTripAlertMutation({
-        variables: {
-          eventId: event.id,
-          enabled: !disabled,
-          latitude: address ? latitude : 0,
-          longitude: address ? longitude : 0,
-          address: address,
-          radius: radius,
-        },
-      });
-      addToast(t('alert.create'));
-    } catch (error) {
-      addToast(t('alert.errors.cant_create'));
-    }
+  const handleRadiusChange = e => {
+    setRadius(Number(e.target.value));
+    setFormModified(true);
+  };
+
+  const disabledButton = disabled || !formModified;
+  const eventId = event.id;
+
+  const handleCreateTripAlert = useCreateTripAlert();
+  const handleCreateAlert = async () => {
+    await handleCreateTripAlert({
+      eventId,
+      enabled: !disabled,
+      latitude: address ? latitude : 0,
+      longitude: address ? longitude : 0,
+      address,
+      radius,
+    });
+    setFormModified(false);
   };
 
   return (
@@ -63,6 +66,7 @@ const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
             setAddress(place);
             setLatitude(latitude);
             setLongitude(longitude);
+            setFormModified(true);
           }}
           disabled={disabled}
         />
@@ -82,7 +86,8 @@ const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
         variant="contained"
         color="primary"
         fullWidth
-        onClick={handleCreateTripAlert}
+        disabled={disabledButton}
+        onClick={handleCreateAlert}
       >
         {t('alert.button.label')}
       </Button>

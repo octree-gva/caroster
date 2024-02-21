@@ -84,6 +84,7 @@
   "options.plus.addAdminError": "Une erreur est survenue",
   "options.plus.adminDeleted": "L'administrateur a été supprimé",
   "options.plus.deleteAdminError": "Une erreur est survenue",
+  "options.plus.notRightForAddAdmin": "Vous n'avez pas les droits pour ajouter un administrateur",
   "generic.access": "Accéder",
   "generic.add": "Ajouter",
   "generic.cancel": "Annuler",

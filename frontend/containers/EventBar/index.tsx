@@ -61,7 +61,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
             <Typography
               variant="h6"
               noWrap
-              sx={{maxWidth: `calc(100vw - ${theme.spacing(18)})`}}
+              sx={{maxWidth: `calc(100vw - ${theme.spacing(28)})`}}
             >
               {title || event.name}
             </Typography>

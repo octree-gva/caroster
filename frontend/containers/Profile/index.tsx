@@ -15,6 +15,7 @@ import {
 } from '../../generated/graphql';
 import ManagingNotificationsField from './ManagingNotificationsField';
 import StripeDashboardLink from './StripeDashboardLink';
+import {Box, Divider} from '@mui/material';
 
 interface Props {
   profile: UsersPermissionsUser;
@@ -115,46 +116,52 @@ const Profile = ({profile, logout}: Props) => {
     >
       <Card sx={{width: '480px', maxWidth: '100%'}}>
         <CardContent>
-          <ProfileField
-            name="firstName"
-            value={firstName}
-            label={t('profile.firstName')}
-            defaultValue={t('profile.not_defined', {
-              field: '$t(profile.firstName)',
-            })}
-            onChange={setFirstName}
-            isEditing={isEditing}
-          />
-          <ProfileField
-            name="lastName"
-            value={lastName}
-            label={t('profile.lastName')}
-            defaultValue={t('profile.not_defined', {
-              field: '$t(profile.lastName)',
-            })}
-            onChange={setLastName}
-            isEditing={isEditing}
-          />
-          <ProfileField
-            name="email"
-            value={email}
-            label={t('profile.email')}
-            defaultValue={t('profile.not_defined', {
-              field: '$t(profile.email)',
-            })}
-            onChange={setEmail}
-            isEditing={isEditing}
-            disabled={!isStrapiUser}
-          />
+          <Box>
+            <ProfileField
+              name="firstName"
+              value={firstName}
+              label={t('profile.firstName')}
+              defaultValue={t('profile.not_defined', {
+                field: '$t(profile.firstName)',
+              })}
+              onChange={setFirstName}
+              isEditing={isEditing}
+            />
+            <ProfileField
+              name="lastName"
+              value={lastName}
+              label={t('profile.lastName')}
+              defaultValue={t('profile.not_defined', {
+                field: '$t(profile.lastName)',
+              })}
+              onChange={setLastName}
+              isEditing={isEditing}
+            />
+            <ProfileField
+              name="email"
+              value={email}
+              label={t('profile.email')}
+              defaultValue={t('profile.not_defined', {
+                field: '$t(profile.email)',
+              })}
+              onChange={setEmail}
+              isEditing={isEditing}
+              disabled={!isStrapiUser}
+            />
+          </Box>
         </CardContent>
-        <ManagingNotificationsField
-          isEditing={isEditing}
-          notificationChecked={notificationEnabled}
-          newsletterChecked={newsletterConsent}
-          toggleNotification={toggleNotification}
-          toggleNewsletter={toggleNewsletter}
-        />
-        <StripeDashboardLink />
+        <Divider />
+        <Box my={4}>
+          <ManagingNotificationsField
+            isEditing={isEditing}
+            notificationChecked={notificationEnabled}
+            newsletterChecked={newsletterConsent}
+            toggleNotification={toggleNotification}
+            toggleNewsletter={toggleNewsletter}
+          />
+          <StripeDashboardLink />
+        </Box>
+        <Divider />
         <CardActions sx={{justifyContent: 'flex-end'}}>
           {!isEditing && (
             <>

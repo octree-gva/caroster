@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
+import {Box} from '@mui/material';
 
 type Props = TextFieldProps & {
   isEditing: boolean;
@@ -11,22 +12,22 @@ const ProfileField = (props: Props) => {
 
   if (isEditing) {
     return (
-      <TextField
-        fullWidth
-        margin="dense"
-        onChange={e => onChange(e.target.value)}
-        id={`Profile${name}`}
-        {...inputProps}
-      />
+      <Box mb={1}>
+        <TextField
+          fullWidth
+          margin="dense"
+          onChange={e => onChange(e.target.value)}
+          id={`Profile${name}`}
+          {...inputProps}
+        />
+      </Box>
     );
   }
   return (
-    <>
-      <Typography variant="h6">{label}</Typography>
-      <Typography variant="body1" gutterBottom>
-        {value || defaultValue}
-      </Typography>
-    </>
+    <Box mb={2}>
+      <Typography variant="caption">{label}</Typography>
+      <Typography variant="h6">{value || defaultValue}</Typography>
+    </Box>
   );
 };
 export default ProfileField;

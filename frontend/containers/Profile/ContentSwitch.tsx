@@ -12,7 +12,7 @@ const ContentSwitch = ({
   return isEditing ? (
     <Switch checked={checked} onChange={onChange} />
   ) : (
-    <Typography variant="h6">
+    <Typography variant="h6" fontWeight="bold" py={1}>
       {checked ? t(trueLabel) : t(falseLabel)}
     </Typography>
   );

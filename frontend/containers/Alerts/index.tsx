@@ -1,12 +1,10 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import theme from '../../theme';
-import AlertsHead from './AlertsHead';
-import AlertsForm from './AlertsForm';
 import {useReducer} from 'react';
+import {Box, Container, Paper, useMediaQuery} from '@mui/material';
+import theme from '../../theme';
 import {EventEntity, TripAlertEntity} from '../../generated/graphql';
+
+import AlertsHeader from './AlertsHead';
+import AlertsForm from './AlertsForm';
 
 interface Props {
   event: EventEntity;
@@ -24,7 +22,12 @@ const Alerts = ({event, tripAlertEntity}: Props) => {
     <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: isMobile ? 2 : 4}}>
       <Paper sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
         <Box p={2}>
-          <AlertsHead handleToggle={handleToggle} checked={switchChecked} />
+          <AlertsHeader
+            event={event}
+            switchChecked={switchChecked}
+            handleToggle={handleToggle}
+            disabled={switchChecked}
+          />
           <AlertsForm
             event={event}
             disabled={!switchChecked}

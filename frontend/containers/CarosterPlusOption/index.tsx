@@ -40,7 +40,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
       sx={{
         position: 'relative',
         maxWidth: '100%',
-        width: '350px',
+        width: '480px',
       }}
     >
       <Box

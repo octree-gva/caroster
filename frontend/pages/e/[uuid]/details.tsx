@@ -128,7 +128,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
           sx={{
             position: 'relative',
             maxWidth: '100%',
-            width: '350px',
+            width: '480px',
             p: 2,
           }}
         >
