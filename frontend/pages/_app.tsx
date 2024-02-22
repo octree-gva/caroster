@@ -1,6 +1,7 @@
 import {useEffect} from 'react';
 import 'leaflet/dist/leaflet.css';
 import '../public/leaflet_reset.css';
+import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, Theme} from '@mui/material/styles';
 import {AppProps} from 'next/app';
@@ -47,6 +48,9 @@ const App = function (props: AppProps) {
             adapterLocale={locale === 'fr' ? 'fr-ch' : 'en'}
           >
             <CssBaseline />
+            <Head>
+              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            </Head>
             <Component {...pageProps} />
             <Toasts />
           </LocalizationProvider>
