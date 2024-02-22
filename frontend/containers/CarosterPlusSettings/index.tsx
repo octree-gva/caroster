@@ -71,7 +71,6 @@ const CarosterPlusSettings = ({event}: Props) => {
         },
       });
       addToast(t('options.plus.adminDeleted'));
-      toggleAddAdminDialog();
     } catch (e) {
       console.error(e);
       addToast(t('options.plus.deleteAdminError'));

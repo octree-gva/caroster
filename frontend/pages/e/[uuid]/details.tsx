@@ -7,8 +7,6 @@ import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import EventIcon from '@mui/icons-material/Event';
 import TuneIcon from '@mui/icons-material/Tune';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {useTheme} from '@mui/material/styles';
@@ -136,7 +134,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
             {t('event.details')}
           </Typography>
           {canEditEventDetails() && modifyButton}
-          <Box pt={2} pr={1.5}>
+          {(isEditing || event.name) && <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.name')}</Typography>
             <Typography>
               {isEditing ? (
@@ -150,12 +148,12 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                 />
               ) : (
                 <Typography id="EventName">
-                  {event.name ?? t('event.fields.empty')}
+                  {event.name}
                 </Typography>
               )}
             </Typography>
-          </Box>
-          <Box pt={2} pr={1.5}>
+          </Box>}
+          {(isEditing || event.address) && <Box pt={2} pr={1.5}>
             <Typography variant="overline">{t('event.fields.date')}</Typography>
             {isEditing ? (
               <Typography>
@@ -180,42 +178,32 @@ const DetailsTab: TabComponent<Props> = ({}) => {
             ) : (
               <Box position="relative">
                 <Typography id="EventDate">
-                  {event.date
-                    ? moment(event.date).format('DD/MM/YYYY')
-                    : t('event.fields.empty')}
+                   {moment(event.date).format('DD/MM/YYYY')}
                 </Typography>
-                <EventIcon
-                  color="action"
-                  sx={{
-                    position: 'absolute',
-                    right: theme.spacing(-0.5),
-                    top: 0,
-                  }}
-                />
               </Box>
             )}
-          </Box>
-          <Box pt={2} pr={1.5}>
-            <Typography variant="overline">
-              {t('event.fields.address')}
-            </Typography>
-            {isEditing ? (
-              <PlaceInput
-                place={event.address}
-                latitude={event.latitude}
-                longitude={event.longitude}
-                onSelect={({place, latitude, longitude}) =>
-                  setEventUpdate({
-                    address: place,
-                    latitude,
-                    longitude,
-                  })
-                }
-              />
-            ) : (
-              <Box position="relative">
-                <Typography id="EventAddress" sx={{pr: 3}}>
-                  {event.address ? (
+          </Box>}
+          {(isEditing || event.address) && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('event.fields.address')}
+              </Typography>
+              {isEditing ? (
+                <PlaceInput
+                  place={event.address}
+                  latitude={event.latitude}
+                  longitude={event.longitude}
+                  onSelect={({place, latitude, longitude}) =>
+                    setEventUpdate({
+                      address: place,
+                      latitude,
+                      longitude,
+                    })
+                  }
+                />
+              ) : (
+                <Box position="relative">
+                  <Typography id="EventAddress" sx={{pr: 3}}>
                     <Link
                       target="_blank"
                       rel="noreferrer"
@@ -226,59 +214,55 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                     >
                       {event.address}
                     </Link>
-                  ) : (
-                    t('event.fields.empty')
-                  )}
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          )}
+          {(isEditing || event.description) && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('event.fields.description')}
+              </Typography>
+              {isEditing ? (
+                <Typography>
+                  <TextField
+                    fullWidth
+                    multiline
+                    maxRows={4}
+                    inputProps={{maxLength: 250}}
+                    value={event.description || ''}
+                    onChange={e =>
+                      setEventUpdate({description: e.target.value})
+                    }
+                    id={`EditEventDescription`}
+                    name="description"
+                  />
                 </Typography>
-                <PlaceOutlinedIcon
-                  color="action"
-                  sx={{
-                    position: 'absolute',
-                    right: theme.spacing(-0.5),
-                    top: 0,
-                  }}
+              ) : (
+                <Typography id="EventDescription" sx={{pr: 3}}>
+                  {event.description}
+                </Typography>
+              )}
+            </Box>
+          )}
+          {(isEditing || event.lang) && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('event.fields.lang')}
+              </Typography>
+              {isEditing ? (
+                <LangSelector
+                  value={event.lang}
+                  onChange={lang => setEventUpdate({lang})}
                 />
-              </Box>
-            )}
-          </Box>
-          <Box pt={2} pr={1.5}>
-            <Typography variant="overline">
-              {t('event.fields.description')}
-            </Typography>
-            {isEditing ? (
-              <Typography>
-                <TextField
-                  fullWidth
-                  multiline
-                  maxRows={4}
-                  inputProps={{maxLength: 250}}
-                  value={event.description || ''}
-                  onChange={e => setEventUpdate({description: e.target.value})}
-                  id={`EditEventDescription`}
-                  name="description"
-                />
-              </Typography>
-            ) : (
-              <Typography id="EventDescription" sx={{pr: 3}}>
-                {event.description ?? t('event.fields.empty')}
-              </Typography>
-            )}
-          </Box>
-          <Box pt={2} pr={1.5}>
-            <Typography variant="overline">{t('event.fields.lang')}</Typography>
-            {isEditing ? (
-              <LangSelector
-                value={event.lang}
-                onChange={lang => setEventUpdate({lang})}
-              />
-            ) : (
-              <Typography id="EventLang" sx={{pr: 3}}>
-                {event.lang
-                  ? t(`PROTECTED.languages.${event.lang}`)
-                  : t('event.fields.empty')}
-              </Typography>
-            )}
-          </Box>
+              ) : (
+                <Typography id="EventLang" sx={{pr: 3}}>
+                  {t(`PROTECTED.languages.${event.lang}`)}
+                </Typography>
+              )}
+            </Box>
+          )}
           {!isEditing && (
             <ShareEvent
               title={`Caroster ${event.name}`}

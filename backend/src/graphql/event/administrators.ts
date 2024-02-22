@@ -27,7 +27,7 @@ export default ({ nexus, strapi }) => ({
   ],
   resolvers: {
     Event: {
-      administrators: async (event) => event.administrators?.split(/, ?/),
+      administrators: (event) => event.administrators?.split(/, ?/).filter(Boolean) || [],
     },
     Mutation: {
       addEventAdmin: {
@@ -39,7 +39,7 @@ export default ({ nexus, strapi }) => ({
           );
           if (!event) throw new errors.NotFoundError(`Event not found`);
 
-          const currentAdmins = event.administrators?.split(/, ?/) || [];
+          const currentAdmins = event.administrators?.split(/, ?/).filter(Boolean) || [];
 
           // Check if user is authorized to add event admin
           const user = context.state.user;
@@ -105,9 +105,12 @@ export default ({ nexus, strapi }) => ({
             throw new errors.ForbiddenError();
 
           // Remove email from event's administrators list
-          const administrators = currentAdmins
-            .filter((email) => email !== args.email)
-            .join(", ");
+          const administratorsArray = currentAdmins.filter(
+            (email) => email !== args.email
+          );
+
+          const administrators = administratorsArray.join(", ");
+
           const updatedEvent = await strapi.entityService.update(
             "api::event.event",
             args.eventId,

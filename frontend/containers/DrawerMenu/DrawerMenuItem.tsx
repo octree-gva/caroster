@@ -58,7 +58,6 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
         sx={{
           ml: 1,
           position: 'relative',
-          fontSize: '11px',
           lineHeight: '1.1em',
           height: 'auto',
           display: 'inline-block',
