@@ -59,5 +59,6 @@
     "glob": "^10.3.3",
     "i18next-json-sync": "^3.1.2",
     "ts-node": "^10.9.1"
-  }
+  },
+  "packageManager": "yarn@4.1.0"
 }
