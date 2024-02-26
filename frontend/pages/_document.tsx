@@ -1,7 +1,7 @@
 import React from 'react';
 import Document, {Html, Head, Main, NextScript} from 'next/document';
 import theme from '../theme';
-import { ServerStyleSheets } from '@mui/styles';
+import {ServerStyleSheets} from '@mui/styles';
 
 export default class MyDocument extends Document {
   render() {
@@ -12,8 +12,15 @@ export default class MyDocument extends Document {
           <meta name="application-name" content="Caroster" />
           <link rel="shortcut icon" href="/assets/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+          />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined"

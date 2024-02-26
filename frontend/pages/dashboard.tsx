@@ -20,7 +20,7 @@ const Dashboard = (props: PageProps) => {
   const {t} = useTranslation();
   const router = useRouter();
   const {profile, isReady} = useProfile();
-  const events = profile?.events?.data || [];
+  const events = useMemo(() => profile?.events?.data || [], [profile]);
 
   const pastEvents = useMemo(
     () =>
