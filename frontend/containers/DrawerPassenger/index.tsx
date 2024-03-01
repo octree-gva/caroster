@@ -34,7 +34,6 @@ const DrawerPassenger = ({
       anchor="right"
       open={isOpen}
       onClose={onClose}
-      hideBackdrop={true}
       sx={{
         height: 'auto',
         '& .MuiDrawer-paper': {

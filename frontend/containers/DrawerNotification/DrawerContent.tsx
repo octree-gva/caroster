@@ -31,7 +31,6 @@ const DrawerContent = ({isOpen, onClose, notifications}: Props) => {
       anchor="right"
       open={isOpen}
       onClose={onClose}
-      hideBackdrop={true}
       sx={{
         height: 'auto',
         '& .MuiDrawer-paper': {
