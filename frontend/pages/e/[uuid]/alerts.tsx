@@ -55,6 +55,13 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       };
     }
 
+    const isCarosterPlus =
+      event?.attributes?.enabled_modules.includes('caroster-plus');
+    if (!isCarosterPlus)
+      return {
+        notFound: true,
+      };
+
     try {
       const {data} = await apolloClient.query({
         query: TripAlertDocument,

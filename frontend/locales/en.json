@@ -132,6 +132,7 @@
   "notification.type.PassengerJoinTrip.content": "A new passenger wishes to contact you to travel with you.",
   "notification.type.ContactTripCreator.content": "Contact the driver to organize your trip.",
   "notification.type.EnabledCarosterPlus.content": "Caroster+ has been enabled for your event.",
+  "notification.type.DeletedFromTrip.content": "You have been removed from a trip.",
   "passenger.actions.place": "Assign",
   "passenger.actions.remove_alert": "Are you sure you want to remove <italic> <bold> {{name}} </bold> </italic> from the waitlist?",
   "passenger.availability.seats": "{{count}} seat available",

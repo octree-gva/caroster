@@ -6,7 +6,13 @@ export default async (policyContext, _config, { strapi }) => {
     "api::passenger.passenger",
     passengerId,
     {
-      populate: ["event", "user"],
+      populate: {
+        event: true,
+        user: true,
+        travel: {
+          populate: ["user"],
+        },
+      },
     }
   );
 
@@ -21,10 +27,20 @@ export default async (policyContext, _config, { strapi }) => {
 
     const admins = event.administrators?.split(/, ?/) || [];
     const isAdmin = [...admins, event.email].includes(user.email);
-    if (isAdmin) {
-      // TODO Create notification to passenger's linked user
+    const isDriver = passenger.travel?.user?.id === user.id;
+
+    // If remove self
+    if (passenger.user.id == user.id) return true;
+    else if (isDriver || isAdmin) {
+      await strapi.entityService.create("api::notification.notification", {
+        data: {
+          type: "DeletedFromTrip",
+          event: event.id,
+          user: passenger.user.id,
+          payload: { travel: passenger.travel },
+        },
+      });
       return true;
-    } else if (passenger.user.id == user.id) return true;
-    else return false;
+    } else return false;
   }
 };

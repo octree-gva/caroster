@@ -45,11 +45,19 @@ const authHandler = NextAuth({
 
       // Google Auth
       if (account?.provider === 'google') {
-        const strapiUrl = 'http://localhost:1337';
         const response = await fetch(
           `${STRAPI_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
         );
         const data = await response.json();
+
+        if (data.error) {
+          console.error(
+            `Error from Strapi on authentication with Google: `,
+            data.error
+          );
+          throw new Error(data.error?.message || data.error);
+        }
+
         token.id = data.user.id;
         token.jwt = data.jwt;
         token.email = data.user.email;

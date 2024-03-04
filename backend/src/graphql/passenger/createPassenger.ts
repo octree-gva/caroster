@@ -32,7 +32,15 @@ const createPassenger = {
       "api::passenger.passenger",
       {
         data: passengerInput,
-        populate: ["event", "user", "travel"],
+        populate: {
+          event: true,
+          user: true,
+          travel: {
+            populate: {
+              user: true,
+            },
+          },
+        },
       }
     );
 
@@ -41,6 +49,7 @@ const createPassenger = {
     const isCarosterPlus = enabledModules?.includes("caroster-plus");
     if (isCarosterPlus && createdPassenger.user) {
       const travel = createdPassenger.travel;
+      const driver = travel.user;
       const datetime = travel.departure
         ? moment(travel.departure)
             .locale(createdPassenger.user.lang || "en")
@@ -52,7 +61,7 @@ const createPassenger = {
           event: createdPassenger.event.id,
           user: createdPassenger.user.id,
           // @ts-expect-error
-          payload: { travel, datetime },
+          payload: { travel, driver, datetime },
         },
       });
     }

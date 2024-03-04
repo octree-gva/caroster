@@ -70,6 +70,13 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       };
     }
 
+    const isCarosterPlus =
+      event?.attributes?.enabled_modules.includes('caroster-plus');
+    if (isCarosterPlus)
+      return {
+        notFound: true,
+      };
+
     return {
       props: {
         eventUUID: uuid,

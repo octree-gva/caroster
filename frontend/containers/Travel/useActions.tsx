@@ -10,6 +10,7 @@ import {
   useUpdatePassengerMutation,
   TravelInput,
   TravelEntity,
+  useDeletePassengerMutation,
 } from '../../generated/graphql';
 
 interface Props {
@@ -25,6 +26,25 @@ const useActions = (props: Props) => {
   const [updateTravelMutation] = useUpdateTravelMutation();
   const [deleteTravelMutation] = useDeleteTravelMutation();
   const [updatePassenger] = useUpdatePassengerMutation();
+  const [deletePassenger] = useDeletePassengerMutation();
+
+  const removePassengerFromTravel = async (passengerId: string) => {
+    const isCarosterPlus = event.enabled_modules.includes('caroster-plus');
+    if (isCarosterPlus) {
+      try {
+        await deletePassenger({
+          variables: {
+            id: passengerId,
+          },
+          refetchQueries: ['eventByUUID'],
+        });
+        addToast(t`travel.passengers.removed`);
+      } catch (error) {
+        console.error(error);
+        addToast(t('travel.errors.cant_remove_passenger'));
+      }
+    } else return sendPassengerToWaitingList(passengerId);
+  };
 
   const sendPassengerToWaitingList = async (passengerId: string) => {
     try {
@@ -39,7 +59,7 @@ const useActions = (props: Props) => {
         refetchQueries: ['eventByUUID'],
       });
       addToast(
-        t('travel.moved_to_waiting_list'),
+        t('travel.passengers.moved_to_waiting_list'),
         <Link href={`/e/${event.uuid}/waitingList`} passHref>
           <Button
             size="small"
@@ -98,7 +118,7 @@ const useActions = (props: Props) => {
     }
   };
 
-  return {sendPassengerToWaitingList, updateTravel, removeTravel};
+  return {removePassengerFromTravel, updateTravel, removeTravel};
 };
 
 export default useActions;

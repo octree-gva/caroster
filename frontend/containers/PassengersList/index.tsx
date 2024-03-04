@@ -39,16 +39,13 @@ interface Props {
 
 const PassengersList = (props: Props) => {
   const {passengers, Button, onClick, onPress, travel} = props;
-
   const theme = useTheme();
-
-  let list = passengers;
 
   return (
     <Root sx={{padding: theme.spacing(0, 0, 1, 0)}}>
       <List disablePadding>
-        {!!list &&
-          list.map((passenger, index) => (
+        {!!passengers &&
+          passengers.map((passenger, index) => (
             <ListItem
               sx={{paddingRight: theme.spacing(12)}}
               key={index}

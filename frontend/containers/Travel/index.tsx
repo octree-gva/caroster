@@ -50,7 +50,7 @@ const Travel = (props: Props) => {
       passenger => passenger.attributes.user?.data?.id === `${userId}`
     );
     return isInTravel;
-  }, [travel, userId]);
+  }, [travel, userId, connected]);
 
   if (!travel) return null;
 
@@ -93,7 +93,7 @@ const Travel = (props: Props) => {
           {travel.attributes.passengers.data.length > 0 && <Divider />}
           <PassengersList
             passengers={travel.attributes.passengers.data}
-            onClick={actions.sendPassengerToWaitingList}
+            onClick={actions.removePassengerFromTravel}
             travel={travel}
             Button={({onClick, passenger}) =>
               canDeletePassenger({

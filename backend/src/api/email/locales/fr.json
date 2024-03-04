@@ -16,6 +16,14 @@
       "title": "<%= event.name %> - Votre voiture a été supprimée",
       "content": "Votre trajet <%= travel.vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
     },
+    "DeletedFromTrip": {
+      "title": "<%= event.name %> - Vous avez été retiré(e) d'une voiture",
+      "content": "Vous avez été retiré(e) de la voiture <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "DeletedFromTrip": {
+      "title": "<%= event.name %> - Vous avez été retiré(e) d'une voiture",
+      "content": "Vous avez été retiré(e) de la voiture <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
       "content": "Un passager a été ajouté à votre trajet pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
@@ -38,7 +46,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contacter la conductrice ou le conducteur du trajet",
-      "content": "Afin d'organiser votre voyage pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Voiture: <%= travel.vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nContact: <%= travel.phone_mumber %>"
+      "content": "Afin d'organiser votre voyage pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Voiture: <%= travel.vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nTéléphone: <%= travel.phone_mumber || 'Non précisé' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster+ a été activé pour votre événement",

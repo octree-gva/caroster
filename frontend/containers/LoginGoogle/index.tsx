@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useTheme} from '@mui/material/styles';
+import {signIn} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
 
 const LoginGoogle = () => {
@@ -12,7 +13,7 @@ const LoginGoogle = () => {
       variant="outlined"
       color="primary"
       fullWidth
-      href="/api/connect/google"
+      onClick={() => signIn('google', {callbackUrl: '/dashboard'})}
     >
       <Box
         component="img"
