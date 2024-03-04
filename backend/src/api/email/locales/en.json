@@ -5,24 +5,24 @@
   },
   "notifications": {
     "NewTrip": {
-      "title": "<%= event.name %> - A new car is available",
-      "content": "## New car available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
+      "title": "<%= event.name %> - A new trip is available",
+      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
     },
     "DeletedTrip": {
-      "title": "<%= event.name %> - Car removed",
-      "content": "Car <%= travel.vehicleName %> in which you've subscribed to as been removed. Go to the [Caroster](<%= host %>/e/<%= event.uuid %>) page to find another car."
+      "title": "<%= event.name %> - Trip removed",
+      "content": "Trip <%= travel.vehicleName %> in which you've subscribed to as been removed. Go to the [Caroster](<%= host %>/e/<%= event.uuid %>) page to find another car."
     },
     "DeletedYourTrip": {
-      "title": "<%= event.name %> - Your car has been removed",
-      "content": "Your car <%= travel.vehicleName %> has been removed by an admin from [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Your trip has been removed",
+      "content": "Your trip <%= travel.vehicleName %> has been removed by an administrator from [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - A passenger has been added to your trip",
-      "content": "A passenger has been added to your trip. on Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"
+      "content": "A passenger has been added to your trip on [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)"
     },
     "AddedAsAdmin": {
-      "title": "You have been added as admin to an event",
-      "content": "You have been added as admin to Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "You have been promoted as administrator to an event",
+      "content": "You have been promoted as administrator to [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "EventCreated": {
       "title": "<%= event.name %> - Your Caroster is ready !",
@@ -41,8 +41,8 @@
       "content": "To organize your journey to <%= event.name %>, please contact the driver of the trip you've registered.\n\n**Car: <%= travel.vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nContact: <%= travel.phone_mumber %>"
     },
     "EnabledCarosterPlus": {
-      "title": "<%= event.name %> - Caroster Plus enabled for your event",
-      "content": "Module 'Caroster Plus' has been enabled for your event. New features are now available on [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Caroster+ is now active for your event",
+      "content": "Module 'Caroster+' has been enabled for your event [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     }
   }
 }
