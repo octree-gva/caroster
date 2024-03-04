@@ -19,7 +19,7 @@ export default {
         }
       );
       const { user, event, payload = {} } = notification;
-      if (user.notificationEnabled || user.notificationEnabled === null)
+      if (user.notificationEnabled)
         await strapi
           .service("api::email.email")
           .sendEmailNotif(user.email, notification.type, user.lang, {

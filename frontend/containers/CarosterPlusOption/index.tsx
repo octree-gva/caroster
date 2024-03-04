@@ -15,6 +15,7 @@ import Markdown from '../../components/Markdown';
 import useLocale from '../../hooks/useLocale';
 import usePermissions from '../../hooks/usePermissions';
 import {Event as EventType, Module} from '../../generated/graphql';
+import useProfile from '../../hooks/useProfile';
 
 interface Props {
   event: EventType;
@@ -23,6 +24,7 @@ interface Props {
 
 const CarosterPlusOption = ({event, modulesSettings}: Props) => {
   const {t} = useTranslation();
+  const {profile} = useProfile();
   const {
     userPermissions: {canEditEventOptions},
   } = usePermissions();
@@ -63,7 +65,7 @@ const CarosterPlusOption = ({event, modulesSettings}: Props) => {
           >
             <Box>
               <Button
-                href={`${caroster_plus_payment_link}?client_reference_id=${event.uuid}&locale=${locale}`}
+                href={`${caroster_plus_payment_link}?client_reference_id=${event.uuid}&locale=${locale}&prefilled_email=${profile?.email}`}
                 disabled={!canEditEventOptions()}
                 sx={{
                   backgroundColor: 'primary.light',

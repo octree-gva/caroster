@@ -13,6 +13,8 @@ import {
 } from '../../../generated/graphql';
 import CarosterPlusOption from '../../../containers/CarosterPlusOption';
 import CarosterPlusSettings from '../../../containers/CarosterPlusSettings';
+import {Card, Typography} from '@mui/material';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
   modulesSettings?: Module;
@@ -25,6 +27,7 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
+  const {t} = useTranslation();
   const theme = useTheme();
   const event = useEventStore(s => s.event);
 
@@ -47,8 +50,11 @@ const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
         }}
       >
         {carosterPlusActivated && <CarosterPlusSettings event={event} />}{' '}
-        {modulesSettings && !carosterPlusActivated && (
+        {modulesSettings?.caroster_plus_enabled && (
           <CarosterPlusOption event={event} modulesSettings={modulesSettings} />
+        )}
+        {!modulesSettings?.caroster_plus_enabled && (
+          <Typography variant="overline">{t`options.no_module`}</Typography>
         )}
       </Container>
     </Box>
