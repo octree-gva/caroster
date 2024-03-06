@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import dynamic from 'next/dynamic';
-import Container from '@mui/material/Container';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import {useTranslation} from 'react-i18next';
@@ -16,6 +15,9 @@ import Travel from '../Travel';
 import NoCar from './NoCar';
 import {TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
+import MasonryContainer from './MasonryContainer';
+import LoginToAttend from './LoginToAttend';
+import usePermissions from '../../hooks/usePermissions';
 
 const EventMarker = dynamic(() => import('../EventMarker'), {ssr: false});
 const TravelMarker = dynamic(() => import('../TravelMarker'), {ssr: false});
@@ -39,9 +41,40 @@ const TravelColumns = (props: Props) => {
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const {profile, userId} = useProfile();
+  const {
+    userPermissions: {canAddTravel},
+  } = usePermissions();
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
   const {addPassenger} = usePassengersActions();
+
+  const sortTravels = (
+    {attributes: a}: TravelEntity,
+    {attributes: b}: TravelEntity
+  ) => {
+    if (a?.user?.data?.id === userId && b?.user?.data?.id !== userId) return -1;
+    else if (a?.user?.data?.id !== userId && b?.user?.data?.id == userId)
+      return 1;
+
+    const passengerFirst =
+      Number(
+        b?.passengers?.data?.some(
+          passenger => passenger.attributes.user?.data?.id === userId
+        )
+      ) -
+      Number(
+        a?.passengers?.data?.some(
+          passenger => passenger.attributes.user?.data?.id === userId
+        )
+      );
+    if (passengerFirst !== 0) return passengerFirst;
+    const dateA = new Date(a.departure).getTime();
+    const dateB = new Date(b.departure).getTime();
+    if (dateA === dateB)
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    else return dateA - dateB;
+  };
+
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const addSelfToTravel = async (travel: TravelEntity) => {
@@ -136,53 +169,29 @@ const TravelColumns = (props: Props) => {
         }}
       >
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
+          {!canAddTravel() && (
+            <MasonryContainer key="no_other_travel">
+              <LoginToAttend />
+            </MasonryContainer>
+          )}
           {sortedTravels?.map(travel => {
             return (
-              <Container
-                key={travel.id}
-                maxWidth="sm"
-                sx={{
-                  p: 1,
-                  mb: 10,
-                  outline: 'none',
-                  '& > *': {
-                    cursor: 'default',
-                  },
-
-                  [theme.breakpoints.down('md')]: {
-                    marginBottom: `calc(${theme.spacing(10)} + 56px)`,
-                  },
-                }}
-              >
+              <MasonryContainer key={travel.id}>
                 <Travel
                   travel={travel}
                   onAddSelf={() => addSelfToTravel(travel)}
                   onAddOther={() => setSelectedTravel(travel)}
                   {...props}
                 />
-              </Container>
+              </MasonryContainer>
             );
           })}
-          <Container
-            maxWidth="sm"
-            sx={{
-              padding: theme.spacing(1),
-              marginBottom: theme.spacing(10),
-              outline: 'none',
-              '& > *': {
-                cursor: 'default',
-              },
-
-              [theme.breakpoints.down('md')]: {
-                marginBottom: `calc(${theme.spacing(10)} + 56px)`,
-              },
-            }}
-          >
+          <MasonryContainer key="no_other_travel">
             <NoCar
               eventName={event?.name}
               title={t('event.no_other_travel.title')}
             />
-          </Container>
+          </MasonryContainer>
         </Masonry>
       </Box>
       {!!selectedTravel && (
@@ -194,18 +203,6 @@ const TravelColumns = (props: Props) => {
       )}
     </>
   );
-};
-
-const sortTravels = (
-  {attributes: a}: TravelEntity,
-  {attributes: b}: TravelEntity
-) => {
-  if (!b) return 1;
-  const dateA = new Date(a.departure).getTime();
-  const dateB = new Date(b.departure).getTime();
-  if (dateA === dateB)
-    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-  else return dateA - dateB;
 };
 
 export default TravelColumns;

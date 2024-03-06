@@ -11,6 +11,8 @@ import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
 import {TravelEntity} from '../../generated/graphql';
 import usePermissions from '../../hooks/usePermissions';
+import Chip from '@mui/material/Chip';
+import useProfile from '../../hooks/useProfile';
 
 interface Props {
   travel: TravelEntity;
@@ -25,6 +27,8 @@ const Header = (props: Props) => {
     userPermissions: {canEditTravel},
   } = usePermissions();
   const {setFocusOnTravel, focusedTravel} = useMapStore();
+  const {userId} = useProfile();
+  const isUserTripCreator = userId && userId === travel.attributes.user?.data?.id;
 
   const passengersCount = travel?.attributes.passengers?.data.length || 0;
   const availableSeats = travel?.attributes.seats - passengersCount || 0;
@@ -44,7 +48,7 @@ const Header = (props: Props) => {
           color="primary"
           sx={{
             position: 'absolute',
-            top: 0,
+            top: theme.spacing(1),
             right: 0,
             margin: theme.spacing(1),
           }}
@@ -68,7 +72,11 @@ const Header = (props: Props) => {
       )}
       <Typography variant="subtitle1">
         {travel.attributes.vehicleName}
+        {isUserTripCreator && (
+          <Chip sx={{mx: 1}} label={t`generic.me`} variant="outlined" />
+        )}
       </Typography>
+
       {!!travel.attributes.phone_number && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>

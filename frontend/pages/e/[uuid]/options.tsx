@@ -34,6 +34,7 @@ const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
   if (!event) return null;
 
   const carosterPlusActivated =
+    modulesSettings?.caroster_plus_enabled &&
     event.enabled_modules?.includes('caroster-plus');
 
   return (
@@ -50,7 +51,7 @@ const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
         }}
       >
         {carosterPlusActivated && <CarosterPlusSettings event={event} />}{' '}
-        {modulesSettings?.caroster_plus_enabled && (
+        {modulesSettings?.caroster_plus_enabled && !carosterPlusActivated && (
           <CarosterPlusOption event={event} modulesSettings={modulesSettings} />
         )}
         {!modulesSettings?.caroster_plus_enabled && (
