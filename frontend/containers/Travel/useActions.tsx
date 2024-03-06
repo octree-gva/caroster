@@ -29,7 +29,7 @@ const useActions = (props: Props) => {
   const [deletePassenger] = useDeletePassengerMutation();
 
   const removePassengerFromTravel = async (passengerId: string) => {
-    const isCarosterPlus = event.enabled_modules.includes('caroster-plus');
+    const isCarosterPlus = event.enabled_modules?.includes('caroster-plus');
     if (isCarosterPlus) {
       try {
         await deletePassenger({

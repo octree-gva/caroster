@@ -19,7 +19,7 @@ import usePassengersActions from '../../hooks/usePassengersActions';
 import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import AssignButton from './AssignButton';
-import PassengersList, { PassengerButton } from '../PassengersList';
+import PassengersList from '../PassengersList';
 
 interface Props {
   canAddSelf: boolean;
@@ -37,10 +37,13 @@ const WaitingList = (props: Props) => {
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [removingPassenger, setRemovingPassenger] = useState(null);
-  const travels =
-    event?.travels?.data?.length > 0
-      ? event?.travels?.data.slice().sort(sortTravels)
-      : [];
+  const travels = useMemo(
+    () =>
+      event?.travels?.data?.length > 0
+        ? event?.travels?.data.slice().sort(sortTravels)
+        : [],
+    [event?.travels?.data]
+  );
   const {removePassenger} = usePassengersActions();
 
   const availability = useMemo(() => {
@@ -52,9 +55,12 @@ const WaitingList = (props: Props) => {
     }, 0);
   }, [travels]);
 
-  const removePassengerCallback = useCallback(removePassenger, [event]);
+  const removePassengerCallback = useCallback(removePassenger, [
+    event,
+    removePassenger,
+  ]);
 
-  const onPress = useCallback(
+  const onClickPassenger = useCallback(
     (passengerId: string) => {
       const selectedPassenger = event?.waitingPassengers?.data.find(
         item => item.id === passengerId
@@ -74,18 +80,6 @@ const WaitingList = (props: Props) => {
       addToast(t('passenger.errors.cant_remove_passenger'));
     }
   };
-
-  const ListButton: PassengerButton = isEditing
-    ? ({onClick}) => (
-        <ListItemSecondaryAction>
-          <IconButton size="small" color="primary" onClick={onClick}>
-            <CancelOutlinedIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
-      )
-    : ({onClick, disabled}) => (
-        <AssignButton onClick={onClick} tabIndex={-1} disabled={disabled} />
-      );
 
   return (
     <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: mobile ? 2 : 4}}>
@@ -122,8 +116,21 @@ const WaitingList = (props: Props) => {
         {event?.waitingPassengers?.data?.length > 0 && (
           <PassengersList
             passengers={event.waitingPassengers.data}
-            onPress={onPress}
-            Button={ListButton}
+            onClickPassenger={onClickPassenger}
+            Actions={({passenger}) =>
+              isEditing ? (
+                <ListItemSecondaryAction>
+                  <IconButton size="small" color="primary">
+                    <CancelOutlinedIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              ) : (
+                <AssignButton
+                  tabIndex={-1}
+                  onClick={() => onClickPassenger(passenger.id)}
+                />
+              )
+            }
           />
         )}
       </Paper>

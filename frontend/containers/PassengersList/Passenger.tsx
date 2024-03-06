@@ -1,4 +1,4 @@
-import {ReactNode, useReducer} from 'react';
+import {ReactNode} from 'react';
 import {
   ListItemAvatar,
   ListItemIcon,
@@ -12,57 +12,40 @@ import {
 import {useTranslation} from 'react-i18next';
 import useProfile from '../../hooks/useProfile';
 import {PassengerEntity} from '../../generated/graphql';
-import DrawerPassenger from '../DrawerPassenger';
-import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   passenger?: PassengerEntity;
-  button?: ReactNode;
   isTravel?: boolean;
+  Actions?: (props: {passenger: PassengerEntity}) => ReactNode;
 }
 
 const Passenger = (props: Props) => {
-  const {passenger, button, isTravel} = props;
+  const {passenger, isTravel, Actions} = props;
   const theme = useTheme();
   const {t} = useTranslation();
 
-  const [openDrawerPassenger, toggleDrawerPassenger] = useReducer(
-    i => !i,
-    false
-  );
-
-  const {
-    userPermissions: {canSeePassengerDetails},
-  } = usePermissions();
-
   const {userId} = useProfile();
   const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
-  const showLocation = isTravel ? null : (
-    <Typography
-      sx={{pl: 1, color: 'GrayText'}}
-      component="span"
-      variant="caption"
-    >
-      {passenger.attributes.location}
-    </Typography>
-  );
 
   if (passenger) {
     return (
-      <Box sx={{width: 1}} aria-label="user informations">
+      <Box
+        aria-label="user informations"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          padding: 0,
+        }}
+      >
         <ListItemText
           primary={
             <Box
-              onClick={toggleDrawerPassenger}
               sx={{
-                width: 1,
-                maxWidth: 1,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                cursor: canSeePassengerDetails(passenger)
-                  ? 'pointer'
-                  : 'inherit',
               }}
             >
               <Icon fontSize="inherit" sx={{verticalAlign: 'middle', mr: 0.5}}>
@@ -73,7 +56,6 @@ const Passenger = (props: Props) => {
                 variant="body1"
                 sx={{
                   overflow: 'hidden',
-                  maxWidth: 'calc(100% - 88px)',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                 }}
@@ -87,21 +69,19 @@ const Passenger = (props: Props) => {
                   variant="outlined"
                 />
               )}
-              {showLocation}
+              {!isTravel && (
+                <Typography
+                  sx={{pl: 1, color: 'GrayText'}}
+                  component="span"
+                  variant="caption"
+                >
+                  {passenger.attributes.location}
+                </Typography>
+              )}
             </Box>
           }
         />
-        {button}
-        {canSeePassengerDetails(passenger) && (
-          <DrawerPassenger
-            isOpen={openDrawerPassenger}
-            onClose={() => toggleDrawerPassenger()}
-            firstName={passenger?.attributes.user?.data?.attributes.firstName}
-            lastName={passenger?.attributes.user?.data?.attributes.lastName}
-            email={passenger?.attributes.email}
-            phone={passenger?.attributes.phone}
-          />
-        )}
+        <Actions passenger={passenger} />
       </Box>
     );
   } else {

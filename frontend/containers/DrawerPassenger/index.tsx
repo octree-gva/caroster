@@ -1,11 +1,4 @@
-import {
-  Drawer,
-  Icon,
-  Typography,
-  useMediaQuery,
-  Link,
-  Box,
-} from '@mui/material';
+import {Drawer, Typography, useMediaQuery, Link, Box} from '@mui/material';
 import {useTranslation} from 'react-i18next';
 import DrawerPassengerHeader from './DrawerPassengerHeader';
 
@@ -67,32 +60,35 @@ const DrawerPassenger = ({
               {lastName}
             </Typography>
           </Box>
-          {phone && (
-            <Box display="flex" flexDirection="column">
-              <Typography variant="h6">
-                {t('passenger.informations.phone.label')}
-              </Typography>
-              <Link href={`tel:${phone}`}>
-                <Typography variant="body1" gutterBottom>
-                  {phone}
-                </Typography>
-              </Link>
-            </Box>
-          )}
+
           <Box display="flex" flexDirection="column">
             <Typography variant="h6">
               {t('passenger.informations.email.label')}
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Link
+              sx={{display: 'flex', flexDirection: 'row', gap: 1}}
+              href={`mailto:${email}`}
+            >
               {email}
-            </Typography>
+            </Link>
           </Box>
-          <Link
-            sx={{display: 'flex', flexDirection: 'row', gap: 1}}
-            href={`mailto:${email}`}
-          >
-            <Icon>email</Icon> {t('passenger.informations.email.label')}
-          </Link>
+          <Box display="flex" flexDirection="column">
+            <Typography variant="h6">
+              {t('passenger.informations.phone.label')}
+            </Typography>
+            {phone ? (
+              <Link
+                sx={{display: 'flex', flexDirection: 'row', gap: 1}}
+                href={`tel:${phone}`}
+              >
+                {phone}
+              </Link>
+            ) : (
+              <Typography variant="body1">
+                {t('passenger.informations.notSpecify')}
+              </Typography>
+            )}
+          </Box>
         </Box>
       </Box>
     </Drawer>

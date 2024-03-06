@@ -44,9 +44,8 @@ const CardNotification = ({notification, onClose}: NotificationProps) => {
           direction="row"
           display="flex"
           justifyContent="space-between"
-          spacing={2}
         >
-          <Box display="flex" alignItems="center" sx={{width: '168px'}}>
+          <Box display="flex" alignItems="center" sx={{width: '192px'}}>
             {!notification.attributes.read && (
               <Badge
                 sx={{pr: 2}}
@@ -58,12 +57,12 @@ const CardNotification = ({notification, onClose}: NotificationProps) => {
                 }}
               />
             )}
-            <Typography variant="subtitle1" noWrap>
+            <Typography variant="body2" color="text.secondary" noWrap>
               {eventName}
             </Typography>
           </Box>
 
-          <Typography variant="overline" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
             {formatDate(notification.attributes.createdAt)}
           </Typography>
         </Stack>

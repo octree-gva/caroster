@@ -58,7 +58,6 @@ const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
       <FormControl>
         <PlaceInput
           label={t('alert.location.label')}
-          textFieldProps={{sx: {mt: 2}}}
           place={address}
           latitude={latitude}
           longitude={longitude}

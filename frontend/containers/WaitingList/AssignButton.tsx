@@ -7,20 +7,16 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 interface Props {
   onClick: () => void;
   tabIndex?: number;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const AssignButton = (props: Props) => {
   const {onClick, tabIndex} = props;
   const theme = useTheme();
-
   const {t} = useTranslation();
 
   return (
-    <ListItemSecondaryAction
-      onClick={onClick}
-      tabIndex={tabIndex}
-    >
+    <ListItemSecondaryAction onClick={onClick} tabIndex={tabIndex}>
       <IconButton
         sx={{
           borderRadius: 1,

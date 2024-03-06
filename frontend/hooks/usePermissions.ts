@@ -64,8 +64,10 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
         canJoinTravels: () => true,
         canAddTravel: () => true,
         canDeletePassenger: passenger => {
-          const travel = event?.travels?.data?.find(
-            travel => travel?.id === passenger.attributes.travel.data?.id
+          const travel = event?.travels?.data?.find(travel =>
+            travel.attributes.passengers.data.some(
+              travelPassenger => travelPassenger.id === passenger.id
+            )
           );
           const isTravelCreator = travel?.attributes.user?.data?.id === userId;
           const isCurrentPassenger =
@@ -73,11 +75,15 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
           return isTravelCreator || isCurrentPassenger;
         },
         canSeePassengerDetails: passenger => {
-          const travel = event?.travels?.data?.find(
-            travel => travel?.id === passenger.attributes.travel.data?.id
+          const travel = event?.travels?.data?.find(travel =>
+            travel.attributes.passengers.data.some(
+              travelPassenger => travelPassenger.id === passenger.id
+            )
           );
           const isTravelCreator = travel?.attributes.user?.data?.id === userId;
-          return isTravelCreator;
+          const isCurrentPassenger =
+            passenger?.attributes.user?.data?.id === userId;
+          return isTravelCreator || isCurrentPassenger;
         },
       };
       return {userPermissions: carosterPlusPermissions};
@@ -88,6 +94,8 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     return {
       userPermissions: {
         ...allPermissions,
+        canSeePassengerDetails: () => false,
+        canDeletePassenger: () => true,
         canEditEventOptions: () => userIsEventCreator,
         canJoinTravels: () => connected,
       },

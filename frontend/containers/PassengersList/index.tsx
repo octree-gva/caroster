@@ -1,7 +1,7 @@
-import {useState} from 'react';
 import {ListItem, List, styled, useTheme} from '@mui/material';
 import Passenger from './Passenger';
 import {PassengerEntity, TravelEntity} from '../../generated/graphql';
+import {ReactNode} from 'react';
 
 const PREFIX = 'PassengersList';
 
@@ -20,25 +20,15 @@ const Root = styled('div')(({theme}) => ({
   },
 }));
 
-export type PassengerButton = ({
-  onClick,
-  disabled,
-}: {
-  onClick: () => void;
-  passenger?: PassengerEntity;
-  disabled?: boolean;
-}) => JSX.Element;
-
 interface Props {
   passengers: PassengerEntity[];
-  Button: PassengerButton;
   travel?: TravelEntity;
-  onPress?: (passengerId: string) => void;
-  onClick?: (passengerId: string) => void;
+  onClickPassenger?: (passengerId: string) => void;
+  Actions?: (props: {passenger: PassengerEntity}) => ReactNode;
 }
 
 const PassengersList = (props: Props) => {
-  const {passengers, Button, onClick, onPress, travel} = props;
+  const {passengers, onClickPassenger, travel, Actions} = props;
   const theme = useTheme();
 
   return (
@@ -47,10 +37,9 @@ const PassengersList = (props: Props) => {
         {!!passengers &&
           passengers.map((passenger, index) => (
             <ListItem
-              sx={{paddingRight: theme.spacing(12)}}
               key={index}
-              button={!!onPress}
-              onClick={() => !!onPress && onPress(passenger.id)}
+              button={!!onClickPassenger}
+              onClick={() => onClickPassenger?.(passenger.id)}
             >
               <Passenger
                 key={index}
@@ -59,12 +48,7 @@ const PassengersList = (props: Props) => {
                   attributes: {...passenger.attributes, travel: {data: travel}},
                 }}
                 isTravel={!!travel}
-                button={
-                  <Button
-                    passenger={passenger}
-                    onClick={() => onClick && onClick(passenger.id)}
-                  />
-                }
+                Actions={Actions}
               />
             </ListItem>
           ))}
