@@ -56,7 +56,7 @@ const EventCard = ({event}: Props) => {
           {t('event.fields.date')}
         </Typography>
         <Typography variant="body1" sx={{mb: 1}}>
-          {moment(event.attributes.date).format('DD/MM/YYYY') ||
+          {event.attributes.date && moment(event.attributes.date).format('DD/MM/YYYY') ||
             t('event.fields.empty')}
         </Typography>
         <Typography

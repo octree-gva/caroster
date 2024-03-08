@@ -28,7 +28,8 @@ const Header = (props: Props) => {
   } = usePermissions();
   const {setFocusOnTravel, focusedTravel} = useMapStore();
   const {userId} = useProfile();
-  const isUserTripCreator = userId && userId === travel.attributes.user?.data?.id;
+  const isUserTripCreator =
+    userId && userId === travel.attributes.user?.data?.id;
 
   const passengersCount = travel?.attributes.passengers?.data.length || 0;
   const availableSeats = travel?.attributes.seats - passengersCount || 0;
@@ -73,7 +74,9 @@ const Header = (props: Props) => {
       <Typography variant="subtitle1">
         {travel.attributes.vehicleName}
         {isUserTripCreator && (
-          <Chip sx={{mx: 1}} label={t`generic.me`} variant="outlined" />
+          <Typography component="span">
+            <Chip sx={{mx: 1}} label={t`generic.me`} variant="outlined" />
+          </Typography>
         )}
       </Typography>
 
