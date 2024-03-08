@@ -1,7 +1,6 @@
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import {useTheme} from '@mui/material/styles';
 import {getSession} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
@@ -18,7 +17,6 @@ interface PageProps {
 
 const Login = (props: PageProps) => {
   const {emailConfirmation} = props;
-  const theme = useTheme();
   const {t} = useTranslation();
 
   return (
@@ -28,7 +26,7 @@ const Login = (props: PageProps) => {
           <CardMedia component={Logo} />
           {emailConfirmation && (
             <Typography
-              sx={{marginBottom: theme.spacing(2)}}
+              sx={{p: 2}}
               variant="body2"
               align="center"
             >{t`signin.emailConfirmation`}</Typography>

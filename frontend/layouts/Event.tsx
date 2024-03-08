@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useState} from 'react';
+import {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
@@ -54,11 +54,11 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
       pollInterval: POLL_INTERVAL,
       variables: {uuid: eventUUID},
     });
-  const event = {id, ...attributes};
+  const event = useMemo(() => ({id, ...attributes}), [id, attributes]);
 
   useEffect(() => {
     if (event) setEvent(event);
-  }, [event]);
+  }, [event, setEvent]);
 
   if (!event) return <ErrorPage statusCode={404} title={t`event.not_found`} />;
 

@@ -58,7 +58,7 @@ const Dashboard = (props: PageProps) => {
     {divider: true},
     {
       label: t('menu.new_event'),
-      onClick: () => router.push('/'),
+      onClick: () => router.push('/new'),
       id: 'AddEventTabs',
     },
   ];
@@ -86,7 +86,7 @@ const Dashboard = (props: PageProps) => {
         />
       )}
       <Fab
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/new')}
         aria-label={t('dashboard.actions.add_event')}
         noDrawer
       >
