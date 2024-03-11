@@ -10,19 +10,15 @@
     },
     "DeletedTrip": {
       "title": "<%= event.name %> - Trip removed",
-      "content": "Trip <%= travel.vehicleName %> in which you've subscribed to as been removed. Go to the [Caroster](<%= host %>/e/<%= event.uuid %>) page to find another car."
+      "content": "The trip '<%= travel.vehicleName %>' in which you've subscribed to as been removed. You can try to find another available trip for you [here](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedYourTrip": {
       "title": "<%= event.name %> - Your trip has been removed",
       "content": "Your trip <%= travel.vehicleName %> has been removed by an administrator from [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedFromTrip": {
-      "title": "<%= event.name %> - You have been removed from car",
-      "content": "You have been removed from car <%= travel.vehicleName %> for [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
-    },
-    "DeletedFromTrip": {
-      "title": "<%= event.name %> - You have been removed from car",
-      "content": "You have been removed from car <%= travel.vehicleName %> for [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - You have been removed from a trip",
+      "content": "You have been removed from the trip '<%= travel.vehicleName %>' for [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - A passenger has been added to your trip",
@@ -49,8 +45,8 @@
       "content": "To organize your journey to <%= event.name %>, please contact the driver of the trip you've registered.\n\n**Car: <%= travel.vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nPhone: <%= travel.phone_mumber | 'Not provided' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
-      "title": "<%= event.name %> - Caroster+ is now active for your event",
-      "content": "Module 'Caroster+' has been enabled for your event [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Caroster Plus is now active for your event",
+      "content": "Module 'Caroster Plus' has been enabled for your event [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     }
   }
 }

@@ -5,20 +5,16 @@
   },
   "notifications": {
     "NewTrip": {
-      "title": "<%= event.name %> - Une nouvelle voiture est disponible",
+      "title": "<%= event.name %> - Nouveau trajet disponible",
       "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Voiture: <%= travel.vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail, car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."
     },
     "DeletedTrip": {
       "title": "<%= event.name %> - Trajet supprimé",
-      "content": "Le trajet <%= travel.vehicleName %> pour lequelle vous vous êtes inscrit.e.s a été supprimé. Rendez-vous sur la page du [Caroster](<%= host %>/e/<%= event.uuid %>) pour trouver un autre trajet."
+      "content": "Le trajet '<%= travel.vehicleName %>' pour lequel vous vous êtes inscrit.e.s a été supprimé. Vous pouvez chercher un autre trajet vous correspondant [ici](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedYourTrip": {
       "title": "<%= event.name %> - Votre voiture a été supprimée",
       "content": "Votre trajet <%= travel.vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
-    },
-    "DeletedFromTrip": {
-      "title": "<%= event.name %> - Vous avez été retiré(e) d'une voiture",
-      "content": "Vous avez été retiré(e) de la voiture <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedFromTrip": {
       "title": "<%= event.name %> - Vous avez été retiré(e) d'une voiture",
@@ -49,8 +45,8 @@
       "content": "Afin d'organiser votre voyage pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Voiture: <%= travel.vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nTéléphone: <%= travel.phone_mumber || 'Non précisé' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
-      "title": "<%= event.name %> - Caroster+ a été activé pour votre événement",
-      "content": "Le module 'Caroster+' a été activé pour votre événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Caroster Plus a été activé pour votre événement",
+      "content": "Le module 'Caroster Plus' a été activé pour votre événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     }
   }
 }
