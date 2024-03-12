@@ -1,5 +1,4 @@
 import {useRouter} from 'next/router';
-import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,29 +7,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 
-const PREFIX = 'DashboardEmpty';
-
-const classes = {
-  container: `${PREFIX}-container`
-};
-
-const StyledContainer = styled(Container)((
-  {
-    theme
-  }
-) => ({
-  [`&.${classes.container}`]: {
-    paddingTop: theme.spacing(8),
-  }
-}));
-
 const DashboardEmpty = () => {
   const {t} = useTranslation();
   const router = useRouter();
 
-
   return (
-    <StyledContainer maxWidth="sm" className={classes.container}>
+    <Container maxWidth="sm" sx={{pt: 8}}>
       <Card>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h1">
@@ -46,7 +28,7 @@ const DashboardEmpty = () => {
         </CardContent>
         <CardActions>
           <Button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/new')}
             variant="contained"
             color="primary"
           >
@@ -54,7 +36,7 @@ const DashboardEmpty = () => {
           </Button>
         </CardActions>
       </Card>
-    </StyledContainer>
+    </Container>
   );
 };
 

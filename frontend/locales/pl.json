@@ -122,6 +122,7 @@
   "notifications.content": "",
   "notification.type.NewPassengerInYourTrip.content": "",
   "notification.type.NewTrip.content": "",
+  "notification.type.NewTripAlert.content": "",
   "notification.type.DeletedTrip.content": "",
   "notification.type.DeletedYourTrip.content": "",
   "notification.type.DeletedFromTrip.content": "",

@@ -49,7 +49,7 @@ export default factories.createCoreService(
         );
         strapi.entityService.create("api::notification.notification", {
           data: {
-            type: "NewTrip",
+            type: "NewTripAlert",
             event: eventId,
             user: tripAlert.user.id,
             payload: { travel },

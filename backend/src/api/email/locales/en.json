@@ -4,9 +4,17 @@
     "footer": "---\n💝 You also think Caroster is awesome? Keep it free and support us with a donation!\n\n👉 [Open collective](https://opencollective.com/caroster)\n\n<center><a href='https://caroster.io'>https://caroster.io</a></center>"
   },
   "notifications": {
+    "ConfirmEmail": {
+      "title": "Please confirm your email address",
+      "content": "## Welcome on Caroster !\nPlease confirm your account by clicking on this link:\n\n[<%= confirmationLink %>](<%= confirmationLink %>)"
+    },
     "NewTrip": {
       "title": "<%= event.name %> - A new trip is available",
       "content": "## New trip is available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
+    },
+    "NewTripAlert": {
+      "title": "<%= event.name %> - A new trip is available",
+      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you've enabled alerts in this event."
     },
     "DeletedTrip": {
       "title": "<%= event.name %> - Trip removed",

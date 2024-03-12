@@ -131,6 +131,7 @@
   "notifications.content": "Aucune notification",
   "notification.type.NewPassengerInYourTrip.content": "Un passager a été ajouté à votre trajet.",
   "notification.type.NewTrip.content": "Un nouveau trajet proche de chez vous est disponible.",
+  "notification.type.NewTripAlert.content": "Un nouveau trajet proche de chez vous est disponible.",
   "notification.type.DeletedTrip.content": "Un trajet a été supprimée.",
   "notification.type.DeletedYourTrip.content": "Votre trajet a été supprimé par un administrateur de l'événement.",
   "notification.type.AddedAsAdmin.content": "Vous avez été promu administrateur.",
