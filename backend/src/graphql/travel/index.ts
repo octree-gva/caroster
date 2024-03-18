@@ -69,6 +69,9 @@ export default [
       "Travel.passengers": {
         auth: false,
       },
+      "Travel.user": {
+        auth: false,
+      },
     },
   }),
 ];
