@@ -211,13 +211,16 @@ export enum Enum_Event_Lang {
 export enum Enum_Notification_Type {
   AddedAsAdmin = 'AddedAsAdmin',
   ContactTripCreator = 'ContactTripCreator',
+  DeletedFromTrip = 'DeletedFromTrip',
   DeletedTrip = 'DeletedTrip',
+  DeletedYourTrip = 'DeletedYourTrip',
   EnabledCarosterPlus = 'EnabledCarosterPlus',
   EventCreated = 'EventCreated',
   EventEnded = 'EventEnded',
   EventRecap = 'EventRecap',
   NewPassengerInYourTrip = 'NewPassengerInYourTrip',
   NewTrip = 'NewTrip',
+  NewTripAlert = 'NewTripAlert',
   PassengerJoinTrip = 'PassengerJoinTrip'
 }
 
@@ -2137,7 +2140,7 @@ export type UserNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type UserNotificationsQuery = { __typename?: 'Query', notifications?: { __typename?: 'NotificationEntityResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null, createdAt?: any | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', email: string } | null } | null } | null, event?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', name: string, uuid?: string | null } | null } | null } | null } | null }> } | null };
+export type UserNotificationsQuery = { __typename?: 'Query', notifications?: { __typename?: 'NotificationEntityResponseCollection', data: Array<{ __typename?: 'NotificationEntity', id?: string | null, attributes?: { __typename?: 'Notification', type: Enum_Notification_Type, read?: boolean | null, createdAt?: any | null, event?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', name: string, uuid?: string | null } | null } | null } | null } | null }> } | null };
 
 export type ReadNotificationsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -2855,14 +2858,6 @@ export const UserNotificationsDocument = gql`
         type
         read
         createdAt
-        user {
-          data {
-            id
-            attributes {
-              email
-            }
-          }
-        }
         event {
           data {
             id

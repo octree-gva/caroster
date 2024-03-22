@@ -10,6 +10,11 @@ export default {
    */
   register(context) {
     graphqlExtends(context);
+
+    // Because of bug https://github.com/strapi/strapi/issues/17995, we're forced
+    // to enable "plugin::users-permissions.user" permission for Authenticated role.
+    context.strapi.controller("plugin::users-permissions.user").find = (ctx) =>
+      ctx.unauthorized();
   },
 
   /**

@@ -5,7 +5,8 @@ export default async (policyContext) => {
   if (!user) throw new errors.ForbiddenError();
 
   policyContext.args.filters = {
-    ...(policyContext.args || {}),
+    ...(policyContext.args.filters || {}),
     user: { id: { eq: user.id } },
+    event: { id: { notNull: true } },
   };
 };
