@@ -29,6 +29,7 @@ const Meta = (props: Props) => {
         content="minimum-scale=1, initial-scale=1, width=device-width"
       />
 
+      <meta name="robots" content="noindex" />
       <meta itemProp="name" content={siteName} />
       {metas?.url && <meta itemProp="url" content={metas.url} />}
       <meta itemProp="thumbnailUrl" content={socialImage} />
