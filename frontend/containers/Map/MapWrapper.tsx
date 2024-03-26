@@ -8,7 +8,12 @@ const MapWrapper = ({children}: PropsWithChildren) => {
   const mobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <ThemeProvider theme={theme}>
-      <Box id="map" width='100%' height={mobile ? '40vh' : '50vh'}>
+      <Box
+        id="map"
+        width="100%"
+        height={mobile ? '40vh' : '50vh'}
+        sx={{position: 'relative'}}
+      >
         {children}
       </Box>
     </ThemeProvider>

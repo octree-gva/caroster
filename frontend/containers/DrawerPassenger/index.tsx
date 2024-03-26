@@ -60,7 +60,6 @@ const DrawerPassenger = ({
               {lastName}
             </Typography>
           </Box>
-
           <Box display="flex" flexDirection="column">
             <Typography variant="h6">
               {t('passenger.informations.email.label')}

@@ -1,4 +1,4 @@
-import {PassengerEntity, TravelEntity} from '../generated/graphql';
+import { PassengerEntity, TravelEntity } from '../generated/graphql';
 import useEventStore from '../stores/useEventStore';
 import useProfile from './useProfile';
 
@@ -26,9 +26,9 @@ const noPermissions = {
   canSeePassengerDetails: () => false,
 };
 
-const usePermissions = (): {userPermissions: UserPermissions} => {
-  const {event} = useEventStore();
-  const {profile, connected, userId} = useProfile();
+const usePermissions = (): { userPermissions: UserPermissions } => {
+  const { event } = useEventStore();
+  const { profile, connected, userId } = useProfile();
 
   const carosterPlus = event?.enabled_modules?.includes('caroster-plus');
   const userIsAnonymous = !connected;
@@ -48,10 +48,10 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
   };
 
   if (carosterPlus) {
-    if (userIsAnonymous) return {userPermissions: noPermissions};
+    if (userIsAnonymous) return { userPermissions: noPermissions };
     else if (userIsEventCreator || userIsEventAdmin)
       return {
-        userPermissions: {...allPermissions, canAddToTravel: () => false},
+        userPermissions: { ...allPermissions, canAddToTravel: () => false },
       };
     else {
       const carosterPlusPermissions: UserPermissions = {
@@ -74,19 +74,13 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
             passenger.attributes.user?.data?.id === userId;
           return isTravelCreator || isCurrentPassenger;
         },
-        canSeePassengerDetails: passenger => {
-          const travel = event?.travels?.data?.find(travel =>
-            travel.attributes.passengers.data.some(
-              travelPassenger => travelPassenger.id === passenger.id
-            )
-          );
-          const isTravelCreator = travel?.attributes.user?.data?.id === userId;
-          const isCurrentPassenger =
-            passenger?.attributes.user?.data?.id === userId;
-          return isTravelCreator || isCurrentPassenger;
-        },
+        canSeePassengerDetails: (passenger) => {
+          const travel = event?.travels?.data?.find(travel => travel?.id === passenger.attributes.travel.data?.id)
+          const userIsDriver = travel?.attributes.user?.data?.id === userId;
+          return userIsDriver || passenger.attributes.user?.data?.id === userId;
+        }
       };
-      return {userPermissions: carosterPlusPermissions};
+      return { userPermissions: carosterPlusPermissions };
     }
   }
   // Caroster Vanilla permissions

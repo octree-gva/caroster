@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import dynamic from 'next/dynamic';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
@@ -18,6 +18,9 @@ import {AddPassengerToTravel} from '../NewPassengerDialog';
 import MasonryContainer from './MasonryContainer';
 import LoginToAttend from './LoginToAttend';
 import usePermissions from '../../hooks/usePermissions';
+import useDisplayTravels from './useDisplayTravels';
+import FilterByDate from '../../components/FilterByDate';
+import moment from 'moment';
 
 const EventMarker = dynamic(() => import('../EventMarker'), {ssr: false});
 const TravelMarker = dynamic(() => import('../TravelMarker'), {ssr: false});
@@ -47,35 +50,15 @@ const TravelColumns = (props: Props) => {
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
   const {addPassenger} = usePassengersActions();
+  const {selectedDates, setSelectedDates, displayedTravels} =
+    useDisplayTravels();
 
-  const sortTravels = (
-    {attributes: a}: TravelEntity,
-    {attributes: b}: TravelEntity
-  ) => {
-    if (a?.user?.data?.id === userId && b?.user?.data?.id !== userId) return -1;
-    else if (a?.user?.data?.id !== userId && b?.user?.data?.id == userId)
-      return 1;
-
-    const passengerFirst =
-      Number(
-        b?.passengers?.data?.some(
-          passenger => passenger.attributes.user?.data?.id === userId
-        )
-      ) -
-      Number(
-        a?.passengers?.data?.some(
-          passenger => passenger.attributes.user?.data?.id === userId
-        )
-      );
-    if (passengerFirst !== 0) return passengerFirst;
-    const dateA = new Date(a.departure).getTime();
-    const dateB = new Date(b.departure).getTime();
-    if (dateA === dateB)
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    else return dateA - dateB;
-  };
-
-  const sortedTravels = travels?.slice().sort(sortTravels);
+  const buttonFilterContent = useMemo(() => {
+    if (selectedDates.length > 1) return t('event.filter.dates');
+    else if (selectedDates.length === 1)
+      return selectedDates.map(date => date.format('dddd Do MMMM'));
+    else return t('event.filter.allDates');
+  }, [selectedDates, t]);
 
   const addSelfToTravel = async (travel: TravelEntity) => {
     const hasName = profile.firstName && profile.lastName;
@@ -126,6 +109,7 @@ const TravelColumns = (props: Props) => {
           markers: [
             ...markers,
             <TravelMarker
+              key={travel.id}
               travel={travelObject}
               focused={focusedTravel === travel.id}
             />,
@@ -143,7 +127,7 @@ const TravelColumns = (props: Props) => {
     setPreventUpdateKey(mapUpdateKey);
     if (latitude && longitude) {
       bounds.push([latitude, longitude]);
-      markers.push(<EventMarker event={event} />);
+      markers.push(<EventMarker key="event" event={event} />);
     }
     if (!focusedTravel) {
       setBounds(bounds);
@@ -151,12 +135,24 @@ const TravelColumns = (props: Props) => {
     setMarkers(markers);
   }
 
+  const dates = Array.from(
+    new Set(travels.map(travel => travel?.attributes?.departure))
+  )
+    .map(date => moment(date))
+    .filter(date => date.isValid())
+    .sort((a, b) => (a.isAfter(b) ? 1 : -1));
+
   return (
     <>
       {showMap && <Map />}
+      <FilterByDate
+        dates={dates}
+        setSelectedDates={setSelectedDates}
+        buttonFilterContent={buttonFilterContent}
+      />
       <Box
         p={0}
-        pt={showMap ? 4 : 9}
+        pt={showMap ? 4 : 13}
         pb={11}
         sx={{
           overflowX: 'hidden',
@@ -174,7 +170,7 @@ const TravelColumns = (props: Props) => {
               <LoginToAttend />
             </MasonryContainer>
           )}
-          {sortedTravels?.map(travel => {
+          {displayedTravels?.map(travel => {
             return (
               <MasonryContainer key={travel.id}>
                 <Travel
