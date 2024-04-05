@@ -38,7 +38,7 @@ const Header = (props: Props) => {
     <Box
       p={2}
       onClick={() => {
-        setFocusOnTravel(focusedTravel === travel.id ? undefined : travel);
+        setFocusOnTravel(travel);
         const mapElement = document?.getElementById('map');
         mapElement?.scrollIntoView({behavior: 'smooth'});
       }}

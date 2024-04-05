@@ -9,7 +9,7 @@ const DEV_TILES_URL =
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 const Map = () => {
-  const {markers} = useMapStore();
+  const markers = useMapStore(s => s.markers);
 
   return (
     <MapWrapper>

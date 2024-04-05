@@ -6,7 +6,6 @@ import {useTranslation} from 'react-i18next';
 import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
-import useMapStore from '../../stores/useMapStore';
 import useProfile from '../../hooks/useProfile';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import usePassengersActions from '../../hooks/usePassengersActions';
@@ -19,11 +18,9 @@ import MasonryContainer from './MasonryContainer';
 import LoginToAttend from './LoginToAttend';
 import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
+import useDisplayMarkers from './useDisplayMarkers';
 import FilterByDate from '../../components/FilterByDate';
 import moment from 'moment';
-
-const EventMarker = dynamic(() => import('../EventMarker'), {ssr: false});
-const TravelMarker = dynamic(() => import('../TravelMarker'), {ssr: false});
 
 interface Props {
   toggle: () => void;
@@ -31,13 +28,6 @@ interface Props {
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
-  const {
-    focusedTravel,
-    preventUpdateKey,
-    setPreventUpdateKey,
-    setMarkers,
-    setBounds,
-  } = useMapStore();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();
@@ -52,6 +42,7 @@ const TravelColumns = (props: Props) => {
   const {addPassenger} = usePassengersActions();
   const {selectedDates, setSelectedDates, displayedTravels} =
     useDisplayTravels();
+  useDisplayMarkers({event, selectedDates});
 
   const buttonFilterContent = useMemo(() => {
     if (selectedDates.length > 1) return t('event.filter.dates');
@@ -87,53 +78,12 @@ const TravelColumns = (props: Props) => {
       />
     );
 
-  const {latitude, longitude} = event;
   const showMap =
-    (latitude && longitude) ||
+    (event.latitude && event.longitude) ||
     travels.some(
       ({attributes: {meeting_latitude, meeting_longitude}}) =>
         meeting_latitude && meeting_longitude
     );
-  let coordsString = `${latitude}${longitude}`;
-
-  const {markers, bounds} = travels.reduce(
-    ({markers, bounds}, travel) => {
-      const {
-        attributes: {meeting_latitude, meeting_longitude},
-      } = travel;
-      if (meeting_latitude && meeting_longitude) {
-        const travelObject = {id: travel.id, ...travel.attributes};
-        coordsString =
-          coordsString + String(meeting_latitude) + String(meeting_longitude);
-        return {
-          markers: [
-            ...markers,
-            <TravelMarker
-              key={travel.id}
-              travel={travelObject}
-              focused={focusedTravel === travel.id}
-            />,
-          ],
-          bounds: [...bounds, [meeting_latitude, meeting_longitude]],
-        };
-      }
-      return {markers, bounds};
-    },
-    {markers: [], bounds: []}
-  );
-
-  const mapUpdateKey = `${event.uuid}.travels+${coordsString}.${latitude}.${longitude}.${focusedTravel}`;
-  if (preventUpdateKey !== mapUpdateKey) {
-    setPreventUpdateKey(mapUpdateKey);
-    if (latitude && longitude) {
-      bounds.push([latitude, longitude]);
-      markers.push(<EventMarker key="event" event={event} />);
-    }
-    if (!focusedTravel) {
-      setBounds(bounds);
-    }
-    setMarkers(markers);
-  }
 
   const dates = Array.from(
     new Set(travels.map(travel => travel?.attributes?.departure))

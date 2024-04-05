@@ -79,8 +79,9 @@ const FilterByDate = ({
           role: 'listbox',
         }}
       >
-        {Array.isArray(dates) &&
-          dates.map((date, index) => (
+        {dates
+          ?.filter(date => date.isValid())
+          .map((date, index) => (
             <MenuItem key={index}>
               <FormControlLabel
                 control={
