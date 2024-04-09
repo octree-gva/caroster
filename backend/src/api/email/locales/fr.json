@@ -21,12 +21,12 @@
       "content": "Le trajet '<%= travel.vehicleName %>' pour lequel vous vous êtes inscrit.e.s a été supprimé. Vous pouvez chercher un autre trajet vous correspondant [ici](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedYourTrip": {
-      "title": "<%= event.name %> - Votre voiture a été supprimée",
+      "title": "<%= event.name %> - Votre trajet a été supprimé",
       "content": "Votre trajet <%= travel.vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
     },
     "DeletedFromTrip": {
-      "title": "<%= event.name %> - Vous avez été retiré(e) d'une voiture",
-      "content": "Vous avez été retiré(e) de la voiture <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "title": "<%= event.name %> - Vous avez été retiré(e) d'un trajet "
+      "content": "Vous avez été retiré(e) du trajet <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
@@ -38,15 +38,15 @@
     },
     "EventCreated": {
       "title": "<%= event.name %> - Votre Caroster est prêt !",
-      "content": "## Hurrah, votre Caroster \"<%= event.name %>\" est prêt !\n\nCommencez à vous organiser:\n🚗 Ajoutez des voitures\n💬 Invitez vos participants à covoiturer en partageant le lien de votre Caroster.\n\nLien de partage:\n<%= host %>/e/<%= event.uuid %>"
+      "content": "## Hurrah, votre Caroster \"<%= event.name %>\" est prêt !\n\nCommencez à vous organiser:\n🚗 Ajoutez des trajets\n💬 Invitez vos participants à covoiturer en partageant le lien de votre Caroster.\n\nLien de partage:\n<%= host %>/e/<%= event.uuid %>"
     },
     "EventEnded": {
       "title": "<%= event.name %> - Votre événement est terminé !",
-      "content": "## \"<%= event.name %>\", c'est terminé !\n\n👏 Nombre de personnes transportées : <%= passengersCount %>\n🚗 Nombre de voitures utilisées : <%= travelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
+      "content": "## \"<%= event.name %>\", c'est terminé !\n\n👏 Nombre de personnes transportées : <%= passengersCount %>\n🚗 Nombre de trajets remplis : <%= travelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
     },
     "EventRecap": {
       "title": "<%= event.name %> - Du nouveau dans votre événement",
-      "content": "## Il y a du nouveau dans votre événement \"<%= event.name %>\"\n\n⏳ Nombre de passagers en recherche d'une place : <%= waitingListCount %>\n🚗 Nombre de voitures : <%= travelsCount %>\n🆕 Nombre de nouvelles voitures : <%= newTravelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
+      "content": "## Il y a du nouveau dans votre événement \"<%= event.name %>\"\n\n⏳ Nombre de passagers en recherche d'une place : <%= waitingListCount %>\n🚗 Nombre de trajets : <%= travelsCount %>\n🆕 Nombre de nouveaux trajets : <%= newTravelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contacter la conductrice ou le conducteur du trajet",
