@@ -22,7 +22,7 @@ const useDisplayMarkers = ({event, selectedDates}: Props) => {
     const filteredTravels =
       selectedDates.length >= 1
         ? travels.filter(travel => {
-            const departureDate = moment(travel?.attributes?.departure);
+            const departureDate = moment(travel?.attributes?.departureDate);
             return selectedDates.some(date =>
               date.isSame(departureDate, 'day')
             );

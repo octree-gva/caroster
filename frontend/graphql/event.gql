@@ -39,7 +39,8 @@ fragment EventFields on EventEntity {
           meeting
           meeting_latitude
           meeting_longitude
-          departure
+          departureDate
+          departureTime
           details
           vehicleName
           phone_number

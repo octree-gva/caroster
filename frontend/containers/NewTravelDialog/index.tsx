@@ -8,7 +8,7 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
-import moment, {Moment} from 'moment';
+import moment from 'moment';
 import {Box, Divider} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
@@ -91,7 +91,8 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
       seats,
       vehicleName: name,
       phone_number: phone,
-      departure: formatDate(date, time),
+      departureDate: moment(date).format('YYYY-MM-DD'),
+      departureTime: moment(time).format('HH:mm'),
       event: event.id,
     };
     const createVehicle = !selectedVehicle;
@@ -305,13 +306,6 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const formatDate = (date: Moment, time: Moment) => {
-  return moment(
-    `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
-    'YYYY-MM-DD HH:mm'
-  ).toISOString();
-};
 
 const MARKS = [1, 2, 3, 4, 5, 6, 7, 8].map(value => ({
   value,

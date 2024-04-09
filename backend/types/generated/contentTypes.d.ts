@@ -1221,6 +1221,8 @@ export interface ApiTravelTravel extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    departureDate: Attribute.Date;
+    departureTime: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

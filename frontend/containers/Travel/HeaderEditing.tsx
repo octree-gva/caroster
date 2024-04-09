@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
-import moment, {Moment} from 'moment';
+import moment from 'moment';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
@@ -28,10 +28,6 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
     s.event.enabled_modules?.includes('caroster-plus')
   );
   const [removing, toggleRemoving] = useReducer(i => !i, false);
-  const dateMoment = useMemo(
-    () => (travel?.attributes.departure ? moment(travel.attributes.departure) : null),
-    [travel?.attributes.departure]
-  );
 
   // States
   const [name, setName] = useState(travel?.attributes.vehicleName ?? '');
@@ -43,8 +39,16 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const [meeting_longitude, setMeetingLongitude] = useState(
     travel?.attributes.meeting_longitude
   );
-  const [date, setDate] = useState(dateMoment);
-  const [time, setTime] = useState(dateMoment);
+  const [date, setDate] = useState(
+    travel?.attributes.departureDate
+      ? moment(travel.attributes.departureDate)
+      : null
+  );
+  const [time, setTime] = useState(
+    travel?.attributes.departureTime
+      ? moment(travel.attributes.departureTime, 'HH:mm')
+      : null
+  );
   const [phone, setPhone] = useState(travel?.attributes.phone_number ?? '');
   const [details, setDetails] = useState(travel?.attributes.details ?? '');
 
@@ -73,7 +77,8 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       seats,
       phone_number: phone,
       vehicleName: name,
-      departure: formatDate(date, time),
+      departureDate: moment(date).format('YYYY-MM-DD'),
+      departureTime: moment(time).format('HH:mm'),
     };
     await actions.updateTravel(travelUpdate);
     toggleEditing();
@@ -217,13 +222,6 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       />
     </Box>
   );
-};
-
-const formatDate = (date: Moment, time: Moment) => {
-  return moment(
-    `${moment(date).format('YYYY-MM-DD')} ${moment(time).format('HH:mm')}`,
-    'YYYY-MM-DD HH:mm'
-  ).toISOString();
 };
 
 export default HeaderEditing;

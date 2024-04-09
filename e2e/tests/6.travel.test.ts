@@ -6,7 +6,8 @@ import { getJwtToken } from "../lib/strapi-utils";
 test("createTravel returns created travel", async () => {
   const travel: TravelInput = {
     vehicleName: "Test travel car",
-    departure: "2023-08-12T13:57:40.093Z",
+    departureDate: "2023-08-12",
+    departureTime: "13:57",
     meeting: "Test",
     seats: 3,
   };

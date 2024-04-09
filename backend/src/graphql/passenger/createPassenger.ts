@@ -50,11 +50,12 @@ const createPassenger = {
     if (isCarosterPlus && createdPassenger.user) {
       const travel = createdPassenger.travel;
       const driver = travel.user;
-      const datetime = travel.departure
-        ? moment(travel.departure)
+      const date = travel.departureDate
+        ? moment(travel.departureDate)
             .locale(createdPassenger.user.lang || "en")
-            .format("LLLL")
-        : null;
+            .format("dddd LL")
+        : "";
+      const datetime = `${date} ${travel.departureTime || ""}`;
       strapi.entityService.create("api::notification.notification", {
         data: {
           type: "ContactTripCreator",

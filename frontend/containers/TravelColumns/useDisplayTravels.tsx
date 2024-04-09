@@ -30,8 +30,8 @@ const useDisplayTravels = () => {
         )
       );
     if (passengerFirst !== 0) return passengerFirst;
-    const dateA = new Date(a.departure).getTime();
-    const dateB = new Date(b.departure).getTime();
+    const dateA = new Date(a.departureDate).getTime();
+    const dateB = new Date(b.departureDate).getTime();
     if (dateA === dateB)
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     else return dateA - dateB;
@@ -40,8 +40,8 @@ const useDisplayTravels = () => {
   const sortedTravels = travels?.slice().sort(sortTravels);
 
   const filteredTravels = sortedTravels.filter(travel => {
-    const departureDate = travel?.attributes?.departure
-      ? moment(travel.attributes.departure)
+    const departureDate = travel?.attributes?.departureDate
+      ? moment(travel.attributes.departureDate)
       : null;
     return selectedDates.some(date => date.isSame(departureDate));
   });

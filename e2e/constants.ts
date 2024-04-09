@@ -46,7 +46,8 @@ export const TRAVEL: Travel = {
   phone_number: "+41 79 632 58 85",
   seats: 4,
   vehicleName: "The Test Car",
-  departure: "2023-08-12T13:57:40.093Z",
+  departureDate: "2023-08-12",
+  departureTime: "13:57",
   createdAt: "2022-08-12",
   updatedAt: "2022-08-20",
 };

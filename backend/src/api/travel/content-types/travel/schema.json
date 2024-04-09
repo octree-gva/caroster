@@ -54,6 +54,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "departureDate": {
+      "type": "date"
+    },
+    "departureTime": {
+      "type": "string",
+      "regex": "\\d\\d:\\d\\d"
     }
   }
 }

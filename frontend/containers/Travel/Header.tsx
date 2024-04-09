@@ -62,13 +62,14 @@ const Header = (props: Props) => {
           <TuneIcon />
         </IconButton>
       )}
-      {!!travel.attributes.departure && (
+      {!!travel.attributes.departureDate && (
         <Typography
           variant="overline"
           sx={{color: 'GrayText', textTransform: 'capitalize'}}
           id="TravelDeparture"
         >
-          {moment(travel.attributes.departure).format('LLLL')}
+          {moment(travel.attributes.departureDate).format('dddd LL')}{' '}
+          {travel.attributes.departureTime}
         </Typography>
       )}
       <Typography variant="subtitle1">

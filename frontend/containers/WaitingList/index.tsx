@@ -153,8 +153,8 @@ const WaitingList = (props: Props) => {
 };
 
 const sortTravels = (a, b) => {
-  const dateA = new Date(a.departure).getTime();
-  const dateB = new Date(b.departure).getTime();
+  const dateA = new Date(a.departureDate).getTime();
+  const dateB = new Date(b.departureDate).getTime();
   if (dateA === dateB)
     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   else return dateA - dateB;

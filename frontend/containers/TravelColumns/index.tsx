@@ -1,5 +1,4 @@
 import {useMemo, useState} from 'react';
-import dynamic from 'next/dynamic';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import {useTranslation} from 'react-i18next';
@@ -69,7 +68,7 @@ const TravelColumns = (props: Props) => {
     }
   };
 
-  const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus')
+  const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus');
 
   if (!event || travels?.length === 0)
     return (
@@ -77,7 +76,11 @@ const TravelColumns = (props: Props) => {
         showImage
         eventName={event?.name}
         title={t('event.no_travel.title')}
-        description={isCarosterPlus ? t('event.no_travel.plus.desc') : t('event.no_travel.desc')}
+        description={
+          isCarosterPlus
+            ? t('event.no_travel.plus.desc')
+            : t('event.no_travel.desc')
+        }
       />
     );
 
@@ -139,7 +142,11 @@ const TravelColumns = (props: Props) => {
             <NoCar
               eventName={event?.name}
               title={t('event.no_other_travel.title')}
-              description={isCarosterPlus ? t('event.no_travel.plus.desc') : t('event.no_travel.desc')}
+              description={
+                isCarosterPlus
+                  ? t('event.no_travel.plus.desc')
+                  : t('event.no_travel.desc')
+              }
             />
           </MasonryContainer>
         </Masonry>

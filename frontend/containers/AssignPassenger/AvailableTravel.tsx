@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
-import {Travel, TravelEntity} from '../../generated/graphql';
+import {TravelEntity} from '../../generated/graphql';
 
 interface Props {
   travel: TravelEntity;
@@ -26,10 +26,11 @@ const AvailableTravel = ({travel, assign}: Props) => {
       <ListItem sx={{flexDirection: 'column', p: 2}}>
         <Box display="flex" justifyContent="space-between" width={1}>
           <Box>
-            {travel.attributes.departure && (
+            {travel.attributes.departureDate && (
               <Typography variant="overline" color="GrayText">
                 {t('passenger.assign.departure')}
-                {moment(travel.attributes.departure).format('LLLL')}
+                {moment(travel.attributes.departureDate).format('dddd LL')}{' '}
+                {travel.attributes.departureTime || ''}
               </Typography>
             )}
             <Typography variant="body1" sx={{pt: 1}}>

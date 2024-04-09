@@ -17,9 +17,10 @@ const TravelPopup = ({travel}: Props) => {
   return (
     <Popup>
       <Card sx={{p: 2, width: '350px', maxWidth: '100%', cursor: 'pointer'}}>
-        {!!travel.attributes.departure && (
+        {!!travel.attributes.departureDate && (
           <Typography variant="overline" color="Graytext" id="TravelDeparture">
-            {moment(travel.attributes.departure).format('LLLL')}
+            {moment(travel.attributes.departureDate).format('dddd LL')}{' '}
+            {travel.attributes.departureTime || ''}
           </Typography>
         )}
         <Box>
