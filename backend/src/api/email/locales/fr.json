@@ -25,7 +25,7 @@
       "content": "Votre trajet <%= travel.vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
     },
     "DeletedFromTrip": {
-      "title": "<%= event.name %> - Vous avez été retiré(e) d'un trajet "
+      "title": "<%= event.name %> - Vous avez été retiré(e) d'un trajet ",
       "content": "Vous avez été retiré(e) du trajet <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "NewPassengerInYourTrip": {

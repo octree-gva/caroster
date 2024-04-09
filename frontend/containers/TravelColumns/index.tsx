@@ -69,12 +69,15 @@ const TravelColumns = (props: Props) => {
     }
   };
 
+  const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus')
+
   if (!event || travels?.length === 0)
     return (
       <NoCar
         showImage
         eventName={event?.name}
         title={t('event.no_travel.title')}
+        description={isCarosterPlus ? t('event.no_travel.plus.desc') : t('event.no_travel.desc')}
       />
     );
 
@@ -136,6 +139,7 @@ const TravelColumns = (props: Props) => {
             <NoCar
               eventName={event?.name}
               title={t('event.no_other_travel.title')}
+              description={isCarosterPlus ? t('event.no_travel.plus.desc') : t('event.no_travel.desc')}
             />
           </MasonryContainer>
         </Masonry>

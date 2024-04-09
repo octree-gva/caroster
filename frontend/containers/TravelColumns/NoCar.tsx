@@ -1,18 +1,17 @@
 import Typography from '@mui/material/Typography';
 import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {useTranslation} from 'react-i18next';
 import ShareEvent from '../ShareEvent';
 import SupportCaroster from '../SupportCaroster';
 
 interface Props {
   eventName: string;
   title: string;
+  description: string;
   showImage?: boolean;
 }
 
-const NoCar = ({eventName, title, showImage}: Props) => {
-  const {t} = useTranslation();
+const NoCar = ({eventName, title, description, showImage}: Props) => {
   const theme = useTheme();
 
   return (
@@ -44,7 +43,7 @@ const NoCar = ({eventName, title, showImage}: Props) => {
         />
       )}
       <Typography sx={{whiteSpace: 'pre-line', mt: 4}} color="textSecondary">
-        {t('event.no_travel.desc')}
+        {description}
       </Typography>
       <ShareEvent
         color="primary"

@@ -73,6 +73,7 @@
   "event.loginToAttend.login": "$t(menu.login)",
   "event.loginToAttend.signup": "$t(signup.title)",
   "event.no_other_travel.title": "There are currently no other trip",
+  "event.no_travel.plus.desc": "Create an alert to receive an email in case of a nearby departure",
   "event.no_travel.desc": "1. Subscribe to the waiting list\n2. Share the event\n3. You will be notified when a new travel is added",
   "event.no_travel.title": "There are currently no trips",
   "event.not_found": "Project not found",
