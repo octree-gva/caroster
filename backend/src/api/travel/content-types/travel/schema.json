@@ -60,7 +60,7 @@
     },
     "departureTime": {
       "type": "string",
-      "regex": "\\d\\d:\\d\\d"
+      "regex": "(\\d\\d:\\d\\d)?"
     }
   }
 }

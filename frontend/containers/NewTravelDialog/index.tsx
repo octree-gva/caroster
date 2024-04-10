@@ -91,8 +91,8 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
       seats,
       vehicleName: name,
       phone_number: phone,
-      departureDate: moment(date).format('YYYY-MM-DD'),
-      departureTime: moment(time).format('HH:mm'),
+      departureDate: date ? moment(date).format('YYYY-MM-DD') : '',
+      departureTime: time ? moment(time).format('HH:mm') : '',
       event: event.id,
     };
     const createVehicle = !selectedVehicle;

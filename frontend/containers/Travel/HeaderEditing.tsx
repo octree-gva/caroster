@@ -77,8 +77,8 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       seats,
       phone_number: phone,
       vehicleName: name,
-      departureDate: moment(date).format('YYYY-MM-DD'),
-      departureTime: moment(time).format('HH:mm'),
+      departureDate: date ? moment(date).format('YYYY-MM-DD') : '',
+      departureTime: time ? moment(time).format('HH:mm') : '',
     };
     await actions.updateTravel(travelUpdate);
     toggleEditing();
