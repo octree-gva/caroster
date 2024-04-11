@@ -1,6 +1,7 @@
 import {useMemo, useState} from 'react';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
+import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
@@ -19,7 +20,6 @@ import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
 import FilterByDate from '../../components/FilterByDate';
-import moment from 'moment';
 
 interface Props {
   toggle: () => void;
@@ -76,11 +76,7 @@ const TravelColumns = (props: Props) => {
         showImage
         eventName={event?.name}
         title={t('event.no_travel.title')}
-        description={
-          isCarosterPlus
-            ? t('event.no_travel.plus.desc')
-            : t('event.no_travel.desc')
-        }
+        isCarosterPlus={isCarosterPlus}
       />
     );
 
@@ -142,11 +138,7 @@ const TravelColumns = (props: Props) => {
             <NoCar
               eventName={event?.name}
               title={t('event.no_other_travel.title')}
-              description={
-                isCarosterPlus
-                  ? t('event.no_travel.plus.desc')
-                  : t('event.no_travel.desc')
-              }
+              isCarosterPlus={isCarosterPlus}
             />
           </MasonryContainer>
         </Masonry>

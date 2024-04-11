@@ -74,6 +74,7 @@
   "event.loginToAttend.signup": "$t(signup.title)",
   "event.no_other_travel.title": "Pas d'autres trajets pour le moment",
   "event.no_travel.plus.desc": "Créez une alerte de covoiturage pour être notifié",
+  "event.no_travel.plus.action": "Créer une alerte",
   "event.no_travel.desc": "1. Inscrivez-vous dans la liste d’attente \n2. Partagez l’événement \n3. Vous serez notifié lorsqu’un nouveau trajet sera ajouté",
   "event.no_travel.title": "Pas de trajets pour le moment",
   "event.not_found": "Projet introuvable",
