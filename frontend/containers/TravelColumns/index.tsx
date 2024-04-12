@@ -88,7 +88,7 @@ const TravelColumns = (props: Props) => {
     );
 
   const dates = Array.from(
-    new Set(travels.map(travel => travel?.attributes?.departure))
+    new Set(travels.map(travel => travel?.attributes?.departureDate))
   )
     .map(date => moment(date))
     .filter(date => date.isValid())
