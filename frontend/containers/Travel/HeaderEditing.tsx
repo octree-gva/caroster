@@ -106,7 +106,6 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           label={t('travel.creation.date')}
           value={date}
           onChange={setDate}
-          autoFocus
         />
         <TimePicker
           label={t('travel.creation.time')}
