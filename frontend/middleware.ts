@@ -17,17 +17,25 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith('/graphql') ||
     PUBLIC_FILE.test(req.nextUrl.pathname);
 
-  if (!isIgnoredPath && req.nextUrl.locale === DEFAULT_LOCALE) {
-    const registeredUserLanguage = await getRegisteredUserLanguage(req);
+  if (isIgnoredPath) return null;
+
+  const registeredUserLanguage = await getRegisteredUserLanguage(req);
+
+  if (registeredUserLanguage && req.nextUrl.locale !== registeredUserLanguage) {
+    return NextResponse.redirect(
+      new URL(
+        `/${registeredUserLanguage}${req.nextUrl.pathname}${
+          req.nextUrl.search || ''
+        }`,
+        req.url
+      )
+    );
+  } else if (req.nextUrl.locale === DEFAULT_LOCALE) {
     const NEXT_LOCALE = getCookie('NEXT_LOCALE', req.headers.get('cookie'));
     const browserPreferredSupportedLanguage =
       getBrowserPreferredSupportedLanguage(req);
 
-    const locale =
-      registeredUserLanguage ||
-      NEXT_LOCALE ||
-      browserPreferredSupportedLanguage ||
-      'fr';
+    const locale = NEXT_LOCALE || browserPreferredSupportedLanguage || 'fr';
 
     return NextResponse.redirect(
       new URL(
