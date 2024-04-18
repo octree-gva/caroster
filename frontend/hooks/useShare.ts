@@ -2,7 +2,7 @@ import {useTranslation} from 'react-i18next';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import useToastStore from '../stores/useToastStore';
 
-const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
+const FALLBACK_LANGUAGE = process.env.FALLBACK_LANGUAGE || 'en';
 
 const navigatorHasShareCapability =
   typeof navigator !== 'undefined' && !!navigator.share;
@@ -23,7 +23,7 @@ const useShare = () => {
         member => SupportedLocales[member]
       );
       const urlCopy = [...splittedUrl]
-      urlCopy[localeParamIndex] = DEFAULT_LOCALE;
+      urlCopy[localeParamIndex] = FALLBACK_LANGUAGE;
       const withDefaultLocaleURL = urlCopy.join('/');
       const isPhone = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       // If navigator share capability and a phone

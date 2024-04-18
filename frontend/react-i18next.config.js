@@ -1,15 +1,15 @@
-const {DEFAULT_LOCALE = 'share'} = process.env;
+const {FALLBACK_LANGUAGE = 'en'} = process.env;
 
 module.exports = {
   i18n: {
-    defaultLocale: DEFAULT_LOCALE,
-    locales: [DEFAULT_LOCALE, 'en', 'fr'],
+    defaultLocale: FALLBACK_LANGUAGE,
+    locales: [...new Set([FALLBACK_LANGUAGE, 'en', 'fr'])],
     localeDetection: false,
   },
   trailingSlash: true,
 
   fallbackLng: {
-    default: ['fr'],
+    default: FALLBACK_LANGUAGE,
     'fr-CH': ['fr'],
   },
 };

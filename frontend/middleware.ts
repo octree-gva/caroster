@@ -8,7 +8,7 @@ import {print} from 'graphql/language/printer';
 import {getCookie} from './lib/cookies';
 
 const PUBLIC_FILE = /\.(.*)$/;
-const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'share';
+const FALLBACK_LANGUAGE = process.env.FALLBACK_LANGUAGE || 'en';
 
 export async function middleware(req: NextRequest) {
   const isIgnoredPath =
@@ -19,24 +19,12 @@ export async function middleware(req: NextRequest) {
 
   if (isIgnoredPath) return null;
 
-  const registeredUserLanguage = await getRegisteredUserLanguage(req);
+  const locale = await getRegisteredUserLanguage(req) ||
+    getCookie('NEXT_LOCALE', req.headers.get('cookie')) ||
+    getBrowserPreferredSupportedLanguage(req) ||
+    FALLBACK_LANGUAGE;
 
-  if (registeredUserLanguage && req.nextUrl.locale !== registeredUserLanguage) {
-    return NextResponse.redirect(
-      new URL(
-        `/${registeredUserLanguage}${req.nextUrl.pathname}${
-          req.nextUrl.search || ''
-        }`,
-        req.url
-      )
-    );
-  } else if (req.nextUrl.locale === DEFAULT_LOCALE) {
-    const NEXT_LOCALE = getCookie('NEXT_LOCALE', req.headers.get('cookie'));
-    const browserPreferredSupportedLanguage =
-      getBrowserPreferredSupportedLanguage(req);
-
-    const locale = NEXT_LOCALE || browserPreferredSupportedLanguage || 'fr';
-
+  if (req.nextUrl.locale !== locale) {
     return NextResponse.redirect(
       new URL(
         `/${locale}${req.nextUrl.pathname}${req.nextUrl.search || ''}`,
@@ -46,7 +34,7 @@ export async function middleware(req: NextRequest) {
   }
 }
 
-const getRegisteredUserLanguage = async req => {
+const getRegisteredUserLanguage = async (req) => {
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
@@ -62,13 +50,13 @@ const getRegisteredUserLanguage = async req => {
     body: JSON.stringify({query: print(ProfileDocument)}),
   })
     .then(async response => {
-      const {data} = await response.json();
+      const {data}  = await response.json();
       return data?.me?.profile?.lang;
     })
     .catch(console.error);
 };
 
-const getBrowserPreferredSupportedLanguage = req => {
+const getBrowserPreferredSupportedLanguage = (req): SupportedLocales => {
   const browserAcceptedLanguages = req.headers
     .get('accept-language')
     ?.split(',');

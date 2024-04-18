@@ -3,7 +3,7 @@ const {
   NODE_ENV,
   DEV_TILES_URL,
   STRAPI_URL = 'http://localhost:1337',
-  DEFAULT_LOCALE = 'share',
+  FALLBACK_LANGUAGE = 'en',
   MAPBOX_TOKEN,
   MAPBOX_URL,
 } = process.env;
@@ -24,7 +24,7 @@ module.exports = withPWA({
   env: {
     STRAPI_URL,
     DEV_TILES_URL,
-    DEFAULT_LOCALE,
+    FALLBACK_LANGUAGE,
     MAPBOX_CONFIGURED: !!MAPBOX_TOKEN && !!MAPBOX_URL,
   },
   i18n,
