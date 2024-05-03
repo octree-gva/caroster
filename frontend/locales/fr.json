@@ -87,7 +87,7 @@
   "options.plus.admins": "Administrateurs",
   "options.plus.creator": "Créateur",
   "options.plus.activationOK": "Ajoutez Caroster Plus à votre évènement",
-  "options.plus.activationForbiden": "Seul le créateur de l'événement est autorisé à ajouter des modules",
+  "options.plus.activationForbiden": "Vous devez être le créateur de l'événement et être connecté avec un compte Caroster pour ajouter des modules",
   "options.plus.addAdmin": "Ajouter un administrateur",
   "options.plus.addAdmin.email": "E-mail",
   "options.plus.addAdmin.emailHelper": "L e-mail n'est pas valide",
