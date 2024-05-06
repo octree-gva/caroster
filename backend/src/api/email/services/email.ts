@@ -84,7 +84,7 @@ export default () => ({
       const htmlContent = await marked.parse(mdContent, { breaks: true });
       const htmlHeader = await marked.parse(mdHeader, { breaks: true });
       const htmlFooter = await marked.parse(mdFooter, { breaks: true });
-      const html = `${getHTMLMeta()}<header>${htmlHeader}</header><main>${htmlContent}${htmlFooter}</main>`;
+      const html = `<header>${htmlHeader}</header><main>${getHTMLMeta()}${htmlContent}${htmlFooter}</main>`;
 
       return {
         subject,
