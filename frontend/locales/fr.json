@@ -242,7 +242,7 @@
   "travel.actions.removed": "Le trajet a été supprimée et ses passagers déplacés dans la liste d'attente.",
   "travel.actions.removed.caroster_plus": "Le trajet a été supprimée et ses passagers ont été notifiés.",
   "travel.creation.car.title": "Voiture et contact",
-  "travel.creation.created": "La voiture a été créée",
+  "travel.creation.created": "Le trajet a été créée",
   "travel.creation.date": "Date de départ",
   "travel.creation.meeting": "Lieu de rencontre",
   "travel.creation.name": "Nom de la voiture",
