@@ -10,11 +10,11 @@
     },
     "NewTrip": {
       "title": "<%= event.name %> - A new trip is available",
-      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
+      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Trip: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."
     },
     "NewTripAlert": {
       "title": "<%= event.name %> - A new trip is available",
-      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Car: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you've enabled alerts in this event."
+      "content": "## New trip is available for \"<%= event.name %>\"\n\n**Trip: <%= travel.vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you've enabled alerts in this event."
     },
     "DeletedTrip": {
       "title": "<%= event.name %> - Trip removed",
@@ -50,7 +50,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact trip driver",
-      "content": "To organize your journey to <%= event.name %>, please contact the driver of the trip you've registered.\n\n**Car: <%= travel.vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nPhone: <%= travel.phone_mumber | 'Not provided' %>\nE-mail: <%= driver.email %>"
+      "content": "To organize your journey to [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), please contact the driver of the trip you've registered.\n\n**Trip: <%= travel.vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nPhone: <%= travel.phone_mumber | 'Not provided' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster Plus is now active for your event",
