@@ -31,6 +31,20 @@ In order to activate geocoding and map features, you will need a Mapbox token.
 
 There is no need to setup a payment method as long as you don't exceed [the temporary geocoding api free rate ](https://www.mapbox.com/pricing#temporary-geocoding-api), but if you do so, the app will still work and geocoding will simply disable till the end of the ongoing month.
 
+Copy the mapbox token in the .env file as a value for "MAPBOX_TOKEN" variable to start using geocoding and map features;
+
+#### Tiles server
+
+You can use the TOKEN_FREE_TILES variables in the .env file to setup a tiles server used by the map features. By default, we use the [© OpenStreetMap ](https://www.openstreetmap.org/copyright) test server. 
+
+Make sure to respect the copyrights of the tiles server you setup, or those from [© OpenStreetMap ](https://www.openstreetmap.org/copyright) if you keep the default settings.
+
+> :warning: Be aware that some services might require a token to use their tiles server.
+>
+> We don't have yet developed a way to obfuscate this token from the users.
+
+> :warning: This means anyone accessing the application will be able to use this token on your behalf, which exposes you to substantial risks (financial, legal, reputational, operational) that may affect you and the disponibility of the service.
+
 ### Installing
 
 Clone the repo locally:
@@ -83,10 +97,6 @@ yarn dev
 ```
 
 The frontend is now accessible on http://localhost:3000
-
-#### Geocoding in development (optional)
-
-Copy your Mapbox token in your .env file under MAPBOX_TOKEN variable and run the app again.
 
 ### Backend
 

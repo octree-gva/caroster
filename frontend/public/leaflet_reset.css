@@ -24,6 +24,11 @@
     color: inherit;
 }
 
+.leaflet-control-attribution a {
+    color:blue;
+    text-decoration: underline;
+}
+
 .leaflet-popup-content p {
     margin: 0;
 }
