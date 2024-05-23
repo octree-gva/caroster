@@ -89,7 +89,7 @@ export default () => ({
       return {
         subject,
         html,
-        text: notif.content,
+        text: mdContent,
       };
     } catch (error) {
       strapi.log.error(
