@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import _ from "lodash";
 import { marked } from "marked";
-import { getHTMLMeta } from "../utils/layout";
+import { getHTML } from "../utils/layout";
 
 const langs = ["en", "fr"];
 
 let locales: Record<
   string,
   {
-    template: Record<"header" | "footer", string>;
+    template: Record<"footer" | "carosterLink", string>;
     notifications: Record<string, { title: string; content: string }>;
   }
 > = null;
@@ -79,12 +79,11 @@ export default () => ({
         ...variables,
         host: strapi.config.server.url,
       });
-      const mdHeader = locales?.[lang]?.template.header;
       const mdFooter = locales?.[lang]?.template.footer;
+      const carosterLink = locales?.[lang]?.template.carosterLink;
       const htmlContent = await marked.parse(mdContent, { breaks: true });
-      const htmlHeader = await marked.parse(mdHeader, { breaks: true });
       const htmlFooter = await marked.parse(mdFooter, { breaks: true });
-      const html = `<header>${htmlHeader}</header><main>${getHTMLMeta()}${htmlContent}${htmlFooter}</main>`;
+      const html = getHTML({htmlContent, htmlFooter, carosterLink});
 
       return {
         subject,

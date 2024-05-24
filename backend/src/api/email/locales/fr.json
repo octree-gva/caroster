@@ -1,7 +1,7 @@
 {
   "template": {
-    "header": "<img src='https://app.caroster.io/uploads/Caroster_logo1_cddd3057fc.png?updated_at=2022-09-12T08:11:11.735Z' width='100%' alt='Caroster'/>",
-    "footer": "---\n💝 Vous pensez aussi que Caroster est génial ? Aidez-nous à le maintenir libre et gratuit en faisant une donation !\n\n👉 [Open collective](https://opencollective.com/caroster)\n\n<center><a href='https://caroster.io'>https://caroster.io</a></center>"
+    "footer": "💝 Vous pensez aussi que Caroster est génial ? Aidez-nous à le maintenir libre et gratuit en faisant une donation !",
+    "carosterLink": "https://caroster.io"
   },
   "notifications": {
     "ConfirmEmail": {
@@ -38,7 +38,7 @@
     },
     "EventCreated": {
       "title": "<%= event.name %> - Votre Caroster est prêt !",
-      "content": "## Hurrah, votre Caroster \"<%= event.name %>\" est prêt !\n\nCommencez à vous organiser:\n🚗 Ajoutez des trajets\n💬 Invitez vos participants à covoiturer en partageant le lien de votre Caroster.\n\nLien de partage:\n<%= host %>/e/<%= event.uuid %>"
+      "content": "## Hurrah, votre Caroster \"<%= event.name %>\" est prêt !\n\nCommencez à vous organiser:\n\n🚗 Ajoutez des trajets\n\n💬 Invitez vos participants à covoiturer en partageant le lien de votre Caroster.\n\nLien de partage:\n<%= host %>/e/<%= event.uuid %>"
     },
     "EventEnded": {
       "title": "<%= event.name %> - Votre événement est terminé !",
