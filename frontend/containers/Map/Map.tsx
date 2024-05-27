@@ -10,7 +10,7 @@ const TOKEN_FREE_TILES_URL =
 
   const TOKEN_FREE_TILES_LAYER_ATTRIBUTION = 
   process.env.TOKEN_FREE_TILES_LAYER_ATTRIBUTION ||
-  '© <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  '© <a target="_blank" href="https://www.openstreetmap.org/copyright/en">OpenStreetMap</a> contributors';
 
 const Map = () => {
   const markers = useMapStore(s => s.markers);

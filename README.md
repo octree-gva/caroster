@@ -35,9 +35,9 @@ Copy the mapbox token in the .env file as a value for "MAPBOX_TOKEN" variable to
 
 #### Tiles server
 
-You can use the TOKEN_FREE_TILES variables in the .env file to setup a tiles server used by the map features. By default, we use the [© OpenStreetMap ](https://www.openstreetmap.org/copyright) test server. 
+You can use the TOKEN_FREE_TILES variables in the .env file to setup a tiles server used by the map features. By default, we use the [© OpenStreetMap ](https://www.openstreetmap.org/copyright/en) test server. 
 
-Make sure to respect the copyrights of the tiles server you setup, or those from [© OpenStreetMap ](https://www.openstreetmap.org/copyright) if you keep the default settings.
+Make sure to respect the copyrights of the tiles server you setup, or those from [© OpenStreetMap ](https://www.openstreetmap.org/copyright/en) if you keep the default settings.
 
 > :warning: Be aware that some services might require a token to use their tiles server.
 >
