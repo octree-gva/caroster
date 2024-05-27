@@ -1,12 +1,16 @@
 import {useState} from 'react';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
 import {debounce} from '@mui/material/utils';
+import {SessionToken} from '@mapbox/search-js-core';
 import {useTranslation} from 'react-i18next';
 import useLocale from '../../hooks/useLocale';
-import getPlacesSuggestions from '../../lib/getPlacesSuggestion';
+import {MapboxSuggestion} from '../../pages/api/mapbox/searchbox/suggest';
+import {GeocodedOption} from '../../pages/api/mapbox/searchbox/retrieve';
 
 interface Props {
   place: string;
@@ -26,12 +30,14 @@ interface Props {
   disabled?: boolean;
 }
 
+type Option = MapboxSuggestion | {name: String; previous?: Boolean};
+
 const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
 
 const PlaceInput = ({
-  place = '',
   latitude,
   longitude,
+  place = '',
   onSelect,
   label,
   textFieldProps,
@@ -41,29 +47,43 @@ const PlaceInput = ({
   const {locale} = useLocale();
   const [mapboxAvailable, setMapboxAvailable] = useState(MAPBOX_CONFIGURED);
   const [noCoordinates, setNoCoordinates] = useState(!latitude || !longitude);
-  const previousOption = place ? {place_name: place, previous: true} : null;
+  const previousOption = place ? {name: place, previous: true} : null;
+  const sessionToken = new SessionToken();
 
-  const [options, setOptions] = useState([] as Array<any>);
+  const [options, setOptions] = useState([] as Array<Option>);
+
+  const getOptionDecorators = option => {
+    if (option.mapbox_id) {
+      return {secondary: option.address || option.place_formatted};
+    } else {
+      return {
+        secondary: t`placeInput.item.noCoordinates`,
+        color: 'warning.main',
+      };
+    }
+  };
+
   const onChange = async (e, selectedOption) => {
-    if (selectedOption.previous) {
-      setNoCoordinates(!latitude || !longitude);
-      onSelect({
-        place,
-        latitude,
-        longitude,
-      });
-    } else if (selectedOption.center) {
-      const [optionLongitude, optionLatitude] = selectedOption.center;
+    if (selectedOption.mapbox_id) {
+      const geocodedFeature: GeocodedOption = await fetch(
+        '/api/mapbox/searchbox/retrieve?' +
+          new URLSearchParams({
+            id: selectedOption.mapbox_id,
+            sessionToken: String(sessionToken),
+            locale,
+          })
+      ).then(response => response.json());
+      const {longitude, latitude} = geocodedFeature.coordinates;
       setNoCoordinates(false);
       onSelect({
-        place: selectedOption.place_name,
-        latitude: optionLatitude,
-        longitude: optionLongitude,
+        place: geocodedFeature.name,
+        latitude,
+        longitude,
       });
     } else {
       setNoCoordinates(true);
       onSelect({
-        place: selectedOption.place_name,
+        place: selectedOption.name,
         latitude: null,
         longitude: null,
       });
@@ -72,33 +92,21 @@ const PlaceInput = ({
 
   const updateOptions = debounce(async (e, search: string) => {
     if (search !== '') {
-      getPlacesSuggestions({search, proximity: 'ip', locale}).then(
-        suggestions => {
-          let defaultOptions = [];
-          if (previousOption) {
-            defaultOptions = [previousOption];
-          }
-          if (search && search !== previousOption?.place_name) {
-            defaultOptions = [...defaultOptions, {place_name: search}];
-          }
-          if (suggestions?.length >= 1) {
-            setMapboxAvailable(true);
-            const suggestionsWithoutCopies = suggestions.filter(
-              ({place_name}) =>
-                place_name !== search &&
-                place_name !== previousOption?.place_name
-            );
-            const uniqueOptions = [
-              ...defaultOptions,
-              ...suggestionsWithoutCopies,
-            ];
-            setOptions(uniqueOptions);
-          } else {
-            setMapboxAvailable(false);
-            setOptions(defaultOptions);
-          }
-        }
-      );
+      try {
+        await fetch(
+          '/api/mapbox/searchbox/suggest?' +
+            new URLSearchParams({
+              search,
+              sessionToken,
+              locale,
+            })
+        )
+          .then(response => response.json())
+          .then(suggestions => setOptions([{name: search}, ...suggestions]));
+      } catch (err) {
+        console.warn(err);
+        setMapboxAvailable(false);
+      }
     }
   }, 400);
 
@@ -119,10 +127,10 @@ const PlaceInput = ({
     <Autocomplete
       freeSolo
       disableClearable
-      getOptionLabel={option => option.place_name}
+      getOptionLabel={option => option?.name || place}
       options={options}
-      autoComplete
       defaultValue={previousOption}
+      autoComplete
       filterOptions={x => x}
       noOptionsText={t('autocomplete.noMatch')}
       onChange={onChange}
@@ -136,6 +144,7 @@ const PlaceInput = ({
           helperText={MAPBOX_CONFIGURED && getHelperText()}
           FormHelperTextProps={{sx: {color: 'warning.main'}}}
           InputProps={{
+            type: 'search',
             endAdornment: (
               <InputAdornment position="end" sx={{mr: -0.5}}>
                 <PlaceOutlinedIcon />
@@ -148,7 +157,17 @@ const PlaceInput = ({
         />
       )}
       renderOption={(props, option) => {
-        return <li {...props}>{option.place_name}</li>;
+        const {color, secondary} = getOptionDecorators(option);
+        if (option.previous) return null;
+        return (
+          <ListItem key={option.mapbox_id || 'text'} {...props}>
+            <ListItemText
+              primary={option.name}
+              secondary={secondary}
+              secondaryTypographyProps={{color}}
+            />
+          </ListItem>
+        );
       }}
     />
   );

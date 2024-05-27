@@ -175,6 +175,7 @@
   "passenger.title": "Liste d'attente",
   "placeInput.mapboxUnavailable": "Nous ne pouvons pas suggérer de lieux géolocalisés pour le moment",
   "placeInput.noCoordinates": "Le lieu indiqué n'a pas pu être géo-localisé et ne sera pas affiché sur la carte, essayez une adresse plus précise.",
+  "placeInput.item.noCoordinates": "Pas de coordonnées",
   "profile.actions.cancel": "Annuler",
   "profile.actions.change_password": "Changer son mot de passe",
   "profile.actions.edit": "Editer",

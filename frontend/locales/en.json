@@ -175,6 +175,7 @@
   "passenger.title": "Waiting list",
   "placeInput.mapboxUnavailable": "We are not able to suggest geolocated places at the moment",
   "placeInput.noCoordinates": "This place is not geo-located and won't appear on the map",
+  "placeInput.item.noCoordinates": "No coordinates",
   "profile.actions.cancel": "Cancel",
   "profile.actions.change_password": "Change your password",
   "profile.actions.edit": "Edit",
