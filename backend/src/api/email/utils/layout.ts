@@ -15,34 +15,35 @@ export const getHTML = ({ htmlContent, htmlFooter, carosterLink }) => `
         border="0"
       >
         <tbody>
-        <style type="text/css">
-          a {
-            color: #009688;
-          }
-        </style>
           <tr style="width:100%">
             <td>
               <div
                 style="padding:16px 24px 16px 24px;background-color:#FFEB3B;text-align:center"
               >
-                <img
-                  alt="Caroster"
-                  src="https://app.caroster.io/uploads/Caroster_logo1_cddd3057fc.png?updated_at=2022-09-12T08:11:11.735Z"
-                  height="32"
-                  style="height:32px;outline:none;border:none;text-decoration:none;vertical-align:middle;display:inline-block;max-width:100%"
-                />
+                <a
+                  href="${carosterLink}"
+                  style="text-decoration:none"
+                  target="_blank"
+                  ><img
+                    alt="Caroster link"
+                    src="https://app.caroster.io/uploads/Caroster_logo1_cddd3057fc.png?updated_at=2022-09-12T08:11:11.735Z"
+                    height="32"
+                    style="height:32px;outline:none;border:none;text-decoration:none;vertical-align:middle;display:inline-block;max-width:100%"
+                /></a>
               </div>
               <div style="font-weight:normal;padding:16px 24px 16px 24px">
                 ${htmlContent}
               </div>
-              <div style="background-color:#E5E5E5;padding:16px 24px 16px 24px">
-                <div style="font-weight:normal;padding:16px 24px 16px 24px">
+              <div style="background-color:#E5E5E5;padding:16px 8px 16px 8px">
+                <div
+                  style="font-size:14px;font-weight:normal;padding:16px 24px 16px 24px"
+                >
                   ${htmlFooter}
                 </div>
                 <div style="padding:0px 0px 0px 12px">
                   <a
                     href="https://opencollective.com/caroster"
-                    style="color:#171717;font-size:16px;font-weight:bold;background-color:#E5E5E5;border-radius:64px;display:inline-block;padding:8px 12px;text-decoration:none"
+                    style="color:#171717;font-size:14px;font-weight:normal;background-color:#E5E5E5;border-radius:64px;display:inline-block;padding:8px 12px;text-decoration:none"
                     target="_blank"
                     ><span
                       ><!--[if mso
@@ -57,31 +58,6 @@ export const getHTML = ({ htmlContent, htmlFooter, carosterLink }) => `
                       ><!--[if mso
                         ]><i
                           style="letter-spacing: 12px;mso-font-width:-100%"
-                          hidden
-                          >&nbsp;</i
-                        ><!
-                      [endif]--></span
-                    ></a
-                  >
-                </div>
-                <div style="text-align:center;padding:16px 24px 16px 24px">
-                  <a
-                    href="${carosterLink}"
-                    style="color:#FFFFFF;font-size:16px;font-weight:bold;background-color:#009688;border-radius:4px;display:block;padding:12px 20px;text-decoration:none"
-                    target="_blank"
-                    ><span
-                      ><!--[if mso
-                        ]><i
-                          style="letter-spacing: 20px;mso-font-width:-100%;mso-text-raise:30"
-                          hidden
-                          >&nbsp;</i
-                        ><!
-                      [endif]--></span
-                    ><span>Caroster.io</span
-                    ><span
-                      ><!--[if mso
-                        ]><i
-                          style="letter-spacing: 20px;mso-font-width:-100%"
                           hidden
                           >&nbsp;</i
                         ><!
