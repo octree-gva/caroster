@@ -45,7 +45,7 @@ const App = function (props: AppProps) {
           <LocalizationProvider
             dateAdapter={AdapterMoment}
             dateLibInstance={moment}
-            adapterLocale={locale === 'fr' ? 'fr-ch' : 'en'}
+            adapterLocale={locale}
           >
             <CssBaseline />
             <Head>

@@ -24,7 +24,8 @@
       "type": "enumeration",
       "enum": [
         "fr",
-        "en"
+        "en",
+        "nl"
       ],
       "default": "en"
     },

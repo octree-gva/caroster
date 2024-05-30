@@ -3,7 +3,7 @@ import _ from "lodash";
 import { marked } from "marked";
 import { getHTML } from "../utils/layout";
 
-const langs = ["en", "fr"];
+const langs = ["en", "fr", "nl"];
 
 let locales: Record<
   string,

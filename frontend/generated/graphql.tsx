@@ -205,7 +205,8 @@ export enum Enum_Contentreleasesreleaseaction_Type {
 
 export enum Enum_Event_Lang {
   en = 'en',
-  fr = 'fr'
+  fr = 'fr',
+  nl = 'nl'
 }
 
 export enum Enum_Notification_Type {
@@ -230,7 +231,8 @@ export enum Enum_Page_Type {
 
 export enum Enum_Userspermissionsuser_Lang {
   en = 'en',
-  fr = 'fr'
+  fr = 'fr',
+  nl = 'nl'
 }
 
 export type Event = {
