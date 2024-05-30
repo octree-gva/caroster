@@ -23,11 +23,13 @@ const AlertsHeader = ({
   const eventId = event.id;
 
   const handleToggleClick = async () => {
-    await handleCreateTripAlert({
-      eventId,
-      enabled: !disabled,
-    });
-    handleToggle();
+    if (!disabled) {
+      await handleCreateTripAlert({
+        eventId,
+        enabled: !switchChecked,
+      });
+      handleToggle();
+    }
   };
 
   return (
@@ -35,7 +37,11 @@ const AlertsHeader = ({
       <Typography variant="h5">{t('alert.title')}</Typography>
       <FormControlLabel
         control={
-          <Toggle activate={handleToggleClick} checked={switchChecked} />
+          <Toggle
+            activate={handleToggleClick}
+            checked={switchChecked}
+            disabled={disabled}
+          />
         }
         label=""
         sx={{m: 0}}

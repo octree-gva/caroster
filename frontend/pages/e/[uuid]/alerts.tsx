@@ -55,13 +55,6 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       };
     }
 
-    const isCarosterPlus =
-      event?.attributes?.enabled_modules?.includes('caroster-plus');
-    if (!isCarosterPlus)
-      return {
-        notFound: true,
-      };
-
     try {
       const {data} = await apolloClient.query({
         query: TripAlertDocument,
@@ -69,9 +62,7 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       });
       tripAlertEntity = data.eventTripAlert.data;
     } catch (error) {
-      return {
-        notFound: true,
-      };
+      tripAlertEntity = null;
     }
 
     return {

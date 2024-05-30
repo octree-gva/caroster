@@ -69,6 +69,7 @@
   "event.filter.allDates": "Toutes les dates",
   "event.filter.dates": "Dates multiples",
   "event.filter.title": "Filtrer par dates",
+  "event.loginToSetAlert": "Les alertes ne sont disponibles que pour les participants à ce covoiturage.",
   "event.loginToAttend": "Voulez-vous rejoindre cet évènement ?",
   "event.loginToAttend.desc": "Créez un compte ou connectez-vous pour covoiturer à l'événement",
   "event.loginToAttend.login": "$t(menu.login)",

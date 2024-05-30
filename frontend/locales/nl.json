@@ -69,6 +69,7 @@
   "event.filter.allDates": "Alle datums",
   "event.filter.dates": "Meerdere datums",
   "event.filter.title": "Datums filteren",
+  "event.loginToSetAlert": "Waarschuwingen zijn alleen beschikbaar voor de deelnemers aan deze carpool.",
   "event.loginToAttend": "Wilt u deelnemen aan deze afspraak?",
   "event.loginToAttend.desc": "Registreer of log in om deel te nemen",
   "event.loginToAttend.login": "$t(menu.login)",

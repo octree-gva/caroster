@@ -6,6 +6,7 @@ interface UserPermissions {
   canEditEventOptions: () => boolean;
   canEditEventDetails: () => boolean;
   canEditWaitingList: () => boolean;
+  canSetAlert: () => boolean;
   canAddTravel: () => boolean;
   canEditTravel: (travel: TravelEntity) => boolean;
   canJoinTravels: () => boolean;
@@ -18,6 +19,7 @@ const noPermissions = {
   canEditEventOptions: () => false,
   canEditEventDetails: () => false,
   canEditWaitingList: () => false,
+  canSetAlert: () => false,
   canAddTravel: () => false,
   canEditTravel: () => false,
   canJoinTravels: () => false,
@@ -39,6 +41,7 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
     canEditEventOptions: () => true,
     canEditEventDetails: () => true,
     canEditWaitingList: () => true,
+    canSetAlert: () => true,
     canAddTravel: () => true,
     canEditTravel: () => true,
     canJoinTravels: () => true,
@@ -61,8 +64,10 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
             travel.attributes.user?.data?.id || travel.attributes.user;
           return travelCreatorId === userId;
         },
+        
         canJoinTravels: () => true,
         canAddTravel: () => true,
+        canSetAlert: () => true,
         canDeletePassenger: passenger => {
           const travel = event?.travels?.data?.find(travel =>
             travel.attributes.passengers.data.some(
@@ -91,6 +96,7 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
         canSeePassengerDetails: () => false,
         canDeletePassenger: () => true,
         canEditEventOptions: () => userIsEventCreator,
+        canSetAlert: () => false,
         canJoinTravels: () => connected,
       },
     };

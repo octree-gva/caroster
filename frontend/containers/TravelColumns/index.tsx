@@ -15,7 +15,7 @@ import NoCar from './NoCar';
 import {TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
 import MasonryContainer from './MasonryContainer';
-import LoginToAttend from './LoginToAttend';
+import LoginToAttend from '../LoginToAttend/LoginToAttend';
 import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
@@ -119,7 +119,7 @@ const TravelColumns = (props: Props) => {
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {!canAddTravel() && (
             <MasonryContainer key="no_other_travel">
-              <LoginToAttend />
+              <LoginToAttend title={t('event.loginToAttend')}/>
             </MasonryContainer>
           )}
           {displayedTravels?.map(travel => {

@@ -69,6 +69,7 @@
   "event.filter.allDates": "All dates",
   "event.filter.dates": "Multiple dates",
   "event.filter.title": "Filter dates",
+  "event.loginToSetAlert": "Alerts are only available to the attendees of this carpool.",
   "event.loginToAttend": "Do you want to attend this event ?",
   "event.loginToAttend.desc": "Signup or log in to carpool to the event",
   "event.loginToAttend.login": "$t(menu.login)",
