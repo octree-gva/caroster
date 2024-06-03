@@ -5,19 +5,21 @@ import TuneIcon from '@mui/icons-material/Tune';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import LinearProgress from '@mui/material/LinearProgress';
+import Chip from '@mui/material/Chip';
 import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
-import {TravelEntity} from '../../generated/graphql';
 import usePermissions from '../../hooks/usePermissions';
-import Chip from '@mui/material/Chip';
 import useProfile from '../../hooks/useProfile';
+import {TravelEntity} from '../../generated/graphql';
 
 interface Props {
   travel: TravelEntity;
   toggleEditing: () => void;
 }
+
+const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
 
 const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
@@ -106,6 +108,9 @@ const Header = (props: Props) => {
               {travel.attributes.meeting}
             </Link>
           </Typography>
+          {MAPBOX_CONFIGURED && (
+            <Typography variant="overline" color="warning.main">{t`placeInput.noCoordinates`}</Typography>
+          )}
         </Box>
       )}
       {!!travel.attributes.details && (
@@ -113,7 +118,7 @@ const Header = (props: Props) => {
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.details')}
           </Typography>
-          <Typography variant="body1">{travel.attributes.details}</Typography>
+          <Typography variant="body1" sx={{whiteSpace: 'pre-line'}}>{travel.attributes.details}</Typography>
         </Box>
       )}
       <LinearProgress

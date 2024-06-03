@@ -22,8 +22,9 @@ const LangSelector = (props: Props) => {
       >
         <MenuItem value={'fr'}>{t`PROTECTED.languages.fr`}</MenuItem>
         <MenuItem value={'en'}>{t`PROTECTED.languages.en`}</MenuItem>
+        <MenuItem value={'en'}>{t`PROTECTED.languages.nl`}</MenuItem>
       </Select>
     </FormControl>
   );
-};
+};  
 export default LangSelector;
