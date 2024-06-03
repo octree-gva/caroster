@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Linkify from 'linkify-react';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import TuneIcon from '@mui/icons-material/Tune';
@@ -12,6 +13,7 @@ import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
 import usePermissions from '../../hooks/usePermissions';
 import useProfile from '../../hooks/useProfile';
+import DetailsLink from './DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
 
 interface Props {
@@ -28,7 +30,7 @@ const Header = (props: Props) => {
   const {
     userPermissions: {canEditTravel},
   } = usePermissions();
-  const {setFocusOnTravel, focusedTravel} = useMapStore();
+  const {setFocusOnTravel} = useMapStore();
   const {userId} = useProfile();
   const isUserTripCreator =
     userId && userId === travel.attributes.user?.data?.id;
@@ -118,7 +120,12 @@ const Header = (props: Props) => {
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.details')}
           </Typography>
-          <Typography variant="body1" sx={{whiteSpace: 'pre-line'}}>{travel.attributes.details}</Typography>
+
+          <Typography variant="body1" sx={{whiteSpace: 'pre-line'}} onClick={e => e.stopPropagation()}>
+            <Linkify options={{render: DetailsLink}}>
+              {travel.attributes.details}
+            </Linkify>
+          </Typography>
         </Box>
       )}
       <LinearProgress
