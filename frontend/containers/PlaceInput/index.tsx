@@ -1,16 +1,14 @@
 import {useState} from 'react';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
 import {debounce} from '@mui/material/utils';
-import {SessionToken} from '@mapbox/search-js-core';
 import {useTranslation} from 'react-i18next';
 import useLocale from '../../hooks/useLocale';
-import {MapboxSuggestion} from '../../pages/api/mapbox/searchbox/suggest';
-import {GeocodedOption} from '../../pages/api/mapbox/searchbox/retrieve';
+import getPlacesSuggestions from '../../lib/getPlacesSuggestion';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
 
 interface Props {
   place: string;
@@ -30,14 +28,12 @@ interface Props {
   disabled?: boolean;
 }
 
-type Option = MapboxSuggestion | {name: String; previous?: Boolean};
-
 const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
 
 const PlaceInput = ({
+  place = '',
   latitude,
   longitude,
-  place = '',
   onSelect,
   label,
   textFieldProps,
@@ -47,43 +43,22 @@ const PlaceInput = ({
   const {locale} = useLocale();
   const [mapboxAvailable, setMapboxAvailable] = useState(MAPBOX_CONFIGURED);
   const [noCoordinates, setNoCoordinates] = useState(!latitude || !longitude);
-  const previousOption = place ? {name: place, previous: true} : null;
-  const sessionToken = new SessionToken();
+  const previousOption = place ? {place_name: place, previous: true} : null;
 
-  const [options, setOptions] = useState([] as Array<Option>);
-
-  const getOptionDecorators = option => {
-    if (option.mapbox_id) {
-      return {secondary: option.address || option.place_formatted};
-    } else {
-      return {
-        secondary: t`placeInput.item.noCoordinates`,
-        color: 'warning.main',
-      };
-    }
-  };
-
+  const [options, setOptions] = useState([] as Array<any>);
   const onChange = async (e, selectedOption) => {
-    if (selectedOption.mapbox_id) {
-      const geocodedFeature: GeocodedOption = await fetch(
-        '/api/mapbox/searchbox/retrieve?' +
-          new URLSearchParams({
-            id: selectedOption.mapbox_id,
-            sessionToken: String(sessionToken),
-            locale,
-          })
-      ).then(response => response.json());
-      const {longitude, latitude} = geocodedFeature.coordinates;
+    if (selectedOption.center) {
+      const [optionLongitude, optionLatitude] = selectedOption.center;
       setNoCoordinates(false);
       onSelect({
-        place: geocodedFeature.name,
-        latitude,
-        longitude,
+        place: selectedOption.place_name,
+        latitude: optionLatitude,
+        longitude: optionLongitude,
       });
     } else {
       setNoCoordinates(true);
       onSelect({
-        place: selectedOption.name,
+        place: selectedOption.place_name,
         latitude: null,
         longitude: null,
       });
@@ -92,21 +67,33 @@ const PlaceInput = ({
 
   const updateOptions = debounce(async (e, search: string) => {
     if (search !== '') {
-      try {
-        await fetch(
-          '/api/mapbox/searchbox/suggest?' +
-            new URLSearchParams({
-              search,
-              sessionToken,
-              locale,
-            })
-        )
-          .then(response => response.json())
-          .then(suggestions => setOptions([{name: search}, ...suggestions]));
-      } catch (err) {
-        console.warn(err);
-        setMapboxAvailable(false);
-      }
+      getPlacesSuggestions({search, proximity: 'ip', locale}).then(
+        suggestions => {
+          let defaultOptions = [];
+          if (previousOption) {
+            defaultOptions = [previousOption];
+          }
+          if (search && search !== previousOption?.place_name) {
+            defaultOptions = [...defaultOptions, {place_name: search}];
+          }
+          if (suggestions?.length >= 1) {
+            setMapboxAvailable(true);
+            const suggestionsWithoutCopies = suggestions.filter(
+              ({place_name}) =>
+                place_name !== search &&
+                place_name !== previousOption?.place_name
+            );
+            const uniqueOptions = [
+              ...defaultOptions,
+              ...suggestionsWithoutCopies,
+            ];
+            setOptions(uniqueOptions);
+          } else {
+            setMapboxAvailable(false);
+            setOptions(defaultOptions);
+          }
+        }
+      );
     }
   }, 400);
 
@@ -127,10 +114,10 @@ const PlaceInput = ({
     <Autocomplete
       freeSolo
       disableClearable
-      getOptionLabel={option => option?.name || place}
+      getOptionLabel={option => option.place_name}
       options={options}
-      defaultValue={previousOption}
       autoComplete
+      defaultValue={previousOption}
       filterOptions={x => x}
       noOptionsText={t('autocomplete.noMatch')}
       onChange={onChange}
@@ -157,14 +144,16 @@ const PlaceInput = ({
         />
       )}
       renderOption={(props, option) => {
-        const {color, secondary} = getOptionDecorators(option);
         if (option.previous) return null;
+
         return (
-          <ListItem key={option.mapbox_id || 'text'} {...props}>
+          <ListItem key={option.id || 'text'} {...props}>
             <ListItemText
-              primary={option.name}
-              secondary={secondary}
-              secondaryTypographyProps={{color}}
+              primary={option.place_name}
+              secondary={!option.center && t`placeInput.item.noCoordinates`}
+              secondaryTypographyProps={{
+                color: option.center ? 'inherit' : 'warning.main',
+              }}
             />
           </ListItem>
         );

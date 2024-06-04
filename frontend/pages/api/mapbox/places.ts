@@ -1,18 +1,18 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 
-export type MapboxSuggestion = {name: string; mapbox_id: string, address: string; place_formatted: string};
+type ResponseData = Array<{place_name: string; center: [number, number]}>;
 
 const {MAPBOX_TOKEN, MAPBOX_URL} = process.env;
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Array<MapboxSuggestion>>
+  res: NextApiResponse<ResponseData>
 ) {
-  const {search, proximity = 'ip', sessionToken, locale} = req.query;
+  const {search, proximity = 'ip', locale} = req.query;
   if (!search) return res.status(400).send(null);
   else if (!MAPBOX_TOKEN) return res.status(500).send(null);
 
-  const url = `${MAPBOX_URL}search/searchbox/v1/suggest?q=${search}&proximity=${proximity}&language=${locale}&access_token=${MAPBOX_TOKEN}&session_token=${sessionToken}`;
+  const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?proximity=${proximity}&access_token=${MAPBOX_TOKEN}&language=${locale}`;
 
   const mapBoxResult = await fetch(url)
     .then(response => {
@@ -25,10 +25,9 @@ export default async function handler(
       console.error(error);
     });
 
-  if (mapBoxResult?.suggestions) {
-    console.log(url)
-    res.status(200).send(mapBoxResult.suggestions);
+  if (mapBoxResult?.features) {
+    res.status(200).send(mapBoxResult.features);
     return;
   }
-  res.send([]);
+  res.status(500).send(null);
 }
