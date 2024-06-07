@@ -61,14 +61,6 @@ const EventPopup = ({event}: Props) => {
             </Typography>
           </Box>
         )}
-        {!!event.description && (
-          <Box sx={{marginTop: 2}}>
-            <Typography variant="overline" color="GrayText">
-              {t('event.fields.description')}
-            </Typography>
-            <Typography variant="body1">{event.description}</Typography>
-          </Box>
-        )}
       </Card>
     </Popup>
   );

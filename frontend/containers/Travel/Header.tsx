@@ -13,7 +13,7 @@ import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
 import usePermissions from '../../hooks/usePermissions';
 import useProfile from '../../hooks/useProfile';
-import DetailsLink from './DetailsLink';
+import DetailsLink from '../DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
 
 interface Props {
@@ -37,6 +37,9 @@ const Header = (props: Props) => {
 
   const passengersCount = travel?.attributes.passengers?.data.length || 0;
   const availableSeats = travel?.attributes.seats - passengersCount || 0;
+
+  const tripHasValidCoordinates =
+    travel.attributes.meeting_latitude && travel.attributes.meeting_longitude;
 
   return (
     <Box
@@ -110,8 +113,11 @@ const Header = (props: Props) => {
               {travel.attributes.meeting}
             </Link>
           </Typography>
-          {MAPBOX_CONFIGURED && (
-            <Typography variant="overline" color="warning.main">{t`placeInput.noCoordinates`}</Typography>
+          {MAPBOX_CONFIGURED && !tripHasValidCoordinates && (
+            <Typography
+              variant="overline"
+              color="warning.main"
+            >{t`placeInput.noCoordinates`}</Typography>
           )}
         </Box>
       )}
@@ -121,7 +127,11 @@ const Header = (props: Props) => {
             {t('travel.fields.details')}
           </Typography>
 
-          <Typography variant="body1" sx={{whiteSpace: 'pre-line'}} onClick={e => e.stopPropagation()}>
+          <Typography
+            variant="body1"
+            sx={{whiteSpace: 'pre-line'}}
+            onClick={e => e.stopPropagation()}
+          >
             <Linkify options={{render: DetailsLink}}>
               {travel.attributes.details}
             </Linkify>

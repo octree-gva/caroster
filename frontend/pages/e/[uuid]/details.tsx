@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Linkify from 'linkify-react';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -14,6 +15,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {PropsWithChildren, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import pageUtils from '../../../lib/pageUtils';
+import DetailsLink from '../../../containers/DetailsLink';
 import ShareEvent from '../../../containers/ShareEvent';
 import PlaceInput from '../../../containers/PlaceInput';
 import LangSelector from '../../../components/LangSelector';
@@ -134,55 +136,61 @@ const DetailsTab: TabComponent<Props> = ({}) => {
             {t('event.details')}
           </Typography>
           {canEditEventDetails() && modifyButton}
-          {(isEditing || event.name) && <Box pt={2} pr={1.5}>
-            <Typography variant="overline">{t('event.fields.name')}</Typography>
-            <Typography>
-              {isEditing ? (
-                <TextField
-                  size="small"
-                  fullWidth
-                  value={event.name}
-                  onChange={e => setEventUpdate({name: e.target.value})}
-                  name="name"
-                  id="EditEventName"
-                />
-              ) : (
-                <Typography id="EventName">
-                  {event.name}
-                </Typography>
-              )}
-            </Typography>
-          </Box>}
-          {(isEditing || event.address) && <Box pt={2} pr={1.5}>
-            <Typography variant="overline">{t('event.fields.date')}</Typography>
-            {isEditing ? (
-              <Typography>
-                <DatePicker
-                  slotProps={{
-                    textField: {
-                      size: 'small',
-                      id: `EditEventDate`,
-                      fullWidth: true,
-                      placeholder: t('event.fields.date_placeholder'),
-                    },
-                  }}
-                  format="DD/MM/YYYY"
-                  value={moment(event.date)}
-                  onChange={date =>
-                    setEventUpdate({
-                      date: !date ? null : moment(date).format('YYYY-MM-DD'),
-                    })
-                  }
-                />
+          {(isEditing || event.name) && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('event.fields.name')}
               </Typography>
-            ) : (
-              <Box position="relative">
-                <Typography id="EventDate">
-                   {moment(event.date).format('DD/MM/YYYY')}
+              <Typography>
+                {isEditing ? (
+                  <TextField
+                    size="small"
+                    fullWidth
+                    value={event.name}
+                    onChange={e => setEventUpdate({name: e.target.value})}
+                    name="name"
+                    id="EditEventName"
+                  />
+                ) : (
+                  <Typography id="EventName">{event.name}</Typography>
+                )}
+              </Typography>
+            </Box>
+          )}
+          {(isEditing || event.address) && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('event.fields.date')}
+              </Typography>
+              {isEditing ? (
+                <Typography>
+                  <DatePicker
+                    slotProps={{
+                      textField: {
+                        size: 'small',
+                        id: `EditEventDate`,
+                        fullWidth: true,
+                        placeholder: t('event.fields.date_placeholder'),
+                      },
+                    }}
+                    format="DD/MM/YYYY"
+                    value={moment(event.date)}
+                    onChange={date =>
+                      setEventUpdate({
+                        date: !date ? null : moment(date).format('YYYY-MM-DD'),
+                      })
+                    }
+                  />
                 </Typography>
-              </Box>
-            )}
-          </Box>}
+              ) : (
+                <Box position="relative">
+                  <Typography id="EventDate">
+                    {moment(event.date).format('DD/MM/YYYY')}
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          )}
           {(isEditing || event.address) && (
             <Box pt={2} pr={1.5}>
               <Typography variant="overline">
@@ -240,8 +248,13 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                   />
                 </Typography>
               ) : (
-                <Typography id="EventDescription" sx={{pr: 3}}>
-                  {event.description}
+                <Typography
+                  id="EventDescription"
+                  sx={{pr: 3, whiteSpace: 'pre-line'}}
+                >
+                  <Linkify options={{render: DetailsLink}}>
+                    {event.description}
+                  </Linkify>
                 </Typography>
               )}
             </Box>
