@@ -1195,7 +1195,6 @@ export interface ApiTravelTravel extends Schema.CollectionType {
   };
   attributes: {
     meeting: Attribute.String;
-    departure: Attribute.DateTime;
     details: Attribute.Text;
     vehicleName: Attribute.String;
     seats: Attribute.Integer &

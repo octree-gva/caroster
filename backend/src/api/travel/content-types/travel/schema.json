@@ -15,9 +15,6 @@
     "meeting": {
       "type": "string"
     },
-    "departure": {
-      "type": "datetime"
-    },
     "details": {
       "type": "text"
     },

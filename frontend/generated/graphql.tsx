@@ -1426,7 +1426,6 @@ export type StringFilterInput = {
 export type Travel = {
   __typename?: 'Travel';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  departure?: Maybe<Scalars['DateTime']['output']>;
   departureDate?: Maybe<Scalars['Date']['output']>;
   departureTime?: Maybe<Scalars['String']['output']>;
   details?: Maybe<Scalars['String']['output']>;
@@ -1469,7 +1468,6 @@ export type TravelEntityResponseCollection = {
 export type TravelFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<TravelFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
-  departure?: InputMaybe<DateTimeFilterInput>;
   departureDate?: InputMaybe<DateFilterInput>;
   departureTime?: InputMaybe<StringFilterInput>;
   details?: InputMaybe<StringFilterInput>;
@@ -1489,7 +1487,6 @@ export type TravelFiltersInput = {
 };
 
 export type TravelInput = {
-  departure?: InputMaybe<Scalars['DateTime']['input']>;
   departureDate?: InputMaybe<Scalars['Date']['input']>;
   departureTime?: InputMaybe<Scalars['String']['input']>;
   details?: InputMaybe<Scalars['String']['input']>;
