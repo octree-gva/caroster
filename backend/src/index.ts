@@ -13,8 +13,22 @@ export default {
 
     // Because of bug https://github.com/strapi/strapi/issues/17995, we're forced
     // to enable "plugin::users-permissions.user" permission for Authenticated role.
+    // Disable REST endpoints
     context.strapi.controller("plugin::users-permissions.user").find = (ctx) =>
       ctx.unauthorized();
+    context.strapi.controller("api::event.event").find = (ctx) =>
+      ctx.unauthorized();
+    // Disable GQL methods
+    strapi
+      .plugin("graphql")
+      .service("extension")
+      .shadowCRUD("plugin::users-permissions.user")
+      .disableAction("find");
+    strapi
+      .plugin("graphql")
+      .service("extension")
+      .shadowCRUD("api::event.event")
+      .disableAction("find");
   },
 
   /**

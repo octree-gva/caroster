@@ -8,7 +8,11 @@ const publicPerms = [
   "api::stripe.stripe.handleWebhook",
 ];
 
-const authenticated = [...publicPerms, "plugin::users-permissions.user.me"];
+const authenticated = [
+  ...publicPerms,
+  "api::event.event.find",
+  "plugin::users-permissions.user.me",
+];
 
 export default {
   roles: {
