@@ -33,14 +33,6 @@
       },
       "type": "string"
     },
-    "faq_link": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string"
-    },
     "announcement": {
       "pluginOptions": {
         "i18n": {

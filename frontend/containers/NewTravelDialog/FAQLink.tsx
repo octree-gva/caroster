@@ -1,16 +1,14 @@
 import Link, {LinkProps} from '@mui/material/Link';
-import useSettings from '../../hooks/useSettings';
 
 interface Props {
   text: string;
   link: string;
 }
 
-const FAQLink = ({text, link, sx}: Props & LinkProps) => {
-  const settings = useSettings();
+const FAQLink = ({text, link}: Props & LinkProps) => {
 
   return (
-    <Link sx={sx} target="_blank" href={`${settings?.faq_link}${link}`}>
+    <Link target="_blank" href={link}>
       {text}
     </Link>
   );

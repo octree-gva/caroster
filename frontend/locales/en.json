@@ -251,7 +251,7 @@
   "travel.creation.name": "Name of the car",
   "travel.creation.notes": "Additional information",
   "travel.creation.phone": "Telephone number",
-  "travel.creation.phoneHelper.faq": "/en/faq",
+  "travel.creation.phoneHelper.faq": "https://caroster.io/en/faq",
   "travel.creation.phoneHelper.why": "Why do we ask for a phone number ?",
   "travel.creation.seats": "Number of available seats",
   "travel.creation.submit": "Add",

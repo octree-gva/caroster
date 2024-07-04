@@ -1110,12 +1110,6 @@ export interface ApiSettingSetting extends Schema.SingleType {
           localized: false;
         };
       }>;
-    faq_link: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     announcement: Attribute.RichText &
       Attribute.SetPluginOptions<{
         i18n: {

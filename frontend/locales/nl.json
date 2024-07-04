@@ -248,7 +248,7 @@
   "travel.creation.name": "Voertuignaam",
   "travel.creation.notes": "Aanvullende informatie",
   "travel.creation.phone": "Telefoonnummer",
-  "travel.creation.phoneHelper.faq": "/nl/faq",
+  "travel.creation.phoneHelper.faq": "https://caroster.io/en/faq",
   "travel.creation.phoneHelper.why": "Waarom wordt er om een telefoonnummer gevraagd?",
   "travel.creation.seats": "Aantal beschikbare plaatsen",
   "travel.creation.submit": "Toevoegen",

@@ -238,7 +238,7 @@
     "travel.creation.name": "",
     "travel.creation.notes": "",
     "travel.creation.phone": "",
-    "travel.creation.phoneHelper.faq": "/pl/faq",
+    "travel.creation.phoneHelper.faq": "https://caroster.io/en/faq",
     "travel.creation.phoneHelper.why": "",
     "travel.creation.seats": "",
     "travel.creation.submit": "Dodaj",

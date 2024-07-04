@@ -68,11 +68,9 @@ export const VEHICLE: Partial<Vehicle> = {
 export const SETTING_FR: Partial<Setting> = {
   announcement: "Annonce en français",
   about_link: "https://about.test",
-  faq_link: "https://faq.test",
 };
 
 export const SETTING_EN: Partial<Setting> = {
   announcement: "Annoucement in english",
   about_link: "https://about.test",
-  faq_link: "https://faq.test",
 };

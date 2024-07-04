@@ -5,7 +5,6 @@ query setting($locale: I18NLocaleCode!) {
       attributes {
         gtm_id
         about_link
-        faq_link
         announcement
         matomo_script_url
         opencollective_link

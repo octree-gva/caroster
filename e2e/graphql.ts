@@ -1354,7 +1354,6 @@ export type Setting = {
   code_link?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   data_policy_link?: Maybe<Scalars['String']>;
-  faq_link?: Maybe<Scalars['String']>;
   gtm_id?: Maybe<Scalars['String']>;
   locale?: Maybe<Scalars['String']>;
   localizations?: Maybe<SettingRelationResponseCollection>;
@@ -1381,7 +1380,6 @@ export type SettingInput = {
   announcement?: InputMaybe<Scalars['String']>;
   code_link?: InputMaybe<Scalars['String']>;
   data_policy_link?: InputMaybe<Scalars['String']>;
-  faq_link?: InputMaybe<Scalars['String']>;
   gtm_id?: InputMaybe<Scalars['String']>;
   matomo_script_url?: InputMaybe<Scalars['String']>;
   opencollective_link?: InputMaybe<Scalars['String']>;
@@ -2446,7 +2444,6 @@ export const SettingDocument = gql`
       attributes {
         gtm_id
         about_link
-        faq_link
         announcement
         matomo_script_url
         opencollective_link
@@ -2764,7 +2761,7 @@ export type SettingQueryVariables = Exact<{
 }>;
 
 
-export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, faq_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null, stripe_dashboard_link?: string | null, tos_link?: string | null, data_policy_link?: string | null } | null } | null } | null };
+export type SettingQuery = { __typename?: 'Query', setting?: { __typename?: 'SettingEntityResponse', data?: { __typename?: 'SettingEntity', id?: string | null, attributes?: { __typename?: 'Setting', gtm_id?: string | null, about_link?: string | null, announcement?: string | null, matomo_script_url?: string | null, opencollective_link?: string | null, code_link?: string | null, stripe_dashboard_link?: string | null, tos_link?: string | null, data_policy_link?: string | null } | null } | null } | null };
 
 export type TravelFieldsFragment = { __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departure?: any | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, seats?: number | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, phone?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null };
 
