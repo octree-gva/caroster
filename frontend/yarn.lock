@@ -2204,6 +2204,25 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tolgee/core@5.28.2":
+  version "5.28.2"
+  resolved "https://registry.yarnpkg.com/@tolgee/core/-/core-5.28.2.tgz#d3be5753b04b53f3bfb0082d7ff83a8a8cd93f81"
+  integrity sha512-9gFhzT5V7IA4ndAABgbbCVZ92o7S+H1rfjgWT6amCSaQ2ZWlDHZh5dc3bPEHPXHQD2ebqJLgDr/X80ZNU6xKBg==
+
+"@tolgee/i18next@^5.28.2":
+  version "5.28.2"
+  resolved "https://registry.yarnpkg.com/@tolgee/i18next/-/i18next-5.28.2.tgz#1cb790bded4109b70d5057e5446feea54076eeac"
+  integrity sha512-eYhKF2W+D1Ex360QosasKe1KsPWQxpPCkIZx19yl+I7JaV6eY0ckRWyKLyP9scoiz6RbbWhtspS15me9+uKCSA==
+  dependencies:
+    "@tolgee/web" "5.28.2"
+
+"@tolgee/web@5.28.2":
+  version "5.28.2"
+  resolved "https://registry.yarnpkg.com/@tolgee/web/-/web-5.28.2.tgz#113c3959de4a48bc9ecc6728e7aafb862cc794e7"
+  integrity sha512-7t8A9JgOSoJcKRsvKHJpODDCbP64JN7ulDiFtvu5pVnRzVx7cDzY6eczUC3Ab7uCSUio7C5+9GanD91KnzxjWA==
+  dependencies:
+    "@tolgee/core" "5.28.2"
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.11.tgz#6ee46400685f130e278128c7b38b7e031ff5b2f2"

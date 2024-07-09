@@ -21,6 +21,7 @@
     "@mui/material": "^5.14.5",
     "@mui/styles": "^5.14.5",
     "@mui/x-date-pickers": "^6.11.2",
+    "@tolgee/i18next": "^5.28.2",
     "cookies": "^0.9.1",
     "crypto-js": "^4.1.1",
     "deepmerge": "^4.3.1",
