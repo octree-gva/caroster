@@ -27,7 +27,8 @@ export default ({ nexus, strapi }) => ({
   ],
   resolvers: {
     Event: {
-      administrators: (event) => event.administrators?.split(/, ?/).filter(Boolean) || [],
+      administrators: (event) =>
+        event.administrators?.split(/, ?/).filter(Boolean) || [],
     },
     Mutation: {
       addEventAdmin: {
@@ -39,7 +40,8 @@ export default ({ nexus, strapi }) => ({
           );
           if (!event) throw new errors.NotFoundError(`Event not found`);
 
-          const currentAdmins = event.administrators?.split(/, ?/).filter(Boolean) || [];
+          const currentAdmins =
+            event.administrators?.split(/, ?/).filter(Boolean) || [];
 
           // Check if user is authorized to add event admin
           const user = context.state.user;
@@ -73,10 +75,16 @@ export default ({ nexus, strapi }) => ({
                 user: targetedUser.id,
               },
             });
-          } else
+          } else {
             strapi.log.warn(
               `No user with email '${args.email}'. Can't create notification AddedAsAdmin for event ${args.eventId}`
             );
+            strapi
+              .service("api::email.email")
+              .sendEmailNotif(args.email, "AddedAsAdmin", event.lang, {
+                event,
+              });
+          }
 
           // Send formated response
           const { toEntityResponse } = strapi
