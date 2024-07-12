@@ -4,6 +4,7 @@ fragment VehicleFields on VehicleEntity {
     name
     seats
     phone_number
+    phoneCountry
   }
 }
 

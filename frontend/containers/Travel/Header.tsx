@@ -15,6 +15,7 @@ import usePermissions from '../../hooks/usePermissions';
 import useProfile from '../../hooks/useProfile';
 import DetailsLink from '../DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
+import { getFormatedPhoneNumber } from '../../lib/phoneNumbers';
 
 interface Props {
   travel: TravelEntity;
@@ -94,7 +95,7 @@ const Header = (props: Props) => {
             {t('travel.fields.phone')}
           </Typography>
           <Typography variant="body1" id="TravelPhone">
-            {travel.attributes.phone_number}
+            {getFormatedPhoneNumber({phone: travel.attributes.phone_number, phoneCountry: travel.attributes.phoneCountry})}
           </Typography>
         </Box>
       )}

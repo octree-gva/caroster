@@ -1064,6 +1064,7 @@ export interface ApiPassengerPassenger extends Schema.CollectionType {
       'api::event.event'
     >;
     phone: Attribute.String;
+    phoneCountry: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1216,6 +1217,7 @@ export interface ApiTravelTravel extends Schema.CollectionType {
     >;
     departureDate: Attribute.Date;
     departureTime: Attribute.String;
+    phoneCountry: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1290,8 +1292,6 @@ export interface ApiVehicleVehicle extends Schema.CollectionType {
     displayName: 'Vehicle';
   };
   options: {
-    increments: true;
-    timestamps: true;
     draftAndPublish: false;
   };
   attributes: {
@@ -1307,6 +1307,7 @@ export interface ApiVehicleVehicle extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    phoneCountry: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

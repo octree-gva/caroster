@@ -8,10 +8,12 @@ import moment from 'moment';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
+import {CountryIso2} from 'react-international-phone';
 import {useTranslation} from 'react-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
 import PlaceInput from '../PlaceInput';
+import PhoneInput from '../../components/PhoneInput';
 import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
 
@@ -50,6 +52,10 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       : null
   );
   const [phone, setPhone] = useState(travel?.attributes.phone_number ?? '');
+  const [phoneCountry, setPhoneCountry] = useState<CountryIso2>(
+    travel?.attributes.phoneCountry ?? ''
+  );
+  const [phoneError, setPhoneError] = useState(false);
   const [details, setDetails] = useState(travel?.attributes.details ?? '');
 
   // Click on ESQ closes the form
@@ -76,6 +82,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       details,
       seats,
       phone_number: phone,
+      phoneCountry,
       vehicleName: name,
       departureDate: date ? moment(date).format('YYYY-MM-DD') : '',
       departureTime: time ? moment(time).format('HH:mm') : '',
@@ -128,12 +135,15 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           name="name"
           id="EditTravelName"
         />
-        <TextField
-          label={t('travel.creation.phone')}
-          fullWidth
-          sx={{pb: 2}}
+        <PhoneInput
           value={phone}
-          onChange={e => setPhone(e.target.value)}
+          onChange={({phone, country, error}) => {
+            setPhone(phone);
+            setPhoneCountry(country);
+            setPhoneError(error);
+          }}
+          label={t('travel.creation.phone')}
+          sx={{pb: 2}}
           name="phone"
           id="EditTravelPhone"
         />
@@ -197,6 +207,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           color="primary"
           onClick={onSave}
           id="TravelSave"
+          disabled={phoneError}
         >
           {t('generic.save')}
         </Button>

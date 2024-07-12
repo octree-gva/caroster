@@ -14,11 +14,12 @@ import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {useTranslation} from 'react-i18next';
+import PhoneInput from '../../components/PhoneInput';
+import PlaceInput from '../PlaceInput';
 import useEventStore from '../../stores/useEventStore';
 import useActions from './useActions';
 import FAQLink from './FAQLink';
 import {VehicleEntity} from '../../generated/graphql';
-import PlaceInput from '../PlaceInput';
 
 interface Props {
   selectedVehicle: VehicleEntity;
@@ -48,12 +49,16 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
   const [phone, setPhone] = useState(
     selectedVehicle?.attributes.phone_number || ''
   );
+  const [phoneCountry, setPhoneCountry] = useState(
+    selectedVehicle?.attributes.phoneCountry || ''
+  );
+  const [phoneError, setPhoneError] = useState(false);
   const [details, setDetails] = useState('');
   const [dateError, setDateError] = useState(false);
   const [titleError, setTitleError] = useState(false);
   const [isTitleEmpty, setIsTitleEmpty] = useState(true);
 
-  const canCreate = !!name && !!seats;
+  const canCreate = !!name && !!seats && !phoneError;
 
   const clearState = () => {
     setName('');
@@ -63,6 +68,7 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
     setMeetingLongitude(null);
     setDate(moment());
     setPhone('');
+    setPhoneCountry('');
     setDetails('');
   };
 
@@ -91,6 +97,7 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
       seats,
       vehicleName: name,
       phone_number: phone,
+      phoneCountry: phoneCountry,
       departureDate: date ? moment(date).format('YYYY-MM-DD') : '',
       departureTime: time ? moment(time).format('HH:mm') : '',
       event: event.id,
@@ -160,16 +167,18 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
             FormHelperTextProps={{sx: {color: 'warning.main'}}}
           />
 
-          <TextField
+          <PhoneInput
+            value={phone}
+            onChange={({phone, country, error}) => {
+              setPhone(phone);
+              setPhoneCountry(country);
+              setPhoneError(error);
+            }}
+            label={t('travel.creation.phone')}
+            name="phone"
             variant="outlined"
             size="small"
             sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
-            label={t('travel.creation.phone')}
-            fullWidth
-            inputProps={{type: 'tel'}}
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-            name="phone"
             helperText={
               <Typography variant="caption">
                 <FAQLink

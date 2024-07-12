@@ -58,6 +58,9 @@
     "departureTime": {
       "type": "string",
       "regex": "(\\d\\d:\\d\\d)?"
+    },
+    "phoneCountry": {
+      "type": "string"
     }
   }
 }

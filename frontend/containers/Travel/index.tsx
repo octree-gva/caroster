@@ -113,6 +113,7 @@ const Travel = (props: Props) => {
               }
               email={focusPassenger?.attributes.email}
               phone={focusPassenger?.attributes.phone}
+              phoneCountry={focusPassenger?.attributes.phoneCountry}
             />
           )}
         </>

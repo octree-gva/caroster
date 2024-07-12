@@ -43,6 +43,9 @@
     },
     "phone": {
       "type": "string"
+    },
+    "phoneCountry": {
+      "type": "string"
     }
   }
 }

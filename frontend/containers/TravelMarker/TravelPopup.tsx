@@ -7,6 +7,7 @@ import {TravelEntity} from '../../generated/graphql';
 import {Popup} from 'react-leaflet';
 import {useTranslation} from 'react-i18next';
 import getMapsLink from '../../lib/getMapsLink';
+import { getFormatedPhoneNumber } from '../../lib/phoneNumbers';
 
 interface Props {
   travel: TravelEntity;
@@ -32,7 +33,7 @@ const TravelPopup = ({travel}: Props) => {
               {t('travel.fields.phone')}
             </Typography>
             <Typography variant="body1">
-              {travel.attributes.phone_number}
+              {getFormatedPhoneNumber({phone: travel.attributes.phone_number, phoneCountry: travel.attributes.phoneCountry})}
             </Typography>
           </Box>
         )}

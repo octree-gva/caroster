@@ -4,9 +4,11 @@ import {
   MenuItem,
   Select,
   TextField,
+  TextFieldProps,
   Typography,
 } from '@mui/material';
 import {
+  CountryIso2,
   defaultCountries,
   FlagImage,
   getActiveFormattingMask,
@@ -18,11 +20,23 @@ import 'react-international-phone/style.css';
 
 interface Props {
   value: string;
-  onChange: (phoneNumber: string) => void;
+  onChange: ({
+    phone,
+    country,
+  }: {
+    phone: string;
+    country: CountryIso2 | '';
+    error: boolean
+  }) => void;
   label: string;
 }
 
-const PhoneInput = ({value, onChange, label}: Props) => {
+const PhoneInput = ({
+  value,
+  onChange,
+  label,
+  ...textFieldProps
+}: Omit<TextFieldProps, 'onChange'> & Props) => {
   const [phone, setPhone] = useState(value);
 
   const browserLocales = navigator.language.split('-');
@@ -34,19 +48,19 @@ const PhoneInput = ({value, onChange, label}: Props) => {
       defaultCountry: defaultCountry || defaultCountries[0][1],
       value: phone,
       countries: defaultCountries,
-      onChange: data => {
-        setPhone(data.phone);
+      onChange: ({phone, country}) => {
+        setPhone(phone);
         const mask = getActiveFormattingMask({
-          phone: data.phone,
-          country: data.country,
+          phone: phone,
+          country: country,
         });
         const digitnumbers = mask.split('').filter(c => c === '.').length;
         const isValid =
-          data.phone.length === 1 + data.country.dialCode.length + digitnumbers;
+          phone.length === 1 + country.dialCode.length + digitnumbers;
         if (isValid) {
-          onChange(data.phone);
+          onChange({phone, country: country.iso2, error: false});
         } else {
-          onChange('');
+          onChange({phone: '', country: '', error: true});
         }
       },
     });
@@ -54,7 +68,8 @@ const PhoneInput = ({value, onChange, label}: Props) => {
   return (
     <TextField
       fullWidth
-      color={value === phone ? 'primary' : 'error'}
+      error={!phone || value !== phone}
+      {...textFieldProps}
       label={label}
       value={inputValue}
       onChange={handlePhoneValueChange}

@@ -24,13 +24,12 @@ const RequestTripModal = ({open, toggle, travel}: Props) => {
   const {profile, userId} = useProfile();
   const [createPassenger] = useCreatePassengerMutation();
   const [email, setEmail] = useState('');
-  useEffect(
-    () => {
-      setEmail(profile?.email);
-    },
-    [profile?.email]
-  );
+  useEffect(() => {
+    setEmail(profile?.email);
+  }, [profile?.email]);
   const [phone, setPhone] = useState('');
+  const [phoneCountry, setPhoneCountry] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
   const {event} = useEventStore();
   const {addToEvent} = useAddToEvents();
   const addToast = useToastStore(s => s.addToast);
@@ -47,6 +46,7 @@ const RequestTripModal = ({open, toggle, travel}: Props) => {
             user: userId,
             email,
             phone,
+            phoneCountry,
             name: hasName ? userName : profile.username,
             travel: travel.id,
             event: event.id,
@@ -69,18 +69,23 @@ const RequestTripModal = ({open, toggle, travel}: Props) => {
       onSubmit={onSubmit}
       title={t('travel.requestTrip.title')}
       action={t('travel.requestTrip.send')}
+      disabled={emailError || phoneError}
     >
       <Typography>{t('travel.requestTrip.description')}</Typography>
       <Box py={2}>
         <PhoneInput
           value={phone}
-          onChange={v => setPhone(v)}
+          onChange={({phone, country, error}) => {
+            setPhone(phone);
+            setPhoneCountry(country);
+            setPhoneError(error);
+          }}
           label={t('travel.requestTrip.phone')}
         />
       </Box>
       <TextField
         fullWidth
-        error={emailError}
+        error={emailError || phoneError}
         label={t('travel.requestTrip.email')}
         value={email}
         onChange={e => setEmail(e.target.value)}

@@ -44,6 +44,7 @@ fragment EventFields on EventEntity {
           details
           vehicleName
           phone_number
+          phoneCountry
           seats
           user {
             data {
@@ -58,6 +59,7 @@ fragment EventFields on EventEntity {
                 location
                 email
                 phone
+                phoneCountry
                 user {
                   data {
                     id

@@ -1,6 +1,10 @@
 import {Drawer, Typography, useMediaQuery, Link, Box} from '@mui/material';
 import {useTranslation} from 'react-i18next';
+import {
+  CountryIso2,
+} from 'react-international-phone';
 import DrawerPassengerHeader from './DrawerPassengerHeader';
+import { getFormatedPhoneNumber } from '../../lib/phoneNumbers';
 
 interface Props {
   isOpen: boolean;
@@ -9,7 +13,10 @@ interface Props {
   lastName: string;
   email: string;
   phone?: string;
+  phoneCountry?: '' | CountryIso2;
 }
+
+
 
 const DrawerPassenger = ({
   isOpen,
@@ -18,6 +25,7 @@ const DrawerPassenger = ({
   firstName,
   email,
   phone,
+  phoneCountry,
 }: Props) => {
   const {t} = useTranslation();
   const isMobile = useMediaQuery('(max-width:400px)');
@@ -80,7 +88,7 @@ const DrawerPassenger = ({
                 sx={{display: 'flex', flexDirection: 'row', gap: 1}}
                 href={`tel:${phone}`}
               >
-                {phone}
+                {getFormatedPhoneNumber({phone, phoneCountry})}
               </Link>
             ) : (
               <Typography variant="body1">
