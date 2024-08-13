@@ -58,7 +58,7 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
   const [titleError, setTitleError] = useState(false);
   const [isTitleEmpty, setIsTitleEmpty] = useState(true);
 
-  const canCreate = !!name && !!seats && !phoneError;
+  const canCreate = !!name && !!seats && !phoneError && phone;
 
   const clearState = () => {
     setName('');

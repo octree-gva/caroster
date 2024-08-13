@@ -207,7 +207,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           color="primary"
           onClick={onSave}
           id="TravelSave"
-          disabled={phoneError}
+          disabled={phoneError || !phone}
         >
           {t('generic.save')}
         </Button>
