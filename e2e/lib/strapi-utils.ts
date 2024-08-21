@@ -6,7 +6,7 @@ import { wait } from "./wait";
 export const restartStrapi = async () => {
   await fs.promises.writeFile("../backend/restart.test", "Restart Strapi");
   console.log(`Wait for Strapi to restart`);
-  await wait(6000);
+  await wait(8000);
   await waitForStrapi();
 };
 

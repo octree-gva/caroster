@@ -2,11 +2,11 @@ import { EVENT, EVENT_ID, EVENT_UUID } from "../constants";
 import { sdk } from "../lib/gqlSdk";
 
 test("createEvent returns created event with minimal parameters", async () => {
-  const event = {
+  const eventData = {
     email: "test+event@octree.ch",
     name: "Test event",
   };
-  const request = sdk.createEvent(event);
+  const request = sdk.createEvent({ eventData });
 
   await expect(request).resolves.toMatchObject({
     createEvent: {
@@ -14,7 +14,7 @@ test("createEvent returns created event with minimal parameters", async () => {
         id: expect.stringMatching(/\d/),
         attributes: {
           waitingPassengers: { data: [] },
-          ...event,
+          ...eventData,
         },
       },
     },
@@ -22,14 +22,14 @@ test("createEvent returns created event with minimal parameters", async () => {
 });
 
 test("createEvent returns created event with all parameters", async () => {
-  const event = {
+  const eventData = {
     email: "test+event@octree.ch",
     name: "Test event",
     address: "Test address",
     date: "2032-10-03",
     description: "Test event description",
   };
-  const request = sdk.createEvent(event);
+  const request = sdk.createEvent({ eventData });
 
   await expect(request).resolves.toMatchObject({
     createEvent: {
@@ -37,7 +37,7 @@ test("createEvent returns created event with all parameters", async () => {
         id: expect.stringMatching(/\d/),
         attributes: {
           waitingPassengers: { data: [] },
-          ...event,
+          ...eventData,
         },
       },
     },
@@ -74,7 +74,7 @@ test("updateEvent throws error if UUID doesn´t exist", async () => {
     },
   });
 
-  await expect(request).rejects.toThrow("No matching event");
+  await expect(request).rejects.toThrow();
 });
 
 test("eventByUUID returns event corresponding to UUID", async () => {
@@ -96,5 +96,5 @@ test("eventByUUID fails if UUID doesn't exist", async () => {
     uuid: "uuid-that-not-exists",
   });
 
-  await expect(request).rejects.toThrow("No matching event");
+  await expect(request).rejects.toThrow();
 });

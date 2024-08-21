@@ -203,7 +203,7 @@
   "PROTECTED.languages.nl": "Nederlands (97%)",
   "signin.email": "Email",
   "signin.emailConfirmation": "Your account has been confirmed. You can now login.",
-  "signin.errors.CredentialsSignin": "Check your email and password. If your account is linked to Google, please use login with Google.",
+  "signin.errors.CredentialsSignin": "Check your email and password. If your account is linked to Google, please use the Google auth. button.",
   "signin.errors.EmailNotConfirmed": "Your account has not been confirmed. Please check your emails",
   "signin.login": "$t(menu.login)",
   "signin.no_account": "You don't have an account ?",

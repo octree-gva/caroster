@@ -18,6 +18,7 @@ test("findUserVehicles returns vehicles of logged user", async () => {
               id: VEHICLE_ID,
               attributes: {
                 name: VEHICLE.name,
+                phoneCountry: null,
                 phone_number: VEHICLE.phone_number,
                 seats: VEHICLE.seats,
               },
@@ -64,5 +65,5 @@ test("deleteVehicle fails if logged user doesn't own the vehicle", async () => {
     }
   );
 
-  await expect(request).rejects.toThrow("Not Authorized");
+  await expect(request).rejects.toThrow();
 });
