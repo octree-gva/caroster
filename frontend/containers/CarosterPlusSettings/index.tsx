@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import usePermissions from '../../hooks/usePermissions';
 import useToastStore from '../../stores/useToastStore';
 import FormDialog from '../FormDialog';

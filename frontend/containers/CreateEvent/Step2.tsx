@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
 import {useRouter} from 'next/router';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 import PlaceInput from '../PlaceInput';
 import {EventEntity, EventInput} from '../../generated/graphql';

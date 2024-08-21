@@ -2,7 +2,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import {getSession} from 'next-auth/react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Layout from '../../layouts/Centered';
 import Logo from '../../components/Logo';
 import SignInForm from '../../containers/SignInForm';

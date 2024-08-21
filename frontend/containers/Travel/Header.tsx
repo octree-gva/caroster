@@ -8,14 +8,14 @@ import Link from '@mui/material/Link';
 import LinearProgress from '@mui/material/LinearProgress';
 import Chip from '@mui/material/Chip';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
 import usePermissions from '../../hooks/usePermissions';
 import useProfile from '../../hooks/useProfile';
 import DetailsLink from '../DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
-import { getFormatedPhoneNumber } from '../../lib/phoneNumbers';
+import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
 
 interface Props {
   travel: TravelEntity;
@@ -95,7 +95,10 @@ const Header = (props: Props) => {
             {t('travel.fields.phone')}
           </Typography>
           <Typography variant="body1" id="TravelPhone">
-            {getFormatedPhoneNumber({phone: travel.attributes.phone_number, phoneCountry: travel.attributes.phoneCountry})}
+            {getFormatedPhoneNumber({
+              phone: travel.attributes.phone_number,
+              phoneCountry: travel.attributes.phoneCountry,
+            })}
           </Typography>
         </Box>
       )}

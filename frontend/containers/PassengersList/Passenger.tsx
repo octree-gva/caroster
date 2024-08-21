@@ -9,7 +9,7 @@ import {
   Icon,
   useTheme,
 } from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useProfile from '../../hooks/useProfile';
 import {PassengerEntity} from '../../generated/graphql';
 

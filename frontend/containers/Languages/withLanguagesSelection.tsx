@@ -3,7 +3,7 @@ import {
   useUpdateMeMutation,
   Enum_Userspermissionsuser_Lang as Lang,
 } from '../../generated/graphql';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useLocale from '../../hooks/useLocale';
 
 export interface LanguageSelectionComponentProps {

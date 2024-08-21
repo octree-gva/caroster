@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Layout from '../../../layouts/Centered';
 import Logo from '../../../components/Logo';
 import LanguagesIcon from '../../../containers/Languages/Icon';

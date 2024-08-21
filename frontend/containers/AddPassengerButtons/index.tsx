@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import usePermissions from '../../hooks/usePermissions';
 
 interface Props {

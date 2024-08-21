@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useProfile from '../../hooks/useProfile';
 import useShare from '../../hooks/useShare';
 import useEventStore from '../../stores/useEventStore';

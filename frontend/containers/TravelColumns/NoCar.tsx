@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import ShareEvent from '../ShareEvent';
@@ -18,7 +18,7 @@ const NoCar = ({eventName, title, isCarosterPlus, showImage}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const router = useRouter();
-  const {uuid} = router.query
+  const {uuid} = router.query;
 
   return (
     <Box my={4} mx="auto" pb={16} mt={9} maxWidth="100%" width={340}>

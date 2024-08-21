@@ -4,6 +4,10 @@ import moment from 'moment';
 import {setCookie} from '../lib/cookies';
 import {useEffect} from 'react';
 
+// Import moment locales
+import 'moment/locale/fr';
+import 'moment/locale/nl';
+
 const defaultLocale = SupportedLocales['en'];
 
 const useLocale = (): {

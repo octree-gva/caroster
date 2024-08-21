@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import {TravelEntity} from '../../generated/graphql';
 

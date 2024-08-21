@@ -3,7 +3,7 @@ import moment from 'moment';
 import Cookies from 'cookies';
 import {useRouter} from 'next/router';
 import {getSession} from 'next-auth/react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import LayoutDefault from '../layouts/Default';
 import DashboardEvents from '../containers/DashboardEvents';
 import DashboardEmpty from '../containers/DashboardEmpty';

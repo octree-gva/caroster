@@ -1,26 +1,22 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import TextField from '@mui/material/TextField';
 
 const PREFIX = 'EditPassword';
 
 const classes = {
-  actions: `${PREFIX}-actions`
+  actions: `${PREFIX}-actions`,
 };
 
-const Root = styled('form')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('form')(({theme}) => ({
   [`& .${classes.actions}`]: {
     justifyContent: 'flex-end',
-  }
+  },
 }));
 
 const EditPassword = ({

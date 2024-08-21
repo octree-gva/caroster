@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import NextLink from 'next/link';
 import CardActions from '@mui/material/CardActions';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useSession} from 'next-auth/react';
 import useDebounce from '../../hooks/useDebounce';
 import {isValidEmail} from '../../lib/formValidation';

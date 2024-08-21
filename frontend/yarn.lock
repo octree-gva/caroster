@@ -1557,38 +1557,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-io/core@npm:^2.17.0":
-  version: 2.17.0
-  resolution: "@date-io/core@npm:2.17.0"
-  checksum: 10c0/e56df44e9b0bc14eefad8509fef2f4a0b847ea01ad0f2cf6b7b5fce5f69120e607a90b6436e84266a2b0336b6bb986fd3f56c3f4b897db85578b9050ac6610bd
+"@date-io/core@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@date-io/core@npm:3.0.0"
+  checksum: 10c0/c8a725ad5729b38d3f73b7c2bf852ac18a980d6b610832db9f87eb6821e6377854112ba4b5f8510d3e3f49d5290a50dd79ae7724bbafeb146bfdfb5b4c8a13ed
   languageName: node
   linkType: hard
 
-"@date-io/dayjs@npm:2.17.0":
-  version: 2.17.0
-  resolution: "@date-io/dayjs@npm:2.17.0"
+"@date-io/dayjs@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@date-io/dayjs@npm:3.0.0"
   dependencies:
-    "@date-io/core": "npm:^2.17.0"
+    "@date-io/core": "npm:^3.0.0"
   peerDependencies:
     dayjs: ^1.8.17
   peerDependenciesMeta:
     dayjs:
       optional: true
-  checksum: 10c0/ecf92e37a1c5afae91a8e6acb580e17dcb2b32ee2a461a5302dfb05acbcd0076c819eaa2a968f6005162aba7788ffff1b8cfbe63553484b98f79e308d6bba140
+  checksum: 10c0/0c445e6ca6dd2e39a359645f817258cf6f5909455c3b41172a2e6ccfaad85dbe2683b7328b46399f8edaf2ecffd3441b5b2ac869126d1e8765116e2fc6526816
   languageName: node
   linkType: hard
 
-"@date-io/moment@npm:2.17.0":
-  version: 2.17.0
-  resolution: "@date-io/moment@npm:2.17.0"
+"@date-io/moment@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@date-io/moment@npm:3.0.0"
   dependencies:
-    "@date-io/core": "npm:^2.17.0"
+    "@date-io/core": "npm:^3.0.0"
   peerDependencies:
     moment: ^2.24.0
   peerDependenciesMeta:
     moment:
       optional: true
-  checksum: 10c0/7fb24a7155ecf6a10ebbb61db8d3f82017773b5dfd38e301786ff67b667ec9fb7ca377fe64557978249b6f53f421292a0cd84c30720496477e806f5f0cac1579
+  checksum: 10c0/60dce1746510f040a84e05450069028bcc53b677f54fdc46c44ecbe9922223dab7f1c93851182fb741173fecaf9f8cac53e67222adbc30f495520006395ef038
   languageName: node
   linkType: hard
 
@@ -3463,6 +3463,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hoist-non-react-statics@npm:^3.3.4":
+  version: 3.3.5
+  resolution: "@types/hoist-non-react-statics@npm:3.3.5"
+  dependencies:
+    "@types/react": "npm:*"
+    hoist-non-react-statics: "npm:^3.3.0"
+  checksum: 10c0/2a3b64bf3d9817d7830afa60ee314493c475fb09570a64e7737084cd482d2177ebdddf888ce837350bac51741278b077683facc9541f052d4bbe8487b4e3e618
+  languageName: node
+  linkType: hard
+
 "@types/js-yaml@npm:^4.0.0":
   version: 4.0.9
   resolution: "@types/js-yaml@npm:4.0.9"
@@ -3911,8 +3921,8 @@ __metadata:
   resolution: "app@workspace:."
   dependencies:
     "@apollo/client": "npm:^3.11.4"
-    "@date-io/dayjs": "npm:2.17.0"
-    "@date-io/moment": "npm:2.17.0"
+    "@date-io/dayjs": "npm:3.0.0"
+    "@date-io/moment": "npm:3.0.0"
     "@emotion/react": "npm:^11.13.0"
     "@emotion/styled": "npm:^11.13.0"
     "@graphql-codegen/cli": "npm:^5.0.2"
@@ -3946,6 +3956,7 @@ __metadata:
     moment: "npm:^2.30.1"
     next: "npm:^14.2.5"
     next-auth: "npm:4.24.7"
+    next-i18next: "npm:^15.3.1"
     next-pwa: "npm:^5.6.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -4812,6 +4823,13 @@ __metadata:
   dependencies:
     browserslist: "npm:^4.23.0"
   checksum: 10c0/70fba18a4095cd8ac04e5ba8cee251e328935859cf2851c1f67770068ea9f9fe71accb1b7de17cd3c9a28d304a4c41712bd9aa895110ebb6e3be71b666b029d1
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3":
+  version: 3.38.1
+  resolution: "core-js@npm:3.38.1"
+  checksum: 10c0/7df063b6f13a54e46515817ac3e235c6c598a4d3de65cd188a061fc250642be313b895fb9fb2f36e1e31890a1bb4ef61d82666a340413f540b7ce3c65689739b
   languageName: node
   linkType: hard
 
@@ -6335,7 +6353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -6394,6 +6412,13 @@ __metadata:
   version: 1.0.4
   resolution: "hyphenate-style-name@npm:1.0.4"
   checksum: 10c0/b19c3e2cd1dc426f6f893752fec08140abf79058a1b6238422e45373ed81389f02e1a2ba2ef4e9b2430d4e900a0f5ba12307de82320604e81ac1b722abd2ee62
+  languageName: node
+  linkType: hard
+
+"i18next-fs-backend@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "i18next-fs-backend@npm:2.3.2"
+  checksum: 10c0/5760843ade112821e4df62dffcdab769a09550bbe26264bb03babd60a122b4a1520a7ee95de228d3b932d2ac4220fc7669936026c10a729292c98cacdee8c49b
   languageName: node
   linkType: hard
 
@@ -7927,6 +7952,24 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 10c0/40c5f51e02141615069d422431a4906c38f6050b29f654ecc99a92fd3c974958535eb7c5f7bbc3dfd2e5996825d7c4f20d8ca68f372e2f9aad2131701cb95b7d
+  languageName: node
+  linkType: hard
+
+"next-i18next@npm:^15.3.1":
+  version: 15.3.1
+  resolution: "next-i18next@npm:15.3.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@types/hoist-non-react-statics": "npm:^3.3.4"
+    core-js: "npm:^3"
+    hoist-non-react-statics: "npm:^3.3.2"
+    i18next-fs-backend: "npm:^2.3.2"
+  peerDependencies:
+    i18next: ">= 23.7.13"
+    next: ">= 12.0.0"
+    react: ">= 17.0.2"
+    react-i18next: ">= 13.5.0"
+  checksum: 10c0/e8657760edbf345a7e047a0594f60cc2b28f66db46b9f26bbb57f5da5b30536adc4a49d640ecbb7c0c871381536496f885e9c5e34a41c8c6fd144e2fc4408435
   languageName: node
   linkType: hard
 

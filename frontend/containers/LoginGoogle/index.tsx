@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useTheme} from '@mui/material/styles';
 import {signIn} from 'next-auth/react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 const LoginGoogle = () => {
   const {t} = useTranslation();

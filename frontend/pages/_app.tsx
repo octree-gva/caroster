@@ -5,18 +5,19 @@ import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, Theme} from '@mui/material/styles';
 import {AppProps} from 'next/app';
-import {I18nextProvider} from 'react-i18next';
+import {appWithTranslation} from 'next-i18next';
 import {ApolloProvider} from '@apollo/client';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {SessionProvider} from 'next-auth/react';
-import moment from 'moment';
 import Metas from '../containers/Metas';
 import Toasts from '../components/Toasts';
 import theme from '../theme';
 import useLocale from '../hooks/useLocale';
-import i18n, {initI18Next} from '../lib/i18n';
 import {useApollo} from '../lib/apolloClient';
+import nextI18NextConfig from '../next-i18next.config.js';
+import moment from 'moment';
+import useTolgee from '../hooks/useTolgee';
 
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
@@ -26,6 +27,7 @@ const App = function (props: AppProps) {
   const {Component, pageProps} = props;
   const apolloClient = useApollo(pageProps);
   const {locale} = useLocale();
+  useTolgee();
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -35,31 +37,27 @@ const App = function (props: AppProps) {
     }
   }, []);
 
-  initI18Next(locale);
-
   return (
-    <I18nextProvider i18n={i18n}>
-      <ApolloProvider client={apolloClient}>
-        <Metas metas={pageProps.metas} />
-        <ThemeProvider theme={theme}>
-          <LocalizationProvider
-            dateAdapter={AdapterMoment}
-            dateLibInstance={moment}
-            adapterLocale={locale}
-          >
-            <CssBaseline />
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1, maximum-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-            <Toasts />
-          </LocalizationProvider>
-        </ThemeProvider>
-      </ApolloProvider>
-    </I18nextProvider>
+    <ApolloProvider client={apolloClient}>
+      <Metas metas={pageProps.metas} />
+      <ThemeProvider theme={theme}>
+        <LocalizationProvider
+          dateAdapter={AdapterMoment}
+          dateLibInstance={moment}
+          adapterLocale={locale}
+        >
+          <CssBaseline />
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=1"
+            />
+          </Head>
+          <Component {...pageProps} />
+          <Toasts />
+        </LocalizationProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 };
 
@@ -69,4 +67,4 @@ const AppWrapper = (props: AppProps) => (
   </SessionProvider>
 );
 
-export default AppWrapper;
+export default appWithTranslation(AppWrapper, nextI18NextConfig);

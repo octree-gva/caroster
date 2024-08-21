@@ -1,6 +1,6 @@
 import {useReducer} from 'react';
 import {Box, Container, Paper, Typography, useMediaQuery} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import theme from '../../theme';
 import usePermissions from '../../hooks/usePermissions';
 import LoginToAttend from '../LoginToAttend/LoginToAttend';
@@ -27,9 +27,9 @@ const Alerts = ({event, tripAlertEntity}: Props) => {
   return (
     <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: isMobile ? 2 : 4}}>
       {!canSetAlert() && (
-          <Box sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
-            <LoginToAttend title={t('event.loginToSetAlert')}/>
-          </Box>
+        <Box sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
+          <LoginToAttend title={t('event.loginToSetAlert')} />
+        </Box>
       )}
       <Paper sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
         <Box p={2}>

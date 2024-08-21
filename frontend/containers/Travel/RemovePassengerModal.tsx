@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {
   Typography,
   Dialog,
@@ -29,7 +29,7 @@ const RemovePassengerModal = ({passenger, close, removePassenger}: Props) => {
       return 'travel.removePassengerModal.plus.self.description';
     } else if (isCarosterPlus) {
       return 'travel.removePassengerModal.plus.description';
-    } else  if (IsPassengerIsUser) {
+    } else if (IsPassengerIsUser) {
       return 'travel.removePassengerModal.self.description';
     } else {
       return 'travel.removePassengerModal.description';

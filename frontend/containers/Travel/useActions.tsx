@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Button from '@mui/material/Button';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import {

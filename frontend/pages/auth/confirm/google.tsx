@@ -5,7 +5,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import {useTranslation, Trans} from 'react-i18next';
+import {useTranslation, Trans} from 'next-i18next';
 import {useState} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import CommonConfirm from '../../../layouts/ConfirmLayout';

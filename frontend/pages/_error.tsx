@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import pageUtils from '../lib/pageUtils';
@@ -26,7 +26,6 @@ const NotFoundPage = (props: Props) => {
     </Box>
   );
 };
-
 
 export const getServerSideProps = pageUtils.getServerSideProps();
 export default NotFoundPage;

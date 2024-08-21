@@ -13,7 +13,7 @@ import {Box, Divider} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import PhoneInput from '../../components/PhoneInput';
 import PlaceInput from '../PlaceInput';
 import useEventStore from '../../stores/useEventStore';

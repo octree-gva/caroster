@@ -1,5 +1,5 @@
 import {Box, Button, Typography} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import useSettings from '../../hooks/useSettings';
 import Link from 'next/link';

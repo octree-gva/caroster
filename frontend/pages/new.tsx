@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Layout from '../layouts/Centered';
 import CreateEvent from '../containers/CreateEvent';
 import LanguagesIcon from '../containers/Languages/Icon';

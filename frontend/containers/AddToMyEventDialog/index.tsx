@@ -1,5 +1,5 @@
 import {forwardRef} from 'react';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import {useRouter} from 'next/router';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -10,25 +10,21 @@ import Icon from '@mui/material/Icon';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 
 const PREFIX = 'AddToMyEventDialog';
 
 const classes = {
-  close: `${PREFIX}-close`
+  close: `${PREFIX}-close`,
 };
 
-const StyledSlide = styled(Slide)((
-  {
-    theme
-  }
-) => ({
+const StyledSlide = styled(Slide)(({theme}) => ({
   [`& .${classes.close}`]: {
     position: 'absolute',
     top: theme.spacing(1),
     right: theme.spacing(0.5),
-  }
+  },
 }));
 
 const AddToMyEventDialog = ({event, open, onClose}) => {

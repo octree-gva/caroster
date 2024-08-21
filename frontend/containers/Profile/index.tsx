@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
 import useToastStore from '../../stores/useToastStore';

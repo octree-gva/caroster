@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import ShareEvent from '../ShareEvent';
 import useToastStore from '../../stores/useToastStore';

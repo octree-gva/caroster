@@ -2,7 +2,7 @@ import {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
 import Layout from '../layouts/Default';

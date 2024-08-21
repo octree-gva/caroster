@@ -2,7 +2,7 @@ import {useMemo, useState} from 'react';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import moment from 'moment';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
@@ -119,7 +119,7 @@ const TravelColumns = (props: Props) => {
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
           {!canAddTravel() && (
             <MasonryContainer key="no_other_travel">
-              <LoginToAttend title={t('event.loginToAttend')}/>
+              <LoginToAttend title={t('event.loginToAttend')} />
             </MasonryContainer>
           )}
           {displayedTravels?.map(travel => {

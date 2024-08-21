@@ -1,5 +1,5 @@
-import {useTranslation} from 'react-i18next';
-import { styled } from '@mui/material/styles';
+import {useTranslation} from 'next-i18next';
+import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import CardContent from '@mui/material/CardContent';
@@ -13,14 +13,10 @@ const PREFIX = 'Success';
 const classes = {
   successCard: `${PREFIX}-successCard`,
   successIcon: `${PREFIX}-successIcon`,
-  actions: `${PREFIX}-actions`
+  actions: `${PREFIX}-actions`,
 };
 
-const StyledCard = styled(Card)((
-  {
-    theme
-  }
-) => ({
+const StyledCard = styled(Card)(({theme}) => ({
   [`&.${classes.successCard}`]: {
     textAlign: 'center',
   },
@@ -31,12 +27,11 @@ const StyledCard = styled(Card)((
 
   [`& .${classes.actions}`]: {
     justifyContent: 'center',
-  }
+  },
 }));
 
 const Success = ({email}) => {
   const {t} = useTranslation();
-
 
   return (
     <StyledCard className={classes.successCard}>

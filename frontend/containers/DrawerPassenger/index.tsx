@@ -1,10 +1,8 @@
 import {Drawer, Typography, useMediaQuery, Link, Box} from '@mui/material';
-import {useTranslation} from 'react-i18next';
-import {
-  CountryIso2,
-} from 'react-international-phone';
+import {useTranslation} from 'next-i18next';
+import {CountryIso2} from 'react-international-phone';
 import DrawerPassengerHeader from './DrawerPassengerHeader';
-import { getFormatedPhoneNumber } from '../../lib/phoneNumbers';
+import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
 
 interface Props {
   isOpen: boolean;
@@ -15,8 +13,6 @@ interface Props {
   phone?: string;
   phoneCountry?: '' | CountryIso2;
 }
-
-
 
 const DrawerPassenger = ({
   isOpen,

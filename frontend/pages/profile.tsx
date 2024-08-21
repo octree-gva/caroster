@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Loading from '../containers/Loading';
 import Profile from '../containers/Profile';
 import LayoutDefault from '../layouts/Default';
@@ -39,7 +39,7 @@ const ProfilePage = (props: PageProps) => {
       goBack
       {...props}
     >
-      {profile && <Profile profile={profile} logout={signOut} />} 
+      {profile && <Profile profile={profile} logout={signOut} />}
     </LayoutDefault>
   );
 };

@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {PureQueryOptions} from '@apollo/client/core';
 import useToastsStore from '../../stores/useToastStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
@@ -41,7 +41,6 @@ const useActions = (props: Props) => {
       });
     }
     try {
-
       await createTravelMutation({
         variables: {
           travel: {

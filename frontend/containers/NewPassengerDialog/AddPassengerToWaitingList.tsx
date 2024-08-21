@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import useAddToEvents from '../../hooks/useAddToEvents';

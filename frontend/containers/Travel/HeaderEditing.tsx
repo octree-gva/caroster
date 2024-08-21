@@ -9,7 +9,7 @@ import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {CountryIso2} from 'react-international-phone';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import RemoveDialog from '../RemoveDialog';
 import useActions from './useActions';
 import PlaceInput from '../PlaceInput';

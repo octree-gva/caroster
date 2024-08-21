@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';

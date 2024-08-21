@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Slide from '@mui/material/Slide';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import VehicleItem from './VehicleItem';
 import Typography from '@mui/material/Typography';
 import {VehicleEntity} from '../../generated/graphql';

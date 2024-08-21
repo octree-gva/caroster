@@ -1,6 +1,6 @@
 import {useState, useReducer, PropsWithChildren} from 'react';
 import Box from '@mui/material/Box';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {getSession, useSession} from 'next-auth/react';
 import TravelColumns from '../../../containers/TravelColumns';
 import NewTravelDialog from '../../../containers/NewTravelDialog';

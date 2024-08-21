@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,

@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import {useTheme} from '@mui/material/styles';
-import {Trans, useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
 import usePassengersActions from '../../hooks/usePassengersActions';

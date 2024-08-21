@@ -6,7 +6,7 @@ import {
 } from '../../generated/graphql';
 import CardNotification from './CardNotification';
 import DrawerHeader from './DrawerHeader';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 interface Props {
   isOpen: boolean;

@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const DrawerHeader = ({onClose, markAllRead, disabled}) => {

@@ -1,5 +1,5 @@
 import {Link} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useSettings from '../../hooks/useSettings';
 
 type Props = {};

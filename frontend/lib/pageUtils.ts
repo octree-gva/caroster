@@ -1,8 +1,10 @@
 import {ApolloClient} from '@apollo/client';
 import {getSession} from 'next-auth/react';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import {ProfileDocument, SettingDocument} from '../generated/graphql';
 import {initializeApollo, APOLLO_STATE_PROP_NAME} from './apolloClient';
 import {getCookie, hashText} from './cookies';
+import nextI18NextConfig from '../next-i18next.config';
 
 type ServerSideExtension = (
   context: any,
@@ -21,6 +23,11 @@ const getServerSideProps =
 
     const jwt = session?.token?.jwt;
     const apolloClient = initializeApollo(`${STRAPI_URL}/graphql/`, jwt);
+    const translations = await serverSideTranslations(
+      context.locale,
+      ['common'],
+      nextI18NextConfig
+    );
 
     try {
       const {
@@ -64,13 +71,14 @@ const getServerSideProps =
           session,
           announcement,
           [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
+          ...translations,
           ...extensionProps,
         },
       };
     } catch (error) {
       console.error(error);
       return {
-        props: {session},
+        props: {session, ...translations},
       };
     }
   };

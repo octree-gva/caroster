@@ -4,7 +4,7 @@ import {
   useReadNotificationsMutation,
 } from '../../generated/graphql';
 import {useRouter} from 'next/navigation';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {formatDate} from './formatDate';
 
 interface NotificationProps {

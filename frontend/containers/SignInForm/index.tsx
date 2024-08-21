@@ -9,7 +9,7 @@ import CardActions from '@mui/material/CardActions';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {signIn} from 'next-auth/react';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import LoginGoogle from '../LoginGoogle';

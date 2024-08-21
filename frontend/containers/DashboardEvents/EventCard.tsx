@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {EventEntity} from '../../generated/graphql';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -56,7 +56,8 @@ const EventCard = ({event}: Props) => {
           {t('event.fields.date')}
         </Typography>
         <Typography variant="body1" sx={{mb: 1}}>
-          {event.attributes.date && moment(event.attributes.date).format('DD/MM/YYYY') ||
+          {(event.attributes.date &&
+            moment(event.attributes.date).format('DD/MM/YYYY')) ||
             t('event.fields.empty')}
         </Typography>
         <Typography

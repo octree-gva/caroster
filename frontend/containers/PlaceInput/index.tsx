@@ -4,7 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
 import {debounce} from '@mui/material/utils';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useLocale from '../../hooks/useLocale';
 import getPlacesSuggestions from '../../lib/getPlacesSuggestion';
 import ListItemText from '@mui/material/ListItemText';

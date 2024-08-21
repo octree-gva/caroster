@@ -1,5 +1,5 @@
 import Menu from '@mui/material/Menu';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {signOut, useSession} from 'next-auth/react';
 import useSettings from '../../hooks/useSettings';
 import Languages from '../Languages/MenuItem';

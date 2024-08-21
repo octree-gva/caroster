@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useTheme} from '@mui/material/styles';
-import {Trans, useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import useToastsStore from '../../stores/useToastStore';
 import SignUpActions from './SignupActions';

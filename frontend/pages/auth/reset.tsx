@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 import Layout from '../../layouts/Centered';
 import ResetPasswordContainer from '../../containers/ResetPassword';

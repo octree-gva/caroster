@@ -10,7 +10,7 @@ import ListItemIcon from '@mui/material//ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Markdown from '../../components/Markdown';
 import useLocale from '../../hooks/useLocale';
 import usePermissions from '../../hooks/usePermissions';

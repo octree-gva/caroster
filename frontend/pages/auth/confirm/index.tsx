@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import {useTheme} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import CommonConfirm from '../../../layouts/ConfirmLayout';
 import pageUtils from '../../../lib/pageUtils';
 
@@ -17,10 +17,7 @@ const Confirm = () => {
       <Typography variant="h5" align="center">
         {t('confirm.title')}
       </Typography>
-      <Typography
-        align="center"
-        sx={{margin: theme.spacing(5, 0)}}
-      >
+      <Typography align="center" sx={{margin: theme.spacing(5, 0)}}>
         <Icon fontSize="large">mail</Icon>
       </Typography>
       <Typography

@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/graphql';
 import useToastStore from '../stores/useToastStore';
 
@@ -22,7 +22,7 @@ const useShare = () => {
       const localeParamIndex = splittedUrl.findIndex(
         member => SupportedLocales[member]
       );
-      const urlCopy = [...splittedUrl]
+      const urlCopy = [...splittedUrl];
       urlCopy[localeParamIndex] = FALLBACK_LANGUAGE;
       const withDefaultLocaleURL = urlCopy.join('/');
       const isPhone = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

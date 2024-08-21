@@ -1,6 +1,6 @@
 import {useCallback, useState, useEffect} from 'react';
-import { styled } from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
+import {styled} from '@mui/material/styles';
+import {useTranslation} from 'next-i18next';
 import router from 'next/router';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -18,14 +18,10 @@ const PREFIX = 'LostPassword';
 
 const classes = {
   loader: `${PREFIX}-loader`,
-  actions: `${PREFIX}-actions`
+  actions: `${PREFIX}-actions`,
 };
 
-const Root = styled('form')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('form')(({theme}) => ({
   [`& .${classes.loader}`]: {
     marginLeft: theme.spacing(4),
   },
@@ -33,7 +29,7 @@ const Root = styled('form')((
   [`& .${classes.actions}`]: {
     marginTop: theme.spacing(2),
     justifyContent: 'flex-end',
-  }
+  },
 }));
 
 const LostPassword = () => {

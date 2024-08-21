@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useRouter} from 'next/router';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 const LoginToAttend = ({title}) => {
   const {t} = useTranslation();
@@ -21,7 +21,7 @@ const LoginToAttend = ({title}) => {
       >
         {t('event.loginToAttend.desc')}
       </Typography>
-      <Box display='flex' justifyContent='space-between' pt={2} gap={1}>
+      <Box display="flex" justifyContent="space-between" pt={2} gap={1}>
         <Link
           href={`/auth/login?redirectPath=${router.asPath}`}
           passHref

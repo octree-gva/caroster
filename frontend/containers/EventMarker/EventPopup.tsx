@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {Popup} from 'react-leaflet';
 import getMapsLink from '../../lib/getMapsLink';
 import {Event} from '../../generated/graphql';

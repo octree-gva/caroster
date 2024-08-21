@@ -1,4 +1,5 @@
-const {i18n} = require('./react-i18next.config');
+const {i18n} = require('./next-i18next.config');
+
 const {
   NODE_ENV,
   DEV_TILES_URL,

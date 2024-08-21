@@ -1,6 +1,6 @@
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Layout from '../../../layouts/Centered';
 import MailSignUpForm from '../../../containers/MailSignUpForm';
 import Logo from '../../../components/Logo';
@@ -19,7 +19,6 @@ const MailSignup = () => {
     </Layout>
   );
 };
-
 
 export const getServerSideProps = pageUtils.getServerSideProps();
 
