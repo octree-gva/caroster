@@ -6,6 +6,7 @@ import {useEffect} from 'react';
 
 // Import moment locales
 import 'moment/locale/fr';
+import 'moment/locale/de';
 import 'moment/locale/nl';
 
 const defaultLocale = SupportedLocales['en'];

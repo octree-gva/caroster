@@ -25,6 +25,7 @@
       "enum": [
         "fr",
         "en",
+        "de",
         "nl"
       ],
       "default": "en"

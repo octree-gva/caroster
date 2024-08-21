@@ -102,6 +102,7 @@
       "enum": [
         "fr",
         "en",
+        "de",
         "nl"
       ],
       "default": "fr"

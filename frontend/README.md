@@ -81,3 +81,13 @@ README.md
 ## Standalone
 
 This is pre-configured to be installed in a repo with a backend code as parent with React and React DOM (Strapi). If you want to install it out of a Strapi installation, you need to remove `peerDependencies` in `package.json` and add `react` and `react-dom` to `dependencies` modules.
+
+## Add new language
+
+- Add JSON file with locales in `frontend/locales`
+- Import corresponding moment locales in `frontend/hooks/useLocale.ts`
+- Add language key to `locales` field in `frontend/next-i18next.config.js`
+- Add language key to `lang` field in `backend/src/api/event/content-types/event/schema.json`
+- Add language key to `lang` field in `backend/src/extensions/users-permissions/content-types/user/schema.json`
+- Add `PROTECTED.languages.<lang>: <Lang label>` in `frontend/locales/en.json` (See existing keys)
+- (Re)start backend and run `yarn gql` from frontend directory
