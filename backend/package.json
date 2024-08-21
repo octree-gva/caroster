@@ -55,10 +55,10 @@
     "jest": "^29.7.0",
     "sqlite3": "^5.1.7"
   },
+  "packageManager": "yarn@4.4.0",
   "engines": {
     "node": ">=16.x.x",
     "npm": ">=6.0.0"
   },
-  "strapi": {},
-  "packageManager": "yarn@4.1.0"
+  "strapi": {}
 }

@@ -54,11 +54,8 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
   );
   const [phoneError, setPhoneError] = useState(false);
   const [details, setDetails] = useState('');
-  const [dateError, setDateError] = useState(false);
-  const [titleError, setTitleError] = useState(false);
-  const [isTitleEmpty, setIsTitleEmpty] = useState(true);
 
-  const canCreate = !!name && !!seats && !phoneError && phone;
+  const canCreate = !!name?.trim() && !!seats && !phoneError && phone;
 
   const clearState = () => {
     setName('');
@@ -74,20 +71,6 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
 
   const onCreate = async e => {
     if (e.preventDefault) e.preventDefault();
-
-    if (!date) {
-      setDateError(true);
-      return;
-    } else {
-      setDateError(false);
-    }
-
-    if (!name.trim()) {
-      setTitleError(true);
-      return;
-    } else {
-      setTitleError(false);
-    }
 
     const travel = {
       meeting,
@@ -122,12 +105,6 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
     },
   };
 
-  const handleTitleChange = e => {
-    const inputValue = e.target.value;
-    setName(inputValue);
-    setIsTitleEmpty(inputValue.trim() === '');
-  };
-
   return (
     <Dialog
       fullWidth
@@ -152,22 +129,23 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
           <TextField
             variant="outlined"
             size="small"
-            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(1)}}
+            sx={{...addSpacing(theme, 1), paddingBottom: theme.spacing(2)}}
             label={t('travel.creation.name')}
             fullWidth
             value={name}
-            onChange={handleTitleChange}
+            onChange={e => setName(e.target.value)}
             name="name"
             id="NewTravelName"
             required
-            error={titleError}
+            error={name && !name?.trim()}
             helperText={
-              isTitleEmpty ? t('travel.creation.travel.titleHelper') : ''
+              name && !name?.trim() && t('travel.creation.travel.titleHelper')
             }
             FormHelperTextProps={{sx: {color: 'warning.main'}}}
           />
 
           <PhoneInput
+            required
             value={phone}
             onChange={({phone, country, error}) => {
               setPhone(phone);
@@ -215,16 +193,16 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
           >
             {t('travel.creation.travel.title')}
           </Typography>
-          <Box sx={addSpacing(theme, 0.5)} pb={1}>
+          <Box sx={addSpacing(theme, 0.5)} pb={2}>
             <DatePicker
               slotProps={{
                 textField: {
                   variant: 'outlined',
                   size: 'small',
-                  helperText: dateError
+                  helperText: !date
                     ? t('travel.creation.travel.dateHelper')
                     : '',
-                  error: dateError,
+                  error: !date,
                   FormHelperTextProps: {sx: {color: 'warning.main'}},
                   sx: halfWidthFieldSx,
                 },

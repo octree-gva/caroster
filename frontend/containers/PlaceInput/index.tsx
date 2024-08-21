@@ -43,9 +43,9 @@ const PlaceInput = ({
   const {locale} = useLocale();
   const [mapboxAvailable, setMapboxAvailable] = useState(MAPBOX_CONFIGURED);
   const [noCoordinates, setNoCoordinates] = useState(!latitude || !longitude);
+  const [options, setOptions] = useState([] as Array<any>);
   const previousOption = place ? {place_name: place, previous: true} : null;
 
-  const [options, setOptions] = useState([] as Array<any>);
   const onChange = async (e, selectedOption) => {
     if (selectedOption.center) {
       const [optionLongitude, optionLatitude] = selectedOption.center;
@@ -98,7 +98,8 @@ const PlaceInput = ({
   }, 400);
 
   const getHelperText = () => {
-    if (!mapboxAvailable) return t`placeInput.mapboxUnavailable`;
+    if (!place) return undefined;
+    else if (!mapboxAvailable) return t`placeInput.mapboxUnavailable`;
     else if (noCoordinates) return t`placeInput.noCoordinates`;
   };
 
@@ -114,9 +115,9 @@ const PlaceInput = ({
     <Autocomplete
       freeSolo
       disableClearable
-      getOptionLabel={option => option.place_name}
-      options={options}
       autoComplete
+      getOptionLabel={option => option?.place_name}
+      options={options}
       defaultValue={previousOption}
       filterOptions={x => x}
       noOptionsText={t('autocomplete.noMatch')}
@@ -143,11 +144,11 @@ const PlaceInput = ({
           onBlur={handleBlur}
         />
       )}
-      renderOption={(props, option) => {
+      renderOption={({key, ...props}, option) => {
         if (option.previous) return null;
 
         return (
-          <ListItem key={option.id || 'text'} {...props}>
+          <ListItem key={key || option.id || 'text'} {...props}>
             <ListItemText
               primary={option.place_name}
               secondary={!option.center && t`placeInput.item.noCoordinates`}

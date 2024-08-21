@@ -215,7 +215,6 @@
   "travel.creation.name": "Name des Fahrzeugs",
   "travel.creation.notes": "Zusätzliche Informationen",
   "travel.creation.phone": "Telefonnummer",
-  "travel.creation.phoneHelper.faq": "/de/faq",
   "travel.creation.phoneHelper.why": "Warum fragen wir nach einer Telefonnummer?",
   "travel.creation.seats": "Anzahl der verfügbaren Plätze",
   "travel.creation.submit": "Hinzufügen",

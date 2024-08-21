@@ -20,13 +20,14 @@ import 'react-international-phone/style.css';
 
 interface Props {
   value: string;
+  required?: boolean;
   onChange: ({
     phone,
     country,
   }: {
     phone: string;
     country: CountryIso2 | '';
-    error: boolean
+    error: boolean;
   }) => void;
   label: string;
 }
@@ -35,6 +36,7 @@ const PhoneInput = ({
   value,
   onChange,
   label,
+  required,
   ...textFieldProps
 }: Omit<TextFieldProps, 'onChange'> & Props) => {
   const [phone, setPhone] = useState(value);
@@ -68,7 +70,8 @@ const PhoneInput = ({
   return (
     <TextField
       fullWidth
-      error={!phone || value !== phone}
+      required={required}
+      error={inputValue && (!phone || value !== phone)}
       {...textFieldProps}
       label={label}
       value={inputValue}
