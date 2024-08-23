@@ -70,6 +70,13 @@ const TravelColumns = (props: Props) => {
 
   const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus');
 
+  const showMap =
+    (!!event?.latitude && !!event?.longitude) ||
+    travels?.some(
+      ({attributes: {meeting_latitude, meeting_longitude}}) =>
+        meeting_latitude && meeting_longitude
+    );
+
   if (!event || travels?.length === 0)
     return (
       <NoCar
@@ -78,13 +85,6 @@ const TravelColumns = (props: Props) => {
         title={t('event.no_travel.title')}
         isCarosterPlus={isCarosterPlus}
       />
-    );
-
-  const showMap =
-    (event.latitude && event.longitude) ||
-    travels.some(
-      ({attributes: {meeting_latitude, meeting_longitude}}) =>
-        meeting_latitude && meeting_longitude
     );
 
   const dates = Array.from(

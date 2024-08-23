@@ -8,7 +8,7 @@ const TOKEN_FREE_TILES_URL =
   process.env.TOKEN_FREE_TILES_URL ||
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-  const TOKEN_FREE_TILES_LAYER_ATTRIBUTION = 
+const TOKEN_FREE_TILES_LAYER_ATTRIBUTION =
   process.env.TOKEN_FREE_TILES_LAYER_ATTRIBUTION ||
   '© <a target="_blank" href="https://www.openstreetmap.org/copyright/en">OpenStreetMap</a> contributors';
 
@@ -19,7 +19,11 @@ const Map = () => {
     <MapWrapper>
       <MapContainer style={{height: '100%', width: '100%'}} zoomControl={false}>
         <Bounds />
-        <TileLayer key="tiles" url={TOKEN_FREE_TILES_URL} attribution={TOKEN_FREE_TILES_LAYER_ATTRIBUTION}/>
+        <TileLayer
+          key="tiles"
+          url={TOKEN_FREE_TILES_URL}
+          attribution={TOKEN_FREE_TILES_LAYER_ATTRIBUTION}
+        />
         <MapController />
         {markers}
       </MapContainer>

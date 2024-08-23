@@ -836,7 +836,6 @@ export interface ApiEventEvent extends Schema.CollectionType {
       Attribute.DefaultTo<'en'>;
     date: Attribute.Date;
     address: Attribute.Text;
-    position: Attribute.JSON;
     uuid: Attribute.String & Attribute.Unique;
     description: Attribute.Text &
       Attribute.SetMinMaxLength<{

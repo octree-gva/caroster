@@ -12,7 +12,6 @@ fragment EventFields on EventEntity {
     address
     latitude
     longitude
-    position
     waitingPassengers {
       data {
         id

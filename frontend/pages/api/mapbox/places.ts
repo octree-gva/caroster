@@ -9,25 +9,28 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const {search, proximity = 'ip', locale} = req.query;
-  if (!search) return res.status(400).send(null);
-  else if (!MAPBOX_TOKEN) return res.status(500).send(null);
+  if (!search) return res.status(400);
+  else if (!MAPBOX_TOKEN) {
+    console.warn('No MAPBOX_TOKEN provided');
+    return res.status(500);
+  }
 
   const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?proximity=${proximity}&access_token=${MAPBOX_TOKEN}&language=${locale}`;
 
-  const mapBoxResult = await fetch(url)
-    .then(response => {
-      if (response.status === 429) {
-        throw 'MAPBOX_RATE_LIMIT_EXCEEDED';
-      }
+  try {
+    const mapBoxResult = await fetch(url).then(response => {
+      if (response.status === 429)
+        throw new Error('MAPBOX_RATE_LIMIT_EXCEEDED');
+      else if (response.status === 401) throw new Error('MAPBOX_UNAUTHORIZED');
       return response.json();
-    })
-    .catch(error => {
-      console.error(error);
     });
 
-  if (mapBoxResult?.features) {
-    res.status(200).send(mapBoxResult.features);
-    return;
+    if (mapBoxResult?.features) {
+      res.status(200).send(mapBoxResult.features);
+      return;
+    } else throw new Error('MAPBOX_MALFORMED_RESPONSE');
+  } catch (error) {
+    console.error(error);
+    res.status(500);
   }
-  res.status(500).send(null);
 }

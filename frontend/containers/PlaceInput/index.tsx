@@ -46,7 +46,7 @@ const PlaceInput = ({
   const [options, setOptions] = useState([] as Array<any>);
   const previousOption = place ? {place_name: place, previous: true} : null;
 
-  const onChange = async (e, selectedOption) => {
+  const onChange = async (_event, selectedOption) => {
     if (selectedOption.center) {
       const [optionLongitude, optionLatitude] = selectedOption.center;
       setNoCoordinates(false);
@@ -65,17 +65,15 @@ const PlaceInput = ({
     }
   };
 
-  const updateOptions = debounce(async (e, search: string) => {
-    if (search !== '') {
-      getPlacesSuggestions({search, proximity: 'ip', locale}).then(
+  const updateOptions = debounce(async (_event, search: string) => {
+    if (search)
+      getPlacesSuggestions({search, locale, proximity: 'ip'}).then(
         suggestions => {
           let defaultOptions = [];
-          if (previousOption) {
-            defaultOptions = [previousOption];
-          }
-          if (search && search !== previousOption?.place_name) {
+          if (previousOption) defaultOptions = [previousOption];
+          if (search && search !== previousOption?.place_name)
             defaultOptions = [...defaultOptions, {place_name: search}];
-          }
+
           if (suggestions?.length >= 1) {
             setMapboxAvailable(true);
             const suggestionsWithoutCopies = suggestions.filter(
@@ -94,21 +92,18 @@ const PlaceInput = ({
           }
         }
       );
-    }
+    else
+      onSelect({
+        place: null,
+        latitude: null,
+        longitude: null,
+      });
   }, 400);
 
   const getHelperText = () => {
     if (!place) return undefined;
     else if (!mapboxAvailable) return t`placeInput.mapboxUnavailable`;
     else if (noCoordinates) return t`placeInput.noCoordinates`;
-  };
-
-  const handleBlur = e => {
-    onSelect({
-      place: e.target.value,
-      latitude,
-      longitude,
-    });
   };
 
   return (
@@ -141,7 +136,6 @@ const PlaceInput = ({
           }}
           {...params}
           {...textFieldProps}
-          onBlur={handleBlur}
         />
       )}
       renderOption={({key, ...props}, option) => {

@@ -36,9 +36,6 @@
     "address": {
       "type": "text"
     },
-    "position": {
-      "type": "json"
-    },
     "uuid": {
       "type": "string",
       "unique": true
