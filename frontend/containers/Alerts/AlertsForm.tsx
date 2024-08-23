@@ -6,10 +6,8 @@ import {
   InputAdornment,
   Stack,
 } from '@mui/material';
-import {t} from 'i18next';
-
+import {useTranslation} from 'next-i18next';
 import {EventEntity, TripAlertEntity} from '../../generated/graphql';
-
 import PlaceInput from '../PlaceInput';
 import useCreateTripAlert from './useCreateTripAlert';
 
@@ -20,6 +18,8 @@ interface Props {
 }
 
 const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
+  const {t} = useTranslation();
+
   const [address, setAddress] = useState(
     tripAlertEntity?.attributes.address || ''
   );

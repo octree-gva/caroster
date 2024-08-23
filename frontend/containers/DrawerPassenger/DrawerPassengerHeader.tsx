@@ -1,5 +1,5 @@
 import {Box, IconButton, Icon, Typography} from '@mui/material';
-import {t} from 'i18next';
+import {useTranslation} from 'next-i18next';
 
 interface DrawerHeaderProps {
   isMobile: boolean;
@@ -7,6 +7,8 @@ interface DrawerHeaderProps {
 }
 
 const DrawerHeader = ({isMobile, onClose}: DrawerHeaderProps) => {
+  const {t} = useTranslation();
+
   return (
     <Box>
       {!isMobile && (

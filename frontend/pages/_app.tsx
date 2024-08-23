@@ -29,6 +29,8 @@ const App = function (props: AppProps) {
   const {locale} = useLocale();
   useTolgee();
 
+  moment.locale(locale);
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

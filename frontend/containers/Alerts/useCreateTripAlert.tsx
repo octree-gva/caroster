@@ -3,10 +3,11 @@ import {
   SetTripAlertMutationVariables,
   useSetTripAlertMutation,
 } from '../../generated/graphql';
-import {t} from 'i18next';
+import {useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 
 const useCreateTripAlert = () => {
+  const {t} = useTranslation();
   const addToast = useToastStore(s => s.addToast);
   const [setTripAlertMutation] = useSetTripAlertMutation();
 

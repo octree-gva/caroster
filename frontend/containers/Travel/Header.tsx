@@ -29,7 +29,7 @@ const Header = (props: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
   const {
-    userPermissions: {canEditTravel},
+    userPermissions: {canEditTravel, canSeeTravelDetails},
   } = usePermissions();
   const {setFocusOnTravel} = useMapStore();
   const {userId} = useProfile();
@@ -89,7 +89,7 @@ const Header = (props: Props) => {
         )}
       </Typography>
 
-      {!!travel.attributes.phone_number && (
+      {!!travel.attributes.phone_number && canSeeTravelDetails(travel) && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>
             {t('travel.fields.phone')}

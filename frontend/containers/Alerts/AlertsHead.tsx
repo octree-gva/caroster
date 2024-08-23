@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Box, FormControlLabel, Typography} from '@mui/material';
 import Toggle from '../../components/Toggle/index';
-import {t} from 'i18next';
+import {useTranslation} from 'next-i18next';
 import {EventEntity} from '../../generated/graphql';
 import useCreateTripAlert from './useCreateTripAlert';
 
@@ -18,6 +18,7 @@ const AlertsHeader = ({
   disabled,
   handleToggle,
 }: Props) => {
+  const {t} = useTranslation();
   const handleCreateTripAlert = useCreateTripAlert();
 
   const eventId = event.id;

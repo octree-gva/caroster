@@ -1,4 +1,4 @@
-import { PassengerEntity, TravelEntity } from '../generated/graphql';
+import {PassengerEntity, TravelEntity} from '../generated/graphql';
 import useEventStore from '../stores/useEventStore';
 import useProfile from './useProfile';
 
@@ -9,6 +9,7 @@ interface UserPermissions {
   canSetAlert: () => boolean;
   canAddTravel: () => boolean;
   canEditTravel: (travel: TravelEntity) => boolean;
+  canSeeTravelDetails: (travel: TravelEntity) => boolean;
   canJoinTravels: () => boolean;
   canAddToTravel: () => boolean;
   canDeletePassenger: (passenger: PassengerEntity) => boolean;
@@ -22,15 +23,16 @@ const noPermissions = {
   canSetAlert: () => false,
   canAddTravel: () => false,
   canEditTravel: () => false,
+  canSeeTravelDetails: () => false,
   canJoinTravels: () => false,
   canAddToTravel: () => false,
   canDeletePassenger: () => false,
   canSeePassengerDetails: () => false,
 };
 
-const usePermissions = (): { userPermissions: UserPermissions } => {
-  const { event } = useEventStore();
-  const { profile, connected, userId } = useProfile();
+const usePermissions = (): {userPermissions: UserPermissions} => {
+  const {event} = useEventStore();
+  const {profile, connected, userId} = useProfile();
 
   const carosterPlus = event?.enabled_modules?.includes('caroster-plus');
   const userIsAnonymous = !connected;
@@ -43,6 +45,7 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
     canEditWaitingList: () => true,
     canSetAlert: () => true,
     canAddTravel: () => true,
+    canSeeTravelDetails: () => true,
     canEditTravel: () => true,
     canJoinTravels: () => true,
     canAddToTravel: () => true,
@@ -51,10 +54,10 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
   };
 
   if (carosterPlus) {
-    if (userIsAnonymous) return { userPermissions: noPermissions };
+    if (userIsAnonymous) return {userPermissions: noPermissions};
     else if (userIsEventCreator || userIsEventAdmin)
       return {
-        userPermissions: { ...allPermissions, canAddToTravel: () => false },
+        userPermissions: {...allPermissions, canAddToTravel: () => false},
       };
     else {
       const carosterPlusPermissions: UserPermissions = {
@@ -64,9 +67,15 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
             travel.attributes.user?.data?.id || travel.attributes.user;
           return travelCreatorId === userId;
         },
-        
+
         canJoinTravels: () => true,
         canAddTravel: () => true,
+        canSeeTravelDetails: travel => {
+          const isInPassengersList = travel.attributes.passengers.data?.some(
+            passenger => passenger.attributes.user?.data?.id === userId
+          );
+          return isInPassengersList;
+        },
         canSetAlert: () => true,
         canDeletePassenger: passenger => {
           const travel = event?.travels?.data?.find(travel =>
@@ -79,13 +88,15 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
             passenger.attributes.user?.data?.id === userId;
           return isTravelCreator || isCurrentPassenger;
         },
-        canSeePassengerDetails: (passenger) => {
-          const travel = event?.travels?.data?.find(travel => travel?.id === passenger.attributes.travel.data?.id)
+        canSeePassengerDetails: passenger => {
+          const travel = event?.travels?.data?.find(
+            travel => travel?.id === passenger.attributes.travel.data?.id
+          );
           const userIsDriver = travel?.attributes.user?.data?.id === userId;
           return userIsDriver || passenger.attributes.user?.data?.id === userId;
-        }
+        },
       };
-      return { userPermissions: carosterPlusPermissions };
+      return {userPermissions: carosterPlusPermissions};
     }
   }
   // Caroster Vanilla permissions
@@ -98,6 +109,7 @@ const usePermissions = (): { userPermissions: UserPermissions } => {
         canEditEventOptions: () => userIsEventCreator,
         canSetAlert: () => false,
         canJoinTravels: () => connected,
+        canSeeTravelDetails: () => true,
       },
     };
 };
