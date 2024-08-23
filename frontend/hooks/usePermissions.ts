@@ -71,6 +71,9 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
         canJoinTravels: () => true,
         canAddTravel: () => true,
         canSeeTravelDetails: travel => {
+          const travelCreatorId =
+            travel.attributes.user?.data?.id || travel.attributes.user;
+          if (travelCreatorId === userId) return true;
           const isInPassengersList = travel.attributes.passengers.data?.some(
             passenger => passenger.attributes.user?.data?.id === userId
           );
