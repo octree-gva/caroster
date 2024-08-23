@@ -5,8 +5,20 @@ export default {
   async beforeCreate(event) {
     const { data } = event.params;
     if (!data.uuid) data.uuid = uuid();
+
+    const userCreator = await strapi.db
+      .query("plugin::users-permissions.user")
+      .findOne({
+        where: { email: data.email },
+      });
+
+    if (userCreator) {
+      data.creator = userCreator.id;
+      data.users = [userCreator.id];
+    }
+
     // If user provides an address, get its lat/lng position using OSM API
-    if (data.address) data.position = getPosition(data.address);
+    if (data.address) data.position = await getPosition(data.address);
   },
   async afterCreate({ result }) {
     await strapi
@@ -25,7 +37,7 @@ export default {
   },
 };
 
-const getPosition = async (address) => {
+const getPosition = async (address: string): Promise<[string, string]> => {
   try {
     const query = encodeURI(address);
     const { data } = await axios.get(
