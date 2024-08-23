@@ -5,7 +5,7 @@ import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, Theme} from '@mui/material/styles';
 import {AppProps} from 'next/app';
-import {appWithTranslation} from 'next-i18next';
+import {appWithTranslation, useTranslation} from 'next-i18next';
 import {ApolloProvider} from '@apollo/client';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
@@ -27,8 +27,8 @@ const App = function (props: AppProps) {
   const {Component, pageProps} = props;
   const apolloClient = useApollo(pageProps);
   const {locale} = useLocale();
-  useTolgee();
 
+  useTolgee();
   moment.locale(locale);
 
   useEffect(() => {

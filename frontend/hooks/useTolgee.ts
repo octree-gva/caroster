@@ -1,6 +1,7 @@
-import i18n from 'i18next';
 import {withTolgee, Tolgee, I18nextPlugin, DevTools} from '@tolgee/i18next';
 import useLocale from './useLocale';
+import {useTranslation} from 'next-i18next';
+import {useEffect} from 'react';
 
 const tolgee = Tolgee()
   .use(DevTools())
@@ -13,10 +14,23 @@ const tolgee = Tolgee()
 
 const useTolgee = () => {
   const {locale} = useLocale();
-  return withTolgee(i18n, tolgee).init({
-    lng: locale,
-    fallbackLng: 'fr',
-  });
+  const {i18n} = useTranslation();
+
+  useEffect(() => {
+    const isChrome =
+      window.navigator.vendor?.startsWith('Google') ||
+      // @ts-expect-error
+      window.navigator.userAgentData?.brands.some(brand =>
+        brand.brand.startsWith('Chrom')
+      );
+    if (isChrome) {
+      console.info(`Chrome recognized. Load Tolgee.`);
+      withTolgee(i18n, tolgee).init({
+        lng: locale,
+        fallbackLng: 'en',
+      });
+    }
+  }, []);
 };
 
 export default useTolgee;
