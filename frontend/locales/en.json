@@ -213,6 +213,8 @@
   "signin.register": "$t(menu.register)",
   "signin.title": "Sign in",
   "signin.withGoogle": "Use a Google account",
+  "emailConfirmation.invalidMessage": "This confirmation link is no longer valid because it has already been used or has expired.",
+  "emailConfirmation.toLogin": "Go to login page",
   "signup.account_already": "Do you already have an account ?",
   "signup.create": "Create an account",
   "signup.createForm": "Create an account\ninformation to fullfill",

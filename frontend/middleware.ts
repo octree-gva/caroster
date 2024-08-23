@@ -19,7 +19,8 @@ export async function middleware(req: NextRequest) {
 
   if (isIgnoredPath) return null;
 
-  const locale = await getRegisteredUserLanguage(req) ||
+  const locale =
+    (await getRegisteredUserLanguage(req)) ||
     getCookie('NEXT_LOCALE', req.headers.get('cookie')) ||
     getBrowserPreferredSupportedLanguage(req) ||
     FALLBACK_LANGUAGE;
@@ -34,7 +35,7 @@ export async function middleware(req: NextRequest) {
   }
 }
 
-const getRegisteredUserLanguage = async (req) => {
+const getRegisteredUserLanguage = async req => {
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
@@ -50,7 +51,7 @@ const getRegisteredUserLanguage = async (req) => {
     body: JSON.stringify({query: print(ProfileDocument)}),
   })
     .then(async response => {
-      const {data}  = await response.json();
+      const {data} = await response.json();
       return data?.me?.profile?.lang;
     })
     .catch(console.error);
