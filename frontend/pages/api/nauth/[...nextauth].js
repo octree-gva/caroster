@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
-const STRAPI_URL = 'http://localhost:1337';
+const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 
 const authHandler = NextAuth({
   providers: [

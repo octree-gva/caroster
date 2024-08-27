@@ -62,6 +62,7 @@ const getServerSideProps =
         if (extensionReturn?.notFound) {
           return {
             notFound: true,
+            props: {...translations},
           };
         }
       }
