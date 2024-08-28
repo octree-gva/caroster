@@ -1,0 +1,11 @@
+{
+  "name": "caroster",
+  "packageManager": "yarn@4.4.1",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "dependencies": {
+    "pm2": "^5.4.2"
+  }
+}

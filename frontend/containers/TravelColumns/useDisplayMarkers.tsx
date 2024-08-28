@@ -18,7 +18,7 @@ const useDisplayMarkers = ({event, selectedDates}: Props) => {
   const focusedTravel = useMapStore(s => s.focusedTravel);
 
   const travelsWithGeoloc = useMemo(() => {
-    const travels = event?.travels.data || [];
+    const travels = event?.travels?.data || [];
     const filteredTravels =
       selectedDates.length >= 1
         ? travels.filter(travel => {
