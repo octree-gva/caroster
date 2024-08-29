@@ -10,3 +10,4 @@ frontend/.next
 .gitlab-ci.yml
 banner.jpg
 *.md
+e2e

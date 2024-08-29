@@ -56,15 +56,19 @@ const createPassenger = {
             .format("dddd LL")
         : "";
       const datetime = `${date} ${travel.departureTime || ""}`;
-      strapi.entityService.create("api::notification.notification", {
-        data: {
-          type: "ContactTripCreator",
-          event: createdPassenger.event.id,
-          user: createdPassenger.user.id,
-          // @ts-expect-error
-          payload: { travel, driver, datetime },
-        },
-      });
+      try {
+        await strapi.entityService.create("api::notification.notification", {
+          data: {
+            type: "ContactTripCreator",
+            event: createdPassenger.event.id,
+            user: createdPassenger.user.id,
+            // @ts-expect-error
+            payload: { travel, driver, datetime },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     const { toEntityResponse } = strapi

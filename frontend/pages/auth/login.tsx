@@ -9,6 +9,7 @@ import SignInForm from '../../containers/SignInForm';
 import LanguagesIcon from '../../containers/Languages/Icon';
 import pageUtils from '../../lib/pageUtils';
 import Container from '@mui/material/Container';
+import Cookies from 'cookies';
 
 interface PageProps {
   error?: string;
@@ -53,6 +54,13 @@ export const getServerSideProps = async (context: any) => {
     return pageUtils.getServerSideProps(async ctx => {
       const error = ctx.query?.error || null;
       const emailConfirmation = ctx.query?.confirmed === 'true';
+      const redirectPath = ctx.query?.redirectPath;
+
+      if (redirectPath) {
+        const cookies = new Cookies(ctx.req, ctx.res);
+        cookies.set('redirectPath', redirectPath);
+      }
+
       return {props: {error, emailConfirmation}};
     })(context);
 };
