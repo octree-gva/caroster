@@ -8,6 +8,7 @@ import {Popup} from 'react-leaflet';
 import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
+import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   travel: TravelEntity;
@@ -15,6 +16,9 @@ interface Props {
 
 const TravelPopup = ({travel}: Props) => {
   const {t} = useTranslation();
+  const {
+    userPermissions: {canSeeTravelDetails},
+  } = usePermissions();
   return (
     <Popup>
       <Card sx={{p: 2, width: '350px', maxWidth: '100%', cursor: 'pointer'}}>
@@ -27,7 +31,7 @@ const TravelPopup = ({travel}: Props) => {
         <Box>
           <Typography variant="h5">{travel.attributes.vehicleName}</Typography>
         </Box>
-        {!!travel.attributes.phone_number && (
+        {!!travel.attributes.phone_number && canSeeTravelDetails(travel) && (
           <Box sx={{marginTop: 2}}>
             <Typography variant="overline" color="GrayText">
               {t('travel.fields.phone')}
