@@ -1,5 +1,6 @@
 import bootstrapActions from "./bootstrap";
 import graphqlExtends from "./graphql";
+import userLifecycles from "./extensions/users-permissions/content-types/user/lifecycles";
 
 export default {
   /**
@@ -42,5 +43,10 @@ export default {
     for (let action of bootstrapActions) {
       await action(context);
     }
+
+    strapi.db.lifecycles.subscribe({
+      models: ["plugin::users-permissions.user"],
+      ...userLifecycles,
+    });
   },
 };
