@@ -1,7 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 
-const {STRAPI_URL = 'http://localhost:1337'} = process.env;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -10,9 +8,10 @@ export default async function handler(
 
   try {
     const response = await fetch(
-      `${STRAPI_URL}/api/auth/email-confirmation?confirmation=${confirmation}`
+      `http://localhost:1337/api/auth/email-confirmation?confirmation=${confirmation}`
     );
-    if (response.redirected) return res.redirect(302, response.url);
+    if (response.redirected)
+      return res.redirect(302, '/auth/login?confirmed=true');
     const result = await response.json();
     if (result.error) throw new Error(result.error.name);
   } catch (error) {
