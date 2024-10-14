@@ -1739,6 +1739,7 @@ __metadata:
     "@mui/styles": "npm:^5.16.7"
     "@mui/x-date-pickers": "npm:^6.20.2"
     "@tolgee/i18next": "npm:^5.28.6"
+    "@types/google-libphonenumber": "npm:^7.4.30"
     "@types/node": "npm:^22.4.2"
     "@types/react": "npm:^18.3.4"
     cookies: "npm:^0.9.1"
@@ -1749,6 +1750,7 @@ __metadata:
     eslint-config-prettier: "npm:^9.1.0"
     fs: "npm:^0.0.1-security"
     glob: "npm:^11.0.0"
+    google-libphonenumber: "npm:^3.2.38"
     graphql: "npm:^16.9.0"
     i18next: "npm:^23.14.0"
     leaflet: "npm:^1.9.4"
@@ -7231,6 +7233,13 @@ __metadata:
     "@types/minimatch": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/a8eb5d5cb5c48fc58c7ca3ff1e1ddf771ee07ca5043da6e4871e6757b4472e2e73b4cfef2644c38983174a4bc728c73f8da02845c28a1212f98cabd293ecae98
+  languageName: node
+  linkType: hard
+
+"@types/google-libphonenumber@npm:^7.4.30":
+  version: 7.4.30
+  resolution: "@types/google-libphonenumber@npm:7.4.30"
+  checksum: 10c0/f81803dc061b775d981a04e99dfe9ee124b9e73ced6f0298928c0ff73fea4b34bc50b9c58f3235ee5c3c08a940a27bad20fcb9f4c25ba31698f1a64b98768306
   languageName: node
   linkType: hard
 
@@ -13796,6 +13805,13 @@ __metadata:
     pify: "npm:^2.0.0"
     pinkie-promise: "npm:^2.0.0"
   checksum: 10c0/656ad1f0d02c6ef378c07589519ed3ec27fe988ea177195c05b8aff280320f3d67b91fa0baa6f7e49288f9bf1f92fc84f783a79ac3ed66278f3fa082e627ed84
+  languageName: node
+  linkType: hard
+
+"google-libphonenumber@npm:^3.2.38":
+  version: 3.2.38
+  resolution: "google-libphonenumber@npm:3.2.38"
+  checksum: 10c0/c5a8ec4ff6ed17d8336a48299e565ed3e79ace44b4dea3b3e3664bd633ff1a9fbc9cf7eda65eb410d7430feea88693e5dca4bc313b81cf5bbd1e1ed7a97d0908
   languageName: node
   linkType: hard
 

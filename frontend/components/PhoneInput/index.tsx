@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {PhoneNumberUtil} from 'google-libphonenumber';
 import {
   InputAdornment,
   MenuItem,
@@ -11,11 +12,9 @@ import {
   CountryIso2,
   defaultCountries,
   FlagImage,
-  getActiveFormattingMask,
   parseCountry,
   usePhoneInput,
 } from 'react-international-phone';
-
 import 'react-international-phone/style.css';
 
 interface Props {
@@ -31,6 +30,15 @@ interface Props {
   }) => void;
   label: string;
 }
+
+const phoneUtil = PhoneNumberUtil.getInstance();
+const isPhoneValid = (phone: string) => {
+  try {
+    return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+  } catch (error) {
+    return false;
+  }
+};
 
 const PhoneInput = ({
   value,
@@ -52,18 +60,9 @@ const PhoneInput = ({
       countries: defaultCountries,
       onChange: ({phone, country}) => {
         setPhone(phone);
-        const mask = getActiveFormattingMask({
-          phone: phone,
-          country: country,
-        });
-        const digitnumbers = mask.split('').filter(c => c === '.').length;
-        const isValid =
-          phone.length === 1 + country.dialCode.length + digitnumbers;
-        if (isValid) {
+        if (isPhoneValid(phone))
           onChange({phone, country: country.iso2, error: false});
-        } else {
-          onChange({phone: '', country: '', error: true});
-        }
+        else onChange({phone: '', country: '', error: true});
       },
     });
 
