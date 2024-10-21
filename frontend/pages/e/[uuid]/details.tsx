@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import TuneIcon from '@mui/icons-material/Tune';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {PropsWithChildren, useState} from 'react';
@@ -50,6 +51,8 @@ const DetailsTab: TabComponent<Props> = ({}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   if (!event) return null;
+
+  const hasGeoloc = event.latitude && event.longitude;
 
   const onSave = async e => {
     try {
@@ -157,7 +160,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
               </Typography>
             </Box>
           )}
-          {(isEditing || event.address) && (
+          {(isEditing || event.date) && (
             <Box pt={2} pr={1.5}>
               <Typography variant="overline">
                 {t('event.fields.date')}
@@ -211,7 +214,16 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                 />
               ) : (
                 <Box position="relative">
-                  <Typography id="EventAddress" sx={{pr: 3}}>
+                  <Typography
+                    id="EventAddress"
+                    title={t`placeInput.noCoordinates`}
+                    sx={{
+                      pr: 3,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      columnGap: 1,
+                    }}
+                  >
                     <Link
                       target="_blank"
                       rel="noreferrer"
@@ -222,6 +234,9 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                     >
                       {event.address}
                     </Link>
+                    {!hasGeoloc && (
+                      <InfoOutlinedIcon fontSize="small" color="warning" />
+                    )}
                   </Typography>
                 </Box>
               )}

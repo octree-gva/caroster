@@ -61,7 +61,7 @@ const Step2 = ({event, addToEvent, createEvent}: Props) => {
         onChange={setDate}
       />
       <PlaceInput
-        label={t('event.creation.address')}
+        label={t('event.fields.address')}
         textFieldProps={{sx: {mt: 2}}}
         place={address}
         latitude={event.latitude}

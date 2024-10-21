@@ -41,7 +41,6 @@
   "event.creation.addFromAccount.actions.register": "$t(menu.register)",
   "event.creation.addFromAccount.subtitle": "Erstellen Sie es über Ihr Konto",
   "event.creation.addFromAccount.title": "Möchten Sie diesen Caroster zu Ihren Veranstaltungen hinzufügen?",
-  "event.creation.address": "Adresse der Veranstaltung",
   "event.creation.creator_email": "Ihre E-Mail",
   "event.creation.date": "Datum der Veranstaltung",
   "event.creation.description": "Beschreibung",
