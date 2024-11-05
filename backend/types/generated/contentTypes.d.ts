@@ -790,7 +790,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     lastName: Attribute.String;
     onboardingUser: Attribute.Boolean & Attribute.DefaultTo<false>;
     onboardingCreator: Attribute.Boolean & Attribute.DefaultTo<false>;
-    lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl']> &
+    lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl', 'it']> &
       Attribute.DefaultTo<'fr'>;
     newsletterConsent: Attribute.Boolean & Attribute.DefaultTo<false>;
     notificationEnabled: Attribute.Boolean & Attribute.DefaultTo<true>;
@@ -832,7 +832,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     email: Attribute.String & Attribute.Required;
-    lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl']> &
+    lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl', 'it']> &
       Attribute.DefaultTo<'en'>;
     date: Attribute.Date;
     address: Attribute.Text;

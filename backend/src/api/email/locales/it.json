@@ -1,0 +1,60 @@
+{
+  "notifications": {
+    "ConfirmEmail": {
+      "content": "## Benvenuto/a a Caroster!\nPer favore conferma la registrazione del tuo account cliccando su questo link\n\n[<%= confirmationLink %>](<%= confirmationLink %>)",
+      "title": "Per favore, conferma il tuo indirizzo e-mail"
+    },
+    "ContactTripCreator": {
+      "content": "Per organizzare la tua avventura con [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), per favore, contatta il pilota del viaggio a cui sei stato/a registrato/a\n\n**Viaggio: <%= travel.vehicleName %>**\nLuogo: <%= travel.meeting %>\nData/orario: <%= datetime %>\nNumero di telefono: <%= travel.phone_mumber | 'Not provided' %>\nE-mail: <%= driver.email %>",
+      "title": "<%= event.name %> - Contatta il pilota del viaggio"
+    },
+    "NewTripAlert": {
+      "title": "<%= event.name %> - Un nuovo viaggio è disponibile",
+      "content": "## Un nuovo viaggio è disponibile per \"<%= event.name %>\"\n\n**Viaggio: <%= travel.vehicleName %>**\nNumero di posti: <%= travel.seats %>\nLuogo d'incontro: <%= travel.meeting %>\nInformazioni: <%= travel.details %>.\n\n[Prenota un posto](<%= host %>/e/<%= event.uuid %>).\n\nStai ricevendo questa e-mail perchè hai abilitato gli avvisi per questo evento."
+    },
+    "DeletedTrip": {
+      "title": "<%= event.name %> - Viaggio rimosso",
+      "content": "Il viaggio '<%= travel.vehicleName %>' in cui vi siete iscritto/a è stato rimosso. Puoi provare a cercarne un'altro viaggio disponibile per te [qui](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "DeletedYourTrip": {
+      "title": "<%= event.name %> - Il tuo viaggio è stato rimosso",
+      "content": "Il tuo viaggio <%= travel.vehicleName %> è stato rimosso da un amministratore da [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "DeletedFromTrip": {
+      "title": "<%= event.name %> - Sei stato/a rimosso/a da un viaggio",
+      "content": "Sei stato/a rimosso/a dal viaggio '<%= travel.vehicleName %>' a causa di [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "NewPassengerInYourTrip": {
+      "content": "Un passeggiero è stato aggiunto al tuo viaggio su [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)",
+      "title": "<%= event.name %> - Un passeggerio è stato aggiunto al tuo viaggio"
+    },
+    "AddedAsAdmin": {
+      "title": "Sei stato/a promosso/a come amministratore di un evento",
+      "content": "Sei stato promosso come amministratore a [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "EventCreated": {
+      "title": "<%= event.name %> - Il tuo Caroster è pronto!",
+      "content": "## Congratulazioni, il tuo Caroster \"<%= event.name %>\" è pronto!\n\nIncomincia ad organizzare:\n\n🚗 Aggiungi viaggi\n\n💬 Invita i tuoi partecipanti condividendo il tuo link Caroster.\n\nCondividi link:\n<%= host %>/e/<%= event.uuid %>"
+    },
+    "EventEnded": {
+      "title": "<%= event.name %> - Il tuo evento è finito!",
+      "content": "## \"<%= event.name %>\" è finito!\n\n👏 Numero di passeggieri: <%= event.passengers.length %>\n🚗 Numero di viaggi sottoscritti: <%= event.travels.length %>\n\nLink del tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perchè sei l'autore di questo evento."
+    },
+    "EventRecap": {
+      "title": "<%= event.name %> - Qualcosa di nuovo è successo nel tuo evento",
+      "content": "## C'è qualcosa di nuovo al tuo evento \"<%= event.name %>\"\n\n⏳ Numero di passeggeri in cerca di un posto: <%= waitingListCount %>\n🚗 Numero di viaggi: <%= travelsCount %>\n🆕 Numero di nuovi viaggi: <%= newTravelsCount %>\n\nLink al tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perchè sei l'autore di questo evento."
+    },
+    "EnabledCarosterPlus": {
+      "title": "<%= event.name %> - Caroster Plus è stato attivato per il tuo evento",
+      "content": "Il modulo 'Caroster Plus' è stato attivato per il tuo evento [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+    },
+    "NewTrip": {
+      "title": "<%= event.name %> - Un nuovo viaggio è disponibile",
+      "content": "## Un nuovo viaggio è disponibile per \"<%= event.name %>\"\n\n**Viaggio: <%= travel.vehicleName %>**\nNumero di posti: <%= travel.seats %>\nLuogo d'incontro: <%= travel.meeting %>\nInformazioni: <%= travel.details %>.\n\n[Prenota un posto per me!](<%= host %>/e/<%= event.uuid %>).\n\nStai ricevendo questa e-mail perchè sei stato registrato/a alla lista d'attesa nella ricerca di un parcheggio a questo evento."
+    }
+  },
+  "template": {
+    "footer": "💝 Pensi anche tu che Caroster sia fantastico? Mantienilo libero e dacci supporto con una donazione!",
+    "carosterLink": "https://caroster.io/it/home"
+  }
+}

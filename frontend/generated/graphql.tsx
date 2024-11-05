@@ -101,6 +101,7 @@ export enum Enum_Event_Lang {
   de = 'de',
   en = 'en',
   fr = 'fr',
+  it = 'it',
   nl = 'nl'
 }
 
@@ -128,6 +129,7 @@ export enum Enum_Userspermissionsuser_Lang {
   de = 'de',
   en = 'en',
   fr = 'fr',
+  it = 'it',
   nl = 'nl'
 }
 

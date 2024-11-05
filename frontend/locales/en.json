@@ -201,6 +201,7 @@
   "PROTECTED.languages.fr": "Français (100%)",
   "PROTECTED.languages.nl": "Nederlands (97%)",
   "PROTECTED.languages.de": "Deutsch (96%)",
+  "PROTECTED.languages.it": "Italiano (100%)",
   "signin.email": "Email",
   "signin.emailConfirmation": "Your account has been confirmed. You can now login.",
   "signin.errors.CredentialsSignin": "Check your email and password. If your account is linked to Google, please use the Google auth. button.",

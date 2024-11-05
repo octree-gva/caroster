@@ -5,7 +5,7 @@ const {FALLBACK_LANGUAGE = 'en'} = process.env;
 module.exports = {
   i18n: {
     defaultLocale: FALLBACK_LANGUAGE,
-    locales: [...new Set([FALLBACK_LANGUAGE, 'en', 'fr', 'de', 'nl'])],
+    locales: [...new Set([FALLBACK_LANGUAGE, 'en', 'fr', 'de', 'nl', 'it'])],
   },
   // Load same lang file for every namespaces
   localePath: (locale, _namespace) => `./locales/${locale}.json`,
