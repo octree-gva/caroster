@@ -2684,7 +2684,7 @@ export type ModuleSuspenseQueryHookResult = ReturnType<typeof useModuleSuspenseQ
 export type ModuleQueryResult = Apollo.QueryResult<ModuleQuery, ModuleQueryVariables>;
 export const UserNotificationsDocument = gql`
     query UserNotifications($maxItems: Int = 20) {
-  notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
+  notifications(pagination: {limit: $maxItems}) {
     data {
       id
       attributes {

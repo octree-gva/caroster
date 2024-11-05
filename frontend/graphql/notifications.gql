@@ -1,5 +1,5 @@
 query UserNotifications($maxItems: Int = 20) {
-  notifications(pagination: {limit: $maxItems}, sort: "createdAt:DESC") {
+  notifications(pagination: {limit: $maxItems}) {
     data {
       id
       attributes {

@@ -11,6 +11,28 @@ export default [
       }),
     ],
     resolvers: {
+      Query: {
+        notifications: {
+          async resolve(_root, args, context) {
+            const user = context.state.user;
+            const userNotifications = await strapi.entityService.findMany(
+              "api::notification.notification",
+              {
+                filters: {
+                  user: { id: { $eq: user.id } },
+                  event: { id: { $notNull: true } },
+                },
+                sort: { createdAt: "DESC" },
+                limit: args?.pagination?.limit || 20,
+              }
+            );
+            return {
+              nodes: userNotifications,
+              info: { args, resourceUID: "api::notification.notification" },
+            };
+          },
+        },
+      },
       Mutation: {
         readNotifications: {
           async resolve(_root, args, context) {
@@ -57,7 +79,6 @@ export default [
     resolversConfig: {
       "Query.notifications": {
         auth: true,
-        policies: ["api::notification.check-find"],
       },
       "Mutation.readNotifications": {
         auth: true,
