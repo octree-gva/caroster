@@ -28,6 +28,7 @@ import {
   EventByUuidDocument,
   useUpdateEventMutation,
 } from '../../../generated/graphql';
+import {langLocales} from '../../../locales/constants';
 
 interface Props {
   eventUUID: string;
@@ -286,7 +287,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
                 />
               ) : (
                 <Typography id="EventLang" sx={{pr: 3}}>
-                  {t(`PROTECTED.languages.${event.lang}`)}
+                  {langLocales[event.lang]}
                 </Typography>
               )}
             </Box>

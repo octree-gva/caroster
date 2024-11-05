@@ -5,10 +5,10 @@ import Icon from '@mui/material/Icon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {useTranslation} from 'next-i18next';
-import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
+import {langLocales, langs} from '../../locales/constants';
 
 const IconLanguageSelection = ({
   language,
@@ -22,7 +22,7 @@ const IconLanguageSelection = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const onConfirm = (lang: SupportedLocales) => {
+  const onConfirm = (lang: (typeof langs)[number]) => {
     setAnchorEl(null);
     onChangeLang(lang);
   };
@@ -52,13 +52,13 @@ const IconLanguageSelection = ({
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {Object.keys(SupportedLocales).map(locale => (
+        {langs.map(lang => (
           <MenuItem
-            key={locale}
-            disabled={language === SupportedLocales[locale]}
-            onClick={() => onConfirm(SupportedLocales[locale])}
+            key={lang}
+            disabled={language === lang}
+            onClick={() => onConfirm(lang)}
           >
-            {t(`PROTECTED.languages.${locale}`)}
+            {langLocales[lang]}
           </MenuItem>
         ))}
       </Menu>

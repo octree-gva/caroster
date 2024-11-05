@@ -186,8 +186,6 @@
   "profile.stripe_link.button": "Historia",
   "profile.stripe_link.title": "Rachunek",
   "profile.title": "Profil",
-  "PROTECTED.languages.en": "English",
-  "PROTECTED.languages.fr": "Français",
   "signin.email": "E-mail",
   "signin.emailConfirmation": "Twoje konto zostało potwierdzone. Teraz można się zalogować.",
   "signin.errors.CredentialsSignin": "",
@@ -286,7 +284,6 @@
   "event.filter.dates": "Wiele dat",
   "passenger.informations.notSpecify": "Nie podano",
   "placeInput.item.noCoordinates": "Brak koordynatów",
-  "PROTECTED.languages.nl": "Holandia",
   "travel.removePassengerModal.cancel": "Anuluj",
   "event.filter.title": "Filtruj daty",
   "event.filter.allDates": "Wszystkie daty"

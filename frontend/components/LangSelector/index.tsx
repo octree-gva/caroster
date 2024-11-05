@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import {Enum_Event_Lang} from '../../generated/graphql';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import {useTranslation} from 'next-i18next';
+import {langs, langLocales} from '../../locales/constants';
 
 type Props = {
   value: Enum_Event_Lang;
@@ -10,7 +10,6 @@ type Props = {
 };
 
 const LangSelector = (props: Props) => {
-  const {t} = useTranslation();
   return (
     <FormControl fullWidth>
       <Select
@@ -20,9 +19,14 @@ const LangSelector = (props: Props) => {
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       >
-        <MenuItem value={'fr'}>{t`PROTECTED.languages.fr`}</MenuItem>
-        <MenuItem value={'en'}>{t`PROTECTED.languages.en`}</MenuItem>
-        <MenuItem value={'nl'}>{t`PROTECTED.languages.nl`}</MenuItem>
+        {langs.map(
+          lang =>
+            langLocales[lang] && (
+              <MenuItem value={lang} key={lang}>
+                {langLocales[lang]}
+              </MenuItem>
+            )
+        )}
       </Select>
     </FormControl>
   );

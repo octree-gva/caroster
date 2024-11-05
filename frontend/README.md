@@ -89,5 +89,5 @@ This is pre-configured to be installed in a repo with a backend code as parent w
 - Add language key to `locales` field in `frontend/next-i18next.config.js`
 - Add language key to `lang` field in `backend/src/api/event/content-types/event/schema.json`
 - Add language key to `lang` field in `backend/src/extensions/users-permissions/content-types/user/schema.json`
-- Add `PROTECTED.languages.<lang>: <Lang label>` in `frontend/locales/en.json` (See existing keys)
+- Add language translation in `frontend/locales/constants.ts` (See existing keys)
 - (Re)start backend and run `yarn gql` from frontend directory

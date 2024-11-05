@@ -4,10 +4,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
-import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../../generated/graphql';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
+import {langLocales, langs} from '../../locales/constants';
 
 const Languages = ({
   language,
@@ -21,7 +21,7 @@ const Languages = ({
     setSelecting(!isSelecting);
   };
 
-  const onConfirm = (lang: SupportedLocales) => {
+  const onConfirm = (lang: (typeof langs)[number]) => {
     setSelecting(false);
     onChangeLang(lang);
   };
@@ -38,13 +38,13 @@ const Languages = ({
         }}
         dense
       >
-        {Object.keys(SupportedLocales).map(locale => (
+        {langs.map(lang => (
           <MenuItem
-            key={locale}
-            disabled={language === SupportedLocales[locale]}
-            onClick={() => onConfirm(SupportedLocales[locale])}
+            key={lang}
+            disabled={language === lang}
+            onClick={() => onConfirm(lang)}
           >
-            {t(`PROTECTED.languages.${locale}`)}
+            {langLocales[lang]}
           </MenuItem>
         ))}
       </MenuList>
