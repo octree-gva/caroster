@@ -16,6 +16,8 @@
 
 #### **Do you want to translate Caroster?**
 
+- You can follow the detailed process here : [Translating the Caroster app as a contributor ](https://octreegva.notion.site/Translating-the-Caroster-app-as-a-contributor-13612ef1253c8021abb0fcb2512fe8fe)
+
 - Go to [the weblate project](https://translate.codeberg.org/projects/caroster/web-app/).
 
 - Read and accept the contributor agreement.
