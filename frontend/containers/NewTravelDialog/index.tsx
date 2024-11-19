@@ -137,7 +137,7 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
             name="name"
             id="NewTravelName"
             required
-            error={name && !name?.trim()}
+            error={!name?.trim()}
             helperText={
               name && !name?.trim() && t('travel.creation.travel.titleHelper')
             }
