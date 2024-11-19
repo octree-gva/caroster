@@ -142,7 +142,7 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
     async (email) =>
       strapi
         .service("api::email.email")
-        .sendEmailNotif(email, "NewTrip", "en", {
+        .sendEmailNotif(email, "NewTrip", event.lang || "en", {
           event,
           travel,
         }),
