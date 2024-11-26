@@ -47,7 +47,7 @@ export default {
     }
   },
 
-  async beforeDelete({ params, ...others }) {
+  async beforeDelete({ params }) {
     const travel = await strapi.entityService.findOne(
       "api::travel.travel",
       params.where?.id,
