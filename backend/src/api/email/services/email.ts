@@ -3,7 +3,7 @@ import _ from "lodash";
 import { marked } from "marked";
 import { getHTML } from "../utils/layout";
 
-const langs = ["en", "fr", "nl"];
+const langs = ["en", "fr", "nl", "it"];
 
 let locales: Record<
   string,
@@ -60,15 +60,17 @@ export default () => ({
   },
 
   async getEmailTemplate(notifType: string, lang: string, variables = {}) {
-    let notif = locales?.[lang]?.notifications?.[notifType];
+    let matchingLocale = locales?.[lang];
 
-    if (!notif) {
+    if (!matchingLocale) {
       strapi.log.warn(
         `No email notification locale found for type '${notifType}' and lang '${lang}'`
       );
-      notif = locales?.["en"]?.notifications?.[notifType];
-      if (!notif) return null;
+      matchingLocale = locales?.["en"];
+      if (!matchingLocale) return null;
     }
+
+    const notif = matchingLocale.notifications?.[notifType];
 
     try {
       const subject = _.template(notif.title)({
@@ -79,11 +81,11 @@ export default () => ({
         ...variables,
         host: strapi.config.server.url,
       });
-      const mdFooter = locales?.[lang]?.template.footer;
-      const carosterLink = locales?.[lang]?.template.carosterLink;
+      const mdFooter = matchingLocale.template.footer;
+      const carosterLink = matchingLocale.template.carosterLink;
       const htmlContent = await marked.parse(mdContent, { breaks: true });
       const htmlFooter = await marked.parse(mdFooter, { breaks: true });
-      const html = getHTML({htmlContent, htmlFooter, carosterLink});
+      const html = getHTML({ htmlContent, htmlFooter, carosterLink });
 
       return {
         subject,

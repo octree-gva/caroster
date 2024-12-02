@@ -1,4 +1,8 @@
 {
+  "template": {
+    "footer": "💝 Pensi anche tu che Caroster sia fantastico? Mantienilo libero e dacci supporto con una donazione!",
+    "carosterLink": "https://caroster.io/en/home"
+  },
   "notifications": {
     "ConfirmEmail": {
       "content": "## Benvenuto/a a Caroster!\nPer favore conferma la registrazione del tuo account cliccando su questo link\n\n[<%= confirmationLink %>](<%= confirmationLink %>)",
@@ -52,9 +56,5 @@
       "title": "<%= event.name %> - È disponibile un nuovo passaggio",
       "content": "## È disponibile un nuovo passaggio per \"<%= event.name %>\"\n\n**Passaggio: <%= travel.vehicleName %>**\nNumero di posti: <%= travel.seats %>\nLuogo d'incontro: <%= travel.meeting %>\nInformazioni: <%= travel.details %>.\n\n[Prenota un posto per me!](<%= host %>/e/<%= event.uuid %>).\n\nStai ricevendo questa e-mail perché sei stato registrato/a alla lista d'attesa per ottenere un passaggio in auto per recarti a questo evento."
     }
-  },
-  "template": {
-    "footer": "💝 Pensi anche tu che Caroster sia fantastico? Mantienilo libero e dacci supporto con una donazione!",
-    "carosterLink": "https://caroster.io/en/home"
   }
 }
