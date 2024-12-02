@@ -51,7 +51,9 @@ const PhoneInput = ({
       value: phone,
       countries: defaultCountries,
       onChange: ({phone, country}) => {
-        const formatedPhone = phone?.replace(/^\+0*/, '+');
+        let formatedPhone = phone?.replace(/^\+0*/, '+');
+        if (country.iso2 === 'fr')
+          formatedPhone = formatedPhone?.replace(/^\+330/, '+33');
         setPhone(formatedPhone);
         if (isPhoneValid(formatedPhone))
           onChange({phone: formatedPhone, country: country.iso2, error: false});
