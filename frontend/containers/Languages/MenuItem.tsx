@@ -8,6 +8,8 @@ import withLanguagesSelection, {
   LanguageSelectionComponentProps,
 } from './withLanguagesSelection';
 import {langLocales, langs} from '../../locales/constants';
+import {ListItemIcon, ListItemText} from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
 
 const Languages = ({
   language,
@@ -28,7 +30,12 @@ const Languages = ({
 
   return (
     <Box>
-      <MenuItem onClick={handleClick}>{t('menu.language')}</MenuItem>
+      <MenuItem onClick={handleClick}>
+        <ListItemIcon>
+          <LanguageIcon />
+        </ListItemIcon>
+        <ListItemText>{t('menu.language')}</ListItemText>
+      </MenuItem>
       <MenuList
         sx={{
           visibility: isSelecting ? 'visible' : 'hidden',
