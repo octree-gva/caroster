@@ -1,5 +1,8 @@
 export default {
-  async afterCreate({ params }) {
+  async beforeCreate(event) {
+    event.state.isAdmin = event.params.data.isAdmin;
+  },
+  async afterCreate({ params, state }) {
     if (params.data.travel) {
       const travel = await strapi.entityService.findOne(
         "api::travel.travel",
@@ -14,6 +17,17 @@ export default {
             type: "NewPassengerInYourTrip",
             event: params.data.event,
             user: travel.user?.id,
+          },
+        });
+
+      if (travel && state.isAdmin)
+        strapi.entityService.create("api::notification.notification", {
+          data: {
+            type: "AssignedByAdmin",
+            event: params.data.event,
+            user: params.data.user,
+            // @ts-expect-error
+            payload: { travel },
           },
         });
     }

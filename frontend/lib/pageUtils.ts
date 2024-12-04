@@ -5,10 +5,12 @@ import {ProfileDocument, SettingDocument} from '../generated/graphql';
 import {initializeApollo, APOLLO_STATE_PROP_NAME} from './apolloClient';
 import {getCookie, hashText} from './cookies';
 import nextI18NextConfig from '../next-i18next.config';
+import {Session} from 'next-auth';
 
 type ServerSideExtension = (
   context: any,
-  apolloClient: ApolloClient<any>
+  apolloClient: ApolloClient<any>,
+  session?: Session
 ) => Promise<ExtensionResult | void>;
 
 type ExtensionResult = {
@@ -57,7 +59,7 @@ const getServerSideProps =
 
       let extensionProps = {};
       if (extension) {
-        const extensionReturn = await extension(context, apolloClient);
+        const extensionReturn = await extension(context, apolloClient, session);
         extensionProps = extensionReturn?.props || {};
         if (extensionReturn?.notFound) {
           return {

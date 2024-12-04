@@ -6,6 +6,9 @@ export default ({ nexus, strapi }) => ({
         t.field("waitingPassengers", {
           type: "PassengerRelationResponseCollection",
         });
+        t.field("tripAlerts", {
+          type: "TripAlertEntityResponseCollection",
+        });
       },
     }),
     nexus.extendType({
@@ -44,6 +47,18 @@ export default ({ nexus, strapi }) => ({
         return toEntityResponseCollection(waitingPassengers, {
           args,
           resourceUID: "api::passenger.passenger",
+        });
+      },
+      tripAlerts: async (root, args) => {
+        const tripAlerts = await strapi
+          .service("api::event.event")
+          .getTripAlerts(root);
+        const { toEntityResponseCollection } = strapi
+          .plugin("graphql")
+          .service("format").returnTypes;
+        return toEntityResponseCollection(tripAlerts, {
+          args,
+          resourceUID: "api::trip-alert.trip-alert",
         });
       },
     },
@@ -124,6 +139,9 @@ export default ({ nexus, strapi }) => ({
     },
     "Event.waitingPassengers": {
       auth: false,
+    },
+    "Event.tripAlerts": {
+      auth: true,
     },
     "Event.travels": {
       auth: false,

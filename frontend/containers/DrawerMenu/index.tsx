@@ -7,6 +7,7 @@ import {useRouter} from 'next/router';
 import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';
 import useEventStore from '../../stores/useEventStore';
+import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   eventUuid: string;
@@ -20,6 +21,10 @@ const DrawerMenu = ({eventUuid}: Props) => {
   const {connected} = useProfile();
   const appLink = connected ? '/dashboard' : `/e/${eventUuid}` || '';
   const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
+
+  const {
+    userPermissions: {canSeeAdminWaitingList},
+  } = usePermissions();
 
   const router = useRouter();
   const {
@@ -109,6 +114,17 @@ const DrawerMenu = ({eventUuid}: Props) => {
             router.pathname === `/e/[uuid]/waitingList` ||
             router.pathname === `/e/[uuid]/assign/[passengerId]`
           }
+        />
+      )}
+
+      {isCarosterPlusEvent && canSeeAdminWaitingList() && (
+        <DrawerMenuItem
+          title={t('drawer.waitingList')}
+          onClick={() =>
+            router.push(`/e/${uuid}/adminWaitingList`, null, {shallow: true})
+          }
+          icon="group"
+          active={router.pathname === `/e/[uuid]/adminWaitingList`}
         />
       )}
 

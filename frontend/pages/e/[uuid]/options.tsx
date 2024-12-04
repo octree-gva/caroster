@@ -13,7 +13,7 @@ import {
 } from '../../../generated/graphql';
 import CarosterPlusOption from '../../../containers/CarosterPlusOption';
 import CarosterPlusSettings from '../../../containers/CarosterPlusSettings';
-import {Card, Typography} from '@mui/material';
+import {Typography} from '@mui/material';
 import {useTranslation} from 'next-i18next';
 
 interface Props {

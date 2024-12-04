@@ -122,3 +122,34 @@ query eventByUUID($uuid: String!) {
     }
   }
 }
+
+query eventTripAlerts($uuid: String!) {
+  eventByUUID(uuid: $uuid) {
+    data {
+      id
+      attributes {
+        tripAlerts {
+          data {
+            id
+            attributes {
+              address
+              radius
+              latitude
+              longitude
+              user {
+                data {
+                  id
+                  attributes {
+                    firstName
+                    lastName
+                    email
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

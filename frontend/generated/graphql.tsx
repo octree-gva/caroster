@@ -149,6 +149,7 @@ export type Event = {
   name: Scalars['String']['output'];
   passengers?: Maybe<PassengerRelationResponseCollection>;
   travels?: Maybe<TravelRelationResponseCollection>;
+  tripAlerts?: Maybe<TripAlertEntityResponseCollection>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   uuid?: Maybe<Scalars['String']['output']>;
   waitingPassengers?: Maybe<PassengerRelationResponseCollection>;
@@ -1941,6 +1942,13 @@ export type EventByUuidQueryVariables = Exact<{
 
 export type EventByUuidQuery = { __typename?: 'Query', eventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', uuid?: string | null, name: string, description?: string | null, enabled_modules?: any | null, email: string, lang?: Enum_Event_Lang | null, administrators?: Array<string | null> | null, date?: any | null, address?: string | null, latitude?: number | null, longitude?: number | null, waitingPassengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, email?: string | null, location?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null, travels?: { __typename?: 'TravelRelationResponseCollection', data: Array<{ __typename?: 'TravelEntity', id?: string | null, attributes?: { __typename?: 'Travel', meeting?: string | null, meeting_latitude?: number | null, meeting_longitude?: number | null, departureDate?: any | null, departureTime?: string | null, details?: string | null, vehicleName?: string | null, phone_number?: string | null, phoneCountry?: string | null, seats?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } | null, passengers?: { __typename?: 'PassengerRelationResponseCollection', data: Array<{ __typename?: 'PassengerEntity', id?: string | null, attributes?: { __typename?: 'Passenger', name: string, location?: string | null, email?: string | null, phone?: string | null, phoneCountry?: string | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null } | null } | null } | null } | null }> } | null } | null }> } | null } | null } | null } | null };
 
+export type EventTripAlertsQueryVariables = Exact<{
+  uuid: Scalars['String']['input'];
+}>;
+
+
+export type EventTripAlertsQuery = { __typename?: 'Query', eventByUUID?: { __typename?: 'EventEntityResponse', data?: { __typename?: 'EventEntity', id?: string | null, attributes?: { __typename?: 'Event', tripAlerts?: { __typename?: 'TripAlertEntityResponseCollection', data: Array<{ __typename?: 'TripAlertEntity', id?: string | null, attributes?: { __typename?: 'TripAlert', address?: string | null, radius?: number | null, latitude?: number | null, longitude?: number | null, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, email: string } | null } | null } | null } | null }> } | null } | null } | null } | null };
+
 export type ModuleQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
 }>;
@@ -2273,8 +2281,8 @@ export function useTripAlertLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TripAlertQuery, TripAlertQueryVariables>(TripAlertDocument, options);
         }
-export function useTripAlertSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TripAlertQuery, TripAlertQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useTripAlertSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TripAlertQuery, TripAlertQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TripAlertQuery, TripAlertQueryVariables>(TripAlertDocument, options);
         }
 export type TripAlertQueryHookResult = ReturnType<typeof useTripAlertQuery>;
@@ -2628,14 +2636,79 @@ export function useEventByUuidLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<EventByUuidQuery, EventByUuidQueryVariables>(EventByUuidDocument, options);
         }
-export function useEventByUuidSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<EventByUuidQuery, EventByUuidQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useEventByUuidSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EventByUuidQuery, EventByUuidQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<EventByUuidQuery, EventByUuidQueryVariables>(EventByUuidDocument, options);
         }
 export type EventByUuidQueryHookResult = ReturnType<typeof useEventByUuidQuery>;
 export type EventByUuidLazyQueryHookResult = ReturnType<typeof useEventByUuidLazyQuery>;
 export type EventByUuidSuspenseQueryHookResult = ReturnType<typeof useEventByUuidSuspenseQuery>;
 export type EventByUuidQueryResult = Apollo.QueryResult<EventByUuidQuery, EventByUuidQueryVariables>;
+export const EventTripAlertsDocument = gql`
+    query eventTripAlerts($uuid: String!) {
+  eventByUUID(uuid: $uuid) {
+    data {
+      id
+      attributes {
+        tripAlerts {
+          data {
+            id
+            attributes {
+              address
+              radius
+              latitude
+              longitude
+              user {
+                data {
+                  id
+                  attributes {
+                    firstName
+                    lastName
+                    email
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useEventTripAlertsQuery__
+ *
+ * To run a query within a React component, call `useEventTripAlertsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventTripAlertsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventTripAlertsQuery({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useEventTripAlertsQuery(baseOptions: Apollo.QueryHookOptions<EventTripAlertsQuery, EventTripAlertsQueryVariables> & ({ variables: EventTripAlertsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EventTripAlertsQuery, EventTripAlertsQueryVariables>(EventTripAlertsDocument, options);
+      }
+export function useEventTripAlertsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventTripAlertsQuery, EventTripAlertsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EventTripAlertsQuery, EventTripAlertsQueryVariables>(EventTripAlertsDocument, options);
+        }
+export function useEventTripAlertsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EventTripAlertsQuery, EventTripAlertsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EventTripAlertsQuery, EventTripAlertsQueryVariables>(EventTripAlertsDocument, options);
+        }
+export type EventTripAlertsQueryHookResult = ReturnType<typeof useEventTripAlertsQuery>;
+export type EventTripAlertsLazyQueryHookResult = ReturnType<typeof useEventTripAlertsLazyQuery>;
+export type EventTripAlertsSuspenseQueryHookResult = ReturnType<typeof useEventTripAlertsSuspenseQuery>;
+export type EventTripAlertsQueryResult = Apollo.QueryResult<EventTripAlertsQuery, EventTripAlertsQueryVariables>;
 export const ModuleDocument = gql`
     query module($locale: I18NLocaleCode!) {
   module(locale: $locale) {
@@ -2676,8 +2749,8 @@ export function useModuleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Mod
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ModuleQuery, ModuleQueryVariables>(ModuleDocument, options);
         }
-export function useModuleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ModuleQuery, ModuleQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useModuleSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ModuleQuery, ModuleQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ModuleQuery, ModuleQueryVariables>(ModuleDocument, options);
         }
 export type ModuleQueryHookResult = ReturnType<typeof useModuleQuery>;
@@ -2732,8 +2805,8 @@ export function useUserNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UserNotificationsQuery, UserNotificationsQueryVariables>(UserNotificationsDocument, options);
         }
-export function useUserNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UserNotificationsQuery, UserNotificationsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useUserNotificationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserNotificationsQuery, UserNotificationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<UserNotificationsQuery, UserNotificationsQueryVariables>(UserNotificationsDocument, options);
         }
 export type UserNotificationsQueryHookResult = ReturnType<typeof useUserNotificationsQuery>;
@@ -2930,8 +3003,8 @@ export function useSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Se
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
         }
-export function useSettingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingQuery, SettingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useSettingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SettingQuery, SettingQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
         }
 export type SettingQueryHookResult = ReturnType<typeof useSettingQuery>;
@@ -3080,8 +3153,8 @@ export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pr
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
         }
-export function useProfileSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useProfileSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
         }
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
@@ -3165,8 +3238,8 @@ export function useFindUserVehiclesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, options);
         }
-export function useFindUserVehiclesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useFindUserVehiclesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<FindUserVehiclesQuery, FindUserVehiclesQueryVariables>(FindUserVehiclesDocument, options);
         }
 export type FindUserVehiclesQueryHookResult = ReturnType<typeof useFindUserVehiclesQuery>;

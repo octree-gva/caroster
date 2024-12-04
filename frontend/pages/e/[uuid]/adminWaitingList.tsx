@@ -1,48 +1,29 @@
 import {PropsWithChildren} from 'react';
-import Alerts from '../../../containers/Alerts';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
-import {
-  EventByUuidDocument,
-  EventEntity,
-  TripAlertDocument,
-  TripAlertEntity,
-} from '../../../generated/graphql';
 import pageUtils from '../../../lib/pageUtils';
+import {EventByUuidDocument} from '../../../generated/graphql';
+import TripAlertsList from '../../../containers/TripAlertsList';
 
 interface Props {
   eventUUID: string;
   announcement?: string;
-  event: EventEntity;
-  tripAlertEntity: TripAlertEntity;
 }
 
 const Page = (props: PropsWithChildren<Props>) => {
-  return (
-    <EventLayout
-      {...props}
-      Tab={AlertsTab}
-      tabProps={{tripAlertEntity: props.tripAlertEntity}}
-    />
-  );
+  return <EventLayout {...props} Tab={WaitingListTab} tabProps={props} />;
 };
 
-const AlertsTab: TabComponent<Props> = ({
-  event,
-  tripAlertEntity,
-}: {
-  event: EventEntity;
-  tripAlertEntity: TripAlertEntity;
-}) => {
-  return <Alerts event={event} tripAlertEntity={tripAlertEntity} />;
+const WaitingListTab: TabComponent<Props> = ({event}) => {
+  return <TripAlertsList />;
 };
 
 export const getServerSideProps = pageUtils.getServerSideProps(
-  async (context, apolloClient) => {
+  async (context, apolloClient, session) => {
     const {uuid} = context.query;
     const {host = ''} = context.req.headers;
     let event = null;
-    let tripAlertEntity = null;
 
+    // Fetch event
     try {
       const {data} = await apolloClient.query({
         query: EventByUuidDocument,
@@ -62,20 +43,15 @@ export const getServerSideProps = pageUtils.getServerSideProps(
         notFound: true,
       };
 
-    try {
-      const {data} = await apolloClient.query({
-        query: TripAlertDocument,
-        variables: {eventId: event.id},
-      });
-      tripAlertEntity = data.eventTripAlert.data;
-    } catch (error) {
-      tripAlertEntity = null;
-    }
+    const userEmail = session?.user?.email;
+    const userIsAdmin =
+      event?.attributes?.adminstrators?.includes(userEmail) ||
+      event?.attributes?.email === userEmail;
+    if (!userIsAdmin) return {notFound: true};
 
     return {
       props: {
         eventUUID: uuid,
-        tripAlertEntity,
         metas: {
           title: event?.attributes?.name || '',
           url: `https://${host}${context.resolvedUrl}`,

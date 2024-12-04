@@ -24,6 +24,10 @@
       "title": "<%= event.name %> - Passagier toegevoegd aan reis",
       "content": "Er is een passagier toegevoegd aan ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’"
     },
+    "AssignedByAdmin": {
+      "title": "<%= event.name %> - You have been added to a trip",
+      "content": "An administrator of [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) has added you to trip '<%= travel.vehicleName %>'."
+    },
     "AddedAsAdmin": {
       "title": "U bent toegevoegd als beheerder van een afspraak",
       "content": "U bent toegevoegd als beheerder van ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’."

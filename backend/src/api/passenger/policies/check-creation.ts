@@ -9,7 +9,11 @@ export default async (policyContext, _config, { strapi }) => {
   if (!event) throw new errors.NotFoundError(`Event not found`);
 
   if (event.enabled_modules?.includes("caroster-plus")) {
-    if (user) policyContext.args.data.user = user.id;
-    else throw new errors.ForbiddenError();
+    const administrators = event.administrators?.split(/, ?/) || [];
+    const isEventAdmin = [...administrators, event.email].includes(user.email);
+    if (!isEventAdmin) {
+      if (user) policyContext.args.data.user = user.id;
+      else throw new errors.ForbiddenError();
+    }
   }
 };

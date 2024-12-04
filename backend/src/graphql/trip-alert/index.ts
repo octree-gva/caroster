@@ -107,6 +107,9 @@ export default [
       "Mutation.setTripAlert": {
         auth: true,
       },
+      "TripAlert.user": {
+        auth: true,
+      },
     },
   }),
 ];

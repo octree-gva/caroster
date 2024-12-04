@@ -32,6 +32,10 @@
       "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
       "content": "Un passager a été ajouté à votre trajet pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
+    "AssignedByAdmin": {
+      "title": "<%= event.name %> - Vous avez été assigné à un trajet",
+      "content": "Un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) vous a assigné au trajet '<%= travel.vehicleName %>'."
+    },
     "AddedAsAdmin": {
       "title": "Vous avez été promu administrateur d'un événement",
       "content": "Vous avez été promu administrateur sur le Caroster [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."

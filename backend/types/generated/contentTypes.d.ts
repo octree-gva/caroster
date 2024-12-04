@@ -548,6 +548,7 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
         'DeletedTrip',
         'DeletedYourTrip',
         'DeletedFromTrip',
+        'AssignedByAdmin',
         'AddedAsAdmin',
         'EventCreated',
         'EventEnded',

@@ -21,6 +21,7 @@
         "DeletedTrip",
         "DeletedYourTrip",
         "DeletedFromTrip",
+        "AssignedByAdmin",
         "AddedAsAdmin",
         "EventCreated",
         "EventEnded",

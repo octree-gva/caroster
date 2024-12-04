@@ -6,6 +6,7 @@ interface UserPermissions {
   canEditEventOptions: () => boolean;
   canEditEventDetails: () => boolean;
   canEditWaitingList: () => boolean;
+  canSeeAdminWaitingList: () => boolean;
   canSetAlert: () => boolean;
   canAddTravel: () => boolean;
   canEditTravel: (travel: TravelEntity) => boolean;
@@ -20,6 +21,7 @@ const noPermissions = {
   canEditEventOptions: () => false,
   canEditEventDetails: () => false,
   canEditWaitingList: () => false,
+  canSeeAdminWaitingList: () => false,
   canSetAlert: () => false,
   canAddTravel: () => false,
   canEditTravel: () => false,
@@ -43,6 +45,7 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     canEditEventOptions: () => true,
     canEditEventDetails: () => true,
     canEditWaitingList: () => true,
+    canSeeAdminWaitingList: () => true,
     canSetAlert: () => true,
     canAddTravel: () => true,
     canSeeTravelDetails: () => true,

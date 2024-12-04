@@ -17,6 +17,39 @@ export default factories.createCoreService(
         populate: ["travel", "user"],
       });
     },
+    getTripAlerts: async (event) => {
+      const tripAlerts = await strapi.entityService.findMany(
+        "api::trip-alert.trip-alert",
+        {
+          filters: {
+            event: { id: event.id },
+            user: { $not: null },
+            enabled: true,
+          },
+          populate: ["user"],
+        }
+      );
+      const eventPassengers = await strapi.entityService.findMany(
+        "api::passenger.passenger",
+        {
+          filters: {
+            event: { id: event.id },
+            travel: {
+              id: {
+                $null: false,
+              },
+            },
+          },
+          populate: ["user"],
+        }
+      );
+      const usersInTravel = eventPassengers
+        .map((passenger) => passenger.user?.id)
+        .filter(Boolean);
+      return tripAlerts.filter(
+        (tripAlert) => !usersInTravel.includes(tripAlert.user.id)
+      );
+    },
     sendDailyRecap: async (event) => {
       const referenceDate = DateTime.now().minus({ day: 1 });
       const hasBeenModified =
