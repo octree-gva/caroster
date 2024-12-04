@@ -1,6 +1,6 @@
 {
   "template": {
-    "footer": "💝 Vous pensez aussi que Caroster est génial ? Aidez-nous à le maintenir libre et gratuit en faisant une donation !",
+    "footer": "<a href='https://octreegva.notion.site/Charte-du-Covoitureur-FR-758f2974306d4c8fa59f259f31b31ae6?pvs=4'>Voir la charte du coivoitureur</a>\n\n\n💝 Vous pensez aussi que Caroster est génial ? Aidez-nous à le maintenir libre et gratuit en faisant une donation !",
     "carosterLink": "https://caroster.io"
   },
   "notifications": {

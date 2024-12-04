@@ -36,7 +36,7 @@ export const getHTML = ({ htmlContent, htmlFooter, carosterLink }) => `
               </div>
               <div style="background-color:#E5E5E5;padding:16px 8px 16px 8px">
                 <div
-                  style="font-size:14px;font-weight:normal;padding:16px 24px 16px 24px"
+                  style="font-size:14px;font-weight:normal;padding:4px 24px 16px 24px"
                 >
                   ${htmlFooter}
                 </div>
