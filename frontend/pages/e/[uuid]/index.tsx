@@ -1,13 +1,10 @@
 import {useState, useReducer, PropsWithChildren} from 'react';
 import Box from '@mui/material/Box';
-import {useTranslation} from 'next-i18next';
 import {getSession, useSession} from 'next-auth/react';
 import TravelColumns from '../../../containers/TravelColumns';
 import NewTravelDialog from '../../../containers/NewTravelDialog';
 import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
-import Fab from '../../../containers/Fab';
 import pageUtils from '../../../lib/pageUtils';
-import usePermissions from '../../../hooks/usePermissions';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {
   EventByUuidDocument,
@@ -26,11 +23,7 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const TravelsTab: TabComponent<Props> = () => {
-  const {t} = useTranslation();
   const session = useSession();
-  const {
-    userPermissions: {canAddTravel},
-  } = usePermissions();
   const [openNewTravelDialog, setNewTravelDialog] = useState(false);
   const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleEntity>();
@@ -49,11 +42,6 @@ const TravelsTab: TabComponent<Props> = () => {
   return (
     <Box>
       <TravelColumns toggle={addTravelClickHandler} />
-      {canAddTravel() && (
-        <Fab onClick={addTravelClickHandler} aria-label="add-car">
-          {t('travel.creation.title')}
-        </Fab>
-      )}
       <NewTravelDialog
         key={selectedVehicle?.id || 'noVehicle'}
         opened={openNewTravelDialog}

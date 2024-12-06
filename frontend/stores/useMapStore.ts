@@ -1,14 +1,14 @@
 import {ReactNode} from 'react';
-import type {LatLngExpression} from 'leaflet';
+import type {LatLngExpression, Map as LMap} from 'leaflet';
 import {create} from 'zustand';
 import {TravelEntity} from '../generated/graphql';
 
 type State = {
-  map?: any;
+  map?: LMap;
   markers: Array<ReactNode>;
   focusedTravel?: string;
   bounds: Array<LatLngExpression>;
-  setMap: (map: any) => void;
+  setMap: (map: LMap) => void;
   setMarkers: (markers: Array<ReactNode>) => void;
   setFocusOnTravel: (travel?: TravelEntity) => void;
   setBounds: (bounds: Array<LatLngExpression>) => void;

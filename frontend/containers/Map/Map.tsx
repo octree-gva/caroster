@@ -3,6 +3,8 @@ import MapController from './MapController';
 import MapWrapper from './MapWrapper';
 import useMapStore from '../../stores/useMapStore';
 import Bounds from './Bounds';
+import {Box} from '@mui/material';
+import MapActions from './MapActions';
 
 const TOKEN_FREE_TILES_URL =
   process.env.TOKEN_FREE_TILES_URL ||
@@ -26,6 +28,9 @@ const Map = () => {
         />
         <MapController />
         {markers}
+        <Box zIndex={400} position="relative" top={75} left={25}>
+          <MapActions />
+        </Box>
       </MapContainer>
     </MapWrapper>
   );

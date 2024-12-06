@@ -5,18 +5,14 @@ import useMapStore from '../../stores/useMapStore';
 
 const Bounds = () => {
   const map = useMap();
-  const {bounds: storedBounds} = useMapStore();
-  const debouncedBounds = useDebounce(storedBounds, 750);
-  const bounds = useMemo(
-    () => debouncedBounds.map(bound => bound),
-    [debouncedBounds]
-  );
+  const storedBounds = useMapStore(s => s.bounds);
+  const bounds = useDebounce(storedBounds, 750);
 
   useEffect(() => {
     if (bounds.length >= 1) {
       map.fitBounds(bounds, {padding: [30, 30]});
     }
-  }, [bounds]);
+  }, [bounds, map]);
 
   return null;
 };

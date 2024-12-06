@@ -1,19 +1,56 @@
-import {useState} from 'react';
 import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
-import moment, {Moment} from 'moment';
+import moment from 'moment';
+import useTravelsStore from '../../stores/travelsStore';
+import {useMemo} from 'react';
+import {calculateHaversineDistance} from '../../lib/geography';
 
 const useDisplayTravels = () => {
-  const [selectedDates, setSelectedDates] = useState<Moment[]>([]);
+  const datesFilter = useTravelsStore(s => s.datesFilter);
+  const meetingFilter = useTravelsStore(s => s.meetingFilter);
   const {userId} = useProfile();
   const event = useEventStore(s => s.event);
-  const travels = event?.travels?.data || [];
 
-  const sortTravels = (
-    {attributes: a}: TravelEntity,
-    {attributes: b}: TravelEntity
-  ) => {
+  const dateFileredTravels = useMemo(() => {
+    const travels = event?.travels?.data || [];
+    return travels
+      .slice()
+      .sort(sortTravels(userId))
+      .filter(travel => {
+        if (datesFilter.length === 0) return true;
+        const departureDate = travel?.attributes?.departureDate
+          ? moment(travel.attributes.departureDate)
+          : null;
+        return datesFilter.some(date => date.isSame(departureDate));
+      });
+  }, [event?.travels?.data, datesFilter, userId]);
+
+  const meetingFilteredTravels = useMemo(() => {
+    if (!meetingFilter.latitude || !meetingFilter.longitude)
+      return dateFileredTravels;
+
+    return dateFileredTravels
+      .map(travel => ({
+        ...travel,
+        distance: calculateHaversineDistance(
+          [meetingFilter.latitude, meetingFilter.longitude],
+          [
+            travel.attributes.meeting_latitude,
+            travel.attributes.meeting_longitude,
+          ]
+        ),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 3);
+  }, [dateFileredTravels, meetingFilter]);
+
+  return {displayedTravels: meetingFilteredTravels};
+};
+
+const sortTravels =
+  userId =>
+  ({attributes: a}: TravelEntity, {attributes: b}: TravelEntity) => {
     if (a?.user?.data?.id === userId && b?.user?.data?.id !== userId) return -1;
     else if (a?.user?.data?.id !== userId && b?.user?.data?.id == userId)
       return 1;
@@ -36,20 +73,5 @@ const useDisplayTravels = () => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     else return dateA - dateB;
   };
-
-  const sortedTravels = travels?.slice().sort(sortTravels);
-
-  const filteredTravels = sortedTravels.filter(travel => {
-    const departureDate = travel?.attributes?.departureDate
-      ? moment(travel.attributes.departureDate)
-      : null;
-    return selectedDates.some(date => date.isSame(departureDate));
-  });
-
-  const displayedTravels =
-    selectedDates.length > 0 ? filteredTravels : sortedTravels;
-
-  return {selectedDates, setSelectedDates, displayedTravels};
-};
 
 export default useDisplayTravels;

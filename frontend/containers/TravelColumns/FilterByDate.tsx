@@ -1,28 +1,23 @@
 import {useState} from 'react';
 import {
-  Box,
   Button,
   Checkbox,
   FormControlLabel,
   Icon,
-  List,
   Menu,
   MenuItem,
 } from '@mui/material';
-import theme from '../../theme';
 import {type Moment} from 'moment';
+import useTravelsStore from '../../stores/travelsStore';
 
 interface FilterByDateProps {
   dates: Moment[];
-  setSelectedDates: React.Dispatch<React.SetStateAction<Moment[]>>;
   buttonFilterContent: string | string[];
 }
 
-const FilterByDate = ({
-  dates,
-  setSelectedDates,
-  buttonFilterContent,
-}: FilterByDateProps) => {
+const FilterByDate = ({dates, buttonFilterContent}: FilterByDateProps) => {
+  const datesFilters = useTravelsStore(s => s.datesFilter);
+  const setDatesFilter = useTravelsStore(s => s.setDatesFilter);
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [checkedItems, setCheckedItems] = useState<boolean[]>(
     new Array(dates.length).fill(false)
@@ -37,39 +32,23 @@ const FilterByDate = ({
     newCheckedItems[index] = !checkedItems[index];
     setCheckedItems(newCheckedItems);
     const selectedDate = dates[index];
-    setSelectedDates(prevSelectedDates => {
-      if (checkedItems[index])
-        return prevSelectedDates.filter(date => !date.isSame(selectedDate));
-      else return [...prevSelectedDates, selectedDate];
-    });
+    const newDatesFilters = checkedItems[index]
+      ? datesFilters.filter(date => !date.isSame(selectedDate))
+      : [...datesFilters, selectedDate];
+    setDatesFilter(newDatesFilters);
   };
 
   return (
-    <Box
-      sx={{
-        outline: 'none',
-        '& > *': {
-          cursor: 'default',
-        },
-        position: 'absolute',
-        top: 60,
-        zIndex: 666,
-        [theme.breakpoints.down('sm')]: {
-          left: 15,
-        },
-        [theme.breakpoints.up('sm')]: {
-          left: 25,
-        },
-      }}
-    >
-      <List sx={{bgcolor: 'background.paper', borderRadius: 1, p: 0}}>
-        <Button
-          onClick={handleClickListItem}
-          endIcon={<Icon>calendar_today_outlined</Icon>}
-        >
-          {buttonFilterContent}
-        </Button>
-      </List>
+    <>
+      <Button
+        sx={{bgcolor: 'background.paper'}}
+        variant="contained"
+        color="inherit"
+        onClick={handleClickListItem}
+        endIcon={<Icon>calendar_today_outlined</Icon>}
+      >
+        {buttonFilterContent}
+      </Button>
       <Menu
         anchorEl={anchorElement}
         open={menuOpen}
@@ -95,7 +74,7 @@ const FilterByDate = ({
             </MenuItem>
           ))}
       </Menu>
-    </Box>
+    </>
   );
 };
 

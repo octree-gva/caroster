@@ -1,7 +1,7 @@
 import {CircleMarker} from 'react-leaflet';
 import {useTheme} from '@mui/material';
 import EventPopup from './EventPopup';
-import {Event} from '../../generated/graphql';
+import {Event} from '../../../generated/graphql';
 
 interface Props {
   event: Event & {id: string};

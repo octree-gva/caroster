@@ -3,12 +3,11 @@ import useMapStore from '../../stores/useMapStore';
 
 const MapController = () => {
   const map = useMap();
-  const {setMap, map: storedMap} = useMapStore();
+  const setMap = useMapStore(s => s.setMap);
+  const storedMap = useMapStore(s => s.map);
   map.scrollWheelZoom.disable();
 
-  if (storedMap !== map) {
-    setMap(map);
-  }
+  if (storedMap !== map) setMap(map);
 
   return <></>;
 };

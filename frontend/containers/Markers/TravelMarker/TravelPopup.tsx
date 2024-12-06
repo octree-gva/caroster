@@ -3,12 +3,12 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
-import {TravelEntity} from '../../generated/graphql';
+import {TravelEntity} from '../../../generated/graphql';
 import {Popup} from 'react-leaflet';
 import {useTranslation} from 'next-i18next';
-import getMapsLink from '../../lib/getMapsLink';
-import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
-import usePermissions from '../../hooks/usePermissions';
+import getMapsLink from '../../../lib/getMapsLink';
+import {getFormatedPhoneNumber} from '../../../lib/phoneNumbers';
+import usePermissions from '../../../hooks/usePermissions';
 
 interface Props {
   travel: TravelEntity;

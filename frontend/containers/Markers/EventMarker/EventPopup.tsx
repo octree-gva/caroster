@@ -5,8 +5,8 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import {useTranslation} from 'next-i18next';
 import {Popup} from 'react-leaflet';
-import getMapsLink from '../../lib/getMapsLink';
-import {Event} from '../../generated/graphql';
+import getMapsLink from '../../../lib/getMapsLink';
+import {Event} from '../../../generated/graphql';
 
 interface Props {
   event: Event & {id: string};

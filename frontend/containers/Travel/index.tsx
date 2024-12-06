@@ -36,7 +36,7 @@ const Travel = (props: Props) => {
     false
   );
   const {userId, connected} = useProfile();
-  const {focusedTravel} = useMapStore();
+  const focusedTravel = useMapStore(s => s.focusedTravel);
   const focused = focusedTravel === travel.id;
   const disableNewPassengers =
     travel.attributes.passengers?.data?.length >= travel.attributes.seats;

@@ -47,7 +47,7 @@ const PlaceInput = ({
   const previousOption = place ? {place_name: place, previous: true} : null;
 
   const onChange = async (_event, selectedOption) => {
-    if (selectedOption.center) {
+    if (selectedOption?.center) {
       const [optionLongitude, optionLatitude] = selectedOption.center;
       setNoCoordinates(false);
       onSelect({
@@ -58,7 +58,7 @@ const PlaceInput = ({
     } else {
       setNoCoordinates(true);
       onSelect({
-        place: selectedOption.place_name,
+        place: selectedOption?.place_name || '',
         latitude: null,
         longitude: null,
       });
@@ -109,7 +109,6 @@ const PlaceInput = ({
   return (
     <Autocomplete
       freeSolo
-      disableClearable
       autoComplete
       getOptionLabel={option => option?.place_name}
       options={options}
@@ -125,17 +124,23 @@ const PlaceInput = ({
           multiline
           maxRows={4}
           helperText={MAPBOX_CONFIGURED && getHelperText()}
-          FormHelperTextProps={{sx: {color: 'warning.main'}}}
-          InputProps={{
-            type: 'search',
-            endAdornment: (
-              <InputAdornment position="end" sx={{mr: -0.5}}>
-                <PlaceOutlinedIcon />
-              </InputAdornment>
-            ),
+          {...textFieldProps}
+          slotProps={{
+            formHelperText: {
+              sx: {color: 'warning.main'},
+            },
+            input: {
+              ...params.InputProps,
+              ...(textFieldProps?.slotProps?.input || {
+                endAdornment: (
+                  <InputAdornment position="end" sx={{mr: -0.5}}>
+                    <PlaceOutlinedIcon />
+                  </InputAdornment>
+                ),
+              }),
+            },
           }}
           {...params}
-          {...textFieldProps}
         />
       )}
       renderOption={({key, ...props}, option) => {

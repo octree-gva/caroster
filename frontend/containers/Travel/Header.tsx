@@ -31,7 +31,7 @@ const Header = (props: Props) => {
   const {
     userPermissions: {canEditTravel, canSeeTravelDetails},
   } = usePermissions();
-  const {setFocusOnTravel} = useMapStore();
+  const setFocusOnTravel = useMapStore(s => s.setFocusOnTravel);
   const {userId} = useProfile();
   const isUserTripCreator =
     userId && userId === travel.attributes.user?.data?.id;

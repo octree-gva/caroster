@@ -19,7 +19,9 @@ import LoginToAttend from '../LoginToAttend/LoginToAttend';
 import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
-import FilterByDate from '../../components/FilterByDate';
+import FilterByDate from './FilterByDate';
+import {Button, Icon} from '@mui/material';
+import useTravelsStore from '../../stores/travelsStore';
 
 interface Props {
   toggle: () => void;
@@ -38,17 +40,17 @@ const TravelColumns = (props: Props) => {
   } = usePermissions();
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
+  const datesFilters = useTravelsStore(s => s.datesFilter);
   const {addPassenger} = usePassengersActions();
-  const {selectedDates, setSelectedDates, displayedTravels} =
-    useDisplayTravels();
-  useDisplayMarkers({event, selectedDates});
+  const {displayedTravels} = useDisplayTravels();
+  useDisplayMarkers({event});
 
   const buttonFilterContent = useMemo(() => {
-    if (selectedDates.length > 1) return t('event.filter.dates');
-    else if (selectedDates.length === 1)
-      return selectedDates.map(date => date.format('dddd Do MMMM'));
+    if (datesFilters.length > 1) return t('event.filter.dates');
+    else if (datesFilters.length === 1)
+      return datesFilters.map(date => date.format('dddd Do MMMM'));
     else return t('event.filter.allDates');
-  }, [selectedDates, t]);
+  }, [datesFilters, t]);
 
   const addSelfToTravel = async (travel: TravelEntity) => {
     const hasName = profile.firstName && profile.lastName;
@@ -97,14 +99,23 @@ const TravelColumns = (props: Props) => {
   return (
     <>
       {showMap && <Map />}
-      <FilterByDate
-        dates={dates}
-        setSelectedDates={setSelectedDates}
-        buttonFilterContent={buttonFilterContent}
-      />
+      <Box px={3} py={2} display="flex" gap={2}>
+        <FilterByDate dates={dates} buttonFilterContent={buttonFilterContent} />
+        {canAddTravel() && (
+          <Button
+            onClick={props.toggle}
+            aria-label="add-car"
+            variant="contained"
+            color="secondary"
+            endIcon={<Icon>add</Icon>}
+          >
+            {t('travel.creation.title')}
+          </Button>
+        )}
+      </Box>
       <Box
         p={0}
-        pt={showMap ? 4 : 13}
+        pt={showMap ? 0 : 13}
         pb={11}
         sx={{
           overflowX: 'hidden',
