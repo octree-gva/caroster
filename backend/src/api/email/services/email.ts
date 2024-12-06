@@ -70,9 +70,13 @@ export default () => ({
       if (!matchingLocale) return null;
     }
 
-    const notif = matchingLocale.notifications?.[notifType];
-
     try {
+      const notif =
+        matchingLocale.notifications?.[notifType] ||
+        locales?.["en"]?.notifications?.[notifType];
+
+      if (!notif) throw new Error(`Can't found notification locale`);
+
       const subject = _.template(notif.title)({
         ...variables,
         host: strapi.config.server.url,
