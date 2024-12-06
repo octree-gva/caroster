@@ -41,7 +41,7 @@ const FilterByDate = ({dates, buttonFilterContent}: FilterByDateProps) => {
   return (
     <>
       <Button
-        sx={{bgcolor: 'background.paper'}}
+        sx={{bgcolor: 'background.paper', width: {xs: 1, sm: 'auto'}}}
         variant="contained"
         color="inherit"
         onClick={handleClickListItem}

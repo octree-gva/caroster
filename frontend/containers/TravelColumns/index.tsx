@@ -24,7 +24,7 @@ import {Button, Icon} from '@mui/material';
 import useTravelsStore from '../../stores/travelsStore';
 
 interface Props {
-  toggle: () => void;
+  showTravelModal: () => void;
 }
 
 const TravelColumns = (props: Props) => {
@@ -83,6 +83,7 @@ const TravelColumns = (props: Props) => {
     return (
       <NoCar
         showImage
+        showTravelModal={props.showTravelModal}
         eventName={event?.name}
         title={t('event.no_travel.title')}
         isCarosterPlus={isCarosterPlus}
@@ -99,15 +100,16 @@ const TravelColumns = (props: Props) => {
   return (
     <>
       {showMap && <Map />}
-      <Box px={3} py={2} display="flex" gap={2}>
+      <Box px={3} py={2} display="flex" gap={2} maxWidth="100%" flexWrap="wrap">
         <FilterByDate dates={dates} buttonFilterContent={buttonFilterContent} />
         {canAddTravel() && (
           <Button
-            onClick={props.toggle}
+            onClick={props.showTravelModal}
             aria-label="add-car"
             variant="contained"
             color="secondary"
             endIcon={<Icon>add</Icon>}
+            sx={{width: {xs: 1, sm: 'auto'}}}
           >
             {t('travel.creation.title')}
           </Button>

@@ -41,7 +41,7 @@ const TravelsTab: TabComponent<Props> = () => {
 
   return (
     <Box>
-      <TravelColumns toggle={addTravelClickHandler} />
+      <TravelColumns showTravelModal={addTravelClickHandler} />
       <NewTravelDialog
         key={selectedVehicle?.id || 'noVehicle'}
         opened={openNewTravelDialog}
