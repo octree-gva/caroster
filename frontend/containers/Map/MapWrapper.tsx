@@ -11,7 +11,7 @@ const MapWrapper = ({children}: PropsWithChildren) => {
       <Box
         id="map"
         width="100%"
-        height={mobile ? '40vh' : '50vh'}
+        height={mobile ? '60vh' : '50vh'}
         sx={{position: 'relative'}}
       >
         {children}

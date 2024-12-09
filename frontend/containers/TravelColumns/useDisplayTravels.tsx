@@ -2,7 +2,7 @@ import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
 import useProfile from '../../hooks/useProfile';
 import moment from 'moment';
-import useTravelsStore from '../../stores/travelsStore';
+import useTravelsStore from '../../stores/useTravelsStore';
 import {useMemo} from 'react';
 import {calculateHaversineDistance} from '../../lib/geography';
 

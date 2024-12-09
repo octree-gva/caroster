@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useMemo, useReducer, useState} from 'react';
 import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import moment from 'moment';
@@ -21,7 +21,7 @@ import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
 import FilterByDate from './FilterByDate';
 import {Button, Icon} from '@mui/material';
-import useTravelsStore from '../../stores/travelsStore';
+import useTravelsStore from '../../stores/useTravelsStore';
 
 interface Props {
   showTravelModal: () => void;
@@ -40,6 +40,7 @@ const TravelColumns = (props: Props) => {
   } = usePermissions();
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
+  const [mapEnabled, toggleMap] = useReducer(i => !i, true);
   const datesFilters = useTravelsStore(s => s.datesFilter);
   const {addPassenger} = usePassengersActions();
   const {displayedTravels} = useDisplayTravels();
@@ -72,12 +73,13 @@ const TravelColumns = (props: Props) => {
 
   const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus');
 
-  const showMap =
+  const haveGeopoints =
     (!!event?.latitude && !!event?.longitude) ||
     travels?.some(
       ({attributes: {meeting_latitude, meeting_longitude}}) =>
         meeting_latitude && meeting_longitude
     );
+  const showMap = mapEnabled && haveGeopoints;
 
   if (!event || travels?.length === 0)
     return (
@@ -100,7 +102,15 @@ const TravelColumns = (props: Props) => {
   return (
     <>
       {showMap && <Map />}
-      <Box px={3} py={2} display="flex" gap={2} maxWidth="100%" flexWrap="wrap">
+      <Box
+        px={3}
+        pb={2}
+        pt={showMap ? 2 : 10}
+        display="flex"
+        gap={2}
+        maxWidth="100%"
+        flexWrap="wrap"
+      >
         <FilterByDate dates={dates} buttonFilterContent={buttonFilterContent} />
         {canAddTravel() && (
           <Button
@@ -114,10 +124,19 @@ const TravelColumns = (props: Props) => {
             {t('travel.creation.title')}
           </Button>
         )}
+        {haveGeopoints && (
+          <Button
+            sx={{width: {xs: 1, sm: 'auto'}}}
+            onClick={toggleMap}
+            startIcon={<Icon>{mapEnabled ? 'visibility_off' : 'map'}</Icon>}
+          >
+            {mapEnabled ? t`travel.hideMap` : t`travel.showMap`}
+          </Button>
+        )}
       </Box>
       <Box
         p={0}
-        pt={showMap ? 0 : 13}
+        pt={showMap ? 0 : 3}
         pb={11}
         sx={{
           overflowX: 'hidden',

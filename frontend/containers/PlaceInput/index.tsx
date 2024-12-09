@@ -110,7 +110,7 @@ const PlaceInput = ({
     <Autocomplete
       freeSolo
       autoComplete
-      getOptionLabel={option => option?.place_name}
+      getOptionLabel={option => option?.place_name || ''}
       options={options}
       defaultValue={previousOption}
       filterOptions={x => x}
@@ -130,8 +130,10 @@ const PlaceInput = ({
               sx: {color: 'warning.main'},
             },
             input: {
+              style: {paddingRight: 0},
               ...params.InputProps,
               ...(textFieldProps?.slotProps?.input || {
+                paddingRight: 0,
                 endAdornment: (
                   <InputAdornment position="end" sx={{mr: -0.5}}>
                     <PlaceOutlinedIcon />
@@ -149,7 +151,7 @@ const PlaceInput = ({
         return (
           <ListItem key={key || option.id || 'text'} {...props}>
             <ListItemText
-              primary={option.place_name}
+              primary={option?.place_name || ''}
               secondary={!option.center && t`placeInput.item.noCoordinates`}
               secondaryTypographyProps={{
                 color: option.center ? 'inherit' : 'warning.main',

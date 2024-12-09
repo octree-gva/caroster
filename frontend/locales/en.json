@@ -310,5 +310,7 @@
   "travel.vehicle.empty": "There is no vehicle assigned to you. Click the button bellow in order to create one.",
   "travel.vehicle.name": "Name of the vehicle",
   "travel.vehicle.seats_number": "Seats number",
-  "travel.vehicle.title": "My Vehicles"
+  "travel.vehicle.title": "My Vehicles",
+  "travel.showMap": "Show map",
+  "travel.hideMap": "Hide map"
 }

@@ -1,7 +1,7 @@
-import {Icon, InputAdornment, TextField} from '@mui/material';
+import {Icon, InputAdornment} from '@mui/material';
 import {useTranslation} from 'react-i18next';
 import PlaceInput from '../PlaceInput';
-import useTravelsStore from '../../stores/travelsStore';
+import useTravelsStore from '../../stores/useTravelsStore';
 
 type Props = {};
 

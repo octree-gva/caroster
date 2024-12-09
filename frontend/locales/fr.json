@@ -309,5 +309,7 @@
   "travel.vehicle.empty": "Vous n'avez aucun véhicule assigné. Utilisez le bouton ci-dessous pour en créer un.",
   "travel.vehicle.name": "Nom du véhicule",
   "travel.vehicle.seats_number": "Nombre de places",
-  "travel.vehicle.title": "Mes véhicules"
+  "travel.vehicle.title": "Mes véhicules",
+  "travel.showMap": "Afficher la carte",
+  "travel.hideMap": "Masquer la carte"
 }

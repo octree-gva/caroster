@@ -3,7 +3,7 @@ import {useEffect, useMemo} from 'react';
 import useMapStore from '../../stores/useMapStore';
 import dynamic from 'next/dynamic';
 import {Event} from '../../generated/graphql';
-import useTravelsStore from '../../stores/travelsStore';
+import useTravelsStore from '../../stores/useTravelsStore';
 import {calculateHaversineDistance} from '../../lib/geography';
 
 const EventMarker = dynamic(() => import('../Markers/EventMarker'), {
@@ -79,10 +79,6 @@ const useDisplayMarkers = ({event}: Props) => {
   useEffect(() => {
     let bounds = [];
 
-    // Set event bounds
-    const {latitude, longitude} = event || {};
-    if (latitude && longitude) bounds.push([latitude, longitude]);
-
     if (meetingFilter?.latitude && meetingFilter?.longitude) {
       bounds.push([meetingFilter.latitude, meetingFilter.longitude]);
 
@@ -106,6 +102,9 @@ const useDisplayMarkers = ({event}: Props) => {
         ]);
       bounds.push(...travelCoords);
     } else {
+      // Set event bounds
+      const {latitude, longitude} = event || {};
+      if (latitude && longitude) bounds.push([latitude, longitude]);
       // Set travels bounds
       const travelCoords = travelsWithGeoloc.map(travel => [
         travel.attributes.meeting_latitude,

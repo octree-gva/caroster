@@ -8,7 +8,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import {type Moment} from 'moment';
-import useTravelsStore from '../../stores/travelsStore';
+import useTravelsStore from '../../stores/useTravelsStore';
 
 interface FilterByDateProps {
   dates: Moment[];
