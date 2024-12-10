@@ -8,6 +8,7 @@ import {
   TripAlertEntity,
 } from '../../../generated/graphql';
 import pageUtils from '../../../lib/pageUtils';
+import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
   eventUUID: string;
@@ -72,12 +73,18 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       tripAlertEntity = null;
     }
 
+    const description = await getLocaleForLang(
+      event?.attributes?.lang,
+      'meta.description'
+    );
+
     return {
       props: {
         eventUUID: uuid,
         tripAlertEntity,
         metas: {
           title: event?.attributes?.name || '',
+          description,
           url: `https://${host}${context.resolvedUrl}`,
         },
       },

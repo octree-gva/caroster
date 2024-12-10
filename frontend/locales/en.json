@@ -312,5 +312,6 @@
   "travel.vehicle.seats_number": "Seats number",
   "travel.vehicle.title": "My Vehicles",
   "travel.showMap": "Show map",
-  "travel.hideMap": "Hide map"
+  "travel.hideMap": "Hide map",
+  "meta.description": "Caroster Join the event by offering a car or taking a seat."
 }

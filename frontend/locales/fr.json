@@ -311,5 +311,6 @@
   "travel.vehicle.seats_number": "Nombre de places",
   "travel.vehicle.title": "Mes véhicules",
   "travel.showMap": "Afficher la carte",
-  "travel.hideMap": "Masquer la carte"
+  "travel.hideMap": "Masquer la carte",
+  "meta.description": "Caroster Covoiturez à l’événement en proposant une voiture ou en prenant une place."
 }

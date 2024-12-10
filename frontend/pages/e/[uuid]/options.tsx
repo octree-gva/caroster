@@ -15,6 +15,7 @@ import CarosterPlusOption from '../../../containers/CarosterPlusOption';
 import CarosterPlusSettings from '../../../containers/CarosterPlusSettings';
 import {Typography} from '@mui/material';
 import {useTranslation} from 'next-i18next';
+import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
   modulesSettings?: Module;
@@ -113,12 +114,18 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       console.error(error);
     }
 
+    const description = await getLocaleForLang(
+      event?.attributes?.lang,
+      'meta.description'
+    );
+
     return {
       props: {
         modulesSettings,
         eventUUID: uuid,
         metas: {
           title: event?.attributes?.name || '',
+          description,
           url: `https://${host}${context.resolvedUrl}`,
         },
       },

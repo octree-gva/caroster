@@ -311,5 +311,6 @@
   "signin.errors.CredentialsSignin": "Controlla email e password. Se il tuo account è connesso a Google, usa il pulsante di login con Google.",
   "tour.creator.step4": "L'evento può essere modificato cliccando il pulsante Modifica.",
   "emailConfirmation.toLogin": "Vai alla pagina di login",
-  "emailConfirmation.invalidMessage": "Questo link di registrazione non è più valido perché già utilizzato o scaduto."
+  "emailConfirmation.invalidMessage": "Questo link di registrazione non è più valido perché già utilizzato o scaduto.",
+  "meta.description": "Caroster Partecipa all'evento offrendo la tua automobile o prendendo un passaggio."
 }
