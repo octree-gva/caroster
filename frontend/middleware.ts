@@ -52,7 +52,8 @@ const getRegisteredUserLanguage = async req => {
   })
     .then(async response => {
       const {data} = await response.json();
-      return data?.me?.profile?.lang;
+      if (data?.me?.profile?.provider === 'local')
+        return data?.me?.profile?.lang;
     })
     .catch(console.error);
 };

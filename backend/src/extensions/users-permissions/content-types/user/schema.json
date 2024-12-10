@@ -99,8 +99,14 @@
     },
     "lang": {
       "type": "enumeration",
-      "enum": ["fr", "en", "de", "nl", "it"],
-      "default": "fr"
+      "enum": [
+        "fr",
+        "en",
+        "de",
+        "nl",
+        "it"
+      ],
+      "default": "en"
     },
     "newsletterConsent": {
       "type": "boolean",

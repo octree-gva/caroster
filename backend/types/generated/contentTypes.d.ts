@@ -1305,7 +1305,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     firstName: Attribute.String;
     lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl', 'it']> &
-      Attribute.DefaultTo<'fr'>;
+      Attribute.DefaultTo<'en'>;
     lastName: Attribute.String;
     newsletterConsent: Attribute.Boolean & Attribute.DefaultTo<false>;
     notificationEnabled: Attribute.Boolean & Attribute.DefaultTo<true>;
