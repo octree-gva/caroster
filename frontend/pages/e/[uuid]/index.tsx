@@ -12,6 +12,7 @@ import {
   VehicleEntity,
   useFindUserVehiclesQuery,
 } from '../../../generated/graphql';
+import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
   eventUUID: string;
@@ -85,11 +86,17 @@ export const getServerSideProps = pageUtils.getServerSideProps(
         query: FindUserVehiclesDocument,
       });
 
+    const description = await getLocaleForLang(
+      event?.attributes?.lang,
+      'meta.description'
+    );
+
     return {
       props: {
         eventUUID: uuid,
         metas: {
           title: event?.attributes?.name || '',
+          description,
           url: `https://${host}${context.resolvedUrl}`,
         },
       },

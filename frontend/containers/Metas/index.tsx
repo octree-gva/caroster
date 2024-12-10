@@ -2,7 +2,8 @@ import Head from 'next/head';
 
 type Metas = {
   title: string;
-  url: string;
+  description?: string;
+  url?: string;
 };
 
 interface Props {
@@ -17,6 +18,7 @@ const Meta = (props: Props) => {
     ? `${metas.title} - Caroster`
     : 'Caroster - Covoiturage de groupe';
   const description =
+    metas?.description ||
     'Covoiturez à un événement en proposant une voiture ou en prenant une place.';
   const socialImage = '/assets/Caroster_Octree_Social.jpg';
 

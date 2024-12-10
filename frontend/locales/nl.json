@@ -304,5 +304,6 @@
   "travel.vehicle.empty": "Er is nog geen voertuig aan u toegewezen. Klik op onderstaande knop om er een toe te voegen.",
   "travel.vehicle.name": "Voertuignaam",
   "travel.vehicle.seats_number": "Aantal plaatsen",
-  "travel.vehicle.title": "Mijn voertuigen"
+  "travel.vehicle.title": "Mijn voertuigen",
+  "meta.description": "Caroster Carpool naar het evenement door een auto aan te bieden of een plaats in te nemen."
 }

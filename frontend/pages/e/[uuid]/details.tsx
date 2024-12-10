@@ -29,6 +29,7 @@ import {
   useUpdateEventMutation,
 } from '../../../generated/graphql';
 import {langLocales} from '../../../locales/constants';
+import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
   eventUUID: string;
@@ -323,11 +324,17 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       };
     }
 
+    const description = await getLocaleForLang(
+      event?.attributes?.lang,
+      'meta.description'
+    );
+
     return {
       props: {
         eventUUID: uuid,
         metas: {
           title: event?.attributes?.name || '',
+          description,
           url: `https://${host}${context.resolvedUrl}`,
         },
       },
