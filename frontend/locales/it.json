@@ -107,7 +107,7 @@
   "dashboard.noEvent.text_html": "Qui troverai <strong> i Caroster ai quali partecipi </strong>, per iniziare a creare un Caroster!",
   "event.actions.share": "Condividi il Caroster",
   "signin.email": "Email",
-  "event.add_to_my_events.text_html": "Per aggiungere <strong> {{eventName}} </strong> ai tuoi caroster devi effettuare l'accesso o creare un account.",
+  "event.add_to_my_events.text": "Per aggiungere <bold>{{eventName}}</bold> ai tuoi caroster devi effettuare l'accesso o creare un account.",
   "event.loginToSetAlert": "Gli avvisi sono disponibili solo a chi partecipa al carpool.",
   "passenger.success.added_self_to_car": "Sei stato aggiunto al passaggio",
   "travel.passengers.location_placeholder": "Luogo d'incontro (facoltativo)",

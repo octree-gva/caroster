@@ -35,7 +35,7 @@
   "event.actions.share": "Delen het Caroster",
   "event.add_to_my_events.login": "$t(menu.login)",
   "event.add_to_my_events.register": "$t(menu.register)",
-  "event.add_to_my_events.text_html": "U kunt <strong>{{eventName}}</strong> alleen toevoegen aan uw carosters als u bent ingelogd.",
+  "event.add_to_my_events.text": "U kunt <bold>{{eventName}}</bold> alleen toevoegen aan uw carosters als u bent ingelogd.",
   "event.add_to_my_events.title": "U dient ingelogd te zijn",
   "event.creation.addFromAccount.actions.login": "$t(menu.login)",
   "event.creation.addFromAccount.actions.register": "$t(menu.register)",

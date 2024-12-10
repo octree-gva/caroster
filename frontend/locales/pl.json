@@ -34,7 +34,7 @@
   "event.actions.share": "",
   "event.add_to_my_events.login": "$t(menu.login)",
   "event.add_to_my_events.register": "$t(menu.register)",
-  "event.add_to_my_events.text_html": "",
+  "event.add_to_my_events.text": "",
   "event.add_to_my_events.title": "",
   "event.creation.addFromAccount.actions.login": "$t(menu.login)",
   "event.creation.addFromAccount.actions.register": "$t(menu.register)",

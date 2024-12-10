@@ -35,7 +35,7 @@
   "event.actions.share": "Partager le Caroster",
   "event.add_to_my_events.login": "$t(menu.login)",
   "event.add_to_my_events.register": "$t(menu.register)",
-  "event.add_to_my_events.text_html": "Pour ajouter <strong>{{eventName}}</strong> à vos carosters vous devez être connecté ou créer un compte.",
+  "event.add_to_my_events.text": "Pour ajouter <bold>{{eventName}}</bold> à vos carosters vous devez être connecté ou créer un compte.",
   "event.add_to_my_events.title": "Vous devez être connecté",
   "event.creation.addFromAccount.actions.login": "$t(menu.login)",
   "event.creation.addFromAccount.actions.register": "$t(menu.register)",

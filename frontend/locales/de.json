@@ -276,7 +276,7 @@
   "event.loginToSetAlert": "Die Benachrichtigungen sind nur für die Teilnehmer dieser Fahrgemeinschaft verfügbar.",
   "lost_password.error": "Diese E-Mail existiert nicht",
   "notification.type.PassengerJoinTrip.content": "Ein neuer Passagier möchte Sie kontaktieren, um mit Ihnen zu reisen.",
-  "event.add_to_my_events.text_html": "Um <strong> {{eventName}}</strong> zu Ihren Veranstaltern hinzuzufügen, müssen Sie eingeloggt sein oder ein Konto erstellen.",
+  "event.add_to_my_events.text": "Um <bold>{{eventName}}</bold> zu Ihren Veranstaltern hinzuzufügen, müssen Sie eingeloggt sein oder ein Konto erstellen.",
   "confirm.creating": "Erstellen des Kontos",
   "options.plus.deleteAdminError": "Es ist ein Fehler aufgetreten",
   "signin.email": "E-Mail",

@@ -10,7 +10,7 @@ import Icon from '@mui/material/Icon';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import {useTranslation} from 'next-i18next';
+import {Trans, useTranslation} from 'next-i18next';
 import useAddToEvents from '../../hooks/useAddToEvents';
 
 const PREFIX = 'AddToMyEventDialog';
@@ -49,13 +49,13 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
         {t('event.add_to_my_events.title', {eventName: event.name})}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText
-          dangerouslySetInnerHTML={{
-            __html: t('event.add_to_my_events.text_html', {
-              eventName: event.name,
-            }),
-          }}
-        />
+        <DialogContentText>
+          <Trans
+            i18nKey="event.add_to_my_events.text"
+            values={{eventName: event.name}}
+            components={{bold: <strong />}}
+          />
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button
