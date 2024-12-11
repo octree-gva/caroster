@@ -12,6 +12,7 @@ fragment EventFields on EventEntity {
     address
     latitude
     longitude
+    isReturnEvent
     waitingPassengers {
       data {
         id
@@ -119,6 +120,21 @@ query eventByUUID($uuid: String!) {
   eventByUUID(uuid: $uuid) {
     data {
       ...EventFields
+      attributes {
+        linkedEvent {
+          data {
+            id
+            attributes {
+              uuid
+              travels {
+                data {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

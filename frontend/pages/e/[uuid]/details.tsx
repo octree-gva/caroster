@@ -59,6 +59,8 @@ const DetailsTab: TabComponent<Props> = ({}) => {
   const onSave = async e => {
     try {
       const {uuid, ...data} = event;
+      delete data.linkedEvent;
+      delete data.isReturnEvent;
       const {
         id,
         travels,

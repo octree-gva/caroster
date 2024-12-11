@@ -15,7 +15,7 @@ const useActions = (props: Props) => {
   const router = useRouter();
   const {connected} = useProfile();
   const {share} = useShare();
-  const {event} = useEventStore();
+  const event = useEventStore(s => s.event);
 
   const noUserMenuActions = [
     {

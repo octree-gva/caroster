@@ -29,6 +29,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const isCarosterPlus = useEventStore(s =>
     s.event.enabled_modules?.includes('caroster-plus')
   );
+  const isReturnEvent = useEventStore(s => s.event?.isReturnEvent);
   const [removing, toggleRemoving] = useReducer(i => !i, false);
 
   // States
@@ -148,7 +149,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           id="EditTravelPhone"
         />
         <PlaceInput
-          label={t('travel.creation.meeting')}
+          label={t(isReturnEvent ? 'travel.destination' : 'travel.meeting')}
           textFieldProps={{sx: {pb: 2}}}
           place={meeting}
           latitude={meeting_latitude}

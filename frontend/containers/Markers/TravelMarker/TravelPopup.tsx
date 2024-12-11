@@ -9,6 +9,7 @@ import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../../lib/getMapsLink';
 import {getFormatedPhoneNumber} from '../../../lib/phoneNumbers';
 import usePermissions from '../../../hooks/usePermissions';
+import useEventStore from '../../../stores/useEventStore';
 
 interface Props {
   travel: TravelEntity;
@@ -19,6 +20,7 @@ const TravelPopup = ({travel}: Props) => {
   const {
     userPermissions: {canSeeTravelDetails},
   } = usePermissions();
+  const isReturnEvent = useEventStore(s => s.event?.isReturnEvent);
   return (
     <Popup>
       <Card sx={{p: 2, width: '350px', maxWidth: '100%', cursor: 'pointer'}}>
@@ -47,7 +49,7 @@ const TravelPopup = ({travel}: Props) => {
         {!!travel.attributes.meeting && (
           <Box sx={{marginTop: 2}}>
             <Typography variant="overline" color="GrayText">
-              {t('travel.fields.meeting_point')}
+              {t(isReturnEvent ? 'travel.destination' : 'travel.meeting')}
             </Typography>
             <Typography variant="body1" color="primary">
               <Link

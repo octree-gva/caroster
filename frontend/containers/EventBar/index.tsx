@@ -14,6 +14,7 @@ import UserIcon from './UserIcon';
 import DrawerNotification from '../DrawerNotification';
 import useProfile from '../../hooks/useProfile';
 import {Chip} from '@mui/material';
+import LinkedEventSwitch from './LinkedEventSwitch';
 
 const EventBar = ({event, onAdd, goBack, title}) => {
   const {connected} = useProfile();
@@ -44,6 +45,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
           flexGrow={1}
           display="flex"
           justifyContent="space-start"
+          alignItems="center"
           pr={1}
           gap={1}
         >
@@ -74,6 +76,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
               sx={{color: 'white', borderColor: 'white'}}
             />
           )}
+          <LinkedEventSwitch />
         </Box>
         <>
           <IconButton

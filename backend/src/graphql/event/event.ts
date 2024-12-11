@@ -146,5 +146,8 @@ export default ({ nexus, strapi }) => ({
     "Event.travels": {
       auth: false,
     },
+    "Event.linkedEvent": {
+      auth: false,
+    },
   },
 });

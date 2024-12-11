@@ -230,7 +230,9 @@ const NewTravelDialog = ({selectedVehicle, opened, toggle}: Props) => {
             />
           </Box>
           <PlaceInput
-            label={t('travel.creation.meeting')}
+            label={t(
+              event?.isReturnEvent ? 'travel.destination' : 'travel.meeting'
+            )}
             textFieldProps={{
               variant: 'outlined',
               size: 'small',

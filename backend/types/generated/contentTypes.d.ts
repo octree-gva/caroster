@@ -400,9 +400,15 @@ export interface ApiEventEvent extends Schema.CollectionType {
         'plugin::multi-select.multi-select',
         ['caroster-plus']
       >;
+    isReturnEvent: Attribute.Boolean & Attribute.DefaultTo<false>;
     lang: Attribute.Enumeration<['fr', 'en', 'de', 'nl', 'it']> &
       Attribute.DefaultTo<'en'>;
     latitude: Attribute.Float;
+    linkedEvent: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'api::event.event'
+    >;
     longitude: Attribute.Float;
     name: Attribute.String & Attribute.Required;
     newsletter: Attribute.Boolean & Attribute.Private;

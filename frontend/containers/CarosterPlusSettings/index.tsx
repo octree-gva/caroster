@@ -133,8 +133,9 @@ const CarosterPlusSettings = ({event}: Props) => {
           </ListItemIcon>
           <ListItemText primary={event.email} />
         </ListItem>
-        {event.administrators?.map(email => (
+        {event.administrators?.map((email, index) => (
           <ListItem
+            key={index}
             secondaryAction={
               canEditEventOptions() && (
                 <IconButton size="medium" onClick={() => deleteAdmin({email})}>

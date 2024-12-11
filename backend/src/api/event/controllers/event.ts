@@ -20,10 +20,19 @@ export default factories.createCoreController(
 
       if (user) eventData = { ...eventData, users: [user.id] };
 
-      const event = await strapi.entityService.create("api::event.event", {
+      const goEvent = await strapi.entityService.create("api::event.event", {
         data: eventData,
       });
-      return this.sanitizeOutput(event, ctx);
+      const returnEvent = await strapi.entityService.create(
+        "api::event.event",
+        {
+          data: { ...eventData, isReturnEvent: true, linkedEvent: goEvent.id },
+        }
+      );
+      await strapi.entityService.update("api::event.event", goEvent.id, {
+        data: { linkedEvent: returnEvent.id },
+      });
+      return this.sanitizeOutput(goEvent, ctx);
     },
   })
 );

@@ -16,6 +16,7 @@ import useProfile from '../../hooks/useProfile';
 import DetailsLink from '../DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
 import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
+import useEventStore from '../../stores/useEventStore';
 
 interface Props {
   travel: TravelEntity;
@@ -33,6 +34,7 @@ const Header = (props: Props) => {
   } = usePermissions();
   const setFocusOnTravel = useMapStore(s => s.setFocusOnTravel);
   const {userId} = useProfile();
+  const isReturnEvent = useEventStore(s => s.event?.isReturnEvent);
   const isUserTripCreator =
     userId && userId === travel.attributes.user?.data?.id;
 
@@ -105,7 +107,7 @@ const Header = (props: Props) => {
       {!!travel.attributes.meeting && (
         <Box sx={{marginTop: 2}}>
           <Typography variant="overline" sx={{color: 'GrayText'}}>
-            {t('travel.fields.meeting_point')}
+            {t(isReturnEvent ? 'travel.destination' : 'travel.meeting')}
           </Typography>
           <Typography variant="body1">
             <Link

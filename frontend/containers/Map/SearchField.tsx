@@ -24,7 +24,7 @@ const SearchField = (props: Props) => {
       onSelect={onSelect}
       textFieldProps={{
         variant: 'outlined',
-        placeholder: t`travel.fields.meeting_point`,
+        placeholder: t`travel.meeting`,
         size: 'small',
         slotProps: {
           input: {

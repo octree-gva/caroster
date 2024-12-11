@@ -110,7 +110,9 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
             <label htmlFor="location">
               <Typography className={classes.label}>
                 <Icon className={classes.labelIcon}>place</Icon>{' '}
-                {t('travel.passengers.location')}
+                {t(
+                  event?.isReturnEvent ? 'travel.destination' : 'travel.meeting'
+                )}
               </Typography>
             </label>
             <TextField
@@ -122,10 +124,14 @@ const AddPassengerToWaitingList = ({open, toggle, addSelf}: Props) => {
               size="small"
               fullWidth
               label=""
-              placeholder={t('travel.passengers.location_placeholder')}
+              placeholder={t('generic.optional')}
             />
             <Typography variant="caption">
-              {t('travel.passengers.location_helper')}
+              {t(
+                event?.isReturnEvent
+                  ? 'travel.passengers.destination_helper'
+                  : 'travel.passengers.location_helper'
+              )}
             </Typography>
           </Box>
           <SubmitButton
