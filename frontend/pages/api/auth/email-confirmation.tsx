@@ -8,7 +8,7 @@ export default async function handler(
 
   try {
     const response = await fetch(
-      `http://localhost:1337/api/auth/email-confirmation?confirmation=${confirmation}`
+      `http://127.0.0.1:1337/api/auth/email-confirmation?confirmation=${confirmation}`
     );
     if (response.redirected)
       return res.redirect(302, '/auth/login?confirmed=true');
