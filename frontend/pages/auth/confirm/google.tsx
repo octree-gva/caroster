@@ -1,34 +1,50 @@
 import Typography from '@mui/material/Typography';
-import {useTheme} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {useTranslation, Trans} from 'next-i18next';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import CommonConfirm from '../../../layouts/ConfirmLayout';
 import {useUpdateMeMutation} from '../../../generated/graphql';
-import router from 'next/router';
 import useSettings from '../../../hooks/useSettings';
 import moment from 'moment';
+import {useSession} from 'next-auth/react';
+import {TextField, useMediaQuery} from '@mui/material';
+import {useTheme} from '@mui/styles';
 
 const Confirm = () => {
-  const theme = useTheme();
   const {t} = useTranslation();
   const settings = useSettings();
   const [updateMe] = useUpdateMeMutation();
+  const session = useSession();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const sessionNames = session?.data?.token?.name?.split(' ') || ['', ''];
 
+  const [firstname, setFirstname] = useState(sessionNames[0]);
+  const [lastname, setLastname] = useState(sessionNames[1]);
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [tosConsent, setTosConsent] = useState(false);
+  const canConfirm = useMemo(
+    () => firstname?.length > 1 && lastname?.length > 1 && tosConsent,
+    [firstname, lastname, tosConsent]
+  );
 
   const onSubmit = async () => {
     const tosAcceptationDate = tosConsent ? moment().toISOString() : null;
     await updateMe({
-      variables: {userUpdate: {newsletterConsent, tosAcceptationDate}},
+      variables: {
+        userUpdate: {
+          newsletterConsent,
+          tosAcceptationDate,
+          firstName: firstname,
+          lastName: lastname,
+        },
+      },
     });
-    router.push('/dashboard');
+    window.location.href = '/dashboard';
   };
 
   return (
@@ -39,9 +55,30 @@ const Confirm = () => {
       <Typography variant="h5" align="center">
         {t('confirm.google.title')}
       </Typography>
-      <Typography align="center" sx={{margin: theme.spacing(5, 0)}}>
-        <Icon fontSize="large">mail</Icon>
-      </Typography>
+      <Box
+        mt={3}
+        mb={2}
+        display="flex"
+        gap={2}
+        flexDirection={isMobile ? 'column' : 'row'}
+      >
+        <TextField
+          label={t`signup.firstName`}
+          variant="outlined"
+          size="small"
+          value={firstname}
+          onChange={e => setFirstname(e.target.value)}
+          fullWidth
+        />
+        <TextField
+          label={t`signup.lastName`}
+          variant="outlined"
+          size="small"
+          value={lastname}
+          onChange={e => setLastname(e.target.value)}
+          fullWidth
+        />
+      </Box>
       <FormControlLabel
         sx={{width: '100%', my: 2, mx: 0}}
         control={
@@ -57,7 +94,7 @@ const Confirm = () => {
         label={t('signup.newsletter.consent')}
       />
       <FormControlLabel
-        sx={{width: '100%', my: 2, mx: 0}}
+        sx={{width: '100%', mx: 0}}
         label={
           <Trans
             i18nKey="signup.tos.consent"
@@ -82,7 +119,7 @@ const Confirm = () => {
           variant="contained"
           color="secondary"
           onClick={onSubmit}
-          disabled={!tosConsent}
+          disabled={!canConfirm}
         >
           {t('generic.confirm')}
         </Button>

@@ -110,12 +110,10 @@ export const getServerSideProps = async (context: any) => {
       },
     };
 
-  const {provider, userCreatedAt} = session?.token || {};
-  const isFirstLogin = userCreatedAt
-    ? moment().subtract({seconds: 3}).isBefore(userCreatedAt)
-    : false;
+  const provider = session?.token?.provider;
+  const hasAcceptedTos = !!session?.profile?.tosAcceptationDate;
 
-  if (provider === 'google' && isFirstLogin)
+  if (provider === 'google' && !hasAcceptedTos)
     return {
       redirect: {
         destination: '/auth/confirm/google',

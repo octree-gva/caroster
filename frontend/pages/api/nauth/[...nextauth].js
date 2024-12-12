@@ -61,10 +61,9 @@ const authHandler = NextAuth({
         token.id = data.user.id;
         token.jwt = data.jwt;
         token.email = data.user.email;
-        token.username = data.user.firstname;
+        token.username = data.user.name;
         token.lang = data.user.lang?.toLowerCase();
         token.provider = account.provider;
-        token.userCreatedAt = data.user.createdAt;
       }
 
       // Strapi Auth
@@ -75,7 +74,6 @@ const authHandler = NextAuth({
         token.username = user.firstname;
         token.lang = user.lang?.toLowerCase();
         token.provider = account.provider;
-        token.userCreatedAt = user.createdAt;
       }
 
       return token;
@@ -83,6 +81,19 @@ const authHandler = NextAuth({
     session: async params => {
       const {session, token} = params;
       if (session) {
+        try {
+          const response = await fetch(`${STRAPI_URL}/api/users/me`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token.jwt}`,
+            },
+          });
+          const profile = await response.json();
+          session.profile = profile;
+        } catch (error) {
+          console.error(error);
+        }
+
         session.token = token;
         session.user.name = token.username;
         session.user.lang = token.lang;
