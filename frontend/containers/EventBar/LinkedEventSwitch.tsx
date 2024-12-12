@@ -1,14 +1,17 @@
-import {Button, ButtonGroup} from '@mui/material';
+import {Button, ButtonGroup, useMediaQuery} from '@mui/material';
 import {useTranslation} from 'react-i18next';
 import useEventStore from '../../stores/useEventStore';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
 
 type Props = {};
 
 const LinkedEventSwitch = (props: Props) => {
   const {t} = useTranslation();
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const loadedEvent = useEventStore(s => s.event);
   const linkedEvent = loadedEvent?.linkedEvent?.data?.attributes;
 
@@ -18,19 +21,25 @@ const LinkedEventSwitch = (props: Props) => {
   const returnEvent = loadedEvent.isReturnEvent ? loadedEvent : linkedEvent;
 
   return (
-    <ButtonGroup variant="contained">
-      <Link href={router.asPath.replace(loadedEvent.uuid, goEvent.uuid)}>
+    <ButtonGroup variant="contained" fullWidth={isMobile}>
+      <Link
+        href={router.asPath.replace(loadedEvent.uuid, goEvent.uuid)}
+        style={{width: isMobile && '100%'}}
+      >
         <Button
           color={loadedEvent.isReturnEvent ? 'inherit' : 'secondary'}
-          sx={{color: 'black'}}
+          sx={{color: 'rgba(0, 0, 0, 0.87)'}}
         >
           {t`event.linked.goEvent`} ({goEvent.travels?.data?.length || 0})
         </Button>
       </Link>
-      <Link href={router.asPath.replace(loadedEvent.uuid, returnEvent.uuid)}>
+      <Link
+        href={router.asPath.replace(loadedEvent.uuid, returnEvent.uuid)}
+        style={{width: isMobile && '100%'}}
+      >
         <Button
           color={!loadedEvent.isReturnEvent ? 'inherit' : 'secondary'}
-          sx={{color: 'black'}}
+          sx={{color: 'rgba(0, 0, 0, 0.87)'}}
         >
           {t`event.linked.returnEvent`} (
           {returnEvent?.travels?.data?.length || 0})

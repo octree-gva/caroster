@@ -33,7 +33,7 @@ const NoCar = ({
   } = usePermissions();
 
   return (
-    <Box my={4} mx="auto" pb={16} mt={9} maxWidth="100%" width={340}>
+    <Box my={4} mx="auto" pb={16} mt={15} maxWidth="100%" width={340}>
       <Typography variant="h6" align="center" color="textSecondary">
         {title}
       </Typography>

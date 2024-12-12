@@ -13,7 +13,7 @@ import useActions from './useActions';
 import UserIcon from './UserIcon';
 import DrawerNotification from '../DrawerNotification';
 import useProfile from '../../hooks/useProfile';
-import {Chip} from '@mui/material';
+import {Chip, useMediaQuery} from '@mui/material';
 import LinkedEventSwitch from './LinkedEventSwitch';
 
 const EventBar = ({event, onAdd, goBack, title}) => {
@@ -23,6 +23,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuActions = useActions({onAdd, eventId: event?.id});
   const isCarosterPlusEvent = event?.enabled_modules?.includes('caroster-plus');
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <AppBar
@@ -76,7 +77,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
               sx={{color: 'white', borderColor: 'white'}}
             />
           )}
-          <LinkedEventSwitch />
+          {!isMobile && <LinkedEventSwitch />}
         </Box>
         <>
           <IconButton
@@ -110,6 +111,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
           />
         </>
       </Toolbar>
+      {isMobile && <LinkedEventSwitch />}
     </AppBar>
   );
 };

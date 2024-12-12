@@ -20,7 +20,7 @@ import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
 import FilterByDate from './FilterByDate';
-import {Button, Icon} from '@mui/material';
+import {Button, Icon, useMediaQuery} from '@mui/material';
 import useTravelsStore from '../../stores/useTravelsStore';
 
 interface Props {
@@ -38,6 +38,7 @@ const TravelColumns = (props: Props) => {
   const {
     userPermissions: {canAddTravel},
   } = usePermissions();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
   const [mapEnabled, toggleMap] = useReducer(i => !i, true);
@@ -105,7 +106,7 @@ const TravelColumns = (props: Props) => {
       <Box
         px={3}
         pb={2}
-        pt={showMap ? 2 : 10}
+        pt={showMap ? 2 : isMobile ? 15 : 10}
         display="flex"
         gap={2}
         maxWidth="100%"
