@@ -15,6 +15,7 @@ interface UserPermissions {
   canAddToTravel: () => boolean;
   canDeletePassenger: (passenger: PassengerEntity) => boolean;
   canSeePassengerDetails: (passenger: PassengerEntity) => boolean;
+  canSeeFullName: () => boolean;
 }
 
 const noPermissions = {
@@ -30,6 +31,7 @@ const noPermissions = {
   canAddToTravel: () => false,
   canDeletePassenger: () => false,
   canSeePassengerDetails: () => false,
+  canSeeFullName: () => false,
 };
 
 const usePermissions = (): {userPermissions: UserPermissions} => {
@@ -39,7 +41,8 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
   const carosterPlus = event?.enabled_modules?.includes('caroster-plus');
   const userIsAnonymous = !connected;
   const userIsEventCreator = event && profile?.email === event.email;
-  const userIsEventAdmin = event?.administrators?.includes(profile?.email);
+  const userIsEventAdmin =
+    userIsEventCreator || event?.administrators?.includes(profile?.email);
 
   const allPermissions: UserPermissions = {
     canEditEventOptions: () => true,
@@ -54,11 +57,12 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     canAddToTravel: () => true,
     canDeletePassenger: () => true,
     canSeePassengerDetails: () => true,
+    canSeeFullName: () => userIsEventAdmin,
   };
 
   if (carosterPlus) {
     if (userIsAnonymous) return {userPermissions: noPermissions};
-    else if (userIsEventCreator || userIsEventAdmin)
+    else if (userIsEventAdmin)
       return {
         userPermissions: {...allPermissions, canAddToTravel: () => false},
       };

@@ -57,13 +57,17 @@ const createPassenger = {
         : "";
       const datetime = `${date} ${travel.departureTime || ""}`;
       try {
+        const vehicleName =
+          travel.firstname && travel.lastname
+            ? `${travel.firstname} ${travel.lastname[0]}.`
+            : travel.vehicleName;
         await strapi.entityService.create("api::notification.notification", {
           data: {
             type: "ContactTripCreator",
             event: createdPassenger.event.id,
             user: createdPassenger.user.id,
             // @ts-expect-error
-            payload: { travel, driver, datetime },
+            payload: { travel, driver, datetime, vehicleName },
           },
         });
       } catch (error) {

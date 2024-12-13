@@ -9,6 +9,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import {TravelEntity} from '../../generated/graphql';
+import usePermissions from '../../hooks/usePermissions';
+import {getTravelName} from '../../lib/travels';
 
 interface Props {
   travel: TravelEntity;
@@ -19,6 +21,9 @@ const AvailableTravel = ({travel, assign}: Props) => {
   const {t} = useTranslation();
   const passengersCount = travel.attributes.passengers?.data.length || 0;
   const availableSeats = travel.attributes.seats - passengersCount;
+  const {
+    userPermissions: {canSeeFullName},
+  } = usePermissions();
 
   return (
     <>
@@ -34,7 +39,7 @@ const AvailableTravel = ({travel, assign}: Props) => {
               </Typography>
             )}
             <Typography variant="body1" sx={{pt: 1}}>
-              {travel.attributes.vehicleName}
+              {getTravelName(travel, canSeeFullName())}
             </Typography>
           </Box>
           <Button

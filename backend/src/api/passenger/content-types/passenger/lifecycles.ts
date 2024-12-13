@@ -20,16 +20,21 @@ export default {
           },
         });
 
-      if (travel && state.isAdmin)
+      if (travel && state.isAdmin) {
+        const vehicleName =
+          travel.firstname && travel.lastname
+            ? `${travel.firstname} ${travel.lastname[0]}.`
+            : travel.vehicleName;
         strapi.entityService.create("api::notification.notification", {
           data: {
             type: "AssignedByAdmin",
             event: params.data.event,
             user: params.data.user,
             // @ts-expect-error
-            payload: { travel },
+            payload: { travel, vehicleName },
           },
         });
+      }
     }
   },
 };

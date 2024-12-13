@@ -90,39 +90,12 @@ export default [
           },
         },
       },
-      // Filter user fields if not for profile fetching
-      UsersPermissionsUser: {
-        vehicles: {
-          async resolve(queriedUser, args, _context, query) {
-            if (query.path.prev.key !== "profile") return null;
-
-            const user = await strapi.entityService.findOne(
-              "plugin::users-permissions.user",
-              queriedUser.id,
-              { populate: ["vehicles"] }
-            );
-            if (!user?.vehicles) return null;
-
-            const { toEntityResponseCollection } = strapi
-              .plugin("graphql")
-              .service("format").returnTypes;
-
-            return toEntityResponseCollection(user.vehicles, {
-              args,
-              resourceUID: "api::vehicle.vehicle",
-            });
-          },
-        },
-      },
     },
     resolversConfig: {
       "Query.me": {
         auth: {
           scope: ["plugin::users-permissions.user.me"],
         },
-      },
-      "UsersPermissionsUser.vehicles": {
-        auth: true,
       },
       "UsersPermissionsUser.events": {
         auth: true,

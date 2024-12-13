@@ -61,6 +61,12 @@
     },
     "phoneCountry": {
       "type": "string"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }

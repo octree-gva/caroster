@@ -22,12 +22,16 @@ export default async (policyContext, config, { strapi }) => {
     const isAdmin = [...admins, event.email].includes(user.email);
 
     if (isAdmin) {
+      const vehicleName =
+        travel.firstname && travel.lastname
+          ? `${travel.firstname} ${travel.lastname[0]}.`
+          : travel.vehicleName;
       await strapi.entityService.create("api::notification.notification", {
         data: {
           type: "DeletedYourTrip",
           event,
           user: travel.user,
-          payload: { travel },
+          payload: { travel, vehicleName },
         },
       });
       return true;

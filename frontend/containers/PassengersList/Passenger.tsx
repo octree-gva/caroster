@@ -12,6 +12,7 @@ import {
 import {useTranslation} from 'next-i18next';
 import useProfile from '../../hooks/useProfile';
 import {PassengerEntity} from '../../generated/graphql';
+import usePermissions from '../../hooks/usePermissions';
 
 interface Props {
   passenger?: PassengerEntity;
@@ -23,6 +24,9 @@ const Passenger = (props: Props) => {
   const {passenger, isTravel, Actions} = props;
   const theme = useTheme();
   const {t} = useTranslation();
+  const {
+    userPermissions: {canSeeFullName},
+  } = usePermissions();
 
   const {userId} = useProfile();
   const isUser = `${userId}` === passenger?.attributes.user?.data?.id;
@@ -60,13 +64,14 @@ const Passenger = (props: Props) => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {passenger.attributes.name}
+                {getPassengerName(passenger, canSeeFullName())}
               </Typography>
               {isUser && (
                 <Chip
-                  sx={{marginLeft: 1}}
+                  sx={{ml: 1}}
                   label={t('generic.me')}
                   variant="outlined"
+                  size="small"
                 />
               )}
               {!isTravel && (
@@ -99,6 +104,24 @@ const Passenger = (props: Props) => {
       </>
     );
   }
+};
+
+const getPassengerName = (
+  passenger: PassengerEntity,
+  canSeeFullName: boolean
+) => {
+  const hideName = (name: string) => (canSeeFullName ? name : `${name[0]}.`);
+
+  if (passenger.attributes.name && passenger.attributes.lastname)
+    return `${passenger.attributes.name} ${hideName(
+      passenger.attributes.lastname
+    )}`;
+
+  const linkedUser = passenger.attributes?.user?.data?.attributes;
+  if (linkedUser?.firstName && linkedUser?.lastName)
+    return `${linkedUser.firstName} ${hideName(linkedUser.lastName)}`;
+
+  return passenger.attributes.name;
 };
 
 export default Passenger;

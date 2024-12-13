@@ -2,12 +2,10 @@ import {useTranslation} from 'next-i18next';
 import {PureQueryOptions} from '@apollo/client/core';
 import useToastsStore from '../../stores/useToastStore';
 import useAddToEvents from '../../hooks/useAddToEvents';
-import useProfile from '../../hooks/useProfile';
 import {
   EventByUuidDocument,
   useCreateTravelMutation,
   TravelInput,
-  FindUserVehiclesDocument,
   Event,
 } from '../../generated/graphql';
 
@@ -21,12 +19,8 @@ const useActions = (props: Props) => {
   const addToast = useToastsStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const [createTravelMutation] = useCreateTravelMutation();
-  const {connected} = useProfile();
 
-  const createTravel = async (
-    travelInput: TravelInput,
-    createVehicle: boolean
-  ) => {
+  const createTravel = async (travelInput: TravelInput) => {
     const refetchQueries: Array<PureQueryOptions> = [
       {
         query: EventByUuidDocument,
@@ -35,18 +29,11 @@ const useActions = (props: Props) => {
         },
       },
     ];
-    if (connected) {
-      refetchQueries.push({
-        query: FindUserVehiclesDocument,
-      });
-    }
+
     try {
       await createTravelMutation({
         variables: {
-          travel: {
-            ...travelInput,
-          },
-          createVehicle,
+          travel: travelInput,
         },
         refetchQueries,
       });

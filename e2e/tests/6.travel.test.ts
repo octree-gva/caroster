@@ -54,30 +54,3 @@ test("deleteTravel returns ID of deleted travel", async () => {
     },
   });
 });
-
-test("createTravel creates a vehicle with 'createVehicle' param and logged user", async () => {
-  const jwt = await getJwtToken();
-
-  const travel = {
-    vehicleName: "My travel's car",
-    seats: 2,
-    phone_number: "12",
-  };
-  const request = sdk.createTravel(
-    {
-      createVehicle: true,
-      travel,
-    },
-    {
-      authorization: `Bearer ${jwt}`,
-    }
-  );
-
-  await expect(request).resolves.toMatchObject({
-    createTravel: {
-      data: {
-        attributes: travel,
-      },
-    },
-  });
-});

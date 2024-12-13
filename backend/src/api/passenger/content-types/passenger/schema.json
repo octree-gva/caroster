@@ -46,6 +46,9 @@
     },
     "phoneCountry": {
       "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }

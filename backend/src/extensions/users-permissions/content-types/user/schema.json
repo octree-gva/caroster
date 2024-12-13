@@ -77,12 +77,6 @@
       "private": true,
       "mappedBy": "user"
     },
-    "vehicles": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::vehicle.vehicle",
-      "mappedBy": "user"
-    },
     "firstName": {
       "type": "string"
     },

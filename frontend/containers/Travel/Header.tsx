@@ -17,6 +17,7 @@ import DetailsLink from '../DetailsLink';
 import {TravelEntity} from '../../generated/graphql';
 import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
 import useEventStore from '../../stores/useEventStore';
+import {getTravelName} from '../../lib/travels';
 
 interface Props {
   travel: TravelEntity;
@@ -30,7 +31,7 @@ const Header = (props: Props) => {
   const theme = useTheme();
   const {t} = useTranslation();
   const {
-    userPermissions: {canEditTravel, canSeeTravelDetails},
+    userPermissions: {canEditTravel, canSeeTravelDetails, canSeeFullName},
   } = usePermissions();
   const setFocusOnTravel = useMapStore(s => s.setFocusOnTravel);
   const {userId} = useProfile();
@@ -83,10 +84,15 @@ const Header = (props: Props) => {
         </Typography>
       )}
       <Typography variant="subtitle1">
-        {travel.attributes.vehicleName}
+        {getTravelName(travel, canSeeFullName())}
         {isUserTripCreator && (
           <Typography component="span">
-            <Chip sx={{mx: 1}} label={t`generic.me`} variant="outlined" />
+            <Chip
+              sx={{mx: 1}}
+              label={t`generic.me`}
+              variant="outlined"
+              size="small"
+            />
           </Typography>
         )}
       </Typography>

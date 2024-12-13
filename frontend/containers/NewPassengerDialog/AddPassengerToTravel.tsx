@@ -14,6 +14,8 @@ import useStyles from './useStyles';
 import useToastStore from '../../stores/useToastStore';
 import usePassengersActions from '../../hooks/usePassengersActions';
 import {validateEmail} from '../../lib/validation';
+import usePermissions from '../../hooks/usePermissions';
+import {getTravelName} from '../../lib/travels';
 
 interface Props {
   travel: TravelEntity;
@@ -27,6 +29,9 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
   const event = useEventStore(s => s.event);
   const {addToEvent} = useAddToEvents();
   const addToast = useToastStore(s => s.addToast);
+  const {
+    userPermissions: {canSeeFullName},
+  } = usePermissions();
 
   // States
   const [name, setName] = useState('');
@@ -64,7 +69,7 @@ const AddPassengerToTravel = ({open, toggle, travel}: Props) => {
     >
       <form onSubmit={onSubmit}>
         <DialogTitle className={classes.title}>
-          {travel.attributes.vehicleName}
+          {getTravelName(travel, canSeeFullName())}
           <Icon
             className={classes.closeIcon}
             onClick={toggle}

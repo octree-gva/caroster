@@ -10,23 +10,23 @@
     },
     "NewTrip": {
       "title": "<%= event.name %> - Nouveau trajet disponible",
-      "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Trajet: <%= travel.vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."
+      "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Trajet: <%= vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."
     },
     "NewTripAlert": {
       "title": "<%= event.name %> - Nouveau trajet disponible",
-      "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Trajet: <%= travel.vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail car vous avez configuré une alerte de trajet à proximité pour cet événement."
+      "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Trajet: <%= vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail car vous avez configuré une alerte de trajet à proximité pour cet événement."
     },
     "DeletedTrip": {
       "title": "<%= event.name %> - Trajet supprimé",
-      "content": "Le trajet '<%= travel.vehicleName %>' pour lequel vous vous êtes inscrit.e.s a été supprimé. Vous pouvez chercher un autre trajet vous correspondant [ici](<%= host %>/e/<%= event.uuid %>)."
+      "content": "Le trajet '<%= vehicleName %>' pour lequel vous vous êtes inscrit.e.s a été supprimé. Vous pouvez chercher un autre trajet vous correspondant [ici](<%= host %>/e/<%= event.uuid %>)."
     },
     "DeletedYourTrip": {
       "title": "<%= event.name %> - Votre trajet a été supprimé",
-      "content": "Votre trajet <%= travel.vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
+      "content": "Votre trajet <%= vehicleName %> a été supprimé par un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>). \n Il n'est plus disponible pour l'événement et les passagers ont été informés."
     },
     "DeletedFromTrip": {
       "title": "<%= event.name %> - Vous avez été retiré(e) d'un trajet ",
-      "content": "Vous avez été retiré(e) du trajet <%= travel.vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
+      "content": "Vous avez été retiré(e) du trajet <%= vehicleName %> pour l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>)."
     },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - Un passager a été ajouté à votre trajet",
@@ -34,7 +34,7 @@
     },
     "AssignedByAdmin": {
       "title": "<%= event.name %> - Vous avez été assigné à un trajet",
-      "content": "Un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) vous a assigné au trajet '<%= travel.vehicleName %>'."
+      "content": "Un administrateur de l'événement [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) vous a assigné au trajet '<%= vehicleName %>'."
     },
     "AddedAsAdmin": {
       "title": "Vous avez été promu administrateur d'un événement",
@@ -54,7 +54,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contacter la conductrice ou le conducteur du trajet",
-      "content": "Afin d'organiser votre voyage pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Trajet: <%= travel.vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nTéléphone: <%= travel.phone_mumber || 'Non précisé' %>\nE-mail: <%= driver.email %>"
+      "content": "Afin d'organiser votre voyage pour [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), merci de contacter la conductrice ou le conducteur du trajet pour lequel vous vous êtes inscrit⸱e.\n\n**Trajet: <%= vehicleName %>**\nDépart: <%= travel.meeting %>\nDate/heure: <%= datetime %>\nTéléphone: <%= travel.phone_mumber || 'Non précisé' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster Plus a été activé pour votre événement",

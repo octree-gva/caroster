@@ -10,6 +10,7 @@ import getMapsLink from '../../../lib/getMapsLink';
 import {getFormatedPhoneNumber} from '../../../lib/phoneNumbers';
 import usePermissions from '../../../hooks/usePermissions';
 import useEventStore from '../../../stores/useEventStore';
+import {getTravelName} from '../../../lib/travels';
 
 interface Props {
   travel: TravelEntity;
@@ -18,7 +19,7 @@ interface Props {
 const TravelPopup = ({travel}: Props) => {
   const {t} = useTranslation();
   const {
-    userPermissions: {canSeeTravelDetails},
+    userPermissions: {canSeeTravelDetails, canSeeFullName},
   } = usePermissions();
   const isReturnEvent = useEventStore(s => s.event?.isReturnEvent);
   return (
@@ -31,7 +32,9 @@ const TravelPopup = ({travel}: Props) => {
           </Typography>
         )}
         <Box>
-          <Typography variant="h5">{travel.attributes.vehicleName}</Typography>
+          <Typography variant="h5">
+            {getTravelName(travel, canSeeFullName())}
+          </Typography>
         </Box>
         {!!travel.attributes.phone_number && canSeeTravelDetails(travel) && (
           <Box sx={{marginTop: 2}}>

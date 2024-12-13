@@ -71,6 +71,11 @@ export default {
       const users = travel.passengers
         .map((passenger) => passenger.user)
         .filter(Boolean);
+
+      const vehicleName =
+        travel.firstname && travel.lastname
+          ? `${travel.firstname} ${travel.lastname[0]}.`
+          : travel.vehicleName;
       await pMap(
         users,
         async (user) =>
@@ -80,7 +85,7 @@ export default {
               event: travel.event.id,
               user: user.id,
               // @ts-expect-error
-              payload: { travel },
+              payload: { travel, vehicleName },
             },
           }),
         { concurrency: 5 }
@@ -112,6 +117,10 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
     const registeredUsers = eventWaitingPassengers
       .map((passenger) => passenger.user)
       .filter(Boolean);
+    const vehicleName =
+      travel.firstname && travel.lastname
+        ? `${travel.firstname} ${travel.lastname[0]}.`
+        : travel.vehicleName;
     await pMap(
       registeredUsers,
       async (user: { id: string }) =>
@@ -120,7 +129,7 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
             type: "NewTrip",
             event: eventId,
             user: user.id,
-            payload: { travel },
+            payload: { travel, vehicleName },
           },
         }),
       { concurrency: 5 }

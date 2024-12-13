@@ -210,7 +210,6 @@
   "travel.creation.car.title": "",
   "travel.creation.created": "",
   "travel.creation.date": "",
-  "travel.creation.name": "",
   "travel.creation.notes": "",
   "travel.creation.phone": "",
   "travel.creation.phoneHelper.faq": "https://caroster.io/en/faq",
@@ -250,10 +249,5 @@
   "travel.requestTrip.emailHelper": "",
   "travel.requestTrip.phone": "",
   "travel.requestTrip.send": "",
-  "travel.requestTrip.title": "",
-  "travel.vehicle.add": "",
-  "travel.vehicle.empty": "",
-  "travel.vehicle.name": "",
-  "travel.vehicle.seats_number": "",
-  "travel.vehicle.title": ""
+  "travel.requestTrip.title": ""
 }

@@ -2,7 +2,6 @@ import authExtensions from "./auth";
 import eventExtensions from "./event";
 import userExtensions from "./user";
 import travelExtensions from "./travel";
-import vehicleExtensions from "./vehicle";
 import passengerExtensions from "./passenger";
 import notificationExtensions from "./notification";
 import tripAlert from "./trip-alert";
@@ -13,7 +12,6 @@ export default ({ strapi }) => {
   eventExtensions.forEach(extService.use);
   userExtensions.forEach(extService.use);
   travelExtensions.forEach(extService.use);
-  vehicleExtensions.forEach(extService.use);
   passengerExtensions.forEach(extService.use);
   notificationExtensions.forEach(extService.use);
   tripAlert.forEach(extService.use);

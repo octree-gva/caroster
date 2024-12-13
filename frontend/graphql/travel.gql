@@ -8,6 +8,8 @@ fragment TravelFields on TravelEntity {
     departureTime
     details
     vehicleName
+    firstname
+    lastname
     phone_number
     phoneCountry
     seats
@@ -35,8 +37,8 @@ fragment TravelFields on TravelEntity {
   }
 }
 
-mutation createTravel($travel: TravelInput!, $createVehicle: Boolean) {
-  createTravel(data: $travel, createVehicle: $createVehicle) {
+mutation createTravel($travel: TravelInput!) {
+  createTravel(data: $travel) {
     data {
       ...TravelFields
     }

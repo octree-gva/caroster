@@ -6,19 +6,19 @@
   "notifications": {
     "DeletedTrip": {
       "title": "<%= event.name %> - Reis verwijderd",
-      "content": "De reis waaraan u wilde deelnemen, <%= travel.vehicleName %>, is verwijderd. Ga naar de [Caroster](<%= host %>/e/<%= event.uuid %>)-pagina om een ander voertuig te zoeken."
+      "content": "De reis waaraan u wilde deelnemen, <%= vehicleName %>, is verwijderd. Ga naar de [Caroster](<%= host %>/e/<%= event.uuid %>)-pagina om een ander voertuig te zoeken."
     },
     "NewTrip": {
       "title": "<%= event.name %> - Nieuwe reis beschikbaar",
-      "content": "## Er is een nieuwe reis beschikbaar voor \"<%= event.name %>\"\n\n**Voertuig: <%= travel.vehicleName %>**\nAantal zitplaatsen: <%= travel.seats %>\nVertreklocatie: <%= travel.meeting %>\nInformatie: <%= travel.details %>.\n\n[Zitplaats reserveren](<%= host %>/e/<%= event.uuid %>).\n\nU ontvangt deze e-mail omdat u uzelf op de carpoolwachtlijst van deze afspraak heeft gezet."
+      "content": "## Er is een nieuwe reis beschikbaar voor \"<%= event.name %>\"\n\n**Voertuig: <%= vehicleName %>**\nAantal zitplaatsen: <%= travel.seats %>\nVertreklocatie: <%= travel.meeting %>\nInformatie: <%= travel.details %>.\n\n[Zitplaats reserveren](<%= host %>/e/<%= event.uuid %>).\n\nU ontvangt deze e-mail omdat u uzelf op de carpoolwachtlijst van deze afspraak heeft gezet."
     },
     "DeletedYourTrip": {
       "title": "<%= event.name %> - Uw reis is verwijderd",
-      "content": "Uw reis, <%= travel.vehicleName %>, is door een beheerder verwijderd uit de afspraak ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’."
+      "content": "Uw reis, <%= vehicleName %>, is door een beheerder verwijderd uit de afspraak ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’."
     },
     "DeletedFromTrip": {
       "title": "<%= event.name %> - U bent uit het voertuig verwijderd",
-      "content": "U bent uit het voertuig ‘<%= travel.vehicleName %>’ van de afspraak ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’ verwijderd."
+      "content": "U bent uit het voertuig ‘<%= vehicleName %>’ van de afspraak ‘[<%= event.name %>](<%= host %>/e/<%= event.uuid %>)’ verwijderd."
     },
     "NewPassengerInYourTrip": {
       "title": "<%= event.name %> - Passagier toegevoegd aan reis",
@@ -26,7 +26,7 @@
     },
     "AssignedByAdmin": {
       "title": "<%= event.name %> - You have been added to a trip",
-      "content": "An administrator of [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) has added you to trip '<%= travel.vehicleName %>'."
+      "content": "An administrator of [<%= event.name %>](<%= host %>/e/<%= event.uuid %>) has added you to trip '<%= vehicleName %>'."
     },
     "AddedAsAdmin": {
       "title": "U bent toegevoegd als beheerder van een afspraak",
@@ -46,7 +46,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact opnemen met bestuurder",
-      "content": "Als u de reis naar ‘<%= event.name %>’ wilt organiseren, neem dan contact op met de bestuurder.\n\n**Voertuig: <%= travel.vehicleName %>**\nVertrek: <%= travel.meeting %>\nDatum/Tijd: <%= datetime %>\nTelefoonnummer: <%= travel.phone_mumber | 'Not provided' %>\nE-mailadres: <%= driver.email %>"
+      "content": "Als u de reis naar ‘<%= event.name %>’ wilt organiseren, neem dan contact op met de bestuurder.\n\n**Voertuig: <%= vehicleName %>**\nVertrek: <%= travel.meeting %>\nDatum/Tijd: <%= datetime %>\nTelefoonnummer: <%= travel.phone_mumber | 'Not provided' %>\nE-mailadres: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster+ is geactiveerd op uw afspraak",

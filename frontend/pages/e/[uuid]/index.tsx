@@ -1,17 +1,10 @@
-import {useState, useReducer, PropsWithChildren} from 'react';
+import {useState, PropsWithChildren} from 'react';
 import Box from '@mui/material/Box';
-import {getSession, useSession} from 'next-auth/react';
 import TravelColumns from '../../../containers/TravelColumns';
 import NewTravelDialog from '../../../containers/NewTravelDialog';
-import VehicleChoiceDialog from '../../../containers/VehicleChoiceDialog';
 import pageUtils from '../../../lib/pageUtils';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
-import {
-  EventByUuidDocument,
-  FindUserVehiclesDocument,
-  VehicleEntity,
-  useFindUserVehiclesQuery,
-} from '../../../generated/graphql';
+import {EventByUuidDocument} from '../../../generated/graphql';
 import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
@@ -24,37 +17,14 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const TravelsTab: TabComponent<Props> = () => {
-  const session = useSession();
   const [openNewTravelDialog, setNewTravelDialog] = useState(false);
-  const [openVehicleChoice, toggleVehicleChoice] = useReducer(i => !i, false);
-  const [selectedVehicle, setSelectedVehicle] = useState<VehicleEntity>();
-
-  const isAuthenticated = session.status === 'authenticated';
-  const {data} = useFindUserVehiclesQuery({
-    skip: !isAuthenticated,
-  });
-  const vehicles = data?.me?.profile?.vehicles?.data || [];
-
-  const addTravelClickHandler =
-    isAuthenticated && vehicles?.length != 0
-      ? toggleVehicleChoice
-      : () => setNewTravelDialog(true);
 
   return (
     <Box>
-      <TravelColumns showTravelModal={addTravelClickHandler} />
+      <TravelColumns showTravelModal={() => setNewTravelDialog(true)} />
       <NewTravelDialog
-        key={selectedVehicle?.id || 'noVehicle'}
         opened={openNewTravelDialog}
         toggle={() => setNewTravelDialog(false)}
-        selectedVehicle={selectedVehicle}
-      />
-      <VehicleChoiceDialog
-        open={openVehicleChoice}
-        toggle={toggleVehicleChoice}
-        setNewTravelDialog={setNewTravelDialog}
-        setSelectedVehicle={setSelectedVehicle}
-        vehicles={vehicles}
       />
     </Box>
   );
@@ -64,7 +34,6 @@ export const getServerSideProps = pageUtils.getServerSideProps(
   async (context, apolloClient) => {
     const {uuid} = context.query;
     const {host = ''} = context.req.headers;
-    const session = await getSession(context);
     let event = null;
 
     // Fetch event
@@ -79,12 +48,6 @@ export const getServerSideProps = pageUtils.getServerSideProps(
         notFound: true,
       };
     }
-
-    // Fetch user vehicles
-    if (session)
-      await apolloClient.query({
-        query: FindUserVehiclesDocument,
-      });
 
     const description = await getLocaleForLang(
       event?.attributes?.lang,

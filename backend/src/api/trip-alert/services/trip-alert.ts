@@ -43,6 +43,10 @@ export default factories.createCoreService(
         return distance <= tripAlert.radius;
       });
 
+      const vehicleName =
+        travel.firstname && travel.lastname
+          ? `${travel.firstname} ${travel.lastname[0]}.`
+          : travel.vehicleName;
       await pMap(filteredTripAlerts, async (tripAlert) => {
         strapi.log.debug(
           `Create trip alert notification for user ${tripAlert.user.id}`
@@ -52,7 +56,7 @@ export default factories.createCoreService(
             type: "NewTripAlert",
             event: eventId,
             user: tripAlert.user.id,
-            payload: { travel },
+            payload: { travel, vehicleName },
           },
         });
       });

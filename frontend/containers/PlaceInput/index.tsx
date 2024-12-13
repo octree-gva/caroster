@@ -118,6 +118,7 @@ const PlaceInput = ({
       onChange={onChange}
       onInputChange={updateOptions}
       disabled={disabled}
+      size="small"
       renderInput={params => (
         <TextField
           label={label}
@@ -135,7 +136,7 @@ const PlaceInput = ({
               ...(textFieldProps?.slotProps?.input || {
                 paddingRight: 0,
                 endAdornment: (
-                  <InputAdornment position="end" sx={{mr: -0.5}}>
+                  <InputAdornment position="end">
                     <PlaceOutlinedIcon />
                   </InputAdornment>
                 ),

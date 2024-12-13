@@ -631,6 +631,7 @@ export interface ApiPassengerPassenger extends Schema.CollectionType {
       'manyToOne',
       'api::event.event'
     >;
+    lastname: Attribute.String;
     location: Attribute.String;
     name: Attribute.String & Attribute.Required;
     phone: Attribute.String;
@@ -777,6 +778,8 @@ export interface ApiTravelTravel extends Schema.CollectionType {
       'manyToOne',
       'api::event.event'
     >;
+    firstname: Attribute.String;
+    lastname: Attribute.String;
     meeting: Attribute.String;
     meeting_latitude: Attribute.Float;
     meeting_longitude: Attribute.Float;
@@ -856,52 +859,6 @@ export interface ApiTripAlertTripAlert extends Schema.CollectionType {
     user: Attribute.Relation<
       'api::trip-alert.trip-alert',
       'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-  };
-}
-
-export interface ApiVehicleVehicle extends Schema.CollectionType {
-  collectionName: 'vehicles';
-  info: {
-    description: '';
-    displayName: 'Vehicle';
-    name: 'vehicle';
-    pluralName: 'vehicles';
-    singularName: 'vehicle';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::vehicle.vehicle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    name: Attribute.String & Attribute.Required;
-    phone_number: Attribute.String;
-    phoneCountry: Attribute.String;
-    seats: Attribute.Integer &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Attribute.DefaultTo<4>;
-    updatedAt: Attribute.DateTime;
-    updatedBy: Attribute.Relation<
-      'api::vehicle.vehicle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    user: Attribute.Relation<
-      'api::vehicle.vehicle',
-      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -1354,11 +1311,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
-    vehicles: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::vehicle.vehicle'
-    >;
   };
 }
 
@@ -1380,7 +1332,6 @@ declare module '@strapi/types' {
       'api::setting.setting': ApiSettingSetting;
       'api::travel.travel': ApiTravelTravel;
       'api::trip-alert.trip-alert': ApiTripAlertTripAlert;
-      'api::vehicle.vehicle': ApiVehicleVehicle;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
