@@ -2126,7 +2126,7 @@ export const UserFieldsFragmentDoc = gql`
   newsletterConsent
   notificationEnabled
   provider
-  events(pagination: {limit: 500}) {
+  events(pagination: {limit: 500}, filters: {isReturnEvent: {not: {eq: true}}}) {
     data {
       id
       attributes {
