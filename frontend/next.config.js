@@ -53,10 +53,6 @@ module.exports = withPWA({
         source: '/content-manager/:slug*',
         destination: `${STRAPI_URL}/content-manager/:slug*`,
       },
-      {
-        source: '/api/auth/email-confirmation',
-        destination: '/api/auth/email-confirmation',
-      },
     ];
   },
 });

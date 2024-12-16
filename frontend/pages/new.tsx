@@ -26,11 +26,6 @@ const Home = (props: PageProps) => {
       onClick: () => router.push('/auth/login'),
       id: 'LoginTabs',
     },
-    {
-      label: t('menu.register'),
-      onClick: () => router.push('/auth/register'),
-      id: 'RegisterTabs',
-    },
   ];
 
   const loggedMenuActions = [

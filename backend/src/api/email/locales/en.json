@@ -8,6 +8,10 @@
       "title": "Please confirm your email address",
       "content": "## Welcome on Caroster !\nPlease confirm your account by clicking on this link:\n\n[<%= confirmationLink %>](<%= confirmationLink %>)"
     },
+    "MagicLinkLogin": {
+      "title": "Log in to Caroster",
+      "content": "## Log in to Caroster\nClick on the link below to log in:\n\n[<%= magicLink %>](<%= magicLink %>)"
+    },
     "NewTrip": {
       "title": "<%= event.name %> - A new trip is available",
       "content": "## New trip is available for \"<%= event.name %>\"\n\n**Trip: <%= vehicleName %>**\nCount of seats: <%= travel.seats %>\nDeparture location: <%= travel.meeting %>\nInformation: <%= travel.details %>.\n\n[Book my seat](<%= host %>/e/<%= event.uuid %>).\n\nYou are receiving this email because you are on the waiting list to find a carpool spot in this event."

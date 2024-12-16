@@ -7,24 +7,21 @@ const {STRAPI_URL = 'http://localhost:1337'} = process.env;
 const authHandler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: 'Strapi',
+      name: 'magic-link',
       credentials: {
-        email: {label: 'Email', type: 'text'},
-        password: {label: 'Password', type: 'password'},
+        token: {label: 'Token', type: 'password'},
       },
-      async authorize(credentials, req) {
-        const response = await fetch(`${STRAPI_URL}/api/auth/local`, {
+      async authorize(credentials) {
+        console.log({credentials});
+        const response = await fetch(`${STRAPI_URL}/api/auth/magic-link`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
-            identifier: credentials.email,
-            password: credentials.password,
+            token: credentials.token,
           }),
         });
         const data = await response.json();
-        if (data?.error?.message === 'Your account email is not confirmed')
-          throw new Error('EmailNotConfirmed');
-        else if (!data?.jwt) return null;
+        if (!data?.jwt) return null;
         else {
           const {user, jwt} = data;
           return {...user, jwt};

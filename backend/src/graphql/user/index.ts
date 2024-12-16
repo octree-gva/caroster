@@ -26,6 +26,13 @@ export default [
           });
         },
       }),
+      nexus.mutationField("sendMagicLink", {
+        type: "Boolean",
+        args: {
+          email: nexus.nonNull("String"),
+          lang: "String",
+        },
+      }),
     ],
     resolvers: {
       Query: {
@@ -89,6 +96,29 @@ export default [
             });
           },
         },
+        sendMagicLink: {
+          async resolve(_root, args) {
+            const { email, lang } = args;
+            const magicToken = await strapi.services[
+              "plugin::users-permissions.user"
+            ].magicLink.generateMagicToken(email);
+            const magicLink = `${strapi.config.get(
+              "server.url"
+            )}/auth/magic-link?token=${magicToken}`;
+
+            try {
+              await strapi
+                .service("api::email.email")
+                .sendEmailNotif(email, "MagicLinkLogin", lang || "en", {
+                  magicLink,
+                });
+              return true;
+            } catch (error) {
+              strapi.log.error(error);
+              return false;
+            }
+          },
+        },
       },
     },
     resolversConfig: {
@@ -96,6 +126,9 @@ export default [
         auth: {
           scope: ["plugin::users-permissions.user.me"],
         },
+      },
+      "Mutation.sendMagicLink": {
+        auth: false,
       },
       "UsersPermissionsUser.events": {
         auth: true,

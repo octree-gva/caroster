@@ -8,6 +8,10 @@
       "title": "Merci de confirmer votre adresse email",
       "content": "## Bienvenue sur Caroster !\nMerci de confirmer votre compte en cliquant sur le lien ci-dessous:\n\n[<%= confirmationLink %>](<%= confirmationLink %>)"
     },
+    "MagicLinkLogin": {
+      "title": "Connectez-vous à Caroster",
+      "content": "## Connectez-vous à Caroster\nCliquez sur le lien ci-dessous pour vous connecter:\n\n[<%= magicLink %>](<%= magicLink %>)"
+    },
     "NewTrip": {
       "title": "<%= event.name %> - Nouveau trajet disponible",
       "content": "## Nouveau trajet pour \"<%= event.name %>\"\n\n**Trajet: <%= vehicleName %>**\nNombre de places: <%= travel.seats %>\nLieu de départ: <%= travel.meeting %>\nInformations: <%= travel.details %>.\n\n[Réserver ma place](<%= host %>/e/<%= event.uuid %>).\n\nVous recevez cet e-mail car vous êtes inscrit en liste d'attente pour trouver une place de covoiturage dans cet événement."

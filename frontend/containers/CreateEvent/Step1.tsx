@@ -101,32 +101,24 @@ const Step1 = ({nextStep, event, addToEvent}) => {
       </Button>
 
       {!isAuthenticated && (
-        <Box sx={{marginTop: theme.spacing(8), textAlign: 'center'}}>
-          <Typography variant="body1">
-            {t('event.creation.addFromAccount.title')}
-          </Typography>
-          <Typography variant="body2">
-            {t('event.creation.addFromAccount.subtitle')}
-          </Typography>
-          <CardActions
-            sx={{
-              marginTop: theme.spacing(1),
-              justifyContent: 'space-evenly',
-              textAlign: 'center',
-            }}
-          >
-            <NextLink href="/auth/register" passHref>
-              <Button variant="text">
-                {t('event.creation.addFromAccount.actions.register')}
-              </Button>
-            </NextLink>
-            <NextLink href="/auth/login" passHref>
-              <Button color="primary">
-                {t('event.creation.addFromAccount.actions.login')}
-              </Button>
-            </NextLink>
-          </CardActions>
-        </Box>
+        <CardActions
+          sx={{
+            marginTop: theme.spacing(1),
+            justifyContent: 'space-evenly',
+            textAlign: 'center',
+          }}
+        >
+          <NextLink href="/auth/login" passHref>
+            <Button variant="text">
+              {t('event.creation.addFromAccount.actions.register')}
+            </Button>
+          </NextLink>
+          <NextLink href="/auth/login" passHref>
+            <Button color="primary">
+              {t('event.creation.addFromAccount.actions.login')}
+            </Button>
+          </NextLink>
+        </CardActions>
       )}
     </Box>
   );

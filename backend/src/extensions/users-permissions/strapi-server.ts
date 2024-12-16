@@ -1,4 +1,5 @@
-import sendConfirmationEmail from "./services/sendConfirmationEmail";
+import * as magicLink from "./services/magic-link";
+import customRoutes from "./routes/user";
 
 export default (plugin) => {
   const userServices = plugin.services.user;
@@ -6,8 +7,9 @@ export default (plugin) => {
     const services = userServices(params);
     return {
       ...services,
-      sendConfirmationEmail,
+      magicLink,
     };
   };
+  plugin.routes["content-api"].routes.push(...customRoutes);
   return plugin;
 };
