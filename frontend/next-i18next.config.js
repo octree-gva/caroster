@@ -6,6 +6,7 @@ module.exports = {
   i18n: {
     defaultLocale: FALLBACK_LANGUAGE,
     locales: [...new Set([FALLBACK_LANGUAGE, 'en', 'fr', 'de', 'nl', 'it'])],
+    localeDetection: false,
   },
   // Load same lang file for every namespaces
   localePath: (locale, _namespace) => `./locales/${locale}.json`,

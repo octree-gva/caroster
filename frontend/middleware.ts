@@ -26,12 +26,11 @@ export async function middleware(req: NextRequest) {
     FALLBACK_LANGUAGE;
 
   if (req.nextUrl.locale !== locale) {
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${req.nextUrl.pathname}${req.nextUrl.search || ''}`,
-        req.url
-      )
+    const url = new URL(
+      `/${locale}${req.nextUrl.pathname}${req.nextUrl.search || ''}`,
+      req.url
     );
+    return NextResponse.redirect(url);
   }
 }
 
