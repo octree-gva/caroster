@@ -28,14 +28,17 @@ const Login = (props: Props) => {
   const {t, i18n} = useTranslation();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
+  const [magicLinkError, setMagicLinkError] = useState<string>(null);
   const [sendMagicLink] = useSendMagicLinkMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     try {
+      setMagicLinkError(null);
       if (email) await sendMagicLink({variables: {email, lang: i18n.language}});
       setSent(true);
     } catch (error) {
       console.error(error);
+      if (error.message === 'GoogleAccount') setMagicLinkError(error.message);
     }
   };
 
@@ -50,9 +53,9 @@ const Login = (props: Props) => {
               <Typography variant="h6" align="center">
                 {t('signin.title')}
               </Typography>
-              {error && (
+              {(error || magicLinkError) && (
                 <FormHelperText error sx={{textAlign: 'center'}}>
-                  {t(errorsMap[error])}
+                  {t(errorsMap[error || magicLinkError])}
                 </FormHelperText>
               )}
               {!sent && (
@@ -94,6 +97,7 @@ const Login = (props: Props) => {
 
 const errorsMap = {
   CredentialsSignin: 'signin.errors.CredentialsSignin',
+  GoogleAccount: 'signin.errors.GoogleAccount',
 };
 
 export const getServerSideProps = async (context: any) => {

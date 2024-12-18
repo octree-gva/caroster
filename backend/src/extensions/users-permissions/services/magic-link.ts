@@ -9,7 +9,7 @@ export const generateMagicToken = async (email: string) => {
       where: { email },
     });
 
-  if (existingUser.provider === "google") {
+  if (existingUser?.provider === "google") {
     strapi.log.warn(
       `User ${email} is linked to Google account. Can't login with magic link.`
     );

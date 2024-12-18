@@ -6,7 +6,7 @@ export default (_, { strapi }) => {
     await next();
     const delta = Math.ceil(Date.now() - start);
 
-    if (ctx.url === "/graphql") {
+    if (ctx.url.startsWith("/graphql")) {
       const user = ctx.state?.user?.username;
       const { operationName = "", variables, query } = ctx.request.body || {};
       const status = graphqlStatus(ctx.body);
@@ -38,10 +38,14 @@ const graphqlStatus = (response) => {
   if (!response) return "NOT FOUND";
 
   try {
-    const { errors = null } = response ? JSON.parse(response) : {};
+    let errors = null;
+    if (typeof response === "string") {
+      const parsed = response ? JSON.parse(response) : {};
+      errors = parsed.errors;
+    } else errors = response?.errors;
     if (errors) return "ERROR";
   } catch (error) {
-    console.error(error);
+    console.error("PARSE ERROR", error);
     return "ERROR";
   }
 

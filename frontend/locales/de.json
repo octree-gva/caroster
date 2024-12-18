@@ -64,7 +64,6 @@
   "event.loginToAttend": "Möchten Sie an dieser Veranstaltung teilnehmen?",
   "event.loginToAttend.desc": "Registrieren Sie sich oder melden Sie sich an, um Fahrgemeinschaften zu bilden",
   "event.loginToAttend.login": "$t(menu.login)",
-  "event.loginToAttend.signup": "$t(signup.title)",
   "event.no_other_travel.title": "Derzeit gibt es keine anderen Fahrten",
   "event.no_travel.desc": "1. Tragen Sie sich in die Warteliste ein\n2. Teilen Sie die Veranstaltung\n3. Sie werden benachrichtigt, wenn eine neue Fahrt hinzugefügt wird",
   "event.no_travel.plus.action": "Einen Alarm erstellen",

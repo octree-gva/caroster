@@ -12,7 +12,6 @@ const authHandler = NextAuth({
         token: {label: 'Token', type: 'password'},
       },
       async authorize(credentials) {
-        console.log({credentials});
         const response = await fetch(`${STRAPI_URL}/api/auth/magic-link`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},

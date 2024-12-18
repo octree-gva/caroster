@@ -110,13 +110,12 @@ export const getServerSideProps = async (context: any) => {
       },
     };
 
-  const provider = session?.token?.provider;
   const hasAcceptedTos = !!session?.profile?.tosAcceptationDate;
 
-  if (provider === 'google' && !hasAcceptedTos)
+  if (!hasAcceptedTos)
     return {
       redirect: {
-        destination: '/auth/confirm/google',
+        destination: '/auth/confirm',
         permanent: false,
       },
     };

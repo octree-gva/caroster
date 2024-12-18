@@ -1,7 +1,6 @@
 import {ReactNode} from 'react';
 import Box from '@mui/material/Box';
 import {Helmet} from 'react-helmet';
-import useGTM from '../hooks/useGTM';
 import GenericToolbar from '../containers/GenericToolbar';
 import Banner from '../components/Banner';
 import useMatomo from '../hooks/useMatomo';
@@ -20,7 +19,6 @@ interface Props {
 }
 
 const DefaultLayout = (props: Props) => {
-  useGTM();
   useMatomo();
   const {
     children,

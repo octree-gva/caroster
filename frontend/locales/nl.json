@@ -70,7 +70,6 @@
   "event.loginToAttend": "Wilt u deelnemen aan deze afspraak?",
   "event.loginToAttend.desc": "Registreer of log in om deel te nemen",
   "event.loginToAttend.login": "$t(menu.login)",
-  "event.loginToAttend.signup": "$t(signup.title)",
   "event.no_other_travel.title": "Er is momenteel geen ander voertuig",
   "event.no_travel.desc": "1. Zet uzelf op de wachtlijst;\n2. Deel de afspraak;\n3. Ontvang een melding zodra er een reis beschikbaar is.",
   "event.no_travel.plus.action": "Maak een waarschuwing",

@@ -39,11 +39,13 @@ export default [
             username: email,
             provider: "local",
             confirmed: true,
+            role: 1, // authenticated
           });
         const jwt = strapi
           .plugin("users-permissions")
           .service("jwt")
           .issue({ id: user.id });
+
         return {
           jwt,
           user: {

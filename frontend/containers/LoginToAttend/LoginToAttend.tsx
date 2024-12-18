@@ -21,23 +21,10 @@ const LoginToAttend = ({title}) => {
       >
         {t('event.loginToAttend.desc')}
       </Typography>
-      <Box display="flex" justifyContent="space-between" pt={2} gap={1}>
-        <Link
-          href={`/auth/login?redirectPath=${router.asPath}`}
-          passHref
-          style={{width: '100%'}}
-        >
-          <Button fullWidth sx={{mr: 0.5}} variant="outlined">
+      <Box display="flex" justifyContent="center" pt={2} gap={1}>
+        <Link href={`/auth/login?redirectPath=${router.asPath}`} passHref>
+          <Button sx={{mr: 0.5}} variant="outlined">
             {t('event.loginToAttend.login')}
-          </Button>
-        </Link>
-        <Link
-          href={`/auth/register?redirectPath=${router.asPath}`}
-          passHref
-          style={{width: '100%'}}
-        >
-          <Button fullWidth sx={{ml: 0.5}} variant="contained">
-            {t('event.loginToAttend.signup')}
           </Button>
         </Link>
       </Box>

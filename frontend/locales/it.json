@@ -117,7 +117,6 @@
   "event.loginToAttend": "Vuoi partecipare a questo evento?",
   "event.loginToAttend.desc": "Accedi o registrati per partecipare all'evento",
   "event.loginToAttend.login": "$t(menu.login)",
-  "event.loginToAttend.signup": "$t(signup.title)",
   "event.no_other_travel.title": "Al momento non ci sono altri passaggi",
   "event.no_travel.plus.action": "Crea un avviso",
   "event.no_travel.plus.desc": "Crea un avviso per ricevere un'email su partenze vicine",
