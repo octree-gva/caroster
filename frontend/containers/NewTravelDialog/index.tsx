@@ -58,15 +58,11 @@ const NewTravelDialog = ({opened, toggle}: Props) => {
     phone;
 
   const clearState = () => {
-    setFirstname('');
-    setLastname('');
     setSeats(4);
     setMeeting('');
     setMeetingLatitude(null);
     setMeetingLongitude(null);
     setDate(moment());
-    setPhone('');
-    setPhoneCountry('');
     setDetails('');
   };
 

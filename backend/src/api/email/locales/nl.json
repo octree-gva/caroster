@@ -46,7 +46,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact opnemen met bestuurder",
-      "content": "Als u de reis naar ‘<%= event.name %>’ wilt organiseren, neem dan contact op met de bestuurder.\n\n**Voertuig: <%= vehicleName %>**\nVertrek: <%= travel.meeting %>\nDatum/Tijd: <%= datetime %>\nTelefoonnummer: <%= travel.phone_mumber | 'Not provided' %>\nE-mailadres: <%= driver.email %>"
+      "content": "Als u de reis naar ‘<%= event.name %>’ wilt organiseren, neem dan contact op met de bestuurder.\n\n**Voertuig: <%= vehicleName %>**\nVertrek: <%= travel.meeting %>\nDatum/Tijd: <%= datetime %>\nTelefoonnummer: <%= travel.phone_number || 'Not provided' %>\nE-mailadres: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster+ is geactiveerd op uw afspraak",

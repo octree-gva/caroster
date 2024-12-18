@@ -9,7 +9,7 @@
       "title": "Conferma il tuo indirizzo e-mail"
     },
     "ContactTripCreator": {
-      "content": "Per raggiungere l'evento [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), contatta il conducente del passaggio al quale ti sei registrato/a\n\n**Passaggio: <%= vehicleName %>**\nPartenza: <%= travel.meeting %>\nData/orario: <%= datetime %>\nTelefono: <%= travel.phone_mumber | 'Non fornito' %>\nE-mail: <%= driver.email %>",
+      "content": "Per raggiungere l'evento [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), contatta il conducente del passaggio al quale ti sei registrato/a\n\n**Passaggio: <%= vehicleName %>**\nPartenza: <%= travel.meeting %>\nData/orario: <%= datetime %>\nTelefono: <%= travel.phone_number || 'Non fornito' %>\nE-mail: <%= driver.email %>",
       "title": "<%= event.name %> - Contatta il conducente del passaggio"
     },
     "NewTripAlert": {

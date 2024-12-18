@@ -58,7 +58,7 @@
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact trip driver",
-      "content": "To organize your journey to [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), please contact the driver of the trip you've registered.\n\n**Trip: <%= vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nPhone: <%= travel.phone_mumber | 'Not provided' %>\nE-mail: <%= driver.email %>"
+      "content": "To organize your journey to [<%= event.name %>](<%= host %>/e/<%= event.uuid %>), please contact the driver of the trip you've registered.\n\n**Trip: <%= vehicleName %>**\nDeparture: <%= travel.meeting %>\nDate/time: <%= datetime %>\nPhone: <%= travel.phone_number || 'Not provided' %>\nE-mail: <%= driver.email %>"
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster Plus is now active for your event",
