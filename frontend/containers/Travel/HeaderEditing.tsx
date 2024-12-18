@@ -16,6 +16,7 @@ import PlaceInput from '../PlaceInput';
 import PhoneInput from '../../components/PhoneInput';
 import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
+import {useSession} from 'next-auth/react';
 
 interface Props {
   travel: TravelEntity;
@@ -25,6 +26,8 @@ interface Props {
 const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
+  const session = useSession();
+  const profile = session?.data?.profile;
   const actions = useActions({travel});
   const isCarosterPlus = useEventStore(s =>
     s.event.enabled_modules?.includes('caroster-plus')
@@ -33,7 +36,12 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const [removing, toggleRemoving] = useReducer(i => !i, false);
 
   // States
-  const [name, setName] = useState(travel?.attributes.vehicleName ?? '');
+  const [firstname, setFirstname] = useState(
+    travel?.attributes.firstname || profile?.firstName || ''
+  );
+  const [lastname, setLastname] = useState(
+    travel?.attributes.lastname || profile?.lastName || ''
+  );
   const [seats, setSeats] = useState(travel?.attributes.seats ?? 4);
   const [meeting, setMeeting] = useState(travel?.attributes.meeting ?? '');
   const [meeting_latitude, setMeetingLatitude] = useState(
@@ -58,6 +66,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
   );
   const [phoneError, setPhoneError] = useState(false);
   const [details, setDetails] = useState(travel?.attributes.details ?? '');
+  const canSave = !phoneError && phone && firstname && lastname;
 
   // Click on ESQ closes the form
   const escFunction = useCallback(
@@ -84,7 +93,8 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
       seats,
       phone_number: phone,
       phoneCountry,
-      vehicleName: name,
+      firstname,
+      lastname,
       departureDate: date ? moment(date).format('YYYY-MM-DD') : '',
       departureTime: time ? moment(time).format('HH:mm') : '',
     };
@@ -128,13 +138,22 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           minutesStep={5}
         />
         <TextField
-          label={t('travel.creation.name')}
+          label={t('profile.firstName')}
           fullWidth
           sx={{pb: 2}}
-          value={name}
-          onChange={e => setName(e.target.value)}
-          name="name"
-          id="EditTravelName"
+          value={firstname}
+          onChange={e => setFirstname(e.target.value)}
+          name="firstname"
+          id="EditTravelFirstname"
+        />
+        <TextField
+          label={t('profile.lastName')}
+          fullWidth
+          sx={{pb: 2}}
+          value={lastname}
+          onChange={e => setLastname(e.target.value)}
+          name="lastname"
+          id="EditTravelLastname"
         />
         <PhoneInput
           value={phone}
@@ -208,7 +227,7 @@ const HeaderEditing = ({travel, toggleEditing}: Props) => {
           color="primary"
           onClick={onSave}
           id="TravelSave"
-          disabled={phoneError || !phone}
+          disabled={!canSave}
         >
           {t('generic.save')}
         </Button>
