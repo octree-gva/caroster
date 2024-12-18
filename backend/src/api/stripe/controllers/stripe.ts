@@ -19,16 +19,16 @@ export default {
     try {
       const payload = ctx.request.body[Symbol.for("unparsedBody")];
       const sig = ctx.request.headers["stripe-signature"];
-      const event = stripe.webhooks.constructEvent(
+      const stripeEvent = stripe.webhooks.constructEvent(
         payload,
         sig,
         ENDPOINT_SECRET
       );
-      if (event.type === "checkout.session.completed") {
-        strapi.service("api::stripe.stripe").enableModule(event);
+      if (stripeEvent.type === "checkout.session.completed") {
+        strapi.service("api::stripe.stripe").enableModule(stripeEvent);
       } else
         strapi.log.warn(
-          `[Stripe] Received webhook of type ${event.type} (ignored)`
+          `[Stripe] Received webhook of type ${stripeEvent.type} (ignored)`
         );
       ctx.body = "ok";
     } catch (err) {

@@ -422,6 +422,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'oneToMany',
       'api::travel.travel'
     >;
+    unpaid: Attribute.Boolean & Attribute.DefaultTo<false>;
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::event.event',

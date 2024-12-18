@@ -153,6 +153,7 @@ export type Event = {
   passengers?: Maybe<PassengerRelationResponseCollection>;
   travels?: Maybe<TravelRelationResponseCollection>;
   tripAlerts?: Maybe<TripAlertEntityResponseCollection>;
+  unpaid?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   uuid?: Maybe<Scalars['String']['output']>;
   waitingPassengers?: Maybe<PassengerRelationResponseCollection>;
@@ -205,6 +206,7 @@ export type EventFiltersInput = {
   or?: InputMaybe<Array<InputMaybe<EventFiltersInput>>>;
   passengers?: InputMaybe<PassengerFiltersInput>;
   travels?: InputMaybe<TravelFiltersInput>;
+  unpaid?: InputMaybe<BooleanFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   users?: InputMaybe<UsersPermissionsUserFiltersInput>;
   uuid?: InputMaybe<StringFilterInput>;
@@ -227,6 +229,7 @@ export type EventInput = {
   newsletter?: InputMaybe<Scalars['Boolean']['input']>;
   passengers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   travels?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  unpaid?: InputMaybe<Scalars['Boolean']['input']>;
   users?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   uuid?: InputMaybe<Scalars['String']['input']>;
 };
@@ -538,6 +541,7 @@ export type MutationCreateSettingLocalizationArgs = {
 
 
 export type MutationCreateTravelArgs = {
+  createVehicle?: InputMaybe<Scalars['Boolean']['input']>;
   data: TravelInput;
 };
 

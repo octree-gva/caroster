@@ -43,7 +43,7 @@ export default () => ({
         : [moduleProduct.name];
       await strapi.db.query("api::event.event").update({
         where: { uuid: eventUuid },
-        data: { enabled_modules: enabledModules },
+        data: { enabled_modules: enabledModules, unpaid: false },
       });
       strapi.log.info(
         `Module '${moduleProduct.name}' enabled for event ${eventUuid}`
@@ -52,7 +52,9 @@ export default () => ({
       if (event.creator)
         strapi.entityService.create("api::notification.notification", {
           data: {
-            type: moduleProduct.notificationType,
+            type: event.unpaid // unpaid before update
+              ? "EventCreated"
+              : moduleProduct.notificationType,
             event,
             user: event.creator,
           },

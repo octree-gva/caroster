@@ -96,6 +96,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::event.event"
+    },
+    "unpaid": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

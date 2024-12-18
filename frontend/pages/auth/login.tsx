@@ -75,7 +75,7 @@ const Login = (props: Props) => {
                     disabled={!email}
                     onClick={handleSubmit}
                   >
-                    {t('signin.login')}
+                    {t('signin.sendLink')}
                   </Button>
                   <Typography align="center">{t('signin.or')}</Typography>
                   <LoginGoogle />
