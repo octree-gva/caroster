@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 import {TripAlertEntity} from '../../generated/graphql';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import RadarIcon from '@mui/icons-material/Radar';
 import useProfile from '../../hooks/useProfile';
 

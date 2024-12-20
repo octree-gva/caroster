@@ -1,6 +1,6 @@
 import {Box, Divider, Typography} from '@mui/material';
 import {useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
 
 type Props = {};

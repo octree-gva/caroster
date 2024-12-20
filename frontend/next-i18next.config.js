@@ -9,9 +9,11 @@ module.exports = {
     localeDetection: false,
   },
   // Load same lang file for every namespaces
-  localePath: (locale, _namespace) => `./locales/${locale}.json`,
+  localePath: './locales',
+  localeExtension: 'json',
+  localeStructure: '{{lng}}',
   ns: ['common'],
-  localeDetection: false,
+  localeDetection: true,
   fallbackLng: ['en', 'fr'],
   trailingSlash: true,
   serializeConfig: false,

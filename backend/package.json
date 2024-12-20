@@ -28,12 +28,12 @@
     ]
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "4.25.17",
-    "@strapi/plugin-i18n": "4.25.17",
-    "@strapi/plugin-sentry": "^4.25.17",
-    "@strapi/plugin-users-permissions": "4.25.17",
-    "@strapi/provider-email-nodemailer": "^4.25.17",
-    "@strapi/strapi": "4.25.17",
+    "@strapi/plugin-graphql": "4.25.18",
+    "@strapi/plugin-i18n": "4.25.13",
+    "@strapi/plugin-sentry": "^4.25.18",
+    "@strapi/plugin-users-permissions": "4.25.18",
+    "@strapi/provider-email-nodemailer": "^4.25.18",
+    "@strapi/strapi": "4.25.18",
     "marked": "^12.0.2",
     "moment": "^2.30.1",
     "pg": "8.13.1",
@@ -42,15 +42,15 @@
     "react-router-dom": "^5.3.4",
     "strapi-plugin-init-admin-user": "^0.2.3",
     "strapi-plugin-multi-select": "^1.2.3",
-    "stripe": "^17.4.0",
+    "stripe": "^17.5.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "@types/uuid": "^10.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^9.16.0",
+    "eslint": "^9.17.0",
     "faker": "^6.6.6",
     "jest": "^29.7.0",
     "sqlite3": "^5.1.7"

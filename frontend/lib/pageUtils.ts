@@ -6,6 +6,7 @@ import {initializeApollo, APOLLO_STATE_PROP_NAME} from './apolloClient';
 import {getCookie, hashText} from './cookies';
 import nextI18NextConfig from '../next-i18next.config';
 import {Session} from 'next-auth';
+import {UserConfig} from 'next-i18next';
 
 type ServerSideExtension = (
   context: any,
@@ -28,7 +29,7 @@ const getServerSideProps =
     const translations = await serverSideTranslations(
       context.locale,
       ['common'],
-      nextI18NextConfig
+      nextI18NextConfig as UserConfig
     );
 
     try {

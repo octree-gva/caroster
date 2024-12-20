@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import useEventCreationStore from '../../stores/useEventCreationStore';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useSession} from 'next-auth/react';
 import {useMemo} from 'react';
 import {isValidEmail} from '../../lib/formValidation';

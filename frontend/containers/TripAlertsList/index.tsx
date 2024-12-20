@@ -20,7 +20,7 @@ import {useState} from 'react';
 import TravelSelectionModal from './TravelSelectionModal';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import ListHeader from './ListHeader';
 

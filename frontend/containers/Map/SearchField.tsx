@@ -1,5 +1,5 @@
 import {Icon, InputAdornment} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import PlaceInput from '../PlaceInput';
 import useTravelsStore from '../../stores/useTravelsStore';
 

@@ -1,7 +1,7 @@
 import {Button} from '@mui/material';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useLocale from '../../hooks/useLocale';
 import useEventCreationStore from '../../stores/useEventCreationStore';
 import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';

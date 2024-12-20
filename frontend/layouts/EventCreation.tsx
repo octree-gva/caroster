@@ -2,7 +2,7 @@ import {Paper} from '@mui/material';
 import Layout from './Centered';
 import Logo from '../components/Logo';
 import LanguagesIcon from '../containers/Languages/Icon';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useSession} from 'next-auth/react';
 import {useRouter} from 'next/router';
 import {ReactNode} from 'react';

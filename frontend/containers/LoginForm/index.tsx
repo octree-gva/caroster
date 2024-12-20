@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import LoginGoogle from '../LoginGoogle';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {useState} from 'react';
 import {useSendMagicLinkMutation} from '../../generated/graphql';
 

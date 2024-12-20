@@ -2,7 +2,7 @@ import {Enum_Userspermissionsuser_Lang as SupportedLocales} from '../generated/g
 import {useRouter} from 'next/router';
 import moment from 'moment';
 import {setCookie} from '../lib/cookies';
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 
 // Import moment locales
 import 'moment/locale/fr';
@@ -18,15 +18,18 @@ const useLocale = (): {
 } => {
   const {pathname, query, asPath, push, locale} = useRouter();
 
-  const changeLocale = (newLocale: SupportedLocales) => {
-    moment.locale(newLocale);
-    setCookie('NEXT_LOCALE', newLocale);
-    push({pathname, query}, asPath, {locale: newLocale});
-  };
+  const changeLocale = useCallback(
+    (newLocale: SupportedLocales) => {
+      moment.locale(newLocale);
+      setCookie('NEXT_LOCALE', newLocale);
+      push({pathname, query}, asPath, {locale: newLocale});
+    },
+    [asPath, pathname, query, push]
+  );
 
   useEffect(() => {
     if (!SupportedLocales[locale]) changeLocale(defaultLocale);
-  }, [locale]);
+  }, [locale, changeLocale]);
 
   return {
     changeLocale,

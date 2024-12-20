@@ -1,6 +1,6 @@
 import pageUtils from '../../lib/pageUtils';
 import Layout from '../../layouts/EventCreation';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import EventTypeCard from '../../containers/EventTypeCard';
 import {useEffect} from 'react';

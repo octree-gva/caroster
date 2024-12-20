@@ -1,5 +1,5 @@
 import {Button, ButtonGroup, useMediaQuery} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
 import Link from 'next/link';
 import {useRouter} from 'next/router';

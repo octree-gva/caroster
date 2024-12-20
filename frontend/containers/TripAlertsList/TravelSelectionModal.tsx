@@ -6,7 +6,7 @@ import {
   DialogTitle,
   List,
 } from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
 import AvailableTravel from '../AssignPassenger/AvailableTravel';
 import {TravelEntity} from '../../generated/graphql';

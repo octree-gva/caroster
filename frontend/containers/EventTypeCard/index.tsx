@@ -1,5 +1,5 @@
 import {Box, Paper, Typography} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import BasicAction from './BasicAction';
 import PlusAction from './PlusAction';
 import {Module} from '../../generated/graphql';

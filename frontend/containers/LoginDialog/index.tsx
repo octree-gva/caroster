@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import LoginForm from '../LoginForm';
 import {useState} from 'react';
 import {setCookie} from '../../lib/cookies';

@@ -1,7 +1,7 @@
 import pageUtils from '../../lib/pageUtils';
 import Layout from '../../layouts/EventCreation';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventCreationStore from '../../stores/useEventCreationStore';
 import {Button, Paper, Stack, TextField} from '@mui/material';
 import PlaceInput from '../../containers/PlaceInput';

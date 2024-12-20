@@ -1,6 +1,6 @@
 import {Button, Icon} from '@mui/material';
 import {useEffect, useReducer} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import NewTravelDialog from './NewTravelDialog';
 import useEventStore from '../../stores/useEventStore';
 import {useSession} from 'next-auth/react';

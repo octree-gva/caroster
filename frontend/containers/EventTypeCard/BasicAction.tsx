@@ -1,5 +1,5 @@
 import {Button} from '@mui/material';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import useEventCreationStore from '../../stores/useEventCreationStore';
 import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';
 import useLocale from '../../hooks/useLocale';

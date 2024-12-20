@@ -5,7 +5,7 @@ import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, Theme} from '@mui/material/styles';
 import {AppProps} from 'next/app';
-import {appWithTranslation, useTranslation} from 'next-i18next';
+import {appWithTranslation, UserConfig} from 'next-i18next';
 import {ApolloProvider} from '@apollo/client';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
@@ -69,4 +69,4 @@ const AppWrapper = (props: AppProps) => (
   </SessionProvider>
 );
 
-export default appWithTranslation(AppWrapper, nextI18NextConfig);
+export default appWithTranslation(AppWrapper, nextI18NextConfig as UserConfig);
