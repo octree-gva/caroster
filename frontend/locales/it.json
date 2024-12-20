@@ -263,7 +263,6 @@
   "lost_password.password_confirmation": "Conferma la nuova password",
   "lost_password.reset_title": "Definizione di una nuova password",
   "profile.stripe_link.title": "Pagamenti",
-  "signin.emailConfirmation": "La tua registrazione è confermata. Ora puoi effettuare l'accesso.",
   "signup.errors.email_taken": "L'indirizzo email è già associato a un altro account",
   "tour.user.step3": "Da questo menu puoi accedere alle informazioni sull'evento.",
   "travel.passengers.add_to_waitingList": "Aggiungi alla lista d'attesa",
@@ -275,7 +274,5 @@
   "notification.type.EnabledCarosterPlus.content": "Caroster Plus è stato attivato per il tuo evento.",
   "placeInput.mapboxUnavailable": "Non è momentaneamente possibile suggerire posizioni geolocalizzate",
   "tour.creator.step4": "L'evento può essere modificato cliccando il pulsante Modifica.",
-  "emailConfirmation.toLogin": "Vai alla pagina di login",
-  "emailConfirmation.invalidMessage": "Questo link di registrazione non è più valido perché già utilizzato o scaduto.",
   "meta.description": "Caroster Partecipa all'evento offrendo la tua automobile o prendendo un passaggio."
 }

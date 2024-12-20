@@ -157,7 +157,6 @@
   "profile.password_changed": "Passwort aktualisiert",
   "profile.stripe_link.button": "Verlauf",
   "profile.title": "Profil",
-  "signin.emailConfirmation": "Ihr Konto wurde bestätigt. Sie können sich jetzt anmelden.",
   "signin.login": "$t(menu.login)",
   "signin.or": "oder",
   "signin.title": "Anmelden",

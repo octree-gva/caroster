@@ -182,7 +182,6 @@
   "profile.stripe_link.title": "Facturering",
   "profile.title": "Profiel",
   "signin.email": "E-mailadres",
-  "signin.emailConfirmation": "Uw account is bevestigd - u kunt nu inloggen.",
   "signin.login": "$t(menu.login)",
   "signin.or": "OF",
   "signin.title": "Inloggen",
