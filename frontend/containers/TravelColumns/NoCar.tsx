@@ -6,53 +6,45 @@ import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import ShareEvent from '../ShareEvent';
 import SupportCaroster from '../SupportCaroster';
-import {Icon} from '@mui/material';
-import usePermissions from '../../hooks/usePermissions';
+import AddTravelButton from '../AddTravelButton';
 
 interface Props {
   eventName: string;
   title: string;
   isCarosterPlus: string;
-  showImage?: boolean;
-  showTravelModal: () => void;
+  noTravel?: boolean;
 }
 
-const NoCar = ({
-  eventName,
-  title,
-  isCarosterPlus,
-  showImage,
-  showTravelModal,
-}: Props) => {
+const NoCar = ({eventName, title, isCarosterPlus, noTravel}: Props) => {
   const {t} = useTranslation();
   const theme = useTheme();
   const router = useRouter();
   const {uuid} = router.query;
-  const {
-    userPermissions: {canAddTravel},
-  } = usePermissions();
 
   return (
-    <Box my={4} mx="auto" pb={16} mt={15} maxWidth="100%" width={340}>
+    <Box
+      my={4}
+      mx="auto"
+      pb={16}
+      mt={noTravel ? 15 : 4}
+      maxWidth="100%"
+      width={340}
+    >
       <Typography variant="h6" align="center" color="textSecondary">
         {title}
       </Typography>
 
-      {showImage && (
+      {noTravel && (
         <>
-          {canAddTravel() && (
-            <Box my={4} textAlign="center">
-              <Button
-                onClick={showTravelModal}
-                aria-label="add-car"
-                variant="contained"
-                color="secondary"
-                endIcon={<Icon>add</Icon>}
-              >
-                {t('travel.creation.title')}
-              </Button>
-            </Box>
-          )}
+          <Box
+            display="flex"
+            justifyContent="center"
+            mt={2}
+            maxWidth={200}
+            mx="auto"
+          >
+            <AddTravelButton />
+          </Box>
           <Box
             component="img"
             sx={{

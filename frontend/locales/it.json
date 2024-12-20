@@ -228,7 +228,6 @@
   "profile.stripe_link.button": "Cronologia",
   "profile.title": "Profilo",
   "signin.login": "$t(menu.login)",
-  "signin.no_account": "Non sei registrato/a?",
   "signin.or": "OPPURE",
   "signin.withGoogle": "Usa un account Google",
   "signup.email": "Email",

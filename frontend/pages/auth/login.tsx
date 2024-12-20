@@ -1,103 +1,40 @@
 import {useTranslation} from 'react-i18next';
 import Layout from '../../layouts/Centered';
 import {
-  Button,
   Card,
   CardContent,
   CardMedia,
   Container,
-  Stack,
-  TextField,
   Typography,
-  FormHelperText,
 } from '@mui/material';
 import Logo from '../../components/Logo';
 import {getSession} from 'next-auth/react';
 import pageUtils from '../../lib/pageUtils';
 import Cookies from 'cookies';
-import {useState} from 'react';
-import LoginGoogle from '../../containers/LoginGoogle';
-import {useSendMagicLinkMutation} from '../../generated/graphql';
+import LoginForm from '../../containers/LoginForm';
 
 interface Props {
   error?: string;
 }
 
 const Login = (props: Props) => {
-  const {error} = props;
-  const {t, i18n} = useTranslation();
-  const [email, setEmail] = useState('');
-  const [sent, setSent] = useState(false);
-  const [magicLinkError, setMagicLinkError] = useState<string>(null);
-  const [sendMagicLink] = useSendMagicLinkMutation();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-    try {
-      setMagicLinkError(null);
-      if (email) await sendMagicLink({variables: {email, lang: i18n.language}});
-      setSent(true);
-    } catch (error) {
-      console.error(error);
-      if (error.message === 'GoogleAccount') setMagicLinkError(error.message);
-    }
-  };
+  const {t} = useTranslation();
 
   return (
     <Layout menuTitle={t('signin.title')} displayMenu={false}>
       <Container maxWidth="xs">
         <Card sx={{pt: 2, width: '100%'}}>
           <CardMedia component={Logo} />
-
           <CardContent>
-            <Stack spacing={2}>
-              <Typography variant="h6" align="center">
-                {t('signin.title')}
-              </Typography>
-              {(error || magicLinkError) && (
-                <FormHelperText error sx={{textAlign: 'center'}}>
-                  {t(errorsMap[error || magicLinkError])}
-                </FormHelperText>
-              )}
-              {!sent && (
-                <>
-                  <TextField
-                    label={t`signin.email`}
-                    fullWidth
-                    required
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    type="email"
-                  />
-                  <Button
-                    fullWidth
-                    color="primary"
-                    variant="contained"
-                    disabled={!email}
-                    onClick={handleSubmit}
-                  >
-                    {t('signin.sendLink')}
-                  </Button>
-                  <Typography align="center">{t('signin.or')}</Typography>
-                  <LoginGoogle />
-                </>
-              )}
-              {sent && (
-                <Typography
-                  variant="body2"
-                  align="center"
-                >{t`signin.check_email`}</Typography>
-              )}
-            </Stack>
+            <Typography variant="h6" align="center">
+              {t('signin.title')}
+            </Typography>
+            <LoginForm error={props.error} showGoogleAuth />
           </CardContent>
         </Card>
       </Container>
     </Layout>
   );
-};
-
-const errorsMap = {
-  CredentialsSignin: 'signin.errors.CredentialsSignin',
-  GoogleAccount: 'signin.errors.GoogleAccount',
 };
 
 export const getServerSideProps = async (context: any) => {

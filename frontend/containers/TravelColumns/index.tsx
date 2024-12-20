@@ -15,17 +15,14 @@ import NoCar from './NoCar';
 import {TravelEntity} from '../../generated/graphql';
 import {AddPassengerToTravel} from '../NewPassengerDialog';
 import MasonryContainer from './MasonryContainer';
-import LoginToAttend from '../LoginToAttend/LoginToAttend';
-import usePermissions from '../../hooks/usePermissions';
 import useDisplayTravels from './useDisplayTravels';
 import useDisplayMarkers from './useDisplayMarkers';
 import FilterByDate from './FilterByDate';
 import {Button, Icon, useMediaQuery} from '@mui/material';
 import useTravelsStore from '../../stores/useTravelsStore';
+import AddTravelButton from '../AddTravelButton';
 
-interface Props {
-  showTravelModal: () => void;
-}
+interface Props {}
 
 const TravelColumns = (props: Props) => {
   const theme = useTheme();
@@ -35,9 +32,6 @@ const TravelColumns = (props: Props) => {
   const addToast = useToastStore(s => s.addToast);
   const {addToEvent} = useAddToEvents();
   const {profile, userId} = useProfile();
-  const {
-    userPermissions: {canAddTravel},
-  } = usePermissions();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [selectedTravel, setSelectedTravel] = useState<TravelEntity>();
@@ -85,8 +79,7 @@ const TravelColumns = (props: Props) => {
   if (!event || travels?.length === 0)
     return (
       <NoCar
-        showImage
-        showTravelModal={props.showTravelModal}
+        noTravel
         eventName={event?.name}
         title={t('event.no_travel.title')}
         isCarosterPlus={isCarosterPlus}
@@ -113,18 +106,7 @@ const TravelColumns = (props: Props) => {
         flexWrap="wrap"
       >
         <FilterByDate dates={dates} buttonFilterContent={buttonFilterContent} />
-        {canAddTravel() && (
-          <Button
-            onClick={props.showTravelModal}
-            aria-label="add-car"
-            variant="contained"
-            color="secondary"
-            endIcon={<Icon>add</Icon>}
-            sx={{width: {xs: 1, sm: 'auto'}}}
-          >
-            {t('travel.creation.title')}
-          </Button>
-        )}
+        <AddTravelButton />
         {haveGeopoints && (
           <Button
             sx={{width: {xs: 1, sm: 'auto'}}}
@@ -150,11 +132,6 @@ const TravelColumns = (props: Props) => {
         }}
       >
         <Masonry columns={{xl: 4, lg: 3, md: 2, sm: 2, xs: 1}} spacing={0}>
-          {!canAddTravel() && (
-            <MasonryContainer key="no_other_travel">
-              <LoginToAttend title={t('event.loginToAttend')} />
-            </MasonryContainer>
-          )}
           {displayedTravels?.map(travel => {
             return (
               <MasonryContainer key={travel.id}>

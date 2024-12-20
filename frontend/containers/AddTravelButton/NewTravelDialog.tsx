@@ -21,11 +21,11 @@ import FAQLink from './FAQLink';
 import {useSession} from 'next-auth/react';
 
 interface Props {
-  opened: boolean;
-  toggle: (opts: {opened: boolean}) => void;
+  open: boolean;
+  toggle: () => void;
 }
 
-const NewTravelDialog = ({opened, toggle}: Props) => {
+const NewTravelDialog = ({open, toggle}: Props) => {
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
   const {createTravel} = useActions({event});
@@ -85,7 +85,7 @@ const NewTravelDialog = ({opened, toggle}: Props) => {
     };
 
     await createTravel(travel);
-    toggle({opened: false});
+    toggle();
 
     clearState();
   };
@@ -94,9 +94,9 @@ const NewTravelDialog = ({opened, toggle}: Props) => {
     <Dialog
       fullWidth
       maxWidth="xs"
-      open={opened}
+      open={open}
       onClose={() => {
-        toggle({opened: false});
+        toggle();
         clearState();
       }}
       TransitionComponent={Transition}
@@ -250,7 +250,7 @@ const NewTravelDialog = ({opened, toggle}: Props) => {
           <Button
             color="primary"
             id="NewTravelCancel"
-            onClick={() => toggle({opened: false})}
+            onClick={toggle}
             tabIndex={-1}
           >
             {t('generic.cancel')}

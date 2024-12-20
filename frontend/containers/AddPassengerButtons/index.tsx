@@ -1,7 +1,11 @@
-import Box from '@mui/material/Box';
+import {Stack} from '@mui/material';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'next-i18next';
-import usePermissions from '../../hooks/usePermissions';
+import useEventStore from '../../stores/useEventStore';
+import {useSession} from 'next-auth/react';
+import {useEffect, useReducer} from 'react';
+import LoginDialog from '../LoginDialog';
+import {useRouter} from 'next/router';
 
 interface Props {
   onAddSelf: () => void;
@@ -16,42 +20,50 @@ const ADD_TO_LOCALE = {
   travel: 'travel.passengers.add_to_travel',
 };
 
-const AddPassengerButtons = ({
-  onAddSelf,
-  onAddOther,
-  registered,
-  variant,
-  disabled,
-}: Props) => {
+const AddPassengerButtons = (props: Props) => {
+  const {onAddSelf, onAddOther, registered, variant, disabled} = props;
   const {t} = useTranslation();
-  const {
-    userPermissions: {canJoinTravels, canAddToTravel},
-  } = usePermissions();
+  const router = useRouter();
+  const event = useEventStore(s => s.event);
+  const isCarosterPlus = event?.enabled_modules?.includes('caroster-plus');
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
+  const [showLoginDialog, toggleLoginDialog] = useReducer(i => !i, false);
+
+  const onClickAddSelf = () => {
+    if (isCarosterPlus && !isAuthenticated) toggleLoginDialog();
+    else onAddSelf();
+  };
+
+  useEffect(() => {
+    if (router.query.action === 'addSelf') {
+      onAddSelf();
+      router.replace(
+        {pathname: `/${router.locale}/e/${router.query.uuid}`, query: null},
+        undefined,
+        {shallow: true}
+      );
+    }
+  }, [router, onAddSelf]);
 
   return (
-    <Box textAlign="center">
-      {canJoinTravels() && (
-        <Box p={1} pt={2}>
+    <>
+      <Stack spacing={2} p={1} pt={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={onClickAddSelf}
+          disabled={disabled || registered}
+        >
+          {t(
+            registered
+              ? 'travel.passengers.registered'
+              : 'travel.passengers.add_me'
+          )}
+        </Button>
+        {isCarosterPlus && isAuthenticated && (
           <Button
-            sx={buttonStyle}
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={onAddSelf}
-            disabled={disabled || registered}
-          >
-            {t(
-              registered
-                ? 'travel.passengers.registered'
-                : 'travel.passengers.add_me'
-            )}
-          </Button>
-        </Box>
-      )}
-      {canAddToTravel() && (
-        <Box p={1} pt={2}>
-          <Button
-            sx={buttonStyle}
             variant="outlined"
             color="primary"
             fullWidth
@@ -60,18 +72,17 @@ const AddPassengerButtons = ({
           >
             {t(ADD_TO_LOCALE[variant])}
           </Button>
-        </Box>
-      )}
-    </Box>
+        )}
+      </Stack>
+      <LoginDialog
+        title={t`travel.passengers.add_me`}
+        content={t`travel.passengers.add_me.loginNotice`}
+        open={showLoginDialog}
+        toggle={toggleLoginDialog}
+        redirectPath={`/e/${event?.uuid}/?action=addSelf`}
+      />
+    </>
   );
-};
-
-const buttonStyle = {
-  py: 1,
-  px: 8,
-  md: {
-    px: 4,
-  },
 };
 
 export default AddPassengerButtons;

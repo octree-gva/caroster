@@ -1,9 +1,7 @@
-import {useState, PropsWithChildren} from 'react';
-import Box from '@mui/material/Box';
+import {PropsWithChildren} from 'react';
 import TravelColumns from '../../../containers/TravelColumns';
-import NewTravelDialog from '../../../containers/NewTravelDialog';
 import pageUtils from '../../../lib/pageUtils';
-import EventLayout, {TabComponent} from '../../../layouts/Event';
+import EventLayout from '../../../layouts/Event';
 import {EventByUuidDocument} from '../../../generated/graphql';
 import {getLocaleForLang} from '../../../lib/getLocale';
 
@@ -13,21 +11,7 @@ interface Props {
 }
 
 const Page = (props: PropsWithChildren<Props>) => {
-  return <EventLayout {...props} Tab={TravelsTab} />;
-};
-
-const TravelsTab: TabComponent<Props> = () => {
-  const [openNewTravelDialog, setNewTravelDialog] = useState(false);
-
-  return (
-    <Box>
-      <TravelColumns showTravelModal={() => setNewTravelDialog(true)} />
-      <NewTravelDialog
-        opened={openNewTravelDialog}
-        toggle={() => setNewTravelDialog(false)}
-      />
-    </Box>
-  );
+  return <EventLayout {...props} Tab={TravelColumns} />;
 };
 
 export const getServerSideProps = pageUtils.getServerSideProps(

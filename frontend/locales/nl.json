@@ -184,7 +184,6 @@
   "signin.email": "E-mailadres",
   "signin.emailConfirmation": "Uw account is bevestigd - u kunt nu inloggen.",
   "signin.login": "$t(menu.login)",
-  "signin.no_account": "Heeft u nog geen account?",
   "signin.or": "OF",
   "signin.title": "Inloggen",
   "signin.withGoogle": "Inloggen met Google-account",

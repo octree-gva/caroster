@@ -27,7 +27,7 @@ const Travel = (props: Props) => {
     s.event.enabled_modules?.includes('caroster-plus')
   );
   const {
-    userPermissions: {canSeePassengerDetails, canJoinTravels, canAddToTravel},
+    userPermissions: {canSeePassengerDetails},
   } = usePermissions();
   const theme = useTheme();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
@@ -75,20 +75,18 @@ const Travel = (props: Props) => {
       {!isEditing && (
         <>
           <Header travel={travel} toggleEditing={toggleEditing} />
-          {(canJoinTravels() || canAddToTravel()) && (
-            <>
-              <Divider />
-              <AddPassengerButtons
-                registered={registered}
-                variant="travel"
-                disabled={disableNewPassengers}
-                onAddOther={props.onAddOther}
-                onAddSelf={
-                  isCarosterPlus ? toggleRequestTripModal : props.onAddSelf
-                }
-              />
-            </>
-          )}
+          <>
+            <Divider />
+            <AddPassengerButtons
+              registered={registered}
+              variant="travel"
+              disabled={disableNewPassengers}
+              onAddOther={props.onAddOther}
+              onAddSelf={
+                isCarosterPlus ? toggleRequestTripModal : props.onAddSelf
+              }
+            />
+          </>
           {travel.attributes.passengers.data.length > 0 && <Divider />}
           <PassengersList
             passengers={travel.attributes.passengers.data}

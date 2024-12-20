@@ -8,11 +8,8 @@ interface UserPermissions {
   canEditWaitingList: () => boolean;
   canSeeAdminWaitingList: () => boolean;
   canSetAlert: () => boolean;
-  canAddTravel: () => boolean;
   canEditTravel: (travel: TravelEntity) => boolean;
   canSeeTravelDetails: (travel: TravelEntity) => boolean;
-  canJoinTravels: () => boolean;
-  canAddToTravel: () => boolean;
   canDeletePassenger: (passenger: PassengerEntity) => boolean;
   canSeePassengerDetails: (passenger: PassengerEntity) => boolean;
   canSeeFullName: () => boolean;
@@ -24,11 +21,8 @@ const noPermissions = {
   canEditWaitingList: () => false,
   canSeeAdminWaitingList: () => false,
   canSetAlert: () => false,
-  canAddTravel: () => false,
   canEditTravel: () => false,
   canSeeTravelDetails: () => false,
-  canJoinTravels: () => false,
-  canAddToTravel: () => false,
   canDeletePassenger: () => false,
   canSeePassengerDetails: () => false,
   canSeeFullName: () => false,
@@ -50,11 +44,8 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     canEditWaitingList: () => true,
     canSeeAdminWaitingList: () => true,
     canSetAlert: () => true,
-    canAddTravel: () => true,
     canSeeTravelDetails: () => true,
     canEditTravel: () => true,
-    canJoinTravels: () => true,
-    canAddToTravel: () => true,
     canDeletePassenger: () => true,
     canSeePassengerDetails: () => true,
     canSeeFullName: () => userIsEventAdmin,
@@ -64,7 +55,7 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
     if (userIsAnonymous) return {userPermissions: noPermissions};
     else if (userIsEventAdmin)
       return {
-        userPermissions: {...allPermissions, canAddToTravel: () => false},
+        userPermissions: allPermissions,
       };
     else {
       const carosterPlusPermissions: UserPermissions = {
@@ -75,8 +66,6 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
           return travelCreatorId === userId;
         },
 
-        canJoinTravels: () => true,
-        canAddTravel: () => true,
         canSeeTravelDetails: travel => {
           const travelCreatorId =
             travel.attributes.user?.data?.id || travel.attributes.user;
@@ -118,7 +107,6 @@ const usePermissions = (): {userPermissions: UserPermissions} => {
         canDeletePassenger: () => true,
         canEditEventOptions: () => userIsEventCreator,
         canSetAlert: () => false,
-        canJoinTravels: () => connected,
         canSeeTravelDetails: () => true,
       },
     };

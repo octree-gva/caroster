@@ -159,7 +159,6 @@
   "profile.title": "Profil",
   "signin.emailConfirmation": "Ihr Konto wurde bestätigt. Sie können sich jetzt anmelden.",
   "signin.login": "$t(menu.login)",
-  "signin.no_account": "Sie haben noch kein Konto ?",
   "signin.or": "oder",
   "signin.title": "Anmelden",
   "signin.withGoogle": "Google-Konto verwenden",
