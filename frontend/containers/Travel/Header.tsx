@@ -84,7 +84,7 @@ const Header = (props: Props) => {
         </Typography>
       )}
       <Typography variant="subtitle1">
-        {getTravelName(travel, canSeeFullName())}
+        {getTravelName(travel, canSeeFullName() || isUserTripCreator)}
         {isUserTripCreator && (
           <Typography component="span">
             <Chip

@@ -64,7 +64,7 @@ const Passenger = (props: Props) => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {getPassengerName(passenger, canSeeFullName())}
+                {getPassengerName(passenger, canSeeFullName() || isUser)}
               </Typography>
               {isUser && (
                 <Chip

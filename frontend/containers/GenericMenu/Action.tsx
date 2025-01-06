@@ -1,18 +1,13 @@
 import {isValidElement} from 'react';
-import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
-const PREFIX = 'Action';
-
-const classes = {
-  divider: `${PREFIX}-divider`,
-  textItem: `${PREFIX}-textItem`,
-};
+import {Icon, ListItemIcon, ListItemText} from '@mui/material';
 
 export type ActionType = {
   divider?: boolean;
   label: JSX.Element | string;
+  icon?: string;
   id: string;
   onClick?: () => void;
 };
@@ -23,29 +18,25 @@ interface Props {
 
 const Action = (props: Props): JSX.Element => {
   const {action} = props;
-  const {divider, onClick, id, label, ...menuItemProps} = action;
+  const {divider, onClick, id, label, icon, ...menuItemProps} = action;
 
   if (divider) return <Divider variant="fullWidth" sx={{mt: 0, mb: 0}} />;
   else if (isValidElement(label)) return label;
   else if (onClick)
     return (
       <MenuItem id={id} onClick={onClick} {...menuItemProps}>
-        {label}
+        <ListItemIcon>
+          <Icon baseClassName="material-icons-outlined">{icon}</Icon>
+        </ListItemIcon>
+        <ListItemText>{label}</ListItemText>
       </MenuItem>
     );
   else
     return (
-      <StyledTypography variant="body1" id={id} className={classes.textItem}>
+      <Typography variant="body1" id={id}>
         {label}
-      </StyledTypography>
+      </Typography>
     );
 };
-
-const StyledTypography = styled(Typography)(({theme}) => ({
-  [`&.${classes.textItem}`]: {
-    margin: theme.spacing(1, 2),
-    '&:focus': {outline: 0},
-  },
-}));
 
 export default Action;

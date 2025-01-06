@@ -54,12 +54,14 @@ const Dashboard = (props: PageProps) => {
       label: t('menu.profile'),
       onClick: () => router.push('/profile'),
       id: 'ProfileTabs',
+      icon: 'account_circle',
     },
     {divider: true},
     {
       label: t('menu.new_event'),
       onClick: () => router.push('/new'),
       id: 'AddEventTabs',
+      icon: 'add',
     },
   ];
 

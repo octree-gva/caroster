@@ -61,11 +61,13 @@ const useActions = (props: Props) => {
       label: t('menu.profile'),
       onClick: () => router.push('/profile'),
       id: 'ProfileTab',
+      icon: 'account_circle',
     },
     {
       label: t('menu.dashboard'),
       onClick: () => (window.location.href = '/dashboard'),
       id: 'GoToDashboardTab',
+      icon: 'space_dashboard',
     },
     {
       label: t('event.actions.share'),
@@ -74,6 +76,7 @@ const useActions = (props: Props) => {
           title: `Caroster ${event.name}`,
         }),
       id: 'ShareEvent',
+      icon: 'share',
     },
     {divider: true},
   ];

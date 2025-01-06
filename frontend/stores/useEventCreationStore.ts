@@ -3,6 +3,7 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import {EventInput} from '../generated/graphql';
 
 interface State {
+  ready: boolean;
   event: Partial<EventInput>;
   setField: (fieldName: keyof EventInput, value: unknown) => void;
 }
@@ -10,6 +11,7 @@ interface State {
 const useEventCreationStore = create<State>()(
   persist(
     (set, get) => ({
+      ready: false,
       event: {},
       setField: (field, value) => {
         const currentEvent = get().event;
@@ -19,6 +21,9 @@ const useEventCreationStore = create<State>()(
     {
       name: 'event-creation',
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => state => {
+        if (state) state.ready = true;
+      },
     }
   )
 );

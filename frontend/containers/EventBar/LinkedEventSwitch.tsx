@@ -27,8 +27,12 @@ const LinkedEventSwitch = (props: Props) => {
         style={{width: isMobile && '100%'}}
       >
         <Button
-          color={loadedEvent.isReturnEvent ? 'inherit' : 'secondary'}
-          sx={{color: 'rgba(0, 0, 0, 0.87)'}}
+          color={loadedEvent.isReturnEvent ? 'inherit' : 'primary'}
+          sx={{
+            color: loadedEvent.isReturnEvent
+              ? 'rgba(0, 0, 0, 0.87)'
+              : 'rgba(255, 255, 255, 0.87)',
+          }}
         >
           {t`event.linked.goEvent`} ({goEvent.travels?.data?.length || 0})
         </Button>
@@ -38,8 +42,12 @@ const LinkedEventSwitch = (props: Props) => {
         style={{width: isMobile && '100%'}}
       >
         <Button
-          color={!loadedEvent.isReturnEvent ? 'inherit' : 'secondary'}
-          sx={{color: 'rgba(0, 0, 0, 0.87)'}}
+          color={!loadedEvent.isReturnEvent ? 'inherit' : 'primary'}
+          sx={{
+            color: !loadedEvent.isReturnEvent
+              ? 'rgba(0, 0, 0, 0.87)'
+              : 'rgba(255, 255, 255, 0.87)',
+          }}
         >
           {t`event.linked.returnEvent`} (
           {returnEvent?.travels?.data?.length || 0})

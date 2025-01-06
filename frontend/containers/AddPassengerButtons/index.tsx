@@ -8,6 +8,7 @@ import LoginDialog from '../LoginDialog';
 import {useRouter} from 'next/router';
 
 interface Props {
+  travelId: string;
   onAddSelf: () => void;
   onAddOther: () => void;
   registered: boolean;
@@ -21,7 +22,8 @@ const ADD_TO_LOCALE = {
 };
 
 const AddPassengerButtons = (props: Props) => {
-  const {onAddSelf, onAddOther, registered, variant, disabled} = props;
+  const {onAddSelf, onAddOther, registered, variant, disabled, travelId} =
+    props;
   const {t} = useTranslation();
   const router = useRouter();
   const event = useEventStore(s => s.event);
@@ -36,7 +38,7 @@ const AddPassengerButtons = (props: Props) => {
   };
 
   useEffect(() => {
-    if (router.query.action === 'addSelf') {
+    if (router.query.action === 'addSelf' && router.query.travel === travelId) {
       onAddSelf();
       router.replace(
         {pathname: `/${router.locale}/e/${router.query.uuid}`, query: null},
@@ -48,21 +50,23 @@ const AddPassengerButtons = (props: Props) => {
 
   return (
     <>
-      <Stack spacing={2} p={1} pt={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={onClickAddSelf}
-          disabled={disabled || registered}
-        >
-          {t(
-            registered
-              ? 'travel.passengers.registered'
-              : 'travel.passengers.add_me'
-          )}
-        </Button>
-        {isCarosterPlus && isAuthenticated && (
+      <Stack spacing={2} p={1}>
+        {(isCarosterPlus || isAuthenticated) && (
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={onClickAddSelf}
+            disabled={disabled || registered}
+          >
+            {t(
+              registered
+                ? 'travel.passengers.registered'
+                : 'travel.passengers.add_me'
+            )}
+          </Button>
+        )}
+        {!isCarosterPlus && (
           <Button
             variant="outlined"
             color="primary"
@@ -79,7 +83,7 @@ const AddPassengerButtons = (props: Props) => {
         content={t`travel.passengers.add_me.loginNotice`}
         open={showLoginDialog}
         toggle={toggleLoginDialog}
-        redirectPath={`/e/${event?.uuid}/?action=addSelf`}
+        redirectPath={`/e/${event?.uuid}/?action=addSelf&travel=${travelId}`}
       />
     </>
   );

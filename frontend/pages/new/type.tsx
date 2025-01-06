@@ -15,13 +15,14 @@ const NewEventType = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const event = useEventCreationStore(s => s.event);
+  const eventStoreReady = useEventCreationStore(s => s.ready);
   const {locale} = useLocale();
   const {data: moduleData} = useModuleQuery({variables: {locale}});
   const moduleConfig = moduleData?.module?.data?.attributes;
 
   useEffect(() => {
-    if (!event.name) router.push('/new');
-  }, [event.name, router]);
+    if (eventStoreReady && !event.name) router.push('/new');
+  }, [event.name, eventStoreReady, router]);
 
   return (
     <Layout>

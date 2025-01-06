@@ -76,6 +76,7 @@ const GenericMenu = (props: Props) => {
       });
     },
     id: 'LogoutTabs',
+    icon: 'logout',
   };
 
   const validActions = [

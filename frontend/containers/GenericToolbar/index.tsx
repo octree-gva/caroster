@@ -26,9 +26,7 @@ const GenericToolbar = ({
   const router = useRouter();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-
   const {profile, connected} = useProfile();
-
   const session = useSession();
   const isAuthenticated = session.status === 'authenticated';
 

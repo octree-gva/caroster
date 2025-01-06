@@ -1,6 +1,4 @@
-import {Paper} from '@mui/material';
 import Layout from './Centered';
-import Logo from '../components/Logo';
 import LanguagesIcon from '../containers/Languages/Icon';
 import {useTranslation} from 'next-i18next';
 import {useSession} from 'next-auth/react';
@@ -24,12 +22,14 @@ const EventCreationLayout = (props: Props) => {
           label: t('menu.profile'),
           onClick: () => router.push('/profile'),
           id: 'ProfileTabs',
+          icon: 'account_circle',
         },
         {divider: true},
         {
           label: t('menu.dashboard'),
           onClick: () => router.push('/dashboard'),
           id: 'SeeDashboardTabs',
+          icon: 'dashboard',
         },
       ]
     : [
@@ -37,6 +37,7 @@ const EventCreationLayout = (props: Props) => {
           label: t('menu.login'),
           onClick: () => router.push('/auth/login'),
           id: 'LoginTabs',
+          icon: 'login',
         },
       ];
 

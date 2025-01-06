@@ -78,6 +78,7 @@ const Travel = (props: Props) => {
           <>
             <Divider />
             <AddPassengerButtons
+              travelId={travel.id}
               registered={registered}
               variant="travel"
               disabled={disableNewPassengers}
