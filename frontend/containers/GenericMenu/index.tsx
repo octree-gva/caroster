@@ -81,10 +81,10 @@ const GenericMenu = (props: Props) => {
 
   const validActions = [
     ...actions,
-    supportItem,
     languageMenuItem,
     logoutMenuItem,
     {divider: true},
+    supportItem,
     aboutMenuItem,
     sourceCodeItem,
   ].filter(Boolean);

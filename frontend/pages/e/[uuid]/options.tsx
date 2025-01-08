@@ -48,6 +48,7 @@ const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
           mx: 0,
           [theme.breakpoints.down('md')]: {
             p: 2,
+            mt: 13,
           },
         }}
       >

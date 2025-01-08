@@ -9,13 +9,14 @@ const MapActions = (props: Props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Box
+      id="map-actions"
       zIndex={400}
-      position="relative"
-      top={isMobile ? 120 : 100}
-      left={25}
-      right={25}
+      position="absolute"
+      top={isMobile ? 95 : 64}
+      left={isMobile ? 0 : 25}
+      right={isMobile ? 0 : 25}
     >
-      <Box component={Paper} p={1} maxWidth={`calc(100vw - 50px)`} width={350}>
+      <Box component={Paper} p={1} width={isMobile ? '100%' : 350}>
         <SearchField />
       </Box>
     </Box>

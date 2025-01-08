@@ -86,7 +86,7 @@ const TripAlertsList = (props: Props) => {
 
   if (!tripAlerts || tripAlerts.length === 0)
     return (
-      <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: mobile ? 2 : 4}}>
+      <Container maxWidth="sm" sx={{mt: 15, mx: 0, px: mobile ? 2 : 4}}>
         <Paper sx={{width: '480px', maxWidth: '100%'}}>
           <ListHeader />
           <Box p={2} textAlign="center">

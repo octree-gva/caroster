@@ -105,7 +105,7 @@ const GenericToolbar = ({
               <GenericMenu
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                actions={[...actions, {divider: true}]}
+                actions={actions}
               />
             </>
           )}

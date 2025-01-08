@@ -21,6 +21,7 @@ import FilterByDate from './FilterByDate';
 import {Button, Icon, useMediaQuery} from '@mui/material';
 import useTravelsStore from '../../stores/useTravelsStore';
 import AddTravelButton from '../AddTravelButton';
+import MapActions from '../MapActions';
 
 interface Props {}
 
@@ -96,10 +97,11 @@ const TravelColumns = (props: Props) => {
   return (
     <>
       {showMap && <Map />}
+      <MapActions />
       <Box
         px={3}
         pb={2}
-        pt={showMap ? 2 : isMobile ? 15 : 10}
+        pt={showMap ? 2 : isMobile ? 22 : 18}
         display="flex"
         gap={2}
         maxWidth="100%"

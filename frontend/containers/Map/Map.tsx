@@ -3,7 +3,6 @@ import MapController from './MapController';
 import MapWrapper from './MapWrapper';
 import useMapStore from '../../stores/useMapStore';
 import Bounds from './Bounds';
-import MapActions from './MapActions';
 
 const TOKEN_FREE_TILES_URL =
   process.env.TOKEN_FREE_TILES_URL ||
@@ -27,7 +26,6 @@ const Map = () => {
         />
         <MapController />
         {markers}
-        <MapActions />
       </MapContainer>
     </MapWrapper>
   );

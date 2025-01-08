@@ -82,7 +82,10 @@ const WaitingList = (props: Props) => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: mobile ? 2 : 4}}>
+    <Container
+      maxWidth="sm"
+      sx={{mt: mobile ? 15 : 11, mx: 0, px: mobile ? 2 : 4}}
+    >
       <Paper sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
         <Box p={2}>
           <IconButton

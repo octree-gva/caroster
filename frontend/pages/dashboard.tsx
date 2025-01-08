@@ -56,7 +56,6 @@ const Dashboard = (props: PageProps) => {
       id: 'ProfileTabs',
       icon: 'account_circle',
     },
-    {divider: true},
     {
       label: t('menu.new_event'),
       onClick: () => router.push('/new'),

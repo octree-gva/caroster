@@ -64,13 +64,6 @@ const AddToMyEventDialog = ({event, open, onClose}) => {
         >
           {t('event.add_to_my_events.login')}
         </Button>
-        <Button
-          id="AddToMyEventRegister"
-          onClick={() => onRedirect(`/auth/register`)}
-          color="primary"
-        >
-          {t('event.add_to_my_events.register')}
-        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -103,11 +103,6 @@ const NewEvent = (props: Props) => {
               }}
             >
               <NextLink href="/auth/login" passHref>
-                <Button variant="text">
-                  {t('event.creation.addFromAccount.actions.register')}
-                </Button>
-              </NextLink>
-              <NextLink href="/auth/login" passHref>
                 <Button color="primary">
                   {t('event.creation.addFromAccount.actions.login')}
                 </Button>

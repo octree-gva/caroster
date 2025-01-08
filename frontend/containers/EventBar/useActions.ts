@@ -24,8 +24,8 @@ const useActions = (props: Props) => {
         onAdd(true);
       },
       id: 'AddToMyEventsTab',
+      icon: 'library_add',
     },
-    {divider: true},
     {
       label: t('event.actions.share'),
       onClick: () =>
@@ -33,27 +33,16 @@ const useActions = (props: Props) => {
           title: `Caroster ${event.name}`,
         }),
       id: 'ShareEvent',
+      icon: 'share',
     },
-    {divider: true},
     {
       label: t('menu.login'),
       onClick: () => {
         router.push(`/auth/login?redirectPath=${router.asPath}`);
       },
       id: 'SignInTab',
+      icon: 'login',
     },
-    {
-      label: t('menu.register'),
-      onClick: () => {
-        router.push({
-          pathname: `/auth/register`,
-          query: {redirectPath: router.asPath},
-          state: {event: eventId},
-        });
-      },
-      id: 'SignUpTab',
-    },
-    {divider: true},
   ];
 
   const loggedMenuActions = [
@@ -78,7 +67,6 @@ const useActions = (props: Props) => {
       id: 'ShareEvent',
       icon: 'share',
     },
-    {divider: true},
   ];
 
   return connected ? loggedMenuActions : noUserMenuActions;

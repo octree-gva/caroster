@@ -128,6 +128,7 @@ const DetailsTab: TabComponent<Props> = ({}) => {
           mx: 0,
           [theme.breakpoints.down('md')]: {
             p: 2,
+            mt: 13,
           },
         }}
       >

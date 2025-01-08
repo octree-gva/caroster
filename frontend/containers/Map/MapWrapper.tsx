@@ -5,14 +5,14 @@ import theme from '../../theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const MapWrapper = ({children}: PropsWithChildren) => {
-  const mobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <ThemeProvider theme={theme}>
       <Box
         id="map"
         width="100%"
-        height={mobile ? '60vh' : '50vh'}
-        sx={{position: 'relative'}}
+        height={isMobile ? '60vh' : '50vh'}
+        pt={isMobile ? 12 : 0}
       >
         {children}
       </Box>

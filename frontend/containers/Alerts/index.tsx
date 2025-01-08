@@ -25,7 +25,10 @@ const Alerts = ({event, tripAlertEntity}: Props) => {
   );
 
   return (
-    <Container maxWidth="sm" sx={{mt: 11, mx: 0, px: isMobile ? 2 : 4}}>
+    <Container
+      maxWidth="sm"
+      sx={{mt: isMobile ? 15 : 11, mx: 0, px: isMobile ? 2 : 4}}
+    >
       {!canSetAlert() && (
         <Box sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>
           <LoginToAttend title={t('event.loginToSetAlert')} />
