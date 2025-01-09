@@ -17,7 +17,7 @@ const Map = () => {
 
   return (
     <MapWrapper>
-      <MapContainer style={{height: '100%', width: '100%'}} zoomControl={false}>
+      <MapContainer style={{height: '100%', width: '100%'}}>
         <Bounds />
         <TileLayer
           key="tiles"
