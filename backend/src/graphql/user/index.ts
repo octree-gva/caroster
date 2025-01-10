@@ -101,7 +101,7 @@ export default [
             const { email, lang } = args;
             const magicToken = await strapi.services[
               "plugin::users-permissions.user"
-            ].magicLink.generateMagicToken(email);
+            ].magicLink.generateMagicToken(email, lang);
             const magicLink = `${strapi.config.get(
               "server.url"
             )}/auth/magic-link?token=${magicToken}`;

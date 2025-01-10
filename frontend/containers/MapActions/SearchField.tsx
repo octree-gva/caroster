@@ -21,6 +21,8 @@ const SearchField = (props: Props) => {
   return (
     <PlaceInput
       place={meetingFilter.place}
+      latitude={meetingFilter.latitude}
+      longitude={meetingFilter.longitude}
       onSelect={onSelect}
       textFieldProps={{
         variant: 'outlined',

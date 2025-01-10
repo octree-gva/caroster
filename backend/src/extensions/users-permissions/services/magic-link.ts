@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const MAGICLINK_SECRET = process.env.MAGICLINK_SECRET;
 
-export const generateMagicToken = async (email: string) => {
+export const generateMagicToken = async (email: string, lang: string) => {
   const existingUser = await strapi.db
     .query("plugin::users-permissions.user")
     .findOne({
@@ -17,7 +17,7 @@ export const generateMagicToken = async (email: string) => {
   }
   if (!MAGICLINK_SECRET) throw new Error("No MAGICLINK_SECRET provided");
 
-  return jwt.sign({ email }, MAGICLINK_SECRET, { expiresIn: "20m" });
+  return jwt.sign({ email, lang }, MAGICLINK_SECRET, { expiresIn: "20m" });
 };
 
 export const verifyMagicToken = (token: string) =>

@@ -39,6 +39,7 @@ export default [
             username: email,
             provider: "local",
             confirmed: true,
+            lang: payload.lang,
             role: 1, // authenticated
           });
         const jwt = strapi
