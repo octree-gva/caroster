@@ -43,27 +43,6 @@
       "type": "string",
       "required": true
     },
-    "caroster_plus_payment_link_id": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string",
-      "required": true,
-      "regex": "^plink_.*",
-      "private": true
-    },
-    "caroster_plus_payment_link": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string",
-      "required": true,
-      "regex": "https://buy.stripe.com/.*"
-    },
     "caroster_plus_description": {
       "pluginOptions": {
         "i18n": {
@@ -71,6 +50,24 @@
         }
       },
       "type": "richtext"
+    },
+    "caroster_plus_pricing_grid_id": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "caroster_plus_publishable_key": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
     }
   }
 }

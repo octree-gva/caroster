@@ -39,4 +39,22 @@ export default {
       concurrency: 5,
     });
   },
+  /**
+   * Clean unpaid events
+   * Every sunday at 02:00
+   */
+  "0 2 * * 0": async ({ strapi }) => {
+    try {
+      const { count } = await strapi.entityService.deleteMany(
+        "api::event.event",
+        {
+          filters: { unpaid: { $eq: true } },
+        }
+      );
+      strapi.log.info(`${count} unpaid events deleted`);
+    } catch (error) {
+      strapi.log.error(`Can't delete unpaid events`);
+      console.error(error);
+    }
+  },
 };

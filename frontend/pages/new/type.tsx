@@ -6,8 +6,6 @@ import EventTypeCard from '../../containers/EventTypeCard';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import useEventCreationStore from '../../stores/useEventCreationStore';
-import {useModuleQuery} from '../../generated/graphql';
-import useLocale from '../../hooks/useLocale';
 
 const NewEventType = () => {
   const {t} = useTranslation();
@@ -16,9 +14,6 @@ const NewEventType = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const event = useEventCreationStore(s => s.event);
   const eventStoreReady = useEventCreationStore(s => s.ready);
-  const {locale} = useLocale();
-  const {data: moduleData} = useModuleQuery({variables: {locale}});
-  const moduleConfig = moduleData?.module?.data?.attributes;
 
   useEffect(() => {
     if (eventStoreReady && !event.name) router.push('/new');
@@ -35,9 +30,7 @@ const NewEventType = () => {
       </Box>
       <Box display="flex" gap={4} py={4} flexWrap={isMobile && 'wrap'}>
         <EventTypeCard type="basic" />
-        {moduleConfig?.caroster_plus_payment_link && (
-          <EventTypeCard type="plus" moduleConfig={moduleConfig} />
-        )}
+        <EventTypeCard type="plus" />
       </Box>
     </Layout>
   );

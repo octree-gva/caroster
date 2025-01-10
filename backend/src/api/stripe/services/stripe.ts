@@ -17,14 +17,10 @@ export default () => ({
       return;
     }
 
-    const paymentLink = stripeEvent.data.object.payment_link as string;
-    const moduleProduct = await getModuleProduct(paymentLink);
-    if (!moduleProduct) {
-      strapi.log.error(
-        `Can't retrieve product/module in Stripe webhook. Is module enabled ? Webhook ID: ${stripeEvent.id}`
-      );
-      return;
-    }
+    const moduleProduct = {
+      name: "caroster-plus",
+      notificationType: "EnabledCarosterPlus" as const,
+    };
 
     const event = await strapi.db.query("api::event.event").findOne({
       where: { uuid: eventUuid },
@@ -52,7 +48,7 @@ export default () => ({
       if (event.creator)
         strapi.entityService.create("api::notification.notification", {
           data: {
-            type: event.unpaid // unpaid before update
+            type: event.unpaid // unpaid before event update
               ? "EventCreated"
               : moduleProduct.notificationType,
             event,
@@ -66,18 +62,3 @@ export default () => ({
     }
   },
 });
-
-const getModuleProduct = async (paymentLink: string) => {
-  const modulesConfig = await strapi.entityService.findOne(
-    "api::module.module",
-    1
-  );
-  const modules = [];
-  if (modulesConfig.caroster_plus_enabled) {
-    modules.push([
-      modulesConfig.caroster_plus_payment_link_id,
-      { name: "caroster-plus", notificationType: "EnabledCarosterPlus" },
-    ]);
-  }
-  return Object.fromEntries(modules)[paymentLink];
-};

@@ -476,21 +476,6 @@ export interface ApiModuleModule extends Schema.SingleType {
           localized: true;
         };
       }>;
-    caroster_plus_payment_link: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    caroster_plus_payment_link_id: Attribute.String &
-      Attribute.Required &
-      Attribute.Private &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     caroster_plus_price: Attribute.Decimal &
       Attribute.SetPluginOptions<{
         i18n: {
@@ -498,6 +483,20 @@ export interface ApiModuleModule extends Schema.SingleType {
         };
       }> &
       Attribute.DefaultTo<0>;
+    caroster_plus_pricing_grid_id: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    caroster_plus_publishable_key: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::module.module',

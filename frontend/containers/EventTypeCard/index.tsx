@@ -2,16 +2,17 @@ import {Box, Paper, Typography} from '@mui/material';
 import {useTranslation} from 'next-i18next';
 import BasicAction from './BasicAction';
 import PlusAction from './PlusAction';
-import {Module} from '../../generated/graphql';
+import {Module, useModuleQuery} from '../../generated/graphql';
 
 type Props = {
   type: 'basic' | 'plus';
-  moduleConfig?: Module;
 };
 
 const EventTypeCard = (props: Props) => {
-  const {type, moduleConfig} = props;
+  const {type} = props;
   const {t} = useTranslation();
+  const {data} = useModuleQuery({variables: {locale: 'en'}});
+  const modulesSettings = data?.module.data?.attributes;
 
   return (
     <Box
@@ -45,7 +46,7 @@ const EventTypeCard = (props: Props) => {
           </Typography>
           <Box display="flex" alignItems="baseline">
             <Typography fontSize={64} lineHeight={1}>
-              {moduleConfig?.caroster_plus_price}
+              {modulesSettings?.caroster_plus_price}
             </Typography>
             <Typography fontSize={24} lineHeight={1}>
               €
@@ -57,9 +58,7 @@ const EventTypeCard = (props: Props) => {
         {t(`event.creation.${type}.description`)}
       </Typography>
       {type === 'basic' && <BasicAction />}
-      {type === 'plus' && (
-        <PlusAction paymentLink={moduleConfig?.caroster_plus_payment_link} />
-      )}
+      {type === 'plus' && <PlusAction />}
     </Box>
   );
 };

@@ -7,15 +7,14 @@ import useEventCreationStore from '../../stores/useEventCreationStore';
 import {ProfileDocument, useCreateEventMutation} from '../../generated/graphql';
 import useAddToEvents from '../../hooks/useAddToEvents';
 import {setCookie} from '../../lib/cookies';
+import {useRouter} from 'next/router';
 
-type Props = {
-  paymentLink: string;
-};
+type Props = {};
 
 const PlusAction = (props: Props) => {
-  const {paymentLink} = props;
   const {t} = useTranslation();
   const session = useSession();
+  const router = useRouter();
   const isAuthenticated = session.status === 'authenticated';
   const {locale} = useLocale();
   const event = useEventCreationStore(s => s.event);
@@ -40,7 +39,9 @@ const PlusAction = (props: Props) => {
       addToUserEvents(createdEvent.id);
       useEventCreationStore.persist.clearStorage();
       setCookie('redirectPath', `/${locale}/e/${createdEvent.attributes.uuid}`);
-      window.location.href = `${paymentLink}?client_reference_id=${createdEvent.attributes.uuid}&locale=${locale}&prefilled_email=${profile?.email}`;
+      router.push(
+        `/${locale}/new/prices?eventId=${createdEvent.attributes.uuid}`
+      );
     } catch (error) {
       console.error(error);
     }
