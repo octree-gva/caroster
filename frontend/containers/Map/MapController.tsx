@@ -5,7 +5,6 @@ const MapController = () => {
   const map = useMap();
   const setMap = useMapStore(s => s.setMap);
   const storedMap = useMapStore(s => s.map);
-  map.scrollWheelZoom.disable();
 
   if (storedMap !== map) setMap(map);
 
