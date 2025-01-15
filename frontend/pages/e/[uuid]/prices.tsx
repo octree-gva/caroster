@@ -9,7 +9,7 @@ import EventLayout, {TabComponent} from '../../../layouts/Event';
 import useEventStore from '../../../stores/useEventStore';
 import {Box, Container, Paper, useTheme} from '@mui/material';
 import Head from 'next/head';
-import {useSession} from 'next-auth/react';
+import {getSession, useSession} from 'next-auth/react';
 import pageUtils from '../../../lib/pageUtils';
 import {getLocaleForLang} from '../../../lib/getLocale';
 
@@ -72,6 +72,15 @@ export const getServerSideProps = pageUtils.getServerSideProps(
     const {host = ''} = context.req.headers;
     let event = null;
     let modulesSettings = null;
+
+    const session = await getSession(context);
+    if (!session)
+      return {
+        redirect: {
+          destination: `/auth/login?redirectPath=${context.resolvedUrl}`,
+          permanent: false,
+        },
+      };
 
     // Fetch event
     try {
