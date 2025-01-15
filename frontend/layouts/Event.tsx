@@ -14,6 +14,7 @@ import {
   useEventByUuidQuery,
   Module,
 } from '../generated/graphql';
+import TOSDialog from '../containers/TOSDialog';
 
 const POLL_INTERVAL = 10000;
 
@@ -105,6 +106,7 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
         open={isAddToMyEvent}
         onClose={() => setIsAddToMyEvent(false)}
       />
+      <TOSDialog />
     </Layout>
   );
 };

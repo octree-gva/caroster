@@ -22,8 +22,9 @@ export const getServerSideProps = pageUtils.getServerSideProps(
     const session = await getSession(context);
     let event = null;
 
-    const hasAcceptedTos = !!session?.profile?.tosAcceptationDate;
-    if (!hasAcceptedTos)
+    const userHasNotAcceptedTos =
+      !!session?.profile && !session.profile.tosAcceptationDate;
+    if (userHasNotAcceptedTos)
       return {
         redirect: {
           destination: '/auth/confirm',

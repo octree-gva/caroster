@@ -251,6 +251,8 @@
   "travel.passengers.email_placeholder": "E-Mail",
   "travel.requestTrip.description": "Die folgenden Informationen werden dem Fahrer der Fahrt zugeschickt.",
   "signup.newsletter.consent": "Ich interessiere mich für Fahrgemeinschaften, ich möchte den Newsletter abonnieren.",
+  "signup.tos.title": "Nutzungsbedingungen",
   "signup.tos.consent": "Ich akzeptiere <tos-link>Nutzungsbedingungen</tos-link> und <data-privacy-link>Datenschutzbestimmungen</data-privacy-link>",
+  "signup.tos.button": "Beginnen Sie mit der Nutzung von Caroster",
   "meta.description": "Caroster Bilden Sie bei der Veranstaltung Fahrgemeinschaften, indem Sie ein Auto anbieten oder einen Platz einnehmen."
 }
