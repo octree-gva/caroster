@@ -67,7 +67,7 @@ const getServerSideProps =
             notFound: true,
             props: {...translations},
           };
-        }
+        } else if (extensionReturn?.redirect) return extensionReturn;
       }
 
       return {

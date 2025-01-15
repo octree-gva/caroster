@@ -4,11 +4,9 @@ import useProfile from '../../hooks/useProfile';
 import moment from 'moment';
 import useTravelsStore from '../../stores/useTravelsStore';
 import {useMemo} from 'react';
-import {calculateHaversineDistance} from '../../lib/geography';
 
 const useDisplayTravels = () => {
   const datesFilter = useTravelsStore(s => s.datesFilter);
-  const meetingFilter = useTravelsStore(s => s.meetingFilter);
   const {userId} = useProfile();
   const event = useEventStore(s => s.event);
 
@@ -26,26 +24,7 @@ const useDisplayTravels = () => {
       });
   }, [event?.travels?.data, datesFilter, userId]);
 
-  const meetingFilteredTravels = useMemo(() => {
-    if (!meetingFilter.latitude || !meetingFilter.longitude)
-      return dateFileredTravels;
-
-    return dateFileredTravels
-      .map(travel => ({
-        ...travel,
-        distance: calculateHaversineDistance(
-          [meetingFilter.latitude, meetingFilter.longitude],
-          [
-            travel.attributes.meeting_latitude,
-            travel.attributes.meeting_longitude,
-          ]
-        ),
-      }))
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, 3);
-  }, [dateFileredTravels, meetingFilter]);
-
-  return {displayedTravels: meetingFilteredTravels};
+  return {displayedTravels: dateFileredTravels};
 };
 
 const sortTravels =

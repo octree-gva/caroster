@@ -456,12 +456,6 @@ export interface ApiModuleModule extends Schema.SingleType {
     };
   };
   attributes: {
-    caroster_plus_description: Attribute.RichText &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     caroster_plus_enabled: Attribute.Boolean &
       Attribute.SetPluginOptions<{
         i18n: {
@@ -469,13 +463,6 @@ export interface ApiModuleModule extends Schema.SingleType {
         };
       }> &
       Attribute.DefaultTo<false>;
-    caroster_plus_name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     caroster_plus_price: Attribute.Decimal &
       Attribute.SetPluginOptions<{
         i18n: {

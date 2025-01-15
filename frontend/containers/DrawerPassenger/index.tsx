@@ -88,7 +88,8 @@ const DrawerPassenger = ({
               </Link>
             ) : (
               <Typography variant="body1">
-                {t('passenger.informations.notSpecify')}
+                {t('passenger.informations.notSpecify')},{' '}
+                {t('passenger.informations.byAdmin')}
               </Typography>
             )}
           </Box>

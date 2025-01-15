@@ -2,10 +2,8 @@ query module($locale: I18NLocaleCode!) {
   module(locale: $locale) {
     data {
       attributes {
-        caroster_plus_name
         caroster_plus_price
         caroster_plus_enabled
-        caroster_plus_description
         caroster_plus_pricing_grid_id
         caroster_plus_publishable_key
       }

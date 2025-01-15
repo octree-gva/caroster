@@ -30,7 +30,7 @@ const AvailableTravel = ({travel, assign}: Props) => {
       <Divider />
       <ListItem sx={{flexDirection: 'column', p: 2}}>
         <Box display="flex" justifyContent="space-between" width={1}>
-          <Box>
+          <Box pr={2}>
             {travel.attributes.departureDate && (
               <Typography variant="overline" color="GrayText">
                 {t('passenger.assign.departure')}

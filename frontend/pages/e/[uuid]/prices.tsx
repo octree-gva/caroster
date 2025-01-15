@@ -52,7 +52,7 @@ const PricesPage: TabComponent<Props> = ({modulesSettings}) => {
           },
         }}
       >
-        <Box component={Paper} mb={4}>
+        <Box mb={4}>
           {/* @ts-ignore */}
           <stripe-pricing-table
             pricing-table-id={modulesSettings.caroster_plus_pricing_grid_id}

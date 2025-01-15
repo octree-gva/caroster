@@ -1,4 +1,4 @@
-import {useReducer} from 'react';
+import {useEffect, useReducer} from 'react';
 import {Box, Container, Paper, Typography, useMediaQuery} from '@mui/material';
 import {useTranslation} from 'next-i18next';
 import theme from '../../theme';
@@ -19,15 +19,19 @@ const Alerts = ({event, tripAlertEntity}: Props) => {
   } = usePermissions();
   const {t} = useTranslation();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [switchChecked, handleToggle] = useReducer(
-    i => !i,
-    tripAlertEntity?.attributes.enabled || false
-  );
+  const [switchChecked, handleToggle] = useReducer(i => !i, false);
+
+  useEffect(() => {
+    if (tripAlertEntity?.attributes?.enabled && !switchChecked) handleToggle();
+    else if (!tripAlertEntity?.attributes?.enabled && switchChecked)
+      handleToggle();
+  }, [tripAlertEntity]);
 
   return (
     <Container
       maxWidth="sm"
       sx={{mt: isMobile ? 15 : 11, mx: 0, px: isMobile ? 2 : 4}}
+      key={tripAlertEntity?.attributes.address}
     >
       {!canSetAlert() && (
         <Box sx={{width: '480px', maxWidth: '100%', position: 'relative'}}>

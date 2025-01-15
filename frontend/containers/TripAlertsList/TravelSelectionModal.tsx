@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   List,
+  Typography,
 } from '@mui/material';
 import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
@@ -26,6 +27,9 @@ const TravelSelectionModal = (props: Props) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{t`passenger.assign.title`}</DialogTitle>
       <DialogContent sx={{p: 0}}>
+        {!travels?.length && (
+          <Typography px={3}>{t`passenger.assign.no_travel.title`}</Typography>
+        )}
         <List disablePadding>
           {travels?.map(travel => (
             <AvailableTravel

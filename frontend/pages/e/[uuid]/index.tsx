@@ -4,6 +4,7 @@ import pageUtils from '../../../lib/pageUtils';
 import EventLayout from '../../../layouts/Event';
 import {EventByUuidDocument} from '../../../generated/graphql';
 import {getLocaleForLang} from '../../../lib/getLocale';
+import {getSession} from 'next-auth/react';
 
 interface Props {
   eventUUID: string;
@@ -18,7 +19,17 @@ export const getServerSideProps = pageUtils.getServerSideProps(
   async (context, apolloClient) => {
     const {uuid} = context.query;
     const {host = ''} = context.req.headers;
+    const session = await getSession(context);
     let event = null;
+
+    const hasAcceptedTos = !!session?.profile?.tosAcceptationDate;
+    if (!hasAcceptedTos)
+      return {
+        redirect: {
+          destination: '/auth/confirm',
+          permanent: false,
+        },
+      };
 
     // Fetch event
     try {

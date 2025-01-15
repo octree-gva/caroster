@@ -296,6 +296,16 @@ const DetailsTab: TabComponent<Props> = ({}) => {
               )}
             </Box>
           )}
+          {!isEditing && !!event.email && (
+            <Box pt={2} pr={1.5}>
+              <Typography variant="overline">
+                {t('options.plus.creator')}
+              </Typography>
+              <Typography id="EventLang" sx={{pr: 3}}>
+                {event.email}
+              </Typography>
+            </Box>
+          )}
           {!isEditing && (
             <ShareEvent
               title={`Caroster ${event.name}`}

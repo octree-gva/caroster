@@ -77,7 +77,7 @@ const AlertsForm = ({event, tripAlertEntity, disabled}: Props) => {
           endAdornment: <InputAdornment position="end">km</InputAdornment>,
         }}
         variant="standard"
-        defaultValue={radius}
+        value={radius}
         disabled={disabled}
         onChange={handleRadiusChange}
       />

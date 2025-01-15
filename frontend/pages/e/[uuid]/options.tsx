@@ -5,20 +5,11 @@ import {PropsWithChildren} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import useEventStore from '../../../stores/useEventStore';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
-import {
-  EventByUuidDocument,
-  Module,
-  ModuleDocument,
-  Enum_Userspermissionsuser_Lang as SupportedLocales,
-} from '../../../generated/graphql';
-import CarosterPlusOption from '../../../containers/CarosterPlusOption';
+import {EventByUuidDocument} from '../../../generated/graphql';
 import CarosterPlusSettings from '../../../containers/CarosterPlusSettings';
-import {Typography} from '@mui/material';
-import {useTranslation} from 'next-i18next';
 import {getLocaleForLang} from '../../../lib/getLocale';
 
 interface Props {
-  modulesSettings?: Module;
   eventUUID: string;
   announcement?: string;
 }
@@ -27,16 +18,11 @@ const Page = (props: PropsWithChildren<Props>) => {
   return <EventLayout {...props} Tab={OptionsTab} />;
 };
 
-const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
-  const {t} = useTranslation();
+const OptionsTab: TabComponent<Props> = () => {
   const theme = useTheme();
   const event = useEventStore(s => s.event);
 
   if (!event) return null;
-
-  const carosterPlusActivated =
-    modulesSettings?.caroster_plus_enabled &&
-    event.enabled_modules?.includes('caroster-plus');
 
   return (
     <Box position="relative">
@@ -52,13 +38,7 @@ const OptionsTab: TabComponent<Props> = ({modulesSettings}) => {
           },
         }}
       >
-        {carosterPlusActivated && <CarosterPlusSettings event={event} />}{' '}
-        {modulesSettings?.caroster_plus_enabled && !carosterPlusActivated && (
-          <CarosterPlusOption event={event} modulesSettings={modulesSettings} />
-        )}
-        {!modulesSettings?.caroster_plus_enabled && (
-          <Typography variant="overline">{t`options.no_module`}</Typography>
-        )}
+        <CarosterPlusSettings event={event} />
       </Container>
     </Box>
   );
@@ -69,7 +49,6 @@ export const getServerSideProps = pageUtils.getServerSideProps(
     const {uuid} = context.query;
     const {host = ''} = context.req.headers;
     let event = null;
-    let modulesSettings = null;
 
     // Fetch event
     try {
@@ -84,36 +63,16 @@ export const getServerSideProps = pageUtils.getServerSideProps(
       };
     }
 
-    // Fetch modules settings
-    try {
-      const {data} = await apolloClient.query({
-        query: ModuleDocument,
-        variables: {locale: context.locale},
-      });
-      modulesSettings = data?.module?.data?.attributes || {};
+    const carosterPlusActivated =
+      event?.attributes?.enabled_modules?.includes('caroster-plus');
 
-      const {caroster_plus_description, caroster_plus_name} = modulesSettings;
-
-      if (
-        caroster_plus_description &&
-        caroster_plus_name &&
-        String(caroster_plus_description).length === 0 &&
-        String(caroster_plus_name).length === 0
-      ) {
-        console.warn(
-          'Module settings are not set for locale: ',
-          context.locale,
-          ' fallback to English'
-        );
-        const {data: enData} = await apolloClient.query({
-          query: ModuleDocument,
-          variables: {locale: SupportedLocales['en']},
-        });
-        modulesSettings = enData?.module?.data?.attributes;
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    if (!carosterPlusActivated)
+      return {
+        redirect: {
+          destination: `/e/${uuid}/prices`,
+          permanent: false,
+        },
+      };
 
     const description = await getLocaleForLang(
       event?.attributes?.lang,
@@ -122,7 +81,6 @@ export const getServerSideProps = pageUtils.getServerSideProps(
 
     return {
       props: {
-        modulesSettings,
         eventUUID: uuid,
         metas: {
           title: event?.attributes?.name || '',

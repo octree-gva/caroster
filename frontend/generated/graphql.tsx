@@ -385,9 +385,7 @@ export type JsonFilterInput = {
 
 export type Module = {
   __typename?: 'Module';
-  caroster_plus_description?: Maybe<Scalars['String']['output']>;
   caroster_plus_enabled?: Maybe<Scalars['Boolean']['output']>;
-  caroster_plus_name: Scalars['String']['output'];
   caroster_plus_price?: Maybe<Scalars['Float']['output']>;
   caroster_plus_pricing_grid_id: Scalars['String']['output'];
   caroster_plus_publishable_key: Scalars['String']['output'];
@@ -409,9 +407,7 @@ export type ModuleEntityResponse = {
 };
 
 export type ModuleInput = {
-  caroster_plus_description?: InputMaybe<Scalars['String']['input']>;
   caroster_plus_enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  caroster_plus_name?: InputMaybe<Scalars['String']['input']>;
   caroster_plus_price?: InputMaybe<Scalars['Float']['input']>;
   caroster_plus_pricing_grid_id?: InputMaybe<Scalars['String']['input']>;
   caroster_plus_publishable_key?: InputMaybe<Scalars['String']['input']>;
@@ -1866,7 +1862,7 @@ export type ModuleQueryVariables = Exact<{
 }>;
 
 
-export type ModuleQuery = { __typename?: 'Query', module?: { __typename?: 'ModuleEntityResponse', data?: { __typename?: 'ModuleEntity', attributes?: { __typename?: 'Module', caroster_plus_name: string, caroster_plus_price?: number | null, caroster_plus_enabled?: boolean | null, caroster_plus_description?: string | null, caroster_plus_pricing_grid_id: string, caroster_plus_publishable_key: string } | null } | null } | null };
+export type ModuleQuery = { __typename?: 'Query', module?: { __typename?: 'ModuleEntityResponse', data?: { __typename?: 'ModuleEntity', attributes?: { __typename?: 'Module', caroster_plus_price?: number | null, caroster_plus_enabled?: boolean | null, caroster_plus_pricing_grid_id: string, caroster_plus_publishable_key: string } | null } | null } | null };
 
 export type UserNotificationsQueryVariables = Exact<{
   maxItems?: InputMaybe<Scalars['Int']['input']>;
@@ -2537,10 +2533,8 @@ export const ModuleDocument = gql`
   module(locale: $locale) {
     data {
       attributes {
-        caroster_plus_name
         caroster_plus_price
         caroster_plus_enabled
-        caroster_plus_description
         caroster_plus_pricing_grid_id
         caroster_plus_publishable_key
       }
