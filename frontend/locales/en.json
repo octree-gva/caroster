@@ -100,6 +100,7 @@
   "generic.save": "Save",
   "generic.select": "Select",
   "generic.close": "Fermer",
+  "generic.optional": "Optional",
   "menu.about": "Discover more about Caroster",
   "menu.code": "Caroster is Open Source",
   "menu.dashboard": "My Carosters",
