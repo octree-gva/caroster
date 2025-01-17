@@ -101,7 +101,7 @@ const Confirm = () => {
             components={{
               'tos-link': <a href={settings.tos_link} target="_blank" />,
               'data-privacy-link': (
-                <a href={settings.tos_link} target="_blank" />
+                <a href={settings.data_policy_link} target="_blank" />
               ),
             }}
           />
