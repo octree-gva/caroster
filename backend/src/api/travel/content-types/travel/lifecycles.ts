@@ -112,15 +112,17 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
     .service("api::event.event")
     .getWaitingPassengers(event);
 
+  const vehicleName =
+    travel.firstname && travel.lastname
+      ? `${travel.firstname} ${travel.lastname[0]}.`
+      : travel.vehicleName;
+
   // Create notification entities for people linked to a registered user
   try {
     const registeredUsers = eventWaitingPassengers
       .map((passenger) => passenger.user)
       .filter(Boolean);
-    const vehicleName =
-      travel.firstname && travel.lastname
-        ? `${travel.firstname} ${travel.lastname[0]}.`
-        : travel.vehicleName;
+
     await pMap(
       registeredUsers,
       async (user: { id: string }) =>
@@ -154,6 +156,7 @@ const sendEmailsToWaitingPassengers = async (travel, eventId: string) => {
         .sendEmailNotif(email, "NewTrip", event.lang || "en", {
           event,
           travel,
+          vehicleName,
         }),
     { concurrency: 5 }
   );
