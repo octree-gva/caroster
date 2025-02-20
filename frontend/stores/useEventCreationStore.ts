@@ -12,7 +12,10 @@ const useEventCreationStore = create<State>()(
   persist(
     (set, get) => ({
       ready: false,
-      event: {},
+      event: {
+        name: '',
+        email: '',
+      },
       setField: (field, value) => {
         const currentEvent = get().event;
         set({event: {...currentEvent, [field]: value}});

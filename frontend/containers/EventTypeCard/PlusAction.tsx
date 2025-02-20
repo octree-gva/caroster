@@ -1,6 +1,5 @@
 import {Button} from '@mui/material';
 import {useSession} from 'next-auth/react';
-import Link from 'next/link';
 import {useTranslation} from 'next-i18next';
 import useLocale from '../../hooks/useLocale';
 import useEventCreationStore from '../../stores/useEventCreationStore';
@@ -36,31 +35,34 @@ const PlusAction = (props: Props) => {
         refetchQueries: [ProfileDocument],
       });
       const createdEvent = data.createEvent.data;
-      addToUserEvents(createdEvent.id);
       useEventCreationStore.persist.clearStorage();
-      setCookie('redirectPath', `/${locale}/e/${createdEvent.attributes.uuid}`);
-      router.push(
-        `/${locale}/new/prices?eventId=${createdEvent.attributes.uuid}`
-      );
+
+      if (isAuthenticated) {
+        addToUserEvents(createdEvent.id);
+        setCookie(
+          'redirectPath',
+          `/${locale}/e/${createdEvent.attributes.uuid}`
+        );
+        router.push(
+          `/${locale}/new/prices?eventId=${createdEvent.attributes.uuid}`
+        );
+      } else {
+        setCookie(
+          'redirectPath',
+          `/${locale}/new/prices?eventId=${createdEvent.attributes.uuid}`
+        );
+        router.push('/auth/login');
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (isAuthenticated)
-    return (
-      <Button
-        fullWidth
-        variant="outlined"
-        onClick={onClick}
-      >{t`event.creation.plus.button`}</Button>
-    );
-  else
-    return (
-      <Link href={`/auth/login?redirectPath=/new/type/`} passHref>
-        <Button variant="outlined" fullWidth>{t`signin.title`}</Button>
-      </Link>
-    );
+  return (
+    <Button fullWidth variant="outlined" onClick={onClick}>
+      {isAuthenticated ? t`event.creation.plus.button` : t`signin.title`}
+    </Button>
+  );
 };
 
 export default PlusAction;
