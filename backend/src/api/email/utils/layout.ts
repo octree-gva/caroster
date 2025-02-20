@@ -36,14 +36,14 @@ export const getHTML = ({ htmlContent, htmlFooter, carosterLink }) => `
               </div>
               <div style="background-color:#E5E5E5;padding:16px 8px 16px 8px">
                 <div
-                  style="font-size:14px;font-weight:normal;padding:4px 24px 16px 24px"
+                  style="font-size:14px;font-weight:normal;padding:4px 24px 4px 24px"
                 >
                   ${htmlFooter}
                 </div>
-                <div style="padding:0px 0px 0px 12px">
+                <div style="padding:0px 24px 0px 24px">👉
                   <a
                     href="https://opencollective.com/caroster"
-                    style="color:#171717;font-size:14px;font-weight:normal;background-color:#E5E5E5;border-radius:64px;display:inline-block;padding:8px 12px;text-decoration:none"
+                    style="color:#171717;font-size:14px;border-radius:64px;display:inline-block;padding:8px 12px 8px 4px;font-weight:bold;"
                     target="_blank"
                     ><span
                       ><!--[if mso
@@ -53,7 +53,7 @@ export const getHTML = ({ htmlContent, htmlFooter, carosterLink }) => `
                           >&nbsp;</i
                         ><!
                       [endif]--></span
-                    ><span>👉 Open collective</span
+                    ><span>Open collective</span
                     ><span
                       ><!--[if mso
                         ]><i
