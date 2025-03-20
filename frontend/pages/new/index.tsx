@@ -98,7 +98,7 @@ const NewEvent = (props: Props) => {
               disabled={!canSubmit}
               aria-disabled={!canSubmit}
             >
-              {t('event.creation.next')}
+              {t('event.creation.toEventDetails')}
             </Button>
           </NextLink>
           {!isAuthenticated && (

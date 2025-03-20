@@ -76,7 +76,7 @@ const NewEventDetails = () => {
               type="submit"
               id="NewEventSubmit"
             >
-              {t('event.creation.next')}
+              {t('event.creation.toEventType')}
             </Button>
           </NextLink>
         </Stack>
