@@ -45,7 +45,7 @@ export const getServerSideProps = pageUtils.getServerSideProps(
 
     const userEmail = session?.user?.email;
     const userIsAdmin =
-      event?.attributes?.adminstrators?.includes(userEmail) ||
+      event?.attributes?.administrators?.includes(userEmail) ||
       event?.attributes?.email === userEmail;
     if (!userIsAdmin) return {notFound: true};
 
