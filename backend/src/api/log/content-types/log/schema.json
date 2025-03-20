@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "logs",
+  "info": {
+    "singularName": "log",
+    "pluralName": "logs",
+    "displayName": "Log",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "AUTH_TOKEN_GENERATION",
+        "AUTH_TOKEN_VERIFICATION"
+      ],
+      "required": true
+    },
+    "payload": {
+      "type": "json"
+    }
+  }
+}

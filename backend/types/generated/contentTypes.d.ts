@@ -439,6 +439,32 @@ export interface ApiEventEvent extends Schema.CollectionType {
   };
 }
 
+export interface ApiLogLog extends Schema.CollectionType {
+  collectionName: 'logs';
+  info: {
+    description: '';
+    displayName: 'Log';
+    pluralName: 'logs';
+    singularName: 'log';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    payload: Attribute.JSON;
+    type: Attribute.Enumeration<
+      ['AUTH_TOKEN_GENERATION', 'AUTH_TOKEN_VERIFICATION']
+    > &
+      Attribute.Required;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiModuleModule extends Schema.SingleType {
   collectionName: 'modules';
   info: {
@@ -1312,6 +1338,7 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::event.event': ApiEventEvent;
+      'api::log.log': ApiLogLog;
       'api::module.module': ApiModuleModule;
       'api::notification.notification': ApiNotificationNotification;
       'api::page.page': ApiPagePage;
