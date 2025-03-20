@@ -84,7 +84,13 @@ const NewEvent = (props: Props) => {
               />
             </>
           )}
-          <NextLink href="/new/details" passHref>
+          <NextLink
+            href="/new/details"
+            passHref
+            tabIndex={canSubmit ? undefined : -1}
+            style={{pointerEvents: canSubmit ? undefined : 'none'}}
+            aria-disabled={!canSubmit}
+          >
             <Button
               fullWidth
               variant="contained"
