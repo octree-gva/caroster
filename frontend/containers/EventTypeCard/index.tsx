@@ -2,7 +2,7 @@ import {Box, Paper, Typography} from '@mui/material';
 import {useTranslation} from 'next-i18next';
 import BasicAction from './BasicAction';
 import PlusAction from './PlusAction';
-import {Module, useModuleQuery} from '../../generated/graphql';
+import {useModuleQuery} from '../../generated/graphql';
 
 type Props = {
   type: 'basic' | 'plus';

@@ -60,7 +60,7 @@ const PlusAction = (props: Props) => {
 
   return (
     <Button fullWidth variant="outlined" onClick={onClick}>
-      {isAuthenticated ? t`event.creation.plus.button` : t`signin.title`}
+      {t`event.creation.plus.button`}
     </Button>
   );
 };
