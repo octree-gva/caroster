@@ -6,6 +6,7 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import {signOut, useSession} from 'next-auth/react';
 
+const ENV = process.env.NODE_ENV;
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient: ApolloClient<any>;
 
@@ -21,7 +22,7 @@ const authLink = (jwt: string | null) =>
   });
 
 const errorLink = onError(({operation, networkError, response}) => {
-  console.error({networkError, operation});
+  if (ENV !== 'production') console.error({networkError, operation});
   if (response) console.error(JSON.stringify(response, null, 4));
   const responseStatus = networkError?.response?.status;
 

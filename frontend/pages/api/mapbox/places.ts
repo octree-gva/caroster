@@ -18,19 +18,18 @@ export default async function handler(
   const url = `${MAPBOX_URL}geocoding/v5/mapbox.places/${search}.json?proximity=${proximity}&access_token=${MAPBOX_TOKEN}&language=${locale}`;
 
   try {
-    const mapBoxResult = await fetch(url).then(response => {
-      if (response.status === 429)
-        throw new Error('MAPBOX_RATE_LIMIT_EXCEEDED');
-      else if (response.status === 401) throw new Error('MAPBOX_UNAUTHORIZED');
-      return response.json();
-    });
-
-    if (mapBoxResult?.features) {
-      res.status(200).send(mapBoxResult.features);
-      return;
-    } else throw new Error('MAPBOX_MALFORMED_RESPONSE');
+    const response = await fetch(url);
+    if (response.status === 429) throw new Error('MAPBOX_RATE_LIMIT_EXCEEDED');
+    else if (response.status === 401) throw new Error('MAPBOX_UNAUTHORIZED');
+    const mapBoxResult = await response.json();
+    if (mapBoxResult?.features)
+      return res.status(200).send(mapBoxResult.features);
+    else {
+      console.warn('MALFORMED RESPONSE FROM MAPBOX', mapBoxResult);
+      throw new Error('MAPBOX_MALFORMED_RESPONSE');
+    }
   } catch (error) {
-    console.error(error);
+    console.error('ERROR WITH MAPBOX: ', error.message);
     res.status(500);
   }
 }
