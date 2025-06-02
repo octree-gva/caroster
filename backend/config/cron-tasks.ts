@@ -45,13 +45,11 @@ export default {
    */
   "0 2 * * 0": async ({ strapi }) => {
     try {
-      const { count } = await strapi.entityService.deleteMany(
-        "api::event.event",
-        {
-          filters: { unpaid: { $eq: true } },
-        }
-      );
-      strapi.log.info(`${count} unpaid events deleted`);
+      const { count } = await strapi.db.query("api::event.event").updateMany({
+        where: { unpaid: true },
+        data: { unpaid: false, enabled_modules: [] },
+      });
+      strapi.log.info(`${count} unpaid events reset to basic.`);
     } catch (error) {
       strapi.log.error(`Can't delete unpaid events`);
       console.error(error);
