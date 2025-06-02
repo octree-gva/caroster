@@ -50,11 +50,11 @@
     },
     "EventEnded": {
       "title": "<%= event.name %> - Votre événement est terminé !",
-      "content": "## \"<%= event.name %>\", c'est terminé !\n\n👏 Nombre de personnes transportées : <%= passengersCount %>\n🚗 Nombre de trajets remplis : <%= travelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
+      "content": "## \"<%= event.name %>\", c'est terminé !\n\n👏 Nombre de personnes transportées : <%= passengersCount %>\n🚗 Nombre de trajets remplis : <%= travelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes un admin de cet événement."
     },
     "EventRecap": {
       "title": "<%= event.name %> - Du nouveau dans votre événement",
-      "content": "## Il y a du nouveau dans votre événement \"<%= event.name %>\"\n\n⏳ Nombre de passagers en recherche d'une place : <%= waitingListCount %>\n🚗 Nombre de trajets : <%= travelsCount %>\n🆕 Nombre de nouveaux trajets : <%= newTravelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes le créateur de cet événement."
+      "content": "## Il y a du nouveau dans votre événement \"<%= event.name %>\"\n\n⏳ Nombre de passagers en recherche d'une place : <%= waitingListCount %>\n🚗 Nombre de trajets : <%= travelsCount %>\n🆕 Nombre de nouveaux trajets : <%= newTravelsCount %>\n\nLien vers votre Caroster: <%= host %>/e/<%= event.uuid %>\n\nVous recevez cet e-mail car vous êtes un admin de cet événement."
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contacter la conductrice ou le conducteur du trajet",

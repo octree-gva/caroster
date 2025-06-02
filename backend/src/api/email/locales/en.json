@@ -50,11 +50,11 @@
     },
     "EventEnded": {
       "title": "<%= event.name %> - Your event is over !",
-      "content": "## \"<%= event.name %>\" is over !\n\n👏 Count of passengers : <%= event.passengers.length %>\n🚗 Count of trips filled : <%= event.travels.length %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are the creator of this event."
+      "content": "## \"<%= event.name %>\" is over !\n\n👏 Count of passengers : <%= event.passengers.length %>\n🚗 Count of trips filled : <%= event.travels.length %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are an admin of this event."
     },
     "EventRecap": {
       "title": "<%= event.name %> - Something new in your event",
-      "content": "## There is something new in your event \"<%= event.name %>\"\n\n⏳ Count of passengers looking for a seat : <%= waitingListCount %>\n🚗 Count of trips : <%= travelsCount %>\n🆕 Count of new trips: <%= newTravelsCount %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are the creator of this event."
+      "content": "## There is something new in your event \"<%= event.name %>\"\n\n⏳ Count of passengers looking for a seat : <%= waitingListCount %>\n🚗 Count of trips : <%= travelsCount %>\n🆕 Count of new trips: <%= newTravelsCount %>\n\nLink to your Caroster: <%= host %>/e/<%= event.uuid %>\n\nYou receive this e-mail because you are an admin of this event."
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact trip driver",

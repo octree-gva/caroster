@@ -38,11 +38,11 @@
     },
     "EventEnded": {
       "title": "<%= event.name %> - De afspraak is voorbij!",
-      "content": "## ‘<%= event.name %>’ is voorbij!\n\n👏 Aantal passagiers: <%= event.passengers.length %>\n🚗 Aantal gebruikte voertuigen: <%= event.travels.length %>\n\nLink naar uw Caroster: <%= host %>/e/<%= event.uuid %>\n\nU ontvangt deze e-mail omdat u de afspraak hebt aangemaakt."
+      "content": "## ‘<%= event.name %>’ is voorbij!\n\n👏 Aantal passagiers: <%= event.passengers.length %>\n🚗 Aantal gebruikte voertuigen: <%= event.travels.length %>\n\nLink naar uw Caroster: <%= host %>/e/<%= event.uuid %>\n\nU ontvangt deze e-mail omdat u een beheerder van dit evenement bent."
     },
     "EventRecap": {
       "title": "<%= event.name %> - Wijzigingen aan afspraak",
-      "content": "## Er hebben wijzigingen plaatsgevonden aan ‘<%= event.name %>’\n\n⏳ Aantal passagiers op wachtlijst: <%= waitingListCount %>\n🚗 Aantal voertuigen: <%= travelsCount %>\n🆕 Aantal nieuwe voertuigen: <%= newTravelsCount %>\n\nLink naar uw Caroster: <%= host %>/e/<%= event.uuid %>\n\nU ontvangt deze e-mail omdat u de afspraak hebt aangemaakt."
+      "content": "## Er hebben wijzigingen plaatsgevonden aan ‘<%= event.name %>’\n\n⏳ Aantal passagiers op wachtlijst: <%= waitingListCount %>\n🚗 Aantal voertuigen: <%= travelsCount %>\n🆕 Aantal nieuwe voertuigen: <%= newTravelsCount %>\n\nLink naar uw Caroster: <%= host %>/e/<%= event.uuid %>\n\nU ontvangt deze e-mail omdat u een beheerder van dit evenement bent."
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Contact opnemen met bestuurder",

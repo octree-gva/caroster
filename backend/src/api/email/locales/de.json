@@ -25,7 +25,7 @@
       "content": "Die Fahrt '<%= vehicleName %>', die Sie abonniert haben, wurde entfernt. Sie können versuchen, [hier] eine andere verfügbare Fahrt für Sie zu finden (<%= host %>/e/<%= event.uuid %>)."
     },
     "EventRecap": {
-      "content": "## Es gibt etwas Neues in Ihrem Ereignis „<%= event.name %>“\n\n⏳ Anzahl der Fahrgäste, die einen Sitzplatz suchen : <%= waitingListCount %>\n🚗 Anzahl der Fahrten : <%= travelsCount %>\n🆕 Anzahl der neuen Fahrten: <%= newTravelsCount %>\n\nLink zu Ihrem Caroster: <%= host %>/e/<%= event.uuid %>\n\nSie erhalten diese E-Mail, weil Sie der Ersteller dieser Veranstaltung sind.",
+      "content": "## Es gibt etwas Neues in Ihrem Ereignis „<%= event.name %>“\n\n⏳ Anzahl der Fahrgäste, die einen Sitzplatz suchen : <%= waitingListCount %>\n🚗 Anzahl der Fahrten : <%= travelsCount %>\n🆕 Anzahl der neuen Fahrten: <%= newTravelsCount %>\n\nLink zu Ihrem Caroster: <%= host %>/e/<%= event.uuid %>\n\nSie erhalten diese E-Mail, weil Sie der Schöpfer dieses Ereignisses sind.",
       "title": "<%= event.name %> - Etwas ist neu bei Ihrem Eregnis"
     },
     "DeletedYourTrip": {
@@ -50,7 +50,7 @@
     },
     "EventEnded": {
       "title": "<%= event.name %> - Ihr Ereignis ist vorbei!",
-      "content": "## „<%= event.name %>“ ist vorbei !\n\n👏 Anzahl der Passagiere : <%= event.passengers.length %>\n🚗 Anzahl der durchgeführten Fahrten : <%= event.travels.length %>\n\nLink zu Ihrem Caroster: <%= host %>/e/<%= event.uuid %>\n\nSie erhalten diese E-Mail, weil Sie der Ersteller dieser Veranstaltung sind."
+      "content": "## „<%= event.name %>“ ist vorbei !\n\n👏 Anzahl der Passagiere : <%= event.passengers.length %>\n🚗 Anzahl der durchgeführten Fahrten : <%= event.travels.length %>\n\nLink zu Ihrem Caroster: <%= host %>/e/<%= event.uuid %>\n\nSie erhalten diese E-Mail, weil Sie der Schöpfer dieses Ereignisses sind."
     },
     "ContactTripCreator": {
       "title": "<%= event.name %> - Fahrer kontaktieren",

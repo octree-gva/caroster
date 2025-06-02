@@ -55,9 +55,7 @@ export default factories.createCoreService(
       const hasBeenModified =
         referenceDate <= DateTime.fromISO(event.updatedAt);
       if (hasBeenModified) {
-        strapi.log.debug(
-          `Send daily recap to ${event.email} for event #${event.id}`
-        );
+        strapi.log.debug(`Send daily recap to admins of event #${event.id}`);
         const newTravels = event.travels?.filter(
           (travel) => referenceDate <= DateTime.fromISO(travel.createdAt)
         );
@@ -65,14 +63,19 @@ export default factories.createCoreService(
           .service("api::event.event")
           .getWaitingPassengers(event);
 
-        await strapi
-          .service("api::email.email")
-          .sendEmailNotif(event.email, "EventRecap", event.lang, {
-            event,
-            waitingListCount: waitingPassengers?.length || 0,
-            travelsCount: event.travels?.length || 0,
-            newTravelsCount: newTravels?.length || 0,
-          });
+        const administratorEmails = event.administrators?.split(/, ?/) || [];
+        administratorEmails.push(event.email);
+
+        for (const email of administratorEmails) {
+          await strapi
+            .service("api::email.email")
+            .sendEmailNotif(email, "EventRecap", event.lang, {
+              event,
+              waitingListCount: waitingPassengers?.length || 0,
+              travelsCount: event.travels?.length || 0,
+              newTravelsCount: newTravels?.length || 0,
+            });
+        }
       }
     },
 
@@ -81,13 +84,19 @@ export default factories.createCoreService(
       const passengersCount = event.passengers?.filter(
         (passenger) => passenger.travel
       ).length;
-      await strapi
-        .service("api::email.email")
-        .sendEmailNotif(event.email, "EventEnded", event.lang, {
-          event,
-          travelsCount,
-          passengersCount,
-        });
+
+      const administratorEmails = event.administrators?.split(/, ?/) || [];
+      administratorEmails.push(event.email);
+
+      for (const email of administratorEmails) {
+        await strapi
+          .service("api::email.email")
+          .sendEmailNotif(email, "EventEnded", event.lang, {
+            event,
+            travelsCount,
+            passengersCount,
+          });
+      }
     },
   })
 );

@@ -46,11 +46,11 @@
     },
     "EventEnded": {
       "title": "<%= event.name %> - Il tuo evento è finito!",
-      "content": "## \"<%= event.name %>\" è finito!\n\n👏 Numero di passeggeri: <%= event.passengers.length %>\n🚗 Numero di  passaggi: <%= event.travels.length %>\n\nLink del tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perché sei il creatore di questo evento."
+      "content": "## \"<%= event.name %>\" è finito!\n\n👏 Numero di passeggeri: <%= event.passengers.length %>\n🚗 Numero di  passaggi: <%= event.travels.length %>\n\nLink del tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perché sei un amministratore di questo evento."
     },
     "EventRecap": {
       "title": "<%= event.name %> - C'è qualche novità nel tuo evento",
-      "content": "## C'è una novità nel tuo evento \"<%= event.name %>\"\n\n⏳ Numero di passeggeri in cerca di un posto: <%= waitingListCount %>\n🚗 Numero di passaggi: <%= travelsCount %>\n🆕 Numero di nuovi passaggi: <%= newTravelsCount %>\n\nLink al tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perché sei il creatore di questo evento."
+      "content": "## C'è una novità nel tuo evento \"<%= event.name %>\"\n\n⏳ Numero di passeggeri in cerca di un posto: <%= waitingListCount %>\n🚗 Numero di passaggi: <%= travelsCount %>\n🆕 Numero di nuovi passaggi: <%= newTravelsCount %>\n\nLink al tuo Caroster: <%= host %>/e/<%= event.uuid %>\n\nHai ricevuto questa e-mail perché sei un amministratore di questo evento."
     },
     "EnabledCarosterPlus": {
       "title": "<%= event.name %> - Caroster Plus è stato attivato per il tuo evento",
