@@ -16,7 +16,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mapbox/search-js-core": "^1.1.0",
-    "@mui/icons-material": "^7.1.1",
+    "@mui/icons-material": "^6.4.12",
     "@mui/lab": "6.0.0-dev.240424162023-9968b4889d",
     "@mui/material": "^6.4.12",
     "@mui/styles": "^6.4.12",

@@ -1870,7 +1870,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": "npm:^4.6.1"
     "@graphql-codegen/typescript-react-apollo": "npm:^4.3.3"
     "@mapbox/search-js-core": "npm:^1.1.0"
-    "@mui/icons-material": "npm:^7.1.1"
+    "@mui/icons-material": "npm:^6.4.12"
     "@mui/lab": "npm:6.0.0-dev.240424162023-9968b4889d"
     "@mui/material": "npm:^6.4.12"
     "@mui/styles": "npm:^6.4.12"
@@ -4438,19 +4438,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@mui/icons-material@npm:7.1.1"
+"@mui/icons-material@npm:^6.4.12":
+  version: 6.4.12
+  resolution: "@mui/icons-material@npm:6.4.12"
   dependencies:
-    "@babel/runtime": "npm:^7.27.1"
+    "@babel/runtime": "npm:^7.26.0"
   peerDependencies:
-    "@mui/material": ^7.1.1
+    "@mui/material": ^6.4.12
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/9be45c567f5e3e4933afcc7f2e779a156d6de650f1e67648ed27f94bf6bfb8de2071df9d19f43938f85c32907efb62c2b570c98e1202a7e3866807af602a4742
+  checksum: 10c0/794929c57bd190347faa966e5e54640c63a56335d7008f75575c3555fc32e37b25302290b00ca2916e20992c1ace70a269b54132ab0932a5cc0906a9b6b9668e
   languageName: node
   linkType: hard
 
