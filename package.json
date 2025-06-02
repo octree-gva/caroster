@@ -6,6 +6,6 @@
     "frontend"
   ],
   "dependencies": {
-    "pm2": "^5.4.3"
+    "pm2": "^6.0.6"
   }
 }
