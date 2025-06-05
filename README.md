@@ -2,11 +2,35 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-# Caroster - Group carpool to your event
+# About Caroster
 
-Caroster is an easy and free app to organize group carpooling for an event, a party, a seminar, a sports event, a camp, a ski trip…
+Caroster is a simple, free and open-source carpooling app designed to makes it easy to organize shared trips for an event, a party, a seminar, a sport game, a camp or any other trip. 
+
+Our vision is to make Caroster a true digital common, a project collectively governed by its community, beyond any individual or organization. Our ambition is for Caroster to survive its creators, growing through shared governance and open collaboration.
+
+Caroster is developed and provided by [Octree](https://octree.ch/), a sustainable startup studio based in Geneva. Octree is made up of a committed team that aims to provide tools that respect human and ecological values.
+
+We believe that all creations should be free of rights, freely modifiable or duplicable, to serve as many people as possible. We prefer cooperation to competition, so Caroster is an open source project under the GNU - AGPL 3.0 license.
+
+We welcome contributions from anyone who shares our vision of a more sustainable and cooperative world :)
 
 > Are you on GitHub ? Please use the [reference repository on GitLab](https://git.octree.ch/p/caroster) for issues and pull requests.
+
+## Features
+
+This project makes it easy to:
+
+- 📅 Create a dedicated carpool page for each event
+- ⚙️ Customize event settings (description, location, date)
+- 🗺️ See trips proposed on a map
+- 🚗 Propose a trip as driver in just a few clicks
+- 👤 Add to a trip as passenger in just a few clicks
+- ⏳ Request a trip in the waiting list menu for passengers
+- 🔄 Manage round trips for the event
+- 🔍 Search for a trip by departure location with a search bar
+- 🔔 Get email notifications when a new trip is available
+- 📬 Receive weekly summary emails for organizers
+- 🛠️ Manage event with administrator roles (_Caroster paid only_)
 
 ## Getting Started
 
