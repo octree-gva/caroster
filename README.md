@@ -162,7 +162,10 @@ yarn test
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on the process for submitting pull requests to us.
+All contributors and persons involved in the project follow our [code of conduct](CODE_OF_CONDUCT.md).
+
+*N.B.* Use [our Gitlab](https://git.octree.ch/p/caroster) to submit any PR or issues
 
 ## Authors
 
@@ -172,4 +175,4 @@ See also the list of [contributors](https://github.com/octree-gva/caroster/graph
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU Affero General Public License v3 - see the [LICENSE.md](LICENSE.md) file for details
