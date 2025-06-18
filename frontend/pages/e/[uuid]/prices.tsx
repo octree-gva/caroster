@@ -53,13 +53,15 @@ const PricesPage: TabComponent<Props> = ({modulesSettings}) => {
         }}
       >
         <Box mb={4}>
-          {/* @ts-ignore */}
-          <stripe-pricing-table
-            pricing-table-id={modulesSettings.caroster_plus_pricing_grid_id}
-            publishable-key={modulesSettings.caroster_plus_publishable_key}
-            client-reference-id={event.uuid}
-            customer-email={profile?.email}
-          />
+          {modulesSettings && (
+            /* @ts-ignore */
+            <stripe-pricing-table
+              pricing-table-id={modulesSettings.caroster_plus_pricing_grid_id}
+              publishable-key={modulesSettings.caroster_plus_publishable_key}
+              client-reference-id={event.uuid}
+              customer-email={profile?.email}
+            />
+          )}
         </Box>
       </Container>
     </Box>
@@ -92,7 +94,7 @@ export const getServerSideProps = pageUtils.getServerSideProps(
         query: ModuleDocument,
         variables: {locale: context.locale},
       });
-      modulesSettings = data?.module?.data?.attributes || {};
+      modulesSettings = data?.module?.data?.attributes || null;
 
       if (!modulesSettings?.caroster_plus_pricing_grid_id) {
         console.warn(
@@ -104,7 +106,7 @@ export const getServerSideProps = pageUtils.getServerSideProps(
           query: ModuleDocument,
           variables: {locale: SupportedLocales['en']},
         });
-        modulesSettings = enData?.module?.data?.attributes;
+        modulesSettings = enData?.module?.data?.attributes || null;
       }
     } catch (error) {
       console.error("Can't fetch config for module: ", error);
