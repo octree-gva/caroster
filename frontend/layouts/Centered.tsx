@@ -7,6 +7,7 @@ import {Breakpoint} from '@mui/material';
 interface Props {
   children: ReactNode;
   maxWidth?: Breakpoint;
+  displayMenu?: boolean;
 }
 
 const CenteredLayout = ({children, ...props}: Props) => {

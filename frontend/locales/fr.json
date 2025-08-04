@@ -278,5 +278,7 @@
   "travel.showMap": "Afficher la carte",
   "travel.hideMap": "Masquer la carte",
   "meta.description": "Caroster Covoiturez à l’événement en proposant une voiture ou en prenant une place.",
-  "signin.sendLink.description": "Authentifiez vous de façon sécurisée"
+  "signin.sendLink.description": "Authentifiez vous de façon sécurisée",
+  "paymentConfirmation.title": "Mise à niveau Caroster Plus réussie",
+  "paymentConfirmation.description": "Votre événement a bien été mis à niveau vers Caroster Plus.\n\nLe lien de votre événement a été envoyé par mail. Cliquez sur le lien reçu pour y accéder."
 }

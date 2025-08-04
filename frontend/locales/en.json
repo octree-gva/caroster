@@ -283,5 +283,7 @@
   "travel.showMap": "Show map",
   "travel.hideMap": "Hide map",
   "meta.description": "Caroster Join the event by offering a car or taking a seat.",
-  "signin.sendLink.description": "Authenticate securely"
+  "signin.sendLink.description": "Authenticate securely",
+  "paymentConfirmation.title": "Caroster Plus upgrade successful",
+  "paymentConfirmation.description": "Your event has been successfully upgraded to Caroster Plus.\n\nA login link has been sent to your email. Please check your email to access your event."
 }
