@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import {useTheme} from '@mui/material/styles';
 import {useRouter} from 'next/router';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,6 +12,7 @@ import GenericMenu from '../GenericMenu';
 import {ActionType} from '../GenericMenu/Action';
 import {useSession} from 'next-auth/react';
 import DrawerNotification from '../DrawerNotification';
+import theme from '../../theme';
 
 const GenericToolbar = ({
   title,
@@ -24,7 +24,6 @@ const GenericToolbar = ({
   goBack?: boolean;
 }) => {
   const router = useRouter();
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const {profile, connected} = useProfile();
   const session = useSession();

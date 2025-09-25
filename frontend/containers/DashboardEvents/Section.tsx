@@ -1,10 +1,10 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/GridLegacy';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import EventCard from './EventCard';
 import {EventEntity} from '../../generated/graphql';
+import theme from '../../theme';
 
 interface Props {
   label: string;
@@ -13,7 +13,6 @@ interface Props {
 
 const Section = (props: Props) => {
   const {label, events} = props;
-  const theme = useTheme();
 
   return (
     <Box

@@ -1,9 +1,9 @@
 import {useEffect, useRef} from 'react';
 import {CircleMarker} from 'react-leaflet';
-import {useTheme} from '@mui/material';
 import useMapStore from '../../../stores/useMapStore';
 import TravelPopup from './TravelPopup';
 import {TravelEntity} from '../../../generated/graphql';
+import theme from '../../../theme';
 
 interface Props {
   travel: TravelEntity;
@@ -14,7 +14,6 @@ const TravelMarker = ({travel, focused}: Props) => {
   const {meeting_longitude, meeting_latitude} = travel.attributes;
   const setFocusOnTravel = useMapStore(s => s.setFocusOnTravel);
   const markerRef = useRef(null);
-  const theme = useTheme();
 
   useEffect(() => {
     if (focused) markerRef.current?.openPopup();

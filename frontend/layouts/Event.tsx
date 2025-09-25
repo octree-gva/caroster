@@ -1,7 +1,6 @@
 import {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import ErrorPage from '../pages/_error';
 import useEventStore from '../stores/useEventStore';
@@ -15,6 +14,7 @@ import {
   Module,
 } from '../generated/graphql';
 import TOSDialog from '../containers/TOSDialog';
+import theme from '../theme';
 
 const POLL_INTERVAL = 10000;
 
@@ -45,7 +45,6 @@ const EventLayout = (props: PropsWithChildren<Props>) => {
     ...pageProps
   } = props;
   const {t} = useTranslation();
-  const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const setEvent = useEventStore(s => s.setEvent);

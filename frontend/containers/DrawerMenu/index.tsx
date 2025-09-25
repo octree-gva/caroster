@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import useProfile from '../../hooks/useProfile';
 import DrawerMenuItem from './DrawerMenuItem';
 import useEventStore from '../../stores/useEventStore';
 import usePermissions from '../../hooks/usePermissions';
+import theme from '../../theme';
 
 interface Props {
   eventUuid: string;
@@ -15,7 +15,6 @@ interface Props {
 
 const DrawerMenu = ({eventUuid}: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
 
   const event = useEventStore(s => s.event);
   const {connected} = useProfile();

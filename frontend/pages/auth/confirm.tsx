@@ -12,14 +12,13 @@ import useSettings from '../../hooks/useSettings';
 import moment from 'moment';
 import {useSession} from 'next-auth/react';
 import {TextField, useMediaQuery} from '@mui/material';
-import {useTheme} from '@mui/styles';
+import theme from '../../theme';
 
 const Confirm = () => {
   const {t} = useTranslation();
   const settings = useSettings();
   const [updateMe] = useUpdateMeMutation();
   const session = useSession();
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const sessionNames = session?.data?.token?.name?.split(' ') || ['', ''];
 

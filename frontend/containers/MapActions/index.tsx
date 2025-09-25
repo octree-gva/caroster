@@ -1,11 +1,10 @@
 import {Box, Paper, useMediaQuery} from '@mui/material';
 import SearchField from './SearchField';
-import {useTheme} from '@mui/styles';
+import theme from '../../theme';
 
 type Props = {};
 
 const MapActions = (props: Props) => {
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Box

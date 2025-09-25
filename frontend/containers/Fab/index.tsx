@@ -1,15 +1,14 @@
 import React from 'react';
-import {useTheme} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import FabMui, {FabProps} from '@mui/material/Fab';
 import useMinimizedFab from '../../hooks/useMinimizedFab';
+import theme from '../../theme';
 
 const Fab = ({
   children = null,
   noDrawer = false,
   ...props
 }: FabProps & {noDrawer?: boolean}) => {
-  const theme = useTheme();
   const isFabMinimized = useMinimizedFab();
   const variant = !isFabMinimized && children ? 'extended' : 'circular';
 

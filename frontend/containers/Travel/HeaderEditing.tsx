@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import moment from 'moment';
-import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {CountryIso2} from 'react-international-phone';
@@ -17,6 +16,7 @@ import PhoneInput from '../../components/PhoneInput';
 import useEventStore from '../../stores/useEventStore';
 import {TravelEntity} from '../../generated/graphql';
 import {useSession} from 'next-auth/react';
+import theme from '../../theme';
 
 interface Props {
   travel: TravelEntity;
@@ -25,7 +25,6 @@ interface Props {
 
 const HeaderEditing = ({travel, toggleEditing}: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const session = useSession();
   const profile = session?.data?.profile;
   const actions = useActions({travel});

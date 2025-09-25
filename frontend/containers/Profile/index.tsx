@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
@@ -16,6 +15,7 @@ import {
 import ManagingNotificationsField from './ManagingNotificationsField';
 import StripeDashboardLink from './StripeDashboardLink';
 import {Box, Divider} from '@mui/material';
+import theme from '../../theme';
 
 interface Props {
   profile: UsersPermissionsUser;
@@ -24,7 +24,6 @@ interface Props {
 
 const Profile = ({profile, logout}: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const addToast = useToastStore(s => s.addToast);
 
   const [updateProfile] = useUpdateMeMutation();

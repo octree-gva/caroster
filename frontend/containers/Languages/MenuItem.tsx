@@ -2,7 +2,6 @@ import {useState} from 'react';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import withLanguagesSelection, {
   LanguageSelectionComponentProps,
@@ -10,12 +9,12 @@ import withLanguagesSelection, {
 import {langLocales, langs} from '../../locales/constants';
 import {ListItemIcon, ListItemText} from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
+import theme from '../../theme';
 
 const Languages = ({
   language,
   onChangeLang,
 }: LanguageSelectionComponentProps) => {
-  const theme = useTheme();
   const {t} = useTranslation();
   const [isSelecting, setSelecting] = useState(false);
 

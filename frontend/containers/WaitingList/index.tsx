@@ -11,7 +11,6 @@ import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import {useTheme} from '@mui/material/styles';
 import {Trans, useTranslation} from 'next-i18next';
 import useToastStore from '../../stores/useToastStore';
 import useEventStore from '../../stores/useEventStore';
@@ -20,6 +19,7 @@ import RemoveDialog from '../RemoveDialog';
 import AddPassengerButtons from '../AddPassengerButtons';
 import AssignButton from './AssignButton';
 import PassengersList from '../PassengersList';
+import theme from '../../theme';
 
 interface Props {
   canAddSelf: boolean;
@@ -32,7 +32,6 @@ const WaitingList = (props: Props) => {
   const {canAddSelf, registered} = props;
   const {t} = useTranslation();
   const event = useEventStore(s => s.event);
-  const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('md'));
   const addToast = useToastStore(s => s.addToast);
   const [isEditing, toggleEditing] = useReducer(i => !i, false);

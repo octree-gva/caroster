@@ -1,12 +1,11 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import {useTheme} from '@mui/material/styles';
 import {signIn} from 'next-auth/react';
 import {useTranslation} from 'next-i18next';
+import theme from '../../theme';
 
 const LoginGoogle = () => {
   const {t} = useTranslation();
-  const theme = useTheme();
 
   return (
     <Button

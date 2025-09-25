@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import TuneIcon from '@mui/icons-material/Tune';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import {useTheme} from '@mui/material/styles';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {PropsWithChildren, useState} from 'react';
 import {useTranslation} from 'next-i18next';
@@ -30,6 +29,7 @@ import {
 } from '../../../generated/graphql';
 import {langLocales} from '../../../locales/constants';
 import {getLocaleForLang} from '../../../lib/getLocale';
+import theme from '../../../theme';
 
 interface Props {
   eventUUID: string;
@@ -45,7 +45,6 @@ const DetailsTab: TabComponent<Props> = ({}) => {
   const {
     userPermissions: {canEditEventDetails},
   } = usePermissions();
-  const theme = useTheme();
   const [updateEvent] = useUpdateEventMutation();
   const addToast = useToastStore(s => s.addToast);
   const setEventUpdate = useEventStore(s => s.setEventUpdate);

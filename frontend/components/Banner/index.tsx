@@ -2,9 +2,9 @@ import {useState} from 'react';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import {useTheme} from '@mui/material/styles';
 import Markdown from '../Markdown';
 import {hashText, setCookie} from '../../lib/cookies';
+import theme from '../../theme';
 
 const ANNOUNCEMENT_COOKIE = 'lastAnnouncementSeen';
 
@@ -14,9 +14,10 @@ interface Props {
 
 const Banner = (props: Props) => {
   const {announcement} = props;
-  const theme = useTheme();
 
-  const [showBanner, setShowBanner] = useState(!!announcement && announcement !== '');
+  const [showBanner, setShowBanner] = useState(
+    !!announcement && announcement !== ''
+  );
 
   const onBannerClear = () => {
     const hashedMessage = hashText(announcement);

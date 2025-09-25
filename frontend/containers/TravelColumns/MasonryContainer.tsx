@@ -1,8 +1,7 @@
 import Container from '@mui/material/Container';
-import {useTheme} from '@mui/material/styles';
+import theme from '../../theme';
 
 const MasonryContainer = ({children}) => {
-  const theme = useTheme();
   return (
     <Container
       maxWidth="sm"

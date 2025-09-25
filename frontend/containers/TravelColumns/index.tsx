@@ -3,7 +3,6 @@ import Masonry from '@mui/lab/Masonry';
 import Box from '@mui/material/Box';
 import moment from 'moment';
 import {useTranslation} from 'next-i18next';
-import {useTheme} from '@mui/material/styles';
 import useEventStore from '../../stores/useEventStore';
 import useToastStore from '../../stores/useToastStore';
 import useProfile from '../../hooks/useProfile';
@@ -22,11 +21,11 @@ import {Button, Icon, useMediaQuery} from '@mui/material';
 import useTravelsStore from '../../stores/useTravelsStore';
 import AddTravelButton from '../AddTravelButton';
 import MapActions from '../MapActions';
+import theme from '../../theme';
 
 interface Props {}
 
 const TravelColumns = (props: Props) => {
-  const theme = useTheme();
   const event = useEventStore(s => s.event);
   const travels = event?.travels?.data || [];
   const {t} = useTranslation();

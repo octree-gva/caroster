@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/styles';
 import useShare from '../../hooks/useShare';
 import GenericMenu from '../GenericMenu';
 import useActions from './useActions';
@@ -15,10 +14,10 @@ import DrawerNotification from '../DrawerNotification';
 import useProfile from '../../hooks/useProfile';
 import {Chip, useMediaQuery} from '@mui/material';
 import LinkedEventSwitch from './LinkedEventSwitch';
+import theme from '../../theme';
 
 const EventBar = ({event, onAdd, goBack, title}) => {
   const {connected} = useProfile();
-  const theme = useTheme();
   const {share} = useShare();
   const [anchorEl, setAnchorEl] = useState(null);
   const menuActions = useActions({onAdd, eventId: event?.id});
@@ -35,7 +34,7 @@ const EventBar = ({event, onAdd, goBack, title}) => {
         minHeight: theme.mixins.toolbar.minHeight,
         transition: 'height 0.3s ease',
         backgroundColor: 'transparent',
-        backgroundImage: `linear-gradient(${theme.palette.background.grey} 0%, rgba(0,0,0,0) 90%)`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.67) 0%, rgba(0,0,0,0) 90%)`,
       }}
       position="absolute"
       elevation={0}

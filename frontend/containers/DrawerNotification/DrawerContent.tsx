@@ -1,4 +1,4 @@
-import {Drawer, Box, Icon, Typography} from '@mui/material/';
+import {Drawer, Box, Icon, Typography} from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   useReadNotificationsMutation,

@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import {useTheme} from '@mui/material/styles';
 import {PropsWithChildren} from 'react';
 import pageUtils from '../../../lib/pageUtils';
 import useEventStore from '../../../stores/useEventStore';
@@ -8,6 +7,7 @@ import EventLayout, {TabComponent} from '../../../layouts/Event';
 import {EventByUuidDocument} from '../../../generated/graphql';
 import CarosterPlusSettings from '../../../containers/CarosterPlusSettings';
 import {getLocaleForLang} from '../../../lib/getLocale';
+import theme from '../../../theme';
 
 interface Props {
   eventUUID: string;
@@ -19,7 +19,6 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const OptionsTab: TabComponent<Props> = () => {
-  const theme = useTheme();
   const event = useEventStore(s => s.event);
 
   if (!event) return null;

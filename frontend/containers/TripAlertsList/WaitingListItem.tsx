@@ -5,12 +5,12 @@ import {
   IconButton,
   ListItem,
   ListItemText,
-  useTheme,
 } from '@mui/material';
 import {TripAlertEntity} from '../../generated/graphql';
 import {useTranslation} from 'next-i18next';
 import RadarIcon from '@mui/icons-material/Radar';
 import useProfile from '../../hooks/useProfile';
+import theme from '../../theme';
 
 type Props = {
   tripAlert: TripAlertEntity;
@@ -20,7 +20,6 @@ type Props = {
 
 const WaitingListItem = ({tripAlert, onClick, isLast}: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const {userId} = useProfile();
 
   const user = tripAlert.attributes.user?.data.attributes;

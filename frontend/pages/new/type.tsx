@@ -1,16 +1,16 @@
 import pageUtils from '../../lib/pageUtils';
 import Layout from '../../layouts/EventCreation';
 import {useTranslation} from 'next-i18next';
-import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Typography, useMediaQuery} from '@mui/material';
 import EventTypeCard from '../../containers/EventTypeCard';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import useEventCreationStore from '../../stores/useEventCreationStore';
+import theme from '../../theme';
 
 const NewEventType = () => {
   const {t} = useTranslation();
   const router = useRouter();
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const event = useEventCreationStore(s => s.event);
   const eventStoreReady = useEventCreationStore(s => s.ready);

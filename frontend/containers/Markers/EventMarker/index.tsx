@@ -1,7 +1,7 @@
 import {CircleMarker} from 'react-leaflet';
-import {useTheme} from '@mui/material';
 import EventPopup from './EventPopup';
 import {Event} from '../../../generated/graphql';
+import theme from '../../../theme';
 
 interface Props {
   event: Event & {id: string};
@@ -9,7 +9,6 @@ interface Props {
 
 const EventMarker = ({event}: Props) => {
   const {latitude, longitude} = event;
-  const theme = useTheme();
 
   const markerStyle = {
     radius: 12,

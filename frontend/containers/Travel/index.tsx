@@ -1,7 +1,6 @@
 import {useMemo, useReducer, useState} from 'react';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import {useTheme} from '@mui/styles';
 import HeaderEditing from './HeaderEditing';
 import Header from './Header';
 import RequestTripModal from './RequestTripModal';
@@ -14,6 +13,7 @@ import useEventStore from '../../stores/useEventStore';
 import {PassengerEntity, TravelEntity} from '../../generated/graphql';
 import DrawerPassenger from '../DrawerPassenger';
 import PassengerActions from './PassengerActions';
+import theme from '../../theme';
 
 interface Props {
   travel: TravelEntity;
@@ -29,7 +29,6 @@ const Travel = (props: Props) => {
   const {
     userPermissions: {canSeePassengerDetails},
   } = usePermissions();
-  const theme = useTheme();
   const [isEditing, toggleEditing] = useReducer(i => !i, false);
   const [requestTripModalOpen, toggleRequestTripModal] = useReducer(
     i => !i,

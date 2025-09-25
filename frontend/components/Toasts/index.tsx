@@ -1,9 +1,8 @@
-import {useTheme} from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import useToastStore from '../../stores/useToastStore';
+import theme from '../../theme';
 
 const Toasts = () => {
-  const theme = useTheme();
   const toast = useToastStore(s => s.toast);
   const action = useToastStore(s => s.action);
   const clearToast = useToastStore(s => s.clearToast);

@@ -7,7 +7,6 @@ import {
   Box,
   Typography,
   Icon,
-  useTheme,
 } from '@mui/material';
 import {useTranslation} from 'next-i18next';
 import useProfile from '../../hooks/useProfile';
@@ -22,7 +21,6 @@ interface Props {
 
 const Passenger = (props: Props) => {
   const {passenger, isTravel, Actions} = props;
-  const theme = useTheme();
   const {t} = useTranslation();
   const {
     userPermissions: {canSeeFullName},

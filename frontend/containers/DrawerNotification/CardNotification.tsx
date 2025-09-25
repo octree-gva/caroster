@@ -1,4 +1,4 @@
-import {Box, Typography, Stack, Badge} from '@mui/material/';
+import {Box, Typography, Stack, Badge} from '@mui/material';
 import {
   NotificationEntity,
   useReadNotificationsMutation,

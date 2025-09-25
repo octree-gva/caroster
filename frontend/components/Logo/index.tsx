@@ -1,8 +1,7 @@
-import {useTheme} from '@mui/material/styles';
 import {Box} from '@mui/material';
+import theme from '../../theme';
 
 const Logo = () => {
-  const theme = useTheme();
   return (
     <Box
       sx={{

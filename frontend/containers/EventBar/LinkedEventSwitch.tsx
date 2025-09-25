@@ -3,14 +3,13 @@ import {useTranslation} from 'next-i18next';
 import useEventStore from '../../stores/useEventStore';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
+import theme from '../../theme';
 
 type Props = {};
 
 const LinkedEventSwitch = (props: Props) => {
   const {t} = useTranslation();
   const router = useRouter();
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const loadedEvent = useEventStore(s => s.event);
   const linkedEvent = loadedEvent?.linkedEvent?.data?.attributes;

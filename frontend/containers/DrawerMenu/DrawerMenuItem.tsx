@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import {useTheme} from '@mui/material/styles';
+import theme from '../../theme';
 
 interface Props {
   icon: string;
@@ -12,8 +12,6 @@ interface Props {
 }
 
 const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
-  const theme = useTheme();
-
   return (
     <Button
       sx={{
@@ -46,7 +44,7 @@ const DrawerMenuItem = ({icon, title, onClick, active}: Props) => {
         }}
         label={
           <Icon
-            color={active ? "primary" : "action"}
+            color={active ? 'primary' : 'action'}
             className={active ? 'material-icons' : 'material-icons-outlined'}
           >
             {icon}

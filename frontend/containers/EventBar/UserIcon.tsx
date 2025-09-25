@@ -1,11 +1,10 @@
 import Avatar from '@mui/material/Avatar';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import {useTheme} from '@mui/material/styles';
 import useProfile from '../../hooks/useProfile';
+import theme from '../../theme';
 
 const UserIcon = () => {
   const {profile} = useProfile();
-  const theme = useTheme();
 
   if (profile)
     return (

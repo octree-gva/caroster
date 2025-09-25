@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
+import theme from '../../theme';
 
 interface Props {
   toggle: () => void;
@@ -12,7 +12,6 @@ const AddTravel = (props: Props) => {
   const {toggle} = props;
 
   const {t} = useTranslation();
-  const theme = useTheme();
   return (
     <Container
       maxWidth="sm"

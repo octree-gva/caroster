@@ -1,8 +1,8 @@
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import theme from '../../theme';
 
 interface Props {
   onClick: () => void;
@@ -12,7 +12,6 @@ interface Props {
 
 const AssignButton = (props: Props) => {
   const {onClick, tabIndex} = props;
-  const theme = useTheme();
   const {t} = useTranslation();
 
   return (

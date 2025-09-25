@@ -6,7 +6,6 @@ import {
   Paper,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import {
   PassengerInput,
@@ -23,12 +22,12 @@ import useToastStore from '../../stores/useToastStore';
 import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import ListHeader from './ListHeader';
+import theme from '../../theme';
 
 type Props = {};
 
 const TripAlertsList = (props: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const router = useRouter();
   const mobile = useMediaQuery(theme.breakpoints.down('md'));
   const [focusAlert, setFocusAlert] = useState<TripAlertEntity>(null);

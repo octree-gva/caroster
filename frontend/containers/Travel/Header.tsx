@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import LinearProgress from '@mui/material/LinearProgress';
 import Chip from '@mui/material/Chip';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import getMapsLink from '../../lib/getMapsLink';
 import useMapStore from '../../stores/useMapStore';
@@ -18,6 +17,7 @@ import {TravelEntity} from '../../generated/graphql';
 import {getFormatedPhoneNumber} from '../../lib/phoneNumbers';
 import useEventStore from '../../stores/useEventStore';
 import {getTravelName} from '../../lib/travels';
+import theme from '../../theme';
 
 interface Props {
   travel: TravelEntity;
@@ -28,7 +28,6 @@ const MAPBOX_CONFIGURED = process.env['MAPBOX_CONFIGURED'] || false;
 
 const Header = (props: Props) => {
   const {travel, toggleEditing} = props;
-  const theme = useTheme();
   const {t} = useTranslation();
   const {
     userPermissions: {canEditTravel, canSeeTravelDetails, canSeeFullName},

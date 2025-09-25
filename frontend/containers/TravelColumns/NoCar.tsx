@@ -1,12 +1,12 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {useTheme} from '@mui/material/styles';
 import {useTranslation} from 'next-i18next';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import ShareEvent from '../ShareEvent';
 import SupportCaroster from '../SupportCaroster';
 import AddTravelButton from '../AddTravelButton';
+import theme from '../../theme';
 
 interface Props {
   eventName: string;
@@ -17,7 +17,6 @@ interface Props {
 
 const NoCar = ({eventName, title, isCarosterPlus, noTravel}: Props) => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const router = useRouter();
   const {uuid} = router.query;
 

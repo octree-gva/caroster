@@ -7,11 +7,12 @@ import {
 } from '../../../generated/graphql';
 import EventLayout, {TabComponent} from '../../../layouts/Event';
 import useEventStore from '../../../stores/useEventStore';
-import {Box, Container, useTheme} from '@mui/material';
+import {Box, Container} from '@mui/material';
 import Head from 'next/head';
 import {useSession} from 'next-auth/react';
 import pageUtils from '../../../lib/pageUtils';
 import {getLocaleForLang} from '../../../lib/getLocale';
+import theme from '../../../theme';
 
 interface Props {
   modulesSettings?: Module;
@@ -24,7 +25,6 @@ const Page = (props: PropsWithChildren<Props>) => {
 };
 
 const PricesPage: TabComponent<Props> = ({modulesSettings}) => {
-  const theme = useTheme();
   const event = useEventStore(s => s.event);
   const session = useSession();
   const profile = session?.data?.profile;

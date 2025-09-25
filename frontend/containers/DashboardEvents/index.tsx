@@ -2,7 +2,7 @@ import {useTranslation} from 'next-i18next';
 import Box from '@mui/material/Box';
 import Section from './Section';
 import {EventEntity} from '../../generated/graphql';
-import {useTheme} from '@mui/styles';
+import theme from '../../theme';
 
 const DashboardEvents = ({
   futureEvents = [],
@@ -14,7 +14,6 @@ const DashboardEvents = ({
   pastEvents: EventEntity[];
 }) => {
   const {t} = useTranslation();
-  const theme = useTheme();
 
   return (
     <Box
