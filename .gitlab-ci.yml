@@ -1,5 +1,5 @@
 include:
-  - project: o/infra/templates
+  - project: internal/templates
     file: /gitlab-ci/includes/StrapiBuildDeploy.yaml
 
 Push to Docker Hub:
