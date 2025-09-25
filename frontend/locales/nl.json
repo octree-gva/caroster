@@ -157,7 +157,6 @@
   "placeInput.noCoordinates": "Deze locatie is niet aangetroffen en verschijnt daarom niet op de kaart",
   "placeInput.item.noCoordinates": "Geen coördinaten",
   "profile.actions.cancel": "Annuleren",
-  "profile.actions.change_password": "Wachtwoord wijzigen",
   "profile.actions.edit": "Bewerken",
   "profile.actions.logout": "Uitloggen",
   "profile.actions.save": "Opslaan",

@@ -205,7 +205,6 @@
   "placeInput.noCoordinates": "Questa posizione non è geolocalizzata e non comparirà sulla mappa",
   "placeInput.item.noCoordinates": "Nessuna coordinata",
   "profile.actions.cancel": "Annulla",
-  "profile.actions.change_password": "Cambia la tua password",
   "profile.actions.edit": "Modifica",
   "profile.actions.logout": "Esci",
   "profile.actions.save": "Salva",

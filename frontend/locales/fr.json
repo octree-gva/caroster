@@ -171,7 +171,6 @@
   "placeInput.noCoordinates": "Le lieu indiqué n'a pas pu être géo-localisé et ne sera pas affiché sur la carte. Essayez une adresse plus précise.",
   "placeInput.item.noCoordinates": "Pas de coordonnées",
   "profile.actions.cancel": "Annuler",
-  "profile.actions.change_password": "Changer son mot de passe",
   "profile.actions.edit": "Editer",
   "profile.actions.logout": "Se déconnecter",
   "profile.actions.save": "Enregistrer",

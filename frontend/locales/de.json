@@ -136,7 +136,6 @@
   "placeInput.noCoordinates": "Dieser Ort ist nicht geografisch zugeordnet und wird nicht auf der Karte angezeigt",
   "placeInput.item.noCoordinates": "Keine Koordinaten",
   "profile.actions.cancel": "Abbrechen",
-  "profile.actions.change_password": "Passwort ändern",
   "profile.actions.edit": "Bearbeiten",
   "profile.actions.logout": "Abmeldung",
   "profile.actions.save_new_password": "Aktualisieren",

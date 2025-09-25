@@ -5,9 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import {useTranslation} from 'next-i18next';
-import EditPassword from './EditPassword';
 import ProfileField from './ProfileField';
-import useToastStore from '../../stores/useToastStore';
 import {
   UsersPermissionsUser,
   useUpdateMeMutation,
@@ -24,11 +22,9 @@ interface Props {
 
 const Profile = ({profile, logout}: Props) => {
   const {t} = useTranslation();
-  const addToast = useToastStore(s => s.addToast);
 
   const [updateProfile] = useUpdateMeMutation();
   const [isEditing, setIsEditing] = useState(false);
-  const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [firstName, setFirstName] = useState(profile.firstName);
   const [lastName, setLastName] = useState(profile.lastName);
   const [email, setEmail] = useState(profile.email);
@@ -41,34 +37,7 @@ const Profile = ({profile, logout}: Props) => {
     profile.notificationEnabled
   );
 
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
   const isStrapiUser = profile.provider === 'local';
-
-  const resetPassword = () => {
-    setIsEditingPassword(false);
-    setNewPassword('');
-    setOldPassword('');
-    setErrorPassword('');
-  };
-
-  const savePassword = async () => {
-    try {
-      await updateProfile({
-        variables: {
-          userUpdate: {oldPassword, password: newPassword},
-        },
-      });
-      addToast(t('profile.password_changed'));
-      resetPassword();
-    } catch (err) {
-      if (err.message === 'Wrong password') {
-        setErrorPassword(t('profile.errors.password_nomatch'));
-        return;
-      }
-    }
-  };
 
   const onSave = async () => {
     try {
@@ -88,19 +57,6 @@ const Profile = ({profile, logout}: Props) => {
       console.error(error);
     }
   };
-
-  if (isEditingPassword)
-    return (
-      <EditPassword
-        oldPassword={oldPassword}
-        newPassword={newPassword}
-        setOldPassword={setOldPassword}
-        setNewPassword={setNewPassword}
-        error={errorPassword}
-        save={savePassword}
-        cancel={resetPassword}
-      />
-    );
 
   return (
     <Container
@@ -176,17 +132,6 @@ const Profile = ({profile, logout}: Props) => {
                 {t('profile.actions.edit')}
               </Button>
             </>
-          )}
-          {isEditing && isStrapiUser && (
-            <Button
-              type="button"
-              onClick={evt => {
-                if (evt.preventDefault) evt.preventDefault();
-                setIsEditingPassword(true);
-              }}
-            >
-              {t('profile.actions.change_password')}
-            </Button>
           )}
           {isEditing && (
             <Button
