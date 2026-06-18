@@ -135,14 +135,14 @@ const DrawerMenu = ({eventUuid}: Props) => {
         icon="info"
         active={router.pathname === `/e/[uuid]/details`}
       />
-      <DrawerMenuItem
+      {/* <DrawerMenuItem
         title={t('drawer.options')}
         onClick={() => {
           router.push(`/e/${uuid}/options`, null, {shallow: true});
         }}
         icon="settings"
         active={router.pathname === `/e/[uuid]/options`}
-      />
+      /> */}
     </Drawer>
   );
 };

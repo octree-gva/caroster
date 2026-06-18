@@ -3,13 +3,13 @@ import Layout from '../../layouts/EventCreation';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {useTranslation} from 'next-i18next';
 import useEventCreationStore from '../../stores/useEventCreationStore';
-import {Button, Paper, Stack, TextField} from '@mui/material';
+import {Paper, Stack, TextField} from '@mui/material';
 import PlaceInput from '../../containers/PlaceInput';
-import NextLink from 'next/link';
 import moment from 'moment';
 import Logo from '../../components/Logo';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
+import BasicAction from '../../containers/EventTypeCard/BasicAction';
 
 const NewEventDetails = () => {
   const {t} = useTranslation();
@@ -68,17 +68,7 @@ const NewEventDetails = () => {
             onChange={e => setField('description', e.target.value)}
             name="address"
           />
-          <NextLink href="/new/type" passHref>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              type="submit"
-              id="NewEventSubmit"
-            >
-              {t('event.creation.toEventType')}
-            </Button>
-          </NextLink>
+          <BasicAction />
         </Stack>
       </Paper>
     </Layout>

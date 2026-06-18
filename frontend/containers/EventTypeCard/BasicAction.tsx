@@ -43,7 +43,7 @@ const BasicAction = (props: Props) => {
   return (
     <Button
       fullWidth
-      variant="outlined"
+      variant="contained"
       onClick={onClick}
     >{t`event.creation.basic.button`}</Button>
   );
