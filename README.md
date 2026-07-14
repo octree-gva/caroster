@@ -2,6 +2,27 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
+# News 
+
+**⚠️ Important Notice: Caroster Service Shutdown on November 30, 2026**
+
+Dear users, partners, and contributors,
+
+It is with mixed emotions that we announce the definitive shutdown of the Caroster service on **November 30, 2026**.
+
+Despite our efforts and commitment to open source carpooling, Caroster has not achieved the viability necessary to sustain the service and fund essential technical upgrades.
+
+What alternatives are available? We strongly recommend switching to **Mobicoop**, an ethical, open source solution offering similar features for your home-to-work commutes and events.
+
+A huge thank you to all the users who trusted us. We also extend our gratitude to the open source community that contributed to this project. While this adventure comes to an end, the spirit of carpooling continues elsewhere.
+
+This shutdown does not affect **[Octree](https://octree.ch/)** 's overall activities. On the contrary, it allows us to focus our resources and expertise on two other projects close to our hearts:
+
+- 🗳️ **[Voca](https://voca.city/):** Our open source solution that enables informed decision-making and engagement for organizations, associations, cooperatives, or citizen movements through their own democratic space.
+- ♻️ **[R-21](https://r-21.ch/):** Our waste statistics analysis tool that helps municipalities visualize and manage their waste data.
+
+Caroster Team (Octree)
+
 # About Caroster
 
 Caroster is a simple, free and open-source carpooling app designed to makes it easy to organize shared trips for an event, a party, a seminar, a sport game, a camp or any other trip. 
